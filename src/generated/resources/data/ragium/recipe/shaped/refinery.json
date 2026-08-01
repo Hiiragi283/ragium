@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:thermometer"
+      "item": "ragium:heating_coil"
     },
     "B": {
       "tag": "c:glass_blocks"

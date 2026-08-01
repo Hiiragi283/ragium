@@ -28,8 +28,10 @@ import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
@@ -64,76 +66,63 @@ data object RagiumBlocks {
     )
 
     @JvmField
-    val INDUSTRIAL_TNT: HTSimpleDeferredBlockAndItem =
-        REGISTER.registerSimple("industrial_tnt", copyOf(Blocks.TNT).mapColor(MapColor.TERRACOTTA_ORANGE))
+    val HEATING_COIL: HTBasicDeferredBlockAndItem<RotatedPillarBlock> = REGISTER.registerSimple("heating_coil", copyOf(Blocks.COPPER_BLOCK), ::RotatedPillarBlock) { it.rarity(Rarity.UNCOMMON) }
+
+    @JvmField
+    val INDUSTRIAL_TNT: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple("industrial_tnt", copyOf(Blocks.TNT).mapColor(MapColor.TERRACOTTA_ORANGE))
 
     //    Generator    //
 
     // Basic
     @JvmField
-    val BOILER: HTDeferredBlockAndItem<HTBoilerBlock, HTMachineBlockItem> =
-        REGISTER.register(RagiumConst.BOILER, machine(), ::HTBoilerBlock, ::HTMachineBlockItem)
+    val BOILER: HTDeferredBlockAndItem<HTBoilerBlock, HTMachineBlockItem> = REGISTER.register(RagiumConst.BOILER, machine(), ::HTBoilerBlock, ::HTMachineBlockItem)
 
     //    Machine    //
 
     // Basic
     @JvmField
-    val ALLOY_SMELTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER, RagiumTranslation.ALLOY_SMELTER)
+    val ALLOY_SMELTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER, RagiumTranslation.ALLOY_SMELTER)
 
     @JvmField
-    val ASSEMBLER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.ASSEMBLER, RagiumTranslation.ASSEMBLER)
+    val ASSEMBLER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.ASSEMBLER, RagiumTranslation.ASSEMBLER)
 
     @JvmField
-    val AUTO_CHISEL: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.AUTO_CHISEL, RagiumTranslation.AUTO_CHISEL)
+    val AUTO_CHISEL: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.AUTO_CHISEL, RagiumTranslation.AUTO_CHISEL)
 
     @JvmField
-    val COMPRESSOR: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.COMPRESSOR, RagiumTranslation.COMPRESSOR)
+    val COMPRESSOR: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.COMPRESSOR, RagiumTranslation.COMPRESSOR)
 
     @JvmField
-    val CRUSHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.CRUSHER, RagiumTranslation.CRUSHER)
+    val CRUSHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.CRUSHER, RagiumTranslation.CRUSHER)
 
     @JvmField
-    val CUTTING_MACHINE: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE, RagiumTranslation.CUTTING_MACHINE)
+    val CUTTING_MACHINE: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE, RagiumTranslation.CUTTING_MACHINE)
 
     @JvmField
-    val ELECTRIC_FURNACE: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.ELECTRIC_FURNACE, RagiumTranslation.ELECTRIC_FURNACE)
+    val ELECTRIC_FURNACE: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.ELECTRIC_FURNACE, RagiumTranslation.ELECTRIC_FURNACE)
 
     @JvmField
-    val PLANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)
+    val PLANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)
 
     // Advanced
     @JvmField
-    val FREEZER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.FREEZER, RagiumTranslation.FREEZER)
+    val FREEZER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.FREEZER, RagiumTranslation.FREEZER)
 
     @JvmField
-    val MELTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER)
+    val MELTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER)
 
     @JvmField
-    val PYROLYZER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
+    val PYROLYZER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
 
     @JvmField
-    val REFINERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY, machine().noOcclusion())
+    val REFINERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY, machine().noOcclusion())
 
     @JvmField
-    val WASHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.WASHER, RagiumTranslation.WASHER)
+    val WASHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.WASHER, RagiumTranslation.WASHER)
 
     // Elite
     @JvmField
-    val BREWERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.BREWERY, RagiumTranslation.BREWERY)
+    val BREWERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.BREWERY, RagiumTranslation.BREWERY)
 
     @JvmField
     val MIXER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(
@@ -144,19 +133,16 @@ data object RagiumBlocks {
 
     // Ultimate
     @JvmField
-    val FLUID_DUPLICATOR: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.FLUID_DUPLICATOR, RagiumTranslation.FLUID_DUPLICATOR, machine().noOcclusion())
+    val FLUID_DUPLICATOR: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.FLUID_DUPLICATOR, RagiumTranslation.FLUID_DUPLICATOR, machine().noOcclusion())
 
     //    Device    //
 
     // Ultimate
     @JvmField
-    val ENCHANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.ENCHANTER, RagiumTranslation.ENCHANTER)
+    val ENCHANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.ENCHANTER, RagiumTranslation.ENCHANTER)
 
     @JvmField
-    val MASS_FABRICATOR: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.MASS_FABRICATOR, RagiumTranslation.MASS_FABRICATOR)
+    val MASS_FABRICATOR: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.MASS_FABRICATOR, RagiumTranslation.MASS_FABRICATOR)
 
     //    Storages    //
 

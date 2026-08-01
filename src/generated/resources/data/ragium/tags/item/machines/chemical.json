@@ -1,6 +1,7 @@
 {
   "values": [
     "ragium:brewery",
-    "ragium:mixer"
+    "ragium:mixer",
+    "ragium:washer"
   ]
 }

@@ -3,25 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:glass_panes/colorless"
+      "tag": "c:plates/stainless_steel"
     },
     "B": {
-      "tag": "c:dyes/red"
+      "tag": "c:gems/ragi_crystal"
     },
     "C": {
-      "item": "ragium:mercury_bottle"
-    },
-    "D": {
-      "tag": "c:plates/copper"
+      "tag": "c:glass_blocks/colorless"
     }
   },
   "pattern": [
     " AB",
     "ACA",
-    "DA "
+    "CA "
   ],
   "result": {
     "count": 1,
-    "id": "ragium:thermometer"
+    "id": "ragium:laser_emitter"
   }
 }

@@ -25,7 +25,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumAdvancementKeys.RAGI_ALLOY, "0xFF003F", "ラギ合金インゴットを手に入れる")
         add(RagiumAdvancementKeys.ALLOY_SMELTER, "アル-ケミストリー", "合金炉を手に入れる")
 
-        add(RagiumAdvancementKeys.THERMOMETER, "Heat And Cool", "温度計を手に入れる")
+        add(RagiumAdvancementKeys.HEATING_COIL, "ヒート！メタル！", "加熱コイルを手に入れる")
         add(RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY, "多分赤色", "発展ラギ合金インゴットを手に入れる")
         add(RagiumAdvancementKeys.REFINERY, "かなりリファイナリーだよこれ", "精製機を手に入れる")
         add(RagiumAdvancementKeys.PLASTIC, "Plus-TiC", "プラスチックを手に入れる")
@@ -42,6 +42,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "骨付き肉ブロック")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "骨付き焼肉ブロック")
+        add(RagiumBlocks.HEATING_COIL, "加熱コイル")
         add(RagiumBlocks.INDUSTRIAL_TNT, "工業用TNT")
         // Generator
         add(RagiumBlocks.BOILER, "ボイラー")
@@ -135,12 +136,12 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.NITROCELLULOSE, "ニトロセルロース")
         add(RagiumItems.SMOKELESS_POWDER, "無煙火薬")
 
-        add(RagiumItems.MERCURY_BOTTLE, "水銀入り瓶")
         add(RagiumItems.THERMOMETER, "温度計")
         add(RagiumItems.SILICON_WAFER, "シリコンウェハ")
         add(RagiumItems.CIRCUIT_CHIP, "回路チップ")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
+        add(RagiumItems.LASER_EMITTER, "レーザー発振器")
 
         add(RagiumItems.ARTIFICIAL_ARTIFACT, "人工遺物")
 

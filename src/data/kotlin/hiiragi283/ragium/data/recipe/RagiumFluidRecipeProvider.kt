@@ -280,22 +280,14 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
     //    Tank Interaction    //
 
     private fun tankInteraction() {
-        HTTankInteractionRecipeBuilder.emptying {
-            ingredient { +RagiumItems.MERCURY_BOTTLE }
-            fluidResult {
-                +RagiumFluids.MERCURY
-                amount = 250
-            }
-            itemResult { +Items.GLASS_BOTTLE }
-        }.save(exporter)
-
+        // Glass Bottle + Mercury -> Thermometer
         HTTankInteractionRecipeBuilder.filling {
             itemIngredient { +Items.GLASS_BOTTLE }
             fluidIngredient {
                 +RagiumFluids.MERCURY
                 amount = 250
             }
-            result { +RagiumItems.MERCURY_BOTTLE }
+            result { +RagiumItems.THERMOMETER }
         }.save(exporter)
     }
 

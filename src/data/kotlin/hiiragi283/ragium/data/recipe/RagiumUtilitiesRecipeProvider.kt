@@ -28,7 +28,6 @@ import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
-import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import java.util.concurrent.CompletableFuture
 import kotlin.contracts.ExperimentalContracts
@@ -81,29 +80,11 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
     }
 
     private fun parts() {
-        // Mercury Bottle <-> Mercury Bucket
-        HTShapelessRecipeBuilder.create {
-            repeat(4) { ingredient { +RagiumItems.MERCURY_BOTTLE } }
-            ingredient { +Tags.Items.BUCKETS_EMPTY }
-            +RagiumFluids.MERCURY.bucketHolder.toStack()
-            recipeId suffix "_from_bottles"
-        }.save(exporter)
-        HTShapelessRecipeBuilder.create {
-            ingredient { +RagiumFluids.MERCURY.bucketTag }
-            repeat(4) { ingredient { +Items.GLASS_BOTTLE } }
-            +RagiumItems.MERCURY_BOTTLE.toStack(4)
-            recipeId suffix "_from_bucket"
-        }.save(exporter)
-        // Thermometer
+        // Heating Coil
         HTShapedRecipeBuilder.create {
-            +" AB"
-            +"ACA"
-            +"DA "
-            define('A') { +Tags.Items.GLASS_PANES_COLORLESS }
-            define('B') { +Tags.Items.DYES_RED }
-            define('C') { +RagiumItems.MERCURY_BOTTLE }
-            define('D') { +tag(CommonTagPrefixes.PLATE, VanillaMaterialKeys.COPPER) }
-            +RagiumItems.THERMOMETER.toStack()
+            hollow()
+            define('A') { +tag(CommonTagPrefixes.ROD, VanillaMaterialKeys.COPPER) }
+            +RagiumBlocks.HEATING_COIL.toStack()
         }.save(exporter)
     }
 
@@ -126,7 +107,7 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
         HTShapedRecipeBuilder.create {
             +"ABA"
             +"BCB"
-            define('A') { +RagiumItems.THERMOMETER }
+            define('A') { +RagiumBlocks.HEATING_COIL }
             define('B') { +Tags.Items.GLASS_BLOCKS }
             define('C') { +tag(CommonTagPrefixes.GEAR, VanillaMaterialKeys.DIAMOND) }
             +RagiumBlocks.REFINERY.toStack()
@@ -177,7 +158,7 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
             +"DDD"
             define('A') { +tag(CommonTagPrefixes.INGOT, key) }
             define('B', builderAction)
-            define('C') { +RagiumItems.THERMOMETER }
+            define('C') { +RagiumBlocks.HEATING_COIL }
             define('D') { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL) }
             +block.toStack()
         }.save(exporter)

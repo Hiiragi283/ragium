@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api
 
-object RagiumConst {
+data object RagiumConst {
     const val BASIC = "basic"
     const val ADVANCED = "advanced"
     const val ELITE = "elite"

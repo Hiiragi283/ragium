@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/mercury_bottle"
+    "layer0": "ragium:item/laser_emitter"
   }
 }

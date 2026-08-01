@@ -25,7 +25,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumAdvancementKeys.RAGI_ALLOY, "0xFF003f", "Get Ragi-Alloy Ingot")
         add(RagiumAdvancementKeys.ALLOY_SMELTER, "Al-Chemistry", "Get Alloy Smelter")
 
-        add(RagiumAdvancementKeys.THERMOMETER, "Heat And Cool", "Get Thermometer")
+        add(RagiumAdvancementKeys.HEATING_COIL, "Heat! Metal!", "Get Heating Coil")
         add(RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY, "Maybe Red", "Get Advanced Ragi-Alloy Ingot")
         add(RagiumAdvancementKeys.REFINERY, "A BC is DEFinitely Good", "Get Refinery")
         add(RagiumAdvancementKeys.PLASTIC, "Plus-TiC", "Get Plastic Sheet")
@@ -42,6 +42,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "Bone with Meat")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
+        add(RagiumBlocks.HEATING_COIL, "Heating Coil")
         add(RagiumBlocks.INDUSTRIAL_TNT, "Industrial TNT")
         // Generator
         add(RagiumBlocks.BOILER, "Boiler")
@@ -135,12 +136,12 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.NITROCELLULOSE, "Nitrocellulose")
         add(RagiumItems.SMOKELESS_POWDER, "Smokeless Powder")
 
-        add(RagiumItems.MERCURY_BOTTLE, "Mercury Bottle")
         add(RagiumItems.THERMOMETER, "Thermometer")
         add(RagiumItems.SILICON_WAFER, "Silicon Wafer")
         add(RagiumItems.CIRCUIT_CHIP, "Circuit Chip")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
+        add(RagiumItems.LASER_EMITTER, "Laser Emitter")
 
         add(RagiumItems.ARTIFICIAL_ARTIFACT, "Artificial Artifact")
 

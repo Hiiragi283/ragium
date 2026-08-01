@@ -1,8 +1,8 @@
 {
   "values": [
-    "#ragium:devices",
-    "#ragium:generators",
     "#ragium:machines",
-    "#ragium:storages"
+    "#ragium:storages",
+    "ragium:boiler",
+    "ragium:heating_coil"
   ]
 }

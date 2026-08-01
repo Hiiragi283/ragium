@@ -6,7 +6,6 @@
     "ragium:compressor",
     "ragium:crusher",
     "ragium:cutting_machine",
-    "ragium:electric_furnace",
-    "ragium:planter"
+    "ragium:electric_furnace"
   ]
 }

@@ -26,6 +26,8 @@ data object RagiumItems {
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
+        REGISTER.addAlias("mercury_bottle", "thermometer")
+
         REGISTER.register(eventBus)
 
         eventBus.addListener(::modifyComponents)
@@ -68,9 +70,6 @@ data object RagiumItems {
 
     // Advanced
     @JvmField
-    val MERCURY_BOTTLE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("mercury_bottle")
-
-    @JvmField
     val THERMOMETER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("thermometer") { it.rarity(Rarity.UNCOMMON) }
 
     // Elite
@@ -85,6 +84,9 @@ data object RagiumItems {
 
     @JvmField
     val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit") { it.rarity(Rarity.RARE) }
+
+    @JvmField
+    val LASER_EMITTER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("laser_emitter")
 
     // Ultimate
     @JvmField

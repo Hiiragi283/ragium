@@ -21,7 +21,7 @@ object RagiumAdvancementKeys {
 
     // Advanced
     @JvmStatic
-    val THERMOMETER: AdvancementKey = create("thermometer")
+    val HEATING_COIL: AdvancementKey = create("heating_coil")
 
     @JvmStatic
     val ADVANCED_RAGI_ALLOY: AdvancementKey = create(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)

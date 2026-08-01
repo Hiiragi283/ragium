@@ -668,6 +668,17 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 count = 2
             }
         }.save(exporter)
+
+        // Laser Emitter
+        HTShapedRecipeBuilder.create {
+            +" AB"
+            +"ACA"
+            +"CA "
+            define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.STAINLESS_STEEL) }
+            define('B') { +tag(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) }
+            define('C') { +Tags.Items.GLASS_BLOCKS_COLORLESS }
+            +RagiumItems.LASER_EMITTER.toStack()
+        }.save(exporter)
     }
 
     //    The End    //

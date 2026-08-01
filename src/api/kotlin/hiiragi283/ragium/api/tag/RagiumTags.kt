@@ -14,7 +14,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 
-object RagiumTags {
+data object RagiumTags {
     data class TieredTags<T : Any>(
         val base: TagKey<T>,
         val basic: TagKey<T>,
@@ -48,22 +48,51 @@ object RagiumTags {
 
     //    Blocks    //
 
-    object Blocks {
+    data object BlockItems {
+        val allTags: List<BlockItemTagKey> field: MutableList<BlockItemTagKey> = mutableListOf()
+
+        // Generators
+
+        // Machines
         @JvmField
-        val DEVICES: TieredTags<Block> = TieredTags(Registries.BLOCK, RagiumAPI.id("devices"))
+        val MACHINES: BlockItemTagKey = mod("machines")
 
         @JvmField
-        val GENERATORS: TieredTags<Block> = TieredTags(Registries.BLOCK, RagiumAPI.id("generators"))
+        val MACHINES_MECHANICAL: BlockItemTagKey = mod("machines", "mechanical")
 
         @JvmField
-        val MACHINES: TieredTags<Block> = TieredTags(Registries.BLOCK, RagiumAPI.id("machines"))
+        val MACHINES_HEAT: BlockItemTagKey = mod("machines", "heat")
 
         @JvmField
-        val STORAGES: TagKey<Block> = mod("storages")
+        val MACHINES_CHEMICAL: BlockItemTagKey = mod("machines", "chemical")
 
         @JvmField
-        val STORAGES_CREATIVE: TagKey<Block> = mod("storages", "creative")
+        val MACHINES_BIO: BlockItemTagKey = mod("machines", "bio")
 
+        @JvmField
+        val MACHINES_COLD: BlockItemTagKey = mod("machines", "cold")
+
+        @JvmField
+        val MACHINES_ELECTRONICS: BlockItemTagKey = mod("machines", "electronics")
+
+        @JvmField
+        val MACHINES_ARCANE: BlockItemTagKey = mod("machines", "arcane")
+
+        // Storages
+        @JvmField
+        val STORAGES: BlockItemTagKey = mod("storages")
+
+        @JvmField
+        val STORAGES_CREATIVE: BlockItemTagKey = mod("storages", "creative")
+
+        @JvmStatic
+        private fun common(vararg path: String): BlockItemTagKey = BlockItemTagKey(HTConst.COMMON.toId(*path)).also(allTags::add)
+
+        @JvmStatic
+        private fun mod(vararg path: String): BlockItemTagKey = BlockItemTagKey(RagiumAPI.id(*path)).also(allTags::add)
+    }
+
+    data object Blocks {
         @JvmStatic
         private fun common(vararg path: String): TagKey<Block> = Registries.BLOCK.createTagKey(HTConst.COMMON.toId(*path))
 
@@ -73,7 +102,7 @@ object RagiumTags {
 
     //    Fluids    //
 
-    object Fluids {
+    data object Fluids {
         // Common
         @JvmField
         val ALCOHOL: TagKey<Fluid> = common("alcohol")
@@ -97,27 +126,12 @@ object RagiumTags {
 
     //    Items    //
 
-    object Items {
+    data object Items {
         @JvmField
         val EXPLOSIVES: TieredTags<Item> = TieredTags(Registries.ITEM, RagiumAPI.id("explosives"))
 
         @JvmField
         val FOODS_CAN: TagKey<Item> = common("foods", "can")
-
-        @JvmField
-        val DEVICES: TieredTags<Item> = TieredTags(Registries.ITEM, RagiumAPI.id("devices"))
-
-        @JvmField
-        val GENERATORS: TieredTags<Item> = TieredTags(Registries.ITEM, RagiumAPI.id("generators"))
-
-        @JvmField
-        val MACHINES: TieredTags<Item> = TieredTags(Registries.ITEM, RagiumAPI.id("machines"))
-
-        @JvmField
-        val STORAGES: TagKey<Item> = mod("storages")
-
-        @JvmField
-        val STORAGES_CREATIVE: TagKey<Item> = mod("storages", "creative")
 
         // Integration
         @JvmField

@@ -1,11 +1,11 @@
 {
   "parent": "ragium:alloy_smelter",
   "criteria": {
-    "has_thermometer": {
+    "has_heating_coil": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:thermometer"
+            "items": "ragium:heating_coil"
           }
         ]
       },
@@ -14,20 +14,20 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.thermometer.desc"
+      "translate": "advancement.ragium.heating_coil.desc"
     },
     "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:thermometer"
+      "id": "ragium:heating_coil"
     },
     "title": {
-      "translate": "advancement.ragium.thermometer.title"
+      "translate": "advancement.ragium.heating_coil.title"
     }
   },
   "requirements": [
     [
-      "has_thermometer"
+      "has_heating_coil"
     ]
   ],
   "sends_telemetry_event": true

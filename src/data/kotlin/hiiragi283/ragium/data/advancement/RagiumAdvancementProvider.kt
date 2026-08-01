@@ -81,15 +81,15 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             inventory("has_adv_ragi_alloy") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) }
         }.save(exporter)
 
-        HTAdvancementBuilder.create(RagiumAdvancementKeys.THERMOMETER) {
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.HEATING_COIL) {
             +RagiumAdvancementKeys.ALLOY_SMELTER
             display {
-                +RagiumItems.THERMOMETER.toStack()
+                +RagiumBlocks.HEATING_COIL.toStack()
                 type = AdvancementType.GOAL
             }
-            inventory("has_thermometer") { +ItemPredicate.Builder.item().of(RagiumItems.THERMOMETER) }
+            inventory("has_heating_coil") { +ItemPredicate.Builder.item().of(RagiumBlocks.HEATING_COIL) }
         }.save(exporter)
-        createSimple(RagiumAdvancementKeys.REFINERY, RagiumAdvancementKeys.THERMOMETER, RagiumBlocks.REFINERY)
+        createSimple(RagiumAdvancementKeys.REFINERY, RagiumAdvancementKeys.HEATING_COIL, RagiumBlocks.REFINERY)
         HTAdvancementBuilder.create(RagiumAdvancementKeys.PLASTIC) {
             +RagiumAdvancementKeys.REFINERY
             display { +getItem(CommonParts.PLATE, CommonMaterialKeys.PLASTIC).toStack() }
@@ -101,7 +101,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             inventory("has_silicon") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.DUST, CommonMaterialKeys.SILICON) }
         }.save(exporter)
 
-        createSimple(RagiumAdvancementKeys.PYROLYZER, RagiumAdvancementKeys.THERMOMETER, RagiumBlocks.PYROLYZER)
+        createSimple(RagiumAdvancementKeys.PYROLYZER, RagiumAdvancementKeys.HEATING_COIL, RagiumBlocks.PYROLYZER)
         HTAdvancementBuilder.create(RagiumAdvancementKeys.CRIMSON_CRYSTAL) {
             +RagiumAdvancementKeys.PYROLYZER
             display { +getItem(CommonParts.GEM, HCMaterialKeys.CRIMSON_CRYSTAL).toStack() }

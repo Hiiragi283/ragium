@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.RegistryBuilder
 /**
  * @see hiiragi283.core.api.HCRegistries
  */
-object RagiumRegistries {
+data object RagiumRegistries {
     @JvmStatic
     private fun <T : Any> createRegistry(key: ResourceKey<Registry<T>>): Registry<T> = RegistryBuilder<T>(key)
         .sync(true)
@@ -17,7 +17,7 @@ object RagiumRegistries {
 
     //    Keys    //
 
-    object Keys {
+    data object Keys {
         @JvmStatic
         private fun <T : Any> createKey(path: String): ResourceKey<Registry<T>> = ResourceKey.createRegistryKey(id(path))
 

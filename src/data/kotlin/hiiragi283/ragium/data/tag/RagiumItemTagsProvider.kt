@@ -1,11 +1,14 @@
 package hiiragi283.ragium.data.tag
 
+import hiiragi283.core.api.data.tag.HTTagBuilder
+import hiiragi283.core.api.data.tag.HTTagDependType
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.support.data.tag.HTItemTagsProvider
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.tag.BlockItemTagKey
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.integration.mek.RagiumMekItems
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -35,12 +38,7 @@ class RagiumItemTagsProvider(
 
     override fun appendTags(registries: HolderLookup.Provider) {
         // Copy
-        copy(RagiumTags.Blocks.DEVICES, RagiumTags.Items.DEVICES)
-        copy(RagiumTags.Blocks.GENERATORS, RagiumTags.Items.GENERATORS)
-        copy(RagiumTags.Blocks.MACHINES, RagiumTags.Items.MACHINES)
-
-        copy(RagiumTags.Blocks.STORAGES, RagiumTags.Items.STORAGES)
-        copy(RagiumTags.Blocks.STORAGES_CREATIVE, RagiumTags.Items.STORAGES_CREATIVE)
+        RagiumTags.BlockItems.allTags.forEach(::copy)
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             tags(Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)
@@ -76,11 +74,9 @@ class RagiumItemTagsProvider(
         tags(MekanismTags.Items.ENRICHED, RagiumTags.Items.ENRICHED_RAGINITE).add(RagiumMekItems.ENRICHED_RAGINITE)
     }
 
-    private fun copy(blockTags: RagiumTags.TieredTags<Block>, itemTags: RagiumTags.TieredTags<Item>) {
-        copy(blockTags.base, itemTags.base)
-        copy(blockTags.basic, itemTags.basic)
-        copy(blockTags.advanced, itemTags.advanced)
-        copy(blockTags.elite, itemTags.elite)
-        copy(blockTags.ultimate, itemTags.ultimate)
+    private fun copy(tagKey: BlockItemTagKey) {
+        copy(tagKey.block, tagKey.item)
     }
+
+    fun HTTagBuilder<Item>.addTag(tagKey: BlockItemTagKey, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<Item> = this.addTag(tagKey.item, type)
 }

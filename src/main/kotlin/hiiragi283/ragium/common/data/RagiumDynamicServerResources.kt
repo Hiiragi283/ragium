@@ -33,16 +33,12 @@ import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.part.RagiumParts
 import hiiragi283.ragium.setup.RagiumFluids
-import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.tags.TagKey
 import net.minecraft.util.Mth
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import net.neoforged.neoforge.registries.datamaps.builtin.Oxidizable
@@ -55,7 +51,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
 
         redox()
 
-        cutWoodFromDefinition()
+        // cutWoodFromDefinition()
         cutBedToPlanks()
         waxing()
 
@@ -192,8 +188,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
         }.save(exporter)
     }
 
-    @JvmStatic
-    private fun cutWoodFromDefinition() {
+    /*private fun cutWoodFromDefinition() {
         for (type: WoodType in WoodTypeRegistry.INSTANCE) {
             val planks: ItemLike = type.getItemOfThis(VanillaWoodChildKeys.PLANKS) ?: continue
             // Stripped Log -> 6x Planks
@@ -353,7 +348,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
                 }.save(exporter)
             }
         }
-    }
+    }*/
 
     @JvmStatic
     private fun cutBedToPlanks() {
