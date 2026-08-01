@@ -32,65 +32,21 @@ import net.neoforged.neoforge.common.Tags
 
 class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
-        refining()
+        bathing()
         mixing()
         washing()
 
         tankInteraction()
     }
 
-    //    Refining    //
+    //    Bathing    //
 
-    private fun refining() {
-        waterRefining()
-        expRefining()
-        eldritchRefining()
+    private fun bathing() {
+        expBathing()
+        eldritchBathing()
     }
 
-    private fun waterRefining() {
-        // Cobblestone -> Mossy
-        HTMixingRecipeBuilder.create {
-            itemIngredient { +Tags.Items.COBBLESTONES_NORMAL }
-            fluidIngredient {
-                water()
-                amount = 250
-            }
-            itemResult { +Items.MOSSY_COBBLESTONE }
-            time /= 2
-        }.save(exporter)
-        // XX Concrete Powder -> XX Concrete
-        // Dirt + Water -> Mud
-        HTMixingRecipeBuilder.create {
-            itemIngredient { +Items.DIRT }
-            fluidIngredient {
-                water()
-                amount = 250
-            }
-            itemResult { +Items.MUD }
-            time /= 2
-        }.save(exporter)
-        // XX Dead Coral -> XX Coral
-        // Sponge -> Wet Sponge
-        HTMixingRecipeBuilder.create {
-            itemIngredient { +Items.SPONGE }
-            fluidIngredient { water() }
-            itemResult { +Items.WET_SPONGE }
-            time /= 2
-        }.save(exporter)
-
-        // Sawdust -> Paper
-        HTMixingRecipeBuilder.create {
-            itemIngredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD) }
-            fluidIngredient {
-                water()
-                amount = 125
-            }
-            itemResult { +Items.PAPER }
-            time /= 2
-        }.save(exporter)
-    }
-
-    private fun expRefining() {
+    private fun expBathing() {
         // Quartz Block -> Ghast Tear
         RagiumRecipeBuilder.bathing {
             itemIngredient { +tag(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ) }
@@ -133,7 +89,7 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
         }.save(exporter)
     }
 
-    private fun eldritchRefining() {
+    private fun eldritchBathing() {
         fun eldritch(multiplier: Int): FluidIngredientBuilder.() -> Unit = {
             +HiiragiCoreTags.Fluids.ELDRITCH
             amount = HTConst.INGOT_AMOUNT * multiplier
@@ -238,6 +194,61 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
                 recipeId suffix "_by_water"
             }.save(exporter)
         }
+
+        // Blueprint
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Items.PAPER }
+            fluidIngredient {
+                +HCFluids.DYES[HTDefaultColor.BLUE]
+                amount = 250
+            }
+            itemResult { +HCItems.BLUEPRINT }
+        }.save(exporter)
+
+        waterMixing()
+    }
+
+    private fun waterMixing() {
+        // Cobblestone -> Mossy
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Tags.Items.COBBLESTONES_NORMAL }
+            fluidIngredient {
+                water()
+                amount = 250
+            }
+            itemResult { +Items.MOSSY_COBBLESTONE }
+            time /= 2
+        }.save(exporter)
+        // XX Concrete Powder -> XX Concrete
+        // Dirt + Water -> Mud
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Items.DIRT }
+            fluidIngredient {
+                water()
+                amount = 250
+            }
+            itemResult { +Items.MUD }
+            time /= 2
+        }.save(exporter)
+        // XX Dead Coral -> XX Coral
+        // Sponge -> Wet Sponge
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Items.SPONGE }
+            fluidIngredient { water() }
+            itemResult { +Items.WET_SPONGE }
+            time /= 2
+        }.save(exporter)
+
+        // Sawdust -> Paper
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD) }
+            fluidIngredient {
+                water()
+                amount = 125
+            }
+            itemResult { +Items.PAPER }
+            time /= 2
+        }.save(exporter)
     }
 
     //    Washing    //

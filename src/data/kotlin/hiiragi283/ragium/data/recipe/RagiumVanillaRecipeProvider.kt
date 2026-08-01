@@ -18,12 +18,9 @@ import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCDataComponents
-import hiiragi283.core.setup.HCFluids
-import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.crafting.HTBatteryCombiningRecipe
 import hiiragi283.ragium.common.crafting.HTTankCombiningRecipe
-import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -43,19 +40,15 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
 
-class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
-        parts()
-
-        // Blueprint
-        HTMixingRecipeBuilder.create {
-            itemIngredient { +Items.PAPER }
-            fluidIngredient {
-                +HCFluids.DYES[HTDefaultColor.BLUE]
-                amount = 250
-            }
-            itemResult { +HCItems.BLUEPRINT }
+        // Heating Coil
+        HTShapedRecipeBuilder.create {
+            hollow()
+            define('A') { +tag(CommonTagPrefixes.ROD, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) }
+            +RagiumBlocks.HEATING_COIL.toStack()
         }.save(exporter)
+
         // Blank Disc
         HTShapedRecipeBuilder.create {
             +" A "
@@ -71,39 +64,30 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
             result { +RagiumItems.ELECTRIC_IGNITER }
         }.save(exporter)
 
-        // Loot Ticket
-        lootTickets()
-
         machines()
-        devices()
         storages()
+
+        lootTickets()
     }
 
-    private fun parts() {
-        // Heating Coil
-        HTShapedRecipeBuilder.create {
-            hollow()
-            define('A') { +tag(CommonTagPrefixes.ROD, VanillaMaterialKeys.COPPER) }
-            +RagiumBlocks.HEATING_COIL.toStack()
-        }.save(exporter)
-    }
+    override fun getName(): String = "Vanilla Recipes"
 
     //    Machine    //
 
     private fun machines() {
         // Basic
-        basic(RagiumBlocks.ALLOY_SMELTER) { +Items.FURNACE }
-        basic(RagiumBlocks.ASSEMBLER) { +Items.CRAFTER }
-        basic(RagiumBlocks.AUTO_CHISEL) { +Items.STONECUTTER }
-        basic(RagiumBlocks.COMPRESSOR) { +Items.PISTON }
-        basic(RagiumBlocks.CRUSHER) { +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND) }
-        basic(RagiumBlocks.CUTTING_MACHINE) { +Items.IRON_AXE }
-        basic(RagiumBlocks.ELECTRIC_FURNACE) { +Items.FURNACE }
-        basic(RagiumBlocks.PLANTER) { +Tags.Items.GLASS_BLOCKS }
+        mechanical(RagiumBlocks.ALLOY_SMELTER) { +Items.FURNACE }
+        mechanical(RagiumBlocks.ASSEMBLER) { +Items.CRAFTER }
+        mechanical(RagiumBlocks.AUTO_CHISEL) { +Items.STONECUTTER }
+        mechanical(RagiumBlocks.COMPRESSOR) { +Items.PISTON }
+        mechanical(RagiumBlocks.CRUSHER) { +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND) }
+        mechanical(RagiumBlocks.CUTTING_MACHINE) { +Items.IRON_AXE }
+        mechanical(RagiumBlocks.ELECTRIC_FURNACE) { +Items.FURNACE }
+        mechanical(RagiumBlocks.PLANTER) { +Tags.Items.GLASS_BLOCKS }
         // Heat
-        advanced(RagiumBlocks.FREEZER, HCMaterialKeys.AZURE_STEEL) { +Items.SNOW_BLOCK }
-        advanced(RagiumBlocks.MELTER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { +Items.BLAST_FURNACE }
-        advanced(RagiumBlocks.PYROLYZER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { +Items.NETHER_BRICKS }
+        cold(RagiumBlocks.FREEZER) { +Items.SNOW_BLOCK }
+        heat(RagiumBlocks.MELTER) { +Items.BLAST_FURNACE }
+        heat(RagiumBlocks.PYROLYZER) { +Items.NETHER_BRICKS }
         HTShapedRecipeBuilder.create {
             +"ABA"
             +"BCB"
@@ -112,7 +96,7 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
             define('C') { +tag(CommonTagPrefixes.GEAR, VanillaMaterialKeys.DIAMOND) }
             +RagiumBlocks.REFINERY.toStack()
         }.save(exporter)
-        advanced(RagiumBlocks.WASHER, HCMaterialKeys.AZURE_STEEL) { +Items.IRON_BARS }
+        chemical(RagiumBlocks.WASHER) { +Items.IRON_BARS }
         // Elite
         /*HTShapedRecipeBuilder.create) {
             pattern(
@@ -124,10 +108,10 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
             define('C') += CommonTagPrefixes.GEAR to RagiumMaterialKeys.STAINLESS_STEEL
             resultStack += RagiumBlocks.CHEMICAL_WASHER
         }*/
-        elite(RagiumBlocks.BREWERY) { +Items.BREWING_STAND }
-        elite(RagiumBlocks.MIXER) { +Items.COPPER_GRATE }
+        chemical(RagiumBlocks.BREWERY) { +Items.BREWING_STAND }
+        chemical(RagiumBlocks.MIXER) { +Items.COPPER_GRATE }
         // Ultimate
-        ultimate(RagiumBlocks.MASS_FABRICATOR) { +Tags.Items.NETHER_STARS }
+        arcane(RagiumBlocks.MASS_FABRICATOR) { +Tags.Items.NETHER_STARS }
         HTShapedRecipeBuilder.create {
             +"ABA"
             +"BCB"
@@ -138,7 +122,7 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
         }.save(exporter)
     }
 
-    private inline fun basic(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun mechanical(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
         HTShapedRecipeBuilder.create {
             +"AAA"
             +"BCB"
@@ -151,12 +135,12 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
         }.save(exporter)
     }
 
-    private inline fun advanced(block: HTSimpleItemLike, key: HTMaterialKey, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun heat(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
         HTShapedRecipeBuilder.create {
             +"AAA"
             +"BCB"
             +"DDD"
-            define('A') { +tag(CommonTagPrefixes.INGOT, key) }
+            define('A') { +tag(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) }
             define('B', builderAction)
             define('C') { +RagiumBlocks.HEATING_COIL }
             define('D') { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL) }
@@ -164,7 +148,7 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
         }.save(exporter)
     }
 
-    private inline fun elite(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun chemical(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
         HTShapedRecipeBuilder.create {
             +"AAA"
             +"BCB"
@@ -177,7 +161,33 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
         }.save(exporter)
     }
 
-    private inline fun ultimate(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun cold(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+        HTShapedRecipeBuilder.create {
+            +"AAA"
+            +"BCB"
+            +"DDD"
+            define('A') { +tag(CommonTagPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL) }
+            define('B', builderAction)
+            define('C') { +Items.PACKED_ICE }
+            define('D') { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL) }
+            +block.toStack()
+        }.save(exporter)
+    }
+
+    private inline fun electronics(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+        HTShapedRecipeBuilder.create {
+            +"AAA"
+            +"BCB"
+            +"DDD"
+            define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.STAINLESS_STEEL) }
+            define('B', builderAction)
+            define('C') { +RagiumItems.LASER_EMITTER }
+            define('D') { +tag(CommonTagPrefixes.PLATE, CommonMaterialKeys.ALUMINUM) }
+            +block.toStack()
+        }.save(exporter)
+    }
+
+    private inline fun arcane(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
         HTShapedRecipeBuilder.create {
             +"AAA"
             +"BCB"
@@ -189,10 +199,6 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
             +block.toStack()
         }.save(exporter)
     }
-
-    //    Device    //
-
-    private fun devices() {}
 
     //    Storage    //
 
@@ -256,7 +262,7 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
         }.save(exporter)
     }
 
-    //    Other    //
+    //    Loot Tickets    //
 
     private fun lootTickets() {
         HTShapedRecipeBuilder.create {
@@ -349,6 +355,4 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
             category = RecipeCategory.TOOLS
         }.save(exporter)
     }
-
-    override fun getName(): String = "Utilities Recipes"
 }

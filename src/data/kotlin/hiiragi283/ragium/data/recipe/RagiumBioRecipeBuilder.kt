@@ -18,9 +18,16 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import org.apache.commons.lang3.math.Fraction
 
-class RagiumPlantingRecipeBuilder(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-
+class RagiumBioRecipeBuilder(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
+        planting()
+    }
+
+    override fun getName(): String = "Bio Recipes"
+
+    //    Planting    //
+
+    private fun planting() {
         crops()
         trees()
         plants()
@@ -223,6 +230,4 @@ class RagiumPlantingRecipeBuilder(packOutput: PackOutput, future: CompletableFut
             }
         }
     }
-
-    override fun getName(): String = "Planting Recipes"
 }

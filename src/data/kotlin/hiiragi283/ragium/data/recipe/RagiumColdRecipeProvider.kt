@@ -11,10 +11,14 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Items
 
-class RagiumCoolRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+class RagiumColdRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
         freezing()
     }
+
+    override fun getName(): String = "Cold Recipes"
+
+    //    Freezing    //
 
     private fun freezing() {
         // Water -> Snowball
@@ -64,6 +68,4 @@ class RagiumCoolRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             result { +RagiumItems.MEAT_INGOT }
         }.save(exporter)
     }
-
-    override fun getName(): String = "Cool Recipes"
 }

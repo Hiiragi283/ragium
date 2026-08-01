@@ -9,7 +9,7 @@
       "item": "minecraft:snow_block"
     },
     "C": {
-      "item": "ragium:heating_coil"
+      "item": "minecraft:packed_ice"
     },
     "D": {
       "tag": "c:ingots/steel"
