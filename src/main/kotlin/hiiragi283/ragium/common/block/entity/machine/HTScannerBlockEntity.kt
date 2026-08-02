@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.data.buildDataPatch
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
@@ -83,7 +82,7 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
         override fun findRecipe(level: ServerLevel, pos: BlockPos): ItemStack? {
             if (topInputHandler.isEmpty()) return null
             val resourceIn: HTItemResourceType = downInputHandler.getResource() ?: return null
-            return RagiumItems.MEMORY_DISC.toStack(patch = buildDataPatch { set(RagiumDataComponents.MEMORY_DISC_DATA, resourceIn) })
+            return RagiumDataComponents.createMemoryDisc(resourceIn)
         }
 
         override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: ItemStack): Boolean = outputHandler.canInsert(recipe)

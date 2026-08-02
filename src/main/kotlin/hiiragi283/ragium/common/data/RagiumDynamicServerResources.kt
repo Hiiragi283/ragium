@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.data
 
+import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.color.HTDefaultColor
 import hiiragi283.core.api.color.VanillaColoredCollections
 import hiiragi283.core.api.component1
@@ -8,6 +9,7 @@ import hiiragi283.core.api.data.pack.HTDynamicDataRegister
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterial
+import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTPart
@@ -16,6 +18,7 @@ import hiiragi283.core.api.material.part.property.getScaledAmount
 import hiiragi283.core.api.material.part.property.tagPrefix
 import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTExtraOreResultMap
+import hiiragi283.core.api.material.property.HTMaterialLevel
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.property.getOrDefault
@@ -56,21 +59,15 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
 
         // Material
         for (material: HTMaterial in materialManager) {
-            // Basic
+            // Mechanical
             compressDustToPellet(material)
             compressIngotToPlate(material)
 
             cutBaseToRod(material)
             cutBlockToPlate(material)
-            // Heat
-            meltPrefixToMolten(material, CommonParts.DUST)
-            meltPrefixToMolten(material, CommonParts.GEM)
-            meltPrefixToMolten(material, CommonParts.INGOT)
-            meltPrefixToMolten(material, CommonParts.PEARL)
 
-            implodeDustToPrefix(material, CommonParts.GEM)
-            implodeDustToPrefix(material, CommonParts.PEARL)
-            // Cool
+            electricSmeltDustToIngot(material)
+            // Heat
             freezeMoltenToPrefix(material, CommonParts.DUST)
             freezeMoltenToPrefix(material, CommonParts.INGOT)
             freezeMoltenToPrefix(material, CommonParts.GEM)
@@ -80,8 +77,22 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
             freezeMoltenToPrefix(material, CommonParts.PLATE)
             freezeMoltenToPrefix(material, CommonParts.ROD)
             freezeMoltenToPrefix(material, CommonParts.WIRE)
+
+            meltPrefixToMolten(material, CommonParts.DUST)
+            meltPrefixToMolten(material, CommonParts.GEM)
+            meltPrefixToMolten(material, CommonParts.INGOT)
+            meltPrefixToMolten(material, CommonParts.PEARL)
+
+            implodeDustToPrefix(material, CommonParts.GEM)
+            implodeDustToPrefix(material, CommonParts.PEARL)
             // Chemical
             washCrushedOre(material)
+
+            // Bio
+
+            // Electronics
+
+            // Arcane
         }
     }
 
@@ -439,6 +450,38 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
             }
             recipeId suffix "_from_${partKey.name}"
             time = HCDynamicRecipeProvider.getTimeFromMelting(material, time) ?: return
+        }.save(exporter)
+    }
+
+    //    Smelting    //
+
+    @JvmStatic
+    private fun getItem(part: HTPartKey, key: HTMaterialKey): HTMaterialContents.ItemEntry? = HiiragiCoreAccess.INSTANCE.getMaterialBlockOrItem(part, key)
+
+    /**
+     * @see HCDynamicRecipeProvider.smeltDustToIngot
+     */
+    @JvmStatic
+    private fun electricSmeltDustToIngot(material: HTMaterial) {
+        if (HTMaterialPropertyKeys.DISABLE_SMELTING in material) return
+        val key: HTMaterialKey = material.key
+        val dust: HTMaterialContents.ItemEntry = getItem(CommonParts.DUST, key) ?: return
+        val smeltedMaterial: HTMaterialKey = material[HTMaterialPropertyKeys.SMELTED_TO] ?: key
+        val ingot: HTMaterialContents.ItemEntry = getItem(CommonParts.INGOT, smeltedMaterial) ?: return
+        // 精錬の前後がどちらも既存アイテムの場合はパス
+        if (dust.isBuiltIn && ingot.isBuiltIn) return
+        // Electric Smelting
+        val meltingPoint: HTMaterialLevel = material.getOrDefault(HTMaterialPropertyKeys.MELTING_POINT)
+        val time: Int = when (meltingPoint) {
+            HTMaterialLevel.HIGH -> 20 * 20
+            HTMaterialLevel.HIGHEST -> 20 * 30
+            else -> return
+        }
+        RagiumRecipeBuilder.smelting {
+            ingredient { +dust }
+            result { +ingot }
+            this.time = time
+            recipeId suffix "_from_${CommonParts.DUST.name}"
         }.save(exporter)
     }
 

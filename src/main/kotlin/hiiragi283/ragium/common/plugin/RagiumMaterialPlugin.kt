@@ -16,7 +16,6 @@ import hiiragi283.core.api.material.property.setName
 import hiiragi283.core.api.material.property.setTextureSet
 import hiiragi283.core.api.plugin.HTMaterialPlugin
 import hiiragi283.core.api.plugin.HTPlugin
-import hiiragi283.core.api.property.add
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -159,7 +158,6 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             addItemPrefixes(alloySet.minus(CommonParts.WIRE))
             put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.HIGH)
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.HIGH)
-            add(HTMaterialPropertyKeys.DISABLE_SMELTING)
             put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
             setMolten(RagiumFluids.MOLTEN_STAINLESS_STEEL)
 

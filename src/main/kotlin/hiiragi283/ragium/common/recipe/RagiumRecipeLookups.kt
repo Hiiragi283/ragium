@@ -21,8 +21,12 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
+import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.recipe.custom.HTBookMeltingRecipe
+import hiiragi283.ragium.common.recipe.ingredient.HTMemoryDiscIngredient
+import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
+import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -31,6 +35,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
+import net.neoforged.neoforge.common.Tags
 
 data object RagiumRecipeLookups {
     // Mechanical
@@ -127,6 +132,18 @@ data object RagiumRecipeLookups {
         PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
 
         PRINTING.fromRecipeType(RagiumRecipeTypes.PRINTING, identity())
+        PRINTING.addSubLookup {
+            buildMap {
+                for (holder: Holder<Item> in BuiltInRegistries.ITEM.getTagOrEmpty(Tags.Items.MUSIC_DISCS)) {
+                    val item: Item = holder.value()
+                    RagiumRecipeBuilder.printing {
+                        primary { +RagiumItems.BLANK_DISC }
+                        secondary { +HTMemoryDiscIngredient.create { +item } }
+                        result { +item }
+                    }.save(this::put)
+                }
+            }
+        }
 
         ENCHANTING.fromRecipeType(RagiumRecipeTypes.ENCHANTING, identity())
     }

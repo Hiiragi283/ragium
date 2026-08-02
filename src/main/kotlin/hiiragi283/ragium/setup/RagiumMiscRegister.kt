@@ -9,6 +9,7 @@ import hiiragi283.core.api.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.common.recipe.ingredient.HTMemoryDiscIngredient
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
 import net.neoforged.neoforge.registries.NeoForgeRegistries
@@ -77,6 +78,10 @@ internal data object RagiumMiscRegister {
         // Attachment Type
         event.register(NeoForgeRegistries.Keys.ATTACHMENT_TYPES) { helper ->
             helper.register(RagiumAPI.id(RagiumConst.UNIVERSAL_CHEST), RagiumAttachmentTypes.UNIVERSAL_CHEST)
+        }
+        // Ingredient Type
+        event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES) { helper ->
+            helper.register(RagiumAPI.id("memory_disc"), HTMemoryDiscIngredient.TYPE)
         }
 
         // Widget Type
