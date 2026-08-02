@@ -13,12 +13,12 @@ import hiiragi283.ragium.data.model.RagiumBlockStateProvider
 import hiiragi283.ragium.data.model.RagiumItemModelProvider
 import hiiragi283.ragium.data.recipe.RagiumArcaneRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumBasicRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumBioRecipeBuilder
 import hiiragi283.ragium.data.recipe.RagiumChemicalRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumColdRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumFluidRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumHeatRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumMaterialRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumBioRecipeBuilder
 import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProvider
 import hiiragi283.ragium.data.recipe.integration.RagiumAERecipeProvider
 import hiiragi283.ragium.data.recipe.integration.RagiumIERecipeProvider

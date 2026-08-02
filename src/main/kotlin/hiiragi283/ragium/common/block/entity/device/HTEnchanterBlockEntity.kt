@@ -17,13 +17,13 @@ import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.common.recipe.cache.completed.HTEnchantingCompletedRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
 import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
-import hiiragi283.ragium.common.recipe.cache.completed.HTEnchantingCompletedRecipe
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents

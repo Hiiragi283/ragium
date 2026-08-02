@@ -2,6 +2,7 @@
 
 package hiiragi283.ragium.common.data.recipe
 
+import hiiragi283.core.support.data.recipe.HTDoubleItemToItemRecipeBuilder
 import hiiragi283.core.support.data.recipe.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.core.support.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.core.support.data.recipe.HTItemToFluidRecipeBuilder
@@ -18,7 +19,6 @@ import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPrintingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
-import hiiragi283.core.support.data.recipe.HTDoubleItemToItemRecipeBuilder
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract

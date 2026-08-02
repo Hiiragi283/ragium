@@ -9,6 +9,7 @@ import hiiragi283.core.util.HTSpriteRenderHelper
 import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
+import java.util.function.Consumer
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.resources.ResourceLocation
@@ -16,7 +17,6 @@ import net.minecraft.world.item.TooltipFlag
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import org.apache.commons.lang3.math.Fraction
-import java.util.function.Consumer
 
 @OnlyIn(Dist.CLIENT)
 class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) : HTSpriteWidgetRenderer<HTEnergySlotWidget>(gui, widget) {

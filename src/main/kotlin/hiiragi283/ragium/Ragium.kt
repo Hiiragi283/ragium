@@ -2,19 +2,17 @@ package hiiragi283.ragium
 
 import hiiragi283.core.api.data.pack.HTDynamicDatapack
 import hiiragi283.core.api.mod.HTCommonMod
+import hiiragi283.core.common.storage.energy.HTBasicItemEnergyHandler
+import hiiragi283.core.common.storage.fluid.HTBasicItemFluidTank
 import hiiragi283.core.support.capability.HTEnergyCapabilities
 import hiiragi283.core.support.capability.HTItemCapabilities
-import hiiragi283.core.common.storage.energy.HTBasicItemEnergyHandler
 import hiiragi283.core.support.storage.energy.HTInfiniteEnergyHandler
-import hiiragi283.core.common.storage.fluid.HTBasicItemFluidTank
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
-import hiiragi283.ragium.support.storage.fluid.HTInfiniteItemFluidTank
-import hiiragi283.ragium.support.storage.fluid.HTVoidItemFluidTank
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -22,6 +20,8 @@ import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMiscRegister
+import hiiragi283.ragium.support.storage.fluid.HTInfiniteItemFluidTank
+import hiiragi283.ragium.support.storage.fluid.HTVoidItemFluidTank
 import java.util.function.IntSupplier
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType

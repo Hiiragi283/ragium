@@ -15,16 +15,16 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
+import java.util.concurrent.CompletableFuture
+import mekanism.common.tags.MekanismTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import java.util.concurrent.CompletableFuture
-import mekanism.common.tags.MekanismTags
-import net.minecraft.tags.TagKey
 
 class RagiumItemTagsProvider(
     fileHelper: ExistingFileHelper,

@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.component
 
 import com.mojang.serialization.Codec
 import hiiragi283.core.api.block.entity.HTBlockEntityComponent
+import hiiragi283.core.api.collection.mutableEnumMapOf
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.component.DataComponentGetter
 import hiiragi283.core.api.serialization.value.HTValueInput
@@ -12,7 +13,6 @@ import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import hiiragi283.ragium.support.storage.holder.HTSlotInfoProvider
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
-import java.util.*
 
 /**
  * @see mekanism.common.tile.component.TileComponentConfig
@@ -29,7 +29,7 @@ class HTSlotInfoComponent(owner: HTBlockEntity) :
         owner.addComponent(this)
     }
 
-    private val slotInfoCache: MutableMap<Direction, HTSlotInfo> = EnumMap(Direction::class.java)
+    private val slotInfoCache: MutableMap<Direction, HTSlotInfo> = mutableEnumMapOf()
 
     //    HTBlockEntityComponent    //
 

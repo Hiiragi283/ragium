@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
+import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
-import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.core.support.recipe.base.HTBasicItemToMultiItemRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes

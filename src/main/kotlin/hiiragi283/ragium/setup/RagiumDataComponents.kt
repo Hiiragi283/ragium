@@ -6,10 +6,10 @@ import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.network.HTStreamCodecs
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
+import java.util.function.IntSupplier
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.codec.ByteBufCodecs
 import org.apache.commons.lang3.math.Fraction
-import java.util.function.IntSupplier
 
 data object RagiumDataComponents {
     @JvmField

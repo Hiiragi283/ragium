@@ -7,14 +7,14 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.BlockItemTagKey
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumBlocks
+import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
+import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import java.util.concurrent.CompletableFuture
-import net.minecraft.tags.TagKey
 
 class RagiumBlockTagsProvider(
     fileHelper: ExistingFileHelper,

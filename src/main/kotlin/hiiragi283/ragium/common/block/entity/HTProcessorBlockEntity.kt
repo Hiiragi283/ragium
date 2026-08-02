@@ -19,9 +19,9 @@ import hiiragi283.core.support.gui.sync.HTIntSyncSlot
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.energy.HTMachineEnergyHandler
+import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntityType

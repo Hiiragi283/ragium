@@ -6,8 +6,8 @@ import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.setup.RagiumDataComponents
-import net.minecraft.core.component.DataComponentMap
 import java.util.function.IntSupplier
+import net.minecraft.core.component.DataComponentMap
 
 class HTStorageCapacityComponent(owner: HTBlockEntity) : HTBlockEntityComponent {
     init {

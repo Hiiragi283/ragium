@@ -28,11 +28,11 @@ import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.support.storage.energy.HTBasicEnergyHandler
 import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
+import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.support.storage.energy.HTVariableEnergyHandler
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
-import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel

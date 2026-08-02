@@ -6,10 +6,10 @@ import hiiragi283.core.support.data.tag.HTFluidTagsProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumFluids
+import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import java.util.concurrent.CompletableFuture
 
 class RagiumFluidTagsProvider(
     fileHelper: ExistingFileHelper,

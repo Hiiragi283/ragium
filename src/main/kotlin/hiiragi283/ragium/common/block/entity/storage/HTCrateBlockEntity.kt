@@ -8,11 +8,11 @@ import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.support.storage.item.HTItemStackResourceSlot
+import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import hiiragi283.ragium.support.storage.item.HTVariableItemSlot
-import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState

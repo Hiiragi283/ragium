@@ -5,8 +5,8 @@ import hiiragi283.core.api.config.definePositiveInt
 import hiiragi283.core.api.config.translation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.text.RagiumTranslation
-import net.neoforged.neoforge.common.ModConfigSpec
 import java.util.function.IntSupplier
+import net.neoforged.neoforge.common.ModConfigSpec
 
 @JvmRecord
 data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: IntSupplier) {

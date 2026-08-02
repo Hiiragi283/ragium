@@ -25,13 +25,13 @@ import hiiragi283.core.client.integration.jei.category.base.HTDoubleItemToItemRe
 import hiiragi283.core.client.integration.jei.category.base.HTItemAndFluidToItemRecipeCategory
 import hiiragi283.core.client.integration.jei.category.base.HTItemOrFluidRecipeCategory
 import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
-import hiiragi283.core.support.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.core.support.recipe.base.HTBasicDoubleItemToItemRecipe
 import hiiragi283.core.support.recipe.base.HTBasicItemAndFluidToItemRecipe
 import hiiragi283.core.support.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.core.support.recipe.base.HTBasicItemToItemRecipe
 import hiiragi283.core.support.recipe.base.HTBasicItemToMultiItemRecipe
+import hiiragi283.core.support.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
@@ -54,6 +54,7 @@ import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
+import kotlin.streams.asSequence
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
@@ -63,7 +64,6 @@ import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
-import kotlin.streams.asSequence
 
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
