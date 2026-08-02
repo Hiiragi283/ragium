@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTItemAndFluidToItemRecipe
@@ -11,6 +12,7 @@ import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.registry.HTSimpleDeferredItem
 import hiiragi283.core.api.registry.createKey
 import hiiragi283.core.api.util.identity
+import hiiragi283.core.common.recipe.VanillaRecipeLookups
 import hiiragi283.core.support.recipe.cache.HTCompoundRecipeLookup
 import hiiragi283.core.support.recipe.cache.HTVanillaRecipeLookup
 import hiiragi283.core.support.recipe.cache.fromRecipeType
@@ -43,6 +45,9 @@ data object RagiumRecipeLookups {
 
     @JvmField
     val CUTTING: HTCompoundRecipeLookup<HTItemToMultiItemRecipe> = create(RagiumConst.CUTTING)
+
+    @JvmField
+    val SMELTING: HTCompoundRecipeLookup<HTItemToItemRecipe> = create(HTConst.SMELTING)
 
     // Heat
     @JvmField
@@ -109,6 +114,8 @@ data object RagiumRecipeLookups {
         ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING, identity())
         COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING, identity())
         CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING, identity())
+        SMELTING.addSubLookup(VanillaRecipeLookups.SMELTING)
+        SMELTING.fromRecipeType(RagiumRecipeTypes.SMELTING, identity())
 
         FREEZING.fromRecipeType(RagiumRecipeTypes.FREEZING, identity())
         MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())

@@ -196,6 +196,7 @@
   "recipe_type.ragium.printing": "刻印",
   "recipe_type.ragium.pyrolyzing": "熱分解",
   "recipe_type.ragium.refining": "精製",
+  "recipe_type.ragium.smelting": "電気精錬",
   "recipe_type.ragium.washing": "洗浄",
   "tag.fluid.c.alcohol": "アルコール",
   "tag.fluid.c.ammonia": "アンモニア",

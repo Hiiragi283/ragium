@@ -391,7 +391,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
         val part: HTPart = partManager[partKey] ?: return
         val prefix: HTTagPrefix = part.tagPrefix ?: return
         // 液体材料を取得
-        val molten: HTFluidContent = material[RagiumMaterialPropertyKeys.MOLTEN_FLUID] ?: return
+        val molten: HTFluidContent = material[RagiumMaterialPropertyKeys.SOLIDIFY_FROM] ?: return
         // レシピを登録
         RagiumRecipeBuilder.freezing {
             fluidIngredient {
@@ -429,7 +429,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
         // 素材のプロパティから液体材料を取得
         val fluidAmount: Int = part.getScaledAmount(material.getOrDefault(RagiumMaterialPropertyKeys.DEFAULT_FLUID_AMOUNT), material).toInt()
         // 完成品を取得
-        val molten: HTFluidContent = material[RagiumMaterialPropertyKeys.MOLTEN_FLUID] ?: return
+        val molten: HTFluidContent = material[RagiumMaterialPropertyKeys.MELT_TO] ?: return
         // レシピを登録
         RagiumRecipeBuilder.melting {
             ingredient { +tag(prefix, material.key) }

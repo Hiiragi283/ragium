@@ -19,7 +19,13 @@ data object RagiumMaterialPropertyKeys {
      * @since 21.1.1.0
      */
     @JvmField
-    val MOLTEN_FLUID: HTPropertyKey<HTFluidContent?> = HTPropertyKey.createNullable(RagiumAPI.id("molten_fluid"))
+    val MELT_TO: HTPropertyKey<HTFluidContent?> = HTPropertyKey.createNullable(RagiumAPI.id("melt_to"))
+
+    /**
+     * @since 21.1.1.0
+     */
+    @JvmField
+    val SOLIDIFY_FROM: HTPropertyKey<HTFluidContent?> = HTPropertyKey.createNullable(RagiumAPI.id("solidify_from"))
 
     @JvmField
     val MATTER_VALUE: HTPropertyKey<Int?> = HTPropertyKey.createNullable(RagiumAPI.id("matter_value"))

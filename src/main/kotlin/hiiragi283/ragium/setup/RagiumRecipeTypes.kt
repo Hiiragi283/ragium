@@ -1,5 +1,6 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -19,6 +20,7 @@ import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
+import hiiragi283.ragium.common.recipe.RTSmeltingRecipe
 import net.minecraft.world.item.crafting.Recipe
 
 data object RagiumRecipeTypes {
@@ -40,6 +42,9 @@ data object RagiumRecipeTypes {
 
     @JvmField
     val COMPRESSING: HTRecipeType<HTCompressingRecipe> = create(RagiumConst.COMPRESSING)
+
+    @JvmField
+    val SMELTING: HTRecipeType<RTSmeltingRecipe> = create(HTConst.SMELTING)
 
     // Heat
     @JvmField

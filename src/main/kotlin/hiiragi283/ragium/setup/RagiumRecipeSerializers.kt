@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
+import hiiragi283.ragium.common.recipe.RTSmeltingRecipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
 
@@ -35,15 +36,12 @@ data object RagiumRecipeSerializers {
 
     //    Machine    //
 
-    // Machine - Basic
+    // Mechanical
     @JvmField
     val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = RecipeSerializer(HTAlloyingRecipe.CODEC)
 
     @JvmField
     val ASSEMBLING: RecipeSerializer<HTAssemblingRecipe> = RecipeSerializer(HTAssemblingRecipe.CODEC)
-
-    @JvmField
-    val PRINTING: RecipeSerializer<HTPrintingRecipe> = RecipeSerializer(HTPrintingRecipe.CODEC)
 
     @JvmField
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = RecipeSerializer(HTCuttingRecipe.CODEC)
@@ -52,9 +50,9 @@ data object RagiumRecipeSerializers {
     val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = RecipeSerializer(HTCompressingRecipe.CODEC)
 
     @JvmField
-    val PLANTING: RecipeSerializer<RTPlantingRecipe> = RecipeSerializer(RTPlantingRecipe.CODEC)
+    val SMELTING: RecipeSerializer<RTSmeltingRecipe> = RecipeSerializer(RTSmeltingRecipe.CODEC)
 
-    // Machine - Advanced
+    // Heat
     @JvmField
     val FREEZING: RecipeSerializer<HTFreezingRecipe> = RecipeSerializer(HTFreezingRecipe.CODEC)
 
@@ -70,10 +68,7 @@ data object RagiumRecipeSerializers {
     @JvmField
     val REFINING: RecipeSerializer<HTRefiningRecipe> = RecipeSerializer(HTRefiningRecipe.CODEC)
 
-    @JvmField
-    val WASHING: RecipeSerializer<HTWashingRecipe> = RecipeSerializer(HTWashingRecipe.CODEC)
-
-    // Machine - Elite
+    // Chemical
     @JvmField
     val BATHING: RecipeSerializer<HTBathingRecipe> = RecipeSerializer(HTBathingRecipe.CODEC)
 
@@ -83,7 +78,18 @@ data object RagiumRecipeSerializers {
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = RecipeSerializer(HTMixingRecipe.CODEC)
 
-    // Device - Ultimate
+    @JvmField
+    val WASHING: RecipeSerializer<HTWashingRecipe> = RecipeSerializer(HTWashingRecipe.CODEC)
+
+    // Bio
+    @JvmField
+    val PLANTING: RecipeSerializer<RTPlantingRecipe> = RecipeSerializer(RTPlantingRecipe.CODEC)
+
+    // Electronics
+    @JvmField
+    val PRINTING: RecipeSerializer<HTPrintingRecipe> = RecipeSerializer(HTPrintingRecipe.CODEC)
+
+    // Arcane
     @JvmField
     val HOLDER_ENCHANTING: RecipeSerializer<RTEnchantingRecipe> = RecipeSerializer(RTEnchantingRecipe.CODEC)
 }

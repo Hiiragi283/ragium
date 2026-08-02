@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.HCRegistries
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.gui.widget.HTWidgetType
 import hiiragi283.core.api.item.HTCreativeModeTabHelper
 import hiiragi283.core.api.recipe.HTRecipeType
@@ -45,19 +46,25 @@ internal data object RagiumMiscRegister {
 
             helper.register(RagiumAPI.id(RagiumConst.ALLOYING), RagiumRecipeSerializers.ALLOYING)
             helper.register(RagiumAPI.id(RagiumConst.ASSEMBLING), RagiumRecipeSerializers.ASSEMBLING)
-            helper.register(RagiumAPI.id(RagiumConst.PRINTING), RagiumRecipeSerializers.PRINTING)
             helper.register(RagiumAPI.id(RagiumConst.CUTTING), RagiumRecipeSerializers.CUTTING)
             helper.register(RagiumAPI.id(RagiumConst.COMPRESSING), RagiumRecipeSerializers.COMPRESSING)
-            helper.register(RagiumAPI.id(RagiumConst.PLANTING), RagiumRecipeSerializers.PLANTING)
+            helper.register(RagiumAPI.id(HTConst.SMELTING), RagiumRecipeSerializers.SMELTING)
+
             helper.register(RagiumAPI.id(RagiumConst.FREEZING), RagiumRecipeSerializers.FREEZING)
             helper.register(RagiumAPI.id(RagiumConst.IMPLODING), RagiumRecipeSerializers.IMPLODING)
             helper.register(RagiumAPI.id(RagiumConst.MELTING), RagiumRecipeSerializers.MELTING)
             helper.register(RagiumAPI.id(RagiumConst.PYROLYZING), RagiumRecipeSerializers.PYROLYZING)
             helper.register(RagiumAPI.id(RagiumConst.REFINING), RagiumRecipeSerializers.REFINING)
-            helper.register(RagiumAPI.id(RagiumConst.WASHING), RagiumRecipeSerializers.WASHING)
+
             helper.register(RagiumAPI.id(RagiumConst.BATHING), RagiumRecipeSerializers.BATHING)
             helper.register(RagiumAPI.id(RagiumConst.CHEMICAL_REACTING), RagiumRecipeSerializers.CHEMICAL_REACTING)
             helper.register(RagiumAPI.id(RagiumConst.MIXING), RagiumRecipeSerializers.MIXING)
+            helper.register(RagiumAPI.id(RagiumConst.WASHING), RagiumRecipeSerializers.WASHING)
+
+            helper.register(RagiumAPI.id(RagiumConst.PLANTING), RagiumRecipeSerializers.PLANTING)
+
+            helper.register(RagiumAPI.id(RagiumConst.PRINTING), RagiumRecipeSerializers.PRINTING)
+
             helper.register(RagiumAPI.id(RagiumConst.ENCHANTING, "holder"), RagiumRecipeSerializers.HOLDER_ENCHANTING)
         }
         // Recipe Type

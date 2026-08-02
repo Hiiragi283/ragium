@@ -196,6 +196,7 @@
   "recipe_type.ragium.printing": "Printing",
   "recipe_type.ragium.pyrolyzing": "Pyrolyzing",
   "recipe_type.ragium.refining": "Refining",
+  "recipe_type.ragium.smelting": "Electric Smelting",
   "recipe_type.ragium.washing": "Washing",
   "tag.fluid.c.alcohol": "Alcohol",
   "tag.fluid.c.ammonia": "Ammonia",

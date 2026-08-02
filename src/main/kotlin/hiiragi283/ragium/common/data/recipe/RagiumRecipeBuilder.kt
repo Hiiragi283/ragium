@@ -2,6 +2,7 @@
 
 package hiiragi283.ragium.common.data.recipe
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.support.data.recipe.HTDoubleItemToItemRecipeBuilder
 import hiiragi283.core.support.data.recipe.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.core.support.data.recipe.HTItemOrFluidRecipeBuilder
@@ -19,6 +20,7 @@ import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPrintingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
+import hiiragi283.ragium.common.recipe.RTSmeltingRecipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -51,6 +53,14 @@ data object RagiumRecipeBuilder {
             time /= 2
             builderAction()
         }
+    }
+
+    @JvmStatic
+    inline fun smelting(builderAction: HTItemToItemRecipeBuilder<RTSmeltingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<RTSmeltingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemToItemRecipeBuilder("electric_${HTConst.SMELTING}", ::RTSmeltingRecipe).apply(builderAction)
     }
 
     //    Heat    //

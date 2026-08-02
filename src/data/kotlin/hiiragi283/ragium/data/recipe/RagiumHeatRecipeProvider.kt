@@ -18,7 +18,6 @@ import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.setup.RagiumFluids
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -273,24 +272,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount = 375
             }
             recipeId suffix "_from_pane"
-        }.save(exporter)
-
-        // Cinnabar -> Mercury
-        HTAlloyingRecipeBuilder.create {
-            result { +RagiumFluids.MERCURY.bucketHolder }
-            ingredient {
-                +baseOrDust(CommonMaterialKeys.CINNABAR)
-                count = 8
-            }
-            ingredient { +Tags.Items.BUCKETS_EMPTY }
-        }.save(exporter)
-        RagiumRecipeBuilder.melting {
-            ingredient { +baseOrDust(CommonMaterialKeys.CINNABAR) }
-            result {
-                +RagiumFluids.MERCURY
-                amount = 125
-            }
-            recipeId suffix "_from_cinnabar"
         }.save(exporter)
     }
 

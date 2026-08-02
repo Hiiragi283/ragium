@@ -33,6 +33,9 @@ data object RagiumRecipeViewerTypes {
     @JvmField
     val CUTTING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 4, 18 * 2)
 
+    @JvmField
+    val SMELTING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.SMELTING, RagiumBlocks.ELECTRIC_FURNACE, 18 * 4)
+
     // Heat
     @JvmField
     val FREEZING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER, 18 * 6)

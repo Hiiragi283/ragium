@@ -92,6 +92,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTDoubleItemToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.ASSEMBLING),
             HTItemToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.COMPRESSING),
             HTCuttingRecipeCategory(guiHelper),
+            HTItemToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.SMELTING),
             // Heat
             HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.FREEZING),
             HTImplodingRecipeCategory(guiHelper),
@@ -130,7 +131,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.CUTTING, RagiumRecipeLookups.CUTTING) {
             it.castRecipe<HTItemToMultiItemRecipe, HTBasicItemToMultiItemRecipe>()?.let(HTRecipeDisplayFactories::itemToMultiItem)
         }
-
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.SMELTING, RagiumRecipeLookups.SMELTING) {
+            it.castRecipe<HTItemToItemRecipe, HTBasicItemToItemRecipe>()?.let(HTRecipeDisplayFactories::itemToItem)
+        }
         // Heat
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.FREEZING, RagiumRecipeLookups.FREEZING) {
             it.castRecipe<HTItemAndFluidToItemRecipe, HTBasicItemAndFluidToItemRecipe>()?.let(RagiumRecipeDisplayFactories::itemAndFluidToItem)
@@ -203,6 +206,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeViewerTypes.ASSEMBLING,
             RagiumRecipeViewerTypes.COMPRESSING,
             RagiumRecipeViewerTypes.CUTTING,
+            RagiumRecipeViewerTypes.SMELTING,
             // Heat
             RagiumRecipeViewerTypes.FREEZING,
             RagiumRecipeViewerTypes.IMPLODING,
