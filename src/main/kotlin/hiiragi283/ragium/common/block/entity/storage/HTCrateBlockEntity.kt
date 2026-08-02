@@ -29,7 +29,7 @@ open class HTCrateBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Bl
         return builder.build()
     }
 
-    protected open fun createSlot(listener: HTContentListener): HTItemStackResourceSlot = HTVariableItemSlot.create(listener, { capacityComponent.getCapacity(RagiumConfig.COMMON.crateCapacity) })
+    protected open fun createSlot(listener: HTContentListener): HTItemStackResourceSlot = HTVariableItemSlot.create(listener, { capacityComponent.getCapacity(RagiumConfig.SERVER.crateCapacity) })
 
     final override fun getAmountView(): HTAmountView = slot
 

@@ -659,7 +659,16 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 count = 4
             }
         }.save(exporter)
-        // Circuit Board + Circuit chip -> Electric Circuit
+        // Silicon Plate -> Circuit Chip
+        RagiumRecipeBuilder.printing {
+            primary { +tag(CommonTagPrefixes.PLATE, CommonMaterialKeys.SILICON) }
+            secondary { +tag(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) }
+            result {
+                +RagiumItems.CIRCUIT_CHIP
+                count = 6
+            }
+        }.save(exporter)
+        // Circuit Board + Circuit Chip -> Electric Circuit
         RagiumRecipeBuilder.assembling {
             result { +RagiumItems.ELECTRIC_CIRCUIT }
             primary { +RagiumItems.CIRCUIT_BOARD }
@@ -679,6 +688,16 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             define('C') { +tag(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) }
             define('D') { +RagiumItems.ELECTRIC_CIRCUIT }
             +RagiumItems.LASER_EMITTER.toStack()
+        }.save(exporter)
+
+        // Memory Disc
+        RagiumRecipeBuilder.assembling {
+            primary { +HiiragiCoreTags.Items.PLASTICS }
+            secondary {
+                +RagiumItems.CIRCUIT_CHIP
+                count = 2
+            }
+            result { +RagiumItems.MEMORY_DISC }
         }.save(exporter)
     }
 

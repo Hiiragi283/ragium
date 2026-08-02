@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState
 abstract class HTMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(type, pos, state),
     HTBlockEntityWithMenu {
-    protected fun getTankCapacity(): IntSupplier = RagiumConfig.COMMON.machine.tankCapacity
+    protected fun getTankCapacity(): IntSupplier = RagiumConfig.SERVER.machine.tankCapacity
 
     fun isActive(): Boolean = isActive(this.blockState)
 

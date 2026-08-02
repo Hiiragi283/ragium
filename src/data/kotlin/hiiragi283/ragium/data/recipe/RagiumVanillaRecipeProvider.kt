@@ -48,12 +48,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) }
             +RagiumBlocks.HEATING_COIL.toStack()
         }.save(exporter)
-        // Cooling Unit
-        HTShapedRecipeBuilder.create {
-            hollow()
-            define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.STAINLESS_STEEL) }
-            +RagiumBlocks.COOLING_UNIT.toStack()
-        }.save(exporter)
 
         // Blank Disc
         HTShapedRecipeBuilder.create {
@@ -81,7 +75,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     //    Machine    //
 
     private fun machines() {
-        // Basic
+        // Mechanical
         mechanical(RagiumBlocks.ALLOY_SMELTER) { +Items.FURNACE }
         mechanical(RagiumBlocks.ASSEMBLER) { +Items.CRAFTER }
         mechanical(RagiumBlocks.AUTO_CHISEL) { +Items.STONECUTTER }
@@ -89,7 +83,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         mechanical(RagiumBlocks.CRUSHER) { +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND) }
         mechanical(RagiumBlocks.CUTTING_MACHINE) { +Items.IRON_AXE }
         mechanical(RagiumBlocks.ELECTRIC_FURNACE) { +Items.FURNACE }
-        mechanical(RagiumBlocks.PLANTER) { +Tags.Items.GLASS_BLOCKS }
         // Heat
         cold(RagiumBlocks.FREEZER) { +Items.SNOW_BLOCK }
         heat(RagiumBlocks.MELTER) { +Items.BLAST_FURNACE }
@@ -102,21 +95,14 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('C') { +tag(CommonTagPrefixes.GEAR, VanillaMaterialKeys.DIAMOND) }
             +RagiumBlocks.REFINERY.toStack()
         }.save(exporter)
-        chemical(RagiumBlocks.WASHER) { +Items.IRON_BARS }
-        // Elite
-        /*HTShapedRecipeBuilder.create) {
-            pattern(
-                "ABA",
-                "BCB",
-            )
-            define('A') += RagiumItems.ELECTRIC_CIRCUIT
-            define('B') += Tags.Items.GLASS_BLOCKS_TINTED
-            define('C') += CommonTagPrefixes.GEAR to RagiumMaterialKeys.STAINLESS_STEEL
-            resultStack += RagiumBlocks.CHEMICAL_WASHER
-        }*/
-        chemical(RagiumBlocks.BREWERY) { +Items.BREWING_STAND }
+        // Chemical
         chemical(RagiumBlocks.MIXER) { +Items.COPPER_GRATE }
-        // Ultimate
+        chemical(RagiumBlocks.WASHER) { +Items.IRON_BARS }
+        // Bio
+        chemical(RagiumBlocks.BREWERY) { +Items.BREWING_STAND }
+        mechanical(RagiumBlocks.PLANTER) { +Tags.Items.GLASS_BLOCKS }
+        // Electronics
+        // Arcane
         arcane(RagiumBlocks.MASS_FABRICATOR) { +Tags.Items.NETHER_STARS }
         HTShapedRecipeBuilder.create {
             +"ABA"
@@ -174,7 +160,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"DDD"
             define('A') { +tag(CommonTagPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL) }
             define('B', builderAction)
-            define('C') { +RagiumBlocks.COOLING_UNIT }
+            define('C') { +RagiumBlocks.HEATING_COIL }
             define('D') { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL) }
             +block.toStack()
         }.save(exporter)

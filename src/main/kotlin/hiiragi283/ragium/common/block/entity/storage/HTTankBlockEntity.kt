@@ -64,7 +64,7 @@ open class HTTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Blo
         return builder.build()
     }
 
-    protected open fun createTank(listener: HTContentListener): HTFluidStackResourceSlot = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.tankCapacity) }
+    protected open fun createTank(listener: HTContentListener): HTFluidStackResourceSlot = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.SERVER.tankCapacity) }
 
     final override fun getAmountView(): HTAmountView = tank
 
@@ -212,6 +212,6 @@ open class HTTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Blo
     //    Simple    //
 
     class Simple(pos: BlockPos, state: BlockState) : HTTankBlockEntity(RagiumBlockEntityTypes.TANK.get(), pos, state) {
-        override fun createTank(listener: HTContentListener): HTBasicFluidTank = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.tankCapacity) }
+        override fun createTank(listener: HTContentListener): HTBasicFluidTank = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.SERVER.tankCapacity) }
     }
 }

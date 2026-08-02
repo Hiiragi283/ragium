@@ -42,5 +42,5 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItem
 
     override fun getLookup(): HTRecipeLookup<HTItemToMultiItemRecipe> = HCRecipeLookups.CRUSHING
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.crusher
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.crusher
 }

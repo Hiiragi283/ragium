@@ -100,5 +100,5 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.freezer
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.freezer
 }

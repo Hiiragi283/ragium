@@ -25,7 +25,7 @@ import net.neoforged.neoforge.common.ItemAbility
  * @see net.minecraft.world.item.FlintAndSteelItem
  */
 class HTElectricIgniterItem(properties: Properties) : HTBatteryItem(properties) {
-    private fun getEnergyUsage(): Int = RagiumConfig.COMMON.electricIgniter.getUsage()
+    private fun getEnergyUsage(): Int = RagiumConfig.SERVER.electricIgniter.getUsage()
 
     private fun canUse(stack: ItemStack): Boolean = HTEnergyCapabilities.getHandler(stack)?.let(::canUse) ?: false
 

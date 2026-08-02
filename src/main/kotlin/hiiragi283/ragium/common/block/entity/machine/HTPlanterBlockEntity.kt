@@ -62,5 +62,5 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockE
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.planter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.planter
 }

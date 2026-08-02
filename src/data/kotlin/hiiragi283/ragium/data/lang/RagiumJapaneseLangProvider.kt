@@ -47,7 +47,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.MEAT_BLOCK, "骨付き肉ブロック")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "骨付き焼肉ブロック")
         add(RagiumBlocks.HEATING_COIL, "加熱コイル")
-        add(RagiumBlocks.COOLING_UNIT, "冷却ユニット")
         add(RagiumBlocks.INDUSTRIAL_TNT, "工業用TNT")
         // Generator
         add(RagiumBlocks.BOILER, "ボイラー")
@@ -147,6 +146,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
         add(RagiumItems.LASER_EMITTER, "レーザー発振器")
+        add(RagiumItems.MEMORY_DISC, "メモリーディスク")
 
         add(RagiumItems.ARTIFICIAL_ARTIFACT, "人工遺物")
 

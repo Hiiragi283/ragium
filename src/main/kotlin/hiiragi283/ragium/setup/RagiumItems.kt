@@ -94,6 +94,9 @@ data object RagiumItems {
     @JvmField
     val LASER_EMITTER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("laser_emitter")
 
+    @JvmField
+    val MEMORY_DISC: HTSimpleDeferredItem = REGISTER.registerSimpleItem("memory_disc")
+
     // Arcane
     @JvmField
     val ARTIFICIAL_ARTIFACT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("artificial_artifact") { it.rarity(Rarity.EPIC) }

@@ -48,7 +48,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.MEAT_BLOCK, "Bone with Meat")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
         add(RagiumBlocks.HEATING_COIL, "Heating Coil")
-        add(RagiumBlocks.COOLING_UNIT, "Cooling Unit")
         add(RagiumBlocks.INDUSTRIAL_TNT, "Industrial TNT")
         // Generator
         add(RagiumBlocks.BOILER, "Boiler")
@@ -148,6 +147,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
         add(RagiumItems.LASER_EMITTER, "Laser Emitter")
+        add(RagiumItems.MEMORY_DISC, "Memory Disc")
 
         add(RagiumItems.ARTIFICIAL_ARTIFACT, "Artificial Artifact")
 

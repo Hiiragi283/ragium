@@ -53,14 +53,6 @@ data object RagiumRecipeBuilder {
         }
     }
 
-    @JvmStatic
-    inline fun printing(builderAction: HTDoubleItemToItemRecipeBuilder<HTPrintingRecipe>.() -> Unit): HTDoubleItemToItemRecipeBuilder<HTPrintingRecipe> {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTDoubleItemToItemRecipeBuilder(RagiumConst.PRINTING, ::HTPrintingRecipe).apply(builderAction)
-    }
-
     //    Heat    //
 
     @JvmStatic
@@ -68,7 +60,7 @@ data object RagiumRecipeBuilder {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemAndFluidToItemRecipeBuilder(RagiumConst.FREEZER, ::HTFreezingRecipe).apply(builderAction)
+        return HTItemAndFluidToItemRecipeBuilder(RagiumConst.FREEZING, ::HTFreezingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -125,6 +117,14 @@ data object RagiumRecipeBuilder {
     //    Bio    //
 
     //    Electronics    //
+
+    @JvmStatic
+    inline fun printing(builderAction: HTDoubleItemToItemRecipeBuilder<HTPrintingRecipe>.() -> Unit): HTDoubleItemToItemRecipeBuilder<HTPrintingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTDoubleItemToItemRecipeBuilder(RagiumConst.PRINTING, ::HTPrintingRecipe).apply(builderAction)
+    }
 
     //    Arcane    //
 }

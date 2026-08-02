@@ -117,5 +117,5 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcess
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.fluidDuplicator
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.fluidDuplicator
 }

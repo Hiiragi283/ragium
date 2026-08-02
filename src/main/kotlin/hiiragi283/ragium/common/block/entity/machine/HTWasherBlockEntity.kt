@@ -102,5 +102,5 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockEn
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.washer
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.washer
 }

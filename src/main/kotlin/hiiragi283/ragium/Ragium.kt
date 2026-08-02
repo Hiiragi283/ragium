@@ -42,7 +42,7 @@ data object Ragium : HTCommonMod() {
         RagiumBlocks.register(eventBus)
         RagiumItems.register(eventBus)
 
-        container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
+        container.registerConfig(ModConfig.Type.SERVER, RagiumConfig.SERVER_SPEC)
 
         HTDynamicDatapack.addDomain(RagiumAPI.MOD_ID)
 
@@ -68,7 +68,7 @@ data object Ragium : HTCommonMod() {
 
         // Item
         helper.registerItemTank(
-            { container: ItemStack -> HTBasicItemFluidTank.create(container, getCapacity(container, RagiumConfig.COMMON.tankCapacity)) },
+            { container: ItemStack -> HTBasicItemFluidTank.create(container, getCapacity(container, RagiumConfig.SERVER.tankCapacity)) },
             RagiumBlocks.TANK,
         )
         helper.registerItemTank(::HTVoidItemFluidTank, RagiumBlocks.VOID_TANK)
@@ -76,14 +76,14 @@ data object Ragium : HTCommonMod() {
 
         helper.registerItem(
             HTEnergyCapabilities,
-            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, getCapacity(container, RagiumConfig.COMMON.batteryCapacity)) },
+            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, getCapacity(container, RagiumConfig.SERVER.batteryCapacity)) },
             RagiumBlocks.BATTERY,
         )
         helper.registerItem(HTEnergyCapabilities, { HTInfiniteEnergyHandler }, RagiumBlocks.CREATIVE_BATTERY)
 
         helper.registerItem(
             HTEnergyCapabilities,
-            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, RagiumConfig.COMMON.electricIgniter.getCapacity()) },
+            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, RagiumConfig.SERVER.electricIgniter.getCapacity()) },
             RagiumItems.ELECTRIC_IGNITER,
         )
         helper.registerItem(

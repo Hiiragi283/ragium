@@ -124,7 +124,7 @@ abstract class HTBatteryBlockEntity<T : HTEnergyHandler>(type: BlockEntityType<*
                     listener.onContentsChanged()
                 },
                 {
-                    capacityComponent.getCapacity(RagiumConfig.COMMON.batteryCapacity)
+                    capacityComponent.getCapacity(RagiumConfig.SERVER.batteryCapacity)
                 },
             )
         }

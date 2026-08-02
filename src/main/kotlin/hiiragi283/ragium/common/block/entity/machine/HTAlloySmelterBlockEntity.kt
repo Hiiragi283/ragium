@@ -126,5 +126,5 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorB
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.alloySmelter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.alloySmelter
 }

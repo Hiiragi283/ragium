@@ -55,5 +55,5 @@ class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStor
 
     override fun getBarWidth(stack: ItemStack): Int = HTStorageHelper.getEnergyBarWidth(stack)
 
-    override fun getBarColor(stack: ItemStack): Int = RagiumConfig.COMMON.energyBarColor.get()
+    override fun getBarColor(stack: ItemStack): Int = RagiumConfig.SERVER.energyBarColor.get()
 }

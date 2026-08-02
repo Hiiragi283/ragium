@@ -70,5 +70,5 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.assembler
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.assembler
 }

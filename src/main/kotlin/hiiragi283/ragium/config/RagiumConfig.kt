@@ -3,31 +3,26 @@ package hiiragi283.ragium.config
 import hiiragi283.core.api.config.definePositiveInt
 import hiiragi283.ragium.api.RagiumConst
 import net.neoforged.neoforge.common.ModConfigSpec
-import org.apache.commons.lang3.tuple.Pair
 
-object RagiumConfig {
+data object RagiumConfig {
     @JvmField
-    val COMMON_SPEC: ModConfigSpec
+    val SERVER_SPEC: ModConfigSpec
 
     @JvmField
-    val COMMON: Common
+    val SERVER: Server
 
     init {
-        val commonPair: Pair<Common, ModConfigSpec> = ModConfigSpec.Builder().configure(::Common)
-        COMMON_SPEC = commonPair.right
-        COMMON = commonPair.left
+        val (server: Server, serverSpec: ModConfigSpec) = ModConfigSpec.Builder().configure(::Server)
+        SERVER_SPEC = serverSpec
+        SERVER = server
     }
 
-    class Common(builder: ModConfigSpec.Builder) {
+    class Server(builder: ModConfigSpec.Builder) {
         // Generator
 
         // Machine
         @JvmField
         val machine: Machine
-
-        // Device
-        @JvmField
-        val device: Device
 
         // Item
         @JvmField
@@ -52,11 +47,6 @@ object RagiumConfig {
             machine = Machine(builder)
             builder.pop()
 
-            builder.push("device")
-            builder.comment("Configurations for Devices")
-            device = Device(builder)
-            builder.pop()
-
             builder.push("item")
             electricIgniter = HTEnergyConfig.createItem(builder, "electric_igniter", 160, 160 * 64)
             builder.pop()
@@ -73,7 +63,7 @@ object RagiumConfig {
             @JvmField
             val tankCapacity: ModConfigSpec.IntValue = builder.definePositiveInt("tank_capacity", 8000)
 
-            // Basic
+            // Mechanical
             @JvmField
             val alloySmelter: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.ALLOY_SMELTER)
 
@@ -95,10 +85,7 @@ object RagiumConfig {
             @JvmField
             val electricFurnace: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.ELECTRIC_FURNACE)
 
-            @JvmField
-            val planter: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.PLANTER)
-
-            // Advanced
+            // Heat
             @JvmField
             val freezer: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.FREEZER)
 
@@ -111,10 +98,7 @@ object RagiumConfig {
             @JvmField
             val refinery: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.REFINERY)
 
-            // Elite
-            @JvmField
-            val brewery: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.BREWERY)
-
+            // Chemical
             @JvmField
             val chemicalBath: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.CHEMICAL_BATH)
 
@@ -127,14 +111,21 @@ object RagiumConfig {
             @JvmField
             val washer: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.WASHER)
 
-            // Ultimate
+            // Bio
+            @JvmField
+            val brewery: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.BREWERY)
+
+            @JvmField
+            val planter: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.PLANTER)
+
+            // Electronics
+
+            // Arcane
             @JvmField
             val fluidDuplicator: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.FLUID_DUPLICATOR, 1024)
 
             @JvmField
             val massFabricator: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.MASS_FABRICATOR, 1024)
         }
-
-        class Device(builder: ModConfigSpec.Builder)
     }
 }

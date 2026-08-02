@@ -19,5 +19,5 @@ class HTFurnaceBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlock
         playSound(SoundEvents.FIRE_EXTINGUISH)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.electricFurnace
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.electricFurnace
 }

@@ -73,5 +73,5 @@ class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToIt
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.massFabricator
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.massFabricator
 }

@@ -112,5 +112,5 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
         override fun isIncomplete(): Boolean = ingredient.hasNoItems()
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.autoChisel
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.autoChisel
 }

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:printing",
+  "primary": {
+    "amount": 1,
+    "items": "#c:plates/silicon"
+  },
+  "result": {
+    "count": 6,
+    "id": "ragium:circuit_chip"
+  },
+  "secondary": {
+    "amount": 1,
+    "items": "#c:gems/ragi_crystal"
+  },
+  "time": 200
+}
