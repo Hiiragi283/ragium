@@ -6,13 +6,13 @@
       "tag": "c:ingots/stainless_steel"
     },
     "B": {
-      "item": "minecraft:iron_bars"
+      "item": "ragium:electric_circuit"
     },
     "C": {
-      "item": "ragium:thermometer"
+      "item": "ragium:laser_emitter"
     },
     "D": {
-      "tag": "c:plates/carbon"
+      "tag": "c:ingots/aluminum"
     }
   },
   "pattern": [
@@ -22,6 +22,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:washer"
+    "id": "ragium:printer"
   }
 }

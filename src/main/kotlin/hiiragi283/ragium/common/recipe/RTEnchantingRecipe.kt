@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -22,7 +21,7 @@ class RTEnchantingRecipe(ingredient: HTItemIngredient, val holder: Holder<Enchan
     HTSerializableRecipe<HTEnchantingRecipe.Input> {
     companion object {
         @JvmField
-        val CODEC: MapCodec<RTEnchantingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<RTEnchantingRecipe> = HTCodecs.recordMap { instance ->
             instance
                 .group(
                     HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(RTEnchantingRecipe::ingredient),

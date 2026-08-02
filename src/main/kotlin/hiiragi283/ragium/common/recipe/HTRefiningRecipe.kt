@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
@@ -39,7 +38,7 @@ class HTRefiningRecipe(
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTRefiningRecipe> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<HTRefiningRecipe> = HTCodecs.recordMap { instance ->
             instance
                 .group(
                     HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTRefiningRecipe::ingredient),

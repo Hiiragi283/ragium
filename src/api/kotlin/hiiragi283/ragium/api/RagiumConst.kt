@@ -40,6 +40,7 @@ data object RagiumConst {
     const val PLANTER = "planter"
 
     // Machine - Electronics
+    const val PRINTER = "printer"
 
     // Machine - Arcane
     const val ENCHANTER = "enchanter"

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/stainless_steel"
+      "tag": "c:ingots/stainless_steel"
     },
     "B": {
       "item": "minecraft:copper_grate"

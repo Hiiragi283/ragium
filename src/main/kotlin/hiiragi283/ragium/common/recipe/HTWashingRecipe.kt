@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.FluidIngredientBuilder
 import hiiragi283.core.api.recipe.HTRecipeResultHelper
@@ -15,6 +14,7 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.registry.VanillaFluidContents
+import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -30,7 +30,7 @@ class HTWashingRecipe(val ingredient: HTItemIngredient, val results: List<HTChan
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTWashingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<HTWashingRecipe> = HTCodecs.recordMap { instance ->
             instance
                 .group(
                     HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTWashingRecipe::ingredient),

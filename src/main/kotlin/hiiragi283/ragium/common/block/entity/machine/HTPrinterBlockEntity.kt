@@ -11,10 +11,10 @@ import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
-class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) : HTDoubleItemToItemBlockEntity(RagiumBlockEntityTypes.ASSEMBLER.get(), pos, state) {
-    override fun getSecondarySlotInfo(): HTSlotInfo = HTSlotInfo.EXTRA_INPUT
+class HTPrinterBlockEntity(pos: BlockPos, state: BlockState) : HTDoubleItemToItemBlockEntity(RagiumBlockEntityTypes.PRINTER.get(), pos, state) {
+    override fun getSecondarySlotInfo(): HTSlotInfo = HTSlotInfo.NONE
 
-    override fun getLookup(): HTRecipeLookup<HTDoubleItemToItemRecipe> = RagiumRecipeLookups.ASSEMBLING
+    override fun getLookup(): HTRecipeLookup<HTDoubleItemToItemRecipe> = RagiumRecipeLookups.PRINTING
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.assembler
 }

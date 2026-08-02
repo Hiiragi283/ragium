@@ -102,6 +102,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         chemical(RagiumBlocks.BREWERY) { +Items.BREWING_STAND }
         mechanical(RagiumBlocks.PLANTER) { +Tags.Items.GLASS_BLOCKS }
         // Electronics
+        electronics(RagiumBlocks.PRINTER) { +RagiumItems.ELECTRIC_CIRCUIT }
         // Arcane
         arcane(RagiumBlocks.MASS_FABRICATOR) { +Tags.Items.NETHER_STARS }
         HTShapedRecipeBuilder.create {
@@ -145,7 +146,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"AAA"
             +"BCB"
             +"DDD"
-            define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.STAINLESS_STEEL) }
+            define('A') { +tag(CommonTagPrefixes.INGOT, RagiumMaterialKeys.STAINLESS_STEEL) }
             define('B', builderAction)
             define('C') { +RagiumItems.THERMOMETER }
             define('D') { +tag(CommonTagPrefixes.PLATE, CommonMaterialKeys.CARBON) }
@@ -171,10 +172,10 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"AAA"
             +"BCB"
             +"DDD"
-            define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.STAINLESS_STEEL) }
+            define('A') { +tag(CommonTagPrefixes.INGOT, RagiumMaterialKeys.STAINLESS_STEEL) }
             define('B', builderAction)
             define('C') { +RagiumItems.LASER_EMITTER }
-            define('D') { +tag(CommonTagPrefixes.PLATE, CommonMaterialKeys.ALUMINUM) }
+            define('D') { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.ALUMINUM) }
             +block.toStack()
         }.save(exporter)
     }

@@ -114,7 +114,6 @@ data object Ragium : HTCommonMod() {
         registerProcessor(RagiumBlockEntityTypes.CRUSHER.get())
         registerProcessor(RagiumBlockEntityTypes.CUTTING_MACHINE.get())
         registerProcessor(RagiumBlockEntityTypes.ELECTRIC_FURNACE.get())
-        registerProcessor(RagiumBlockEntityTypes.PLANTER.get())
 
         registerProcessor(RagiumBlockEntityTypes.FREEZER.get())
         registerProcessor(RagiumBlockEntityTypes.MELTER.get())
@@ -125,9 +124,12 @@ data object Ragium : HTCommonMod() {
         registerProcessor(RagiumBlockEntityTypes.MIXER.get())
         registerProcessor(RagiumBlockEntityTypes.WASHER.get())
 
-        registerProcessor(RagiumBlockEntityTypes.FLUID_DUPLICATOR.get())
-        // Device
+        registerProcessor(RagiumBlockEntityTypes.PLANTER.get())
+
+        registerProcessor(RagiumBlockEntityTypes.PRINTER.get())
+
         helper.registerBlockEntity(RagiumBlockEntityTypes.ENCHANTER.get())
+        registerProcessor(RagiumBlockEntityTypes.FLUID_DUPLICATOR.get())
         registerProcessor(RagiumBlockEntityTypes.MASS_FABRICATOR.get())
         // Storage
         helper.registerBlockEntity(HTItemCapabilities, RagiumBlockEntityTypes.UNIVERSAL_CHEST.get(), HTUniversalChestBlockEntity::getItemHandler)

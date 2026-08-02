@@ -68,7 +68,7 @@ data object RagiumRecipeViewerTypes {
 
     // Electronics
     @JvmField
-    val PRINTING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.PRINTING, RagiumBlocks.ASSEMBLER, 18 * 6)
+    val PRINTING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.PRINTING, RagiumBlocks.PRINTER, 18 * 6)
 
     // Arcane
     @JvmField

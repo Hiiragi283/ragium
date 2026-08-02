@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
@@ -39,23 +38,14 @@ class HTChemicalReactingRecipe(
     HTSerializableRecipe<HTChemicalReactingRecipe.Input> {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTChemicalReactingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<HTChemicalReactingRecipe> = HTCodecs.recordMap { instance ->
             instance
                 .group(
-                    HTFluidIngredient.CODEC
-                        .fieldOf(HTConst.PRIMARY)
-                        .forGetter(HTChemicalReactingRecipe::primary),
-                    HTCodecs
-                        .ior(
-                            HTFluidIngredient.CODEC.fieldOf(HTConst.SECONDARY),
-                            HTCodecs.INGREDIENT.fieldOf(HTConst.CATALYST),
-                        ).forGetter(HTChemicalReactingRecipe::secondary),
-                    HTFluidResult.CODEC
-                        .listOrElement(1..2)
-                        .fieldOf(HTConst.FLUID_RESULT)
-                        .forGetter(HTChemicalReactingRecipe::fluidResults),
+                    HTFluidIngredient.CODEC.fieldOf(HTConst.PRIMARY).forGetter(HTChemicalReactingRecipe::primary),
+                    HTCodecs.ior(HTFluidIngredient.CODEC.fieldOf(HTConst.SECONDARY), HTCodecs.INGREDIENT.fieldOf(HTConst.CATALYST)).forGetter(HTChemicalReactingRecipe::secondary),
+                    HTFluidResult.CODEC.listOrElement(1..2).fieldOf(HTConst.FLUID_RESULT).forGetter(HTChemicalReactingRecipe::fluidResults),
                     HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).convert().forGetter(HTChemicalReactingRecipe::itemResult),
-                    HTProgressData.CODEC.forGetter { it.progressData },
+                    HTProgressData.CODEC.forGetter(HTChemicalReactingRecipe::progressData),
                 ).apply(instance, ::HTChemicalReactingRecipe)
         }
     }

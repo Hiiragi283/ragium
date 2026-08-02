@@ -132,6 +132,8 @@ data object RagiumBlocks {
     val PLANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)
 
     // Electronics
+    @JvmField
+    val PRINTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.PRINTER, RagiumTranslation.PRINTER)
 
     // Arcane
     @JvmField

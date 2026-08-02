@@ -58,20 +58,22 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.CRUSHER, "粉砕機")
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")
-        add(RagiumBlocks.PLANTER, "栽培機")
 
         add(RagiumBlocks.FREEZER, "冷却機")
         add(RagiumBlocks.MELTER, "溶融炉")
         add(RagiumBlocks.PYROLYZER, "熱分解室")
         add(RagiumBlocks.REFINERY, "精製室")
+
+        add(RagiumBlocks.MIXER, "混合機")
         add(RagiumBlocks.WASHER, "洗浄機")
 
         add(RagiumBlocks.BREWERY, "醸造機")
-        add(RagiumBlocks.MIXER, "混合機")
+        add(RagiumBlocks.PLANTER, "栽培機")
 
-        add(RagiumBlocks.FLUID_DUPLICATOR, "液体複製機")
-        // Device
+        add(RagiumBlocks.PRINTER, "レーザー印刷機")
+
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
+        add(RagiumBlocks.FLUID_DUPLICATOR, "液体複製機")
         add(RagiumBlocks.MASS_FABRICATOR, "物質生成機")
         // Storage
         add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")

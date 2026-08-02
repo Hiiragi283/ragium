@@ -59,20 +59,22 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")
-        add(RagiumBlocks.PLANTER, "Planter")
 
         add(RagiumBlocks.FREEZER, "Freezer")
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
         add(RagiumBlocks.REFINERY, "Refinery")
+
+        add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.WASHER, "Washer")
 
         add(RagiumBlocks.BREWERY, "Brewery")
-        add(RagiumBlocks.MIXER, "Mixer")
+        add(RagiumBlocks.PLANTER, "Planter")
 
-        add(RagiumBlocks.FLUID_DUPLICATOR, "Fluid Duplicator")
-        // Device
+        add(RagiumBlocks.PRINTER, "Laser Printer")
+
         add(RagiumBlocks.ENCHANTER, "Enchanter")
+        add(RagiumBlocks.FLUID_DUPLICATOR, "Fluid Duplicator")
         add(RagiumBlocks.MASS_FABRICATOR, "Mass Fabricator")
         // Storage
         add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
