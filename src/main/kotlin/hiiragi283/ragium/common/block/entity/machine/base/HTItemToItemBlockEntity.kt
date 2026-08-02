@@ -79,7 +79,7 @@ abstract class HTItemToItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, 
             }
         }
 
-        final override fun createHandler(): HTProgressHandler<*> = SingleProgressHandler()
+        final override fun createHandler(): HTProgressHandler = SingleProgressHandler()
 
         protected abstract fun getCache(): HTRecipeCaches.SingleItem<out HTItemToItemRecipe>
 

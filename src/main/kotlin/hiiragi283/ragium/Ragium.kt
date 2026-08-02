@@ -127,6 +127,7 @@ data object Ragium : HTCommonMod() {
         registerProcessor(RagiumBlockEntityTypes.PLANTER.get())
 
         registerProcessor(RagiumBlockEntityTypes.PRINTER.get())
+        registerProcessor(RagiumBlockEntityTypes.SCANNER.get())
 
         helper.registerBlockEntity(RagiumBlockEntityTypes.ENCHANTER.get())
         registerProcessor(RagiumBlockEntityTypes.FLUID_DUPLICATOR.get())

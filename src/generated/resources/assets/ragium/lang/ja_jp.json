@@ -85,6 +85,7 @@
   "block.ragium.pyrolyzer": "熱分解室",
   "block.ragium.ragi_matter": "らぎマター",
   "block.ragium.refinery": "精製室",
+  "block.ragium.scanner": "レーザースキャナ",
   "block.ragium.sodium_hydroxide_solution": "アルカリ水溶液",
   "block.ragium.steam": "蒸気",
   "block.ragium.sulfur_dioxide": "二酸化硫黄",
@@ -260,5 +261,6 @@
   "tooltip.ragium.blast_power": "威力: %1$s",
   "tooltip.ragium.block_pos": "座標: [%1$s, %2$s, %3$s]",
   "tooltip.ragium.dimension": "次元: %1$s",
-  "tooltip.ragium.loot_table_id": "ルートテーブル: %1$s"
+  "tooltip.ragium.loot_table_id": "ルートテーブル: %1$s",
+  "tooltip.ragium.memory_disc_data": "スキャン済み: %1$s"
 }

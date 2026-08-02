@@ -103,6 +103,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         mechanical(RagiumBlocks.PLANTER) { +Tags.Items.GLASS_BLOCKS }
         // Electronics
         electronics(RagiumBlocks.PRINTER) { +RagiumItems.ELECTRIC_CIRCUIT }
+        electronics(RagiumBlocks.SCANNER) { +RagiumItems.MEMORY_DISC }
         // Arcane
         arcane(RagiumBlocks.MASS_FABRICATOR) { +Tags.Items.NETHER_STARS }
         HTShapedRecipeBuilder.create {

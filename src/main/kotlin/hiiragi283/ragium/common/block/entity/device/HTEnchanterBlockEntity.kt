@@ -125,5 +125,5 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         override fun isEmpty(firstInput: ItemStack, secondInput: ItemStack, thirdInput: Int): Boolean = firstInput.isEmpty || secondInput.isEmpty || thirdInput <= 0
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 }

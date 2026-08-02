@@ -66,7 +66,7 @@ abstract class HTItemToMultiItemBlockEntity(type: BlockEntityType<*>, pos: Block
         }
     }
 
-    final override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    final override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
     protected abstract fun getLookup(): HTRecipeLookup<HTItemToMultiItemRecipe>
 

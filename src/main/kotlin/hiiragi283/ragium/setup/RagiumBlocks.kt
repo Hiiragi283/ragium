@@ -135,6 +135,9 @@ data object RagiumBlocks {
     @JvmField
     val PRINTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.PRINTER, RagiumTranslation.PRINTER)
 
+    @JvmField
+    val SCANNER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.SCANNER, RagiumTranslation.SCANNER)
+
     // Arcane
     @JvmField
     val ENCHANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(RagiumBlockEntityTypes.ENCHANTER, RagiumTranslation.ENCHANTER)

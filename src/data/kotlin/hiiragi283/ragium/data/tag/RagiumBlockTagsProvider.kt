@@ -68,6 +68,7 @@ class RagiumBlockTagsProvider(
             .add(RagiumBlocks.FREEZER)
         builder(RagiumTags.BlockItems.MACHINES_ELECTRONICS)
             .add(RagiumBlocks.PRINTER)
+            .add(RagiumBlocks.SCANNER)
         builder(RagiumTags.BlockItems.MACHINES_ARCANE)
             .add(RagiumBlocks.FLUID_DUPLICATOR)
             .add(RagiumBlocks.MASS_FABRICATOR)

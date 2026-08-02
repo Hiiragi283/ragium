@@ -68,7 +68,7 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
         }
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
     protected abstract fun getLookup(): HTRecipeLookup<HTDoubleItemToItemRecipe>
 }

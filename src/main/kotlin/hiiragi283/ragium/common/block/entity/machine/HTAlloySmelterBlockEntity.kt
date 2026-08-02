@@ -124,7 +124,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorB
         override fun isEmpty(firstInput: ItemStack, secondInput: ItemStack, thirdInput: ItemStack): Boolean = firstInput.isEmpty || secondInput.isEmpty
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.alloySmelter
 }

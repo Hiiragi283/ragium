@@ -119,6 +119,8 @@ data object RagiumConfig {
             val planter: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.PLANTER)
 
             // Electronics
+            @JvmField
+            val scanner: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.SCANNER)
 
             // Arcane
             @JvmField

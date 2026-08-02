@@ -4,6 +4,7 @@ import com.google.common.primitives.Ints
 import hiiragi283.core.api.data.DataComponentType
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.network.HTStreamCodecs
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import java.util.function.IntSupplier
@@ -23,6 +24,9 @@ data object RagiumDataComponents {
 
     @JvmField
     val LOOT_TICKET: DataComponentType<HTLootTicketTargets> = DataComponentType(HTLootTicketTargets.CODEC, HTLootTicketTargets.STREAM_CODEC)
+
+    @JvmField
+    val MEMORY_DISC_DATA: DataComponentType<HTItemResourceType> = DataComponentType(HTItemResourceType.CODEC, HTItemResourceType.STREAM_CODEC)
 
     @JvmField
     val SPAWNER_MOB: DataComponentType<HTSpawnerMob> = DataComponentType(HTSpawnerMob.CODEC, HTSpawnerMob.STREAM_CODEC)

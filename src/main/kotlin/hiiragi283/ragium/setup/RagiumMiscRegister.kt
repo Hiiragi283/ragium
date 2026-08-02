@@ -35,6 +35,7 @@ internal data object RagiumMiscRegister {
             helper.register(RagiumAPI.id("capacity_scale"), RagiumDataComponents.CAPACITY_SCALE)
             helper.register(RagiumAPI.id("charge_power"), RagiumDataComponents.CHARGE_POWER)
             helper.register(RagiumAPI.id("loot_ticket"), RagiumDataComponents.LOOT_TICKET)
+            helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
             helper.register(RagiumAPI.id("spawner_mob"), RagiumDataComponents.SPAWNER_MOB)
         }
         // Recipe Serializer

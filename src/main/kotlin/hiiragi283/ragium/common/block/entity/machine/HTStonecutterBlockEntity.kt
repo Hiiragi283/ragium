@@ -95,7 +95,7 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
         }
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
     private class WrappedRecipe(recipe: StonecutterRecipe) : HTDoubleItemToItemRecipe {
         private val accessor: SingleItemRecipeAccessor = recipe as SingleItemRecipeAccessor

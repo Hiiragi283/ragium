@@ -7,6 +7,7 @@ import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
+import hiiragi283.core.api.recipe.handler.HTTypedProgressHandler
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
@@ -28,7 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTMachineBlockEntity(type, pos, state) {
-    protected lateinit var recipeHandler: HTProgressHandler<*>
+    protected lateinit var recipeHandler: HTProgressHandler
         private set
     protected lateinit var recipeComponent: HTRecipeComponent
         private set
@@ -39,7 +40,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
         recipeComponent = HTRecipeComponent(this, recipeHandler)
     }
 
-    protected abstract fun createHandler(): HTProgressHandler<*>
+    protected abstract fun createHandler(): HTProgressHandler
 
     fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4), vararg recipeTypes: HTRecipeViewerType<*>) {
         widgetHolder += HTProgressWidget.createArrow(
@@ -81,7 +82,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
     //    RecipeHandler    //
 
-    abstract class RecipeHandler<RECIPE : Any, COMP : HTCompletedRecipe<RECIPE>> : HTProgressHandler<COMP>() {
+    abstract class RecipeHandler<RECIPE : Any, COMP : HTCompletedRecipe<RECIPE>> : HTTypedProgressHandler<COMP>() {
         final override fun findRecipe(level: ServerLevel, pos: BlockPos): COMP? = findFirstRecipe(level, pos)?.let(::completeRecipe)
 
         protected abstract fun findFirstRecipe(level: ServerLevel, pos: BlockPos): RECIPE?

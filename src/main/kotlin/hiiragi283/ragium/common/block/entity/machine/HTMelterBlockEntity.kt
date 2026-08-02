@@ -86,7 +86,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
         }
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.melter
 }

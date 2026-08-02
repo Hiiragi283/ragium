@@ -41,6 +41,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     BREWERY(HTConst.DESCRIPTION, RagiumConst.BREWERY),
     PLANTER(HTConst.DESCRIPTION, RagiumConst.PLANTER),
 
+    SCANNER(HTConst.DESCRIPTION, RagiumConst.SCANNER),
     PRINTER(HTConst.DESCRIPTION, RagiumConst.PRINTER),
 
     CHEMICAL_BATH(HTConst.DESCRIPTION, RagiumConst.CHEMICAL_BATH),
@@ -66,7 +67,8 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     TOOLTIP_BLOCK_POS(HTConst.TOOLTIP, "block_pos"),
     TOOLTIP_CHARGE_POWER(HTConst.TOOLTIP, "blast_power"),
     TOOLTIP_DIMENSION(HTConst.TOOLTIP, "dimension"),
-    TOOLTIP_LOOT_TABLE_ID("tooltip", "loot_table_id"),
+    TOOLTIP_LOOT_TABLE_ID(HTConst.TOOLTIP, "loot_table_id"),
+    TOOLTIPS_MEMORY_DISC_DATA(HTConst.TOOLTIP, "memory_disc_data"),
     ;
 
     override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".")).toLanguageKey(type)

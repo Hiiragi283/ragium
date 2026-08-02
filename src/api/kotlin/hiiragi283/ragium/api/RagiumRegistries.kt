@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceKey
 import net.neoforged.neoforge.registries.RegistryBuilder
 
 /**
- * @see hiiragi283.core.api.HCRegistries
+ * 参照 : [Hiiragi Core - HCRegistries][hiiragi283.core.api.HCRegistries]
  */
 data object RagiumRegistries {
     @JvmStatic

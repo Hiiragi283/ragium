@@ -71,6 +71,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.PLANTER, "栽培機")
 
         add(RagiumBlocks.PRINTER, "レーザー印刷機")
+        add(RagiumBlocks.SCANNER, "レーザースキャナ")
 
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
         add(RagiumBlocks.FLUID_DUPLICATOR, "液体複製機")
@@ -235,6 +236,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
+        add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"スキャン済み: %1$s")
         // Integration
         add(RagiumChemicals.RAGINITE.translationKey, "ラギナイト")
 

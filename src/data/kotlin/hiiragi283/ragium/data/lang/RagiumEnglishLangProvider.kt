@@ -72,6 +72,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.PLANTER, "Planter")
 
         add(RagiumBlocks.PRINTER, "Laser Printer")
+        add(RagiumBlocks.SCANNER, "Laser Scanner")
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")
         add(RagiumBlocks.FLUID_DUPLICATOR, "Fluid Duplicator")
@@ -236,6 +237,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"Power: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
+        add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"Scanned Item: %1$s")
         // Integration
         add(RagiumChemicals.RAGINITE.translationKey, "Raginite")
 

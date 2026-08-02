@@ -6,12 +6,18 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.ragium.api.RagiumAPI
 
 /**
- * @see hiiragi283.core.api.material.property.HTMaterialPropertyKeys
+ * 参照 : [Hiiragi Core - HTMaterialPropertyKeys][hiiragi283.core.api.material.property.HTMaterialPropertyKeys]
  */
 data object RagiumMaterialPropertyKeys {
+    /**
+     * @since 21.1.1.0
+     */
     @JvmField
     val DEFAULT_FLUID_AMOUNT: HTPropertyKey<Int> = HTPropertyKey.create(RagiumAPI.id("default_fluid_amount"), HTConst.INGOT_AMOUNT)
 
+    /**
+     * @since 21.1.1.0
+     */
     @JvmField
     val MOLTEN_FLUID: HTPropertyKey<HTFluidContent?> = HTPropertyKey.createNullable(RagiumAPI.id("molten_fluid"))
 

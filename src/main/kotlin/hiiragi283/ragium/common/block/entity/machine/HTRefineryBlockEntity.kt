@@ -118,7 +118,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlock
         }
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.refinery
 }

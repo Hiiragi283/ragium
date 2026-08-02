@@ -25,6 +25,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPrinterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTScannerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTStonecutterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTWasherBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
@@ -117,6 +118,9 @@ data object RagiumBlockEntityTypes {
     // Electronics
     @JvmField
     val PRINTER: HTDeferredBlockEntityType<HTPrinterBlockEntity> = registerTick(RagiumConst.PRINTER, ::HTPrinterBlockEntity)
+
+    @JvmField
+    val SCANNER: HTDeferredBlockEntityType<HTScannerBlockEntity> = registerTick(RagiumConst.SCANNER, ::HTScannerBlockEntity)
 
     // Arcane
     @JvmField

@@ -5,6 +5,7 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
+import hiiragi283.core.api.recipe.handler.HTTypedProgressHandler
 import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
@@ -84,7 +85,7 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcess
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : HTProgressHandler<FluidStack>() {
+    private inner class ProgressHandlerImpl : HTTypedProgressHandler<FluidStack>() {
         private val inputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val matterHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(matterTank) }
         private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
@@ -115,7 +116,7 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcess
         }
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.fluidDuplicator
 }

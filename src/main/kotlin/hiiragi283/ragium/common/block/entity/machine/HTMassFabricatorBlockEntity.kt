@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
+import hiiragi283.core.api.recipe.handler.HTTypedProgressHandler
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
@@ -50,7 +51,7 @@ class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToIt
         return super.onUpdateMachine(level, pos, state)
     }
 
-    private inner class ProgressHandlerImpl : HTProgressHandler<ItemStack>() {
+    private inner class ProgressHandlerImpl : HTTypedProgressHandler<ItemStack>() {
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
         override fun findRecipe(level: ServerLevel, pos: BlockPos): ItemStack = RagiumItems.RAGI_MATTER.toStack()
@@ -71,7 +72,7 @@ class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToIt
         }
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.massFabricator
 }

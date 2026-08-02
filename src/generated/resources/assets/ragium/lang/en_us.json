@@ -85,6 +85,7 @@
   "block.ragium.pyrolyzer": "Pyrolyzer",
   "block.ragium.ragi_matter": "Ragi-Matter",
   "block.ragium.refinery": "Refinery",
+  "block.ragium.scanner": "Laser Scanner",
   "block.ragium.sodium_hydroxide_solution": "Alkali Solution",
   "block.ragium.steam": "Steam",
   "block.ragium.sulfur_dioxide": "Sulfur Dioxide",
@@ -260,5 +261,6 @@
   "tooltip.ragium.blast_power": "Power: %1$s",
   "tooltip.ragium.block_pos": "Position: [%1$s, %2$s, %3$s]",
   "tooltip.ragium.dimension": "Dimension: %1$s",
-  "tooltip.ragium.loot_table_id": "Loot Table: %1$s"
+  "tooltip.ragium.loot_table_id": "Loot Table: %1$s",
+  "tooltip.ragium.memory_disc_data": "Scanned Item: %1$s"
 }

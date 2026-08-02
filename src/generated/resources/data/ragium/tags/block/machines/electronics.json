@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:printer"
+    "ragium:printer",
+    "ragium:scanner"
   ]
 }

@@ -114,7 +114,7 @@ abstract class HTItemOrFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
         }
     }
 
-    final override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    final override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
     protected abstract fun getLookup(): HTRecipeLookup<HTItemOrFluidRecipe>
 

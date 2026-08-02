@@ -48,6 +48,9 @@ data object RagiumTags {
 
     //    Blocks    //
 
+    /**
+     * @since 21.1.1.0
+     */
     data object BlockItems {
         val allTags: List<BlockItemTagKey> field: MutableList<BlockItemTagKey> = mutableListOf()
 
