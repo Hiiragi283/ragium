@@ -21,10 +21,13 @@ import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.util.getOrThrow
 import hiiragi283.core.client.integration.jei.category.HTItemToItemRecipeCategory
+import hiiragi283.core.client.integration.jei.category.base.HTDoubleItemToItemRecipeCategory
+import hiiragi283.core.client.integration.jei.category.base.HTItemAndFluidToItemRecipeCategory
 import hiiragi283.core.client.integration.jei.category.base.HTItemOrFluidRecipeCategory
 import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
 import hiiragi283.core.support.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.core.setup.HCDataComponents
+import hiiragi283.core.support.recipe.base.HTBasicDoubleItemToItemRecipe
 import hiiragi283.core.support.recipe.base.HTBasicItemAndFluidToItemRecipe
 import hiiragi283.core.support.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.core.support.recipe.base.HTBasicItemToItemRecipe
@@ -34,18 +37,14 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import hiiragi283.ragium.client.integration.jei.category.HTAlloyingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTChemicalReactingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.HTCombiningRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTCuttingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTImplodingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.HTItemAndFluidToItemRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTMassFabricatingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTPlantingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTRefiningRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTWashingRecipeCategory
-import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
@@ -55,7 +54,6 @@ import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.support.recipe.base.HTBasicDoubleItemToItemRecipe
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
@@ -91,11 +89,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipeCategories(
             // Mechanical
             HTAlloyingRecipeCategory(guiHelper),
-            HTCombiningRecipeCategory(guiHelper, RagiumRecipeViewerTypes.ASSEMBLING),
+            HTDoubleItemToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.ASSEMBLING),
             HTItemToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.COMPRESSING),
             HTCuttingRecipeCategory(guiHelper),
             // Heat
-            HTFreezingRecipeCategory(guiHelper),
+            HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.FREEZING),
             HTImplodingRecipeCategory(guiHelper),
             HTMeltingRecipeCategory(guiHelper),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PYROLYZING),
@@ -108,7 +106,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Bio
             HTPlantingRecipeCategory(guiHelper),
             // Electronics
-            HTCombiningRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PRINTING),
+            HTDoubleItemToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PRINTING),
             // Arcane
             HTMassFabricatingRecipeCategory(guiHelper),
         )
@@ -124,7 +122,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Mechanical
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.ALLOYING, RagiumRecipeLookups.ALLOYING, RagiumRecipeDisplayFactories::alloying)
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING) {
-            it.castRecipe<HTDoubleItemToItemRecipe, HTBasicDoubleItemToItemRecipe>()?.let(RagiumRecipeDisplayFactories::combining)
+            it.castRecipe<HTDoubleItemToItemRecipe, HTBasicDoubleItemToItemRecipe>()?.let(RagiumRecipeDisplayFactories::doubleItem)
         }
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING) {
             it.castRecipe<HTItemToItemRecipe, HTBasicItemToItemRecipe>()?.let(HTRecipeDisplayFactories::itemToItem)
@@ -135,7 +133,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         // Heat
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.FREEZING, RagiumRecipeLookups.FREEZING) {
-            it.castRecipe<HTItemAndFluidToItemRecipe, HTFreezingRecipe>()?.let(RagiumRecipeDisplayFactories::freezing)
+            it.castRecipe<HTItemAndFluidToItemRecipe, HTBasicItemAndFluidToItemRecipe>()?.let(RagiumRecipeDisplayFactories::itemAndFluidToItem)
         }
         helper.addFlatDisplayRecipes(RagiumRecipeViewerTypes.IMPLODING, RagiumRecipeLookups.IMPLODING, RagiumRecipeDisplayFactories::imploding)
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.MELTING, RagiumRecipeLookups.MELTING) {
@@ -158,7 +156,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         // Electronics
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.PRINTING, RagiumRecipeLookups.PRINTING) {
-            it.castRecipe<HTDoubleItemToItemRecipe, HTBasicDoubleItemToItemRecipe>()?.let(RagiumRecipeDisplayFactories::combining)
+            it.castRecipe<HTDoubleItemToItemRecipe, HTBasicDoubleItemToItemRecipe>()?.let(RagiumRecipeDisplayFactories::doubleItem)
         }
 
         // Arcane

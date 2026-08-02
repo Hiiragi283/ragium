@@ -12,12 +12,13 @@ import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
+import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPrintingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
-import hiiragi283.ragium.support.data.recipe.HTDoubleItemToItemRecipeBuilder
+import hiiragi283.core.support.data.recipe.HTDoubleItemToItemRecipeBuilder
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -61,6 +62,14 @@ data object RagiumRecipeBuilder {
     }
 
     //    Heat    //
+
+    @JvmStatic
+    inline fun freezing(builderAction: HTItemAndFluidToItemRecipeBuilder<HTFreezingRecipe>.() -> Unit): HTItemAndFluidToItemRecipeBuilder<HTFreezingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemAndFluidToItemRecipeBuilder(RagiumConst.FREEZER, ::HTFreezingRecipe).apply(builderAction)
+    }
 
     @JvmStatic
     inline fun imploding(builderAction: HTItemToItemRecipeBuilder<HTImplodingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<HTImplodingRecipe> {

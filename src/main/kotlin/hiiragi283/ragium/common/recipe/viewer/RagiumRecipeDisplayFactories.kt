@@ -4,19 +4,18 @@ import hiiragi283.core.api.data.recipe.IngredientBuilder
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
+import hiiragi283.core.support.recipe.base.HTBasicDoubleItemToItemRecipe
 import hiiragi283.core.support.recipe.base.HTBasicItemAndFluidToItemRecipe
 import hiiragi283.core.support.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.core.support.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe
-import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
-import hiiragi283.ragium.support.recipe.base.HTBasicDoubleItemToItemRecipe
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -25,6 +24,17 @@ import net.minecraft.world.item.Item
  * @see hiiragi283.core.common.recipe.viewer.HCRecipeDisplayFactories
  */
 data object RagiumRecipeDisplayFactories {
+    @JvmStatic
+    fun doubleItem(holder: HTRecipeHolder<HTBasicDoubleItemToItemRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
+        addInput(it.primary)
+        if (it.consumeSecondary) {
+            addInput(it.secondary)
+        } else {
+            addCatalyst(it.secondary)
+        }
+        addOutput(it.result)
+    }
+
     @JvmStatic
     fun itemOrFluid(holder: HTRecipeHolder<HTBasicItemOrFluidRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.ingredient.getLeft())
@@ -35,7 +45,11 @@ data object RagiumRecipeDisplayFactories {
 
     @JvmStatic
     fun itemAndFluidToItem(holder: HTRecipeHolder<HTBasicItemAndFluidToItemRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
-        addInput(it.itemIngredient)
+        if (it.consumeItem) {
+            addInput(it.itemIngredient)
+        } else {
+            addCatalyst(it.itemIngredient)
+        }
         addInput(it.fluidIngredient)
         addOutput(it.result)
     }
@@ -50,17 +64,6 @@ data object RagiumRecipeDisplayFactories {
     }
 
     @JvmStatic
-    fun combining(holder: HTRecipeHolder<HTBasicDoubleItemToItemRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
-        addInput(it.primary)
-        if (it.consumeSecondary) {
-            addInput(it.secondary)
-        } else {
-            addCatalyst(it.secondary)
-        }
-        addOutput(it.result)
-    }
-
-    @JvmStatic
     fun planting(holder: HTRecipeHolder<RTPlantingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.plant)
         addCatalyst(it.soil)
@@ -68,13 +71,6 @@ data object RagiumRecipeDisplayFactories {
     }
 
     // Machine - Advanced
-    @JvmStatic
-    fun freezing(holder: HTRecipeHolder<HTFreezingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
-        addInput(it.ingredient)
-        addCatalyst(it.catalyst)
-        addOutput(it.result)
-    }
-
     @JvmStatic
     fun imploding(holder: HTRecipeHolder<HTImplodingRecipe>): Sequence<HTProgressRecipeDisplay> = HTImplodingRecipe.EXPLOSIVE_AMOUNTS
         .map { (tagKey: TagKey<Item>, amount: Int) ->

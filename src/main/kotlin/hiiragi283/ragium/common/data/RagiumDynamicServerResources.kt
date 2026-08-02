@@ -29,7 +29,6 @@ import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.common.data.HCDynamicRecipeProvider
 import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
-import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.part.RagiumParts
 import hiiragi283.ragium.setup.RagiumFluids
@@ -394,12 +393,12 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
         // 液体材料を取得
         val molten: HTFluidContent = material[RagiumMaterialPropertyKeys.MOLTEN_FLUID] ?: return
         // レシピを登録
-        HTFreezingRecipeBuilder.create {
-            ingredient {
+        RagiumRecipeBuilder.freezing {
+            fluidIngredient {
                 +molten
                 amount = part.getScaledAmount(material.getOrDefault(RagiumMaterialPropertyKeys.DEFAULT_FLUID_AMOUNT), material).toInt()
             }
-            catalyst = HCDynamicRecipeProvider.getBlueprint(prefix)
+            itemIngredient { +HCDynamicRecipeProvider.getBlueprint(prefix) }
             result { +HTItemResult.MaterialPart(part, material.key) }
             recipeId suffix "_from_molten"
         }.save(exporter)

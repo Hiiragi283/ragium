@@ -18,7 +18,6 @@ import hiiragi283.core.common.recipe.ingredient.HTBluePrintIngredient
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -155,12 +154,12 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
                 }
             }.save(exporter)
             // Liquid Dye -> Dye
-            HTFreezingRecipeBuilder.create {
-                ingredient {
+            RagiumRecipeBuilder.freezing {
+                fluidIngredient {
                     +content
                     amount = 250
                 }
-                catalyst { +HTBluePrintIngredient(0) }
+                itemIngredient { +HTBluePrintIngredient(0) }
                 result { +VanillaColoredCollections.DYE[color] }
             }.save(exporter)
             // Gravel + Sand + Liquid Dye -> Concrete

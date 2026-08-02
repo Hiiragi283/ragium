@@ -44,11 +44,11 @@ class HTChemicalReactingRecipe(
             instance
                 .group(
                     HTFluidIngredient.CODEC
-                        .fieldOf(RagiumConst.PRIMARY)
+                        .fieldOf(HTConst.PRIMARY)
                         .forGetter(HTChemicalReactingRecipe::primary),
                     HTCodecs
                         .ior(
-                            HTFluidIngredient.CODEC.fieldOf(RagiumConst.SECONDARY),
+                            HTFluidIngredient.CODEC.fieldOf(HTConst.SECONDARY),
                             HTCodecs.INGREDIENT.fieldOf(HTConst.CATALYST),
                         ).forGetter(HTChemicalReactingRecipe::secondary),
                     HTFluidResult.CODEC

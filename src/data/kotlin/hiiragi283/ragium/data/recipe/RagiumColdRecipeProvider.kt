@@ -4,7 +4,7 @@ import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.common.recipe.ingredient.HTBluePrintIngredient
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
@@ -22,9 +22,9 @@ class RagiumColdRecipeProvider(packOutput: PackOutput, future: CompletableFuture
 
     private fun freezing() {
         // Water -> Snowball
-        HTFreezingRecipeBuilder.create {
-            ingredient { water() }
-            catalyst { +HTBluePrintIngredient(0) }
+        RagiumRecipeBuilder.freezing {
+            fluidIngredient { water() }
+            itemIngredient { +HTBluePrintIngredient(0) }
             result {
                 +Items.SNOWBALL
                 count = 4
@@ -32,39 +32,39 @@ class RagiumColdRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             time /= 4
         }.save(exporter)
         // Water -> Ice
-        HTFreezingRecipeBuilder.create {
-            ingredient { water() }
-            catalyst { +HTBluePrintIngredient(1) }
+        RagiumRecipeBuilder.freezing {
+            fluidIngredient { water() }
+            itemIngredient { +HTBluePrintIngredient(1) }
             result { +Items.ICE }
         }.save(exporter)
 
         // Lava -> Obsidian
-        HTFreezingRecipeBuilder.create {
-            ingredient { lava() }
-            catalyst { +HTBluePrintIngredient(0) }
+        RagiumRecipeBuilder.freezing {
+            fluidIngredient { lava() }
+            itemIngredient { +HTBluePrintIngredient(0) }
             result { +Items.OBSIDIAN }
         }.save(exporter)
         // Lava -> Magma Block
-        HTFreezingRecipeBuilder.create {
-            ingredient {
+        RagiumRecipeBuilder.freezing {
+            fluidIngredient {
                 lava()
                 amount = 250
             }
-            catalyst { +HTBluePrintIngredient(1) }
+            itemIngredient { +HTBluePrintIngredient(1) }
             result { +Items.MAGMA_BLOCK }
         }.save(exporter)
 
         // Honey -> Honey Block
-        HTFreezingRecipeBuilder.create {
-            ingredient { +HCFluids.HONEY }
-            catalyst { +HTBluePrintIngredient(0) }
+        RagiumRecipeBuilder.freezing {
+            fluidIngredient { +HCFluids.HONEY }
+            itemIngredient { +HTBluePrintIngredient(0) }
             result { +Items.HONEY_BLOCK }
         }.save(exporter)
 
         // Meat -> Meat Ingot
-        HTFreezingRecipeBuilder.create {
-            ingredient { +HCFluids.MEAT }
-            catalyst { +HTBluePrintIngredient(0) }
+        RagiumRecipeBuilder.freezing {
+            fluidIngredient { +HCFluids.MEAT }
+            itemIngredient { +HTBluePrintIngredient(0) }
             result { +RagiumItems.MEAT_INGOT }
         }.save(exporter)
     }

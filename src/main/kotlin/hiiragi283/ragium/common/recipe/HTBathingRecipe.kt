@@ -13,12 +13,8 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTBathingRecipe(
-    itemIngredient: HTItemIngredient,
-    fluidIngredient: HTFluidIngredient,
-    result: HTItemResult,
-    progressData: HTProgressData,
-) : HTBasicItemAndFluidToItemRecipe(itemIngredient, fluidIngredient, result, progressData),
+class HTBathingRecipe(itemIngredient: HTItemIngredient, fluidIngredient: HTFluidIngredient, result: HTItemResult, progressData: HTProgressData) :
+    HTBasicItemAndFluidToItemRecipe(itemIngredient, fluidIngredient, true, result, progressData),
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField

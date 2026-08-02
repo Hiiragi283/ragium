@@ -60,9 +60,6 @@ data object RagiumConst {
 
     //    Recipes    //
 
-    const val PRIMARY = "primary"
-    const val SECONDARY = "secondary"
-
     // Mechanical
     const val ALLOYING = "alloying"
     const val ASSEMBLING = "assembling"

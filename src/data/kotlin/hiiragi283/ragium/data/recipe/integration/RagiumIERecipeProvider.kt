@@ -18,7 +18,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.data.recipe.HTChemicalReactingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
@@ -45,18 +44,18 @@ class RagiumIERecipeProvider(packOutput: PackOutput, future: CompletableFuture<H
             condition { +condition }
         }.save(exporter)
         // Duroplast
-        HTFreezingRecipeBuilder.create {
-            ingredient {
+        RagiumRecipeBuilder.freezing {
+            fluidIngredient {
                 +IETags.fluidResin
                 amount = 4000
             }
-            catalyst { +HTBluePrintIngredient(0) }
+            itemIngredient { +HTBluePrintIngredient(0) }
             result { +IEBlocks.StoneDecoration.DUROPLAST }
             condition { +condition }
         }.save(exporter)
-        HTFreezingRecipeBuilder.create {
-            ingredient { +IETags.fluidResin }
-            catalyst { +HTBluePrintIngredient(1) }
+        RagiumRecipeBuilder.freezing {
+            fluidIngredient { +IETags.fluidResin }
+            itemIngredient { +HTBluePrintIngredient(1) }
             result { +IEItems.Ingredients.DUROPLAST_PLATE }
             condition { +condition }
         }.save(exporter)
