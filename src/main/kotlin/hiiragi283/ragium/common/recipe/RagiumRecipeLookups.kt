@@ -31,7 +31,7 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
 
 data object RagiumRecipeLookups {
-    // Machine - Basic
+    // Mechanical
     @JvmField
     val ALLOYING: HTRecipeLookup<HTAlloyingRecipe> = create(RagiumRecipeTypes.ALLOYING)
 
@@ -44,10 +44,7 @@ data object RagiumRecipeLookups {
     @JvmField
     val CUTTING: HTCompoundRecipeLookup<HTItemToMultiItemRecipe> = create(RagiumConst.CUTTING)
 
-    @JvmField
-    val PLANTING: HTCompoundRecipeLookup<HTPlantingRecipe> = create(RagiumConst.PLANTING)
-
-    // Machine - Advanced
+    // Heat
     @JvmField
     val FREEZING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConst.FREEZING)
 
@@ -63,10 +60,7 @@ data object RagiumRecipeLookups {
     @JvmField
     val REFINING: HTRecipeLookup<HTRefiningRecipe> = create(RagiumRecipeTypes.REFINING)
 
-    @JvmField
-    val WASHING: HTRecipeLookup<HTWashingRecipe> = create(RagiumRecipeTypes.WASHING)
-
-    // Machine - Elite
+    // Chemical
     @JvmField
     val BATHING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConst.BATHING)
 
@@ -76,7 +70,21 @@ data object RagiumRecipeLookups {
     @JvmField
     val MIXING: HTRecipeLookup<HTMixingRecipe> = create(RagiumRecipeTypes.MIXING)
 
-    // Machine - Ultimate
+    @JvmField
+    val WASHING: HTRecipeLookup<HTWashingRecipe> = create(RagiumRecipeTypes.WASHING)
+
+    // Bio
+    @JvmField
+    val PLANTING: HTCompoundRecipeLookup<HTPlantingRecipe> = create(RagiumConst.PLANTING)
+
+    // Electronics
+    @JvmField
+    val PRINTING: HTCompoundRecipeLookup<HTDoubleItemToItemRecipe> = create(RagiumConst.PRINTING)
+
+    // Arcane
+    @JvmField
+    val ENCHANTING: HTCompoundRecipeLookup<HTEnchantingRecipe> = create(RagiumConst.ENCHANTING)
+
     @JvmField
     val MASS_FABRICATING: HTRecipeLookup.Translatable<HTMassFabricatingRecipe> = object : HTRecipeLookup.Translatable<HTMassFabricatingRecipe> {
         override fun getAllRecipes(context: HTRecipeLookup.Context): Map<ResourceLocation, HTMassFabricatingRecipe> {
@@ -90,10 +98,6 @@ data object RagiumRecipeLookups {
         override fun getKey(): ResourceKey<RecipeType<*>> = Registries.RECIPE_TYPE.createKey(RagiumAPI.id(RagiumConst.MASS_FABRICATING))
     }
 
-    // Device - Ultimate
-    @JvmField
-    val ENCHANTING: HTCompoundRecipeLookup<HTEnchantingRecipe> = create(RagiumConst.ENCHANTING)
-
     @JvmStatic
     private fun <RECIPE : Any> create(path: String): HTCompoundRecipeLookup<RECIPE> = HTCompoundRecipeLookup.create(RagiumAPI.id(path))
 
@@ -105,7 +109,6 @@ data object RagiumRecipeLookups {
         ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING, identity())
         COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING, identity())
         CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING, identity())
-        PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
 
         FREEZING.fromRecipeType(RagiumRecipeTypes.FREEZING, identity())
         MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())
@@ -113,6 +116,10 @@ data object RagiumRecipeLookups {
         PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING, identity())
 
         BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
+
+        PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
+
+        PRINTING.fromRecipeType(RagiumRecipeTypes.PRINTING, identity())
 
         ENCHANTING.fromRecipeType(RagiumRecipeTypes.ENCHANTING, identity())
     }

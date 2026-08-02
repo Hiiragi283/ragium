@@ -1,18 +1,16 @@
 {
   "type": "ragium:assembling",
-  "ingredient": [
-    {
-      "amount": 1,
-      "items": "#c:ingots/iron"
-    },
-    {
-      "amount": 3,
-      "items": "#c:nuggets/iron"
-    }
-  ],
+  "primary": {
+    "amount": 1,
+    "items": "#c:ingots/iron"
+  },
   "result": {
     "count": 3,
     "id": "minecraft:chain"
+  },
+  "secondary": {
+    "amount": 3,
+    "items": "#c:nuggets/iron"
   },
   "time": 200
 }

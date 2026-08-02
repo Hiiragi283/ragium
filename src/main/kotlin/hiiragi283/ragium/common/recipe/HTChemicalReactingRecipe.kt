@@ -18,6 +18,7 @@ import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.api.util.Ior
 import hiiragi283.core.api.util.Option
 import hiiragi283.core.api.recipe.HTSerializableRecipe
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.result.HTChemicalResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -43,11 +44,11 @@ class HTChemicalReactingRecipe(
             instance
                 .group(
                     HTFluidIngredient.CODEC
-                        .fieldOf("primary")
+                        .fieldOf(RagiumConst.PRIMARY)
                         .forGetter(HTChemicalReactingRecipe::primary),
                     HTCodecs
                         .ior(
-                            HTFluidIngredient.CODEC.fieldOf("secondary"),
+                            HTFluidIngredient.CODEC.fieldOf(RagiumConst.SECONDARY),
                             HTCodecs.INGREDIENT.fieldOf(HTConst.CATALYST),
                         ).forGetter(HTChemicalReactingRecipe::secondary),
                     HTFluidResult.CODEC

@@ -5,8 +5,10 @@ import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.data.recipe.IngredientBuilder
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.util.Either
+import hiiragi283.core.common.data.recipe.HCRecipeBuilders
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTPlantingRecipeBuilder
+import hiiragi283.ragium.setup.RagiumFluids
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -20,10 +22,25 @@ import org.apache.commons.lang3.math.Fraction
 
 class RagiumBioRecipeBuilder(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
+        brewing()
         planting()
     }
 
     override fun getName(): String = "Bio Recipes"
+
+    //    Brewing    //
+
+    private fun brewing() {
+        // Crude Bio -> Ethanol
+        HCRecipeBuilders.brewing {
+            fluidIngredient { +RagiumFluids.CRUDE_BIO }
+            fluidResult {
+                +RagiumFluids.ETHANOL
+                amount = 500
+            }
+        }.save(exporter)
+        // Ethanol -> Biofuel
+    }
 
     //    Planting    //
 

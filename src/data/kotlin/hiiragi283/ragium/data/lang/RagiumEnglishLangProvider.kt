@@ -169,22 +169,24 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
         add(RagiumRecipeTypes.COMPRESSING, "Compressing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
-        add(RagiumRecipeTypes.PLANTING, "Planting")
 
         add(RagiumRecipeTypes.FREEZING, "Freezing")
         add(RagiumRecipeTypes.IMPLODING, "Implosion Compressing")
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
         add(RagiumRecipeTypes.REFINING, "Refining")
-        add(RagiumRecipeTypes.WASHING, "Washing")
 
         add(RagiumRecipeTypes.BATHING, "Chemical Bathing")
         add(RagiumRecipeTypes.CHEMICAL_REACTING, "Chemical Reacting")
         add(RagiumRecipeTypes.MIXING, "Mixing")
+        add(RagiumRecipeTypes.WASHING, "Washing")
 
-        add(RagiumRecipeLookups.MASS_FABRICATING, "Mass Fabricating")
+        add(RagiumRecipeTypes.PLANTING, "Planting")
+
+        add(RagiumRecipeTypes.PRINTING, "Printing")
 
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
+        add(RagiumRecipeLookups.MASS_FABRICATING, "Mass Fabricating")
 
         // Tag
         add(RagiumTags.Fluids.ALCOHOL, "Alcohol")

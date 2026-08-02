@@ -1,18 +1,16 @@
 {
   "type": "ragium:assembling",
-  "ingredient": [
-    {
-      "amount": 1,
-      "items": "minecraft:skeleton_skull"
-    },
-    {
-      "amount": 8,
-      "items": "minecraft:rotten_flesh"
-    }
-  ],
+  "primary": {
+    "amount": 1,
+    "items": "minecraft:skeleton_skull"
+  },
   "result": {
     "count": 1,
     "id": "minecraft:zombie_head"
+  },
+  "secondary": {
+    "amount": 8,
+    "items": "minecraft:rotten_flesh"
   },
   "time": 200
 }

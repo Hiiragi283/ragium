@@ -17,7 +17,7 @@ import hiiragi283.core.common.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.data.recipe.HTChemicalReactingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
@@ -32,7 +32,7 @@ import net.neoforged.neoforge.common.Tags
 class RagiumIERecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider.Integration(packOutput, future, RagiumAPI.MOD_ID, HCIConstants.IMMERSIVE) {
     override fun buildRecipes() {
         // Insulating Glass
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             result {
                 +IEBlocks.StoneDecoration.INSULATING_GLASS
                 count = 2

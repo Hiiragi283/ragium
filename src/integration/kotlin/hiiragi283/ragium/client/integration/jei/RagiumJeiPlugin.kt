@@ -21,6 +21,7 @@ import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.util.getOrThrow
 import hiiragi283.core.client.integration.jei.category.HTItemToItemRecipeCategory
+import hiiragi283.core.client.integration.jei.category.base.HTItemOrFluidRecipeCategory
 import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
 import hiiragi283.core.support.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.core.setup.HCDataComponents
@@ -32,13 +33,12 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import hiiragi283.ragium.client.integration.jei.category.HTAlloyingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.HTAssemblingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTChemicalReactingRecipeCategory
+import hiiragi283.ragium.client.integration.jei.category.HTCombiningRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTCuttingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTImplodingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTItemAndFluidToItemRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTMassFabricatingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTMixingRecipeCategory
@@ -52,10 +52,10 @@ import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.custom.HTBookMeltingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeDisplayFactories
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
-import hiiragi283.ragium.support.recipe.base.HTBasicAssemblingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.support.recipe.base.HTBasicDoubleItemToItemRecipe
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
@@ -89,26 +89,28 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         val guiHelper: IGuiHelper = registration.jeiHelpers.guiHelper
 
         registration.addRecipeCategories(
-            // Machine - Basic
+            // Mechanical
             HTAlloyingRecipeCategory(guiHelper),
-            HTAssemblingRecipeCategory(guiHelper),
+            HTCombiningRecipeCategory(guiHelper, RagiumRecipeViewerTypes.ASSEMBLING),
             HTItemToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.COMPRESSING),
             HTCuttingRecipeCategory(guiHelper),
-            HTPlantingRecipeCategory(guiHelper),
-            // Machine - Advanced
+            // Heat
             HTFreezingRecipeCategory(guiHelper),
             HTImplodingRecipeCategory(guiHelper),
             HTMeltingRecipeCategory(guiHelper),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PYROLYZING),
             HTRefiningRecipeCategory(guiHelper),
-            HTWashingRecipeCategory(guiHelper),
-            // Machine - Elite
+            // Chemical
             HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.BATHING),
             HTChemicalReactingRecipeCategory(guiHelper),
             HTMixingRecipeCategory(guiHelper),
-            // Machine - Ultimate
+            HTWashingRecipeCategory(guiHelper),
+            // Bio
+            HTPlantingRecipeCategory(guiHelper),
+            // Electronics
+            HTCombiningRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PRINTING),
+            // Arcane
             HTMassFabricatingRecipeCategory(guiHelper),
-            // Device - Ultimate
         )
     }
 
@@ -119,10 +121,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             }
         }
 
-        // Machine - Basic
+        // Mechanical
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.ALLOYING, RagiumRecipeLookups.ALLOYING, RagiumRecipeDisplayFactories::alloying)
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING) {
-            it.castRecipe<HTDoubleItemToItemRecipe, HTBasicAssemblingRecipe>()?.let(RagiumRecipeDisplayFactories::assembling)
+            it.castRecipe<HTDoubleItemToItemRecipe, HTBasicDoubleItemToItemRecipe>()?.let(RagiumRecipeDisplayFactories::combining)
         }
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING) {
             it.castRecipe<HTItemToItemRecipe, HTBasicItemToItemRecipe>()?.let(HTRecipeDisplayFactories::itemToItem)
@@ -130,10 +132,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.CUTTING, RagiumRecipeLookups.CUTTING) {
             it.castRecipe<HTItemToMultiItemRecipe, HTBasicItemToMultiItemRecipe>()?.let(HTRecipeDisplayFactories::itemToMultiItem)
         }
-        helper.addDisplayRecipes(RagiumRecipeViewerTypes.PLANTING, RagiumRecipeLookups.PLANTING) {
-            it.castRecipe<HTPlantingRecipe, RTPlantingRecipe>()?.let(RagiumRecipeDisplayFactories::planting)
-        }
-        // Machine - Advanced
+
+        // Heat
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.FREEZING, RagiumRecipeLookups.FREEZING) {
             it.castRecipe<HTItemAndFluidToItemRecipe, HTFreezingRecipe>()?.let(RagiumRecipeDisplayFactories::freezing)
         }
@@ -143,16 +143,26 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         }
         itemOrFluid(RagiumRecipeViewerTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING)
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.REFINING, RagiumRecipeLookups.REFINING, RagiumRecipeDisplayFactories::refining)
-        helper.addDisplayRecipes(RagiumRecipeViewerTypes.WASHING, RagiumRecipeLookups.WASHING, RagiumRecipeDisplayFactories::washing)
-        // Machine - Elite
+
+        // Chemical
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.BATHING, RagiumRecipeLookups.BATHING) {
             it.castRecipe<HTItemAndFluidToItemRecipe, HTBasicItemAndFluidToItemRecipe>()?.let(RagiumRecipeDisplayFactories::itemAndFluidToItem)
         }
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.CHEMICAL_REACTING, RagiumRecipeLookups.CHEMICAL_REACTING, RagiumRecipeDisplayFactories::reacting)
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.MIXING, RagiumRecipeLookups.MIXING, RagiumRecipeDisplayFactories::mixing)
-        // Machine - Ultimate
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.WASHING, RagiumRecipeLookups.WASHING, RagiumRecipeDisplayFactories::washing)
+        // Bio
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.PLANTING, RagiumRecipeLookups.PLANTING) {
+            it.castRecipe<HTPlantingRecipe, RTPlantingRecipe>()?.let(RagiumRecipeDisplayFactories::planting)
+        }
+
+        // Electronics
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.PRINTING, RagiumRecipeLookups.PRINTING) {
+            it.castRecipe<HTDoubleItemToItemRecipe, HTBasicDoubleItemToItemRecipe>()?.let(RagiumRecipeDisplayFactories::combining)
+        }
+
+        // Arcane
         helper.addLookupRecipes(RagiumRecipeViewerTypes.MASS_FABRICATING, RagiumRecipeLookups.MASS_FABRICATING, sorter = compareBy { it.point })
-        // Device - Ultimate
 
         registerCustomRecipes(helper)
     }
@@ -190,27 +200,29 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         helper.add(RecipeTypes.STONECUTTING, RagiumBlocks.AUTO_CHISEL.toStack())
 
         helper.addFromViewerType(
-            // Machine - Basic
+            // Mechanical
             RagiumRecipeViewerTypes.ALLOYING,
             RagiumRecipeViewerTypes.ASSEMBLING,
             RagiumRecipeViewerTypes.COMPRESSING,
             RagiumRecipeViewerTypes.CUTTING,
-            RagiumRecipeViewerTypes.PLANTING,
-            // Machine - Advanced
+            // Heat
             RagiumRecipeViewerTypes.FREEZING,
             RagiumRecipeViewerTypes.IMPLODING,
             RagiumRecipeViewerTypes.MELTING,
             RagiumRecipeViewerTypes.PYROLYZING,
             RagiumRecipeViewerTypes.REFINING,
-            RagiumRecipeViewerTypes.WASHING,
-            // Machine - Elite
+            // Chemical
             RagiumRecipeViewerTypes.BATHING,
             RagiumRecipeViewerTypes.CHEMICAL_REACTING,
             RagiumRecipeViewerTypes.MIXING,
-            // Machine - Ultimate
-            RagiumRecipeViewerTypes.MASS_FABRICATING,
-            // Device - Ultimate
+            RagiumRecipeViewerTypes.WASHING,
+            // Bio
+            RagiumRecipeViewerTypes.PLANTING,
+            // Electronics
+            RagiumRecipeViewerTypes.PRINTING,
+            // Arcane
             RagiumRecipeViewerTypes.ENCHANTING,
+            RagiumRecipeViewerTypes.MASS_FABRICATING,
         )
     }
 }

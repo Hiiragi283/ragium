@@ -168,22 +168,24 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.ASSEMBLING, "組立")
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CUTTING, "切断")
-        add(RagiumRecipeTypes.PLANTING, "栽培")
 
         add(RagiumRecipeTypes.FREEZING, "冷却")
         add(RagiumRecipeTypes.IMPLODING, "内爆圧縮")
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
         add(RagiumRecipeTypes.REFINING, "精製")
-        add(RagiumRecipeTypes.WASHING, "洗浄")
 
         add(RagiumRecipeTypes.BATHING, "化学浴")
         add(RagiumRecipeTypes.CHEMICAL_REACTING, "化学反応")
         add(RagiumRecipeTypes.MIXING, "混合")
+        add(RagiumRecipeTypes.WASHING, "洗浄")
 
-        add(RagiumRecipeLookups.MASS_FABRICATING, "マター生成")
+        add(RagiumRecipeTypes.PLANTING, "栽培")
+
+        add(RagiumRecipeTypes.PRINTING, "刻印")
 
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
+        add(RagiumRecipeLookups.MASS_FABRICATING, "マター生成")
 
         // Tag
         add(RagiumTags.Fluids.ALCOHOL, "アルコール")

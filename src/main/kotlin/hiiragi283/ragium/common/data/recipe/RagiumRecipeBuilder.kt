@@ -8,19 +8,30 @@ import hiiragi283.core.support.data.recipe.HTItemToFluidRecipeBuilder
 import hiiragi283.core.support.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.core.support.data.recipe.HTItemToMultiItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTPrintingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
+import hiiragi283.ragium.support.data.recipe.HTDoubleItemToItemRecipeBuilder
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 data object RagiumRecipeBuilder {
-    //    Basic    //
+    //    Mechanical    //
+
+    @JvmStatic
+    inline fun assembling(builderAction: HTDoubleItemToItemRecipeBuilder<HTAssemblingRecipe>.() -> Unit): HTDoubleItemToItemRecipeBuilder<HTAssemblingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTDoubleItemToItemRecipeBuilder(RagiumConst.ASSEMBLING, ::HTAssemblingRecipe).apply(builderAction)
+    }
 
     @JvmStatic
     inline fun compressing(builderAction: HTItemToItemRecipeBuilder<HTCompressingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<HTCompressingRecipe> {
@@ -41,7 +52,15 @@ data object RagiumRecipeBuilder {
         }
     }
 
-    //    Advanced    //
+    @JvmStatic
+    inline fun printing(builderAction: HTDoubleItemToItemRecipeBuilder<HTPrintingRecipe>.() -> Unit): HTDoubleItemToItemRecipeBuilder<HTPrintingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTDoubleItemToItemRecipeBuilder(RagiumConst.PRINTING, ::HTPrintingRecipe).apply(builderAction)
+    }
+
+    //    Heat    //
 
     @JvmStatic
     inline fun imploding(builderAction: HTItemToItemRecipeBuilder<HTImplodingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<HTImplodingRecipe> {
@@ -73,6 +92,16 @@ data object RagiumRecipeBuilder {
         }
     }
 
+    //    Chemical    //
+
+    @JvmStatic
+    inline fun bathing(builderAction: HTItemAndFluidToItemRecipeBuilder<HTBathingRecipe>.() -> Unit): HTItemAndFluidToItemRecipeBuilder<HTBathingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemAndFluidToItemRecipeBuilder(RagiumConst.BATHING, ::HTBathingRecipe).apply(builderAction)
+    }
+
     @JvmStatic
     inline fun washing(builderAction: HTItemToMultiItemRecipeBuilder<HTWashingRecipe>.() -> Unit): HTItemToMultiItemRecipeBuilder<HTWashingRecipe> {
         contract {
@@ -84,13 +113,9 @@ data object RagiumRecipeBuilder {
         }
     }
 
-    //    Elite    //
+    //    Bio    //
 
-    @JvmStatic
-    inline fun bathing(builderAction: HTItemAndFluidToItemRecipeBuilder<HTBathingRecipe>.() -> Unit): HTItemAndFluidToItemRecipeBuilder<HTBathingRecipe> {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTItemAndFluidToItemRecipeBuilder(RagiumConst.BATHING, ::HTBathingRecipe).apply(builderAction)
-    }
+    //    Electronics    //
+
+    //    Arcane    //
 }

@@ -20,77 +20,65 @@ import net.minecraft.world.level.ItemLike
  * @see hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
  */
 data object RagiumRecipeViewerTypes {
-    // Machine - Basic
+    // Mechanical
     @JvmField
-    val ALLOYING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER, 18 * 7)
+    val ALLOYING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER, 18 * 7)
 
     @JvmField
-    val ASSEMBLING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER, 18 * 6)
+    val ASSEMBLING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER, 18 * 6)
 
     @JvmField
-    val COMPRESSING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR, 18 * 4)
+    val COMPRESSING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR, 18 * 4)
 
     @JvmField
-    val CUTTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 4, 18 * 2)
+    val CUTTING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 4, 18 * 2)
+
+    // Heat
+    @JvmField
+    val FREEZING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER, 18 * 6)
 
     @JvmField
-    val PLANTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER, 18 * 5, 18 * 3)
-
-    // Machine - Advanced
-    @JvmField
-    val FREEZING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER, 18 * 6)
+    val IMPLODING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.IMPLODING, RagiumBlocks.INDUSTRIAL_TNT, 18 * 6)
 
     @JvmField
-    val IMPLODING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.IMPLODING, RagiumBlocks.INDUSTRIAL_TNT, 18 * 6)
+    val MELTING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, 18 * 4)
 
     @JvmField
-    val MELTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, 18 * 4)
+    val PYROLYZING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER, 18 * 8)
 
     @JvmField
-    val PYROLYZING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER, 18 * 8)
+    val REFINING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY, 18 * 6, 18 * 3)
+
+    // Chemical
+    @JvmField
+    val BATHING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.BATHING, RagiumBlocks.MIXER, 18 * 6)
 
     @JvmField
-    val REFINING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY, 18 * 6, 18 * 3)
+    val CHEMICAL_REACTING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.CHEMICAL_REACTING, RagiumBlocks.MIXER, 18 * 8, 18 * 3)
 
     @JvmField
-    val WASHING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER, 18 * 7, 18 * 3)
-
-    // Machine - Elite
-    @JvmField
-    val BATHING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.BATHING, RagiumBlocks.MIXER, 18 * 6)
+    val MIXING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, 18 * 8, 18 * 3)
 
     @JvmField
-    val CHEMICAL_REACTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.CHEMICAL_REACTING, RagiumBlocks.MIXER, 18 * 8, 18 * 3)
+    val WASHING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER, 18 * 7, 18 * 3)
+
+    // Bio
+    @JvmField
+    val PLANTING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER, 18 * 5, 18 * 3)
+
+    // Electronics
+    @JvmField
+    val PRINTING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.PRINTING, RagiumBlocks.ASSEMBLER, 18 * 6)
+
+    // Arcane
+    @JvmField
+    val ENCHANTING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER, 18 * 8, 18 * 3)
 
     @JvmField
-    val MIXING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, 18 * 8, 18 * 3)
-
-    // Machine - Ultimate
-    @JvmField
-    val MASS_FABRICATING: HTHolderRecipeViewerType<HTMassFabricatingRecipe> =
-        createHolder(RagiumRecipeLookups.MASS_FABRICATING, RagiumItems.RAGI_MATTER, 18 * 8) {
-            workStations.clear()
-            workStations += RagiumBlocks.MASS_FABRICATOR.toStack()
-        }
-
-    // Device - Ultimate
-    @JvmField
-    val ENCHANTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER, 18 * 8, 18 * 3)
+    val MASS_FABRICATING: HTHolderRecipeViewerType<HTMassFabricatingRecipe> = createHolder(RagiumRecipeLookups.MASS_FABRICATING, RagiumItems.RAGI_MATTER, 18 * 8) {
+        workStations.clear()
+        workStations += RagiumBlocks.MASS_FABRICATOR.toStack()
+    }
 
     @JvmStatic
     private inline fun <reified T : Any> create(

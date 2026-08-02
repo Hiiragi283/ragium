@@ -5,7 +5,6 @@ import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
@@ -26,144 +25,144 @@ class RagiumBasicRecipeProvider(packOutput: PackOutput, future: CompletableFutur
 
     private fun assembling() {
         // Blackstone + Gold -> Gilded Blackstone
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.GILDED_BLACKSTONE }
-            ingredient { +Items.BLACKSTONE }
-            ingredient {
+            primary { +Items.BLACKSTONE }
+            secondary {
                 +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.GOLD)
                 count = 8
             }
         }.save(exporter)
         // Dirt + Leaves -> Podzol
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.PODZOL }
-            ingredient { +Items.DIRT }
-            ingredient {
+            primary { +Items.DIRT }
+            secondary {
                 +ItemTags.LEAVES
                 count = 8
             }
         }.save(exporter)
         // Dirt + Mushroom -> Mycelium
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.MYCELIUM }
-            ingredient { +Items.DIRT }
-            ingredient { +Tags.Items.MUSHROOMS }
+            primary { +Items.DIRT }
+            secondary { +Tags.Items.MUSHROOMS }
         }.save(exporter)
         // Crimson Nylium
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.CRIMSON_NYLIUM }
-            ingredient { +Tags.Items.NETHERRACKS }
-            ingredient { +Items.CRIMSON_FUNGUS }
+            primary { +Tags.Items.NETHERRACKS }
+            secondary { +Items.CRIMSON_FUNGUS }
         }.save(exporter)
         // Warped Nylium
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.WARPED_NYLIUM }
-            ingredient { +Tags.Items.NETHERRACKS }
-            ingredient { +Items.WARPED_FUNGUS }
+            primary { +Tags.Items.NETHERRACKS }
+            secondary { +Items.WARPED_FUNGUS }
         }.save(exporter)
         // String + Sticky -> Cobweb
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.COBWEB }
-            ingredient {
+            primary {
                 +Tags.Items.STRINGS
                 count = 5
             }
-            ingredient { +HiiragiCoreTags.Items.STICKY_BALLS }
+            secondary { +HiiragiCoreTags.Items.STICKY_BALLS }
         }.save(exporter)
 
         // Iron Ingot + Iron Nugget -> Chain
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result {
                 +Items.CHAIN
                 count = 3
             }
-            ingredient { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON) }
-            ingredient {
+            primary { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON) }
+            secondary {
                 +tag(CommonTagPrefixes.NUGGET, VanillaMaterialKeys.IRON)
                 count = 3
             }
         }.save(exporter)
         // Iron Ingot + Torch -> Lantern
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result {
                 +Items.LANTERN
                 count = 2
             }
-            ingredient { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON) }
-            ingredient { +Items.TORCH }
+            primary { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON) }
+            secondary { +Items.TORCH }
         }.save(exporter)
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result {
                 +Items.SOUL_LANTERN
                 count = 2
             }
-            ingredient { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON) }
-            ingredient { +Items.SOUL_TORCH }
+            primary { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON) }
+            secondary { +Items.SOUL_TORCH }
         }.save(exporter)
         // Iron Ingot + Chest -> Hopper
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.HOPPER }
-            ingredient {
+            primary {
                 +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON)
                 count = 5
             }
-            ingredient { +Tags.Items.CHESTS_WOODEN }
+            secondary { +Tags.Items.CHESTS_WOODEN }
         }.save(exporter)
         // Dropper + Bow -> Dispenser
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.DISPENSER }
-            ingredient { +Items.DROPPER }
-            ingredient { +Tags.Items.TOOLS_BOW }
+            primary { +Items.DROPPER }
+            secondary { +Tags.Items.TOOLS_BOW }
         }.save(exporter)
         // TNT
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result {
                 +Items.TNT
                 count = 2
             }
-            ingredient {
+            primary {
                 +Tags.Items.SANDS
                 count = 4
             }
-            ingredient {
+            secondary {
                 +Tags.Items.GUNPOWDERS
                 count = 5
             }
         }.save(exporter)
 
         // Leather + Iron Nugget -> Saddle
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.SADDLE }
-            ingredient {
+            primary {
                 +Tags.Items.LEATHERS
                 count = 5
             }
-            ingredient {
+            secondary {
                 +tag(CommonTagPrefixes.NUGGET, VanillaMaterialKeys.IRON)
                 count = 2
             }
         }.save(exporter)
         // Head
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.ZOMBIE_HEAD }
-            ingredient { +Items.SKELETON_SKULL }
-            ingredient {
+            primary { +Items.SKELETON_SKULL }
+            secondary {
                 +Items.ROTTEN_FLESH
                 count = 8
             }
         }.save(exporter)
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.CREEPER_HEAD }
-            ingredient { +Items.SKELETON_SKULL }
-            ingredient {
+            primary { +Items.SKELETON_SKULL }
+            secondary {
                 +Tags.Items.GUNPOWDERS
                 count = 8
             }
         }.save(exporter)
-        HTCombiningRecipeBuilder.assembling {
+        RagiumRecipeBuilder.assembling {
             result { +Items.PIGLIN_HEAD }
-            ingredient { +Items.SKELETON_SKULL }
-            ingredient {
+            primary { +Items.SKELETON_SKULL }
+            secondary {
                 +Items.PORKCHOP
                 count = 8
             }

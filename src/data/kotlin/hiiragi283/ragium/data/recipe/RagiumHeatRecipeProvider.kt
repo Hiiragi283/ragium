@@ -14,7 +14,7 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -39,7 +39,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
 
     private fun alloying() {
         // Netherite
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.INGOT, VanillaMaterialKeys.NETHERITE, 2)
             ingredient {
                 +baseOrDust(VanillaMaterialKeys.GOLD)
@@ -52,7 +52,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
 
         // Steel from Coal
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.STEEL)
             ingredient { +baseOrDust(VanillaMaterialKeys.IRON) }
             ingredient {
@@ -62,14 +62,14 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             recipeId suffix "_from_coal"
         }.save(exporter)
         // Steel from Coke
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.STEEL)
             ingredient { +baseOrDust(VanillaMaterialKeys.IRON) }
             ingredient { +baseOrDust(CommonMaterialKeys.COAL_COKE) }
             recipeId suffix "_from_coke"
         }.save(exporter)
         // Invar
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.INVAR, 3)
             ingredient {
                 +baseOrDust(VanillaMaterialKeys.IRON)
@@ -79,14 +79,14 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             condition { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.INVAR) }
         }.save(exporter)
         // Electrum
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.ELECTRUM, 2)
             ingredient { +baseOrDust(VanillaMaterialKeys.GOLD) }
             ingredient { +baseOrDust(CommonMaterialKeys.SILVER) }
             condition { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.ELECTRUM) }
         }.save(exporter)
         // Bronze
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.BRONZE, 4)
             ingredient {
                 +baseOrDust(VanillaMaterialKeys.COPPER)
@@ -95,13 +95,13 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             ingredient { +baseOrDust(CommonMaterialKeys.TIN) }
         }.save(exporter)
         // Brass
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.BRASS, 2)
             ingredient { +baseOrDust(VanillaMaterialKeys.COPPER) }
             ingredient { +baseOrDust(CommonMaterialKeys.ZINC) }
         }.save(exporter)
         // Constantan
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.CONSTANTAN, 2)
             ingredient { +baseOrDust(VanillaMaterialKeys.COPPER) }
             ingredient { +baseOrDust(CommonMaterialKeys.NICKEL) }
@@ -109,13 +109,13 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
 
         // Amethyst + Lapis -> Azure Shard
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.GEM, HCMaterialKeys.AZURE, 2)
             ingredient { +baseOrDust(VanillaMaterialKeys.AMETHYST) }
             ingredient { +baseOrDust(VanillaMaterialKeys.LAPIS) }
         }.save(exporter)
         // Azure Shard + Iron -> Azure Steel
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.INGOT, HCMaterialKeys.AZURE_STEEL)
             ingredient { +baseOrDust(VanillaMaterialKeys.IRON) }
             ingredient {
@@ -125,7 +125,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
 
         // Raginite + Copper -> Ragi-Alloy
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             ingredient { +baseOrDust(VanillaMaterialKeys.COPPER) }
             ingredient {
@@ -134,7 +134,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
         }.save(exporter)
         // Ragi-Alloy + Glowstone -> Adv Ragi-Alloy
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
             ingredient { +baseOrDust(RagiumMaterialKeys.RAGI_ALLOY) }
             ingredient {
@@ -143,7 +143,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
         }.save(exporter)
         // Raginite + Diamond -> Ragi-Crystal
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             +HTItemResult.MaterialPart(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             ingredient { +baseOrDust(VanillaMaterialKeys.DIAMOND) }
             ingredient {
@@ -276,7 +276,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
 
         // Cinnabar -> Mercury
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             result { +RagiumFluids.MERCURY.bucketHolder }
             ingredient {
                 +baseOrDust(CommonMaterialKeys.CINNABAR)

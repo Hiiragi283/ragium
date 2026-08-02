@@ -6,14 +6,17 @@
     }
   ],
   "type": "ragium:printing",
-  "ingredient": {
+  "primary": {
     "amount": 1,
     "items": "#c:gems/certus_quartz"
   },
-  "press": "ae2:calculation_processor_press",
   "result": {
     "count": 1,
     "id": "ae2:printed_calculation_processor"
+  },
+  "secondary": {
+    "amount": 1,
+    "items": "ae2:calculation_processor_press"
   },
   "time": 200
 }

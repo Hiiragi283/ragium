@@ -3,9 +3,9 @@ package hiiragi283.ragium.client.integration.jei.category
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.addChancedItem
 import hiiragi283.core.api.integration.jei.category.HTDisplayRecipeCategory
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
-import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
@@ -13,7 +13,7 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.RecipeIngredientRole
 import net.minecraft.world.item.ItemStack
 
-class HTAssemblingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategory.Progress(guiHelper, RagiumRecipeViewerTypes.ASSEMBLING) {
+class HTCombiningRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeViewerType<HTProgressRecipeDisplay>) : HTDisplayRecipeCategory.Progress(guiHelper, recipeType) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, contents: HTRecipeContents, focuses: IFocusGroup) {
         // inputs
         builder
