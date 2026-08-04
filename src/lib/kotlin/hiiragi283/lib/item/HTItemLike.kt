@@ -22,7 +22,7 @@ interface HTItemLike<out ITEM : Item> : ItemLike {
     /**
      * 新しい[ItemStackTemplate]のインスタンスを作成します。
      */
-    fun toTemplate(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): ItemStackTemplate
+    fun toTemplate(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): ItemStackTemplate?
 
     /**
      * 新しい[ItemStack]のインスタンスを作成します。

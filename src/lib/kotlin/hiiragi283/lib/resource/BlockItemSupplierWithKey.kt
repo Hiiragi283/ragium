@@ -10,15 +10,13 @@ import net.minecraft.world.level.block.Block
 typealias SimpleBlockItemSupplierWithKey = BlockItemSupplierWithKey<Block, Item>
 
 /**
- * ブロックとアイテム向けの[SupplierWithId]の拡張インターフェースです。
+ * ブロックとアイテム向けの[SupplierWithKey]の拡張インターフェースです。
  * @param BLOCK 提供するブロックのクラス
  * @param ITEM 提供するアイテムのクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.3
  */
-interface BlockItemSupplierWithKey<out BLOCK : Block, out ITEM : Item> : SupplierWithKey<Block, BLOCK> {
-    /**
-     * 保持しているアイテムを[SupplierWithKey]として取得します。
-     */
-    fun getItemSupplier(): SupplierWithKey<Item, ITEM>
+interface BlockItemSupplierWithKey<out BLOCK : Block, out ITEM : Item> {
+    val block: SupplierWithKey<Block, BLOCK>
+    val item: SupplierWithKey<Item, ITEM>
 }

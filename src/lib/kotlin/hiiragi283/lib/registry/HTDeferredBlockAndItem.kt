@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.Block
 typealias HTSimpleDeferredBlockAndItem = HTBasicDeferredBlockAndItem<Block>
 
 /**
- * [HTBlockItem]に基づいた[HTDeferredBlockAndItem]のエイリアスです。
+ * [BlockItem]に基づいた[HTDeferredBlockAndItem]のエイリアスです。
  * @param BLOCK ブロックのクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0
@@ -32,15 +32,14 @@ typealias HTBasicDeferredBlockAndItem<BLOCK> = HTDeferredBlockAndItem<BLOCK, Blo
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-data class HTDeferredBlockAndItem<out BLOCK : Block, out ITEM : Item>(val blockHolder: HTDeferredBlock<BLOCK>, val itemHolder: HTDeferredItem<ITEM>) :
+data class HTDeferredBlockAndItem<out BLOCK : Block, out ITEM : Item>(override val block: HTDeferredBlock<BLOCK>, override val item: HTDeferredItem<ITEM>) :
+    SupplierWithKey<Block, BLOCK>,
     BlockItemSupplierWithKey<BLOCK, ITEM>,
-    HTIdLike.Translatable by itemHolder,
-    HTItemLike<ITEM> by itemHolder {
+    HTIdLike.Translatable by item,
+    HTItemLike<ITEM> by item {
     constructor(id: Identifier) : this(HTDeferredBlock(id), HTDeferredItem(id))
 
-    override fun getItemSupplier(): SupplierWithKey<Item, ITEM> = itemHolder
+    override fun get(): BLOCK = block.get()
 
-    override fun get(): BLOCK = blockHolder.get()
-
-    override fun getKey(): ResourceKey<Block> = blockHolder.key
+    override fun getKey(): ResourceKey<Block> = block.key
 }

@@ -2,6 +2,7 @@
 
 package hiiragi283.lib.resource
 
+import hiiragi283.lib.util.Identity
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 
@@ -38,6 +39,8 @@ inline fun vanillaId(path: String): Identifier = Identifier.withDefaultNamespace
  * @since 26.1.0
  */
 fun vanillaId(vararg path: String): Identifier = Identifier.withDefaultNamespace(path.joinToString(separator = "/"))
+
+inline fun Identifier.modifyPath(operator: Identity<String>): Identifier = this.namespace.toId(operator(this.path))
 
 //    ResourceKey    //
 

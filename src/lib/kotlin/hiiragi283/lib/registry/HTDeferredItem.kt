@@ -3,7 +3,6 @@ package hiiragi283.lib.registry
 import hiiragi283.lib.item.HTItemLike
 import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.text.Text
-import hiiragi283.lib.util.getOrThrow
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
@@ -39,7 +38,7 @@ class HTDeferredItem<out ITEM : Item> :
 
     override fun asItem(): ITEM = get()
 
-    override fun toTemplate(count: Int, patch: DataComponentPatch): ItemStackTemplate = getResult().map { ItemStackTemplate(it, count, patch) }.getOrThrow()
+    override fun toTemplate(count: Int, patch: DataComponentPatch): ItemStackTemplate? = asOption().map { ItemStackTemplate(it, count, patch) }.getOrNull()
 
     override fun toStack(count: Int, patch: DataComponentPatch): ItemStack = when {
         this.isBound -> ItemStack(this, count, patch)

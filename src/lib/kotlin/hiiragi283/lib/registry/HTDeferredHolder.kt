@@ -23,19 +23,10 @@ open class HTDeferredHolder<R : Any, out T : R> :
 
     constructor(key: RegistryKey<R>, id: Identifier) : super(key.createKey(id))
 
-    /**
-     * @since 26.1.4
-     */
     fun getOrNull(): T? = if (this.isBound) get() else null
 
-    /**
-     * @since 26.1.4
-     */
     fun getResult(): HTTextResult<T> = getOrNull().toTextResult { "Trying to access unbound value: $key" }
 
-    /**
-     * @since 26.1.4
-     */
     fun asOption(): Option<T> = asOptional().kotlin
 
     override fun getId(): Identifier = super<DeferredHolder>.getId()

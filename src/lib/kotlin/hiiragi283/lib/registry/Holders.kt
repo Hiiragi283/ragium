@@ -3,9 +3,7 @@ package hiiragi283.lib.registry
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.resource.SimpleBlockItemSupplierWithKey
 import hiiragi283.lib.resource.SimpleSupplierWithKey
-import hiiragi283.lib.resource.SupplierWithKey
 import net.minecraft.core.Holder
-import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
@@ -65,11 +63,8 @@ fun Holder<Block>.toBlockLike(): SimpleBlockItemSupplierWithKey = when (this.kin
 
 @JvmRecord
 private data class BlockHolderWithKey(private val holder: Holder<Block>) : SimpleBlockItemSupplierWithKey {
-    override fun getItemSupplier(): SimpleSupplierWithKey<Item> = object : SupplierWithKey<Item, Item> {
-        override fun get(): Item = this@BlockHolderWithKey.get().asItem()
-
-        override fun getKey(): ResourceKey<Item> = Registries.ITEM.createKey(this@BlockHolderWithKey.getId())
-    }
+    @Suppress("DEPRECATION")
+    override fun getItemSupplier(): SimpleSupplierWithKey<Item> = this@BlockHolderWithKey.get().asItem().builtInRegistryHolder().toLike()
 
     override fun get(): Block = holder.value()
 
