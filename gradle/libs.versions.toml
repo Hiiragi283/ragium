@@ -1,0 +1,66 @@
+[versions]
+minecraft = "26.1.2"
+
+neo-moddev = "2.0.141"
+neo-version = "26.1.2.78"
+kff-version = "6.3.0"
+
+kotlin = "2.4.0"
+dokka = "2.2.0"
+spotless = "7.2.1"
+
+axion-release = "1.21.2"
+maven-publish = "0.37.0"
+mod-publish = "2.1.1"
+
+ae2 = "26.1.10-beta"
+curios = "15.0.0-beta.2+26.1.2"
+jade = "26.1.8+neoforge"
+jei = "29.12.0.40"
+ldlib = "26.1.2.26"
+
+[libraries]
+
+kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kff-version" }
+
+ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
+curios = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curios" }
+jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
+jei = { group = "mezz.jei", name = "jei-26.1.2-neoforge", version.ref = "jei" }
+jei-api = { group = "mezz.jei", name = "jei-26.1.2-neoforge-api", version.ref = "jei" }
+ldlib = { group = "com.lowdragmc.ldlib2", name = "ldlib2-neoforge-26.1", version.ref = "ldlib" }
+
+[bundles]
+
+common-impl = []
+
+common-compile = []
+
+common-runtime = []
+
+integration-impl = [
+    "ae2",
+    "curios",
+    "jade",
+]
+
+integration-compile = [
+    "jei-api",
+]
+
+integration-runtime = [
+    "jei"
+]
+
+[plugins]
+
+neo-moddev = { id = "net.neoforged.moddev", version.ref = "neo-moddev" }
+
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+dokka-javadoc = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+
+axion-release = { id = "pl.allegro.tech.build.axion-release", version.ref = "axion-release" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
+mod-publish = { id = "me.modmuss50.mod-publish-plugin", version.ref = "mod-publish" }
