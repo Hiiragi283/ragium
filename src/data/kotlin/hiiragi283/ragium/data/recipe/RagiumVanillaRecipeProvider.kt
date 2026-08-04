@@ -21,10 +21,12 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.crafting.HTBatteryCombiningRecipe
 import hiiragi283.ragium.common.crafting.HTTankCombiningRecipe
+import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import java.util.concurrent.CompletableFuture
 import kotlin.contracts.ExperimentalContracts
@@ -259,13 +261,13 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     //    Loot Tickets    //
 
     private fun lootTickets() {
-        HTShapedRecipeBuilder.create {
-            cross8()
-            define('A') { +RagiumItems.RAGI_MATTER }
-            define('B') { +Tags.Items.DYES_RED }
-            define('C') { +Items.PAPER }
-            +RagiumItems.RAGI_TICKET.toStack(4)
-            category = RecipeCategory.TOOLS
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +Items.PAPER }
+            fluidIngredient {
+                +RagiumFluids.RAGI_MATTER
+                amount = 250
+            }
+            result { +RagiumItems.RAGI_TICKET }
         }.save(exporter)
 
         // End City

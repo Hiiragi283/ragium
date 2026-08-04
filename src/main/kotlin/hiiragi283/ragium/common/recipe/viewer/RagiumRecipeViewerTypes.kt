@@ -8,10 +8,7 @@ import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.util.Either
 import hiiragi283.core.support.recipe.viewer.HTSimpleRecipeViewerType
-import hiiragi283.ragium.common.recipe.HTMassFabricatingRecipe
-import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -76,12 +73,6 @@ data object RagiumRecipeViewerTypes {
     // Arcane
     @JvmField
     val ENCHANTING: HTRecipeViewerType<HTProgressRecipeDisplay> = create(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER, 18 * 8, 18 * 3)
-
-    @JvmField
-    val MASS_FABRICATING: HTHolderRecipeViewerType<HTMassFabricatingRecipe> = createHolder(RagiumRecipeLookups.MASS_FABRICATING, RagiumItems.RAGI_MATTER, 18 * 8) {
-        workStations.clear()
-        workStations += RagiumBlocks.MASS_FABRICATOR.toStack()
-    }
 
     @JvmStatic
     private inline fun <reified T : Any> create(

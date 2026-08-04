@@ -39,7 +39,6 @@ import hiiragi283.ragium.client.integration.jei.category.HTAlloyingRecipeCategor
 import hiiragi283.ragium.client.integration.jei.category.HTChemicalReactingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTCuttingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTImplodingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.HTMassFabricatingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTPlantingRecipeCategory
@@ -109,7 +108,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Electronics
             HTDoubleItemToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PRINTING),
             // Arcane
-            HTMassFabricatingRecipeCategory(guiHelper),
         )
     }
 
@@ -163,12 +161,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         }
 
         // Arcane
-        helper.addLookupRecipes(RagiumRecipeViewerTypes.MASS_FABRICATING, RagiumRecipeLookups.MASS_FABRICATING, sorter = compareBy { it.point })
 
         registerCustomRecipes(helper)
     }
 
     private fun registerCustomRecipes(helper: HTJeiRecipeHelper) {
+        // Melting
         helper.addDisplayRecipes(
             RagiumRecipeViewerTypes.MELTING,
             HTPhysicalSideHelper.lookup(Registries.ENCHANTMENT)
@@ -224,7 +222,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeViewerTypes.PRINTING,
             // Arcane
             RagiumRecipeViewerTypes.ENCHANTING,
-            RagiumRecipeViewerTypes.MASS_FABRICATING,
         )
     }
 }

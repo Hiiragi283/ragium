@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.integration.mek.RagiumChemicals
 import hiiragi283.ragium.common.integration.mek.RagiumMekItems
-import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.data.advancement.RagiumAdvancementKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
@@ -165,7 +164,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.ELECTRIC_IGNITER, "Electric Igniter")
         add(RagiumItems.LOCATION_TICKET, "Location Ticket")
 
-        add(RagiumItems.RAGI_MATTER, "Ragi-Matter")
         add(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
@@ -190,7 +188,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.PRINTING, "Printing")
 
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
-        add(RagiumRecipeLookups.MASS_FABRICATING, "Mass Fabricating")
 
         // Tag
         add(RagiumTags.Fluids.ALCOHOL, "Alcohol")

@@ -2,7 +2,6 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.registry.HTDeferredItemRegister
 import hiiragi283.core.api.registry.HTSimpleDeferredItem
-import hiiragi283.core.common.item.endgame.HTCreativeItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTBatteryItem
 import hiiragi283.ragium.common.item.HTElectricIgniterItem
@@ -26,6 +25,7 @@ data object RagiumItems {
     @JvmStatic
     fun register(eventBus: IEventBus) {
         REGISTER.addAlias("mercury_bottle", "thermometer")
+        REGISTER.addAlias("ragi_matter", "ragi_ticket")
 
         REGISTER.register(eventBus)
 
@@ -137,9 +137,6 @@ data object RagiumItems {
     // Ultimate
 
     //    End Game    //
-
-    @JvmField
-    val RAGI_MATTER: HTSimpleDeferredItem = REGISTER.registerItem("ragi_matter", ::HTCreativeItem)
 
     @JvmField
     val RAGI_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)

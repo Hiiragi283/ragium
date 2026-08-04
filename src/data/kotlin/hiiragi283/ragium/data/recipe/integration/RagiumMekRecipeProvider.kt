@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.integration.mek.RagiumChemicals
 import hiiragi283.ragium.common.integration.mek.RagiumMekItems
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.setup.RagiumItems
 import java.util.concurrent.CompletableFuture
 import mekanism.api.chemical.ChemicalStack
 import mekanism.api.datagen.recipe.builder.ItemStackChemicalToItemStackRecipeBuilder
@@ -21,7 +20,6 @@ import mekanism.api.recipes.ingredients.ItemStackIngredient
 import mekanism.api.recipes.ingredients.creator.IChemicalStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IngredientCreatorAccess
-import mekanism.common.registries.MekanismItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
@@ -98,12 +96,6 @@ class RagiumMekRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
             ).build(output, id(METALLURGIC_INFUSING, "ragi_crystal"))
         }
         // Antimatter -> Ragi-Matter
-        ItemStackChemicalToItemStackRecipeBuilder.metallurgicInfusing(
-            itemAccess.from(MekanismItems.ANTIMATTER_PELLET),
-            chemicalAccess.fromHolder(RagiumChemicals.RAGINITE, 640),
-            RagiumItems.RAGI_MATTER.toStack(),
-            false,
-        ).build(output, id(METALLURGIC_INFUSING, "ragi_matter"))
     }
 
     override fun getName(): String = "Mekanism Recipes"

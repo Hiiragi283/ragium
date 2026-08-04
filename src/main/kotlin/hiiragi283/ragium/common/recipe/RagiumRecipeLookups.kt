@@ -9,8 +9,6 @@ import hiiragi283.core.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.core.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
-import hiiragi283.core.api.registry.HTSimpleDeferredItem
-import hiiragi283.core.api.registry.createKey
 import hiiragi283.core.api.util.identity
 import hiiragi283.core.common.recipe.VanillaRecipeLookups
 import hiiragi283.core.support.recipe.cache.HTCompoundRecipeLookup
@@ -18,7 +16,6 @@ import hiiragi283.core.support.recipe.cache.HTVanillaRecipeLookup
 import hiiragi283.core.support.recipe.cache.fromRecipeType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
@@ -28,13 +25,9 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.common.Tags
 
 data object RagiumRecipeLookups {
@@ -94,19 +87,6 @@ data object RagiumRecipeLookups {
     // Arcane
     @JvmField
     val ENCHANTING: HTCompoundRecipeLookup<HTEnchantingRecipe> = create(RagiumConst.ENCHANTING)
-
-    @JvmField
-    val MASS_FABRICATING: HTRecipeLookup.Translatable<HTMassFabricatingRecipe> = object : HTRecipeLookup.Translatable<HTMassFabricatingRecipe> {
-        override fun getAllRecipes(context: HTRecipeLookup.Context): Map<ResourceLocation, HTMassFabricatingRecipe> {
-            val map: MutableMap<ResourceLocation, HTMassFabricatingRecipe> = mutableMapOf()
-            for ((key: ResourceKey<Item>, point: Int) in BuiltInRegistries.ITEM.getDataMap(RagiumDataMapTypes.MATTER_POINT)) {
-                map[key.location().withPrefix("${RagiumConst.MASS_FABRICATING}/")] = HTMassFabricatingRecipe(HTSimpleDeferredItem(key).toStack(), point)
-            }
-            return map
-        }
-
-        override fun getKey(): ResourceKey<RecipeType<*>> = Registries.RECIPE_TYPE.createKey(RagiumAPI.id(RagiumConst.MASS_FABRICATING))
-    }
 
     @JvmStatic
     private fun <RECIPE : Any> create(path: String): HTCompoundRecipeLookup<RECIPE> = HTCompoundRecipeLookup.create(RagiumAPI.id(path))

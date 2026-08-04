@@ -53,8 +53,6 @@ data object RagiumConst {
 
     //    Serialization    //
 
-    const val DEVICE = "device"
-    const val LOCATION = "location"
     const val MACHINE = "machine"
     const val MAX_PROGRESS = "max_progress"
     const val PROGRESS = "progress"
@@ -89,5 +87,4 @@ data object RagiumConst {
 
     // Arcane
     const val ENCHANTING = "enchanting"
-    const val MASS_FABRICATING = "mass_fabricating"
 }

@@ -2,13 +2,8 @@ package hiiragi283.ragium.data
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.map.HTDataMapProvider
-import hiiragi283.core.api.registry.HTSimpleDeferredItem
-import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.toId
-import hiiragi283.core.api.resource.vanillaId
-import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.createTagKey
-import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumFluids
@@ -16,21 +11,14 @@ import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
-import net.minecraft.tags.ItemTags
-import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 
 class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) : HTDataMapProvider(packOutput, lookupProvider) {
     override fun gatherInternal() {
-        mobHeads()
-
         coolants()
         magmaticFuels()
         combustionFuels()
-
-        matterPoint()
     }
 
     //    Vanilla    //
@@ -40,7 +28,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     // Block
 
     // Entity Type
-    private fun mobHeads() {
+    /*private fun mobHeads() {
         builder(RagiumDataMapTypes.MOB_HEAD)
             .add(EntityType.SKELETON.toLike(), HTSimpleDeferredItem(vanillaId("skeleton_skull")))
             .add(EntityType.WITHER_SKELETON.toLike(), HTSimpleDeferredItem(vanillaId("wither_skeleton_skull")))
@@ -48,7 +36,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             .add(EntityType.CREEPER.toLike(), HTSimpleDeferredItem(vanillaId("creeper_head")))
             .add(EntityType.ENDER_DRAGON.toLike(), HTSimpleDeferredItem(vanillaId("dragon_head")))
             .add(EntityType.PIGLIN.toLike(), HTSimpleDeferredItem(vanillaId("piglin_head")))
-    }
+    }*/
 
     // Fluid
     private fun coolants() {
@@ -103,7 +91,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     }
 
     // Item
-    private fun matterPoint() {
+    /*private fun matterPoint() {
         builder(RagiumDataMapTypes.MATTER_POINT)
             .add(CommonTagPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE, 64)
             .add(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE, 16)
@@ -158,7 +146,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             .add(Items.SHULKER_SHELL.toLike(), 64)
             .add(Items.SPONGE.toLike(), 64)
             .add(Items.TOTEM_OF_UNDYING.toLike(), 256)
-    }
+    }*/
 
     //    Extensions    //
 

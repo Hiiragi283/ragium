@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.integration.mek.RagiumChemicals
 import hiiragi283.ragium.common.integration.mek.RagiumMekItems
-import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.data.advancement.RagiumAdvancementKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
@@ -164,7 +163,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.ELECTRIC_IGNITER, "電動着火器")
         add(RagiumItems.LOCATION_TICKET, "座標チケット")
 
-        add(RagiumItems.RAGI_MATTER, "らぎマター")
         add(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
@@ -189,7 +187,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.PRINTING, "刻印")
 
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
-        add(RagiumRecipeLookups.MASS_FABRICATING, "マター生成")
 
         // Tag
         add(RagiumTags.Fluids.ALCOHOL, "アルコール")

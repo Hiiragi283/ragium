@@ -50,13 +50,9 @@ data object Ragium : HTCommonMod() {
     }
 
     override fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMapTypes.MOB_HEAD)
-
         event.register(RagiumDataMapTypes.COOLANT)
         event.register(RagiumDataMapTypes.MAGMATIC_FUEL)
         event.register(RagiumDataMapTypes.COMBUSTION_FUEL)
-
-        event.register(RagiumDataMapTypes.MATTER_POINT)
     }
 
     override fun commonSetup(event: FMLCommonSetupEvent) {
