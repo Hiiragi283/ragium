@@ -1,71 +1,105 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.handler.HTTypedProgressHandler
-import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
-import hiiragi283.core.support.storage.item.HTBasicItemSlot
-import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.block.entity.machine.base.HTItemToItemBlockEntity
+import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.api.tag.HiiragiCoreTags
+import hiiragi283.core.common.gui.widget.HTFluidWidget
+import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.support.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumFluids
+import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
+import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.FluidType
 
-class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlockEntity(RagiumBlockEntityTypes.MASS_FABRICATOR.get(), pos, state) {
-    override fun createInputSlot(listener: HTContentListener): HTBasicItemSlot = HTBasicItemSlot.input(
-        listener,
-        // canInsert = { RagiumDataMapTypes.getMatterPoint(it) > 0 },
-    )
+class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MASS_FABRICATOR.get(), pos, state) {
+    private lateinit var inputTank: HTBasicFluidTank
+    private lateinit var outputTank: HTBasicFluidTank
+
+    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        inputTank = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTVariableFluidTank.input(
+                listener,
+                getTankCapacity(),
+                filter = { resource: HTFluidResourceType -> resource.isOf(HiiragiCoreTags.Fluids.ELDRITCH) },
+            ),
+        )
+
+        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(listener, getTankCapacity()))
+    }
+
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        super.setupMenu(widgetHolder)
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(2))
+        // progress
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(3.75))
+        // tanks
+        widgetHolder += HTFluidWidget.Tank(
+            inputTank,
+            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+            false,
+        )
+        widgetHolder.track(inputTank)
+
+        widgetHolder += HTFluidWidget.Tank(
+            outputTank,
+            HTSlotHelper.getSlotPosX(6),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.OUTPUT,
+            false,
+        )
+        widgetHolder.track(outputTank)
+    }
+
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.massFabricator
 
     //    Processing    //
 
-    private var storedPoints: Int = 0
+    private inner class ProgressHandlerImpl : HTTypedProgressHandler<FluidStack>() {
+        private val inputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
+        private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
-    override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
-        // 入力スロットのアイテムを消費してポイントをためる
-        /*if (!inputSlot.isEmpty()) {
-            val stackIn: ItemStack = inputSlot.getStack()
-            val pointIn: Int = RagiumDataMapTypes.getTotalMatterPoint(stackIn)
-            if (pointIn > 0) {
-                storedPoints += pointIn
-                inputSlot.extract(stackIn.count, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-                return true
-            } else {
-                return false
+        override fun findRecipe(level: ServerLevel, pos: BlockPos): FluidStack? {
+            val amount: Int = minOf(inputTank.getAmount(), outputTank.getNeeded())
+            return when {
+                amount > 0 -> RagiumFluids.RAGI_MATTER.toStack(amount)
+                else -> null
             }
-        }*/
-        // ポイントが一定数以上なら電力を消費してマターを生産する
-        return super.onUpdateMachine(level, pos, state)
-    }
+        }
 
-    private inner class ProgressHandlerImpl : HTTypedProgressHandler<ItemStack>() {
-        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+        override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: FluidStack): Boolean = outputHandler.canInsert(recipe)
 
-        override fun findRecipe(level: ServerLevel, pos: BlockPos): ItemStack = RagiumFluids.RAGI_MATTER.bucketHolder.toStack() // RagiumItems.RAGI_MATTER.toStack() TODO
-
-        override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: ItemStack): Boolean = outputHandler.canInsert(recipe)
-
-        override fun getMaxProgress(recipe: ItemStack): Int = updateAndGetProgress(20 * 60)
+        override fun getMaxProgress(recipe: FluidStack): Int = updateAndGetProgress(recipe.amount / 5)
 
         override fun getProgress(level: ServerLevel, pos: BlockPos): Int = handler.consume()
 
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: ItemStack) {
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: FluidStack) {
             // output
             outputHandler.insert(recipe)
             // input
-            storedPoints -= RagiumConst.MAX_MATTER_POINT
+            inputHandler.consume(FluidType.BUCKET_VOLUME)
             // sound
             playSound(SoundEvents.RESPAWN_ANCHOR_CHARGE)
         }
     }
 
     override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
-
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.massFabricator
 }
