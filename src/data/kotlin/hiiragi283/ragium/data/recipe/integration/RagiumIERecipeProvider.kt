@@ -65,7 +65,7 @@ class RagiumIERecipeProvider(packOutput: PackOutput, future: CompletableFuture<H
                 +tag(CommonTagPrefixes.DUST, CommonMaterialKeys.COAL_COKE)
                 count = 8
             }
-            +HTItemResult.MaterialPart(CommonParts.DUST, HCIntegrationMaterialKeys.HOP_GRAPHITE)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.DUST, HCIntegrationMaterialKeys.HOP_GRAPHITE) }
             condition { +condition }
         }.save(exporter)
         RagiumRecipeBuilder.bathing {

@@ -137,7 +137,7 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
                 +RagiumFluids.MOLTEN_RAGINITE
                 amount = HTConst.INGOT_AMOUNT * 6
             }
-            +HTItemResult.MaterialPart(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            itemResult { +HTItemResult.MaterialPartEntry(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) }
         }.save(exporter)
         // Liquid Dyes
         for ((color: HTDefaultColor, content: HTFluidContent) in HCFluids.DYES.asSequenceWithColor()) {
@@ -267,11 +267,11 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
         RagiumRecipeBuilder.washing {
             ingredient { +Tags.Items.SANDS }
             result {
-                +HTItemResult.MaterialPart(CommonParts.DUST, VanillaMaterialKeys.QUARTZ)
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, VanillaMaterialKeys.QUARTZ)
                 chance = fraction(1, 2)
             }
             result {
-                +HTItemResult.MaterialPart(CommonParts.DUST, RagiumMaterialKeys.BORAX)
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, RagiumMaterialKeys.BORAX)
                 chance = fraction(1, 4)
             }
         }.save(exporter)
@@ -281,8 +281,14 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
                 +tag(CommonTagPrefixes.DUST, CommonMaterialKeys.ASH)
                 count = 4
             }
-            +HTItemResult.MaterialPart(CommonParts.DUST, CommonMaterialKeys.CARBON, 3)
-            +HTItemResult.MaterialPart(CommonParts.DUST, CommonMaterialKeys.CARBON).withChance(fraction(1, 4))
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, CommonMaterialKeys.CARBON)
+                count = 3
+            }
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, CommonMaterialKeys.CARBON)
+                chance = fraction(1, 4)
+            }
             time = 20 * 5
         }.save(exporter)
     }

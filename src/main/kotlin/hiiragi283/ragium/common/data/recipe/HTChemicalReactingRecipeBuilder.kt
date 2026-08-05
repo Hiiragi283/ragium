@@ -53,10 +53,6 @@ class HTChemicalReactingRecipeBuilder : HTProgressRecipeBuilder<HTChemicalReacti
         fluidResults += this
     }
 
-    operator fun HTItemResult.unaryPlus() {
-        itemResult = this.some()
-    }
-
     inline fun ingredient(builderAction: FluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
@@ -82,7 +78,7 @@ class HTChemicalReactingRecipeBuilder : HTProgressRecipeBuilder<HTChemicalReacti
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HTItemResultBuilder().apply(builderAction).build()
+        itemResult = Option.some(HTItemResultBuilder().apply(builderAction).build())
     }
 
     override fun getPrimalId(): ResourceLocation = fluidResults[0].getId()

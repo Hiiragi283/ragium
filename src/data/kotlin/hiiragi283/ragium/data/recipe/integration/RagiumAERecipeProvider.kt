@@ -27,7 +27,7 @@ class RagiumAERecipeProvider(packOutput: PackOutput, future: CompletableFuture<H
         // Sky Stone Dust
         HCRecipeBuilders.crushing {
             ingredient { +AEBlocks.SKY_STONE_BLOCK }
-            result { +HTItemResult.MaterialPart(CommonParts.DUST, HCIntegrationMaterialKeys.SKY_STONE) }
+            result { +HTItemResult.MaterialPartEntry(CommonParts.DUST, HCIntegrationMaterialKeys.SKY_STONE) }
             recipeId suffix "_from_stone"
             condition { +condition }
         }.save(exporter)
@@ -58,7 +58,7 @@ class RagiumAERecipeProvider(packOutput: PackOutput, future: CompletableFuture<H
     private fun alloying() {
         // Fluix Crystal
         HTAlloyingRecipeBuilder.create {
-            result { +HTItemResult.MaterialPart(CommonParts.GEM, HCIntegrationMaterialKeys.FLUIX) }
+            result { +HTItemResult.MaterialPartEntry(CommonParts.GEM, HCIntegrationMaterialKeys.FLUIX) }
             ingredient { +baseOrDust(HCIntegrationMaterialKeys.CERTUS_QUARTZ) }
             ingredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE) }
             ingredient { +baseOrDust(VanillaMaterialKeys.QUARTZ) }

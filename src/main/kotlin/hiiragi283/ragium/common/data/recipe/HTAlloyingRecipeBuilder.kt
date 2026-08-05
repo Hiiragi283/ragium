@@ -36,10 +36,6 @@ class HTAlloyingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private va
         ingredients += this
     }
 
-    operator fun HTItemResult.unaryPlus() {
-        result = this
-    }
-
     inline fun ingredient(builderAction: IngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)

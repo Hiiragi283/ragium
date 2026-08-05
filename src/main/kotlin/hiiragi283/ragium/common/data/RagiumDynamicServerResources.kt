@@ -140,7 +140,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
                 +tag(crushedPrefix, key)
                 count = 8
             }
-            result { +HTItemResult.MaterialPart(RagiumParts.PELLET, key) }
+            result { +HTItemResult.MaterialPartEntry(RagiumParts.PELLET, key) }
             recipeId suffix "_from_dust"
         }.save(exporter)
     }
@@ -151,7 +151,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
         // レシピを登録
         RagiumRecipeBuilder.compressing {
             ingredient { +tag(CommonTagPrefixes.INGOT, key) }
-            result { +HTItemResult.MaterialPart(CommonParts.PLATE, key) }
+            result { +HTItemResult.MaterialPartEntry(CommonParts.PLATE, key) }
             recipeId suffix "_from_ingot"
         }.save(exporter)
     }
@@ -175,7 +175,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
                 count = inputCount
             }
             result {
-                +HTItemResult.MaterialPart(CommonParts.ROD, key)
+                +HTItemResult.MaterialPartEntry(CommonParts.ROD, key)
                 count = outputCount
             }
             time = HCDynamicRecipeProvider.getTimeFromHardness(material, time * 3) ?: return
@@ -190,7 +190,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
         RagiumRecipeBuilder.cutting {
             ingredient { +tag(CommonTagPrefixes.STORAGE_BLOCK, key) }
             result {
-                +HTItemResult.MaterialPart(CommonParts.PLATE, key)
+                +HTItemResult.MaterialPartEntry(CommonParts.PLATE, key)
                 count = material.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount
             }
             time = HCDynamicRecipeProvider.getTimeFromHardness(material, time * 3) ?: (time * 3)
@@ -410,7 +410,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
                 amount = part.getScaledAmount(material.getOrDefault(RagiumMaterialPropertyKeys.DEFAULT_FLUID_AMOUNT), material).toInt()
             }
             itemIngredient { +HCDynamicRecipeProvider.getBlueprint(prefix) }
-            result { +HTItemResult.MaterialPart(part, material.key) }
+            result { +HTItemResult.MaterialPartEntry(part, material.key) }
             recipeId suffix "_from_molten"
         }.save(exporter)
     }
@@ -427,7 +427,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
         // レシピを登録
         RagiumRecipeBuilder.imploding {
             ingredient { +tag(crushedPrefix, key) }
-            result { +HTItemResult.MaterialPart(part, key) }
+            result { +HTItemResult.MaterialPartEntry(part, key) }
             recipeId suffix "from_${crushedPart.name}"
         }.save(exporter)
     }
@@ -496,7 +496,10 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
             // 材料
             ingredient { +tag(CommonTagPrefixes.CRUSHED_ORE, key) }
             // 主産物
-            result { +HTItemResult.MaterialPart(CommonParts.DUST, key, partManager.getOrThrow(CommonParts.CRUSHED_ORE).getScaledAmount(1, material).toInt()) }
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, key)
+                count = partManager.getOrThrow(CommonParts.CRUSHED_ORE).getScaledAmount(1, material).toInt()
+            }
             // 副産物
             material[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
                 ?.getResult(HTExtraOreResultMap.Phase.WASH_CRUSHED)
@@ -518,7 +521,10 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
                 .getScaledAmount(fraction(3, 2), material)
                 .toFloat()
                 .let(Mth::ceil)
-            result { +HTItemResult.MaterialPart(CommonParts.DUST, key, outputCount) }
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, key)
+                count = outputCount
+            }
 
             recipeId suffix "_from_crushed_ore/sulfuric_acid"
         }

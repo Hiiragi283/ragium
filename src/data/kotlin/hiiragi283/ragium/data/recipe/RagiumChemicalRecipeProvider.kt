@@ -90,7 +90,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +ItemTags.LOGS_THAT_BURN
                 count = 8
             }
-            +HTItemResult.MaterialPart(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
+            itemResult {
+                +HTItemResult.MaterialPartEntry(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL)
+                count = 8
+            }
             fluidResult { +RagiumFluids.CREOSOTE }
             recipeId suffix "_from_log"
         }
@@ -100,7 +103,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +tag(RagiumTagPrefixes.PELLET, VanillaMaterialKeys.WOOD)
                 count = 8
             }
-            +HTItemResult.MaterialPart(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
+            itemResult {
+                +HTItemResult.MaterialPartEntry(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL)
+                count = 8
+            }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 500
@@ -115,7 +121,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +tag(CommonTagPrefixes.FUEL, VanillaMaterialKeys.COAL)
                 count = 8
             }
-            +HTItemResult.MaterialPart(CommonParts.FUEL, CommonMaterialKeys.COAL_COKE, 8)
+            itemResult {
+                +HTItemResult.MaterialPartEntry(CommonParts.FUEL, CommonMaterialKeys.COAL_COKE)
+                count = 8
+            }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 2000
@@ -126,7 +135,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL)
                 count = 8
             }
-            +HTItemResult.MaterialPart(CommonParts.DUST, CommonMaterialKeys.COAL_COKE, 8)
+            itemResult {
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, CommonMaterialKeys.COAL_COKE)
+                count = 8
+            }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 2000
@@ -134,7 +146,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }
         pyrolyzing {
             itemIngredient { +tag(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.COAL) }
-            +HTItemResult.MaterialPart(CommonParts.BLOCK, CommonMaterialKeys.COAL_COKE)
+            itemResult { +HTItemResult.MaterialPartEntry(CommonParts.BLOCK, CommonMaterialKeys.COAL_COKE) }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 2000
@@ -356,7 +368,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +RagiumFluids.CRUDE_OIL
                 amount = 500
             }
-            +HTItemResult.MaterialPart(CommonParts.FUEL, RagiumMaterialKeys.PETROLEUM_COKE)
+            itemResult { +HTItemResult.MaterialPartEntry(CommonParts.FUEL, RagiumMaterialKeys.PETROLEUM_COKE) }
             fluidResult {
                 +RagiumFluids.NAPHTHA
                 amount = 300
@@ -383,7 +395,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +RagiumFluids.OXYGEN
                 amount = 250
             }
-            +HTItemResult.MaterialPart(CommonParts.PLATE, CommonMaterialKeys.PLASTIC, 2)
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.PLATE, CommonMaterialKeys.PLASTIC)
+                count = 2
+            }
         }.save(exporter)
 
         // CH4 + H2O -> Synthetic Gas
@@ -623,7 +638,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +RagiumFluids.SULFURIC_ACID
                 amount = 500
             }
-            +HTItemResult.MaterialPart(CommonParts.DUST, CommonMaterialKeys.SILICON)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.DUST, CommonMaterialKeys.SILICON) }
         }.save(exporter)
 
         // Quartz Dust + Gold Plate + Plastic -> Circuit Board

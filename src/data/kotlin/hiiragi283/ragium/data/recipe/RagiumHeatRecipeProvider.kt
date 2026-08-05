@@ -39,7 +39,10 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
     private fun alloying() {
         // Netherite
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.INGOT, VanillaMaterialKeys.NETHERITE, 2)
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.INGOT, VanillaMaterialKeys.NETHERITE)
+                count = 2
+            }
             ingredient {
                 +baseOrDust(VanillaMaterialKeys.GOLD)
                 count = 4
@@ -52,7 +55,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
 
         // Steel from Coal
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.STEEL)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.INGOT, CommonMaterialKeys.STEEL) }
             ingredient { +baseOrDust(VanillaMaterialKeys.IRON) }
             ingredient {
                 +setOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL).flatMap(::baseOrDust)
@@ -62,14 +65,17 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Steel from Coke
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.STEEL)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.INGOT, CommonMaterialKeys.STEEL) }
             ingredient { +baseOrDust(VanillaMaterialKeys.IRON) }
             ingredient { +baseOrDust(CommonMaterialKeys.COAL_COKE) }
             recipeId suffix "_from_coke"
         }.save(exporter)
         // Invar
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.INVAR, 3)
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.INGOT, CommonMaterialKeys.INVAR)
+                count = 3
+            }
             ingredient {
                 +baseOrDust(VanillaMaterialKeys.IRON)
                 count = 2
@@ -79,14 +85,20 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Electrum
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.ELECTRUM, 2)
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.INGOT, CommonMaterialKeys.ELECTRUM)
+                count = 2
+            }
             ingredient { +baseOrDust(VanillaMaterialKeys.GOLD) }
             ingredient { +baseOrDust(CommonMaterialKeys.SILVER) }
             condition { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.ELECTRUM) }
         }.save(exporter)
         // Bronze
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.BRONZE, 4)
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.INGOT, CommonMaterialKeys.BRONZE)
+                count = 4
+            }
             ingredient {
                 +baseOrDust(VanillaMaterialKeys.COPPER)
                 count = 3
@@ -95,13 +107,19 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Brass
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.BRASS, 2)
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.INGOT, CommonMaterialKeys.BRASS)
+                count = 2
+            }
             ingredient { +baseOrDust(VanillaMaterialKeys.COPPER) }
             ingredient { +baseOrDust(CommonMaterialKeys.ZINC) }
         }.save(exporter)
         // Constantan
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.INGOT, CommonMaterialKeys.CONSTANTAN, 2)
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.INGOT, CommonMaterialKeys.CONSTANTAN)
+                count = 2
+            }
             ingredient { +baseOrDust(VanillaMaterialKeys.COPPER) }
             ingredient { +baseOrDust(CommonMaterialKeys.NICKEL) }
             condition { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.CONSTANTAN) }
@@ -109,13 +127,16 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
 
         // Amethyst + Lapis -> Azure Shard
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.GEM, HCMaterialKeys.AZURE, 2)
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.GEM, HCMaterialKeys.AZURE)
+                count = 2
+            }
             ingredient { +baseOrDust(VanillaMaterialKeys.AMETHYST) }
             ingredient { +baseOrDust(VanillaMaterialKeys.LAPIS) }
         }.save(exporter)
         // Azure Shard + Iron -> Azure Steel
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.INGOT, HCMaterialKeys.AZURE_STEEL)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.INGOT, HCMaterialKeys.AZURE_STEEL) }
             ingredient { +baseOrDust(VanillaMaterialKeys.IRON) }
             ingredient {
                 +baseOrDust(HCMaterialKeys.AZURE)
@@ -125,7 +146,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
 
         // Raginite + Copper -> Ragi-Alloy
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.INGOT, RagiumMaterialKeys.RAGI_ALLOY) }
             ingredient { +baseOrDust(VanillaMaterialKeys.COPPER) }
             ingredient {
                 +baseOrDust(RagiumMaterialKeys.RAGINITE)
@@ -134,7 +155,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Ragi-Alloy + Glowstone -> Adv Ragi-Alloy
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) }
             ingredient { +baseOrDust(RagiumMaterialKeys.RAGI_ALLOY) }
             ingredient {
                 +baseOrDust(VanillaMaterialKeys.GLOWSTONE)
@@ -143,7 +164,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Raginite + Diamond -> Ragi-Crystal
         HTAlloyingRecipeBuilder.create {
-            +HTItemResult.MaterialPart(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) }
             ingredient { +baseOrDust(VanillaMaterialKeys.DIAMOND) }
             ingredient {
                 +baseOrDust(RagiumMaterialKeys.RAGINITE)
@@ -162,7 +183,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +coals.flatMap(::baseOrDust)
                 count = 64
             }
-            +HTItemResult.MaterialPart(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.GEM, VanillaMaterialKeys.DIAMOND) }
             recipeId suffix "_from_coals"
         }.save(exporter)
         RagiumRecipeBuilder.imploding {
@@ -170,7 +191,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +coals.map(CommonTagPrefixes.STORAGE_BLOCK::itemTagKey)
                 count = 7
             }
-            +HTItemResult.MaterialPart(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.GEM, VanillaMaterialKeys.DIAMOND) }
             recipeId suffix "_from_coal_blocks"
         }.save(exporter)
         // Coal Coke -> Diamond
@@ -179,7 +200,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +baseOrDust(CommonMaterialKeys.COAL_COKE)
                 count = 32
             }
-            +HTItemResult.MaterialPart(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.GEM, VanillaMaterialKeys.DIAMOND) }
             recipeId suffix "_from_coal_coke"
         }.save(exporter)
         // Carbon -> Diamond
@@ -188,7 +209,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +baseOrDust(CommonMaterialKeys.CARBON)
                 count = 16
             }
-            +HTItemResult.MaterialPart(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.GEM, VanillaMaterialKeys.DIAMOND) }
             recipeId suffix "_from_carbon"
         }.save(exporter)
     }
