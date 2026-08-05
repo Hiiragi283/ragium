@@ -7,6 +7,7 @@ import hiiragi283.ragium.common.item.HTBatteryItem
 import hiiragi283.ragium.common.item.HTElectricIgniterItem
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
+import hiiragi283.ragium.common.item.HTMemoryDiscItem
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.world.food.Foods
@@ -94,7 +95,7 @@ data object RagiumItems {
     val LASER_EMITTER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("laser_emitter")
 
     @JvmField
-    val MEMORY_DISC: HTSimpleDeferredItem = REGISTER.registerSimpleItem("memory_disc")
+    val MEMORY_DISC: HTSimpleDeferredItem = REGISTER.registerItem("memory_disc", ::HTMemoryDiscItem)
 
     // Arcane
     @JvmField

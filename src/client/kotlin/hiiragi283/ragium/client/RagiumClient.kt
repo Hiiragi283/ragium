@@ -11,10 +11,12 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.render.HTBatteryRenderer
+import hiiragi283.ragium.client.render.HTMemoryDiscClientTooltipComponent
 import hiiragi283.ragium.client.render.HTTankRenderer
 import hiiragi283.ragium.client.render.block.HTCrateRenderer
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
+import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
@@ -31,6 +33,7 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
+import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
@@ -39,6 +42,10 @@ import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
 data object RagiumClient : HTClientMod() {
     override fun initialize(eventBus: IEventBus, container: ModContainer) {
+        eventBus.addListener { event: RegisterClientTooltipComponentFactoriesEvent ->
+            event.register(HTMemoryDiscTooltipComponent::class.java, ::HTMemoryDiscClientTooltipComponent)
+        }
+
         configScreen(container)
 
         HTDynamicResourcePack.addDomain(RagiumAPI.MOD_ID)
