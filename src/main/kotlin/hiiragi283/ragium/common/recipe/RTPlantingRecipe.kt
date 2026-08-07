@@ -4,9 +4,9 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTRecipeResultHelper
 import hiiragi283.core.api.recipe.HTSerializableRecipe
-import hiiragi283.core.api.recipe.base.HTProgressData
-import hiiragi283.core.api.recipe.base.HTProgressRecipe
-import hiiragi283.core.api.recipe.ingredient.getMatchingStack
+import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.recipe.progress.HTBiProgressProvider
+import hiiragi283.core.api.recipe.progress.HTProgressData
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.codec.listOrElement
@@ -14,26 +14,25 @@ import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
 class RTPlantingRecipe(
-    val plant: Ingredient,
-    val soil: Ingredient,
+    val plant: HTItemIngredient,
+    val soil: HTItemIngredient,
     val results: List<HTChancedItemResult>,
     override val progressData: HTProgressData,
 ) : HTPlantingRecipe,
-    HTProgressRecipe.Simple<RecipeInput>,
+    HTBiProgressProvider.Simple<ItemStack, ItemStack>,
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTPlantingRecipe> = HTCodecs.recordMap { instance ->
             instance
                 .group(
-                    HTCodecs.INGREDIENT.fieldOf("plant").forGetter(RTPlantingRecipe::plant),
-                    HTCodecs.INGREDIENT.fieldOf("soil").forGetter(RTPlantingRecipe::soil),
+                    HTItemIngredient.SINGLE_CODEC.fieldOf("plant").forGetter(RTPlantingRecipe::plant),
+                    HTItemIngredient.SINGLE_CODEC.fieldOf("soil").forGetter(RTPlantingRecipe::soil),
                     HTChancedItemResult.CODEC.listOrElement(1..4).fieldOf(HTConst.RESULTS).forGetter(RTPlantingRecipe::results),
                     HTProgressData.CODEC.forGetter(RTPlantingRecipe::progressData),
                 ).apply(instance, ::RTPlantingRecipe)
@@ -50,5 +49,5 @@ class RTPlantingRecipe(
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.PLANTING
 
-    override fun isIncomplete(): Boolean = plant.hasNoItems() || soil.hasNoItems() || results.any(HTChancedItemResult::isIncomplete)
+    override fun isIncomplete(): Boolean = plant.isIncomplete() || soil.isIncomplete() || results.any(HTChancedItemResult::isIncomplete)
 }

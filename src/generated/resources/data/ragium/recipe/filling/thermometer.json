@@ -2,7 +2,17 @@
   "type": "hiiragi_core:filling",
   "fluid_ingredient": {
     "amount": 250,
-    "fluids": "#c:mercury"
+    "fluids": {
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:mercury"
+        },
+        {
+          "tag": "c:ethanol"
+        }
+      ]
+    }
   },
   "item_ingredient": "minecraft:glass_bottle",
   "result": {

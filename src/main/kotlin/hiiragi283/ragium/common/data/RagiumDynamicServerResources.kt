@@ -82,12 +82,11 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
             meltPrefixToMolten(material, CommonParts.GEM)
             meltPrefixToMolten(material, CommonParts.INGOT)
             meltPrefixToMolten(material, CommonParts.PEARL)
-
-            implodeDustToPrefix(material, CommonParts.GEM)
-            implodeDustToPrefix(material, CommonParts.PEARL)
             // Chemical
-            washCrushedOre(material)
+            bathDustToGem(material, CommonParts.GEM)
+            bathDustToGem(material, CommonParts.PEARL)
 
+            washCrushedOre(material)
             // Bio
 
             // Electronics
@@ -97,6 +96,24 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
     }
 
     //    Bathing    //
+
+    @JvmStatic
+    private fun bathDustToGem(material: HTMaterial, gemPart: HTPartKey) {
+        val key: HTMaterialKey = material.key
+        // 材料が存在するか判定
+        val crushedPart: HTPartKey = material.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART)
+        val crushedPrefix: HTTagPrefix = partManager[crushedPart]?.tagPrefix ?: return
+        // レシピを登録
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +tag(crushedPrefix, key) }
+            fluidIngredient {
+                +RagiumFluids.MINERAL_WATER
+                amount = 250
+            }
+            result { +HTItemResult.MaterialPartEntry(gemPart, key) }
+            recipeId suffix "_from_${crushedPart.name}"
+        }.save(exporter)
+    }
 
     @JvmStatic
     private fun redox() {
@@ -133,7 +150,8 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
     private fun compressDustToPellet(material: HTMaterial) {
         val key: HTMaterialKey = material.key
         // 材料が存在するか判定
-        val crushedPrefix: HTTagPrefix = material.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART).let(partManager::get)?.tagPrefix ?: return
+        val crushedPart: HTPartKey = material.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART)
+        val crushedPrefix: HTTagPrefix = partManager[crushedPart]?.tagPrefix ?: return
         // レシピを登録
         RagiumRecipeBuilder.compressing {
             ingredient {
@@ -141,7 +159,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
                 count = 8
             }
             result { +HTItemResult.MaterialPartEntry(RagiumParts.PELLET, key) }
-            recipeId suffix "_from_dust"
+            recipeId suffix "_from_${crushedPart.name}"
         }.save(exporter)
     }
 
@@ -412,23 +430,6 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
             itemIngredient { +HCDynamicRecipeProvider.getBlueprint(prefix) }
             result { +HTItemResult.MaterialPartEntry(part, material.key) }
             recipeId suffix "_from_molten"
-        }.save(exporter)
-    }
-
-    //    Imploding    //
-
-    @JvmStatic
-    private fun implodeDustToPrefix(material: HTMaterial, partKey: HTPartKey) {
-        val part: HTPart = partManager[partKey] ?: return
-        val key: HTMaterialKey = material.key
-        // 材料が存在するか判定
-        val crushedPart: HTPartKey = material.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART)
-        val crushedPrefix: HTTagPrefix = partManager[crushedPart]?.tagPrefix ?: return
-        // レシピを登録
-        RagiumRecipeBuilder.imploding {
-            ingredient { +tag(crushedPrefix, key) }
-            result { +HTItemResult.MaterialPartEntry(part, key) }
-            recipeId suffix "from_${crushedPart.name}"
         }.save(exporter)
     }
 

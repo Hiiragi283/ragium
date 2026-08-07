@@ -84,6 +84,10 @@ object RagiumFluids {
     @JvmField
     val NAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("sodium_hydroxide_solution") { properties = liquid() }
 
+    // Si
+    @JvmField
+    val MINERAL_WATER: HTFluidContent.Flowing = REGISTER.registerFlowing("mineral_water") { properties = liquid() }
+
     // Hg
     @JvmField
     val MERCURY: HTFluidContent.Virtual = REGISTER.registerVirtual("mercury") { properties = liquid() }

@@ -8,6 +8,7 @@ import hiiragi283.core.api.data.recipe.HTItemResultBuilder
 import hiiragi283.core.api.data.recipe.HTProgressRecipeBuilder
 import hiiragi283.core.api.data.recipe.IngredientBuilder
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.util.HTDelegates
@@ -20,7 +21,6 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.crafting.Ingredient
 
 class HTChemicalReactingRecipeBuilder : HTProgressRecipeBuilder<HTChemicalReactingRecipe>(RagiumConst.CHEMICAL_REACTING) {
     companion object {
@@ -35,7 +35,7 @@ class HTChemicalReactingRecipeBuilder : HTProgressRecipeBuilder<HTChemicalReacti
 
     @PublishedApi internal val ingredients: MutableList<HTFluidIngredient> = mutableListOf()
 
-    @PublishedApi internal var catalyst: Option<Ingredient> by HTDelegates.optionalOnceInitialize()
+    @PublishedApi internal var catalyst: Option<HTItemIngredient> by HTDelegates.optionalOnceInitialize()
 
     @PublishedApi internal val fluidResults: MutableList<HTFluidResult> = mutableListOf()
 
@@ -45,7 +45,7 @@ class HTChemicalReactingRecipeBuilder : HTProgressRecipeBuilder<HTChemicalReacti
         ingredients += this
     }
 
-    operator fun Ingredient.unaryPlus() {
+    operator fun HTItemIngredient.unaryPlus() {
         catalyst = this.some()
     }
 
@@ -64,7 +64,7 @@ class HTChemicalReactingRecipeBuilder : HTProgressRecipeBuilder<HTChemicalReacti
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder().apply(builderAction).build()
+        +IngredientBuilder().apply(builderAction).buildSized()
     }
 
     inline fun fluidResult(builderAction: HTFluidResultBuilder.() -> Unit) {

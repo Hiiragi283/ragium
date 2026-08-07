@@ -5,12 +5,12 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
-import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.cache.completed.HTDoubleInputCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.id
-import hiiragi283.core.api.recipe.ingredient.getMatchingStack
+import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.recipe.progress.HTProgressData
 import hiiragi283.core.api.recipe.recipe
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.support.recipe.cache.HTRecipeCaches
@@ -28,8 +28,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
@@ -99,7 +97,7 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
 
     private class WrappedRecipe(recipe: StonecutterRecipe) : HTDoubleItemToItemRecipe {
         private val accessor: SingleItemRecipeAccessor = recipe as SingleItemRecipeAccessor
-        private val ingredient: Ingredient = accessor.ingredient
+        private val ingredient = HTItemIngredient(accessor.ingredient, 1)
 
         override fun test(first: ItemStack, second: ItemStack): Boolean = ingredient.test(first) && ItemStack.isSameItemSameComponents(accessor.result, second)
 
@@ -107,9 +105,9 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
 
         override fun assemble(firstInput: ItemStack, secondInput: ItemStack): ItemStack = accessor.result.copy()
 
-        override fun getProgressData(input: RecipeInput): HTProgressData = HTProgressData.time(5)
+        override fun getProgressData(firstInput: ItemStack, secondInput: ItemStack): HTProgressData = HTProgressData.time(5)
 
-        override fun isIncomplete(): Boolean = ingredient.hasNoItems()
+        override fun isIncomplete(): Boolean = ingredient.isIncomplete()
     }
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.autoChisel

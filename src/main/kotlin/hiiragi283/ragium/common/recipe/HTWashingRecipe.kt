@@ -5,13 +5,13 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.FluidIngredientBuilder
 import hiiragi283.core.api.recipe.HTRecipeResultHelper
 import hiiragi283.core.api.recipe.HTSerializableRecipe
-import hiiragi283.core.api.recipe.base.HTProgressData
-import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.base.HTRecipeFactories
 import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.api.recipe.progress.HTBiProgressProvider
+import hiiragi283.core.api.recipe.progress.HTProgressData
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.registry.VanillaFluidContents
 import hiiragi283.core.api.serialization.codec.HTCodecs
@@ -26,7 +26,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTWashingRecipe(val ingredient: HTItemIngredient, val results: List<HTChancedItemResult>, override val progressData: HTProgressData) :
     HTRecipePredicates.ItemAndFluid,
     HTRecipeFactories.SingleItemTo<Iterable<ItemStack>>,
-    HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
+    HTBiProgressProvider.Simple<ItemStack, FluidStack>,
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField

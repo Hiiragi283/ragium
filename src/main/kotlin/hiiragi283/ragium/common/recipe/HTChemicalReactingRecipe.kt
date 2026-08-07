@@ -3,13 +3,13 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTSerializableRecipe
-import hiiragi283.core.api.recipe.base.HTProgressData
-import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.base.HTRecipeFactories
 import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
-import hiiragi283.core.api.recipe.ingredient.getMatchingStack
+import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
+import hiiragi283.core.api.recipe.progress.HTProgressData
+import hiiragi283.core.api.recipe.progress.HTTriProgressProvider
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
@@ -21,20 +21,19 @@ import hiiragi283.ragium.api.recipe.result.HTChemicalResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTChemicalReactingRecipe(
     val primary: HTFluidIngredient,
-    val secondary: Ior<HTFluidIngredient, Ingredient>,
+    val secondary: Ior<HTFluidIngredient, HTItemIngredient>,
     val fluidResults: List<HTFluidResult>,
     val itemResult: Option<HTItemResult>,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.TripleInput<HTChemicalReactingRecipe.Input, ItemStack, FluidStack, FluidStack>,
     HTRecipeFactories.ItemAndDoubleFluid<HTChemicalResult>,
-    HTProgressRecipe.Simple<HTChemicalReactingRecipe.Input>,
+    HTTriProgressProvider.Simple<ItemStack, FluidStack, FluidStack>,
     HTSerializableRecipe<HTChemicalReactingRecipe.Input> {
     companion object {
         @JvmField
@@ -42,7 +41,7 @@ class HTChemicalReactingRecipe(
             instance
                 .group(
                     HTFluidIngredient.CODEC.fieldOf(HTConst.PRIMARY).forGetter(HTChemicalReactingRecipe::primary),
-                    HTCodecs.ior(HTFluidIngredient.CODEC.fieldOf(HTConst.SECONDARY), HTCodecs.INGREDIENT.fieldOf(HTConst.CATALYST)).forGetter(HTChemicalReactingRecipe::secondary),
+                    HTCodecs.ior(HTFluidIngredient.CODEC.fieldOf(HTConst.SECONDARY), HTItemIngredient.SINGLE_CODEC.fieldOf(HTConst.CATALYST)).forGetter(HTChemicalReactingRecipe::secondary),
                     HTFluidResult.CODEC.listOrElement(1..2).fieldOf(HTConst.FLUID_RESULT).forGetter(HTChemicalReactingRecipe::fluidResults),
                     HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).convert().forGetter(HTChemicalReactingRecipe::itemResult),
                     HTProgressData.CODEC.forGetter(HTChemicalReactingRecipe::progressData),
@@ -78,7 +77,7 @@ class HTChemicalReactingRecipe(
 
     override fun isIncomplete(): Boolean {
         if (primary.isIncomplete()) return true
-        if (secondary.merge(HTFluidIngredient::isIncomplete, Ingredient::hasNoItems) { fluid: Boolean, item: Boolean -> fluid || item }) return true
+        if (secondary.merge(HTFluidIngredient::isIncomplete, HTItemIngredient::isIncomplete) { fluid: Boolean, item: Boolean -> fluid || item }) return true
         return itemResult.fold({ false }, HTItemResult::isIncomplete)
     }
 

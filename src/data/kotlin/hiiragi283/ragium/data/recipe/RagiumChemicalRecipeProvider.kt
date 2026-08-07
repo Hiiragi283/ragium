@@ -615,6 +615,13 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     }
 
     private fun silicon() {
+        // Quartz Dust + Water -> Mineral Water
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.QUARTZ) }
+            fluidIngredient { water() }
+            fluidResult { +RagiumFluids.MINERAL_WATER }
+        }.save(exporter)
+
         // Quartz + Coal -> Crude Silicon
         HTAlloyingRecipeBuilder.create {
             result { +RagiumItems.CRUDE_SILICON }

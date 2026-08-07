@@ -12,9 +12,9 @@ import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.core.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.core.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
-import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.castRecipe
+import hiiragi283.core.api.recipe.progress.HTProgressData
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
@@ -46,6 +46,7 @@ import hiiragi283.ragium.client.integration.jei.category.HTRefiningRecipeCategor
 import hiiragi283.ragium.client.integration.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
+import hiiragi283.ragium.common.recipe.RTSmeltingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.custom.HTBookMeltingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeDisplayFactories
@@ -130,7 +131,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             it.castRecipe<HTItemToMultiItemRecipe, HTBasicItemToMultiItemRecipe>()?.let(HTRecipeDisplayFactories::itemToMultiItem)
         }
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.SMELTING, RagiumRecipeLookups.SMELTING) {
-            it.castRecipe<HTItemToItemRecipe, HTBasicItemToItemRecipe>()?.let(HTRecipeDisplayFactories::itemToItem)
+            it.castRecipe<HTItemToItemRecipe, RTSmeltingRecipe>()?.let(HTRecipeDisplayFactories::itemToItem)
         }
         // Heat
         helper.addDisplayRecipes(RagiumRecipeViewerTypes.FREEZING, RagiumRecipeLookups.FREEZING) {

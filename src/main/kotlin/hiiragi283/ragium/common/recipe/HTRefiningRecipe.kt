@@ -3,13 +3,13 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTSerializableRecipe
-import hiiragi283.core.api.recipe.base.HTProgressData
-import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.base.HTRecipeFactories
 import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
-import hiiragi283.core.api.recipe.ingredient.getMatchingStack
+import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.api.recipe.progress.HTBiProgressProvider
+import hiiragi283.core.api.recipe.progress.HTProgressData
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
@@ -21,20 +21,19 @@ import hiiragi283.ragium.api.recipe.result.HTChemicalResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTRefiningRecipe(
     val ingredient: HTFluidIngredient,
-    val catalyst: Option<Ingredient>,
+    val catalyst: Option<HTItemIngredient>,
     val fluidResults: List<HTFluidResult>,
     val itemResult: Option<HTItemResult>,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.ItemAndFluid,
     HTRecipeFactories.ItemAndFluid<HTChemicalResult>,
-    HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
+    HTBiProgressProvider.Simple<ItemStack, FluidStack>,
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField
@@ -42,7 +41,7 @@ class HTRefiningRecipe(
             instance
                 .group(
                     HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTRefiningRecipe::ingredient),
-                    HTCodecs.INGREDIENT.optionalFieldOf(HTConst.CATALYST).convert().forGetter(HTRefiningRecipe::catalyst),
+                    HTItemIngredient.SINGLE_CODEC.optionalFieldOf(HTConst.CATALYST).convert().forGetter(HTRefiningRecipe::catalyst),
                     HTFluidResult.CODEC.listOrElement(1..2).fieldOf(HTConst.FLUID_RESULT).forGetter(HTRefiningRecipe::fluidResults),
                     HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).convert().forGetter(HTRefiningRecipe::itemResult),
                     HTProgressData.CODEC.forGetter(HTRefiningRecipe::progressData),
@@ -60,5 +59,5 @@ class HTRefiningRecipe(
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.REFINING
 
-    override fun isIncomplete(): Boolean = ingredient.isIncomplete() || catalyst.fold({ false }, Ingredient::hasNoItems) || itemResult.fold({ false }, HTItemResult::isIncomplete)
+    override fun isIncomplete(): Boolean = ingredient.isIncomplete() || catalyst.fold({ false }, HTItemIngredient::isIncomplete) || itemResult.fold({ false }, HTItemResult::isIncomplete)
 }

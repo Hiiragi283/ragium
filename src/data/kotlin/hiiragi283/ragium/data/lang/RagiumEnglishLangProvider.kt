@@ -114,6 +114,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         addFluid(RagiumFluids.NAOH_SOLUTION, "Alkali Solution")
 
+        addFluid(RagiumFluids.MINERAL_WATER, "Mineral Water")
+
         addFluid(RagiumFluids.MERCURY, "Mercury")
 
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")

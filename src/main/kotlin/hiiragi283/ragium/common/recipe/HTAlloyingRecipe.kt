@@ -3,11 +3,11 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTSerializableRecipe
-import hiiragi283.core.api.recipe.base.HTProgressData
-import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.base.HTRecipeFactories
 import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.recipe.progress.HTProgressData
+import hiiragi283.core.api.recipe.progress.HTTriProgressProvider
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -25,7 +25,7 @@ class HTAlloyingRecipe(
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.TripleItem,
     HTRecipeFactories.TripleItem<ItemStack>,
-    HTProgressRecipe.Simple<RecipeInput>,
+    HTTriProgressProvider.Simple<ItemStack, ItemStack, ItemStack>,
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField

@@ -28,6 +28,8 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.fluids.crafting.CompoundFluidIngredient
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 
 class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
@@ -296,11 +298,15 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
     //    Tank Interaction    //
 
     private fun tankInteraction() {
-        // Glass Bottle + Mercury -> Thermometer
+        // Glass Bottle + Mercury / Ethanol -> Thermometer
         HTTankInteractionRecipeBuilder.filling {
             itemIngredient { +Items.GLASS_BOTTLE }
             fluidIngredient {
-                +RagiumFluids.MERCURY
+                +setOf(RagiumFluids.MERCURY, RagiumFluids.ETHANOL)
+                    .map(HTFluidContent::fluidTag)
+                    .map(FluidIngredient::tag)
+                    .stream()
+                    .let(CompoundFluidIngredient::of)
                 amount = 250
             }
             result { +RagiumItems.THERMOMETER }

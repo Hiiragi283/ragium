@@ -4,9 +4,9 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
-import hiiragi283.core.api.recipe.base.HTProgressData
-import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.recipe.progress.HTBiProgressProvider
+import hiiragi283.core.api.recipe.progress.HTProgressData
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.ragium.api.tag.RagiumTags
@@ -21,7 +21,7 @@ import net.minecraft.world.item.crafting.RecipeType
 
 class HTImplodingRecipe(val ingredient: HTItemIngredient, val result: HTItemResult, override val progressData: HTProgressData) :
     HTDoubleItemToItemRecipe,
-    HTProgressRecipe.Simple<RecipeInput>,
+    HTBiProgressProvider.Simple<ItemStack, ItemStack>,
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField

@@ -1,11 +1,10 @@
 package hiiragi283.ragium.api.recipe.cache.completed
 
 import hiiragi283.core.api.recipe.HTBiRecipeFactory
-import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTInputHandler
 import hiiragi283.core.api.recipe.handler.HTOutputHandler
-import hiiragi283.core.api.recipe.input.HTItemListRecipeInput
+import hiiragi283.core.api.recipe.progress.HTProgressData
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import net.minecraft.world.item.ItemStack
 
@@ -47,7 +46,6 @@ abstract class HTDoubleToMultiItemCompletedRecipe<
         outputHandler,
         HTPlantingRecipe::getMatchingStacks,
     ) {
-        override fun getProgress(): HTProgressData = HTItemListRecipeInput(firstInputHandler.getStack(), secondInputHandler.getStack())
-            .let(recipe::getProgressData)
+        override fun getProgress(): HTProgressData = recipe.getProgressData(firstInputHandler.getStack(), secondInputHandler.getStack())
     }
 }

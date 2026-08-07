@@ -113,6 +113,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         addFluid(RagiumFluids.NAOH_SOLUTION, "アルカリ水溶液")
 
+        addFluid(RagiumFluids.MINERAL_WATER, "鉱水")
+
         addFluid(RagiumFluids.MERCURY, "水銀")
 
         addFluid(RagiumFluids.CRUDE_OIL, "原油")

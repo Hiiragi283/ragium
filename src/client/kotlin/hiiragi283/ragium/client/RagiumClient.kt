@@ -139,6 +139,7 @@ data object RagiumClient : HTClientMod() {
         event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
 
         event.dull(RagiumFluids.NAOH_SOLUTION, Color(0x003399))
+        event.clear(RagiumFluids.MINERAL_WATER, Color(0x6699ff))
         event.dull(RagiumFluids.MERCURY, Color(0xcc99cc))
         // Nether
         event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
