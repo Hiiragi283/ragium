@@ -1,6 +1,7 @@
 package hiiragi283.lib.serialization.network
 
 import hiiragi283.lib.registry.RegistryKey
+import hiiragi283.lib.tag.createTagKey
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
@@ -13,7 +14,9 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.TagKey
 import net.minecraft.util.ByIdMap
 import org.apache.commons.lang3.math.Fraction
 
@@ -137,6 +140,13 @@ data object HTStreamCodecs {
      */
     @JvmStatic
     fun <T : Any> resourceKey(registryKey: RegistryKey<T>): StreamCodec<ByteBuf, ResourceKey<T>> = ResourceKey.streamCodec(registryKey)
+
+    /**
+     * [TagKey]の[StreamCodec]を作成します。
+     * @param T レジストリの要素のクラス
+     */
+    @JvmStatic
+    fun <T : Any> tagKey(registryKey: RegistryKey<T>): StreamCodec<ByteBuf, TagKey<T>> = Identifier.STREAM_CODEC.map(registryKey::createTagKey, TagKey<T>::location)
 
     /**
      * 指定した[registryKey]から[Holder]の[StreamCodec]を返します。

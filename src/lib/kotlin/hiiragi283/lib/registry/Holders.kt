@@ -62,13 +62,16 @@ fun Holder<Block>.toBlockLike(): SimpleBlockItemSupplierWithKey = when (this.kin
 }
 
 @JvmRecord
-private data class BlockHolderWithKey(private val holder: Holder<Block>) : SimpleBlockItemSupplierWithKey {
-    @Suppress("DEPRECATION")
-    override fun getItemSupplier(): SimpleSupplierWithKey<Item> = this@BlockHolderWithKey.get().asItem().builtInRegistryHolder().toLike()
+private data class BlockHolderWithKey(override val block: SimpleSupplierWithKey<Block>, override val item: SimpleSupplierWithKey<Item>) : SimpleBlockItemSupplierWithKey {
+    constructor(holder: Holder<Block>) : this(
+        holder.toLike(),
+        object : SimpleSupplierWithKey<Item> {
+            override fun get(): Item = holder.value().asItem()
 
-    override fun get(): Block = holder.value()
-
-    override fun getKey(): ResourceKey<Block> = holder.getKeyOrThrow()
+            @Suppress("DEPRECATION")
+            override fun getKey(): ResourceKey<Item> = get().builtInRegistryHolder().getKeyOrThrow()
+        },
+    )
 }
 
 /**

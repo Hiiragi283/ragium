@@ -1,7 +1,6 @@
 package hiiragi283.lib
 
 import hiiragi283.lib.resource.vanillaId
-import kotlin.random.Random
 import net.minecraft.resources.Identifier
 import net.neoforged.neoforge.common.NeoForgeMod
 
@@ -11,9 +10,6 @@ import net.neoforged.neoforge.common.NeoForgeMod
  * @since 26.1.0
  */
 data object HTConstants {
-    @JvmField
-    val RANDOM: Random = Random.Default
-
     const val ZERO_CELSIUS = 273
     const val STANDARD_TEMP = 300
 
