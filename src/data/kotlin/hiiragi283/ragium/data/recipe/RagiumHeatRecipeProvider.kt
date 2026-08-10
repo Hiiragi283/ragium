@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.server.recipe
+package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.RagiumAPI

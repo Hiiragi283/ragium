@@ -4,6 +4,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.HTDelegates
+import hiiragi283.ragium.api.RagiumAPI
 import java.awt.Color
 import net.minecraft.client.renderer.block.FluidModel
 import net.minecraft.client.resources.model.sprite.Material
@@ -58,6 +59,11 @@ class HTFluidModelBuilder {
     fun setDull() {
         still = Material(HTConstants.NEOFORGE.toId(HTConstants.BLOCK, "milk_still"))
         flowing = Material(HTConstants.NEOFORGE.toId(HTConstants.BLOCK, "milk_flowing"))
+    }
+
+    fun setMolten() {
+        still = Material(RagiumAPI.id(HTConstants.BLOCK, "molten_still"))
+        flowing = Material(RagiumAPI.id(HTConstants.BLOCK, "molten_flowing"))
     }
 
     /**

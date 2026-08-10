@@ -40,20 +40,20 @@ data object RagiumClient : HTClientMod() {
             }
         }*/
         register.register(RagiumFluids.OMINOUS_FLUX) {
-            setDull()
+            setMolten()
             colorTint(Color(0x003366))
         }
 
         register.register(RagiumFluids.MOLTEN_GLASS) {
-            setDull()
+            setMolten()
             colorTint(Color(0xffffff))
         }
         register.register(RagiumFluids.MOLTEN_ENDER) {
-            setDull()
+            setMolten()
             colorTint(Color(0x006666))
         }
         register.register(RagiumFluids.MOLTEN_BLAZE) {
-            setDull()
+            setMolten()
             colorTint(Color(0xcc9900))
         }
     }

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "neoforge:fluid_container",
+    "apply_fluid_luminosity": false,
+    "fluid": "ragium:light_blue_dye",
+    "textures": {
+      "base": "minecraft:item/bucket",
+      "fluid": "neoforge:item/mask/bucket_fluid_drip",
+      "particle": "minecraft:item/bucket"
+    }
+  }
+}
