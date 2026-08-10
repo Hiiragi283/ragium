@@ -80,12 +80,12 @@ abstract class HTRecipeProvider(packOutput: PackOutput, private val future: Comp
      * @since 21.1.0
      */
     protected inline fun useItem(part: HTPartKey, key: HTMaterialKey, action: (HTMaterialContents.ItemEntry) -> Unit) {
-        HiiragiCoreAccess.INSTANCE
+        /*HiiragiCoreAccess.INSTANCE
             .registeredContents
             .items
             .getResult(part, key)
             .onLeft { DataProvider.LOGGER.error(it.value) }
-            .onRight(action)
+            .onRight(action)*/
     }
 
     //    Integration    //

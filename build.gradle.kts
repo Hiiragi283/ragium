@@ -177,24 +177,8 @@ neoForge {
             devLogin = true
         }
 
-        register("data") {
-            clientData()
-            sourceSet = dataModule
-
-            // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
-            gameDirectory = rootProject.file("run-data")
-
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            programArguments.addAll(
-                "--mod",
-                modId,
-                "--all",
-                "--output",
-                file("src/generated/resources/").absolutePath,
-                "--existing",
-                file("src/main/resources").absolutePath,
-            )
-        }
+        register("dataServer") { serverData() }
+        register("dataClient") { clientData() }
 
         // applies to all the run configs above
         configureEach {
@@ -209,6 +193,26 @@ neoForge {
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             logLevel = Level.DEBUG
+
+            if ("data" in this.name) {
+                logLevel = Level.INFO
+
+                sourceSet = dataModule
+
+                gameDirectory = rootProject.file("run-data")
+
+                programArguments.addAll(
+                    "--mod",
+                    modId,
+                    "--all",
+                    "--output",
+                    file("src/generated/resources/").absolutePath,
+                    "--existing",
+                    file("src/main/resources").absolutePath,
+                )
+
+                println("Configured for run model: ${this.name}")
+            }
         }
     }
 

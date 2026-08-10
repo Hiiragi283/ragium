@@ -1,6 +1,5 @@
 package hiiragi283.lib.item.alchemy
 
-import hiiragi283.lib.HTPlatform
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.item.ItemInstanceBuilder
 import hiiragi283.lib.util.HTTextResult
@@ -103,7 +102,7 @@ data object HTPotionHelper {
      */
     @JvmName("getContentsFromItem")
     @JvmStatic
-    fun <T> getContents(instance: T): BottledPotionContents? where T : TypedInstance<Item>, T : DataComponentGetter = HTPlatform.INSTANCE.getContentsFromItem(instance)
+    fun <T> getContents(instance: T): BottledPotionContents? where T : TypedInstance<Item>, T : DataComponentGetter = TODO() // HTPlatform.INSTANCE.getContentsFromItem(instance)
 
     /**
      * 指定した[instance]から[BottledPotionContents]を取得します。
@@ -119,7 +118,7 @@ data object HTPotionHelper {
 
     @JvmStatic
     fun fillItemPatch(contents: BottledPotionContents, builder: DataComponentPatch.Builder) {
-        HTPlatform.INSTANCE.fillItemPatch(contents, builder)
+        // HTPlatform.INSTANCE.fillItemPatch(contents, builder)
     }
 
     @JvmStatic
@@ -134,7 +133,7 @@ data object HTPotionHelper {
      */
     @JvmName("getContentsFromFluid")
     @JvmStatic
-    fun <T> getContents(instance: T): BottledPotionContents? where T : TypedInstance<Fluid>, T : DataComponentGetter = HTPlatform.INSTANCE.getContentsFromFluid(instance)
+    fun <T> getContents(instance: T): BottledPotionContents? where T : TypedInstance<Fluid>, T : DataComponentGetter = TODO() // HTPlatform.INSTANCE.getContentsFromFluid(instance)
 
     @JvmStatic
     fun <T> fillFluidPatch(instance: T, contents: BottledPotionContents, builder: DataComponentPatch.Builder) where T : TypedInstance<Fluid>, T : DataComponentGetter {
@@ -143,7 +142,7 @@ data object HTPotionHelper {
 
     @JvmStatic
     fun fillFluidPatch(fluid: Fluid, contents: BottledPotionContents, builder: DataComponentPatch.Builder) {
-        HTPlatform.INSTANCE.fillFluidPatch(fluid, contents, builder)
+        // HTPlatform.INSTANCE.fillFluidPatch(fluid, contents, builder)
     }
 
     @JvmStatic

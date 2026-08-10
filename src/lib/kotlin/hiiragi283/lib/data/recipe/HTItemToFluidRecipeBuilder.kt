@@ -38,12 +38,12 @@ class HTItemToFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private
         result = this
     }
 
-    /*inline fun result(builderAction: HTFluidResultBuilder.() -> Unit) {
+    inline fun result(builderAction: HTFluidResultBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         result = HTFluidResultBuilder().apply(builderAction).build()
-    }*/
+    }
 
     //    Factory    //
 

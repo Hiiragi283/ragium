@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "minecraft:packed_ice"
+  },
+  "result": {
+    "amount": 9000,
+    "id": "minecraft:water"
+  },
+  "time": 1200
+}

@@ -3,7 +3,7 @@
 package hiiragi283.lib.transfer
 
 import com.google.common.primitives.Ints
-import hiiragi283.lib.math.fixedFraction
+import hiiragi283.lib.util.fixedFraction
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -13,7 +13,6 @@ import net.neoforged.neoforge.transfer.ResourceHandlerUtil
 import net.neoforged.neoforge.transfer.resource.Resource
 import net.neoforged.neoforge.transfer.transaction.Transaction
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
-import org.apache.commons.lang3.math.Fraction
 
 /**
  * この[ResourceHandler][this]の有効なインデックスの範囲を返します。
@@ -58,7 +57,7 @@ fun <T : Resource> ResourceHandler<T>.getNeededAsInt(index: Int, resource: T = g
  * @author Hiiragi Tsubasa
  * @since 26.1.3
  */
-fun <T : Resource> ResourceHandler<T>.getFilledLevel(index: Int, resource: T = getResource(index)): Fraction = fixedFraction(getAmountAsLong(index), getCapacityAsLong(index, resource))
+fun <T : Resource> ResourceHandler<T>.getFilledLevel(index: Int, resource: T = getResource(index)): Double = fixedFraction(getAmountAsLong(index), getCapacityAsLong(index, resource))
 
 /**
  * この[ResourceHandler][this]からリソースを搬出します。
