@@ -30,14 +30,14 @@ data object HTRecipeFactories {
      * 1種類の液体から完成品を作る[SingleInput]の拡張インターフェースです。
      */
     fun interface SingleFluidTo<OUTPUT : Any> : SingleInput<HTSingleFluidRecipeInput, FluidInstance, OUTPUT> {
-        override fun assemble(input: HTSingleFluidRecipeInput): OUTPUT = apply(input.fluid)
+        override fun produce(input: HTSingleFluidRecipeInput): OUTPUT = apply(input.fluid)
     }
 
     /**
      * 1種類のアイテムから完成品を作る[SingleInput]の拡張インターフェースです。
      */
     fun interface SingleItemTo<OUTPUT : Any> : SingleInput<SingleRecipeInput, ItemInstance, OUTPUT> {
-        override fun assemble(input: SingleRecipeInput): OUTPUT = apply(input.item())
+        override fun produce(input: SingleRecipeInput): OUTPUT = apply(input.item())
     }
 
     //    Double Input    //
@@ -52,14 +52,14 @@ data object HTRecipeFactories {
      * 1種類のアイテムと液体から完成品を作る[DoubleInput]の拡張インターフェースです。
      */
     fun interface ItemAndFluid<OUTPUT : Any> : DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance, OUTPUT> {
-        override fun assemble(input: HTItemAndFluidRecipeInput): OUTPUT = apply(input.item, input.fluid)
+        override fun produce(input: HTItemAndFluidRecipeInput): OUTPUT = apply(input.item, input.fluid)
     }
 
     /**
      * 2種類のアイテムから完成品を作る[DoubleInput]の拡張インターフェースです。
      */
     fun interface DoubleItem<OUTPUT : Any> : DoubleInput<RecipeInput, ItemInstance, ItemInstance, OUTPUT> {
-        override fun assemble(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
+        override fun produce(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
     }
 
     //    Triple Input    //
@@ -74,6 +74,6 @@ data object HTRecipeFactories {
      * 3種類のアイテムから完成品を作る[TripleInput]の拡張インターフェースです。
      */
     fun interface TripleItem<OUTPUT : Any> : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance, OUTPUT> {
-        override fun assemble(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
+        override fun produce(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
     }
 }

@@ -30,7 +30,10 @@ data object HTRecipePredicates {
         Predicate<INPUT_A> {
         override fun test(input: INPUT_A): Boolean
 
-        fun getMatchingStack(input: INPUT_A): INPUT_A
+        /**
+         * 入力の消費量を取得します。
+         */
+        fun getRequiredAmount(input: INPUT_A): Int
     }
 
     /**
@@ -60,7 +63,10 @@ data object HTRecipePredicates {
         BiPredicate<INPUT_A, INPUT_B> {
         override fun test(first: INPUT_A, second: INPUT_B): Boolean
 
-        fun getMatchingStacks(first: INPUT_A, second: INPUT_B): Pair<INPUT_A, INPUT_B>
+        /**
+         * 入力の消費量を取得します。
+         */
+        fun getRequiredAmount(first: INPUT_A, second: INPUT_B): Pair<Int, Int>
     }
 
     /**
@@ -94,7 +100,7 @@ data object HTRecipePredicates {
         TriPredicate<INPUT_A, INPUT_B, INPUT_C> {
         override fun test(first: INPUT_A, second: INPUT_B, third: INPUT_C): Boolean
 
-        fun getMatchingStacks(first: INPUT_A, second: INPUT_B, third: INPUT_C): Triple<INPUT_A, INPUT_B, INPUT_C>
+        fun getRequiredAmount(first: INPUT_A, second: INPUT_B, third: INPUT_C): Triple<Int, Int, Int>
     }
 
     /**

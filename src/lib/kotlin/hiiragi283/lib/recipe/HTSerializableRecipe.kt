@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
+@Suppress("DeprecatedCallableAddReplaceWith")
 interface HTSerializableRecipe<INPUT : RecipeInput> :
     Recipe<INPUT>,
     HTRecipePredicate<INPUT> {

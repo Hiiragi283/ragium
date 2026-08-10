@@ -25,7 +25,10 @@ interface HTIngredient<TYPE : Any, STACK> : Predicate<TypedInstance<TYPE>> where
      */
     fun testOnlyType(instance: TypedInstance<TYPE>): Boolean
 
-    fun getMatchingStack(instance: TypedInstance<TYPE>): STACK
+    /**
+     * 消費される数量を取得します。
+     */
+    fun getRequiredAmount(instance: TypedInstance<TYPE>): Int
 
     /**
      * 一致する材料のプレビューを取得します。

@@ -22,7 +22,7 @@ import net.minecraft.world.level.Level
  */
 data object HTRecipeLookupContext {
     @JvmStatic
-    private fun <T : Any> createKey(path: String): ContextKey<T> = ContextKey(HTConstants.MOD_ID.toId(path))
+    private fun <T : Any> createKey(path: String): ContextKey<T> = ContextKey(HTConstants.LIB_ID.toId(path))
 
     /**
      * レシピの一覧に紐づく[ContextKey]

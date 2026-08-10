@@ -28,16 +28,24 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 
+/**
+ * アイテムの完成品を表すインターフェースです。
+ * @author Hiiragi Tsubasa
+ * @since 21.1.0
+ */
 @JvmRecord
-data class HTItemResult(val entry: Entry, val count: Int) {
+data class HTItemResult(val entry: Entry, val count: Int) : HTIdLike {
     companion object {
         @JvmField
-        val CODEC: Codec<HTItemResult> = HTCodecs.record { instance ->
+        val MAP_CODEC: MapCodec<HTItemResult> = HTCodecs.recordMap { instance ->
             instance.group(
                 Entry.MAP_CODEC.forGetter(HTItemResult::entry),
-                HTCodecs.POSITIVE_INT.optionalFieldOf(HTConstants.COUNT, 1).forGetter(HTItemResult::count),
+                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.COUNT).orElse(1).forGetter(HTItemResult::count),
             ).apply(instance, ::HTItemResult)
         }
+
+        @JvmField
+        val CODEC: Codec<HTItemResult> = Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) { it.toResult() }
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemResult> = StreamCodec.composite(
@@ -49,11 +57,28 @@ data class HTItemResult(val entry: Entry, val count: Int) {
         )
     }
 
-    fun create(): HTTextResult<ItemStackTemplate> = entry.create().map { it.withCount(count) }
+    constructor(template: ItemStackTemplate) : this(SimpleEntry(template), template.count())
 
-    fun createStack(): HTTextResult<ItemStack> = create().map(ItemStackTemplate::create)
+    /**
+     * アイテムの完成品を作成します。
+     */
+    fun create(): HTTextResult<ItemStack> = entry.create().map { it.copyWithCount(count) }
 
-    fun createStackOrEmpty(): ItemStack = createStack().getOrElse { ItemStack.EMPTY }
+    /**
+     * アイテムの完成品を作成します。
+     * @return 正常に作成できなかった場合は[ItemStack.EMPTY]
+     */
+    fun createOrEmpty(): ItemStack = create().getOrElse { ItemStack.EMPTY }
+
+    fun isIncomplete(): Boolean = create().isLeft()
+
+    /**
+     * このインスタンスのコピーを作成します。
+     * @param newCount 新しい個数
+     */
+    fun copyWithCount(newCount: Int): HTItemResult = HTItemResult(entry, newCount)
+
+    override fun getId(): Identifier = entry.getId()
 
     //    Entry    //
 
@@ -81,11 +106,13 @@ data class HTItemResult(val entry: Entry, val count: Int) {
 
         fun type(): HTItemResultType<*>
 
-        fun create(): HTTextResult<ItemStackTemplate>
+        fun create(): HTTextResult<ItemStack>
+
+        fun toResult(count: Int = 1): HTItemResult = HTItemResult(this, count)
     }
 
     @JvmRecord
-    data class SimpleEntry(val item: Holder<Item>, val components: DataComponentPatch) :
+    data class SimpleEntry @JvmOverloads constructor(val item: Holder<Item>, val components: DataComponentPatch = DataComponentPatch.EMPTY) :
         Entry,
         HTKeyLike<Item> {
         companion object {
@@ -110,9 +137,11 @@ data class HTItemResult(val entry: Entry, val count: Int) {
             val TYPE: HTItemResultType<SimpleEntry> = HTItemResultType(MAP_CODEC, STREAM_CODEC)
         }
 
+        constructor(template: ItemStackTemplate) : this(template.item(), template.components())
+
         override fun type(): HTItemResultType<*> = TYPE
 
-        override fun create(): HTTextResult<ItemStackTemplate> = ItemStackTemplate(item, 1, components).right()
+        override fun create(): HTTextResult<ItemStack> = ItemStack(item, 1, components).right()
 
         override fun getKey(): ResourceKey<Item> = item.getKeyOrThrow()
     }
@@ -121,7 +150,7 @@ data class HTItemResult(val entry: Entry, val count: Int) {
     value class TagEntry(val tagKey: TagKey<Item>) : Entry {
         companion object {
             @JvmField
-            val CODEC: MapCodec<TagEntry> = HTCodecs.tagKey(Registries.ITEM, false).fieldOf(HTConstants.TAG).xmap(::TagEntry, TagEntry::tagKey)
+            val CODEC: MapCodec<TagEntry> = HTCodecs.tagKey(Registries.ITEM, true).fieldOf(HTConstants.TAG).xmap(::TagEntry, TagEntry::tagKey)
 
             @JvmField
             val STREAM_CODEC: StreamCodec<ByteBuf, TagEntry> = HTStreamCodecs.tagKey(Registries.ITEM).map(::TagEntry, TagEntry::tagKey)
@@ -132,9 +161,7 @@ data class HTItemResult(val entry: Entry, val count: Int) {
 
         override fun type(): HTItemResultType<*> = TYPE
 
-        override fun create(): HTTextResult<ItemStackTemplate> {
-            TODO("Not yet implemented")
-        }
+        override fun create(): HTTextResult<ItemStack> = TODO()
 
         override fun getId(): Identifier = tagKey.location()
     }

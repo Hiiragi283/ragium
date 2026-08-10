@@ -5,11 +5,15 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.convert
+import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.unwrap
+import io.netty.buffer.ByteBuf
+import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.network.codec.StreamCodec
 
 /**
  * 処理時間または消費エネルギーを保持するクラスです。
@@ -28,6 +32,18 @@ sealed interface HTProgressData : HTHasText {
                     is Time -> Either.Left(progressData)
                 }
             }
+
+        @JvmField
+        val STREAM_CODEC: StreamCodec<ByteBuf, HTProgressData> = HTStreamCodecs.either(Time.STREAM_CODEC, Energy.STREAM_CODEC)
+            .map(
+                { it.unwrap() },
+                { progressData ->
+                    when (progressData) {
+                        is Energy -> Either.Right(progressData)
+                        is Time -> Either.Left(progressData)
+                    }
+                },
+            )
 
         /**
          * 処理時間を保持する，新しい[HTProgressData]のインスタンスを作成します。
@@ -64,6 +80,9 @@ sealed interface HTProgressData : HTHasText {
         companion object {
             @JvmField
             val CODEC: MapCodec<Time> = HTCodecs.NON_NEGATIVE_INT.fieldOf(HTConstants.TIME).xmap(::Time, Time::value)
+
+            @JvmField
+            val STREAM_CODEC: StreamCodec<ByteBuf, Time> = ByteBufCodecs.VAR_INT.map(::Time, Time::value)
         }
 
         init {
@@ -87,6 +106,9 @@ sealed interface HTProgressData : HTHasText {
         companion object {
             @JvmField
             val CODEC: MapCodec<Energy> = HTCodecs.NON_NEGATIVE_INT.fieldOf(HTConstants.ENERGY).xmap(::Energy, Energy::value)
+
+            @JvmField
+            val STREAM_CODEC: StreamCodec<ByteBuf, Energy> = ByteBufCodecs.VAR_INT.map(::Energy, Energy::value)
         }
 
         init {

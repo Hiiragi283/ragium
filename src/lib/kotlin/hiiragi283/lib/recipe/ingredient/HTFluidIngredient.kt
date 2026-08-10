@@ -37,9 +37,9 @@ value class HTFluidIngredient(@PublishedApi internal val delegate: SizedFluidIng
 
     override fun testOnlyType(instance: TypedInstance<Fluid>): Boolean = HTIngredientHelper.createStack(instance).let(unsized::test)
 
-    override fun getMatchingStack(instance: TypedInstance<Fluid>): FluidStack = when (testOnlyType(instance)) {
-        true -> HTIngredientHelper.createStack(instance, amount)
-        false -> FluidStack.EMPTY
+    override fun getRequiredAmount(instance: TypedInstance<Fluid>): Int = when (testOnlyType(instance)) {
+        true -> amount
+        false -> 0
     }
 
     override fun getPreviewStacks(contextMap: ContextMap): List<FluidStack> = unsized

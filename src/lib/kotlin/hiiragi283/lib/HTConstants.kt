@@ -42,7 +42,7 @@ data object HTConstants {
      */
     const val COMMON = "c"
 
-    const val MOD_ID = "hiiragi_lib"
+    const val LIB_ID = "hiiragi_lib"
 
     @JvmStatic
     fun getBuiltInIdSet(modId: String): Set<String> = setOf(MINECRAFT, NEOFORGE, COMMON, modId)
@@ -68,9 +68,6 @@ data object HTConstants {
     const val TAG = "tag"
     const val COUNT = "count"
     const val COMPONENTS = "components"
-
-    const val COMPLETED_RECIPE = "CompletedRecipe"
-    const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
 
     //    Recipes    //
 
@@ -98,7 +95,8 @@ data object HTConstants {
     const val ITEM_RESULT = "item_result"
     const val FLUID_RESULT = "fluid_result"
 
-    const val CHANCE = "chance"
+    const val PRIMARY = "primary"
+    const val SECONDARY = "secondary"
 
     //    TagKey    //
 

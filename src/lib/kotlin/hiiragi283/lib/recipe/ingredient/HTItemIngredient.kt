@@ -37,9 +37,9 @@ value class HTItemIngredient(@PublishedApi internal val delegate: SizedIngredien
 
     override fun testOnlyType(instance: TypedInstance<Item>): Boolean = HTIngredientHelper.createStack(instance).let(unsized::test)
 
-    override fun getMatchingStack(instance: TypedInstance<Item>): ItemStack = when (testOnlyType(instance)) {
-        true -> HTIngredientHelper.createStack(instance, count)
-        false -> ItemStack.EMPTY
+    override fun getRequiredAmount(instance: TypedInstance<Item>): Int = when (testOnlyType(instance)) {
+        true -> count
+        false -> 0
     }
 
     override fun getPreviewStacks(contextMap: ContextMap): List<ItemStack> = unsized

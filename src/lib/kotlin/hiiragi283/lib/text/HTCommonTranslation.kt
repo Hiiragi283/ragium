@@ -59,5 +59,5 @@ enum class HTCommonTranslation(type: String, vararg path: String) : HTTranslatio
     DATAPACK_WIP("datapack", "work_in_progress"),
     ;
 
-    override val translationKey: String = HTConstants.MOD_ID.toId(path.joinToString(separator = ".")).toLanguageKey(type)
+    override val translationKey: String = HTConstants.LIB_ID.toId(path.joinToString(separator = ".")).toLanguageKey(type)
 }
