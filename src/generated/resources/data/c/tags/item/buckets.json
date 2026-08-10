@@ -1,0 +1,25 @@
+{
+  "values": [
+    "#c:buckets/dye/black",
+    "#c:buckets/dye/blue",
+    "#c:buckets/dye/brown",
+    "#c:buckets/dye/cyan",
+    "#c:buckets/dye/gray",
+    "#c:buckets/dye/green",
+    "#c:buckets/dye/light_blue",
+    "#c:buckets/dye/light_gray",
+    "#c:buckets/dye/lime",
+    "#c:buckets/dye/magenta",
+    "#c:buckets/dye/orange",
+    "#c:buckets/dye/pink",
+    "#c:buckets/dye/purple",
+    "#c:buckets/dye/red",
+    "#c:buckets/dye/white",
+    "#c:buckets/dye/yellow",
+    "#c:buckets/honey",
+    "#c:buckets/molten_blaze",
+    "#c:buckets/molten_ender",
+    "#c:buckets/molten_glass",
+    "#c:buckets/ominous_flux"
+  ]
+}
