@@ -43,7 +43,7 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockE
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTPlantingRecipe, HTDoubleToMultiItemCompletedRecipe.Planting>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTPlantingRecipe, HTDoubleToMultiItemCompletedRecipe.Planting>(SoundEvents.GROWING_PLANT_CROP) {
         private val cache: HTRecipeCaches.DoubleItem<HTPlantingRecipe> = HTRecipeCaches.DoubleItem(RagiumRecipeLookups.PLANTING)
 
         private val plantInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(plantSlot) }
@@ -53,11 +53,6 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockE
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTPlantingRecipe? = cache.findFirstRecipe(plantInputHandler.getStack(), soilInputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTPlantingRecipe): HTDoubleToMultiItemCompletedRecipe.Planting = HTDoubleToMultiItemCompletedRecipe.Planting(recipe, plantInputHandler, soilInputHandler, outputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTDoubleToMultiItemCompletedRecipe.Planting) {
-            recipe.complete()
-            playSound(SoundEvents.GROWING_PLANT_CROP)
-        }
     }
 
     override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()

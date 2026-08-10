@@ -5,6 +5,7 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
+import hiiragi283.core.api.sounds.HTSoundInstance
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.setup.HCFluids
@@ -115,10 +116,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
         override fun getProgress(level: ServerLevel, pos: BlockPos): Int = 1
 
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTEnchantingCompletedRecipe) {
-            recipe.complete()
-            playSound(SoundEvents.ENCHANTMENT_TABLE_USE)
-        }
+        override fun getCompleteSound(): HTSoundInstance = HTSoundInstance(SoundEvents.ENCHANTMENT_TABLE_USE)
     }
 
     private class EnchantingCache : HTTripleInputRecipeCache<ItemStack, ItemStack, Int, HTEnchantingRecipe>(RagiumRecipeLookups.ENCHANTING) {

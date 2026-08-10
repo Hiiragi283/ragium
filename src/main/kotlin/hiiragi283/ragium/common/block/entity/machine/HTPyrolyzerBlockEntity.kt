@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemOrFluidBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
@@ -18,9 +19,7 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBl
 
     override fun getLookup(): HTRecipeLookup<HTItemOrFluidRecipe> = RagiumRecipeLookups.PYROLYZING
 
-    override fun playSound() {
-        playSound(SoundEvents.FIRE_EXTINGUISH)
-    }
-
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.pyrolyzer
+
+    override fun createHandler(): HTProgressHandler = ItemOrFluidProgressHandler(SoundEvents.FIRE_EXTINGUISH)
 }

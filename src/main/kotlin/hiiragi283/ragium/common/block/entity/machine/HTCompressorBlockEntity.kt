@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemToItemBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
@@ -18,9 +19,7 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBl
 
     override fun getLookup(): HTRecipeLookup<HTItemToItemRecipe> = RagiumRecipeLookups.COMPRESSING
 
-    override fun playSound() {
-        playSound(SoundEvents.WOOL_PLACE)
-    }
-
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.compressor
+
+    override fun createHandler(): HTProgressHandler = ItemToItemProgressHandler(SoundEvents.WOOL_PLACE)
 }

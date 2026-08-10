@@ -84,7 +84,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockEn
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTWashingRecipe, HTWashingCompletedRecipe>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTWashingRecipe, HTWashingCompletedRecipe>(SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE) {
         private val cache: HTRecipeCaches.ItemAndFluid<HTWashingRecipe> = HTRecipeCaches.ItemAndFluid(RagiumRecipeLookups.WASHING)
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
@@ -93,11 +93,6 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockEn
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTWashingRecipe? = cache.findFirstRecipe(itemInputHandler.getStack(), fluidInputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTWashingRecipe): HTWashingCompletedRecipe = HTWashingCompletedRecipe(recipe, itemInputHandler, fluidInputHandler, outputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTWashingCompletedRecipe) {
-            recipe.complete()
-            playSound(SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE)
-        }
     }
 
     override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()

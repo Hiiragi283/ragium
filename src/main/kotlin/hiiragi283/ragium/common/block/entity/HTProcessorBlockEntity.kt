@@ -13,6 +13,7 @@ import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.serialization.value.read
 import hiiragi283.core.api.serialization.value.write
+import hiiragi283.core.api.sounds.HTSoundInstance
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.common.gui.widget.HTProgressWidget
@@ -25,6 +26,7 @@ import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
@@ -82,7 +84,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
     //    RecipeHandler    //
 
-    abstract class RecipeHandler<RECIPE : Any, COMP : HTCompletedRecipe<RECIPE>> : HTTypedProgressHandler<COMP>() {
+    abstract inner class RecipeHandler<RECIPE : Any, COMP : HTCompletedRecipe<RECIPE>> : HTTypedProgressHandler<COMP>() {
         final override fun findRecipe(level: ServerLevel, pos: BlockPos): COMP? = findFirstRecipe(level, pos)?.let(::completeRecipe)
 
         protected abstract fun findFirstRecipe(level: ServerLevel, pos: BlockPos): RECIPE?
@@ -90,6 +92,13 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
         protected abstract fun completeRecipe(recipe: RECIPE): COMP
 
         override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: COMP): Boolean = recipe.canComplete()
+
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: COMP) {
+            recipe.complete()
+            playSound(getCompleteSound())
+        }
+
+        protected abstract fun getCompleteSound(): HTSoundInstance
     }
 
     //    Energized    //
@@ -138,6 +147,12 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
                 .let(::updateAndGetProgress)
 
             final override fun getProgress(level: ServerLevel, pos: BlockPos): Int = handler.consume()
+        }
+
+        abstract inner class SimpleProgressHandler<RECIPE : Any, COMP : HTCompletedRecipe.WithProgress<RECIPE>>(private val sound: HTSoundInstance) : ProgressHandler<RECIPE, COMP>() {
+            constructor(sound: SoundEvent) : this(HTSoundInstance(sound))
+
+            final override fun getCompleteSound(): HTSoundInstance = sound
         }
     }
 }

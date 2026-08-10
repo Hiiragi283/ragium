@@ -71,7 +71,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTItemToFluidRecipe, HTSingleToSingleCompletedRecipe.ItemToFluid>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTItemToFluidRecipe, HTSingleToSingleCompletedRecipe.ItemToFluid>(SoundEvents.LAVA_POP) {
         private val cache: HTRecipeCaches.SingleItem<HTItemToFluidRecipe> = HTRecipeCaches.SingleItem(RagiumRecipeLookups.MELTING)
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
@@ -79,11 +79,6 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemToFluidRecipe? = cache.findFirstRecipe(inputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTItemToFluidRecipe): HTSingleToSingleCompletedRecipe.ItemToFluid = HTSingleToSingleCompletedRecipe.ItemToFluid(recipe, inputHandler, outputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTSingleToSingleCompletedRecipe.ItemToFluid) {
-            recipe.complete()
-            playSound(SoundEvents.LAVA_POP)
-        }
     }
 
     override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()

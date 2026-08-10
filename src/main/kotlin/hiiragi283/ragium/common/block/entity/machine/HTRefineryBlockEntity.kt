@@ -100,7 +100,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlock
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTRefiningRecipe, HTRefiningCompletedRecipe>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTRefiningRecipe, HTRefiningCompletedRecipe>(SoundEvents.LAVA_POP) {
         private val cache: HTRecipeCaches.ItemAndFluid<HTRefiningRecipe> = HTRecipeCaches.ItemAndFluid(RagiumRecipeLookups.REFINING)
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
@@ -111,11 +111,6 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlock
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTRefiningRecipe? = cache.findFirstRecipe(itemInputHandler.getStack(), fluidInputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTRefiningRecipe): HTRefiningCompletedRecipe = HTRefiningCompletedRecipe(recipe, fluidInputHandler, itemInputHandler, firstFluidOutputHandler, secondFluidOutputHandler, itemOutputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTRefiningCompletedRecipe) {
-            recipe.complete()
-            playSound(SoundEvents.LAVA_POP)
-        }
     }
 
     override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()

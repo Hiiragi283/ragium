@@ -82,7 +82,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTItemAndFluidToItemRecipe, HTDoubleInputCompletedRecipe.ItemAndFluid>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTItemAndFluidToItemRecipe, HTDoubleInputCompletedRecipe.ItemAndFluid>(SoundEvents.BUCKET_FILL_POWDER_SNOW) {
         private val cache: HTRecipeCaches.ItemAndFluid<HTItemAndFluidToItemRecipe> = HTRecipeCaches.ItemAndFluid(RagiumRecipeLookups.FREEZING)
         private val inputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
@@ -91,11 +91,6 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemAndFluidToItemRecipe? = cache.findFirstRecipe(catalystHandler.getStack(), inputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTItemAndFluidToItemRecipe): HTDoubleInputCompletedRecipe.ItemAndFluid = HTDoubleInputCompletedRecipe.ItemAndFluid(recipe, catalystHandler, inputHandler, outputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTDoubleInputCompletedRecipe.ItemAndFluid) {
-            recipe.complete()
-            playSound(SoundEvents.BUCKET_FILL_POWDER_SNOW)
-        }
     }
 
     override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()

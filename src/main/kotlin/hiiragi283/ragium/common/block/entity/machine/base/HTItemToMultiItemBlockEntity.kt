@@ -7,8 +7,8 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.cache.completed.HTSingleToMultiItemCompletedRecipe
-import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
+import hiiragi283.core.api.sounds.HTSoundInstance
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.support.recipe.cache.HTRecipeCaches
 import hiiragi283.core.support.recipe.handler.HTItemInputHandler
@@ -18,6 +18,7 @@ import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
@@ -51,7 +52,11 @@ abstract class HTItemToMultiItemBlockEntity(type: BlockEntityType<*>, pos: Block
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTItemToMultiItemRecipe, HTSingleToMultiItemCompletedRecipe.ItemToItem>() {
+    protected inner class ItemToMultiItemProgressHandler : SimpleProgressHandler<HTItemToMultiItemRecipe, HTSingleToMultiItemCompletedRecipe.ItemToItem> {
+        constructor(sound: HTSoundInstance) : super(sound)
+
+        constructor(sound: SoundEvent) : super(sound)
+
         private val cache: HTRecipeCaches.SingleItem<out HTItemToMultiItemRecipe> = HTRecipeCaches.SingleItem(getLookup())
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
@@ -59,16 +64,7 @@ abstract class HTItemToMultiItemBlockEntity(type: BlockEntityType<*>, pos: Block
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemToMultiItemRecipe? = cache.findFirstRecipe(inputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTItemToMultiItemRecipe): HTSingleToMultiItemCompletedRecipe.ItemToItem = HTSingleToMultiItemCompletedRecipe.ItemToItem(recipe, inputHandler, outputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTSingleToMultiItemCompletedRecipe.ItemToItem) {
-            recipe.complete()
-            playSound()
-        }
     }
 
-    final override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
-
     protected abstract fun getLookup(): HTRecipeLookup<HTItemToMultiItemRecipe>
-
-    protected abstract fun playSound()
 }

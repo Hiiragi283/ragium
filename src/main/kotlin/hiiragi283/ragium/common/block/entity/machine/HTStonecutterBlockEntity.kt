@@ -77,7 +77,7 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTDoubleItemToItemRecipe, HTDoubleInputCompletedRecipe.DoubleItem>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTDoubleItemToItemRecipe, HTDoubleInputCompletedRecipe.DoubleItem>(SoundEvents.UI_STONECUTTER_TAKE_RESULT) {
         private val cache: HTRecipeCaches.DoubleItem<WrappedRecipe> = HTRecipeCaches.DoubleItem { context: HTRecipeLookup.Context -> context.getAllRecipes(RecipeType.STONECUTTING).associate { it.id to WrappedRecipe(it.recipe) } }
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }
@@ -86,11 +86,6 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTDoubleItemToItemRecipe? = cache.findFirstRecipe(inputHandler.getStack(), catalystHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTDoubleItemToItemRecipe): HTDoubleInputCompletedRecipe.DoubleItem = HTDoubleInputCompletedRecipe.DoubleItem(recipe, inputHandler, catalystHandler, outputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTDoubleInputCompletedRecipe.DoubleItem) {
-            recipe.complete()
-            playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
-        }
     }
 
     override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()

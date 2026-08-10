@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.cache.completed.HTDoubleInputCompletedRecipe
-import hiiragi283.core.api.recipe.handler.HTProgressHandler
+import hiiragi283.core.api.sounds.HTSoundInstance
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.support.recipe.cache.HTRecipeCaches
 import hiiragi283.core.support.recipe.handler.HTItemInputHandler
@@ -15,7 +15,7 @@ import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
@@ -47,7 +47,11 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTDoubleItemToItemRecipe, HTDoubleInputCompletedRecipe.DoubleItem>() {
+    protected inner class ProgressHandlerImpl : SimpleProgressHandler<HTDoubleItemToItemRecipe, HTDoubleInputCompletedRecipe.DoubleItem> {
+        constructor(sound: HTSoundInstance) : super(sound)
+
+        constructor(sound: SoundEvent) : super(sound)
+
         private val cache: HTRecipeCaches.DoubleItem<HTDoubleItemToItemRecipe> = HTRecipeCaches.DoubleItem(getLookup())
         private val leftInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(leftInputSlot) }
         private val rightInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(rightInputSlot) }
@@ -61,14 +65,7 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
             rightInputHandler,
             outputHandler,
         )
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTDoubleInputCompletedRecipe.DoubleItem) {
-            recipe.complete()
-            playSound(SoundEvents.CRAFTER_CRAFT)
-        }
     }
-
-    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
     protected abstract fun getLookup(): HTRecipeLookup<HTDoubleItemToItemRecipe>
 }

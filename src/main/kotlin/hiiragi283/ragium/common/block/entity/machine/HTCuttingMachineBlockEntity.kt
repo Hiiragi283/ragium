@@ -5,6 +5,7 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.support.storage.item.HTBasicItemSlot
@@ -19,10 +20,6 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CUTTING_MACHINE.get(), pos, state) {
-    override fun playSound() {
-        playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
-    }
-
     override fun getOutputSlotSize(): Int = 2
 
     override fun setupOutputSlots(widgetHolder: HTWidgetHolder) {
@@ -44,6 +41,8 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMu
     }
 
     override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(RagiumRecipeViewerTypes.CUTTING)
+
+    override fun createHandler(): HTProgressHandler = ItemToMultiItemProgressHandler(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
 
     override fun getLookup(): HTRecipeLookup<HTItemToMultiItemRecipe> = RagiumRecipeLookups.CUTTING
 

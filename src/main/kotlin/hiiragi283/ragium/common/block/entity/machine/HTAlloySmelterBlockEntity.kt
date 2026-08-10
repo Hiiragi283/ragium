@@ -97,7 +97,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorB
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTAlloyingRecipe, HTAlloyingCompletedRecipe>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTAlloyingRecipe, HTAlloyingCompletedRecipe>(SoundEvents.FIRE_EXTINGUISH) {
         private val cache = AlloyingCache()
         private val topInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(topInputSlot) }
         private val leftInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(leftInputSlot) }
@@ -113,11 +113,6 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorB
             rightInputHandler,
             outputHandler,
         )
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTAlloyingCompletedRecipe) {
-            recipe.complete()
-            playSound(SoundEvents.FIRE_EXTINGUISH)
-        }
     }
 
     private class AlloyingCache : HTTripleInputRecipeCache<ItemStack, ItemStack, ItemStack, HTAlloyingRecipe>(RagiumRecipeLookups.ALLOYING) {
