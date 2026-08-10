@@ -21,36 +21,24 @@ fun interface HTLangPatternProvider {
     fun translate(type: HTLangType, provider: HTLangName): String = translate(type, provider.getTranslatedName(type))
 
     companion object {
+        /**
+         * @since 21.1.0
+         */
         @JvmField
-        val IDENTITY = HTLangPatternProvider { _, value -> value }
-
-        /**
-         * 新しい[HTLangPatternProvider]のインスタンスを作成します。
-         * @param enPattern 英語での翻訳名のパターン
-         * @param jaPattern 日本語での翻訳名のパターン
-         */
-        @JvmStatic
-        fun create(enPattern: String, jaPattern: String): HTLangPatternProvider = HTLangPatternProvider { type: HTLangType, value: String ->
-            when (type) {
-                HTLangTypes.JA_JP -> jaPattern
-                else -> enPattern
-            }.replace("%s", value)
-        }
-
-        /**
-         * 新しい[HTLangPatternProvider]のインスタンスを作成します。
-         * @param enPattern 英語での翻訳名のパターン
-         * @param others 英語以外での翻訳名のパターン
-         */
-        @JvmStatic
-        fun create(enPattern: String, vararg others: Pair<HTLangType, String>): HTLangPatternProvider = create(enPattern, mapOf(*others))
-
-        /**
-         * 新しい[HTLangPatternProvider]のインスタンスを作成します。
-         * @param enPattern 英語での翻訳名のパターン
-         * @param others 英語以外での翻訳名のパターン
-         */
-        @JvmStatic
-        fun create(enPattern: String, others: Map<HTLangType, String>): HTLangPatternProvider = HTLangPatternProvider { type: HTLangType, value: String -> (others[type] ?: enPattern).replace("%s", value) }
+        val IDENTITY: HTLangPatternProvider = IdentityLangPatternProvider
     }
+}
+
+fun HTLangPatternProvider(enPattern: String, jaPattern: String): HTLangPatternProvider = EnJaLangPatternProvider(enPattern, jaPattern)
+
+private data object IdentityLangPatternProvider : HTLangPatternProvider {
+    override fun translate(type: HTLangType, value: String): String = value
+}
+
+@JvmRecord
+private data class EnJaLangPatternProvider(private val enPattern: String, private val jaPattern: String) : HTLangPatternProvider {
+    override fun translate(type: HTLangType, value: String): String = when (type) {
+        HTLangTypes.JA_JP -> jaPattern
+        else -> enPattern
+    }.replace("%s", value)
 }

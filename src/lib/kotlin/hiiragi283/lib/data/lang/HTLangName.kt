@@ -10,35 +10,14 @@ fun interface HTLangName {
      * 指定された[言語の種類][type]から翻訳名を返します。
      */
     fun getTranslatedName(type: HTLangType): String
+}
 
-    companion object {
-        /**
-         * 新しい[HTLangName]のインスタンスを作成します。
-         * @param enName 英語での翻訳名
-         * @param jaName 日本語での翻訳名
-         */
-        @JvmStatic
-        fun create(enName: String, jaName: String): HTLangName = HTLangName { type: HTLangType ->
-            when (type) {
-                HTLangTypes.JA_JP -> jaName
-                else -> enName
-            }
-        }
+fun HTLangName(enName: String, jaName: String): HTLangName = EnJaLangName(enName, jaName)
 
-        /**
-         * 新しい[HTLangName]のインスタンスを作成します。
-         * @param enName 英語での翻訳名
-         * @param others 英語以外での翻訳名
-         */
-        @JvmStatic
-        fun create(enName: String, vararg others: Pair<HTLangType, String>): HTLangName = create(enName, mapOf(*others))
-
-        /**
-         * 新しい[HTLangName]のインスタンスを作成します。
-         * @param enName 英語での翻訳名
-         * @param others 英語以外での翻訳名
-         */
-        @JvmStatic
-        fun create(enName: String, others: Map<HTLangType, String>): HTLangName = HTLangName { type: HTLangType -> others[type] ?: enName }
+@JvmRecord
+private data class EnJaLangName(private val enName: String, private val jaName: String) : HTLangName {
+    override fun getTranslatedName(type: HTLangType): String = when (type) {
+        HTLangTypes.JA_JP -> jaName
+        else -> enName
     }
 }

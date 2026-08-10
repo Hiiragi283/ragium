@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.init.RagiumFluids
 import net.minecraft.core.registries.Registries
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -19,6 +20,8 @@ import net.neoforged.neoforge.registries.RegisterEvent
 data object Ragium : HTCommonMod() {
     override fun initialize(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(::register)
+
+        RagiumFluids.register(eventBus)
     }
 
     private fun register(event: RegisterEvent) {

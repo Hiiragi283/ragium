@@ -16,7 +16,7 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 abstract class HTLangProvider(output: PackOutput, modId: String, val langType: HTLangType) : LanguageProvider(output, modId, langType.name.lowercase()) {
     companion object {
         @JvmField
-        val BUCKET_PATTERN: HTLangPatternProvider = HTLangPatternProvider.create("%s Bucket", "%s入りバケツ")
+        val BUCKET_PATTERN = HTLangPatternProvider("%s Bucket", "%s入りバケツ")
     }
 
     /**

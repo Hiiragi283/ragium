@@ -68,6 +68,8 @@ abstract class HTRecipeProviderContext {
 
     fun <T : Any> holderSet(tagKeys: Iterable<TagKey<T>>): HolderSet<T> = tagKeys.map(this.registries::getOrThrow).sortedBy { it.unwrapKey().orElseThrow().location() }.let(::OrHolderSet)
 
+    fun <T : Any> holderSet(vararg tagKeys: TagKey<T>): HolderSet<T> = holderSet(tagKeys.toSet())
+
     /**
      * [HolderSet]を取得します。
      * @param prefix タグのプレフィックス

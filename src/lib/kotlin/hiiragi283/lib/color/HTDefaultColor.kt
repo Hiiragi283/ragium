@@ -28,7 +28,7 @@ enum class HTDefaultColor(
     enName: String,
     jaName: String,
 ) : StringRepresentable,
-    HTLangName by HTLangName.create(enName, jaName) {
+    HTLangName by HTLangName(enName, jaName) {
     WHITE(ChatFormatting.WHITE, DyeColor.WHITE, "White", "白色"),
     ORANGE(intArrayOf(255, 161, 96), DyeColor.ORANGE, "Orange", "橙色"),
     MAGENTA(intArrayOf(213, 94, 203), DyeColor.MAGENTA, "Magenta", "赤紫色"),

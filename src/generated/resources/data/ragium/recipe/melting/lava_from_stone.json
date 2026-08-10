@@ -1,0 +1,18 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "ingredient": {
+      "type": "neoforge:or",
+      "values": [
+        "#c:cobblestones",
+        "#c:stones"
+      ]
+    }
+  },
+  "result": {
+    "amount": 125,
+    "id": "minecraft:lava"
+  },
+  "time": 200
+}
