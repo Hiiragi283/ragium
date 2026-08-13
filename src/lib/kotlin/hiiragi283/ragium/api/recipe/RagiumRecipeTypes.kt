@@ -15,6 +15,9 @@ data object RagiumRecipeTypes {
 
     // Mechanical
     @JvmField
+    val ASSEMBLING: HTRecipeType<RTAssemblingRecipe> = create(RagiumConstants.ASSEMBLING)
+
+    @JvmField
     val CRUSHING: HTRecipeType<RTCrushingRecipe> = create(RagiumConstants.CRUSHING)
 
     // Heat

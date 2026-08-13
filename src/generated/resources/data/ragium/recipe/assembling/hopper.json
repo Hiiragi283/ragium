@@ -1,0 +1,16 @@
+{
+  "type": "ragium:assembling",
+  "primary_ingredient": {
+    "count": 5,
+    "ingredient": "#c:ingots/iron"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:hopper"
+  },
+  "secondary_ingredient": {
+    "count": 1,
+    "ingredient": "#c:chests/wooden"
+  },
+  "time": 200
+}

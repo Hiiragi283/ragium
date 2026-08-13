@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.lib.recipe.HTRecipeType
+import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.lookup.HTCompoundRecipeLookup
@@ -22,6 +23,9 @@ data object RagiumRecipeLookups {
 
     // Mechanical
     @JvmField
+    val ASSEMBLING: HTCompoundRecipeLookup<HTDoubleItemToItemRecipe> = create(RagiumConstants.ASSEMBLING)
+
+    @JvmField
     val CRUSHING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.CRUSHING)
 
     // Heat
@@ -38,6 +42,7 @@ data object RagiumRecipeLookups {
 
     @JvmStatic
     fun init() {
+        ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING, identity())
         CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING, identity())
 
         MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())

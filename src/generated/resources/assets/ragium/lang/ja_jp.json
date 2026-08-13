@@ -106,6 +106,7 @@
   "item.ragium.wood_dust": "おがくず",
   "item.ragium.wood_gear": "木の歯車",
   "item.ragium.yellow_dye_bucket": "黄色の染料入りバケツ",
+  "recipe_type.ragium.assembling": "組立",
   "recipe_type.ragium.crushing": "粉砕",
   "recipe_type.ragium.melting": "溶融",
   "tag.fluid.c.dyes.black": "黒色の染料",

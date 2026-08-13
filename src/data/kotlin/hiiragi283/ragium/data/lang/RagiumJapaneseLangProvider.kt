@@ -35,6 +35,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_STAR, "ウィザースター")
 
         // Recipe Type
+        add(RagiumRecipeTypes.ASSEMBLING, "組立")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
 
         add(RagiumRecipeTypes.MELTING, "溶融")

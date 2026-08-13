@@ -22,6 +22,16 @@ interface HTItemToDoubleItemRecipe :
     HTRecipeFactories.SingleItemTo<Pair<ItemStack, ItemStack>>,
     HTProgressRecipe<SingleRecipeInput> {
 
+    fun asSingleOutput(): HTItemToItemRecipe = object : HTItemToItemRecipe {
+        override fun test(input: TypedInstance<Item>): Boolean = this@HTItemToDoubleItemRecipe.test(input)
+
+        override fun getRequiredAmount(input: TypedInstance<Item>): Int = this@HTItemToDoubleItemRecipe.getRequiredAmount(input)
+
+        override fun apply(input: ItemInstance): ItemStack = this@HTItemToDoubleItemRecipe.apply(input).first
+
+        override fun getProgressData(input: SingleRecipeInput): HTProgressData = this@HTItemToDoubleItemRecipe.getProgressData(input)
+    }
+
     open class Basic(val ingredient: HTItemIngredient, val primary: HTItemResult, val secondary: Option<HTItemResult>, override val progressData: HTProgressData) :
         HTItemToDoubleItemRecipe,
         HTProgressRecipe.Simple<SingleRecipeInput> {

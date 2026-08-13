@@ -1,0 +1,16 @@
+{
+  "type": "ragium:assembling",
+  "primary_ingredient": {
+    "count": 5,
+    "ingredient": "#c:leathers"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:saddle"
+  },
+  "secondary_ingredient": {
+    "count": 2,
+    "ingredient": "#c:nuggets/iron"
+  },
+  "time": 200
+}

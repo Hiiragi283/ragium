@@ -106,6 +106,7 @@
   "item.ragium.wood_dust": "Sawdust",
   "item.ragium.wood_gear": "Wood Gear",
   "item.ragium.yellow_dye_bucket": "Yellow Dye Bucket",
+  "recipe_type.ragium.assembling": "Assembling",
   "recipe_type.ragium.crushing": "Crushing",
   "recipe_type.ragium.melting": "Melting",
   "tag.fluid.c.dyes.black": "Black Dye",

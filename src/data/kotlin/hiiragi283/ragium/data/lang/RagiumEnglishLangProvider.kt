@@ -35,6 +35,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_STAR, "Wither Star")
 
         // Recipe Type
+        add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
 
         add(RagiumRecipeTypes.MELTING, "Melting")

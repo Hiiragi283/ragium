@@ -3,8 +3,10 @@ package hiiragi283.ragium.api.recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 
 data object RagiumRecipeSerializers {
-
     // Mechanical
+    @JvmField
+    val ASSEMBLING: RecipeSerializer<RTAssemblingRecipe> = RTAssemblingRecipe.SERIALIZER
+
     @JvmField
     val CRUSHING: RecipeSerializer<RTCrushingRecipe> = RTCrushingRecipe.SERIALIZER
 
