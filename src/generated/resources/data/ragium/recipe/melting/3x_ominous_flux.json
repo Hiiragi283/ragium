@@ -1,0 +1,18 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "ingredient": {
+      "neoforge:ingredient_type": "neoforge:components",
+      "components": {
+        "minecraft:ominous_bottle_amplifier": 3
+      },
+      "items": "minecraft:ominous_bottle"
+    }
+  },
+  "result": {
+    "amount": 1000,
+    "id": "ragium:ominous_flux"
+  },
+  "time": 200
+}

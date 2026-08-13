@@ -1,6 +1,7 @@
 package hiiragi283.lib.recipe.result
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.registry.getKeyOrThrow
@@ -9,12 +10,9 @@ import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.DFUEither
-import hiiragi283.lib.util.HTTextResult
-import hiiragi283.lib.util.getOrElse
-import hiiragi283.lib.util.right
 import hiiragi283.ragium.api.RagiumRegistries
-import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -22,7 +20,6 @@ import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
@@ -64,15 +61,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTIdLike {
     /**
      * アイテムの完成品を作成します。
      */
-    fun create(): HTTextResult<ItemStack> = entry.create().map { it.copyWithCount(count) }
-
-    /**
-     * アイテムの完成品を作成します。
-     * @return 正常に作成できなかった場合は[ItemStack.EMPTY]
-     */
-    fun createOrEmpty(): ItemStack = create().getOrElse { ItemStack.EMPTY }
-
-    fun isIncomplete(): Boolean = create().isLeft()
+    fun create(): ItemStack = entry.create().copyWithCount(count)
 
     /**
      * このインスタンスのコピーを作成します。
@@ -108,7 +97,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTIdLike {
 
         fun type(): HTItemResultType<*>
 
-        fun create(): HTTextResult<ItemStack>
+        fun create(): ItemStack
 
         fun toResult(count: Int = 1): HTItemResult = HTItemResult(this, count)
     }
@@ -145,28 +134,37 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTIdLike {
 
         override fun type(): HTItemResultType<*> = TYPE
 
-        override fun create(): HTTextResult<ItemStack> = ItemStack(item, 1, components).right()
+        override fun create(): ItemStack = ItemStack(item, 1, components)
 
         override fun getKey(): ResourceKey<Item> = item.getKeyOrThrow()
     }
 
     @JvmInline
-    value class TagEntry(val tagKey: TagKey<Item>) : Entry {
+    value class TagEntry(val tag: HolderSet<Item>) : Entry {
         companion object {
             @JvmField
-            val CODEC: MapCodec<TagEntry> = HTCodecs.tagKey(Registries.ITEM, true).fieldOf(HTConstants.TAG).xmap(::TagEntry, TagEntry::tagKey)
+            val CODEC: MapCodec<TagEntry> = HTCodecs.holderSet(Registries.ITEM)
+                .validate { holderSet: HolderSet<Item> ->
+                    if (holderSet.unwrapKey().isEmpty) {
+                        DataResult.error { "TagEntry only accepts tag set" }
+                    } else {
+                        DataResult.success(holderSet)
+                    }
+                }
+                .fieldOf(HTConstants.TAG)
+                .xmap(::TagEntry, TagEntry::tag)
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<ByteBuf, TagEntry> = HTStreamCodecs.tagKey(Registries.ITEM).map(::TagEntry, TagEntry::tagKey)
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, TagEntry> = HTStreamCodecs.holderSet(Registries.ITEM).map(::TagEntry, TagEntry::tag)
 
             @JvmField
-            val TYPE: HTItemResultType<TagEntry> = HTItemResultType(CODEC, STREAM_CODEC.cast())
+            val TYPE: HTItemResultType<TagEntry> = HTItemResultType(CODEC, STREAM_CODEC)
         }
 
         override fun type(): HTItemResultType<*> = TYPE
 
-        override fun create(): HTTextResult<ItemStack> = TODO()
+        override fun create(): ItemStack = TODO()
 
-        override fun getId(): Identifier = tagKey.location()
+        override fun getId(): Identifier = tag.unwrapKey().orElseThrow().location()
     }
 }

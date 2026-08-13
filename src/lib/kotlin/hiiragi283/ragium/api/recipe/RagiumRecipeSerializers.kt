@@ -5,6 +5,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 data object RagiumRecipeSerializers {
 
     // Mechanical
+    @JvmField
+    val CRUSHING: RecipeSerializer<RTCrushingRecipe> = RTCrushingRecipe.SERIALIZER
 
     // Heat
     @JvmField

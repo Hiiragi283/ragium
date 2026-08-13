@@ -31,6 +31,7 @@ abstract class HTCraftingRecipeBuilder<out RECIPE : CraftingRecipe>(prefix: Stri
 
     fun bookInfo(): CraftingRecipe.CraftingBookInfo = bookInfo(category, group)
 
+    // Result
     @PublishedApi internal var result: ItemStackTemplate by HTDelegates.onceInitialize()
 
     operator fun ItemStackTemplate.unaryPlus() {

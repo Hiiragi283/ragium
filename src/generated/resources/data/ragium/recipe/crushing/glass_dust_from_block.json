@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "#c:glass_blocks"
+  },
+  "primary_result": {
+    "count": 1,
+    "id": "ragium:glass_dust"
+  },
+  "time": 200
+}

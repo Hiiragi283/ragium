@@ -24,6 +24,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_BLAZE, "Blaze Blood")
 
         // Recipe Type
+        add(RagiumRecipeTypes.CRUSHING, "Crushing")
+
         add(RagiumRecipeTypes.MELTING, "Melting")
         // Text
         add(RagiumTranslation.RAGIUM, "Ragium")

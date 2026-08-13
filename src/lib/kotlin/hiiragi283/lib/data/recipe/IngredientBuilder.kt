@@ -4,7 +4,6 @@ package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
 import kotlin.contracts.ExperimentalContracts
@@ -24,11 +23,15 @@ import net.neoforged.neoforge.registries.holdersets.OrHolderSet
  */
 @HTBuilderMarker
 class IngredientBuilder {
-    private var contents: Either<ICustomIngredient, HolderSet<Item>> by HTDelegates.onceInitialize()
+    private var ingredient: Ingredient by HTDelegates.onceInitialize()
     var count: Int = 1
 
+    operator fun Ingredient.unaryPlus() {
+        ingredient = this
+    }
+
     operator fun ICustomIngredient.unaryPlus() {
-        contents = Either.Left(this)
+        ingredient = this.toVanilla()
     }
 
     @JvmName("unaryPlusCompound")
@@ -37,7 +40,7 @@ class IngredientBuilder {
     }
 
     operator fun HolderSet<Item>.unaryPlus() {
-        contents = Either.Right(this)
+        ingredient = Ingredient.of(this)
     }
 
     @JvmName("unaryPlusOr")
@@ -52,7 +55,7 @@ class IngredientBuilder {
         +HolderAcceptor.ItemSetBuilder().apply(builderAction).build()
     }
 
-    fun build(): Ingredient = contents.fold(ICustomIngredient::toVanilla, Ingredient::of)
+    fun build(): Ingredient = ingredient
 
     fun buildSized(): HTItemIngredient = HTItemIngredient(build(), count)
 }

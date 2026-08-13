@@ -4,13 +4,13 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
-import net.minecraft.world.level.ItemLike
 
 /**
  * [HTItemResult]を作成するビルダークラスです。
@@ -28,15 +28,19 @@ class HTItemResultBuilder {
 
     // Simple
     operator fun Identifier.unaryPlus() {
-        +HTItemResult.SimpleEntry(HTSimpleDeferredItem(this))
+        +HTSimpleDeferredItem(this).delegate
     }
 
     operator fun ResourceKey<Item>.unaryPlus() {
-        +HTItemResult.SimpleEntry(HTSimpleDeferredItem(this))
+        +HTSimpleDeferredItem(this).delegate
     }
 
-    operator fun ItemLike.unaryPlus() {
-        +ItemStackTemplate(this.asItem())
+    operator fun Holder<Item>.unaryPlus() {
+        +HTItemResult.SimpleEntry(this)
+    }
+
+    operator fun Item.unaryPlus() {
+        +ItemStackTemplate(this)
     }
 
     operator fun ItemStackTemplate.unaryPlus() {
@@ -48,7 +52,7 @@ class HTItemResultBuilder {
     }
 
     // Tag
-    operator fun TagKey<Item>.unaryPlus() {
+    operator fun HolderSet<Item>.unaryPlus() {
         +HTItemResult.TagEntry(this)
     }
 

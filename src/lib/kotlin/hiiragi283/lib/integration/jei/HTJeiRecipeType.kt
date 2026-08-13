@@ -1,12 +1,15 @@
 package hiiragi283.lib.integration.jei
 
 import hiiragi283.lib.item.HTSimpleItemLike
+import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.resource.HTIdLike
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.util.Either
 import mezz.jei.api.recipe.types.IRecipeType
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStack
+
+typealias HTHolderJeiRecipeType<T> = HTJeiRecipeType<HTRecipeHolder<T>>
 
 class HTJeiRecipeType<T : Any>(
     private val id: Identifier,

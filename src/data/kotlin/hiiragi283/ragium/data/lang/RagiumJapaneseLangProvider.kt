@@ -24,6 +24,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_BLAZE, "ブレイズの血液")
 
         // Recipe Type
+        add(RagiumRecipeTypes.CRUSHING, "粉砕")
+
         add(RagiumRecipeTypes.MELTING, "溶融")
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")

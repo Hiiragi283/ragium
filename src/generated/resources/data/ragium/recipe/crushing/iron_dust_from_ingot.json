@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "#c:ingots/iron"
+  },
+  "primary_result": {
+    "count": 1,
+    "id": "ragium:iron_dust"
+  },
+  "time": 200
+}

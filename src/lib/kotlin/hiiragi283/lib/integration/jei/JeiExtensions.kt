@@ -36,4 +36,4 @@ fun <T : IIngredientAcceptor<T>> T.add(result: HTFluidResult): T = this.add(resu
 // Item
 fun <T : IIngredientAcceptor<T>> T.add(ingredient: HTItemIngredient): T = this.addItemStacks(ingredient.getPreviewStacks(this.contextMap))
 
-fun <T : IIngredientAcceptor<T>> T.add(result: HTItemResult): T = this.add(result.createOrEmpty())
+fun <T : IIngredientAcceptor<T>> T.add(result: HTItemResult): T = this.add(result.create())

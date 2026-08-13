@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "#c:gems/diamond"
+  },
+  "primary_result": {
+    "count": 1,
+    "id": "ragium:diamond_dust"
+  },
+  "time": 200
+}

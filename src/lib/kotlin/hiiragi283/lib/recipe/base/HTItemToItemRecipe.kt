@@ -60,6 +60,6 @@ interface HTItemToItemRecipe :
 
         override fun getRequiredAmount(input: TypedInstance<Item>): Int = ingredient.getRequiredAmount(input)
 
-        override fun apply(input: ItemInstance): ItemStack = result.createOrEmpty()
+        override fun apply(input: ItemInstance): ItemStack = result.create()
     }
 }

@@ -14,6 +14,8 @@ data object RagiumRecipeTypes {
     private fun <T : Recipe<*>> create(name: String): HTRecipeType<T> = HTRecipeType<T>(RagiumAPI.id(name)).also(allTypes::add)
 
     // Mechanical
+    @JvmField
+    val CRUSHING: HTRecipeType<RTCrushingRecipe> = create(RagiumConstants.CRUSHING)
 
     // Heat
     @JvmField

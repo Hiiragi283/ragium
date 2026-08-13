@@ -68,6 +68,6 @@ interface HTItemOrFluidRecipe :
             .toPair()
             .let { (item: Int?, fluid: Int?) -> (item ?: 0) to (fluid ?: 0) }
 
-        override fun apply(first: ItemInstance, second: FluidInstance): HTItemAndFluidResult = result.mapLeft { it.createOrEmpty() }.mapRight { it.create() }.let(::HTItemAndFluidResult)
+        override fun apply(first: ItemInstance, second: FluidInstance): HTItemAndFluidResult = result.mapLeft { it.create() }.mapRight { it.create() }.let(::HTItemAndFluidResult)
     }
 }

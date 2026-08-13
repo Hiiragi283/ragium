@@ -36,8 +36,8 @@ interface HTDoubleItemToItemRecipe :
             @JvmStatic
             fun <RECIPE : Basic> codec(factory: (HTItemIngredient, HTItemIngredient, HTItemResult, HTProgressData) -> RECIPE): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
                 instance.group(
-                    HTItemIngredient.CODEC.fieldOf(HTConstants.PRIMARY).forGetter(Basic::primary),
-                    HTItemIngredient.CODEC.fieldOf(HTConstants.SECONDARY).forGetter(Basic::secondary),
+                    HTItemIngredient.CODEC.fieldOf(HTConstants.PRIMARY_INGREDIENT).forGetter(Basic::primary),
+                    HTItemIngredient.CODEC.fieldOf(HTConstants.SECONDARY_INGREDIENT).forGetter(Basic::secondary),
                     HTItemResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
                     HTProgressData.CODEC.forGetter(Basic::progressData),
                 ).apply(instance, factory)
@@ -48,6 +48,6 @@ interface HTDoubleItemToItemRecipe :
 
         override fun getRequiredAmount(first: TypedInstance<Item>, second: TypedInstance<Item>): Pair<Int, Int> = primary.getRequiredAmount(first) to secondary.getRequiredAmount(second)
 
-        override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.createOrEmpty()
+        override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
     }
 }

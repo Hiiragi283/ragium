@@ -3,7 +3,7 @@ package hiiragi283.lib.integration.jei.category
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.integration.jei.HTJeiRecipeType
+import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.id
 import hiiragi283.lib.recipe.recipe
@@ -24,12 +24,12 @@ import net.minecraft.resources.Identifier
  */
 abstract class HTHolderRecipeCategory<RECIPE : Any>(
     guiHelper: IGuiHelper,
-    recipeType: HTJeiRecipeType<HTRecipeHolder<RECIPE>>,
+    recipeType: HTHolderJeiRecipeType<RECIPE>,
     private val codec: Codec<HTRecipeHolder<RECIPE>>,
 ) : HTBasicRecipeCategory<HTRecipeHolder<RECIPE>>(guiHelper, recipeType) {
     constructor(
         guiHelper: IGuiHelper,
-        recipeType: HTJeiRecipeType<HTRecipeHolder<RECIPE>>,
+        recipeType: HTHolderJeiRecipeType<RECIPE>,
         codec: MapCodec<RECIPE>,
     ) : this(guiHelper, recipeType, HTCodecs.mapPair(HTCodecs.resourceKey(Registries.RECIPE).fieldOf(HTConstants.ID), codec).codec())
 

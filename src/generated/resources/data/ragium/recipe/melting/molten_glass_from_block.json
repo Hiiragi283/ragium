@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "#c:glass_blocks"
+  },
+  "result": {
+    "amount": 1000,
+    "id": "ragium:molten_glass"
+  },
+  "time": 200
+}

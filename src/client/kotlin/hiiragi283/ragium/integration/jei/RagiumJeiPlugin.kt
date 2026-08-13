@@ -3,6 +3,7 @@ package hiiragi283.ragium.integration.jei
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
+import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToFluidRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTPotionHelper
@@ -39,12 +40,26 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         val guiHelper: IGuiHelper = registration.jeiHelpers.guiHelper
 
         registration.addRecipeCategories(
+            // Mechanical
+            HTItemToDoubleItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CRUSHING),
+            // Heat
             HTItemToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MELTING),
+            // Chemical
+            // Bio
+            // Electronics
+            // Arcane
         )
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {
+        // Mechanical
+        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeLookups.CRUSHING)
+        // Heat
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.MELTING, RagiumRecipeLookups.MELTING)
+        // Chemical
+        // Bio
+        // Electronics
+        // Arcane
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {

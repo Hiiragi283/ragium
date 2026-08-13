@@ -35,6 +35,7 @@ data object RagiumItems {
             // Fuel
             HTMaterial.Fuel.COAL,
             HTMaterial.Fuel.CHARCOAL,
+            HTMaterial.Fuel.COAL_COKE,
             // Gem
             HTMaterial.Gem.LAPIS,
             HTMaterial.Gem.QUARTZ,
