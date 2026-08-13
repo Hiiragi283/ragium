@@ -5,11 +5,13 @@ import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.registry.getKeyOrThrow
+import hiiragi283.lib.registry.toLike
 import hiiragi283.lib.resource.HTIdLike
 import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.DFUEither
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -163,7 +165,14 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTIdLike {
 
         override fun type(): HTItemResultType<*> = TYPE
 
-        override fun create(): ItemStack = TODO()
+        override fun create(): ItemStack = tag
+            .asSequence()
+            .map(Holder<Item>::toLike)
+            .sortedWith(RagiumConfig.SERVER.modIdComparator)
+            .firstOrNull()
+            ?.get()
+            ?.let(::ItemStack)
+            ?: ItemStack.EMPTY
 
         override fun getId(): Identifier = tag.unwrapKey().orElseThrow().location()
     }

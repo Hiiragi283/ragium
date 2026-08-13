@@ -1,13 +1,17 @@
 package hiiragi283.ragium.data.recipe
 
+import hiiragi283.lib.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.lib.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.lib.data.recipe.HTStonecuttingRecipeBuilder
+import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.HTMaterial
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.item.RagiumItems
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
@@ -18,6 +22,36 @@ import net.minecraft.world.item.Items
 
 class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
+        material()
+
+        // Bamboo Charcoal
+        HTCookingRecipeBuilder.smelting {
+            ingredient { items { +Items.BAMBOO } }
+            result { +RagiumItems.BAMBOO_CHARCOAL }
+            exp = 0.5f
+        }.save(exporter)
+        // Particle Board
+        HTShapedRecipeBuilder.create {
+            hollow8()
+            define('A') { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Other.WOOD) }
+            define('B') { +holderSet(RagiumTags.Items.STICKY_BALLS) }
+            result {
+                +RagiumItems.PARTICLE_BOARD
+                count = 4
+            }
+        }.save(exporter)
+        // Synthetic
+        for (item: HTSimpleDeferredItem in listOf(RagiumItems.SYNTHETIC_FEATHER, RagiumItems.SYNTHETIC_FIBER, RagiumItems.SYNTHETIC_LEATHER)) {
+            HTStonecuttingRecipeBuilder.create {
+                ingredient { +holderSet(RagiumTags.Items.PLASTICS) }
+                result { +item }
+            }.save(exporter)
+        }
+    }
+
+    //    Material    //
+
+    private fun material() {
         // Netherite Ingot <-> Nugget
         HTShapelessRecipeBuilder.create {
             ingredient { +holderSet(CommonTagPrefixes.INGOT, HTMaterial.Metal.NETHERITE) }

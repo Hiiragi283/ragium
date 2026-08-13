@@ -1,5 +1,8 @@
 {
   "values": {
+    "ragium:bamboo_charcoal": {
+      "burn_time": 1200
+    },
     "ragium:coal_coke": {
       "burn_time": 3200
     },

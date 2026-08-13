@@ -4,7 +4,9 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.recipe.HTRecipeType
+import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
@@ -19,6 +21,7 @@ import net.minecraft.world.item.Items
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
+import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegisterEvent
@@ -30,6 +33,9 @@ data object Ragium : HTCommonMod() {
 
         RagiumFluids.register(eventBus)
         RagiumItems.register(eventBus)
+
+        container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
+        container.registerConfig(ModConfig.Type.SERVER, RagiumConfig.SERVER_SPEC)
     }
 
     private fun register(event: RegisterEvent) {
@@ -56,6 +62,11 @@ data object Ragium : HTCommonMod() {
             for (recipeType: HTRecipeType<*> in RagiumRecipeTypes.allTypes) {
                 helper.register(recipeType.getId(), recipeType)
             }
+        }
+
+        event.register(RagiumRegistries.Keys.ITEM_RESULT_TYPE) { helper ->
+            helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
+            helper.register(RagiumAPI.id("tag"), HTItemResult.TagEntry.TYPE)
         }
     }
 

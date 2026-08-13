@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "#c:plastics",
+  "result": {
+    "id": "ragium:synthetic_leather"
+  }
+}

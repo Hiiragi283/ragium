@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.item.RagiumItems
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseLangProvider(output: PackOutput) :
@@ -22,6 +23,16 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_GLASS, "溶融ガラス")
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
         addFluid(RagiumFluids.MOLTEN_BLAZE, "ブレイズの血液")
+
+        // Item
+        add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
+        add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
+        add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
+        add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
+        add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
+        add(RagiumItems.ELDER_HEART, "エルダーの心臓")
+        add(RagiumItems.WITHER_DOLL, "ウィザー人形")
+        add(RagiumItems.WITHER_STAR, "ウィザースター")
 
         // Recipe Type
         add(RagiumRecipeTypes.CRUSHING, "粉砕")

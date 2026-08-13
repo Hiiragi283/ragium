@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.item.RagiumItems
 import net.minecraft.data.PackOutput
 
 class RagiumEnglishLangProvider(output: PackOutput) :
@@ -22,6 +23,16 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_GLASS, "Molten Glass")
         addFluid(RagiumFluids.MOLTEN_ENDER, "Resonant Ender")
         addFluid(RagiumFluids.MOLTEN_BLAZE, "Blaze Blood")
+
+        // Item
+        add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
+        add(RagiumItems.PARTICLE_BOARD, "Particle Board")
+        add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
+        add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
+        add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
+        add(RagiumItems.ELDER_HEART, "Elder Heart")
+        add(RagiumItems.WITHER_DOLL, "Wither Doll")
+        add(RagiumItems.WITHER_STAR, "Wither Star")
 
         // Recipe Type
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
