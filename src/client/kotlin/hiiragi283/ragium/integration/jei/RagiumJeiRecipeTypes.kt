@@ -11,14 +11,14 @@ import hiiragi283.ragium.item.RagiumItems
 data object RagiumJeiRecipeTypes {
     // Mechanical
     @JvmField
-    val ASSEMBLING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, RagiumItems.COAL_COKE, 18 * 6, 18 * 1)
+    val ASSEMBLING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, RagiumItems.COAL_COKE)
 
     @JvmField
-    val CRUSHING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.CRUSHING, RagiumItems.COAL_COKE, 18 * 6, 18 * 1)
+    val CRUSHING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.CRUSHING, RagiumItems.COAL_COKE)
 
     // Heat
     @JvmField
-    val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.MELTING, RagiumItems.COAL_COKE, 18 * 4, 18 * 1)
+    val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.MELTING, RagiumItems.COAL_COKE)
 
     // Chemical
 

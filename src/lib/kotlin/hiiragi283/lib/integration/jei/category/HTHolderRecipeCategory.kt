@@ -25,13 +25,17 @@ import net.minecraft.world.item.crafting.Recipe
 abstract class HTHolderRecipeCategory<RECIPE : Any>(
     guiHelper: IGuiHelper,
     recipeType: HTHolderJeiRecipeType<RECIPE>,
+    width: Int,
+    height: Int,
     private val codec: Codec<HTRecipeHolder<RECIPE>>,
-) : HTBasicRecipeCategory<HTRecipeHolder<RECIPE>>(guiHelper, recipeType) {
+) : HTBasicRecipeCategory<HTRecipeHolder<RECIPE>>(guiHelper, recipeType, width, height) {
     constructor(
         guiHelper: IGuiHelper,
         recipeType: HTHolderJeiRecipeType<RECIPE>,
+        width: Int,
+        height: Int,
         codec: MapCodec<RECIPE>,
-    ) : this(guiHelper, recipeType, HTCodecs.mapPair(Recipe.KEY_CODEC.fieldOf(HTConstants.ID), codec).codec())
+    ) : this(guiHelper, recipeType, width, height, HTCodecs.mapPair(Recipe.KEY_CODEC.fieldOf(HTConstants.ID), codec).codec())
 
     final override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTRecipeHolder<RECIPE>, focuses: IFocusGroup) {
         setupRecipe(builder, recipe.recipe, focuses)

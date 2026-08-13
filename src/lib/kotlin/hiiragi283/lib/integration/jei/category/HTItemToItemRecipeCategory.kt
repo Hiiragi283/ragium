@@ -9,7 +9,7 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class HTItemToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemToItemRecipe.Basic>) : HTHolderRecipeCategory<HTItemToItemRecipe.Basic>(guiHelper, recipeType, HTItemToItemRecipe.Basic.SIMPLE_CODEC) {
+class HTItemToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemToItemRecipe.Basic>) : HTHolderRecipeCategory<HTItemToItemRecipe.Basic>(guiHelper, recipeType, 18 * 4, 18 * 1, HTItemToItemRecipe.Basic.SIMPLE_CODEC) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemToItemRecipe.Basic, focuses: IFocusGroup) {
         // input
         builder

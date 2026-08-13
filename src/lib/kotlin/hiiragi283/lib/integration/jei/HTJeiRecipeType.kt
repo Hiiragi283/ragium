@@ -15,8 +15,6 @@ class HTJeiRecipeType<T : Any>(
     private val id: Identifier,
     hasText: HTHasText,
     val icon: Either<Identifier, ItemStack>,
-    val width: Int,
-    val height: Int,
     private val recipeClass: Class<out T>,
 ) : IRecipeType<T>,
     HTIdLike,
@@ -30,6 +28,6 @@ class HTJeiRecipeType<T : Any>(
     override fun toString(): String = "HTJeiRecipeType(uid=$uid)"
 }
 
-inline fun <reified T : Any> HTJeiRecipeType(id: Identifier, hasText: HTHasText, icon: Either<Identifier, ItemStack>, width: Int, height: Int): HTJeiRecipeType<T> = HTJeiRecipeType(id, hasText, icon, width, height, T::class.java)
+inline fun <reified T : Any> HTJeiRecipeType(id: Identifier, hasText: HTHasText, icon: Either<Identifier, ItemStack>): HTJeiRecipeType<T> = HTJeiRecipeType(id, hasText, icon, T::class.java)
 
-inline fun <reified T : Any> HTJeiRecipeType(id: HTIdLike.Translatable, icon: HTSimpleItemLike, width: Int, height: Int): HTJeiRecipeType<T> = HTJeiRecipeType(id.getId(), id, Either.Right(icon.toStack()), width, height)
+inline fun <reified T : Any> HTJeiRecipeType(id: HTIdLike.Translatable, icon: HTSimpleItemLike): HTJeiRecipeType<T> = HTJeiRecipeType(id.getId(), id, Either.Right(icon.toStack()))

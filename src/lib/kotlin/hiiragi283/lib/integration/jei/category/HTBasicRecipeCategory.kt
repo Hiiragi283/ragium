@@ -46,13 +46,13 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
         )
     }
 
-    constructor(guiHelper: IGuiHelper, recipeType: HTJeiRecipeType<RECIPE>) : this(
+    constructor(guiHelper: IGuiHelper, recipeType: HTJeiRecipeType<RECIPE>, width: Int, height: Int) : this(
         guiHelper,
         recipeType,
         recipeType.getText(),
         createIcon(guiHelper, recipeType.icon),
-        recipeType.width,
-        recipeType.height,
+        width,
+        height,
     )
 
     //    IRecipeCategory    //
