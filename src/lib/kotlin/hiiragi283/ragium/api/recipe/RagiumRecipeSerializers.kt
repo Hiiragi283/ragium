@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.lib.recipe.base.HTSerializerFactories
 import net.minecraft.world.item.crafting.RecipeSerializer
 
 data object RagiumRecipeSerializers {
@@ -9,10 +8,10 @@ data object RagiumRecipeSerializers {
 
     // Heat
     @JvmField
-    val MELTING: RecipeSerializer<RTMeltingRecipe> = HTSerializerFactories.itemToFluid(::RTMeltingRecipe)
+    val MELTING: RecipeSerializer<RTMeltingRecipe> = RTMeltingRecipe.SERIALIZER
 
     @JvmField
-    val SMELTING: RecipeSerializer<RTSmeltingRecipe> = HTSerializerFactories.itemToItem(::RTSmeltingRecipe)
+    val SMELTING: RecipeSerializer<RTSmeltingRecipe> = RTSmeltingRecipe.SERIALIZER
 
     // Chemical
 

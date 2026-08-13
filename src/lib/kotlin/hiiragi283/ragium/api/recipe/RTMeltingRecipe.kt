@@ -12,6 +12,11 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 class RTMeltingRecipe(ingredient: HTItemIngredient, result: HTFluidResult, progressData: HTProgressData) :
     HTItemToFluidRecipe.Basic(ingredient, result, progressData),
     HTSerializableRecipe<SingleRecipeInput> {
+    companion object {
+        @JvmField
+        val SERIALIZER: RecipeSerializer<RTMeltingRecipe> = RecipeSerializer(codec(::RTMeltingRecipe), streamCodec(::RTMeltingRecipe))
+    }
+
     override fun getSerializer(): RecipeSerializer<RTMeltingRecipe> = RagiumRecipeSerializers.MELTING
 
     override fun getType(): HTRecipeType<RTMeltingRecipe> = RagiumRecipeTypes.MELTING

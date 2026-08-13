@@ -1,6 +1,5 @@
 package hiiragi283.lib.recipe.lookup
 
-import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.resource.HTKeyLike
 import net.minecraft.util.context.ContextMap
@@ -20,8 +19,6 @@ fun interface HTRecipeLookup<out RECIPE> {
      * @param contextMap レシピのコンテキスト
      */
     fun getAllRecipes(contextMap: ContextMap): Map<RecipeKey, RECIPE>
-
-    fun asSequence(contextMap: ContextMap): Sequence<HTRecipeHolder<RECIPE>> = getAllRecipes(contextMap).asSequence().map { (key: RecipeKey, value: RECIPE) -> key to value }
 
     /**
      * [HTRecipeLookup]の拡張インターフェースです。

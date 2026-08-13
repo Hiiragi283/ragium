@@ -3,6 +3,7 @@ package hiiragi283.lib.recipe.lookup
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.resource.toId
+import net.minecraft.client.Minecraft
 import net.minecraft.core.HolderLookup
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
@@ -50,14 +51,16 @@ data object HTRecipeLookupContext {
 
     /**
      * [CONTEXT]に基づいた新しい[ContextMap]のインスタンスを作成します。
-     * @since 26.1.2
      */
     @JvmStatic
-    fun createOnClient(level: Level): ContextMap = ContextMap.Builder()
-        .withParameter(RECIPES, HTPhysicalSideHelper.cachedRecipes)
-        .withParameter(REGISTRIES, level.registryAccess())
-        .withParameter(BREWING, level.potionBrewing())
-        .create(CONTEXT)
+    fun createOnClient(): ContextMap {
+        val level: Level = Minecraft.getInstance().level ?: error("Client level is not initialized!")
+        return ContextMap.Builder()
+            .withParameter(RECIPES, HTPhysicalSideHelper.cachedRecipes)
+            .withParameter(REGISTRIES, level.registryAccess())
+            .withParameter(BREWING, level.potionBrewing())
+            .create(CONTEXT)
+    }
 
     /**
      * [CONTEXT]に基づいた新しい[ContextMap]のインスタンスを作成します。
@@ -67,7 +70,6 @@ data object HTRecipeLookupContext {
 
     /**
      * [CONTEXT]に基づいた新しい[ContextMap]のインスタンスを作成します。
-     * @since 26.1.2
      */
     @JvmStatic
     fun create(server: MinecraftServer): ContextMap = ContextMap.Builder()

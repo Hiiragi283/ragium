@@ -42,13 +42,17 @@ fun RecipeKey(id: Identifier): RecipeKey = Registries.RECIPE.createKey(id)
 
 operator fun RecipeHolder<*>.component1(): RecipeKey = this.id()
 
-operator fun <T : Recipe<*>> RecipeHolder<T>.component2(): T = this.value()
+operator fun <R : Recipe<*>> RecipeHolder<R>.component2(): R = this.value()
 
 //    HTRecipeHolder    //
 
 typealias HTRecipeHolder<R> = Pair<RecipeKey, R>
 
 fun <R> HTRecipeHolder(id: Identifier, recipe: R): HTRecipeHolder<R> = RecipeKey(id) to recipe
+
+fun <R : Recipe<*>> HTRecipeHolder(holder: RecipeHolder<R>): HTRecipeHolder<R> = holder.id() to holder.value()
+
+fun <R : Recipe<*>> RecipeHolder(holder: HTRecipeHolder<R>): RecipeHolder<R> = RecipeHolder(holder.key, holder.recipe)
 
 val <R> HTRecipeHolder<R>.key: RecipeKey get() = this.first
 

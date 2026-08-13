@@ -7,6 +7,7 @@ import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.RagiumRegistries
+import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -18,6 +19,7 @@ import net.minecraft.world.item.Items
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegisterEvent
 
@@ -57,5 +59,9 @@ data object Ragium : HTCommonMod() {
 
     override fun registerRegistries(event: NewRegistryEvent) {
         event.register(RagiumRegistries.ITEM_RESULT_TYPE)
+    }
+
+    override fun commonSetup(event: FMLCommonSetupEvent) {
+        event.enqueueWork(RagiumRecipeLookups::init)
     }
 }

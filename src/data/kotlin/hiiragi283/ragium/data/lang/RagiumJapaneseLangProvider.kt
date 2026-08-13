@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.lang
 import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.fluid.RagiumFluids
 import net.minecraft.data.PackOutput
@@ -22,6 +23,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
         addFluid(RagiumFluids.MOLTEN_BLAZE, "ブレイズの血液")
 
+        // Recipe Type
+        add(RagiumRecipeTypes.MELTING, "溶融")
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")
     }
