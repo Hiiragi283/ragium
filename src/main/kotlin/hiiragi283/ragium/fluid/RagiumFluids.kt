@@ -63,4 +63,8 @@ data object RagiumFluids {
 
     @JvmField
     val MOLTEN_BLAZE: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_blaze") { properties = molten() }
+
+    //    Element    //
+
+    //    Chemical    //
 }

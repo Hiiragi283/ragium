@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:dusts/copper",
+    "#c:dusts/raginite",
+    "#c:dusts/raginite",
+    "#c:dusts/raginite"
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:ragi_alloy_dust"
+  }
+}

@@ -1,9 +1,9 @@
 {
-  "type": "minecraft:blasting",
+  "type": "minecraft:smelting",
   "category": "misc",
   "cookingtime": 200,
-  "experience": 0.7,
-  "ingredient": "#c:ingots/iron",
+  "experience": 0.35,
+  "ingredient": "ragium:steel_dust",
   "result": {
     "id": "ragium:steel_ingot"
   }

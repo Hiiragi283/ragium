@@ -19,6 +19,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 
 class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
@@ -68,12 +69,23 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +Items.NETHERITE_INGOT }
             recipeId suffix "_from_nugget"
         }.save(exporter)
-        // Iron Ingot -> Steel Ingot
-        HTCookingRecipeBuilder.blasting {
-            ingredient { +holderSet(CommonTagPrefixes.INGOT, HTMaterial.Metal.IRON) }
-            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, HTMaterial.Metal.STEEL) }
-            exp = 0.7f
-            recipeId suffix "_from_iron"
+
+        // Alloy Dust
+        HTShapelessRecipeBuilder.create {
+            repeat(3) { ingredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Metal.IRON) } }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Fuel.COAL_COKE) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Metal.STEEL)
+                count = 4
+            }
+        }.save(exporter)
+        HTShapelessRecipeBuilder.create {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Metal.COPPER) }
+            repeat(3) { ingredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Mineral.RAGINITE) } }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Metal.RAGI_ALLOY)
+                count = 4
+            }
         }.save(exporter)
 
         // Gear
@@ -94,6 +106,24 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             base { +holderSet(CommonTagPrefixes.GEAR, HTMaterial.Gem.DIAMOND) }
             result { +RagiumItems.getOrThrow(HTItemPart.GEAR, HTMaterial.Metal.NETHERITE) }
         }.save(exporter)
+
+        // Dust -> Ingot
+        for (metal: HTMaterial.Metal in HTMaterial.Metal.entries) {
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
+            val item: ItemLike = when (metal) {
+                HTMaterial.Metal.COPPER -> Items.COPPER_INGOT
+                HTMaterial.Metal.IRON -> Items.IRON_INGOT
+                HTMaterial.Metal.GOLD -> Items.GOLD_INGOT
+                HTMaterial.Metal.NETHERITE -> Items.NETHERITE_INGOT
+                else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, metal]
+            } ?: continue
+            HTCookingRecipeBuilder.smeltingAndBlasting {
+                ingredient { items { +dust } }
+                result { +item.asItem() }
+                exp = 0.35f
+                recipeId suffix "_from_dust"
+            }.forEach { it.save(exporter) }
+        }
 
         // Tiny
         for (fuel: HTMaterial.Fuel in HTMaterial.Fuel.entries) {
