@@ -73,5 +73,5 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
     }
 
-    override fun getName(): String = "Heat Recipes - $modId"
+    override fun getName(): String = "Heat Recipes"
 }

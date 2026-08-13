@@ -44,21 +44,4 @@ data object HTDelegates {
             this.value = value
         }
     }
-
-    /**
-     * 一度だけ値を代入可能なプロパティを返します。
-     */
-    fun <T : Any> optionalOnceInitialize(): ReadWriteProperty<Any?, Option<T>> = OptionalOnceInitialize()
-
-    private class OptionalOnceInitialize<T : Any> : ReadWriteProperty<Any?, Option<T>> {
-        private var value: Option<T> = Option.none()
-        private var initialized: Boolean = false
-
-        override fun getValue(thisRef: Any?, property: KProperty<*>): Option<T> = value
-
-        override fun setValue(thisRef: Any?, property: KProperty<*>, value: Option<T>) {
-            check(!initialized) { "Property ${property.name} has already initialized" }
-            this.value = value
-        }
-    }
 }

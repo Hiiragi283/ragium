@@ -4,6 +4,7 @@ import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider
 import hiiragi283.ragium.data.model.RagiumModelProvider
 import hiiragi283.ragium.data.recipe.RagiumHeatRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProvider
 import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
@@ -17,6 +18,7 @@ data object RagiumDataGen {
     fun gatherData(event: GatherDataEvent.Client) {
         // Server
         event.createProvider(::RagiumHeatRecipeProvider)
+        event.createProvider(::RagiumVanillaRecipeProvider)
 
         event.createProvider(::RagiumFluidTagsProvider)
         event.createBlockAndItemTags(::RagiumBlockTagsProvider, ::RagiumItemTagsProvider)

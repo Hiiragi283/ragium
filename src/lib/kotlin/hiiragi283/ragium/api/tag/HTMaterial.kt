@@ -7,7 +7,7 @@ sealed interface HTMaterial :
     HTMaterialLike,
     HTLangName {
 
-    enum class Fuels(langName: HTLangName) :
+    enum class Fuel(langName: HTLangName) :
         HTMaterial,
         HTLangName by langName {
         COAL("Coal", "石炭"),
@@ -20,7 +20,7 @@ sealed interface HTMaterial :
         override val materialName: String = name.lowercase()
     }
 
-    enum class Minerals(langName: HTLangName) :
+    enum class Mineral(langName: HTLangName) :
         HTMaterial,
         HTLangName by langName {
         REDSTONE("Redstone", "レッドストーン"),
@@ -32,7 +32,7 @@ sealed interface HTMaterial :
         override val materialName: String = name.lowercase()
     }
 
-    enum class Gems(langName: HTLangName) :
+    enum class Gem(langName: HTLangName) :
         HTMaterial,
         HTLangName by langName {
         LAPIS("Lapis", "ラピス"),

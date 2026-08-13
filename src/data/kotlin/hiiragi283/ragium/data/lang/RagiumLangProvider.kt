@@ -8,7 +8,7 @@ import hiiragi283.lib.data.lang.HTLangType
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.HTHasTranslationKey
-import hiiragi283.ragium.api.tag.HTItemParts
+import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.item.RagiumItems
@@ -30,8 +30,8 @@ interface RagiumLangProvider {
             provider.addFluid(content, dyePattern.translate(langType, color))
         }
         // Item
-        RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemParts, material: HTMaterial, item: HTHasTranslationKey) ->
-            if (part == HTItemParts.DUST && material == HTMaterial.Other.WOOD) {
+        RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemPart, material: HTMaterial, item: HTHasTranslationKey) ->
+            if (part == HTItemPart.DUST && material == HTMaterial.Other.WOOD) {
                 provider.add(item, HTLangName("Sawdust", "おがくず"))
             } else {
                 provider.add(item, part, material)

@@ -10,7 +10,7 @@ sealed interface HTPart : HTLangPatternProvider {
     fun createName(material: HTMaterial): String
 }
 
-enum class HTBlockParts(private val idPattern: String, override val tagPrefix: HTTagPrefix, provider: HTLangPatternProvider) :
+enum class HTBlockPart(private val idPattern: String, override val tagPrefix: HTTagPrefix, provider: HTLangPatternProvider) :
     HTPart,
     HTLangPatternProvider by provider {
     ORE("%s_ore", CommonTagPrefixes.ORE, "%s Ore", "%s鉱石"),
@@ -26,7 +26,7 @@ enum class HTBlockParts(private val idPattern: String, override val tagPrefix: H
     override fun createName(material: HTMaterial): String = idPattern.replace("%s", material.materialName)
 }
 
-enum class HTItemParts(private val idPattern: String, override val tagPrefix: HTTagPrefix, provider: HTLangPatternProvider) :
+enum class HTItemPart(private val idPattern: String, override val tagPrefix: HTTagPrefix, provider: HTLangPatternProvider) :
     HTPart,
     HTLangPatternProvider by provider {
     DUST("%s_dust", CommonTagPrefixes.DUST, "%s Dust", "%sの粉"),

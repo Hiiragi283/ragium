@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:ingots/netherite"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:netherite_nugget"
+  }
+}

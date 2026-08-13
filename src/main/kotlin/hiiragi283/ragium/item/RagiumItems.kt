@@ -7,7 +7,7 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.util.Identity
 import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.HTItemParts
+import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.HTMaterial
 import net.minecraft.world.item.Item
 import net.neoforged.bus.api.IEventBus
@@ -22,27 +22,27 @@ data object RagiumItems {
     }
 
     @JvmField
-    val TABLE_COMPARATOR: Comparator<Pair<HTItemParts, HTMaterial>> = compareBy<Pair<HTItemParts, HTMaterial>> { it.first }.thenBy { it.second.materialName }
+    val TABLE_COMPARATOR: Comparator<Pair<HTItemPart, HTMaterial>> = compareBy<Pair<HTItemPart, HTMaterial>> { it.first }.thenBy { it.second.materialName }
 
     @JvmField
-    val MATERIAL_ITEMS: Table<HTItemParts, HTMaterial, HTSimpleDeferredItem> = buildTable(sortedMapOf(TABLE_COMPARATOR)) {
-        fun register(part: HTItemParts, material: HTMaterial, operator: Identity<Item.Properties> = identity()) {
+    val MATERIAL_ITEMS: Table<HTItemPart, HTMaterial, HTSimpleDeferredItem> = buildTable(sortedMapOf(TABLE_COMPARATOR)) {
+        fun register(part: HTItemPart, material: HTMaterial, operator: Identity<Item.Properties> = identity()) {
             this[part, material] = REGISTER.registerSimpleItem(part.createName(material), operator)
         }
 
         // Dust
         setOf(
             // Fuel
-            HTMaterial.Fuels.COAL,
-            HTMaterial.Fuels.CHARCOAL,
+            HTMaterial.Fuel.COAL,
+            HTMaterial.Fuel.CHARCOAL,
             // Gem
-            HTMaterial.Gems.LAPIS,
-            HTMaterial.Gems.QUARTZ,
-            HTMaterial.Gems.AMETHYST,
-            HTMaterial.Gems.DIAMOND,
-            HTMaterial.Gems.EMERALD,
-            HTMaterial.Gems.ECHO,
-            HTMaterial.Gems.PRISMARINE,
+            HTMaterial.Gem.LAPIS,
+            HTMaterial.Gem.QUARTZ,
+            HTMaterial.Gem.AMETHYST,
+            HTMaterial.Gem.DIAMOND,
+            HTMaterial.Gem.EMERALD,
+            HTMaterial.Gem.ECHO,
+            HTMaterial.Gem.PRISMARINE,
             // Metal
             HTMaterial.Metal.COPPER,
             HTMaterial.Metal.IRON,
@@ -51,21 +51,29 @@ data object RagiumItems {
             HTMaterial.Other.WOOD,
             HTMaterial.Other.GLASS,
             HTMaterial.Other.OBSIDIAN,
-        ).forEach { register(HTItemParts.DUST, it) }
+        ).forEach { register(HTItemPart.DUST, it) }
         // Gear
         setOf(
+            // Gem
+            HTMaterial.Gem.DIAMOND,
+            HTMaterial.Gem.EMERALD,
             // Metal
             HTMaterial.Metal.COPPER,
             HTMaterial.Metal.IRON,
             HTMaterial.Metal.GOLD,
+            // Other
+            HTMaterial.Other.WOOD,
         ).forEach {
-            register(HTItemParts.GEAR, it)
+            register(HTItemPart.GEAR, it)
         }
         // Alloy
         setOf(
-            HTItemParts.DUST,
-            HTItemParts.GEAR,
-            HTItemParts.NUGGET,
-        ).forEach { register(it, HTMaterial.Metal.NETHERITE) { it.fireResistant() } }
+            HTItemPart.DUST,
+            HTItemPart.GEAR,
+            HTItemPart.NUGGET,
+        ).forEach { register(it, HTMaterial.Metal.NETHERITE) { properties: Item.Properties -> properties.fireResistant() } }
     }
+
+    @JvmStatic
+    fun getOrThrow(part: HTItemPart, material: HTMaterial): HTSimpleDeferredItem = MATERIAL_ITEMS[part, material] ?: error("Unregistered item: ${part.createName(material)}")
 }

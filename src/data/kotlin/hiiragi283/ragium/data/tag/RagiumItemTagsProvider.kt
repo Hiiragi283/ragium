@@ -5,7 +5,7 @@ import hiiragi283.lib.data.tag.HTItemTagsProvider
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.HTItemParts
+import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.item.RagiumItems
@@ -19,7 +19,7 @@ import net.neoforged.neoforge.common.Tags
 class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, contentsGetter: CompletableFuture<TagLookup<Block>>) : HTItemTagsProvider(output, lookupProvider, contentsGetter, RagiumAPI.MOD_ID) {
     override fun appendTags(registries: HolderLookup.Provider) {
         // Material
-        RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemParts, material: HTMaterial, item: HTKeyLike<Item>) ->
+        RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemPart, material: HTMaterial, item: HTKeyLike<Item>) ->
             tags(part.tagPrefix, material).add(item)
         }
         // Buckets

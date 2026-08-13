@@ -8,7 +8,9 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 
 abstract class HTRecipeProviderContext {
@@ -53,11 +55,10 @@ abstract class HTRecipeProviderContext {
      */
     protected fun holderSet(content: HTFluidContent): HolderSet<Fluid> = holderSet(content.fluidTag)
 
-    //    Delegated    //
-
-    abstract class Delegated : HTRecipeProviderContext() {
-        protected lateinit var delegate: HTRecipeProviderContext
-
-        final override val exporter: HTRecipeExporter get() = delegate.exporter
+    // Recipe Builder
+    protected inline fun netheriteUpgrade(builderAction: HTSmithingRecipeBuilder.() -> Unit): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder.create {
+        template { items { +Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE } }
+        addition { +holderSet(Tags.Items.INGOTS_NETHERITE) }
+        builderAction()
     }
 }
