@@ -68,7 +68,7 @@ inline fun <R, C, V> buildTable(map: MutableMap<Pair<R, C>, V>, builderAction: T
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
-    return PairMapTable.Builder<R, C, V>(map).apply(builderAction).build()
+    return PairMapTable.Builder(map).apply(builderAction).build()
 }
 
 /**

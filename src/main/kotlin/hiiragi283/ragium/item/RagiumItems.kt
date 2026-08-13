@@ -127,4 +127,6 @@ data object RagiumItems {
 
     @JvmField
     val WITHER_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_star") { it.rarity(Rarity.UNCOMMON) }
+
+    //    Tool    //
 }
