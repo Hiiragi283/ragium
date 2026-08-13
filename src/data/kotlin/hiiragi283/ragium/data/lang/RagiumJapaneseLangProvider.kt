@@ -3,14 +3,14 @@ package hiiragi283.ragium.data.lang
 import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.init.RagiumFluids
+import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.fluid.RagiumFluids
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseLangProvider(output: PackOutput) :
     HTLangProvider(output, RagiumAPI.MOD_ID, HTLangTypes.JA_JP),
     RagiumLangProvider {
     override fun addTranslations() {
-        addCommonTranslations(this::add)
         addPatternTranslations(this)
 
         // Fluid
@@ -21,5 +21,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_GLASS, "溶融ガラス")
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
         addFluid(RagiumFluids.MOLTEN_BLAZE, "ブレイズの血液")
+
+        // Text
+        add(RagiumTranslation.RAGIUM, "ラギウム")
     }
 }

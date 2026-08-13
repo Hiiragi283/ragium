@@ -26,6 +26,14 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
         add(translatable.translationKey, value)
     }
 
+    fun add(translatable: HTHasTranslationKey, name: HTLangName) {
+        add(translatable, name.getTranslatedName(langType))
+    }
+
+    fun add(translatable: HTHasTranslationKey, pattern: HTLangPatternProvider, name: HTLangName) {
+        add(translatable, pattern.translate(langType, name))
+    }
+
     /**
      * 進捗の翻訳名を追加します。
      * @param title 進捗のタイトル名

@@ -59,6 +59,8 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTIdLike {
 
     constructor(template: ItemStackTemplate) : this(SimpleEntry(template), template.count())
 
+    constructor(stack: ItemStack) : this(SimpleEntry(stack), stack.count())
+
     /**
      * アイテムの完成品を作成します。
      */
@@ -138,6 +140,8 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTIdLike {
         }
 
         constructor(template: ItemStackTemplate) : this(template.item(), template.components())
+
+        constructor(stack: ItemStack) : this(stack.typeHolder(), stack.componentsPatch)
 
         override fun type(): HTItemResultType<*> = TYPE
 

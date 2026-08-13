@@ -77,6 +77,13 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
         /**
          * 現在の[ID][Identifier]を[newId]で置換します。
          */
+        infix fun replace(newId: RecipeKey) {
+            replace(newId.identifier())
+        }
+
+        /**
+         * 現在の[ID][Identifier]を[newId]で置換します。
+         */
         infix fun replace(newId: Identifier) {
             id = newId
         }

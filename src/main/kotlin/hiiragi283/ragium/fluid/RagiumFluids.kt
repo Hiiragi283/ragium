@@ -1,4 +1,4 @@
-package hiiragi283.ragium.init
+package hiiragi283.ragium.fluid
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.color.HTColoredCollection
@@ -7,7 +7,6 @@ import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTFluidContentRegister
 import hiiragi283.lib.resource.toId
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.fluid.HTDyedFluidType
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.neoforged.bus.api.IEventBus

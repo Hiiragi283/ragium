@@ -1,9 +1,9 @@
 package hiiragi283.lib.data.tag
 
 import hiiragi283.lib.collection.SetMultiMap
-import hiiragi283.lib.material.HTMaterialKey
 import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.registry.createKey
+import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
@@ -65,7 +65,7 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
      * @param prefix タグのプレフィックス
      * @param material タグの種類を表す素材
      */
-    protected fun tags(prefix: HTTagPrefix, material: HTMaterialKey): HTTagBuilder<T> = tags(prefix.rawCommonTag.create(registryKey), prefix.materialTag(material).create(registryKey))
+    protected fun tags(prefix: HTTagPrefix, material: HTMaterialLike): HTTagBuilder<T> = tags(prefix.rawCommonTag.create(registryKey), prefix.materialTag(material).create(registryKey))
 
     /**
      * 新しい[HTTagBuilder]のインスタンスを作成します。

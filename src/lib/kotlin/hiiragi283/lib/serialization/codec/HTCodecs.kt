@@ -5,7 +5,6 @@ package hiiragi283.lib.serialization.codec
 import com.mojang.datafixers.kinds.App
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
-import com.mojang.serialization.Decoder
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.MapLike
@@ -30,7 +29,6 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryCodecs
 import net.minecraft.core.UUIDUtil
 import net.minecraft.network.chat.ComponentSerialization
-import net.minecraft.resources.Identifier
 import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
@@ -331,17 +329,6 @@ data object HTCodecs {
      */
     @JvmStatic
     fun <T : Any> holder(registryKey: RegistryKey<T>): Codec<Holder<T>> = RegistryFixedCodec.create(registryKey)
-
-    @JvmStatic
-    fun <T : Any> deferredHolder(registryKey: RegistryKey<T>, decoder: Decoder<Holder<T>> = holder(registryKey)): Codec<Holder<T>> = Codec.of(
-        Identifier.CODEC.flatComap { holder: Holder<T> ->
-            holder.unwrap().map(
-                { id: ResourceKey<T> -> DataResult.success(id.identifier()) },
-                { DataResult.error { "Elements from registry $registryKey can't be serialized to a value" } },
-            )
-        },
-        decoder,
-    )
 
     /**
      * 指定した[registryKey]から[HolderSet]の[Codec]を返します。

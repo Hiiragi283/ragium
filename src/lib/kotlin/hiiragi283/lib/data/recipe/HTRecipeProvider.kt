@@ -2,9 +2,6 @@ package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.allOf
-import hiiragi283.lib.material.HTMaterialContents
-import hiiragi283.lib.material.HTMaterialKey
-import hiiragi283.lib.material.part.HTPartKey
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.resource.toId
 import java.util.Optional
@@ -32,10 +29,8 @@ abstract class HTRecipeProvider(packOutput: PackOutput, private val future: Comp
     private val pathProvider: PackOutput.PathProvider = packOutput.createRegistryElementsPathProvider(Registries.RECIPE)
 
     override lateinit var exporter: HTRecipeExporter
-        internal set
 
     override lateinit var registries: HolderLookup.Provider
-        internal set
 
     final override fun run(output: CachedOutput): CompletableFuture<*> = future.thenCompose { registries: HolderLookup.Provider ->
         val recipes: MutableMap<RecipeKey, WithConditions<Recipe<*>>> = hashMapOf()
@@ -75,18 +70,6 @@ abstract class HTRecipeProvider(packOutput: PackOutput, private val future: Comp
      * @return [modId]を[名前空間][Identifier.getNamespace]とする[ID][Identifier]
      */
     protected fun id(vararg path: String): Identifier = modId.toId(*path)
-
-    /**
-     * @since 21.1.0
-     */
-    protected inline fun useItem(part: HTPartKey, key: HTMaterialKey, action: (HTMaterialContents.ItemEntry) -> Unit) {
-        /*HiiragiCoreAccess.INSTANCE
-            .registeredContents
-            .items
-            .getResult(part, key)
-            .onLeft { DataProvider.LOGGER.error(it.value) }
-            .onRight(action)*/
-    }
 
     //    Integration    //
 

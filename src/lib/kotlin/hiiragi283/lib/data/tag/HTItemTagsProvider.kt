@@ -1,7 +1,7 @@
 package hiiragi283.lib.data.tag
 
-import hiiragi283.lib.material.HTMaterialKey
 import hiiragi283.lib.registry.toLike
+import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.lib.tag.RawTagKey
 import java.util.concurrent.CompletableFuture
@@ -38,7 +38,7 @@ abstract class HTItemTagsProvider : HTTagsProvider<Item> {
      * @param prefix タグのプレフィックス
      * @param material タグの種類を表す素材
      */
-    protected fun copy(prefix: HTTagPrefix, material: HTMaterialKey) {
+    protected fun copy(prefix: HTTagPrefix, material: HTMaterialLike) {
         this.copy(prefix.rawCommonTag)
         this.copy(prefix.materialTag(material))
     }

@@ -1,36 +1,19 @@
 package hiiragi283.ragium.data.lang
 
+import hiiragi283.lib.collection.forEach
 import hiiragi283.lib.data.lang.HTLangName
 import hiiragi283.lib.data.lang.HTLangPatternProvider
 import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangType
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.text.HTCommonTranslation
-import hiiragi283.lib.text.HTTranslation
-import hiiragi283.ragium.init.RagiumFluids
-import java.util.function.BiConsumer
+import hiiragi283.lib.text.HTHasTranslationKey
+import hiiragi283.ragium.api.tag.HTItemParts
+import hiiragi283.ragium.api.tag.HTMaterial
+import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.item.RagiumItems
 
 interface RagiumLangProvider {
-    fun addCommonTranslations(consumer: BiConsumer<HTTranslation, String>) {
-        // API - Constants
-        consumer.accept(HTCommonTranslation.TRUE, "True")
-        consumer.accept(HTCommonTranslation.FALSE, "False")
-        // API - GUI
-        consumer.accept(HTCommonTranslation.CAPACITY, $$"Capacity: %1$s")
-        consumer.accept(HTCommonTranslation.CAPACITY_MB, $$"Capacity: %1$s mB")
-        consumer.accept(HTCommonTranslation.CAPACITY_FE, $$"Capacity: %1$s FE")
-
-        consumer.accept(HTCommonTranslation.STORED, $$"%1$s: %2$s")
-        consumer.accept(HTCommonTranslation.STORED_MB, $$"%1$s: %2$s mB")
-        consumer.accept(HTCommonTranslation.STORED_FE, $$"%1$s FE")
-        consumer.accept(HTCommonTranslation.STORED_EXP, $$"%1$s Exp")
-
-        consumer.accept(HTCommonTranslation.FRACTION, $$"%1$s / %2$s")
-        consumer.accept(HTCommonTranslation.PERCENTAGE, $$"%1$s %%")
-
-        consumer.accept(HTCommonTranslation.TICK, $$"%1$s ticks")
-    }
-
     fun addPatternTranslations(provider: HTLangProvider) {
         val langType: HTLangType = provider.langType
         // Block
@@ -46,5 +29,31 @@ interface RagiumLangProvider {
         for ((color: HTLangName, content: HTFluidContent) in RagiumFluids.DYES.asSequenceWithColor()) {
             provider.addFluid(content, dyePattern.translate(langType, color))
         }
+        // Item
+        RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemParts, material: HTMaterial, item: HTHasTranslationKey) ->
+            if (part == HTItemParts.DUST && material == HTMaterial.Other.WOOD) {
+                provider.add(item, HTLangName("Sawdust", "おがくず"))
+            } else {
+                provider.add(item, part, material)
+            }
+        }
+        // Text
+        // API - Constants
+        provider.add(HTCommonTranslation.TRUE, "True")
+        provider.add(HTCommonTranslation.FALSE, "False")
+        // API - GUI
+        provider.add(HTCommonTranslation.CAPACITY, $$"Capacity: %1$s")
+        provider.add(HTCommonTranslation.CAPACITY_MB, $$"Capacity: %1$s mB")
+        provider.add(HTCommonTranslation.CAPACITY_FE, $$"Capacity: %1$s FE")
+
+        provider.add(HTCommonTranslation.STORED, $$"%1$s: %2$s")
+        provider.add(HTCommonTranslation.STORED_MB, $$"%1$s: %2$s mB")
+        provider.add(HTCommonTranslation.STORED_FE, $$"%1$s FE")
+        provider.add(HTCommonTranslation.STORED_EXP, $$"%1$s Exp")
+
+        provider.add(HTCommonTranslation.FRACTION, $$"%1$s / %2$s")
+        provider.add(HTCommonTranslation.PERCENTAGE, $$"%1$s %%")
+
+        provider.add(HTCommonTranslation.TICK, $$"%1$s ticks")
     }
 }

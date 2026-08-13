@@ -6,6 +6,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeHolder
 
 //    RecipeKey    //
 
@@ -36,6 +37,12 @@ fun RecipeKey(namespace: String, vararg path: String): RecipeKey = RecipeKey(nam
  * @since 26.1.0
  */
 fun RecipeKey(id: Identifier): RecipeKey = Registries.RECIPE.createKey(id)
+
+//    RecipeHolder    //
+
+operator fun RecipeHolder<*>.component1(): RecipeKey = this.id()
+
+operator fun <T : Recipe<*>> RecipeHolder<T>.component2(): T = this.value()
 
 //    HTRecipeHolder    //
 

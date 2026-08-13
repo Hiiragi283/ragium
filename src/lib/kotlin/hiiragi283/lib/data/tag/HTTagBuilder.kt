@@ -1,7 +1,7 @@
 package hiiragi283.lib.data.tag
 
-import hiiragi283.lib.material.HTMaterialKey
 import hiiragi283.lib.resource.HTKeyLike
+import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.lib.tag.RawTagKey
 import hiiragi283.lib.util.HTBuilderMarker
@@ -52,7 +52,7 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
      * @param material タグの種類を表す素材
      * @param type このエントリの依存関係
      */
-    fun addTag(prefix: HTTagPrefix, material: HTMaterialKey, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = addTag(prefix.materialTag(material), type)
+    fun addTag(prefix: HTTagPrefix, material: HTMaterialLike, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = addTag(prefix.materialTag(material), type)
 
     /**
      * 指定した子タグをタグに追加します。

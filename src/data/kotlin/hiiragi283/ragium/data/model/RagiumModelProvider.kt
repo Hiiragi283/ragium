@@ -3,7 +3,8 @@ package hiiragi283.ragium.data.model
 import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.init.RagiumFluids
+import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.item.RagiumItems
 import net.minecraft.client.data.models.BlockModelGenerators
 import net.minecraft.client.data.models.ItemModelGenerators
 import net.minecraft.data.PackOutput
@@ -34,5 +35,9 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
     private fun registerBlockModels(generators: BlockModelGenerators) = Unit
 
-    private fun registerItemModels(generators: ItemModelGenerators) = Unit
+    private fun registerItemModels(generators: ItemModelGenerators) {
+        buildSet {
+            addAll(RagiumItems.REGISTER.asSequence())
+        }.forEach { generators.generateFlatItem(it) }
+    }
 }

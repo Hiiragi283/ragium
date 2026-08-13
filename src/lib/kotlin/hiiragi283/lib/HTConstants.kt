@@ -44,8 +44,11 @@ data object HTConstants {
 
     const val LIB_ID = "hiiragi_lib"
 
+    @JvmField
+    val BUILT_IN_IDS: Set<String> = setOf(MINECRAFT, NEOFORGE, COMMON)
+
     @JvmStatic
-    fun getBuiltInIdSet(modId: String): Set<String> = setOf(MINECRAFT, NEOFORGE, COMMON, modId)
+    fun getBuiltInIdSet(modId: String): Set<String> = BUILT_IN_IDS + modId
 
     //    Serialization    //
 

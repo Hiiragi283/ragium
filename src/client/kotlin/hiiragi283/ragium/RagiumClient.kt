@@ -7,7 +7,7 @@ import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.init.RagiumFluids
+import hiiragi283.ragium.fluid.RagiumFluids
 import java.awt.Color
 import net.minecraft.client.resources.model.sprite.Material
 import net.neoforged.api.distmarker.Dist

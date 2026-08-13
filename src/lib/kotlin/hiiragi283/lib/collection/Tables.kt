@@ -57,6 +57,21 @@ inline fun <R, C, V> buildTable(initialCapacity: Int = 10, builderAction: Table.
 }
 
 /**
+ * 新しい[PairMapTable]のインスタンスを作成します。
+ * @param R 行のクラス
+ * @param C 列のクラス
+ * @param V 値のクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
+inline fun <R, C, V> buildTable(map: MutableMap<Pair<R, C>, V>, builderAction: Table.Builder<R, C, V>.() -> Unit): Table<R, C, V> {
+    contract {
+        callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+    }
+    return PairMapTable.Builder<R, C, V>(map).apply(builderAction).build()
+}
+
+/**
  * 各要素に対して[action]を行います。
  * @param R 行のクラス
  * @param C 列のクラス
