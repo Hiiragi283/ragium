@@ -39,6 +39,11 @@ data object RagiumItems {
             HTMaterial.Fuel.COAL,
             HTMaterial.Fuel.CHARCOAL,
             HTMaterial.Fuel.COAL_COKE,
+            // Mineral
+            HTMaterial.Mineral.SALT,
+            HTMaterial.Mineral.NITER,
+            HTMaterial.Mineral.BORAX,
+            HTMaterial.Mineral.RAGINITE,
             // Gem
             HTMaterial.Gem.LAPIS,
             HTMaterial.Gem.QUARTZ,
@@ -47,6 +52,7 @@ data object RagiumItems {
             HTMaterial.Gem.EMERALD,
             HTMaterial.Gem.ECHO,
             HTMaterial.Gem.PRISMARINE,
+            HTMaterial.Gem.RAGI_CRYSTAL,
             // Metal
             HTMaterial.Metal.COPPER,
             HTMaterial.Metal.IRON,
@@ -70,6 +76,8 @@ data object RagiumItems {
         ).forEach {
             register(HTItemPart.GEAR, it)
         }
+        // Gem
+        register(HTItemPart.GEM, HTMaterial.Gem.RAGI_CRYSTAL)
 
         // Fuel
         HTMaterial.Fuel.entries.forEach { register(HTItemPart.TINY, it) }
@@ -79,6 +87,15 @@ data object RagiumItems {
             HTItemPart.GEAR,
             HTItemPart.NUGGET,
         ).forEach { register(it, HTMaterial.Metal.NETHERITE) { properties: Item.Properties -> properties.fireResistant() } }
+        setOf(
+            HTItemPart.DUST,
+            HTItemPart.INGOT,
+            HTItemPart.NUGGET,
+        ).forEach {
+            register(it, HTMaterial.Metal.STEEL)
+            register(it, HTMaterial.Metal.RAGI_ALLOY)
+            register(it, HTMaterial.Metal.ADVANCED_RAGI_ALLOY)
+        }
     }
 
     @JvmStatic

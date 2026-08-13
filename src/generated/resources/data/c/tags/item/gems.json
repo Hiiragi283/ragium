@@ -1,5 +1,6 @@
 {
   "values": [
-    "#c:gems/echo"
+    "#c:gems/echo",
+    "#c:gems/ragi_crystal"
   ]
 }

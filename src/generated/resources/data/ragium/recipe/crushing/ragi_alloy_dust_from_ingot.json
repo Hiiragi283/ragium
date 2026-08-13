@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "#c:ingots/ragi_alloy"
+  },
+  "primary_result": {
+    "count": 1,
+    "id": "ragium:ragi_alloy_dust"
+  },
+  "time": 200
+}

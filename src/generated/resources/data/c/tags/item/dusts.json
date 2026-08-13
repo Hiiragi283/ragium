@@ -1,6 +1,8 @@
 {
   "values": [
+    "#c:dusts/advanced_ragi_alloy",
     "#c:dusts/amethyst",
+    "#c:dusts/borax",
     "#c:dusts/charcoal",
     "#c:dusts/coal",
     "#c:dusts/coal_coke",
@@ -13,9 +15,15 @@
     "#c:dusts/iron",
     "#c:dusts/lapis",
     "#c:dusts/netherite",
+    "#c:dusts/niter",
     "#c:dusts/obsidian",
     "#c:dusts/prismarine",
     "#c:dusts/quartz",
+    "#c:dusts/ragi_alloy",
+    "#c:dusts/ragi_crystal",
+    "#c:dusts/raginite",
+    "#c:dusts/salt",
+    "#c:dusts/steel",
     "#c:dusts/wood"
   ]
 }

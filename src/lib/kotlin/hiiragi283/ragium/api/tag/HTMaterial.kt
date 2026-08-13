@@ -10,8 +10,11 @@ sealed interface HTMaterial :
     enum class Fuel(langName: HTLangName) :
         HTMaterial,
         HTLangName by langName {
+        // Minecraft
         COAL("Coal", "石炭"),
         CHARCOAL("Charcoal", "木炭"),
+
+        // Common
         COAL_COKE("Coal Coke", "石炭コークス"),
         ;
 
@@ -23,8 +26,17 @@ sealed interface HTMaterial :
     enum class Mineral(langName: HTLangName) :
         HTMaterial,
         HTLangName by langName {
+        // Minecraft
         REDSTONE("Redstone", "レッドストーン"),
         GLOWSTONE("Glowstone", "グロウストーン"),
+
+        // Common
+        SALT("Salt", "食塩"),
+        NITER("Niter", "硝石"),
+        BORAX("Borax", "ホウ砂"),
+
+        // Ragium
+        RAGINITE("Raginite", "ラギナイト"),
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -35,6 +47,7 @@ sealed interface HTMaterial :
     enum class Gem(langName: HTLangName) :
         HTMaterial,
         HTLangName by langName {
+        // Minecraft
         LAPIS("Lapis", "ラピス"),
         QUARTZ("Quartz", "水晶"),
         AMETHYST("Amethyst", "アメジスト"),
@@ -42,6 +55,9 @@ sealed interface HTMaterial :
         EMERALD("Emerald", "エメラルド"),
         ECHO("Echo", "残響"),
         PRISMARINE("Prismarine", "プリズマリン"),
+
+        // Ragium
+        RAGI_CRYSTAL("Ragi-Crystal", "ラギクリスタリル"),
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -52,10 +68,18 @@ sealed interface HTMaterial :
     enum class Metal(val isElement: Boolean, langName: HTLangName) :
         HTMaterial,
         HTLangName by langName {
+        // Minecraft
         COPPER(true, "Copper", "銅"),
         IRON(true, "Iron", "鉄"),
         GOLD(true, "Gold", "金"),
         NETHERITE(false, "Netherite", "ネザライト"),
+
+        // Common
+        STEEL(false, "Steel", "鋼鉄"),
+
+        // Ragium
+        RAGI_ALLOY(false, "Ragi-Alloy", "ラギ合金"),
+        ADVANCED_RAGI_ALLOY(false, "Advanced Ragi-Alloy", "発展ラギ合金"),
         ;
 
         constructor(isElement: Boolean, enName: String, jaName: String) : this(isElement, HTLangName(enName, jaName))
@@ -66,9 +90,13 @@ sealed interface HTMaterial :
     enum class Other(langName: HTLangName) :
         HTMaterial,
         HTLangName by langName {
+        // Minecraft
         WOOD("Wood", "木"),
         GLASS("Glass", "ガラス"),
         OBSIDIAN("Obsidian", "黒曜石"),
+
+        // Common
+        SILICON("Silicon", "シリコン"),
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))

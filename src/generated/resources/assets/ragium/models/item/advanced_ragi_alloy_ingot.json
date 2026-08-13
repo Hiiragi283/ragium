@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ragium:item/advanced_ragi_alloy_ingot"
+  }
+}

@@ -68,6 +68,13 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +Items.NETHERITE_INGOT }
             recipeId suffix "_from_nugget"
         }.save(exporter)
+        // Iron Ingot -> Steel Ingot
+        HTCookingRecipeBuilder.blasting {
+            ingredient { +holderSet(CommonTagPrefixes.INGOT, HTMaterial.Metal.IRON) }
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, HTMaterial.Metal.STEEL) }
+            exp = 0.7f
+            recipeId suffix "_from_iron"
+        }.save(exporter)
 
         // Gear
         HTShapedRecipeBuilder.create {
