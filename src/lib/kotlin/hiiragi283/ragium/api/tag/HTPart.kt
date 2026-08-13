@@ -36,6 +36,7 @@ enum class HTItemPart(private val idPattern: String, override val tagPrefix: HTT
     NUGGET("%s_nugget", CommonTagPrefixes.NUGGET, "%s Nugget", "%sナゲット"),
     PLATE("%s_plate", CommonTagPrefixes.PLATE, "%s Plate", "%sの板"),
     RAW("raw_%s", CommonTagPrefixes.RAW_MATERIALS, "Raw %s", "%sの原石"),
+    TINY("tiny_%s", CommonTagPrefixes.TINY, "Tiny %s", "小さな%s"),
     ;
 
     constructor(idPattern: String, tagPrefix: HTTagPrefix, enPattern: String, jaPattern: String) : this(idPattern, tagPrefix, HTLangPatternProvider(enPattern, jaPattern))

@@ -17,6 +17,8 @@ data object RagiumDataGen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent.Client) {
         // Server
+        event.createProvider(::RagiumDataMapProvider)
+
         event.createProvider(::RagiumHeatRecipeProvider)
         event.createProvider(::RagiumVanillaRecipeProvider)
 

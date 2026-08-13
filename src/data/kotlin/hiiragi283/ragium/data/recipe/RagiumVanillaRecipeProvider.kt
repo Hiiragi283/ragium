@@ -13,6 +13,7 @@ import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 
 class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
@@ -52,6 +53,29 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             base { +holderSet(CommonTagPrefixes.GEAR, HTMaterial.Gem.DIAMOND) }
             result { +RagiumItems.getOrThrow(HTItemPart.GEAR, HTMaterial.Metal.NETHERITE) }
         }.save(exporter)
+
+        // Tiny
+        for (fuel: HTMaterial.Fuel in HTMaterial.Fuel.entries) {
+            val base: Item = when (fuel) {
+                HTMaterial.Fuel.COAL -> Items.COAL
+                HTMaterial.Fuel.CHARCOAL -> Items.CHARCOAL
+                HTMaterial.Fuel.COAL_COKE -> RagiumItems.COAL_COKE
+            }.asItem()
+
+            HTShapelessRecipeBuilder.create {
+                ingredient { items { +base } }
+                result {
+                    +RagiumItems.getOrThrow(HTItemPart.TINY, fuel)
+                    count = 8
+                }
+            }.save(exporter)
+            HTShapedRecipeBuilder.create {
+                hollow()
+                define('A') { +holderSet(CommonTagPrefixes.TINY, fuel) }
+                result { +base }
+                recipeId suffix "_from_tiny"
+            }.save(exporter)
+        }
     }
 
     private fun gear(basePrefix: HTTagPrefix, material: HTMaterial) {

@@ -37,6 +37,7 @@ interface RagiumLangProvider {
                 provider.add(item, part, material)
             }
         }
+        provider.add(RagiumItems.COAL_COKE, HTMaterial.Fuel.COAL_COKE)
         // Text
         // API - Constants
         provider.add(HTCommonTranslation.TRUE, "True")

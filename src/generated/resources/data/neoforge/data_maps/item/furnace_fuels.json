@@ -1,0 +1,16 @@
+{
+  "values": {
+    "ragium:coal_coke": {
+      "burn_time": 3200
+    },
+    "ragium:tiny_charcoal": {
+      "burn_time": 200
+    },
+    "ragium:tiny_coal": {
+      "burn_time": 200
+    },
+    "ragium:tiny_coal_coke": {
+      "burn_time": 400
+    }
+  }
+}

@@ -42,4 +42,7 @@ data object CommonTagPrefixes {
 
     @JvmField
     val ROD = HTTagPrefix("rods", "rods/%s")
+
+    @JvmField
+    val TINY = HTTagPrefix("tiny", "tiny/%s")
 }

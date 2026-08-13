@@ -66,6 +66,9 @@ data object RagiumItems {
         ).forEach {
             register(HTItemPart.GEAR, it)
         }
+
+        // Fuel
+        HTMaterial.Fuel.entries.forEach { register(HTItemPart.TINY, it) }
         // Alloy
         setOf(
             HTItemPart.DUST,
@@ -73,6 +76,9 @@ data object RagiumItems {
             HTItemPart.NUGGET,
         ).forEach { register(it, HTMaterial.Metal.NETHERITE) { properties: Item.Properties -> properties.fireResistant() } }
     }
+
+    @JvmField
+    val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(HTMaterial.Fuel.COAL_COKE.materialName)
 
     @JvmStatic
     fun getOrThrow(part: HTItemPart, material: HTMaterial): HTSimpleDeferredItem = MATERIAL_ITEMS[part, material] ?: error("Unregistered item: ${part.createName(material)}")

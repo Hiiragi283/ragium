@@ -2,15 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "#c:nuggets/netherite",
-    "B": "ragium:netherite_nugget"
+    "A": "#c:tiny/coal_coke"
   },
   "pattern": [
     "AAA",
-    "ABA",
+    "A A",
     "AAA"
   ],
   "result": {
-    "id": "minecraft:netherite_ingot"
+    "id": "ragium:coal_coke"
   }
 }
