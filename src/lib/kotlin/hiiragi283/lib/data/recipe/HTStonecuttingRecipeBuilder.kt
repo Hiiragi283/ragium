@@ -62,7 +62,7 @@ class HTStonecuttingRecipeBuilder : HTRecipeBuilder<StonecutterRecipe>("stonecut
         result = ItemInstanceBuilder.buildTemplate(builderAction)
     }
 
-    override fun getPrimalId(): Identifier = result.typeHolder().getKeyOrThrow().identifier()
+    override fun getPrimalId(): Identifier = result.getKeyOrThrow().identifier()
 
     override fun createRecipe(): StonecutterRecipe = StonecutterRecipe(commonInfo(true), ingredient, result)
 }

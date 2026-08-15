@@ -45,5 +45,5 @@ abstract class HTCraftingRecipeBuilder<out RECIPE : CraftingRecipe>(prefix: Stri
         result = ItemInstanceBuilder.buildTemplate(builderAction)
     }
 
-    final override fun getPrimalId(): Identifier = result.item().getKeyOrThrow().identifier()
+    final override fun getPrimalId(): Identifier = result.getKeyOrThrow().identifier()
 }

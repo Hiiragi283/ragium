@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "minecraft:blaze_powder"
+  },
+  "result": {
+    "amount": 90,
+    "id": "ragium:molten_blaze"
+  },
+  "time": 200
+}

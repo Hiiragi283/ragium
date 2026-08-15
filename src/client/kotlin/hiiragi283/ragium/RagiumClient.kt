@@ -48,13 +48,21 @@ data object RagiumClient : HTClientMod() {
             setMolten()
             colorTint(Color(0xffffff))
         }
+        register.register(RagiumFluids.MOLTEN_REDSTONE) {
+            setMolten()
+            colorTint(Color(0xcc0000))
+        }
+        register.register(RagiumFluids.MOLTEN_GLOWSTONE) {
+            setMolten()
+            colorTint(Color(0xffcc66))
+        }
         register.register(RagiumFluids.MOLTEN_ENDER) {
             setMolten()
             colorTint(Color(0x006666))
         }
         register.register(RagiumFluids.MOLTEN_BLAZE) {
             setMolten()
-            colorTint(Color(0xcc9900))
+            colorTint(Color(0xff9900))
         }
     }
 }

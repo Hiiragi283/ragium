@@ -53,22 +53,11 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     //    Material    //
 
     private fun material() {
-        // Netherite Ingot <-> Nugget
-        HTShapelessRecipeBuilder.create {
-            ingredient { +holderSet(CommonTagPrefixes.INGOT, HTMaterial.Metal.NETHERITE) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.NUGGET, HTMaterial.Metal.NETHERITE)
-                count = 9
-            }
-            recipeId suffix "_from_ingot"
-        }.save(exporter)
-        HTShapedRecipeBuilder.create {
-            hollow8()
-            define('A') { +holderSet(CommonTagPrefixes.NUGGET, HTMaterial.Metal.NETHERITE) }
-            define('B') { items { +RagiumItems.getOrThrow(HTItemPart.NUGGET, HTMaterial.Metal.NETHERITE) } }
-            result { +Items.NETHERITE_INGOT }
-            recipeId suffix "_from_nugget"
-        }.save(exporter)
+        // Ingot <-> Nugget
+        ingotToNugget(HTMaterial.Metal.NETHERITE, ingot = Items.NETHERITE_INGOT)
+        ingotToNugget(HTMaterial.Metal.STEEL)
+        ingotToNugget(HTMaterial.Metal.RAGI_ALLOY)
+        ingotToNugget(HTMaterial.Metal.ADVANCED_RAGI_ALLOY)
 
         // Alloy Dust
         HTShapelessRecipeBuilder.create {
@@ -147,6 +136,29 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 recipeId suffix "_from_tiny"
             }.save(exporter)
         }
+    }
+
+    private fun ingotToNugget(
+        material: HTMaterial,
+        ingot: ItemLike? = RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, material],
+        nugget: ItemLike? = RagiumItems.MATERIAL_ITEMS[HTItemPart.NUGGET, material],
+    ) {
+        if (ingot == null || nugget == null) return
+        HTShapelessRecipeBuilder.create {
+            ingredient { +holderSet(CommonTagPrefixes.INGOT, material) }
+            result {
+                +nugget.asItem()
+                count = 9
+            }
+            recipeId suffix "_from_ingot"
+        }.save(exporter)
+        HTShapedRecipeBuilder.create {
+            hollow8()
+            define('A') { +holderSet(CommonTagPrefixes.NUGGET, material) }
+            define('B') { items { +nugget.asItem() } }
+            result { +ingot.asItem() }
+            recipeId suffix "_from_nugget"
+        }.save(exporter)
     }
 
     private fun gear(basePrefix: HTTagPrefix, material: HTMaterial) {

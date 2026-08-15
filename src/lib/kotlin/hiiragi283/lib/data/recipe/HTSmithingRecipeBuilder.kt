@@ -67,7 +67,7 @@ class HTSmithingRecipeBuilder : HTRecipeBuilder<SmithingTransformRecipe>(HTConst
         result = ItemInstanceBuilder.buildTemplate(builderAction)
     }
 
-    override fun getPrimalId(): Identifier = result.item().getKeyOrThrow().identifier()
+    override fun getPrimalId(): Identifier = result.getKeyOrThrow().identifier()
 
     override fun createRecipe(): SmithingTransformRecipe = SmithingTransformRecipe(
         commonInfo(true),

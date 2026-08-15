@@ -21,6 +21,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         // add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
         addFluid(RagiumFluids.OMINOUS_FLUX, "不吉な流動体")
         addFluid(RagiumFluids.MOLTEN_GLASS, "溶融ガラス")
+        addFluid(RagiumFluids.MOLTEN_REDSTONE, "励起レッドストーン")
+        addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "活性グロウストーン")
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
         addFluid(RagiumFluids.MOLTEN_BLAZE, "ブレイズの血液")
 

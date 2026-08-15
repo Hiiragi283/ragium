@@ -32,7 +32,9 @@ data object RagiumFluids {
     private fun liquid(): FluidType.Properties = create(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
 
     @JvmStatic
-    private fun molten(): FluidType.Properties = create(SoundEvents.BUCKET_FILL_LAVA, SoundEvents.BUCKET_EMPTY_LAVA)
+    private fun molten(lightLevel: Int = 15, temp: Int = 1300): FluidType.Properties = create(SoundEvents.BUCKET_FILL_LAVA, SoundEvents.BUCKET_EMPTY_LAVA)
+        .lightLevel(lightLevel)
+        .temperature(temp)
 
     //    Vanilla    //
 
@@ -57,6 +59,12 @@ data object RagiumFluids {
 
     @JvmField
     val MOLTEN_GLASS: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_glass") { properties = molten() }
+
+    @JvmField
+    val MOLTEN_REDSTONE: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_redstone") { properties = molten() }
+
+    @JvmField
+    val MOLTEN_GLOWSTONE: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_glowstone") { properties = molten() }
 
     @JvmField
     val MOLTEN_ENDER: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_ender") { properties = molten() }

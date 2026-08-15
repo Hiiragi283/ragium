@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "#c:storage_blocks/redstone"
+  },
+  "result": {
+    "amount": 810,
+    "id": "ragium:molten_redstone"
+  },
+  "time": 1800
+}

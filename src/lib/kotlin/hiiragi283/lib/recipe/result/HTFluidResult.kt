@@ -67,5 +67,5 @@ value class HTFluidResult private constructor(@PublishedApi internal val templat
      */
     fun create(): FluidStack = template.create()
 
-    override fun getId(): Identifier = template.typeHolder().getKeyOrThrow().identifier()
+    override fun getId(): Identifier = template.getKeyOrThrow().identifier()
 }

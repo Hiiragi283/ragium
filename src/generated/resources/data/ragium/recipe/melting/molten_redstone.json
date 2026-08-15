@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "#c:dusts/redstone"
+  },
+  "result": {
+    "amount": 90,
+    "id": "ragium:molten_redstone"
+  },
+  "time": 200
+}

@@ -42,8 +42,6 @@ data object HTConstants {
      */
     const val COMMON = "c"
 
-    const val LIB_ID = "hiiragi_lib"
-
     @JvmField
     val BUILT_IN_IDS: Set<String> = setOf(MINECRAFT, NEOFORGE, COMMON)
 

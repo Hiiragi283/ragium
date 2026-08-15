@@ -12,6 +12,7 @@ import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -169,18 +170,17 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
     private fun crushing() {
         // XX Dust
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.COAL } }
-            primary { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Fuel.COAL) }
-        }.save(exporter)
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.CHARCOAL } }
-            primary { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Fuel.CHARCOAL) }
-        }.save(exporter)
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +RagiumItems.COAL_COKE } }
-            primary { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Fuel.COAL_COKE) }
-        }.save(exporter)
+        for (fuel: HTMaterial.Fuel in HTMaterial.Fuel.entries) {
+            val input: Item = when (fuel) {
+                HTMaterial.Fuel.COAL -> Items.COAL
+                HTMaterial.Fuel.CHARCOAL -> Items.CHARCOAL
+                HTMaterial.Fuel.COAL_COKE -> RagiumItems.COAL_COKE
+            }.asItem()
+            RagiumRecipeBuilders.crushing {
+                ingredient { items { +input } }
+                primary { +RagiumItems.getOrThrow(HTItemPart.DUST, fuel) }
+            }.save(exporter)
+        }
 
         for (gem: HTMaterial.Gem in HTMaterial.Gem.entries) {
             RagiumRecipeBuilders.crushing {

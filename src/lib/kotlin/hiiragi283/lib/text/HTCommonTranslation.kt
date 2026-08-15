@@ -1,7 +1,7 @@
 package hiiragi283.lib.text
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.resource.toId
+import hiiragi283.ragium.api.RagiumAPI
 
 /**
  * Ragiumで使用される[翻訳][HTTranslation]を集めたクラスです。
@@ -59,5 +59,5 @@ enum class HTCommonTranslation(type: String, vararg path: String) : HTTranslatio
     DATAPACK_WIP("datapack", "work_in_progress"),
     ;
 
-    override val translationKey: String = HTConstants.LIB_ID.toId(path.joinToString(separator = ".")).toLanguageKey(type)
+    override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".")).toLanguageKey(type)
 }

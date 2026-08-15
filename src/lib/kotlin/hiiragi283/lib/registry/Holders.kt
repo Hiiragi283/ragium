@@ -4,6 +4,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.resource.SimpleBlockItemSupplierWithKey
 import hiiragi283.lib.resource.SimpleSupplierWithKey
 import net.minecraft.core.Holder
+import net.minecraft.core.TypedInstance
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
@@ -47,6 +48,10 @@ fun <R : Any, T : R> DeferredHolder<R, T>.toLike(): HTDeferredHolder<R, T> = whe
     is HTDeferredHolder<R, T> -> this
     else -> HTDeferredHolder(this.key)
 }
+
+fun <T : Any> TypedInstance<T>.getKeyOrThrow(): ResourceKey<T> = this.typeHolder().getKeyOrThrow()
+
+fun <T : Any> TypedInstance<T>.holderLike(): SimpleSupplierWithKey<T> = this.typeHolder().toLike()
 
 //    Block    //
 

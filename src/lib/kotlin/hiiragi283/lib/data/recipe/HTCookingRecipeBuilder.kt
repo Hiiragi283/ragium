@@ -135,7 +135,7 @@ class HTCookingRecipeBuilder(
 
     //    HTRecipeBuilder    //
 
-    override fun getPrimalId(): Identifier = result.item().getKeyOrThrow().identifier()
+    override fun getPrimalId(): Identifier = result.getKeyOrThrow().identifier()
 
     override fun createRecipe(): AbstractCookingRecipe = factory.create(
         commonInfo(true),

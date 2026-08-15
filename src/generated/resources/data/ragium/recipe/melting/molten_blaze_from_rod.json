@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "#c:rods/blaze"
+  },
+  "result": {
+    "amount": 180,
+    "id": "ragium:molten_blaze"
+  },
+  "time": 200
+}

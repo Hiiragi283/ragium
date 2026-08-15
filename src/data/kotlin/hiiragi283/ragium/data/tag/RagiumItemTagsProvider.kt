@@ -22,11 +22,19 @@ import net.neoforged.neoforge.common.Tags
 
 class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, contentsGetter: CompletableFuture<TagLookup<Block>>) : HTItemTagsProvider(output, lookupProvider, contentsGetter, RagiumAPI.MOD_ID) {
     override fun appendTags(registries: HolderLookup.Provider) {
+        // Copy
+        copy(CommonTagPrefixes.STORAGE_BLOCK, HTMaterial.Mineral.GLOWSTONE)
+        copy(CommonTagPrefixes.STORAGE_BLOCK, HTMaterial.Gem.QUARTZ)
+        copy(CommonTagPrefixes.STORAGE_BLOCK, HTMaterial.Gem.AMETHYST)
+
         // Material
         tags(CommonTagPrefixes.GEM, HTMaterial.Gem.ECHO).addItem(Items.ECHO_SHARD)
 
         RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemPart, material: HTMaterial, item: HTKeyLike<Item>) ->
             tags(part.tagPrefix, material).add(item)
+            if (part == HTItemPart.NUGGET) {
+                builder(ItemTags.METAL_NUGGETS).add(item)
+            }
         }
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {

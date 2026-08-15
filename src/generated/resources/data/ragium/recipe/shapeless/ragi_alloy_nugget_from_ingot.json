@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:ingots/ragi_alloy"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:ragi_alloy_nugget"
+  }
+}

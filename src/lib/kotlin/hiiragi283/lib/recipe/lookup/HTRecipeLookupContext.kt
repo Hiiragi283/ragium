@@ -1,8 +1,7 @@
 package hiiragi283.lib.recipe.lookup
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.HTPhysicalSideHelper
-import hiiragi283.lib.resource.toId
+import hiiragi283.lib.resource.vanillaId
 import net.minecraft.client.Minecraft
 import net.minecraft.core.HolderLookup
 import net.minecraft.server.MinecraftServer
@@ -23,7 +22,7 @@ import net.minecraft.world.level.Level
  */
 data object HTRecipeLookupContext {
     @JvmStatic
-    private fun <T : Any> createKey(path: String): ContextKey<T> = ContextKey(HTConstants.LIB_ID.toId(path))
+    private fun <T : Any> createKey(path: String): ContextKey<T> = ContextKey(vanillaId(path))
 
     /**
      * レシピの一覧に紐づく[ContextKey]

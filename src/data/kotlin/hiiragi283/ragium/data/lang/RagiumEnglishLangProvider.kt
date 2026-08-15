@@ -21,6 +21,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         // add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
         addFluid(RagiumFluids.OMINOUS_FLUX, "Ominous Flux")
         addFluid(RagiumFluids.MOLTEN_GLASS, "Molten Glass")
+        addFluid(RagiumFluids.MOLTEN_REDSTONE, "Destabilized Redstone")
+        addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "Energized Glowstone")
         addFluid(RagiumFluids.MOLTEN_ENDER, "Resonant Ender")
         addFluid(RagiumFluids.MOLTEN_BLAZE, "Blaze Blood")
 
