@@ -8,8 +8,10 @@ import hiiragi283.lib.data.lang.HTLangType
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.HTHasTranslationKey
+import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.HTMaterial
+import hiiragi283.ragium.block.RagiumBlocks
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.item.RagiumItems
 
@@ -18,12 +20,9 @@ interface RagiumLangProvider {
         val langType: HTLangType = provider.langType
         // Block
         val waxedCopper = HTLangPatternProvider("Waxed %s", "錆止めされた%s")
-        val copperBasin = HTLangName("Copper Basin", "銅の鉢")
-        /*for (phase: HTCopperPhase in HTCopperPhase.entries) {
-            val (weathering: HTHasTranslationKey, waxed: HTHasTranslationKey) = HCBlocks.COPPER_BASIN[phase]
-            provider.add(weathering, phase.translate(langType, copperBasin))
-            provider.add(waxed, waxedCopper.translate(langType, phase.translate(langType, copperBasin)))
-        }*/
+        RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: HTMaterial, block: HTHasTranslationKey) ->
+            provider.add(block, part, material)
+        }
         // Fluid
         val dyePattern = HTLangPatternProvider("%s Dye", "%sの染料")
         for ((color: HTLangName, content: HTFluidContent) in RagiumFluids.DYES.asSequenceWithColor()) {

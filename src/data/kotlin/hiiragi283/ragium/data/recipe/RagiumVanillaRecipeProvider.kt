@@ -9,9 +9,11 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.block.RagiumBlocks
 import hiiragi283.ragium.item.RagiumItems
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
@@ -130,7 +132,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }.forEach { it.save(exporter) }
         }
 
-        // Tiny
+        // Fuel
         for (fuel: HTMaterial.Fuel in HTMaterial.Fuel.entries) {
             val base: Item = when (fuel) {
                 HTMaterial.Fuel.COAL -> Items.COAL
@@ -138,6 +140,23 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 HTMaterial.Fuel.COAL_COKE -> RagiumItems.COAL_COKE
             }.asItem()
 
+            // Storage
+            if (fuel != HTMaterial.Fuel.COAL) {
+                HTShapelessRecipeBuilder.create {
+                    ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, fuel) }
+                    result {
+                        +base
+                        count = 9
+                    }
+                    recipeId suffix "_from_block"
+                }.save(exporter)
+                HTShapedRecipeBuilder.create {
+                    storage9()
+                    define('A') { items { +base } }
+                    result { +RagiumBlocks.getOrThrow(HTBlockPart.STORAGE_BLOCK, fuel) }
+                }.save(exporter)
+            }
+            // Tiny
             HTShapelessRecipeBuilder.create {
                 ingredient { items { +base } }
                 result {

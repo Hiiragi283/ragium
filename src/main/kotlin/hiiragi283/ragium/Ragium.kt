@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.block.RagiumBlocks
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.item.RagiumItems
 import net.minecraft.core.registries.Registries
@@ -32,6 +33,7 @@ data object Ragium : HTCommonMod() {
         eventBus.addListener(::register)
 
         RagiumFluids.register(eventBus)
+        RagiumBlocks.register(eventBus)
         RagiumItems.register(eventBus)
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
@@ -46,7 +48,7 @@ data object Ragium : HTCommonMod() {
                     // Items
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumItems.REGISTER.asSequence())
                     // Blocks
-                    // HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumBlocks.REGISTER.asItemSequence())
+                    HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumBlocks.REGISTER.asItemSequence())
                     // Fluids
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumFluids.REGISTER.asItemSequence())
                 },

@@ -6,9 +6,11 @@ import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.block.RagiumBlocks
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.item.RagiumItems
 import java.util.concurrent.CompletableFuture
@@ -27,6 +29,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         copy(CommonTagPrefixes.STORAGE_BLOCK, HTMaterial.Gem.QUARTZ)
         copy(CommonTagPrefixes.STORAGE_BLOCK, HTMaterial.Gem.AMETHYST)
 
+        RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: HTMaterial, _) -> copy(part.tagPrefix, material) }
         // Material
         tags(CommonTagPrefixes.GEM, HTMaterial.Gem.ECHO).addItem(Items.ECHO_SHARD)
 
