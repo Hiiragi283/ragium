@@ -1,8 +1,8 @@
 [versions]
 minecraft = "26.1.2"
 
-neo-moddev = "2.0.141"
-neo-version = "26.1.2.78"
+neo-moddev = "2.0.144"
+neo-version = "26.1.2.95"
 kff-version = "6.3.0"
 
 kotlin = "2.4.0"
@@ -15,9 +15,8 @@ mod-publish = "2.1.1"
 
 ae2 = "26.1.10-beta"
 curios = "15.0.0-beta.2+26.1.2"
-jade = "26.1.8+neoforge"
-jei = "29.12.0.40"
-ldlib = "26.1.2.26"
+jade = "26.1.10+neoforge"
+jei = "29.29.0.76"
 
 [libraries]
 
@@ -28,7 +27,6 @@ curios = { group = "top.theillusivec4.curios", name = "curios-neoforge", version
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 jei = { group = "mezz.jei", name = "jei-26.1.2-neoforge", version.ref = "jei" }
 jei-api = { group = "mezz.jei", name = "jei-26.1.2-neoforge-api", version.ref = "jei" }
-ldlib = { group = "com.lowdragmc.ldlib2", name = "ldlib2-neoforge-26.1", version.ref = "ldlib" }
 
 [bundles]
 
