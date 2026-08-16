@@ -69,27 +69,37 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             result { +Items.COBWEB }
         }.save(exporter)
 
-        // Iron Ingot + Iron Nugget -> Chain
-        RagiumRecipeBuilders.assembling {
-            primary { +holderSet(CommonTagPrefixes.INGOT, HTMaterial.Metal.IRON) }
-            secondary {
-                +holderSet(CommonTagPrefixes.NUGGET, HTMaterial.Metal.IRON)
-                count = 3
-            }
-            result {
-                +Items.IRON_CHAIN
-                count = 3
-            }
-        }.save(exporter)
-        // Iron Ingot + Torch -> Lantern
-        RagiumRecipeBuilders.assembling {
-            primary { +holderSet(CommonTagPrefixes.INGOT, HTMaterial.Metal.IRON) }
-            secondary { items { +Items.TORCH } }
-            result {
-                +Items.LANTERN
-                count = 2
-            }
-        }.save(exporter)
+        // XX Ingot + XX Nugget -> XX Chain
+        setOf(
+            HTMaterial.Metal.COPPER to Items.COPPER_CHAIN.unaffected(),
+            HTMaterial.Metal.IRON to Items.IRON_CHAIN,
+        ).forEach { (metal: HTMaterial.Metal, chain: Item) ->
+            RagiumRecipeBuilders.assembling {
+                primary { +holderSet(CommonTagPrefixes.INGOT, metal) }
+                secondary {
+                    +holderSet(CommonTagPrefixes.NUGGET, metal)
+                    count = 3
+                }
+                result {
+                    +chain
+                    count = 3
+                }
+            }.save(exporter)
+        }
+        // XX Ingot + Torch -> XX Lantern
+        setOf(
+            HTMaterial.Metal.COPPER to Items.COPPER_LANTERN.unaffected(),
+            HTMaterial.Metal.IRON to Items.LANTERN,
+        ).forEach { (metal: HTMaterial.Metal, lantern: Item) ->
+            RagiumRecipeBuilders.assembling {
+                primary { +holderSet(CommonTagPrefixes.INGOT, metal) }
+                secondary { items { +Items.TORCH } }
+                result {
+                    +lantern
+                    count = 2
+                }
+            }.save(exporter)
+        }
         RagiumRecipeBuilders.assembling {
             primary { +holderSet(CommonTagPrefixes.INGOT, HTMaterial.Metal.IRON) }
             secondary { items { +Items.SOUL_TORCH } }
@@ -127,19 +137,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.TNT
                 count = 2
             }
-        }.save(exporter)
-
-        // Leather + Iron Nugget -> Saddle
-        RagiumRecipeBuilders.assembling {
-            primary {
-                +holderSet(Tags.Items.LEATHERS)
-                count = 5
-            }
-            secondary {
-                +holderSet(CommonTagPrefixes.NUGGET, HTMaterial.Metal.IRON)
-                count = 2
-            }
-            result { +Items.SADDLE }
         }.save(exporter)
         // Head
         RagiumRecipeBuilders.assembling {
