@@ -1,0 +1,16 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "#c:ores/redstone"
+  },
+  "primary_result": {
+    "count": 6,
+    "id": "minecraft:redstone"
+  },
+  "secondary_result": {
+    "count": 1,
+    "id": "ragium:raginite_dust"
+  },
+  "time": 200
+}

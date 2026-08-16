@@ -220,6 +220,112 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
             primary { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Other.OBSIDIAN) }
         }.save(exporter)
+
+        // XX Ore -> XX Dust
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Fuel.COAL) }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Fuel.COAL)
+                count = 2
+            }
+            secondary {
+                +RagiumItems.getOrThrow(HTItemPart.TINY, HTMaterial.Fuel.COAL)
+                count = 3
+            }
+            recipeId suffix "_from_ore"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Mineral.REDSTONE) }
+            primary {
+                +Items.REDSTONE
+                count = 6
+            }
+            secondary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Mineral.RAGINITE)
+            }
+            recipeId suffix "_from_ore"
+        }.save(exporter)
+
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Gem.LAPIS) }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Gem.LAPIS)
+                count = 6
+            }
+            recipeId suffix "_from_ore"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Gem.QUARTZ) }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Gem.QUARTZ)
+                count = 4
+            }
+            secondary {
+                +Items.GOLD_NUGGET
+            }
+            recipeId suffix "_from_ore"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Gem.DIAMOND) }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Gem.DIAMOND)
+                count = 2
+            }
+            recipeId suffix "_from_ore"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Gem.EMERALD) }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Gem.EMERALD)
+                count = 2
+            }
+            recipeId suffix "_from_ore"
+        }.save(exporter)
+
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Metal.COPPER) }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Metal.COPPER)
+                count = 3
+            }
+            secondary {
+                +Items.GOLD_NUGGET
+                count = 3
+            }
+            recipeId suffix "_from_ore"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Metal.IRON) }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Metal.IRON)
+                count = 2
+            }
+            secondary { +Items.FLINT }
+            recipeId suffix "_from_ore"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Metal.GOLD) }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Metal.GOLD)
+                count = 2
+            }
+            recipeId suffix "_from_ore"
+        }.save(exporter)
+        // Raw XX -> XX Dust
+        for (metal: HTMaterial.Metal in HTMaterial.Metal.entries) {
+            if (!metal.isElement) continue
+            RagiumRecipeBuilders.crushing {
+                ingredient {
+                    +holderSet(CommonTagPrefixes.RAW_MATERIALS, metal)
+                    count = 3
+                }
+                primary {
+                    +RagiumItems.getOrThrow(HTItemPart.DUST, metal)
+                    count = 4
+                }
+                recipeId suffix "_from_raw"
+            }.save(exporter)
+        }
     }
 
     override fun getName(): String = "Mechanical Recipes"

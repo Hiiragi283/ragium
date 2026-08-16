@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 3,
+    "ingredient": "#c:raw_materials/copper"
+  },
+  "primary_result": {
+    "count": 4,
+    "id": "ragium:copper_dust"
+  },
+  "time": 200
+}

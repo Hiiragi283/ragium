@@ -59,8 +59,8 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // XX Block -> XX
         setOf(
             HTMaterial.Mineral.GLOWSTONE to Items.GLOWSTONE_DUST,
-            HTMaterial.Gem.QUARTZ to Items.QUARTZ_BLOCK,
-            HTMaterial.Gem.AMETHYST to Items.AMETHYST_BLOCK,
+            HTMaterial.Gem.QUARTZ to Items.QUARTZ,
+            HTMaterial.Gem.AMETHYST to Items.AMETHYST_SHARD,
         ).forEach { (material, item) ->
             HTShapelessRecipeBuilder.create {
                 ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, material) }

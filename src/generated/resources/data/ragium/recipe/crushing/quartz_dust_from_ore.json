@@ -1,0 +1,16 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "#c:ores/quartz"
+  },
+  "primary_result": {
+    "count": 4,
+    "id": "ragium:quartz_dust"
+  },
+  "secondary_result": {
+    "count": 1,
+    "id": "minecraft:gold_nugget"
+  },
+  "time": 200
+}
