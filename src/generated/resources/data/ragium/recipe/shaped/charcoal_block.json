@@ -2,11 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "minecraft:charcoal"
+    "A": "minecraft:charcoal",
+    "B": "minecraft:charcoal"
   },
   "pattern": [
     "AAA",
-    "AAA",
+    "ABA",
     "AAA"
   ],
   "result": {

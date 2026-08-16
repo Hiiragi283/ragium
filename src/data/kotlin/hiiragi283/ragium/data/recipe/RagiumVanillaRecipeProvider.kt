@@ -21,6 +21,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 
 class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
@@ -71,6 +72,8 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }.save(exporter)
         }
 
+        // XX <-> Storage Block
+        baseToBlock(HTMaterial.Gem.ECHO, CommonTagPrefixes.GEM, Items.ECHO_SHARD, size = StorageBlockSize.FOUR)
         // Ingot <-> Nugget
         ingotToNugget(HTMaterial.Metal.NETHERITE, ingot = Items.NETHERITE_INGOT)
         ingotToNugget(HTMaterial.Metal.STEEL)
@@ -141,21 +144,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }.asItem()
 
             // Storage
-            if (fuel != HTMaterial.Fuel.COAL) {
-                HTShapelessRecipeBuilder.create {
-                    ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, fuel) }
-                    result {
-                        +base
-                        count = 9
-                    }
-                    recipeId suffix "_from_block"
-                }.save(exporter)
-                HTShapedRecipeBuilder.create {
-                    storage9()
-                    define('A') { items { +base } }
-                    result { +RagiumBlocks.getOrThrow(HTBlockPart.STORAGE_BLOCK, fuel) }
-                }.save(exporter)
-            }
+            baseToBlock(fuel, Ingredient.of(base), base)
             // Tiny
             HTShapelessRecipeBuilder.create {
                 ingredient { items { +base } }
@@ -171,6 +160,48 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 recipeId suffix "_from_tiny"
             }.save(exporter)
         }
+    }
+
+    private fun baseToBlock(
+        material: HTMaterial,
+        basePrefix: HTTagPrefix,
+        base: ItemLike,
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
+        size: StorageBlockSize = StorageBlockSize.NINE,
+    ) {
+        baseToBlock(material, Ingredient.of(holderSet(basePrefix, material)), base, block, size)
+    }
+
+    private fun baseToBlock(
+        material: HTMaterial,
+        baseInput: Ingredient,
+        base: ItemLike,
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
+        size: StorageBlockSize = StorageBlockSize.NINE,
+    ) {
+        if (block == null) return
+        HTShapelessRecipeBuilder.create {
+            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, material) }
+            result {
+                +base.asItem()
+                count = size.count
+            }
+            recipeId suffix "_from_block"
+        }.save(exporter)
+        HTShapedRecipeBuilder.create {
+            size.pattern.invoke(this)
+            define('A') { +baseInput }
+            define('B') { items { +base.asItem() } }
+            result { +block.asItem() }
+        }.save(exporter)
+    }
+
+    private enum class StorageBlockSize(val count: Int, val pattern: (HTShapedRecipeBuilder).() -> Unit) {
+        FOUR(4, {
+            +"AA"
+            +"AB"
+        }),
+        NINE(9, HTShapedRecipeBuilder::hollow8),
     }
 
     private fun ingotToNugget(

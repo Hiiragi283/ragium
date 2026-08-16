@@ -2,11 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "ragium:coal_coke"
+    "A": "ragium:coal_coke",
+    "B": "ragium:coal_coke"
   },
   "pattern": [
     "AAA",
-    "AAA",
+    "ABA",
     "AAA"
   ],
   "result": {

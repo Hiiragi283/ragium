@@ -1,11 +1,10 @@
 package hiiragi283.ragium.item
 
 import hiiragi283.lib.collection.Table
-import hiiragi283.lib.collection.buildTable
+import hiiragi283.lib.collection.buildSetMultiMap
+import hiiragi283.lib.collection.flatMapTable
 import hiiragi283.lib.registry.HTDeferredItemRegister
 import hiiragi283.lib.registry.HTSimpleDeferredItem
-import hiiragi283.lib.util.Identity
-import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.HTMaterial
@@ -22,17 +21,10 @@ data object RagiumItems {
         REGISTER.register(eventBus)
     }
 
-    @JvmField
-    val TABLE_COMPARATOR: Comparator<Pair<HTItemPart, HTMaterial>> = compareBy<Pair<HTItemPart, HTMaterial>> { it.first }.thenBy { it.second.materialName }
-
     //    Ingredient    //
 
     @JvmField
-    val MATERIAL_ITEMS: Table<HTItemPart, HTMaterial, HTSimpleDeferredItem> = buildTable(sortedMapOf(TABLE_COMPARATOR)) {
-        fun register(part: HTItemPart, material: HTMaterial, operator: Identity<Item.Properties> = identity()) {
-            this[part, material] = REGISTER.registerSimpleItem(part.createName(material), operator)
-        }
-
+    val MATERIAL_ITEMS: Table<HTItemPart, HTMaterial, HTSimpleDeferredItem> = buildSetMultiMap<HTItemPart, HTMaterial>(sortedMapOf()) {
         // Dust
         setOf(
             // Fuel
@@ -61,7 +53,7 @@ data object RagiumItems {
             HTMaterial.Other.WOOD,
             HTMaterial.Other.GLASS,
             HTMaterial.Other.OBSIDIAN,
-        ).forEach { register(HTItemPart.DUST, it) }
+        ).forEach { put(HTItemPart.DUST, it) }
         // Gear
         setOf(
             // Gem
@@ -74,27 +66,36 @@ data object RagiumItems {
             // Other
             HTMaterial.Other.WOOD,
         ).forEach {
-            register(HTItemPart.GEAR, it)
+            put(HTItemPart.GEAR, it)
         }
         // Gem
-        register(HTItemPart.GEM, HTMaterial.Gem.RAGI_CRYSTAL)
+        put(HTItemPart.GEM, HTMaterial.Gem.RAGI_CRYSTAL)
 
         // Fuel
-        HTMaterial.Fuel.entries.forEach { register(HTItemPart.TINY, it) }
+        HTMaterial.Fuel.entries.forEach { put(HTItemPart.TINY, it) }
         // Alloy
         setOf(
             HTItemPart.DUST,
             HTItemPart.GEAR,
             HTItemPart.NUGGET,
-        ).forEach { register(it, HTMaterial.Metal.NETHERITE) { properties: Item.Properties -> properties.fireResistant() } }
+        ).forEach { put(it, HTMaterial.Metal.NETHERITE) }
         setOf(
             HTItemPart.DUST,
             HTItemPart.INGOT,
             HTItemPart.NUGGET,
         ).forEach {
-            register(it, HTMaterial.Metal.STEEL)
-            register(it, HTMaterial.Metal.RAGI_ALLOY)
-            register(it, HTMaterial.Metal.ADVANCED_RAGI_ALLOY)
+            put(it, HTMaterial.Metal.STEEL)
+            put(it, HTMaterial.Metal.RAGI_ALLOY)
+            put(it, HTMaterial.Metal.ADVANCED_RAGI_ALLOY)
+        }
+    }.flatMapTable { (part: HTItemPart, materials: Collection<HTMaterial>) ->
+        materials.map { material: HTMaterial ->
+            val item: HTSimpleDeferredItem = if (material == HTMaterial.Metal.NETHERITE) {
+                REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties -> properties.fireResistant() }
+            } else {
+                REGISTER.registerSimpleItem(part.createName(material))
+            }
+            Triple(part, material, item)
         }
     }
 
