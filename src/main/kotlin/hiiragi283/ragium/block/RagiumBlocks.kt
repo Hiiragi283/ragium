@@ -47,6 +47,8 @@ data object RagiumBlocks {
         register(HTBlockPart.STORAGE_BLOCK, HTMaterial.Fuel.CHARCOAL, copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF))
         register(HTBlockPart.STORAGE_BLOCK, HTMaterial.Fuel.COAL_COKE, copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY))
         register(HTBlockPart.STORAGE_BLOCK, HTMaterial.Gem.ECHO, copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN))
+        register(HTBlockPart.STORAGE_BLOCK, HTMaterial.Gem.RAGI_CRYSTAL, copyOf(Blocks.DIAMOND_BLOCK).mapColor(MapColor.COLOR_RED))
+        register(HTBlockPart.STORAGE_BLOCK, HTMaterial.Metal.STEEL, copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_LIGHT_GRAY))
     }
 
     @JvmStatic

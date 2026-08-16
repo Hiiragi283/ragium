@@ -74,6 +74,8 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         // XX <-> Storage Block
         baseToBlock(HTMaterial.Gem.ECHO, CommonTagPrefixes.GEM, Items.ECHO_SHARD, size = StorageBlockSize.FOUR)
+        baseToBlock(HTMaterial.Gem.RAGI_CRYSTAL, HTItemPart.GEM)
+        baseToBlock(HTMaterial.Metal.STEEL, HTItemPart.INGOT)
         // Ingot <-> Nugget
         ingotToNugget(HTMaterial.Metal.NETHERITE, ingot = Items.NETHERITE_INGOT)
         ingotToNugget(HTMaterial.Metal.STEEL)
@@ -170,6 +172,16 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         size: StorageBlockSize = StorageBlockSize.NINE,
     ) {
         baseToBlock(material, Ingredient.of(holderSet(basePrefix, material)), base, block, size)
+    }
+
+    private fun baseToBlock(
+        material: HTMaterial,
+        basePart: HTItemPart,
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
+        size: StorageBlockSize = StorageBlockSize.NINE,
+    ) {
+        val base: ItemLike = RagiumItems.MATERIAL_ITEMS[basePart, material] ?: return
+        baseToBlock(material, basePart.tagPrefix, base, block, size)
     }
 
     private fun baseToBlock(

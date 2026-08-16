@@ -5,6 +5,8 @@
     "#c:storage_blocks/coal_coke",
     "#c:storage_blocks/echo",
     "#c:storage_blocks/glowstone",
-    "#c:storage_blocks/quartz"
+    "#c:storage_blocks/quartz",
+    "#c:storage_blocks/ragi_crystal",
+    "#c:storage_blocks/steel"
   ]
 }
