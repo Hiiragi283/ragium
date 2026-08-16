@@ -138,15 +138,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount = 90
             }
         }.save(exporter)
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, HTMaterial.Mineral.REDSTONE) }
-            result {
-                +RagiumFluids.MOLTEN_REDSTONE
-                amount = 90 * 9
-            }
-            time *= 9
-            recipeId suffix "_from_block"
-        }.save(exporter)
         // Molten Glowstone
         RagiumRecipeBuilders.melting {
             ingredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Mineral.GLOWSTONE) }
@@ -154,15 +145,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +RagiumFluids.MOLTEN_GLOWSTONE
                 amount = 90
             }
-        }.save(exporter)
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, HTMaterial.Mineral.GLOWSTONE) }
-            result {
-                +RagiumFluids.MOLTEN_GLOWSTONE
-                amount = 90 * 4
-            }
-            time *= 4
-            recipeId suffix "_from_block"
         }.save(exporter)
         // Molten Ender
         RagiumRecipeBuilders.melting {

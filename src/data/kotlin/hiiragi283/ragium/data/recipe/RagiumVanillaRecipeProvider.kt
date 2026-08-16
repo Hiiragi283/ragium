@@ -53,6 +53,22 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     //    Material    //
 
     private fun material() {
+        // XX Block -> XX
+        setOf(
+            HTMaterial.Mineral.GLOWSTONE to Items.GLOWSTONE_DUST,
+            HTMaterial.Gem.QUARTZ to Items.QUARTZ_BLOCK,
+            HTMaterial.Gem.AMETHYST to Items.AMETHYST_BLOCK,
+        ).forEach { (material, item) ->
+            HTShapelessRecipeBuilder.create {
+                ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, material) }
+                result {
+                    +item
+                    count = 4
+                }
+                recipeId suffix "_from_block"
+            }.save(exporter)
+        }
+
         // Ingot <-> Nugget
         ingotToNugget(HTMaterial.Metal.NETHERITE, ingot = Items.NETHERITE_INGOT)
         ingotToNugget(HTMaterial.Metal.STEEL)
