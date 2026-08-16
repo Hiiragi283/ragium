@@ -1,7 +1,11 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.lib.data.createLootTables
 import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider
+import hiiragi283.ragium.data.loot.RagiumBlockLootTableProvider
+import hiiragi283.ragium.data.loot.RagiumGlobalLootModifierProvider
+import hiiragi283.ragium.data.loot.RagiumGlobalLootTableProvider
 import hiiragi283.ragium.data.model.RagiumModelProvider
 import hiiragi283.ragium.data.recipe.RagiumHeatRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumMechanicalRecipeProvider
@@ -10,6 +14,7 @@ import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProvider
 import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.data.event.GatherDataEvent
@@ -20,6 +25,12 @@ data object RagiumDataGen {
     fun gatherData(event: GatherDataEvent.Client) {
         // Server
         event.createProvider(::RagiumDataMapProvider)
+
+        event.createLootTables(
+            ::RagiumBlockLootTableProvider to LootContextParamSets.BLOCK,
+            RagiumGlobalLootTableProvider::EntityProvider to LootContextParamSets.ENTITY,
+        )
+        event.createProvider(::RagiumGlobalLootModifierProvider)
 
         event.createProvider(::RagiumHeatRecipeProvider)
         event.createProvider(::RagiumMechanicalRecipeProvider)

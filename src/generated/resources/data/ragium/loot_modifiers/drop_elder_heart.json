@@ -1,0 +1,11 @@
+{
+  "type": "neoforge:add_table",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:entities/elder_guardian"
+    }
+  ],
+  "priority": 0,
+  "table": "ragium:drop_elder_heart"
+}
