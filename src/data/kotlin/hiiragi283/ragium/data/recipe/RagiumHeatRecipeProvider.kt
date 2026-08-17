@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.registry.VanillaFluidContents
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
@@ -17,7 +18,38 @@ import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 
 class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
+        freezing()
         melting()
+    }
+
+    private fun freezing() {
+        // Water -> Snowball
+        // Water -> Ice
+        // Water + Ice -> Packed Ice
+        RagiumRecipeBuilders.freezing {
+            itemIngredient {
+                items { +Items.ICE }
+                count = 5
+            }
+            fluidIngredient { +holderSet(VanillaFluidContents.WATER) }
+            result { +Items.PACKED_ICE }
+        }.save(exporter)
+        // Water + Packed Ice -> Blue Ice
+        RagiumRecipeBuilders.freezing {
+            itemIngredient {
+                items { +Items.PACKED_ICE }
+                count = 5
+            }
+            fluidIngredient {
+                +holderSet(VanillaFluidContents.WATER)
+                amount *= 3
+            }
+            result { +Items.BLUE_ICE }
+        }.save(exporter)
+
+        // Lava -> Obsidian
+
+        // Honey
     }
 
     private fun melting() {

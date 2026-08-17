@@ -12,6 +12,9 @@ data object RagiumRecipeSerializers {
 
     // Heat
     @JvmField
+    val FREEZING: RecipeSerializer<RTFreezingRecipe> = RTFreezingRecipe.SERIALIZER
+
+    @JvmField
     val MELTING: RecipeSerializer<RTMeltingRecipe> = RTMeltingRecipe.SERIALIZER
 
     @JvmField

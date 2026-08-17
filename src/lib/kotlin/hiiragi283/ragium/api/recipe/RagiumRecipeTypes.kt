@@ -22,6 +22,9 @@ data object RagiumRecipeTypes {
 
     // Heat
     @JvmField
+    val FREEZING: HTRecipeType<RTFreezingRecipe> = create(RagiumConstants.FREEZING)
+
+    @JvmField
     val MELTING: HTRecipeType<RTMeltingRecipe> = create(RagiumConstants.MELTING)
 
     @JvmField

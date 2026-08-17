@@ -4,12 +4,14 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.HTDoubleItemToItemRecipeBuilder
+import hiiragi283.lib.data.recipe.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
+import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
 import hiiragi283.ragium.api.recipe.RTSmeltingRecipe
 import kotlin.contracts.ExperimentalContracts
@@ -35,6 +37,14 @@ data object RagiumRecipeBuilders {
     }
 
     // Heat
+    @JvmStatic
+    fun freezing(builderAction: HTItemAndFluidToItemRecipeBuilder<RTFreezingRecipe>.() -> Unit): HTItemAndFluidToItemRecipeBuilder<RTFreezingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemAndFluidToItemRecipeBuilder(RagiumConstants.FREEZING, ::RTFreezingRecipe).apply(builderAction)
+    }
+
     @JvmStatic
     fun melting(builderAction: HTItemToFluidRecipeBuilder<RTMeltingRecipe>.() -> Unit): HTItemToFluidRecipeBuilder<RTMeltingRecipe> {
         contract {

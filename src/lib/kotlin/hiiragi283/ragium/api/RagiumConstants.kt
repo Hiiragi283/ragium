@@ -10,8 +10,8 @@ data object RagiumConstants {
     const val CUTTING = "cutting"
 
     // Heat
+    const val CASTING = "casting"
     const val FREEZING = "freezing"
-    const val IMPLODING = "imploding"
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"
     const val REFINING = "refining"
