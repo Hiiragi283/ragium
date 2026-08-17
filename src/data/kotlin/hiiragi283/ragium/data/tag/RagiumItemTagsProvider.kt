@@ -45,9 +45,10 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         }
 
         // Other
-        builder(ItemTags.PLANKS)
-            .add(RagiumItems.PARTICLE_BOARD)
-        builder(RagiumTags.Items.STICKY_BALLS)
-            .addTag(Tags.Items.SLIME_BALLS)
+        builder(ItemTags.PLANKS).add(RagiumItems.PARTICLE_BOARD)
+        builder(Tags.Items.FEATHERS).add(RagiumItems.SYNTHETIC_FEATHER)
+        builder(Tags.Items.LEATHERS).add(RagiumItems.SYNTHETIC_LEATHER)
+        builder(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
+        builder(RagiumTags.Items.STICKY_BALLS).addTag(Tags.Items.SLIME_BALLS)
     }
 }
