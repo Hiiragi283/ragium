@@ -36,6 +36,10 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
 
+        add(RagiumItems.BLOCK_SHAPE_PATTERN, "Shape Pattern (Block)")
+        add(RagiumItems.INGOT_SHAPE_PATTERN, "Shape Pattern (Ingot)")
+        add(RagiumItems.BALL_SHAPE_PATTERN, "Shape Pattern (Ball)")
+
         // Recipe Type
         add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")

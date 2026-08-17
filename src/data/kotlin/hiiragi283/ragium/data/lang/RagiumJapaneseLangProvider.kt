@@ -36,6 +36,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")
 
+        add(RagiumItems.BLOCK_SHAPE_PATTERN, "形状パターン（ブロック）")
+        add(RagiumItems.INGOT_SHAPE_PATTERN, "形状パターン（インゴット）")
+        add(RagiumItems.BALL_SHAPE_PATTERN, "形状パターン（ボール）")
+
         // Recipe Type
         add(RagiumRecipeTypes.ASSEMBLING, "組立")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")

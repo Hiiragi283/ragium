@@ -1,0 +1,13 @@
+{
+  "type": "ragium:freezing",
+  "catalyst": "#minecraft:bars",
+  "fluid_ingredient": {
+    "amount": 375,
+    "ingredient": "#c:molten_glass"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:glass_pane"
+  },
+  "time": 200
+}

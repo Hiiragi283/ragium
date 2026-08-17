@@ -3,6 +3,7 @@ package hiiragi283.ragium.client.integration.jei
 import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.HTJeiRecipeType
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
+import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -17,6 +18,9 @@ data object RagiumJeiRecipeTypes {
     val CRUSHING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.CRUSHING, RagiumItems.COAL_COKE)
 
     // Heat
+    @JvmField
+    val FREEZING: HTHolderJeiRecipeType<HTItemAndFluidToItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.FREEZING, RagiumItems.COAL_COKE)
+
     @JvmField
     val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.MELTING, RagiumItems.COAL_COKE)
 

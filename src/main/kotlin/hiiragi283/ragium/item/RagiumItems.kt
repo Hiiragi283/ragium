@@ -132,4 +132,16 @@ data object RagiumItems {
     val WITHER_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_star") { it.rarity(Rarity.UNCOMMON) }
 
     //    Tool    //
+
+    @JvmStatic
+    private fun registerShapePattern(name: String): HTSimpleDeferredItem = REGISTER.registerSimpleItem("${name}_shape_pattern") { it.stacksTo(1) }
+
+    @JvmField
+    val BLOCK_SHAPE_PATTERN: HTSimpleDeferredItem = registerShapePattern("block")
+
+    @JvmField
+    val INGOT_SHAPE_PATTERN: HTSimpleDeferredItem = registerShapePattern("ingot")
+
+    @JvmField
+    val BALL_SHAPE_PATTERN: HTSimpleDeferredItem = registerShapePattern("ball")
 }

@@ -7,10 +7,12 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.item.RagiumItems
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.PackOutput
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.OminousBottleAmplifier
 import net.neoforged.neoforge.common.Tags
@@ -24,7 +26,20 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
 
     private fun freezing() {
         // Water -> Snowball
+        RagiumRecipeBuilders.freezing {
+            catalyst { items { +RagiumItems.BALL_SHAPE_PATTERN } }
+            fluidIngredient { +holderSet(VanillaFluidContents.WATER) }
+            result {
+                +Items.SNOWBALL
+                count = 4
+            }
+        }.save(exporter)
         // Water -> Ice
+        RagiumRecipeBuilders.freezing {
+            catalyst { items { +RagiumItems.BLOCK_SHAPE_PATTERN } }
+            fluidIngredient { +holderSet(VanillaFluidContents.WATER) }
+            result { +Items.ICE }
+        }.save(exporter)
         // Water + Ice -> Packed Ice
         RagiumRecipeBuilders.freezing {
             itemIngredient {
@@ -48,8 +63,33 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
 
         // Lava -> Obsidian
+        RagiumRecipeBuilders.freezing {
+            catalyst { items { +RagiumItems.BLOCK_SHAPE_PATTERN } }
+            fluidIngredient { +holderSet(VanillaFluidContents.LAVA) }
+            result { +Items.OBSIDIAN }
+        }.save(exporter)
 
         // Honey
+        RagiumRecipeBuilders.freezing {
+            catalyst { items { +RagiumItems.BLOCK_SHAPE_PATTERN } }
+            fluidIngredient { +holderSet(RagiumFluids.HONEY) }
+            result { +Items.HONEY_BLOCK }
+        }.save(exporter)
+
+        // Glass
+        RagiumRecipeBuilders.freezing {
+            catalyst { items { +RagiumItems.BLOCK_SHAPE_PATTERN } }
+            fluidIngredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
+            result { +Items.GLASS }
+        }.save(exporter)
+        RagiumRecipeBuilders.freezing {
+            catalyst { +holderSet(ItemTags.BARS) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.MOLTEN_GLASS)
+                amount = 375
+            }
+            result { +Items.GLASS_PANE }
+        }.save(exporter)
     }
 
     private fun melting() {
