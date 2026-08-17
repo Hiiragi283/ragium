@@ -89,14 +89,16 @@ data object RagiumItems {
             put(it, HTMaterial.Metal.ADVANCED_RAGI_ALLOY)
         }
     }.flatMapTable { (part: HTItemPart, materials: Collection<HTMaterial>) ->
-        materials.map { material: HTMaterial ->
-            val item: HTSimpleDeferredItem = if (material == HTMaterial.Metal.NETHERITE) {
-                REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties -> properties.fireResistant() }
-            } else {
-                REGISTER.registerSimpleItem(part.createName(material))
+        materials
+            .sortedBy(HTMaterial::materialName)
+            .map { material: HTMaterial ->
+                val item: HTSimpleDeferredItem = if (material == HTMaterial.Metal.NETHERITE) {
+                    REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties -> properties.fireResistant() }
+                } else {
+                    REGISTER.registerSimpleItem(part.createName(material))
+                }
+                Triple(part, material, item)
             }
-            Triple(part, material, item)
-        }
     }
 
     @JvmStatic

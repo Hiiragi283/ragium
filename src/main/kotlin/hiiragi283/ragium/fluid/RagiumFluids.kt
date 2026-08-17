@@ -7,6 +7,7 @@ import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTFluidContentRegister
 import hiiragi283.lib.resource.toId
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.item.HTPotionBucketItem
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.neoforged.bus.api.IEventBus
@@ -37,6 +38,13 @@ data object RagiumFluids {
         .temperature(temp)
 
     //    Vanilla    //
+
+    @JvmField
+    val POTION: HTFluidContent.Virtual = REGISTER.registerVirtual("potion") {
+        properties = liquid()
+        typeFactory = ::HTPotionFluidType
+        bucketFactory = ::HTPotionBucketItem
+    }
 
     @JvmField
     val DYES: HTColoredCollection<HTFluidContent.Flowing> = HTColoredCollection { color: HTDefaultColor ->

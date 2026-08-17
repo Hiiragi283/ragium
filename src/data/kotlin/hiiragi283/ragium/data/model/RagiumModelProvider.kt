@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.model
 
-import hiiragi283.lib.collection.asSequence
 import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.ragium.api.RagiumAPI

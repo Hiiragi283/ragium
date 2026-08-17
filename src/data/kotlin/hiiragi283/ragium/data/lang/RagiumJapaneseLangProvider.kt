@@ -17,8 +17,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
-        // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション入りバケツ")
-        // add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
+        add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション入りバケツ")
+        add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
         addFluid(RagiumFluids.OMINOUS_FLUX, "不吉な流動体")
         addFluid(RagiumFluids.MOLTEN_GLASS, "溶融ガラス")
         addFluid(RagiumFluids.MOLTEN_REDSTONE, "励起レッドストーン")

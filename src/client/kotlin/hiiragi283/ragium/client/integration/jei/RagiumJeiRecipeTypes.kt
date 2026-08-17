@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration.jei
+package hiiragi283.ragium.client.integration.jei
 
 import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.HTJeiRecipeType

@@ -3,6 +3,7 @@ package hiiragi283.lib.item.alchemy
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.item.ItemInstanceBuilder
 import hiiragi283.lib.util.HTTextResult
+import hiiragi283.ragium.api.data.RagiumDataComponents
 import kotlin.jvm.optionals.getOrNull
 import net.minecraft.core.Holder
 import net.minecraft.core.TypedInstance
@@ -16,9 +17,11 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.MutableDataComponentHolder
+import net.neoforged.neoforge.common.Tags
 
 /**
  * @author Hiiragi Tsubasa
@@ -102,7 +105,12 @@ data object HTPotionHelper {
      */
     @JvmName("getContentsFromItem")
     @JvmStatic
-    fun <T> getContents(instance: T): BottledPotionContents? where T : TypedInstance<Item>, T : DataComponentGetter = TODO() // HTPlatform.INSTANCE.getContentsFromItem(instance)
+    fun <T> getContents(instance: T): BottledPotionContents? where T : TypedInstance<Item>, T : DataComponentGetter {
+        // HTPlatform.INSTANCE.getContentsFromItem(instance)
+        val bottleType: HTBottleType = instance.get(RagiumDataComponents.BOTTLE_TYPE) ?: return null
+        val contents: PotionContents = getPotion(instance)
+        return BottledPotionContents(contents, bottleType)
+    }
 
     /**
      * 指定した[instance]から[BottledPotionContents]を取得します。
@@ -119,6 +127,9 @@ data object HTPotionHelper {
     @JvmStatic
     fun fillItemPatch(contents: BottledPotionContents, builder: DataComponentPatch.Builder) {
         // HTPlatform.INSTANCE.fillItemPatch(contents, builder)
+        val (contents1: PotionContents, bottleType: HTBottleType) = contents
+        builder.set(DataComponents.POTION_CONTENTS, contents1)
+        builder.set(RagiumDataComponents.BOTTLE_TYPE, bottleType)
     }
 
     @JvmStatic
@@ -133,7 +144,17 @@ data object HTPotionHelper {
      */
     @JvmName("getContentsFromFluid")
     @JvmStatic
-    fun <T> getContents(instance: T): BottledPotionContents? where T : TypedInstance<Fluid>, T : DataComponentGetter = TODO() // HTPlatform.INSTANCE.getContentsFromFluid(instance)
+    fun <T> getContents(instance: T): BottledPotionContents? where T : TypedInstance<Fluid>, T : DataComponentGetter {
+        // HTPlatform.INSTANCE.getContentsFromFluid(instance)
+        when {
+            instance.`is`(Tags.Fluids.WATER) -> return BottledPotionContents(Potions.WATER)
+            else -> {
+                val bottleType: HTBottleType = instance.get(RagiumDataComponents.BOTTLE_TYPE) ?: return null
+                val contents: PotionContents = getPotion(instance)
+                return BottledPotionContents(contents, bottleType)
+            }
+        }
+    }
 
     @JvmStatic
     fun <T> fillFluidPatch(instance: T, contents: BottledPotionContents, builder: DataComponentPatch.Builder) where T : TypedInstance<Fluid>, T : DataComponentGetter {
@@ -143,6 +164,9 @@ data object HTPotionHelper {
     @JvmStatic
     fun fillFluidPatch(fluid: Fluid, contents: BottledPotionContents, builder: DataComponentPatch.Builder) {
         // HTPlatform.INSTANCE.fillFluidPatch(fluid, contents, builder)
+        val (contents1: PotionContents, bottleType: HTBottleType) = contents
+        builder.set(DataComponents.POTION_CONTENTS, contents1)
+        builder.set(RagiumDataComponents.BOTTLE_TYPE, bottleType)
     }
 
     @JvmStatic

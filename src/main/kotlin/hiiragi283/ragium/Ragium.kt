@@ -9,12 +9,14 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.RagiumRegistries
+import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.block.RagiumBlocks
 import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.item.HTPotionBucketItem
 import hiiragi283.ragium.item.RagiumItems
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
@@ -24,8 +26,10 @@ import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegisterEvent
+import net.neoforged.neoforge.transfer.access.ItemAccess
 
 @Mod(RagiumAPI.MOD_ID)
 data object Ragium : HTCommonMod() {
@@ -54,6 +58,10 @@ data object Ragium : HTCommonMod() {
                 },
             )
         }
+        event.register(Registries.DATA_COMPONENT_TYPE) { helper ->
+            helper.register(RagiumAPI.id("bottle_type"), RagiumDataComponents.BOTTLE_TYPE)
+            helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
+        }
         event.register(Registries.RECIPE_SERIALIZER) { helper ->
             helper.register(RagiumAPI.id(RagiumConstants.ASSEMBLING), RagiumRecipeSerializers.ASSEMBLING)
             helper.register(RagiumAPI.id(RagiumConstants.CRUSHING), RagiumRecipeSerializers.CRUSHING)
@@ -79,5 +87,13 @@ data object Ragium : HTCommonMod() {
 
     override fun commonSetup(event: FMLCommonSetupEvent) {
         event.enqueueWork(RagiumRecipeLookups::init)
+    }
+
+    override fun registerCapabilities(helper: CapabilityHelper) {
+        helper.registerItem(
+            Capabilities.Fluid.ITEM,
+            { _, access: ItemAccess -> HTPotionBucketItem.BucketHandler(access) },
+            RagiumFluids.POTION.bucketHolder,
+        )
     }
 }

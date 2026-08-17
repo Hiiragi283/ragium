@@ -1,24 +1,15 @@
 package hiiragi283.lib.item
 
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
-import net.minecraft.world.level.ItemLike
 
 /**
+ * [ItemStackTemplate]や[ItemStack]に変換可能なオブジェクトを表すインターフェースです。
  * @author Hiiragi Tsubasa
- * @since 26.1.4
+ * @since 26.1.0
  */
-typealias HTSimpleItemLike = HTItemLike<Item>
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.4
- */
-interface HTItemLike<out ITEM : Item> : ItemLike {
-    override fun asItem(): ITEM
-
+interface HTItemInstanceLike {
     /**
      * 新しい[ItemStackTemplate]のインスタンスを作成します。
      */

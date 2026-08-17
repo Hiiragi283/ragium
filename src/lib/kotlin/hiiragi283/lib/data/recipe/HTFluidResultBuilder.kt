@@ -1,10 +1,11 @@
 package hiiragi283.lib.data.recipe
 
+import hiiragi283.lib.fluid.HTFluidInstanceLike
 import hiiragi283.lib.recipe.result.HTFluidResult
-import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.VanillaFluidContents
 import hiiragi283.lib.util.HTBuilderMarker
 import kotlin.properties.Delegates
+import net.minecraft.core.Holder
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
@@ -32,8 +33,12 @@ class HTFluidResultBuilder {
         +FluidStackTemplate(this, FluidType.BUCKET_VOLUME)
     }
 
-    operator fun HTFluidContent.unaryPlus() {
-        +this.toTemplate()
+    operator fun Holder<Fluid>.unaryPlus() {
+        +FluidStackTemplate(this, FluidType.BUCKET_VOLUME)
+    }
+
+    operator fun HTFluidInstanceLike.unaryPlus() {
+        this.toTemplate()?.let { +it }
     }
 
     fun water() {

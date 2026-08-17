@@ -1,6 +1,6 @@
 package hiiragi283.lib.integration.jei
 
-import hiiragi283.lib.item.HTSimpleItemLike
+import hiiragi283.lib.item.HTItemInstanceLike
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.resource.HTIdLike
 import hiiragi283.lib.text.HTHasText
@@ -30,4 +30,4 @@ class HTJeiRecipeType<T : Any>(
 
 inline fun <reified T : Any> HTJeiRecipeType(id: Identifier, hasText: HTHasText, icon: Either<Identifier, ItemStack>): HTJeiRecipeType<T> = HTJeiRecipeType(id, hasText, icon, T::class.java)
 
-inline fun <reified T : Any> HTJeiRecipeType(id: HTIdLike.Translatable, icon: HTSimpleItemLike): HTJeiRecipeType<T> = HTJeiRecipeType(id.getId(), id, Either.Right(icon.toStack()))
+inline fun <reified T : Any> HTJeiRecipeType(id: HTIdLike.Translatable, icon: HTItemInstanceLike): HTJeiRecipeType<T> = HTJeiRecipeType(id.getId(), id, Either.Right(icon.toStack()))

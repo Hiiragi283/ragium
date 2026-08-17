@@ -17,8 +17,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")
-        // add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion Bucket")
-        // add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
+        add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion Bucket")
+        add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
         addFluid(RagiumFluids.OMINOUS_FLUX, "Ominous Flux")
         addFluid(RagiumFluids.MOLTEN_GLASS, "Molten Glass")
         addFluid(RagiumFluids.MOLTEN_REDSTONE, "Destabilized Redstone")
