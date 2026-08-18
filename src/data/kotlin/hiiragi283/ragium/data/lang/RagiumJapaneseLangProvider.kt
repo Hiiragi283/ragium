@@ -17,7 +17,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
-        add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション入りバケツ")
+        add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
         addFluid(RagiumFluids.OMINOUS_FLUX, "不吉な流動体")
         addFluid(RagiumFluids.MOLTEN_GLASS, "溶融ガラス")
@@ -40,6 +40,12 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.INGOT_SHAPE_PATTERN, "形状パターン（インゴット）")
         add(RagiumItems.BALL_SHAPE_PATTERN, "形状パターン（ボール）")
 
+        // Potion
+        addCustomPotion("hunger", "空腹")
+        addCustomPotion("darkness", "暗闇")
+        addCustomPotion("golden_apple", "金リンゴ")
+        addCustomPotion("enchanted_golden_apple", "エンチャントされた金リンゴ")
+
         // Recipe Type
         add(RagiumRecipeTypes.ASSEMBLING, "組立")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
@@ -48,6 +54,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.MELTING, "溶融")
 
         add(RagiumRecipeTypes.BREWING, "醸造")
+
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")
     }

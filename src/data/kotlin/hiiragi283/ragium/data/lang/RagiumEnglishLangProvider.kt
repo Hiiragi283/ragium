@@ -17,7 +17,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")
-        add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion Bucket")
+        add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
         addFluid(RagiumFluids.OMINOUS_FLUX, "Ominous Flux")
         addFluid(RagiumFluids.MOLTEN_GLASS, "Molten Glass")
@@ -40,6 +40,12 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.INGOT_SHAPE_PATTERN, "Shape Pattern (Ingot)")
         add(RagiumItems.BALL_SHAPE_PATTERN, "Shape Pattern (Ball)")
 
+        // Potion
+        addCustomPotion("hunger", "Hunger")
+        addCustomPotion("darkness", "Darkness")
+        addCustomPotion("golden_apple", "Golden Apple")
+        addCustomPotion("enchanted_golden_apple", "Enchanted Golden Apple")
+
         // Recipe Type
         add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
@@ -48,6 +54,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.MELTING, "Melting")
 
         add(RagiumRecipeTypes.BREWING, "Brewing")
+
         // Text
         add(RagiumTranslation.RAGIUM, "Ragium")
     }

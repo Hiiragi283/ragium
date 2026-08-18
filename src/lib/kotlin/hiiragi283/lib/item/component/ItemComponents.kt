@@ -2,6 +2,7 @@
 
 package hiiragi283.lib.item.component
 
+import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -10,7 +11,10 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.component.Consumable
 import net.minecraft.world.item.component.ItemAttributeModifiers
 
@@ -39,3 +43,19 @@ inline fun buildItemAttributeModifiers(builderAction: ItemAttributeModifiers.Bui
     }
     return ItemAttributeModifiers.builder().apply(builderAction).build()
 }
+
+//    PotionContents    //
+
+fun PotionContents(
+    potion: Holder<Potion>? = null,
+    customColor: Int? = null,
+    customEffects: List<MobEffectInstance> = listOf(),
+    customName: String? = null,
+): PotionContents = if (potion == null && customColor == null && customEffects.isEmpty() && customName == null) {
+    PotionContents.EMPTY
+} else PotionContents(
+    Optional.ofNullable(potion),
+    Optional.ofNullable(customColor),
+    customEffects,
+    Optional.ofNullable(customName),
+)

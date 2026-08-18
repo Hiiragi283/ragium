@@ -7,9 +7,6 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.event.TagsUpdatedEvent
 
 /**
  * 複数の[HTRecipeLookup]を束ねた[HTRecipeLookup]の実装クラスです。
@@ -18,7 +15,6 @@ import net.neoforged.neoforge.event.TagsUpdatedEvent
  * @since 26.1.0
  */
 class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Identifier) : HTRecipeLookup<RECIPE> {
-    @EventBusSubscriber
     companion object {
         @JvmStatic
         private val instances: MutableMap<Identifier, HTCompoundRecipeLookup<*>> = hashMapOf()
@@ -33,8 +29,7 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
             return recipeType
         }
 
-        @SubscribeEvent
-        fun clearCache(event: TagsUpdatedEvent.ServerDataLoad) {
+        /*fun clearCache(event: TagsUpdatedEvent.ServerDataLoad) {
             // Clear cached recipes
             instances.values.forEach(HTCompoundRecipeLookup<*>::clearCache)
             // Reload cached recipes (excluding potions)
@@ -45,15 +40,15 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
             for (lookup: HTCompoundRecipeLookup<*> in instances.values) {
                 lookup.getAllRecipes(contextMap)
             }
-        }
+        }*/
     }
 
     private val lookups: MutableList<HTRecipeLookup<RECIPE>> = mutableListOf()
-    private var cachedRecipes: Map<RecipeKey, RECIPE> = mapOf()
+    /*private var cachedRecipes: Map<RecipeKey, RECIPE> = mapOf()
 
     private fun clearCache() {
         cachedRecipes = mapOf()
-    }
+    }*/
 
     /**
      * レシピの一覧を追加します。
@@ -71,14 +66,11 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
     }
 
     override fun getAllRecipes(contextMap: ContextMap): Map<RecipeKey, RECIPE> {
-        if (cachedRecipes.isEmpty()) {
-            val recipes: MutableMap<RecipeKey, RECIPE> = mutableMapOf()
-            for (lookup in lookups) {
-                recipes += lookup.getAllRecipes(contextMap)
-            }
-            cachedRecipes = recipes
+        val recipes: MutableMap<RecipeKey, RECIPE> = mutableMapOf()
+        for (lookup: HTRecipeLookup<RECIPE> in lookups) {
+            recipes += lookup.getAllRecipes(contextMap)
         }
-        return cachedRecipes
+        return recipes
     }
 
     override fun toString(): String = "HTCompoundRecipeLookup(id=$id)"

@@ -17,6 +17,7 @@ import hiiragi283.lib.recipe.lookup.HTRecipeLookupContext
 import hiiragi283.lib.recipe.lookup.HTVanillaRecipeLookup
 import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.registry.toLike
+import hiiragi283.lib.resource.modifyPath
 import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
@@ -79,7 +80,7 @@ data object RagiumRecipeLookups {
                             fluidIngredient { +HTPotionFluidIngredient(mix.from()) }
                             fluidResult { +BottledPotionContents(mix.to()).toFluidTemplate() }
                         }.save { _, recipe: RTBrewingRecipe ->
-                            put(mix.to().toLike().getId(), recipe)
+                            put(mix.to().toLike().getId().modifyPath { "/${RagiumConstants.BREWING}/$it" }, recipe)
                         }
                     }
             }

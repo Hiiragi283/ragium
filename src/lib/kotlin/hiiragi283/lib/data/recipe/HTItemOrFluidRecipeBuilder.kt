@@ -2,6 +2,11 @@
 
 package hiiragi283.lib.data.recipe
 
+import hiiragi283.lib.fluid.FluidInstanceBuilder
+import hiiragi283.lib.item.alchemy.BottledPotionContents
+import hiiragi283.lib.item.alchemy.HTBottleType
+import hiiragi283.lib.item.alchemy.HTPotionFluidAccess
+import hiiragi283.lib.item.alchemy.HTPotionFluidManager
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
@@ -13,7 +18,9 @@ import hiiragi283.lib.util.Option
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Recipe
 
 class HTItemOrFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) : HTProgressRecipeBuilder<RECIPE>(prefix) {
@@ -67,6 +74,22 @@ class HTItemOrFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         +HTFluidResultBuilder().apply(builderAction).build()
+    }
+
+    fun potionResult(contents: PotionContents, bottleType: HTBottleType = HTBottleType.DEFAULT) {
+        fluidResult {
+            +FluidInstanceBuilder.buildTemplate {
+                +HTPotionFluidAccess.INSTANCE.fluidContent
+                components {
+                    set(DataComponents.POTION_CONTENTS, contents)
+                    HTPotionFluidManager.Handler.DEFAULT[this] = bottleType
+                }
+            }
+        }
+    }
+
+    fun potionResult(contents: BottledPotionContents) {
+        potionResult(contents.contents, contents.bottleType)
     }
 
     private fun toIorResult(): Ior<HTItemResult, HTFluidResult> = Ior.fromOption(itemResult, fluidResult).getOrNull() ?: error("Either item or fluid result required")

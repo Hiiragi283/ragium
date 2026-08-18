@@ -1,0 +1,40 @@
+{
+  "type": "ragium:brewing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "ingredient": {
+      "neoforge:ingredient_type": "ragium:potion",
+      "bottle_type": "default",
+      "potions": "minecraft:mundane"
+    }
+  },
+  "fluid_result": {
+    "amount": 1000,
+    "components": {
+      "minecraft:potion_contents": {
+        "custom_color": 16750848,
+        "custom_effects": [
+          {
+            "amplifier": 1,
+            "duration": 100,
+            "id": "minecraft:regeneration",
+            "show_icon": true
+          },
+          {
+            "duration": 2400,
+            "id": "minecraft:absorption",
+            "show_icon": true
+          }
+        ],
+        "custom_name": "golden_apple"
+      },
+      "ragium:bottle_type": "default"
+    },
+    "id": "ragium:potion"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "ingredient": "minecraft:golden_apple"
+  },
+  "time": 200
+}

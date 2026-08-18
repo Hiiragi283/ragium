@@ -17,6 +17,15 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
     companion object {
         @JvmField
         val BUCKET_PATTERN = HTLangPatternProvider("%s Bucket", "%s入りバケツ")
+
+        @JvmField
+        val POTION_PATTERN = HTLangPatternProvider("Potion of %s", "%sのポーション")
+
+        @JvmField
+        val SPLASH_POTION_PATTERN = HTLangPatternProvider("Splash Potion of %s", "%sのスプラッシュポーション")
+
+        @JvmField
+        val LINGERING_POTION_PATTERN = HTLangPatternProvider("Lingering Potion of %s", "%sの残留ポーション")
     }
 
     /**
@@ -65,5 +74,11 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
         val bucketName: String = BUCKET_PATTERN.translate(langType, value)
         add(content.bucketHolder, bucketName)
         add(content.bucketTag, bucketName)
+    }
+
+    fun addCustomPotion(name: String, value: String) {
+        add("item.minecraft.potion.effect.$name", POTION_PATTERN.translate(langType, value))
+        add("item.minecraft.splash_potion.effect.$name", SPLASH_POTION_PATTERN.translate(langType, value))
+        add("item.minecraft.lingering_potion.effect.$name", LINGERING_POTION_PATTERN.translate(langType, value))
     }
 }

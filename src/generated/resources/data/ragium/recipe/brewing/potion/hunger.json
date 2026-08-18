@@ -1,0 +1,33 @@
+{
+  "type": "ragium:brewing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "ingredient": {
+      "neoforge:ingredient_type": "ragium:potion",
+      "bottle_type": "default",
+      "potions": "minecraft:mundane"
+    }
+  },
+  "fluid_result": {
+    "amount": 1000,
+    "components": {
+      "minecraft:potion_contents": {
+        "custom_effects": [
+          {
+            "duration": 900,
+            "id": "minecraft:hunger",
+            "show_icon": true
+          }
+        ],
+        "custom_name": "hunger"
+      },
+      "ragium:bottle_type": "default"
+    },
+    "id": "ragium:potion"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "ingredient": "minecraft:rotten_flesh"
+  },
+  "time": 200
+}
