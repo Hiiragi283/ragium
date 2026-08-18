@@ -33,6 +33,8 @@ data object RagiumRecipeTypes {
     // Chemical
 
     // Bio
+    @JvmField
+    val BREWING: HTRecipeType<RTBrewingRecipe> = create(RagiumConstants.BREWING)
 
     // Electronics
 

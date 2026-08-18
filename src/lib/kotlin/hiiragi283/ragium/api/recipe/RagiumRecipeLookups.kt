@@ -1,17 +1,30 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.lib.collection.MultiMap
+import hiiragi283.lib.collection.buildListMultiMap
+import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.recipe.HTRecipeType
+import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
+import hiiragi283.lib.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
+import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.HTCompoundRecipeLookup
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
+import hiiragi283.lib.recipe.lookup.HTRecipeLookupContext
 import hiiragi283.lib.recipe.lookup.HTVanillaRecipeLookup
 import hiiragi283.lib.recipe.lookup.fromRecipeType
+import hiiragi283.lib.registry.toLike
 import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
+import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import net.minecraft.resources.Identifier
+import net.minecraft.util.context.ContextMap
+import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 
@@ -39,6 +52,8 @@ data object RagiumRecipeLookups {
     // Chemical
 
     // Bio
+    @JvmField
+    val BREWING: HTCompoundRecipeLookup<HTItemOrFluidRecipe> = create(RagiumConstants.BREWING)
 
     // Electronics
 
@@ -51,5 +66,31 @@ data object RagiumRecipeLookups {
 
         FREEZING.fromRecipeType(RagiumRecipeTypes.FREEZING, identity())
         MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())
+
+        BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
+        BREWING.addSubLookup { contextMap: ContextMap ->
+            val multiMap: MultiMap<Identifier, RTBrewingRecipe> = buildListMultiMap {
+                contextMap.getOptional(HTRecipeLookupContext.BREWING)
+                    ?.let(PotionBrewing::potionMixes)
+                    ?.asSequence()
+                    ?.forEach { mix: PotionBrewing.Mix<Potion> ->
+                        RagiumRecipeBuilders.brewing {
+                            itemIngredient { +mix.ingredient }
+                            fluidIngredient { +HTPotionFluidIngredient(mix.from()) }
+                            fluidResult { +BottledPotionContents(mix.to()).toFluidTemplate() }
+                        }.save { _, recipe: RTBrewingRecipe ->
+                            put(mix.to().toLike().getId(), recipe)
+                        }
+                    }
+            }
+            if (multiMap.isEmpty) return@addSubLookup mapOf()
+            val recipeMap: MutableMap<RecipeKey, RTBrewingRecipe> = mutableMapOf()
+            for ((potionTo: Identifier, recipes: Collection<RTBrewingRecipe>) in multiMap.entries) {
+                recipes.forEachIndexed { index: Int, recipe: RTBrewingRecipe ->
+                    recipeMap[RecipeKey(potionTo.withSuffix("_$index"))] = recipe
+                }
+            }
+            recipeMap
+        }
     }
 }

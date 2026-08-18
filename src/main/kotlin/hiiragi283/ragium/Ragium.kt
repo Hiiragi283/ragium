@@ -2,8 +2,10 @@ package hiiragi283.ragium
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.item.HTCreativeModeTabHelper
+import hiiragi283.lib.item.alchemy.HTPotionFluidManager
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.recipe.HTRecipeType
+import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
@@ -27,6 +29,7 @@ import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.transfer.access.ItemAccess
@@ -69,11 +72,17 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id(RagiumConstants.FREEZING), RagiumRecipeSerializers.FREEZING)
             helper.register(RagiumAPI.id(RagiumConstants.MELTING), RagiumRecipeSerializers.MELTING)
             helper.register(RagiumAPI.id(HTConstants.SMELTING), RagiumRecipeSerializers.SMELTING)
+
+            helper.register(RagiumAPI.id(RagiumConstants.BREWING), RagiumRecipeSerializers.BREWING)
         }
         event.register(Registries.RECIPE_TYPE) { helper ->
             for (recipeType: HTRecipeType<*> in RagiumRecipeTypes.allTypes) {
                 helper.register(recipeType.getId(), recipeType)
             }
+        }
+
+        event.register(NeoForgeRegistries.Keys.FLUID_INGREDIENT_TYPES) { helper ->
+            helper.register(RagiumAPI.id("potion"), HTPotionFluidIngredient.TYPE)
         }
 
         event.register(RagiumRegistries.Keys.ITEM_RESULT_TYPE) { helper ->
@@ -88,6 +97,9 @@ data object Ragium : HTCommonMod() {
 
     override fun commonSetup(event: FMLCommonSetupEvent) {
         event.enqueueWork(RagiumRecipeLookups::init)
+        event.enqueueWork {
+            HTPotionFluidManager.register(RagiumFluids.POTION.get(), HTPotionFluidManager.Handler.DEFAULT)
+        }
     }
 
     override fun registerCapabilities(helper: CapabilityHelper) {

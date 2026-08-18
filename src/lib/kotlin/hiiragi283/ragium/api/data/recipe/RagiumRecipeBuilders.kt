@@ -5,11 +5,13 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.HTDoubleItemToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemAndFluidToItemRecipeBuilder
+import hiiragi283.lib.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
+import hiiragi283.ragium.api.recipe.RTBrewingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
@@ -21,7 +23,7 @@ import kotlin.contracts.contract
 data object RagiumRecipeBuilders {
     // Mechanical
     @JvmStatic
-    fun assembling(builderAction: HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe>.() -> Unit): HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe> {
+    inline fun assembling(builderAction: HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe>.() -> Unit): HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -29,7 +31,7 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    fun crushing(builderAction: HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe>.() -> Unit): HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe> {
+    inline fun crushing(builderAction: HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe>.() -> Unit): HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -38,7 +40,7 @@ data object RagiumRecipeBuilders {
 
     // Heat
     @JvmStatic
-    fun freezing(builderAction: HTItemAndFluidToItemRecipeBuilder<RTFreezingRecipe>.() -> Unit): HTItemAndFluidToItemRecipeBuilder<RTFreezingRecipe> {
+    inline fun freezing(builderAction: HTItemAndFluidToItemRecipeBuilder<RTFreezingRecipe>.() -> Unit): HTItemAndFluidToItemRecipeBuilder<RTFreezingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -46,7 +48,7 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    fun melting(builderAction: HTItemToFluidRecipeBuilder<RTMeltingRecipe>.() -> Unit): HTItemToFluidRecipeBuilder<RTMeltingRecipe> {
+    inline fun melting(builderAction: HTItemToFluidRecipeBuilder<RTMeltingRecipe>.() -> Unit): HTItemToFluidRecipeBuilder<RTMeltingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -54,10 +56,21 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    fun smelting(builderAction: HTItemToItemRecipeBuilder<RTSmeltingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<RTSmeltingRecipe> {
+    inline fun smelting(builderAction: HTItemToItemRecipeBuilder<RTSmeltingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<RTSmeltingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTItemToItemRecipeBuilder(HTConstants.SMELTING, ::RTSmeltingRecipe).apply(builderAction)
+    }
+
+    // Chemical
+
+    // Bio
+    @JvmStatic
+    inline fun brewing(builderAction: HTItemOrFluidRecipeBuilder<RTBrewingRecipe>.() -> Unit): HTItemOrFluidRecipeBuilder<RTBrewingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemOrFluidRecipeBuilder(RagiumConstants.BREWING, ::RTBrewingRecipe).apply(builderAction)
     }
 }

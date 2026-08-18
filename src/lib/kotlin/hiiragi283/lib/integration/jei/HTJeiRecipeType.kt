@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack
 
 typealias HTHolderJeiRecipeType<T> = HTJeiRecipeType<HTRecipeHolder<T>>
 
+@Suppress("NonExtendableApiUsage")
 class HTJeiRecipeType<T : Any>(
     private val id: Identifier,
     hasText: HTHasText,
@@ -30,4 +31,6 @@ class HTJeiRecipeType<T : Any>(
 
 inline fun <reified T : Any> HTJeiRecipeType(id: Identifier, hasText: HTHasText, icon: Either<Identifier, ItemStack>): HTJeiRecipeType<T> = HTJeiRecipeType(id, hasText, icon, T::class.java)
 
-inline fun <reified T : Any> HTJeiRecipeType(id: HTIdLike.Translatable, icon: HTItemInstanceLike): HTJeiRecipeType<T> = HTJeiRecipeType(id.getId(), id, Either.Right(icon.toStack()))
+inline fun <reified T : Any> HTJeiRecipeType(id: HTIdLike.Translatable, icon: ItemStack): HTJeiRecipeType<T> = HTJeiRecipeType(id.getId(), id, Either.Right(icon))
+
+inline fun <reified T : Any> HTJeiRecipeType(id: HTIdLike.Translatable, icon: HTItemInstanceLike): HTJeiRecipeType<T> = HTJeiRecipeType(id, icon.toStack())

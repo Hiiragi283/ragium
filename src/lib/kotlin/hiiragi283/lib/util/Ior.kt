@@ -40,6 +40,15 @@ sealed class Ior<out A, out B> {
                 else -> null
             }
         }
+
+        /**
+         * 指定された[left]と[right]を[Ior]に変換します。
+         */
+        @JvmStatic
+        fun <A : Any, B : Any> fromOption(left: Option<A>, right: Option<B>): Option<Ior<A, B>> = left.fold(
+            { right.map { Right(it) } },
+            { leftValue -> right.fold({ Left(leftValue) }, { Both(leftValue, it) }).some() },
+        )
     }
 
     /**

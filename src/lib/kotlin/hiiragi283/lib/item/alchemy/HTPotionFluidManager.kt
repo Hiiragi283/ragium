@@ -1,7 +1,7 @@
 package hiiragi283.lib.item.alchemy
 
+import hiiragi283.lib.data.DataComponentSetter
 import net.minecraft.core.component.DataComponentGetter
-import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.level.material.Fluid
 
@@ -15,7 +15,7 @@ data object HTPotionFluidManager {
      * 登録されている[液体][Fluid]の一覧
      */
     @JvmStatic
-    val handlers: Map<Fluid, Handler>field: MutableMap<Fluid, Handler> = hashMapOf()
+    val handlers: Map<Fluid, Handler> field: MutableMap<Fluid, Handler> = hashMapOf()
 
     /**
      * 新しい液体ポーションを登録します。
@@ -31,7 +31,10 @@ data object HTPotionFluidManager {
      * @return 対応するハンドラがない場合は`null`
      */
     @JvmStatic
-    fun getFluidHandler(fluid: Fluid): Handler? = handlers[fluid]
+    fun getHandler(fluid: Fluid): Handler? = handlers[fluid]
+
+    @JvmStatic
+    fun getHandlerOrDefault(fluid: Fluid): Handler = getHandler(fluid) ?: Handler.DEFAULT
 
     //    Handler    //
 
@@ -41,10 +44,23 @@ data object HTPotionFluidManager {
      * @since 26.1.0
      */
     interface Handler {
+        companion object {
+            @JvmField
+            val DEFAULT: Handler = object : Handler {
+                override fun get(getter: DataComponentGetter): HTBottleType? = getter.get(HTPotionFluidAccess.INSTANCE.bottleType)
+
+                override fun set(setter: DataComponentSetter, bottleType: HTBottleType) {
+                    setter.set(HTPotionFluidAccess.INSTANCE.bottleType, bottleType)
+                }
+            }
+        }
+
         operator fun get(getter: DataComponentGetter): HTBottleType?
 
-        operator fun set(builder: DataComponentMap.Builder, bottleType: HTBottleType)
+        operator fun set(setter: DataComponentSetter, bottleType: HTBottleType)
 
-        operator fun set(builder: DataComponentPatch.Builder, bottleType: HTBottleType)
+        operator fun set(builder: DataComponentPatch.Builder, bottleType: HTBottleType) {
+            set(DataComponentSetter(builder), bottleType)
+        }
     }
 }

@@ -23,6 +23,7 @@ data object RagiumConstants {
     const val WASHING = "washing"
 
     // Bio
+    const val BREWING = "brewing"
     const val PLANTING = "planting"
 
     // Electronics

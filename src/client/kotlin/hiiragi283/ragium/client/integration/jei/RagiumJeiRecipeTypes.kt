@@ -4,10 +4,13 @@ import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.HTJeiRecipeType
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
+import hiiragi283.lib.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.item.RagiumItems
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 
 data object RagiumJeiRecipeTypes {
     // Mechanical
@@ -27,6 +30,8 @@ data object RagiumJeiRecipeTypes {
     // Chemical
 
     // Bio
+    @JvmField
+    val BREWING: HTHolderJeiRecipeType<HTItemOrFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.BREWING, ItemStack(Items.BREWING_STAND))
 
     // Electronics
 

@@ -1,17 +1,12 @@
 package hiiragi283.lib.item.alchemy
 
 import com.mojang.serialization.Codec
-import hiiragi283.lib.data.buildDataPatch
-import hiiragi283.lib.fluid.createOrEmpty
-import hiiragi283.lib.item.createOrEmpty
 import hiiragi283.lib.registry.VanillaFluidContents
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.text.Text
-import hiiragi283.ragium.api.data.RagiumDataComponents
 import kotlin.jvm.optionals.getOrNull
 import net.minecraft.core.Holder
-import net.minecraft.core.component.DataComponents
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.effect.MobEffectInstance
@@ -84,30 +79,22 @@ data class BottledPotionContents(val contents: PotionContents, val bottleType: H
      */
     val isWater: Boolean get() = potion == Potions.WATER && bottleType == HTBottleType.DEFAULT
 
-    fun toFluidTemplate(amount: Int = FluidType.BUCKET_VOLUME): FluidStackTemplate? = when (this.isWater) {
+    fun toFluidTemplate(amount: Int = FluidType.BUCKET_VOLUME): FluidStackTemplate = when (this.isWater) {
         true -> VanillaFluidContents.WATER.toTemplate(amount)
         false -> HTPotionFluidAccess.INSTANCE.fluidContent.toTemplate(
             amount,
-            buildDataPatch {
-                set(DataComponents.POTION_CONTENTS, this@BottledPotionContents.contents)
-                set(RagiumDataComponents.BOTTLE_TYPE, this@BottledPotionContents.bottleType)
-            },
+            HTPotionHelper.createFluidPatch(HTPotionFluidAccess.INSTANCE.fluidContent.get(), this@BottledPotionContents),
         )
-    }
+    }!!
 
-    fun toFluidStack(amount: Int = FluidType.BUCKET_VOLUME): FluidStack = toFluidTemplate(amount).createOrEmpty()
+    fun toFluidStack(amount: Int = FluidType.BUCKET_VOLUME): FluidStack = toFluidTemplate(amount).create()
 
-    fun toBucketTemplate(): ItemStackTemplate? = when (this.isWater) {
+    fun toBucketTemplate(): ItemStackTemplate = when (this.isWater) {
         true -> VanillaFluidContents.WATER.bucketHolder.toTemplate()
-        false -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.toTemplate(
-            patch = buildDataPatch {
-                set(DataComponents.POTION_CONTENTS, this@BottledPotionContents.contents)
-                set(RagiumDataComponents.BOTTLE_TYPE, this@BottledPotionContents.bottleType)
-            },
-        )
-    }
+        false -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.toTemplate(patch = HTPotionHelper.createItemPatch(this@BottledPotionContents))
+    }!!
 
-    fun toBucketStack(): ItemStack = toBucketTemplate().createOrEmpty()
+    fun toBucketStack(): ItemStack = toBucketTemplate().create()
 
     override fun getText(): Text = contents.getName("${bottleType.asItem().descriptionId}.effect.")
 }

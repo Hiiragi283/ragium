@@ -5,6 +5,7 @@ import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
 import hiiragi283.lib.integration.jei.category.HTDoubleItemToItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToItemRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToFluidRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
@@ -72,6 +73,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MELTING),
             // Chemical
             // Bio
+            HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.BREWING),
             // Electronics
             // Arcane
         )
@@ -86,6 +88,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.MELTING, RagiumRecipeLookups.MELTING)
         // Chemical
         // Bio
+        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.BREWING, RagiumRecipeLookups.BREWING)
         // Electronics
         // Arcane
     }

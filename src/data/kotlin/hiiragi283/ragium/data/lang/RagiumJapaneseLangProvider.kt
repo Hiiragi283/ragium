@@ -46,6 +46,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumRecipeTypes.FREEZING, "冷凍")
         add(RagiumRecipeTypes.MELTING, "溶融")
+
+        add(RagiumRecipeTypes.BREWING, "醸造")
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")
     }

@@ -10,8 +10,11 @@ import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
+import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.Ior
 import net.minecraft.core.TypedInstance
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.level.material.Fluid
@@ -54,6 +57,17 @@ interface HTItemOrFluidRecipe :
 
             @JvmField
             val SIMPLE_CODEC: MapCodec<Basic> = codec(::Basic)
+
+            @JvmStatic
+            fun <RECIPE : Basic> streamCodec(factory: (Ior<HTItemIngredient, HTFluidIngredient>, Ior<HTItemResult, HTFluidResult>, HTProgressData) -> RECIPE): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
+                HTStreamCodecs.ior(HTItemIngredient.STREAM_CODEC, HTFluidIngredient.STREAM_CODEC),
+                Basic::ingredient,
+                HTStreamCodecs.ior(HTItemResult.STREAM_CODEC, HTFluidResult.STREAM_CODEC),
+                Basic::result,
+                HTProgressData.STREAM_CODEC,
+                Basic::progressData,
+                factory,
+            )
         }
 
         override fun test(first: TypedInstance<Item>, second: TypedInstance<Fluid>): Boolean = ingredient.fold(

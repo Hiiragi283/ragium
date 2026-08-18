@@ -23,6 +23,8 @@ data object RagiumRecipeSerializers {
     // Chemical
 
     // Bio
+    @JvmField
+    val BREWING: RecipeSerializer<RTBrewingRecipe> = RTBrewingRecipe.SERIALIZER
 
     // Electronics
 
