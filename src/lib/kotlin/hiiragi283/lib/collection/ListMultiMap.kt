@@ -11,13 +11,9 @@ class ListMultiMap<K, out V> private constructor(map: Map<K, List<V>>) : Abstrac
     companion object {
         /**
          * 指定した[map]を[MultiMap]に変換します。
-         * @return [map]が空の場合は[emptyMultiMapOf]
          */
         @JvmStatic
-        fun <K, V> copyOf(map: Map<K, List<V>>): MultiMap<K, V> = when {
-            map.isDeepEmpty() -> emptyMultiMapOf()
-            else -> ListMultiMap(map)
-        }
+        fun <K, V> copyOf(map: Map<K, List<V>>): ListMultiMap<K, V> = ListMultiMap(map)
     }
 
     override fun emptyCollection(): List<V> = listOf()
@@ -38,9 +34,6 @@ class ListMultiMap<K, out V> private constructor(map: Map<K, List<V>>) : Abstrac
 
         override fun emptyCollection(): MutableList<V> = mutableListOf()
 
-        override fun build(): MultiMap<K, V> = when {
-            map.isDeepEmpty() -> emptyMultiMapOf()
-            else -> ListMultiMap(map)
-        }
+        override fun build(): ListMultiMap<K, V> = ListMultiMap(map)
     }
 }

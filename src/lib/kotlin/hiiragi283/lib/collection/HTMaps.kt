@@ -44,17 +44,17 @@ fun <K, A, B, CA : MutableMap<K, in A>, CB : MutableMap<K, in B>> Map<K, Either<
 
 @Suppress("NOTHING_TO_INLINE")
 @JvmName("toListMultiMap")
-inline fun <K, V> Map<K, List<V>>.toMultiMap(): MultiMap<K, V> = ListMultiMap.copyOf(this)
+inline fun <K, V> Map<K, List<V>>.toMultiMap(): ListMultiMap<K, V> = ListMultiMap.copyOf(this)
 
 @JvmName("mapListMultiMapTo")
-inline fun <K, V, W> Map<K, V>.mapMultiMapTo(transform: (Map.Entry<K, V>) -> List<W>): MultiMap<K, W> = this.mapValues(transform).toMultiMap()
+inline fun <K, V, W> Map<K, V>.mapMultiMapTo(transform: (Map.Entry<K, V>) -> List<W>): ListMultiMap<K, W> = this.mapValues(transform).toMultiMap()
 
 @Suppress("NOTHING_TO_INLINE")
 @JvmName("toSetMultiMap")
-inline fun <K, V> Map<K, Set<V>>.toMultiMap(): MultiMap<K, V> = SetMultiMap.copyOf(this)
+inline fun <K, V> Map<K, Set<V>>.toMultiMap(): SetMultiMap<K, V> = SetMultiMap.copyOf(this)
 
 @JvmName("mapSetMultiMapTo")
-inline fun <K, V, W> Map<K, V>.mapMultiMapTo(transform: (Map.Entry<K, V>) -> Set<W>): MultiMap<K, W> = this.mapValues(transform).toMultiMap()
+inline fun <K, V, W> Map<K, V>.mapMultiMapTo(transform: (Map.Entry<K, V>) -> Set<W>): SetMultiMap<K, W> = this.mapValues(transform).toMultiMap()
 
 //    Table    //
 

@@ -3,7 +3,6 @@ package hiiragi283.lib.recipe.result
 import com.mojang.serialization.Codec
 import hiiragi283.lib.fluid.transmuteCopy
 import hiiragi283.lib.registry.getKeyOrThrow
-import hiiragi283.lib.resource.HTIdLike
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
@@ -18,7 +17,7 @@ import net.neoforged.neoforge.fluids.FluidStackTemplate
  * @since 26.1.0
  */
 @JvmInline
-value class HTFluidResult private constructor(@PublishedApi internal val template: FluidStackTemplate) : HTIdLike {
+value class HTFluidResult private constructor(@PublishedApi internal val template: FluidStackTemplate) : HTRecipeResult<FluidStack> {
     companion object {
         @JvmField
         val CODEC: Codec<HTFluidResult> = FluidStackTemplate.CODEC.xmap(::create, HTFluidResult::template)
@@ -65,7 +64,7 @@ value class HTFluidResult private constructor(@PublishedApi internal val templat
     /**
      * 液体の完成品を取得します。
      */
-    fun create(): FluidStack = template.create()
+    override fun create(): FluidStack = template.create()
 
     override fun getId(): Identifier = template.getKeyOrThrow().identifier()
 }

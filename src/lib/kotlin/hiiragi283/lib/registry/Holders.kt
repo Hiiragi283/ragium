@@ -28,7 +28,7 @@ fun <R : Any> Holder<R>.getKeyOrThrow(): ResourceKey<R> = this.unwrapKey().orEls
  * @author Hiiragi Tsubasa
  * @since 0.17.0
  */
-fun <R : Any> Holder<R>.toLike(): SimpleSupplierWithKey<R> = when (this.kind()) {
+fun <R : Any> Holder<R>.asSupplier(): SimpleSupplierWithKey<R> = when (this.kind()) {
     Holder.Kind.REFERENCE -> HolderWithKey(this)
     Holder.Kind.DIRECT -> error("Cannot convert direct holder to SimpleSupplierWithKey")
 }
@@ -44,14 +44,14 @@ private data class HolderWithKey<R : Any>(private val holder: Holder<R>) : Simpl
  * @author Hiiragi Tsubasa
  * @since 21.1.0
  */
-fun <R : Any, T : R> DeferredHolder<R, T>.toLike(): HTDeferredHolder<R, T> = when (this) {
+fun <R : Any, T : R> DeferredHolder<R, T>.asSupplier(): HTDeferredHolder<R, T> = when (this) {
     is HTDeferredHolder<R, T> -> this
     else -> HTDeferredHolder(this.key)
 }
 
 fun <T : Any> TypedInstance<T>.getKeyOrThrow(): ResourceKey<T> = this.typeHolder().getKeyOrThrow()
 
-fun <T : Any> TypedInstance<T>.holderLike(): SimpleSupplierWithKey<T> = this.typeHolder().toLike()
+fun <T : Any> TypedInstance<T>.supplierWithKey(): SimpleSupplierWithKey<T> = this.typeHolder().asSupplier()
 
 //    Block    //
 
@@ -61,7 +61,7 @@ val Holder<out ItemLike>.isAir: Boolean get() = this.`is`(HTConstants.Keys.AIR)
  * @author Hiiragi Tsubasa
  * @since 21.1.0
  */
-fun Holder<Block>.toBlockLike(): SimpleBlockItemSupplierWithKey = when (this.kind()) {
+fun Holder<Block>.asBlockSupplier(): SimpleBlockItemSupplierWithKey = when (this.kind()) {
     Holder.Kind.REFERENCE -> BlockHolderWithKey(this)
     Holder.Kind.DIRECT -> error("Cannot convert direct holder to SimpleBlockItemSupplierWithKey")
 }
@@ -69,7 +69,7 @@ fun Holder<Block>.toBlockLike(): SimpleBlockItemSupplierWithKey = when (this.kin
 @JvmRecord
 private data class BlockHolderWithKey(override val block: SimpleSupplierWithKey<Block>, override val item: SimpleSupplierWithKey<Item>) : SimpleBlockItemSupplierWithKey {
     constructor(holder: Holder<Block>) : this(
-        holder.toLike(),
+        holder.asSupplier(),
         object : SimpleSupplierWithKey<Item> {
             override fun get(): Item = holder.value().asItem()
 
@@ -83,7 +83,7 @@ private data class BlockHolderWithKey(override val block: SimpleSupplierWithKey<
  * @author Hiiragi Tsubasa
  * @since 21.1.0
  */
-fun <BLOCK : Block> DeferredHolder<Block, BLOCK>.toBlockLike(): HTDeferredBlockAndItem<BLOCK, Item> = HTDeferredBlockAndItem(this.id)
+fun <BLOCK : Block> DeferredHolder<Block, BLOCK>.asBlockSupplier(): HTDeferredBlockAndItem<BLOCK, Item> = HTDeferredBlockAndItem(this.id)
 
 //    Fluid    //
 

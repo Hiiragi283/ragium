@@ -27,25 +27,25 @@ private class IntrusiveWrapper<R : Any, out T : R>(private val value: T, private
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <BLOCK : Block> BLOCK.toLike(): SupplierWithKey<Block, BLOCK> = IntrusiveWrapper(this, Block::builtInRegistryHolder)
+fun <BLOCK : Block> BLOCK.asSupplier(): SupplierWithKey<Block, BLOCK> = IntrusiveWrapper(this, Block::builtInRegistryHolder)
 
 /**
  * この[EntityType][this]を[SupplierWithKey]に変換します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <ENTITY : Entity> EntityType<ENTITY>.toLike(): SupplierWithKey<EntityType<*>, EntityType<ENTITY>> = IntrusiveWrapper(this, EntityType<*>::builtInRegistryHolder)
+fun <ENTITY : Entity> EntityType<ENTITY>.asSupplier(): SupplierWithKey<EntityType<*>, EntityType<ENTITY>> = IntrusiveWrapper(this, EntityType<*>::builtInRegistryHolder)
 
 /**
  * この[Fluid][this]を[SupplierWithKey]に変換します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <FLUID : Fluid> FLUID.toLike(): SupplierWithKey<Fluid, FLUID> = IntrusiveWrapper(this, Fluid::builtInRegistryHolder)
+fun <FLUID : Fluid> FLUID.asSupplier(): SupplierWithKey<Fluid, FLUID> = IntrusiveWrapper(this, Fluid::builtInRegistryHolder)
 
 /**
  * この[Item][this]を[SupplierWithKey]に変換します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <ITEM : Item> ITEM.toLike(): SupplierWithKey<Item, ITEM> = IntrusiveWrapper(this, Item::builtInRegistryHolder)
+fun <ITEM : Item> ITEM.asSupplier(): SupplierWithKey<Item, ITEM> = IntrusiveWrapper(this, Item::builtInRegistryHolder)

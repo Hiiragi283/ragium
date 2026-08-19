@@ -4,8 +4,8 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.registry.asSupplier
 import hiiragi283.lib.registry.getKeyOrThrow
-import hiiragi283.lib.registry.toLike
 import hiiragi283.lib.resource.HTIdLike
 import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -33,7 +33,7 @@ import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
  * @since 21.1.0
  */
 @JvmRecord
-data class HTItemResult(val entry: Entry, val count: Int) : HTIdLike {
+data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemStack> {
     companion object {
         @JvmField
         val MAP_CODEC: MapCodec<HTItemResult> = HTCodecs.recordMap { instance ->
@@ -61,15 +61,15 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTIdLike {
     constructor(stack: ItemStack) : this(SimpleEntry(stack), stack.count())
 
     /**
-     * アイテムの完成品を作成します。
-     */
-    fun create(): ItemStack = entry.create().copyWithCount(count)
-
-    /**
      * このインスタンスのコピーを作成します。
      * @param newCount 新しい個数
      */
     fun copyWithCount(newCount: Int): HTItemResult = HTItemResult(entry, newCount)
+
+    /**
+     * アイテムの完成品を作成します。
+     */
+    override fun create(): ItemStack = entry.create().copyWithCount(count)
 
     override fun getId(): Identifier = entry.getId()
 
@@ -167,7 +167,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTIdLike {
 
         override fun create(): ItemStack = tag
             .asSequence()
-            .map(Holder<Item>::toLike)
+            .map(Holder<Item>::asSupplier)
             .sortedWith(RagiumConfig.SERVER.modIdComparator)
             .firstOrNull()
             ?.get()

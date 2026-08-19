@@ -1,6 +1,6 @@
 package hiiragi283.lib.data.tag
 
-import hiiragi283.lib.registry.toLike
+import hiiragi283.lib.registry.asSupplier
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.lib.tag.RawTagKey
@@ -64,7 +64,7 @@ abstract class HTItemTagsProvider : HTTagsProvider<Item> {
      * 指定した要素をタグに追加します。
      * @param item アイテムの値
      */
-    protected fun HTTagBuilder<Item>.addItem(item: ItemLike): HTTagBuilder<Item> = this.add(item.asItem().toLike())
+    protected fun HTTagBuilder<Item>.addItem(item: ItemLike): HTTagBuilder<Item> = this.add(item.asItem().asSupplier())
 
     final override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = super.createContentsProvider().thenCombine(blockTags) { provider: HolderLookup.Provider, blockTags1: TagLookup<Block> ->
         for ((blockTag: TagKey<Block>, itemTag: TagKey<Item>) in this.tagsToCopy) {

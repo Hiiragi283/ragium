@@ -45,8 +45,8 @@ data object HTRecipeLookupContext {
     /**
      * [HTRecipeLookup]で使用される[ContextKey]の条件
      */
-    @JvmField
-    val CONTEXT: ContextKeySet = ContextKeySet.Builder().required(RECIPES).optional(REGISTRIES).optional(BREWING).build()
+    @JvmStatic
+    private val CONTEXT: ContextKeySet = ContextKeySet.Builder().required(RECIPES).optional(REGISTRIES).optional(BREWING).build()
 
     /**
      * [CONTEXT]に基づいた新しい[ContextMap]のインスタンスを作成します。

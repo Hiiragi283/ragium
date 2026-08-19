@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.lib.collection.MultiMap
+import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.buildListMultiMap
 import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.recipe.HTRecipeType
@@ -16,7 +16,7 @@ import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.recipe.lookup.HTRecipeLookupContext
 import hiiragi283.lib.recipe.lookup.HTVanillaRecipeLookup
 import hiiragi283.lib.recipe.lookup.fromRecipeType
-import hiiragi283.lib.registry.toLike
+import hiiragi283.lib.registry.asSupplier
 import hiiragi283.lib.resource.modifyPath
 import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
@@ -72,7 +72,7 @@ data object RagiumRecipeLookups {
 
         BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
         BREWING.addSubLookup { contextMap: ContextMap ->
-            val multiMap: MultiMap<Identifier, RTBrewingRecipe> = buildListMultiMap {
+            val multiMap: ListMultiMap<Identifier, RTBrewingRecipe> = buildListMultiMap {
                 contextMap.getOptional(HTRecipeLookupContext.BREWING)
                     ?.let(PotionBrewing::potionMixes)
                     ?.asSequence()
@@ -82,7 +82,7 @@ data object RagiumRecipeLookups {
                             fluidIngredient { +HTPotionFluidIngredient(mix.from()) }
                             fluidResult { +BottledPotionContents(mix.to()).toFluidTemplate() }
                         }.save { _, recipe: RTBrewingRecipe ->
-                            put(mix.to().toLike().getId().modifyPath { "/${RagiumConstants.BREWING}/$it" }, recipe)
+                            put(mix.to().asSupplier().getId().modifyPath { "/${RagiumConstants.BREWING}/$it" }, recipe)
                         }
                     }
             }

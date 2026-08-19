@@ -1,9 +1,7 @@
 package hiiragi283.lib.recipe.lookup
 
 import hiiragi283.lib.recipe.RecipeKey
-import hiiragi283.lib.resource.HTKeyLike
 import net.minecraft.util.context.ContextMap
-import net.minecraft.world.item.crafting.RecipeType
 
 /**
  * レシピの一覧を提供するインターフェースです。
@@ -19,16 +17,4 @@ fun interface HTRecipeLookup<out RECIPE> {
      * @param contextMap レシピのコンテキスト
      */
     fun getAllRecipes(contextMap: ContextMap): Map<RecipeKey, RECIPE>
-
-    /**
-     * [HTRecipeLookup]の拡張インターフェースです。
-     *
-     * 参照 : [Mekanism - IMekanismRecipeTypeProvider](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/recipe/IMekanismRecipeTypeProvider.java)
-     * @param RECIPE レシピのクラス
-     * @author Hiiragi Tsubasa
-     * @since 26.1.3
-     */
-    interface Translatable<out RECIPE> :
-        HTRecipeLookup<RECIPE>,
-        HTKeyLike.SimpleTranslatable<RecipeType<*>>
 }

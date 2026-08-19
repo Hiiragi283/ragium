@@ -42,7 +42,7 @@ private data object EmptyMultiMap : MultiMap<Nothing, Nothing> {
  * @author Hiiragi Tsubasa
  * @since 26.1.1
  */
-inline fun <K, V> buildListMultiMap(initialCapacity: Int = 10, builderAction: ListMultiMap.Builder<K, V>.() -> Unit): MultiMap<K, V> {
+inline fun <K, V> buildListMultiMap(initialCapacity: Int = 10, builderAction: ListMultiMap.Builder<K, V>.() -> Unit): ListMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -56,7 +56,7 @@ inline fun <K, V> buildListMultiMap(initialCapacity: Int = 10, builderAction: Li
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <K, V> buildListMultiMap(map: MutableMap<K, MutableList<V>>, builderAction: ListMultiMap.Builder<K, V>.() -> Unit): MultiMap<K, V> {
+inline fun <K, V> buildListMultiMap(map: MutableMap<K, MutableList<V>>, builderAction: ListMultiMap.Builder<K, V>.() -> Unit): ListMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -70,7 +70,7 @@ inline fun <K, V> buildListMultiMap(map: MutableMap<K, MutableList<V>>, builderA
  * @author Hiiragi Tsubasa
  * @since 26.1.1
  */
-inline fun <K, V> buildSetMultiMap(initialCapacity: Int = 10, builderAction: SetMultiMap.Builder<K, V>.() -> Unit): MultiMap<K, V> {
+inline fun <K, V> buildSetMultiMap(initialCapacity: Int = 10, builderAction: SetMultiMap.Builder<K, V>.() -> Unit): SetMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -84,7 +84,7 @@ inline fun <K, V> buildSetMultiMap(initialCapacity: Int = 10, builderAction: Set
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <K, V> buildSetMultiMap(map: MutableMap<K, MutableSet<V>>, builderAction: SetMultiMap.Builder<K, V>.() -> Unit): MultiMap<K, V> {
+inline fun <K, V> buildSetMultiMap(map: MutableMap<K, MutableSet<V>>, builderAction: SetMultiMap.Builder<K, V>.() -> Unit): SetMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }

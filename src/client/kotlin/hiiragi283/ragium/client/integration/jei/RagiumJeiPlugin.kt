@@ -25,7 +25,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.registration.ISubtypeRegistration
 import net.minecraft.core.Holder
-import net.minecraft.core.registries.Registries
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
@@ -35,11 +35,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     override fun registerItemSubtypes(registration: ISubtypeRegistration) {
         // Potion-Based Item
         HTPhysicalSideHelper
-            .filteredLookup(Registries.ITEM)
-            .getOrNull()
-            ?.listElements()
-            ?.map(Holder<Item>::value)
-            ?.forEach { item: Item ->
+            .filteredLookup(BuiltInRegistries.ITEM)
+            .listElements()
+            .map(Holder<Item>::value)
+            .forEach { item: Item ->
                 if (item is HTPotionBasedItem) {
                     registration.registerSubtypeInterpreter(item) { stack: ItemStack, _ -> HTPotionHelper.getContents(stack) }
                 }
@@ -51,15 +50,16 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     override fun registerExtraIngredients(registration: IExtraIngredientRegistration) {
-        HTPhysicalSideHelper
-            .filteredLookup(Registries.POTION)
-            .getOrNull()
-            ?.listElements()
-            ?.map(::BottledPotionContents)
-            ?.filter { !it.isWater }
-            ?.map { it.toFluidStack() }
-            ?.toList()
-            ?.let { registration.addExtraIngredients(NeoForgeTypes.FLUID_STACK, it) }
+        registration.addExtraIngredients(
+            NeoForgeTypes.FLUID_STACK,
+            HTPhysicalSideHelper
+                .filteredLookup(BuiltInRegistries.POTION)
+                .listElements()
+                .map(::BottledPotionContents)
+                .filter { !it.isWater }
+                .map(BottledPotionContents::toFluidStack)
+                .toList(),
+        )
     }
 
     override fun registerCategories(registration: IRecipeCategoryRegistration) {

@@ -11,13 +11,9 @@ class SetMultiMap<K, out V> private constructor(map: Map<K, Set<V>>) : AbstractM
     companion object {
         /**
          * 指定した[map]を[MultiMap]に変換します。
-         * @return [map]が空の場合は[emptyMultiMapOf]
          */
         @JvmStatic
-        fun <K, V> copyOf(map: Map<K, Set<V>>): MultiMap<K, V> = when {
-            map.isDeepEmpty() -> emptyMultiMapOf()
-            else -> SetMultiMap(map)
-        }
+        fun <K, V> copyOf(map: Map<K, Set<V>>): SetMultiMap<K, V> = SetMultiMap(map)
     }
 
     override fun emptyCollection(): Set<V> = setOf()
@@ -38,9 +34,6 @@ class SetMultiMap<K, out V> private constructor(map: Map<K, Set<V>>) : AbstractM
 
         override fun emptyCollection(): MutableSet<V> = mutableSetOf()
 
-        override fun build(): MultiMap<K, V> = when {
-            map.isDeepEmpty() -> emptyMultiMapOf()
-            else -> SetMultiMap(map)
-        }
+        override fun build(): SetMultiMap<K, V> = SetMultiMap(map)
     }
 }

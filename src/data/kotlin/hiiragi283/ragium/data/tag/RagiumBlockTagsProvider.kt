@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.tag
 
 import hiiragi283.lib.collection.forEach
 import hiiragi283.lib.data.tag.HTTagsProvider
-import hiiragi283.lib.registry.toLike
+import hiiragi283.lib.registry.asSupplier
 import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
@@ -29,6 +29,6 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             HTMaterial.Mineral.GLOWSTONE to Blocks.GLOWSTONE,
             HTMaterial.Gem.QUARTZ to Blocks.QUARTZ_BLOCK,
             HTMaterial.Gem.AMETHYST to Blocks.AMETHYST_BLOCK,
-        ).forEach { (material: HTMaterial, block: Block) -> tags(CommonTagPrefixes.STORAGE_BLOCK, material).add(block.toLike()) }
+        ).forEach { (material: HTMaterial, block: Block) -> tags(CommonTagPrefixes.STORAGE_BLOCK, material).add(block.asSupplier()) }
     }
 }

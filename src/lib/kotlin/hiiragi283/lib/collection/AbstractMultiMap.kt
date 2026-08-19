@@ -11,10 +11,6 @@ import hiiragi283.lib.util.HTBuilderMarker
  * @since 26.1.0
  */
 abstract class AbstractMultiMap<K, out V, out C : Collection<V>>(protected val map: Map<K, C>) : MultiMap<K, V> {
-    companion object {
-        protected fun Map<*, Collection<*>>.isDeepEmpty(): Boolean = this.isEmpty() || this.values.all(Collection<*>::isEmpty)
-    }
-
     override val size: Int get() = map.size
 
     override val isEmpty: Boolean get() = map.isEmpty()

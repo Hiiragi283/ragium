@@ -65,6 +65,9 @@ data object HTPhysicalSideHelper {
     @JvmStatic
     fun <T : FeatureElement> filteredLookup(registryKey: RegistryKey<T>): HTTextResult<HolderLookup.RegistryLookup<T>> = registry(registryKey).map { it.filterFeatures(getFeatureFlags()) }
 
+    @JvmStatic
+    fun <T : FeatureElement> filteredLookup(registry: Registry<T>): HolderLookup.RegistryLookup<T> = registry.filterFeatures(getFeatureFlags())
+
     //    RecipeMap    //
 
     @JvmStatic
