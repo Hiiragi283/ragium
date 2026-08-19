@@ -64,6 +64,13 @@ data object RagiumRecipeBuilders {
     }
 
     // Chemical
+    @JvmStatic
+    inline fun electrolyzing(builderAction: RTElectrolyzingRecipeBuilder.() -> Unit): RTElectrolyzingRecipeBuilder {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return RTElectrolyzingRecipeBuilder().apply(builderAction)
+    }
 
     // Bio
     @JvmStatic

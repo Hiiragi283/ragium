@@ -15,7 +15,9 @@ import net.neoforged.neoforge.transfer.access.ItemAccess
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.item.ItemResource
 
-class HTPotionBucketItem(content: Fluid, properties: Properties) : HTPotionBasedItem(properties) {
+class HTPotionBucketItem(properties: Properties) : HTPotionBasedItem(properties) {
+    constructor(content: Fluid, properties: Properties) : this(properties)
+
     override fun getName(stack: ItemStack): Text {
         val potionName: Text = HTPotionHelper.getContents(stack)?.getText() ?: return super.getName(stack)
         return translatableText(super.descriptionId, potionName)

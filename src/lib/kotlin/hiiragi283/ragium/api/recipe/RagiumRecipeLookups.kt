@@ -51,6 +51,8 @@ data object RagiumRecipeLookups {
     val MELTING: HTCompoundRecipeLookup<HTItemToFluidRecipe> = create(RagiumConstants.MELTING)
 
     // Chemical
+    @JvmField
+    val ELECTROLYZING: HTRecipeLookup<RTElectrolyzingRecipe> = create(RagiumRecipeTypes.ELECTROLYZING)
 
     // Bio
     @JvmField

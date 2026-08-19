@@ -53,6 +53,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.FREEZING, "Freezing")
         add(RagiumRecipeTypes.MELTING, "Melting")
 
+        add(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
+
         add(RagiumRecipeTypes.BREWING, "Brewing")
 
         // Text

@@ -72,6 +72,8 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id(RagiumConstants.MELTING), RagiumRecipeSerializers.MELTING)
             helper.register(RagiumAPI.id(HTConstants.SMELTING), RagiumRecipeSerializers.SMELTING)
 
+            helper.register(RagiumAPI.id(RagiumConstants.ELECTROLYZING), RagiumRecipeSerializers.ELECTROLYZING)
+
             helper.register(RagiumAPI.id(RagiumConstants.BREWING), RagiumRecipeSerializers.BREWING)
         }
         event.register(Registries.RECIPE_TYPE) { helper ->

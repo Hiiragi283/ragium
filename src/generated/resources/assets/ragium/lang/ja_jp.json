@@ -135,6 +135,7 @@
   "recipe_type.ragium.assembling": "組立",
   "recipe_type.ragium.brewing": "醸造",
   "recipe_type.ragium.crushing": "粉砕",
+  "recipe_type.ragium.electrolyzing": "電気分解",
   "recipe_type.ragium.freezing": "冷凍",
   "recipe_type.ragium.melting": "溶融",
   "tag.fluid.c.dyes.black": "黒色の染料",

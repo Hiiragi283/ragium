@@ -52,5 +52,5 @@ data object RagiumBlocks {
     }
 
     @JvmStatic
-    fun getOrThrow(part: HTBlockPart, material: HTMaterial): HTSimpleDeferredBlockAndItem = MATERIAL_BLOCKS[part, material] ?: error("Unregistered blocl: ${part.createName(material)}")
+    fun getOrThrow(part: HTBlockPart, material: HTMaterial): HTSimpleDeferredBlockAndItem = MATERIAL_BLOCKS[part, material] ?: error("Unregistered block: ${part.createName(material)}")
 }

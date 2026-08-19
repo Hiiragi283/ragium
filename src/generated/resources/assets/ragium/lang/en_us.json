@@ -135,6 +135,7 @@
   "recipe_type.ragium.assembling": "Assembling",
   "recipe_type.ragium.brewing": "Brewing",
   "recipe_type.ragium.crushing": "Crushing",
+  "recipe_type.ragium.electrolyzing": "Electrolyzing",
   "recipe_type.ragium.freezing": "Freezing",
   "recipe_type.ragium.melting": "Melting",
   "tag.fluid.c.dyes.black": "Black Dye",
