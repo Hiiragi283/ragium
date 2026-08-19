@@ -1,11 +1,11 @@
 package hiiragi283.lib.integration.jei
 
-import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.ingredient.HTStackPreview
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import mezz.jei.api.gui.builder.IIngredientAcceptor
 import mezz.jei.api.neoforge.NeoForgeTypes
+import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 
 //    IIngredientAcceptor    //
@@ -29,11 +29,13 @@ fun <T : IIngredientAcceptor<T>> T.add(stack: FluidStack): T = this.add(stack.fl
  */
 fun <T : IIngredientAcceptor<T>> T.addFluidStacks(stacks: Iterable<FluidStack>): T = this.addIngredients(NeoForgeTypes.FLUID_STACK, stacks.toList())
 
-fun <T : IIngredientAcceptor<T>> T.add(ingredient: HTFluidIngredient): T = this.addFluidStacks(ingredient.getPreviewStacks(this.contextMap))
+@JvmName("addFluids")
+fun <T : IIngredientAcceptor<T>> T.add(ingredient: HTStackPreview<FluidStack>): T = this.addFluidStacks(ingredient.getPreviewStacks(this.contextMap))
 
 fun <T : IIngredientAcceptor<T>> T.add(result: HTFluidResult): T = this.add(result.create())
 
 // Item
-fun <T : IIngredientAcceptor<T>> T.add(ingredient: HTItemIngredient): T = this.addItemStacks(ingredient.getPreviewStacks(this.contextMap))
+@JvmName("addItems")
+fun <T : IIngredientAcceptor<T>> T.add(ingredient: HTStackPreview<ItemStack>): T = this.addItemStacks(ingredient.getPreviewStacks(this.contextMap))
 
 fun <T : IIngredientAcceptor<T>> T.add(result: HTItemResult): T = this.add(result.create())

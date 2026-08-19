@@ -12,14 +12,11 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.convert
 import hiiragi283.lib.serialization.network.HTStreamCodecs
-import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidInstance
 
 interface HTItemAndFluidToItemRecipe :
@@ -65,9 +62,9 @@ interface HTItemAndFluidToItemRecipe :
             )
         }
 
-        override fun test(first: TypedInstance<Item>, second: TypedInstance<Fluid>): Boolean = itemIngredient.fold({ HTIngredientHelper.createStack(first).let(it::test) }, { it.test(first) }) && fluidIngredient.test(second)
+        override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.fold({ HTIngredientHelper.unwrap(first).let(it::test) }, { it.test(first) }) && fluidIngredient.test(second)
 
-        override fun getRequiredAmount(first: TypedInstance<Item>, second: TypedInstance<Fluid>): Pair<Int, Int> = itemIngredient.fold({ 0 }, { it.getRequiredAmount(first) }) to fluidIngredient.getRequiredAmount(second)
+        override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = itemIngredient.fold({ 0 }, { it.getRequiredAmount(first) }) to fluidIngredient.getRequiredAmount(second)
 
         override fun apply(first: ItemInstance, second: FluidInstance): ItemStack = result.create()
     }

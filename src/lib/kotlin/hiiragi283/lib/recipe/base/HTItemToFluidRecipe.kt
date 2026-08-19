@@ -6,10 +6,8 @@ import hiiragi283.lib.data.recipe.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.serialization.codec.HTCodecs
-import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
@@ -56,9 +54,9 @@ interface HTItemToFluidRecipe :
             )
         }
 
-        override fun test(input: TypedInstance<Item>): Boolean = ingredient.test(input)
+        override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
-        override fun getRequiredAmount(input: TypedInstance<Item>): Int = ingredient.getRequiredAmount(input)
+        override fun getRequiredAmount(input: ItemInstance): Int = ingredient.getRequiredAmount(input)
 
         override fun apply(input: ItemInstance): FluidStack = result.create()
     }

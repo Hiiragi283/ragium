@@ -9,10 +9,8 @@ import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.convert
 import hiiragi283.lib.serialization.network.asOption
 import hiiragi283.lib.util.Option
-import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -23,9 +21,9 @@ interface HTItemToDoubleItemRecipe :
     HTProgressRecipe<SingleRecipeInput> {
 
     fun asSingleOutput(): HTItemToItemRecipe = object : HTItemToItemRecipe {
-        override fun test(input: TypedInstance<Item>): Boolean = this@HTItemToDoubleItemRecipe.test(input)
+        override fun test(input: ItemInstance): Boolean = this@HTItemToDoubleItemRecipe.test(input)
 
-        override fun getRequiredAmount(input: TypedInstance<Item>): Int = this@HTItemToDoubleItemRecipe.getRequiredAmount(input)
+        override fun getRequiredAmount(input: ItemInstance): Int = this@HTItemToDoubleItemRecipe.getRequiredAmount(input)
 
         override fun apply(input: ItemInstance): ItemStack = this@HTItemToDoubleItemRecipe.apply(input).first
 
@@ -63,9 +61,9 @@ interface HTItemToDoubleItemRecipe :
             )
         }
 
-        override fun test(input: TypedInstance<Item>): Boolean = ingredient.test(input)
+        override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
-        override fun getRequiredAmount(input: TypedInstance<Item>): Int = ingredient.getRequiredAmount(input)
+        override fun getRequiredAmount(input: ItemInstance): Int = ingredient.getRequiredAmount(input)
 
         override fun apply(input: ItemInstance): Pair<ItemStack, ItemStack> = primary.create() to secondary.fold(ItemStack::EMPTY, HTItemResult::create)
     }

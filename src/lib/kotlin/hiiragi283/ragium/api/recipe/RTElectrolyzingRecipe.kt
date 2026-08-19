@@ -18,13 +18,10 @@ import hiiragi283.lib.serialization.codec.convert
 import hiiragi283.lib.serialization.network.asOption
 import hiiragi283.lib.serialization.network.listOf
 import hiiragi283.lib.util.Option
-import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 
@@ -66,9 +63,9 @@ data class RTElectrolyzingRecipe(
         val SERIALIZER: RecipeSerializer<RTElectrolyzingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(first: TypedInstance<Item>, second: TypedInstance<Fluid>): Boolean = itemIngredient.fold({ HTIngredientHelper.isEmpty(first) }, { it.test(first) }) && fluidIngredient.test(second)
+    override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.fold({ HTIngredientHelper.isEmpty(first) }, { it.test(first) }) && fluidIngredient.test(second)
 
-    override fun getRequiredAmount(first: TypedInstance<Item>, second: TypedInstance<Fluid>): Pair<Int, Int> = Pair(
+    override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = Pair(
         itemIngredient.fold({ 0 }, { it.getRequiredAmount(first) }),
         fluidIngredient.getRequiredAmount(second),
     )

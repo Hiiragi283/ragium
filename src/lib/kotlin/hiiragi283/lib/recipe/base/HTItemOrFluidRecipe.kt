@@ -12,12 +12,9 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.Ior
-import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidInstance
 
 interface HTItemOrFluidRecipe :
@@ -70,13 +67,13 @@ interface HTItemOrFluidRecipe :
             )
         }
 
-        override fun test(first: TypedInstance<Item>, second: TypedInstance<Fluid>): Boolean = ingredient.fold(
+        override fun test(first: ItemInstance, second: FluidInstance): Boolean = ingredient.fold(
             { it.test(first) && HTIngredientHelper.isEmpty(second) },
             { it.test(second) && HTIngredientHelper.isEmpty(first) },
             { item: HTItemIngredient, fluid: HTFluidIngredient -> item.test(first) && fluid.test(second) },
         )
 
-        override fun getRequiredAmount(first: TypedInstance<Item>, second: TypedInstance<Fluid>): Pair<Int, Int> = ingredient
+        override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = ingredient
             .mapLeft { it.getRequiredAmount(first) }
             .mapRight { it.getRequiredAmount(second) }
             .toPair()

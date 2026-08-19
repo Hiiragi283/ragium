@@ -6,10 +6,8 @@ import hiiragi283.lib.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
-import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -56,9 +54,9 @@ interface HTItemToItemRecipe :
             )
         }
 
-        override fun test(input: TypedInstance<Item>): Boolean = ingredient.test(input)
+        override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
-        override fun getRequiredAmount(input: TypedInstance<Item>): Int = ingredient.getRequiredAmount(input)
+        override fun getRequiredAmount(input: ItemInstance): Int = ingredient.getRequiredAmount(input)
 
         override fun apply(input: ItemInstance): ItemStack = result.create()
     }

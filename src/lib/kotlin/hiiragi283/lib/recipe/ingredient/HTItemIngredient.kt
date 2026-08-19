@@ -2,11 +2,11 @@ package hiiragi283.lib.recipe.ingredient
 
 import com.mojang.serialization.Codec
 import hiiragi283.lib.util.Either
-import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.context.ContextMap
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.display.DisplayContentsFactory
@@ -22,7 +22,9 @@ typealias HTCatalystOrIngredient = Either<Ingredient, HTItemIngredient>
  * @since 26.1.0
  */
 @JvmInline
-value class HTItemIngredient(@PublishedApi internal val delegate: SizedIngredient) : HTIngredient<Item, ItemStack> {
+value class HTItemIngredient(@PublishedApi internal val delegate: SizedIngredient) :
+    HTIngredient<ItemInstance>,
+    HTStackPreview<ItemStack> {
     companion object {
         @JvmField
         val CODEC: Codec<HTItemIngredient> = SizedIngredient.NESTED_CODEC.xmap(::HTItemIngredient, HTItemIngredient::delegate)
@@ -36,11 +38,11 @@ value class HTItemIngredient(@PublishedApi internal val delegate: SizedIngredien
     inline val unsized: Ingredient get() = delegate.ingredient()
     inline val count: Int get() = delegate.count()
 
-    override fun test(instance: TypedInstance<Item>): Boolean = HTIngredientHelper.unwrap(instance).fold(::testOnlyType, delegate::test)
+    override fun test(instance: ItemInstance): Boolean = HTIngredientHelper.unwrap(instance).let(delegate::test)
 
-    override fun testOnlyType(instance: TypedInstance<Item>): Boolean = HTIngredientHelper.createStack(instance).let(unsized::test)
+    override fun testOnlyType(instance: ItemInstance): Boolean = HTIngredientHelper.unwrap(instance).let(unsized::test)
 
-    override fun getRequiredAmount(instance: TypedInstance<Item>): Int = when (testOnlyType(instance)) {
+    override fun getRequiredAmount(instance: ItemInstance): Int = when (testOnlyType(instance)) {
         true -> count
         false -> 0
     }

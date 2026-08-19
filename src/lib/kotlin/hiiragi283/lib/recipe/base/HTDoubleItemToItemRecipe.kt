@@ -6,10 +6,8 @@ import hiiragi283.lib.data.recipe.HTDoubleItemToItemRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
-import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
@@ -63,9 +61,9 @@ interface HTDoubleItemToItemRecipe :
             )
         }
 
-        override fun test(first: TypedInstance<Item>, second: TypedInstance<Item>): Boolean = primary.test(first) && secondary.test(second)
+        override fun test(first: ItemInstance, second: ItemInstance): Boolean = primary.test(first) && secondary.test(second)
 
-        override fun getRequiredAmount(first: TypedInstance<Item>, second: TypedInstance<Item>): Pair<Int, Int> = primary.getRequiredAmount(first) to secondary.getRequiredAmount(second)
+        override fun getRequiredAmount(first: ItemInstance, second: ItemInstance): Pair<Int, Int> = primary.getRequiredAmount(first) to secondary.getRequiredAmount(second)
 
         override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
     }

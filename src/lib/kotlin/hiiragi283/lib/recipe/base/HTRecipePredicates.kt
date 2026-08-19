@@ -5,12 +5,11 @@ import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import java.util.function.BiPredicate
 import java.util.function.Predicate
-import net.minecraft.core.TypedInstance
-import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.util.TriPredicate
+import net.neoforged.neoforge.fluids.FluidInstance
 
 /**
  * Hiiragi Seriesで使用される[HTRecipePredicate]をまとめたクラスです。
@@ -39,14 +38,14 @@ data object HTRecipePredicates {
     /**
      * 1種類の液体を判定する[SingleInput]の拡張インターフェースです。
      */
-    interface SingleFluid : SingleInput<HTSingleFluidRecipeInput, TypedInstance<Fluid>> {
+    interface SingleFluid : SingleInput<HTSingleFluidRecipeInput, FluidInstance> {
         override fun matches(input: HTSingleFluidRecipeInput): Boolean = test(input.fluid)
     }
 
     /**
      * 1種類のアイテムを判定する[SingleInput]の拡張インターフェースです。
      */
-    interface SingleItem : SingleInput<SingleRecipeInput, TypedInstance<Item>> {
+    interface SingleItem : SingleInput<SingleRecipeInput, ItemInstance> {
         override fun matches(input: SingleRecipeInput): Boolean = test(input.item())
     }
 
@@ -72,9 +71,9 @@ data object HTRecipePredicates {
     /**
      * 1種類のアイテムと液体を判定する[DoubleInput]の拡張インターフェースです。
      */
-    interface ItemAndFluid : DoubleInput<HTItemAndFluidRecipeInput, TypedInstance<Item>, TypedInstance<Fluid>> {
+    interface ItemAndFluid : DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance> {
         override fun matches(input: HTItemAndFluidRecipeInput): Boolean {
-            val (item: TypedInstance<Item>, fluid: TypedInstance<Fluid>) = input
+            val (item: ItemInstance, fluid: FluidInstance) = input
             return test(item, fluid)
         }
     }
@@ -82,7 +81,7 @@ data object HTRecipePredicates {
     /**
      * 2種類のアイテムを判定する[DoubleInput]の拡張インターフェースです。
      */
-    interface DoubleItem : DoubleInput<RecipeInput, TypedInstance<Item>, TypedInstance<Item>> {
+    interface DoubleItem : DoubleInput<RecipeInput, ItemInstance, ItemInstance> {
         override fun matches(input: RecipeInput): Boolean = input.size() >= 2 && test(input.getItem(0), input.getItem(1))
     }
 
@@ -106,7 +105,7 @@ data object HTRecipePredicates {
     /**
      * 3種類のアイテムを判定する[TripleItem]の拡張インターフェースです。
      */
-    interface TripleItem : TripleInput<RecipeInput, TypedInstance<Item>, TypedInstance<Item>, TypedInstance<Item>> {
+    interface TripleItem : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance> {
         override fun matches(input: RecipeInput): Boolean = input.size() >= 3 && test(input.getItem(0), input.getItem(1), input.getItem(2))
     }
 }

@@ -1,11 +1,11 @@
 package hiiragi283.lib.recipe.ingredient
 
 import com.mojang.serialization.Codec
-import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.context.ContextMap
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
@@ -19,7 +19,9 @@ import net.neoforged.neoforge.fluids.crafting.display.ForFluidStacks
  * @since 26.1.0
  */
 @JvmInline
-value class HTFluidIngredient(@PublishedApi internal val delegate: SizedFluidIngredient) : HTIngredient<Fluid, FluidStack> {
+value class HTFluidIngredient(@PublishedApi internal val delegate: SizedFluidIngredient) :
+    HTIngredient<FluidInstance>,
+    HTStackPreview<FluidStack> {
     companion object {
         @JvmField
         val CODEC: Codec<HTFluidIngredient> = SizedFluidIngredient.CODEC.xmap(::HTFluidIngredient, HTFluidIngredient::delegate)
@@ -33,11 +35,11 @@ value class HTFluidIngredient(@PublishedApi internal val delegate: SizedFluidIng
     inline val unsized: FluidIngredient get() = delegate.ingredient()
     inline val amount: Int get() = delegate.amount()
 
-    override fun test(instance: TypedInstance<Fluid>): Boolean = HTIngredientHelper.unwrap(instance).fold(::testOnlyType, delegate::test)
+    override fun test(instance: FluidInstance): Boolean = HTIngredientHelper.unwrap(instance).let(delegate::test)
 
-    override fun testOnlyType(instance: TypedInstance<Fluid>): Boolean = HTIngredientHelper.createStack(instance).let(unsized::test)
+    override fun testOnlyType(instance: FluidInstance): Boolean = HTIngredientHelper.unwrap(instance).let(unsized::test)
 
-    override fun getRequiredAmount(instance: TypedInstance<Fluid>): Int = when (testOnlyType(instance)) {
+    override fun getRequiredAmount(instance: FluidInstance): Int = when (testOnlyType(instance)) {
         true -> amount
         false -> 0
     }
