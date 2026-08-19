@@ -23,10 +23,3 @@ fun GatherDataEvent.createLootTables(
         future,
     )
 }
-
-/**
- * [CompletableFuture]のコレクションを一つの[CompletableFuture]に変換します。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-fun Collection<CompletableFuture<*>>.allOf(): CompletableFuture<*> = CompletableFuture.allOf(*this.toTypedArray())

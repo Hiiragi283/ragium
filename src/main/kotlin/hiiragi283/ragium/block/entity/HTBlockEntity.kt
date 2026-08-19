@@ -4,22 +4,21 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.block.entity.HTOwnedBlockEntity
 import hiiragi283.lib.block.entity.HTSoundPlayerBlockEntity
 import hiiragi283.lib.item.HTItemDropHelper
+import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.readOption
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.HTHandlerProvider
 import hiiragi283.lib.transfer.fluid.FluidResourceHandler
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
-import hiiragi283.lib.transfer.indices
 import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.lib.transfer.item.ItemResourceHandler
+import hiiragi283.lib.transfer.item.getItemStack
 import hiiragi283.lib.transfer.resolver.HTResourceCapabilityManager
 import hiiragi283.ragium.transfer.HTCapabilityCodec
 import java.util.UUID
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.UUIDUtil
-import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Nameable
 import net.minecraft.world.level.Level
@@ -29,7 +28,6 @@ import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.item.ItemResource
-import net.neoforged.neoforge.transfer.item.ItemUtil
 
 /**
  * [HTExtendedBlockEntity]の拡張クラスです。
@@ -99,9 +97,9 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
             }
         }
         // Custom Name
-        output.storeNullable("custom_name", ComponentSerialization.CODEC, this.customName)
+        output.storeNullable("custom_name", HTCodecs.TEXT, this.customName)
         // Owner
-        output.storeNullable(HTConstants.OWNER, UUIDUtil.CODEC, ownerId)
+        output.storeNullable(HTConstants.OWNER, HTCodecs.UUID, ownerId)
     }
 
     override fun readValue(input: ValueInput) {
@@ -113,9 +111,9 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
             }
         }
         // Custom Name
-        input.readOption("custom_name", ComponentSerialization.CODEC).onSome(::customName::set)
+        input.readOption("custom_name", HTCodecs.TEXT).onSome(::customName::set)
         // Owner
-        input.readOption(HTConstants.OWNER, UUIDUtil.CODEC).onSome(::ownerId::set)
+        input.readOption(HTConstants.OWNER, HTCodecs.UUID).onSome(::ownerId::set)
     }
 
     //    Nameable    //
@@ -179,9 +177,8 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
      */
     open fun onBlockRemoved(state: BlockState, level: Level, pos: BlockPos) {
         if (shouldDrop(state, level, pos)) {
-            val handler: ItemResourceHandler = getItemHandler(null) ?: return
-            for (i: Int in handler.indices) {
-                ItemUtil.getStack(handler, i).let { HTItemDropHelper.dropStackAt(level, pos, it) }
+            for (slot: HTItemSlot in getItemSlots(null)) {
+                HTItemDropHelper.dropStackAt(level, pos, slot.getItemStack())
             }
         }
     }

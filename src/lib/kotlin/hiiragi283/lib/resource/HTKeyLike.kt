@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceKey
  * @since 26.1.3
  * @see SupplierWithKey
  */
-fun interface HTKeyLike<R : Any> : HTIdLike {
+interface HTKeyLike<R : Any> : HTIdLike {
     fun getKey(): ResourceKey<R>
 
     fun getRegistryKey(): RegistryKey<R> = getKey().registryKey()

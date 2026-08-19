@@ -1,7 +1,8 @@
 package hiiragi283.lib.data.recipe
 
+import com.google.gson.JsonElement
+import com.mojang.serialization.JsonOps
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.data.allOf
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.resource.toId
 import java.util.Optional
@@ -12,6 +13,7 @@ import net.minecraft.data.CachedOutput
 import net.minecraft.data.DataProvider
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
+import net.minecraft.resources.RegistryOps
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
@@ -21,7 +23,7 @@ import net.neoforged.neoforge.common.conditions.WithConditions
  * Hiiragi Seriesで使用される，レシピ向けの[DataProvider]の抽象クラスです。
  * 参照 : [Minecraft - RecipeProvider][net.minecraft.data.recipes.RecipeProvider]
  * @author Hiiragi Tsubasa
- * @since 21.1.0
+ * @since 26.1.0
  */
 abstract class HTRecipeProvider(packOutput: PackOutput, private val future: CompletableFuture<HolderLookup.Provider>, protected val modId: String) :
     HTRecipeProviderContext(),
@@ -39,10 +41,16 @@ abstract class HTRecipeProvider(packOutput: PackOutput, private val future: Comp
             val fixedId: RecipeKey = id.let(::modifyId)
             check(recipes.put(fixedId, WithConditions(conditions, recipe)) == null) { "Duplicate recipe ${fixedId.identifier()}" }
         }
+
         buildRecipes()
-        recipes
-            .map { (id: RecipeKey, value: WithConditions<Recipe<*>>) -> DataProvider.saveStable(output, registries, Recipe.CONDITIONAL_CODEC, Optional.of(value), pathProvider.json(id)) }
-            .allOf()
+
+        val dynamicOps: RegistryOps<JsonElement> = registries.createSerializationContext(JsonOps.INSTANCE)
+        DataProvider.saveAll(
+            output,
+            { conditions: WithConditions<Recipe<*>> -> Recipe.CONDITIONAL_CODEC.encodeStart(dynamicOps, Optional.of(conditions)).orThrow },
+            pathProvider::json,
+            recipes,
+        )
     }
 
     /**

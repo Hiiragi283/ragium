@@ -66,7 +66,6 @@ abstract class HTCommonMod {
 
     /**
      * 初期化の後にセットアップを行います。
-     * @since 26.1.1
      */
     protected open fun onConstruct(event: FMLConstructModEvent) {}
 

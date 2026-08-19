@@ -30,7 +30,6 @@ import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.registries.NeoForgeRegistries
-import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.transfer.access.ItemAccess
 
@@ -89,10 +88,6 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id("tag"), HTItemResult.TagEntry.TYPE)
         }
-    }
-
-    override fun registerRegistries(event: NewRegistryEvent) {
-        event.register(RagiumRegistries.ITEM_RESULT_TYPE)
     }
 
     override fun commonSetup(event: FMLCommonSetupEvent) {

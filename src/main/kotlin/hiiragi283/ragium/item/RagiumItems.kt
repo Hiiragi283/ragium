@@ -90,7 +90,7 @@ data object RagiumItems {
         }
     }.flatMapTable { (part: HTItemPart, materials: Collection<HTMaterial>) ->
         materials
-            .sortedBy(HTMaterial::materialName)
+            .toSortedSet()
             .map { material: HTMaterial ->
                 val item: HTSimpleDeferredItem = if (material == HTMaterial.Metal.NETHERITE) {
                     REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties -> properties.fireResistant() }

@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.RecipeInput
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun interface HTRecipePredicate<INPUT : RecipeInput> {
+interface HTRecipePredicate<INPUT : RecipeInput> {
     /**
      * 指定された[input]が，このレシピの条件を満たすか判定します。
      */

@@ -5,7 +5,10 @@ import hiiragi283.lib.tag.HTMaterialLike
 
 sealed interface HTMaterial :
     HTMaterialLike,
-    HTLangName {
+    HTLangName,
+    Comparable<HTMaterial> {
+
+    override fun compareTo(other: HTMaterial): Int = this.materialName.compareTo(other.materialName)
 
     enum class Fuel(langName: HTLangName) :
         HTMaterial,

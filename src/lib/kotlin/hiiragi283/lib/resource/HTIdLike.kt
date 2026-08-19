@@ -10,7 +10,7 @@ import net.minecraft.resources.Identifier
  * @since 26.1.0
  * @see SupplierWithId
  */
-fun interface HTIdLike {
+interface HTIdLike {
     /**
      * 保持している[ID][Identifier]を返します。
      */
