@@ -26,6 +26,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
         addFluid(RagiumFluids.MOLTEN_BLAZE, "ブレイズの血液")
 
+        addFluid(RagiumFluids.HYDROGEN, "水素")
+        addFluid(RagiumFluids.OXYGEN, "酸素")
+        addFluid(RagiumFluids.CHLORINE, "塩素")
+
+        addFluid(RagiumFluids.NAOH_SOLUTION, "水酸化ナトリウム水溶液")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")

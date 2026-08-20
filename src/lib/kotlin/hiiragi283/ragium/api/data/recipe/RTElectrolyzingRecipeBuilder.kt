@@ -43,7 +43,7 @@ class RTElectrolyzingRecipeBuilder : HTProgressRecipeBuilder<RTElectrolyzingReci
     }
 
     // Result
-    @PublishedApi internal var results: MutableList<HTFluidResult> by HTDelegates.onceInitialize()
+    @PublishedApi internal var results: MutableList<HTFluidResult> = mutableListOf()
 
     operator fun HTFluidResult.unaryPlus() {
         results += this

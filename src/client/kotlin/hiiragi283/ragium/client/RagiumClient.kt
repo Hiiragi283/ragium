@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.client.fluid.FluidStackTintSource
 import hiiragi283.lib.client.fluid.HTFluidModelRegister
 import hiiragi283.lib.client.mod.HTClientMod
 import hiiragi283.lib.color.HTDefaultColor
@@ -11,12 +12,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.fluid.RagiumFluids
 import java.awt.Color
 import net.minecraft.client.resources.model.sprite.Material
-import net.minecraft.world.level.material.FluidState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
-import net.neoforged.neoforge.client.fluid.FluidTintSource
 import net.neoforged.neoforge.fluids.FluidStack
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
@@ -37,11 +36,7 @@ data object RagiumClient : HTClientMod() {
         }
         register.register(RagiumFluids.POTION) {
             setDull()
-            tintSource = object : FluidTintSource {
-                override fun color(state: FluidState): Int = -1
-
-                override fun colorAsStack(stack: FluidStack): Int = "ff000000".hexToInt() or HTPotionHelper.getPotion(stack).color
-            }
+            tintSource = FluidStackTintSource { stack: FluidStack -> "ff000000".hexToInt() or HTPotionHelper.getPotion(stack).color }
         }
         register.register(RagiumFluids.OMINOUS_FLUX) {
             setMolten()
@@ -67,6 +62,24 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.MOLTEN_BLAZE) {
             setMolten()
             colorTint(Color(0xff9900))
+        }
+
+        register.register(RagiumFluids.HYDROGEN) {
+            setClear()
+            colorTint(Color(0x006699))
+        }
+        register.register(RagiumFluids.OXYGEN) {
+            setClear()
+            colorTint(Color(0x3399cc))
+        }
+        register.register(RagiumFluids.CHLORINE) {
+            setClear()
+            colorTint(Color(0x99cc33))
+        }
+
+        register.register(RagiumFluids.NAOH_SOLUTION) {
+            setDull()
+            colorTint(Color(0x003366))
         }
     }
 }

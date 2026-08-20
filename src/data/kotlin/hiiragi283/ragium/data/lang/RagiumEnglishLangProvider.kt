@@ -26,6 +26,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_ENDER, "Resonant Ender")
         addFluid(RagiumFluids.MOLTEN_BLAZE, "Blaze Blood")
 
+        addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
+        addFluid(RagiumFluids.OXYGEN, "Oxygen")
+        addFluid(RagiumFluids.CHLORINE, "Chlorine")
+
+        addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")

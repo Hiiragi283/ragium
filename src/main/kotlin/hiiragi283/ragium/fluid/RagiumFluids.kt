@@ -33,6 +33,9 @@ data object RagiumFluids {
     private fun liquid(): FluidType.Properties = create(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
 
     @JvmStatic
+    private fun gaseous(): FluidType.Properties = liquid().canSwim(false).canExtinguish(false).supportsBoating(false).density(-1000)
+
+    @JvmStatic
     private fun molten(lightLevel: Int = 15, temp: Int = 1300): FluidType.Properties = create(SoundEvents.BUCKET_FILL_LAVA, SoundEvents.BUCKET_EMPTY_LAVA)
         .lightLevel(lightLevel)
         .temperature(temp)
@@ -82,5 +85,20 @@ data object RagiumFluids {
 
     //    Element    //
 
+    // 1st
+    @JvmField
+    val HYDROGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen") { properties = gaseous() }
+
+    // 3rd
+    @JvmField
+    val OXYGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("oxygen") { properties = gaseous() }
+
+    // 4th
+    @JvmField
+    val CHLORINE: HTFluidContent.Virtual = REGISTER.registerVirtual("chloride") { properties = gaseous() }
+
     //    Chemical    //
+
+    @JvmField
+    val NAOH_SOLUTION: HTFluidContent.Virtual = REGISTER.registerVirtual("sodium_hydroxide_solution") { properties = liquid() }
 }

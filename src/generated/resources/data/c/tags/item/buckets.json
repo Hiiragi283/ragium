@@ -1,5 +1,6 @@
 {
   "values": [
+    "#c:buckets/chloride",
     "#c:buckets/dye/black",
     "#c:buckets/dye/blue",
     "#c:buckets/dye/brown",
@@ -17,12 +18,15 @@
     "#c:buckets/dye/white",
     "#c:buckets/dye/yellow",
     "#c:buckets/honey",
+    "#c:buckets/hydrogen",
     "#c:buckets/molten_blaze",
     "#c:buckets/molten_ender",
     "#c:buckets/molten_glass",
     "#c:buckets/molten_glowstone",
     "#c:buckets/molten_redstone",
     "#c:buckets/ominous_flux",
-    "#c:buckets/potion"
+    "#c:buckets/oxygen",
+    "#c:buckets/potion",
+    "#c:buckets/sodium_hydroxide_solution"
   ]
 }
