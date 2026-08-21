@@ -1,0 +1,16 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 500,
+    "id": "ragium:creosote"
+  },
+  "ingredient": {
+    "count": 1,
+    "ingredient": "minecraft:coal"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "ragium:coal_coke"
+  },
+  "time": 100
+}

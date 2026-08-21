@@ -23,15 +23,34 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 
+/**
+ * 1種類のアイテムと液体から1種類の液体を作成するレシピを表すエイリアスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 typealias HTItemAndFluidToFluidRecipe = HTItemAndFluidToRecipe<FluidStack>
 
+/**
+ * 1種類のアイテムと液体から1種類のアイテムを作成するレシピを表すエイリアスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 typealias HTItemAndFluidToItemRecipe = HTItemAndFluidToRecipe<ItemStack>
 
+/**
+ * 1種類のアイテムと液体から1種類の完成品を作成するレシピを表すインターフェースです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 interface HTItemAndFluidToRecipe<OUTPUT : Any> :
     HTRecipePredicates.ItemAndFluid,
     HTRecipeFactories.ItemAndFluid<OUTPUT>,
     HTProgressRecipe<HTItemAndFluidRecipeInput> {
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     abstract class Basic<OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>>(
         val itemIngredient: HTCatalystOrIngredient,
         val fluidIngredient: HTFluidIngredient,
@@ -80,6 +99,10 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
         override fun apply(first: ItemInstance, second: FluidInstance): OUTPUT = result.create()
     }
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     open class BasicItem(itemIngredient: HTCatalystOrIngredient, fluidIngredient: HTFluidIngredient, result: HTItemResult, progressData: HTProgressData) : Basic<ItemStack, HTItemResult>(itemIngredient, fluidIngredient, result, progressData) {
         companion object {
             @JvmStatic
@@ -93,6 +116,10 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
         }
     }
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     open class BasicFluid(itemIngredient: HTCatalystOrIngredient, fluidIngredient: HTFluidIngredient, result: HTFluidResult, progressData: HTProgressData) : Basic<FluidStack, HTFluidResult>(itemIngredient, fluidIngredient, result, progressData) {
         companion object {
             @JvmStatic

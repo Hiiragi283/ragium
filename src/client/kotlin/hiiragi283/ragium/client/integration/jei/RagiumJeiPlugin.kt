@@ -8,6 +8,7 @@ import hiiragi283.lib.integration.jei.category.HTItemAndFluidToFluidRecipeCatego
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToFluidRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTItemToItemAndFluidRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.item.alchemy.HTPotionHelper
@@ -75,6 +76,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Heat
             HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING),
             HTItemToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MELTING),
+            HTItemToItemAndFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING),
             // Chemical
             RTElectrolyzingRecipeCategory(guiHelper),
             // Bio
@@ -92,6 +94,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Heat
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.FREEZING, RagiumRecipeLookups.FREEZING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.MELTING, RagiumRecipeLookups.MELTING)
+        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING)
         // Chemical
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ELECTROLYZING, RagiumRecipeLookups.ELECTROLYZING)
         // Bio

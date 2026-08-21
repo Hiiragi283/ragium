@@ -30,6 +30,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
         addFluid(RagiumFluids.CHLORINE, "Chlorine")
 
+        addFluid(RagiumFluids.CREOSOTE, "Creosote")
         addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
@@ -58,6 +59,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumRecipeTypes.FREEZING, "Freezing")
         add(RagiumRecipeTypes.MELTING, "Melting")
+        add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
 
         add(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
 

@@ -30,6 +30,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.OXYGEN, "酸素")
         addFluid(RagiumFluids.CHLORINE, "塩素")
 
+        addFluid(RagiumFluids.CREOSOTE, "クレオソート")
         addFluid(RagiumFluids.NAOH_SOLUTION, "水酸化ナトリウム水溶液")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
@@ -58,6 +59,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumRecipeTypes.FREEZING, "冷凍")
         add(RagiumRecipeTypes.MELTING, "溶融")
+        add(RagiumRecipeTypes.PYROLYZING, "熱分解")
 
         add(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
 

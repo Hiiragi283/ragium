@@ -92,6 +92,10 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0x99cc33))
         }
 
+        register.register(RagiumFluids.CREOSOTE) {
+            setDull()
+            colorTint(Color(0x663333))
+        }
         register.register(RagiumFluids.NAOH_SOLUTION) {
             setDull()
             colorTint(Color(0x003366))

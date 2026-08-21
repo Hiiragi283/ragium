@@ -4,7 +4,10 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import hiiragi283.ragium.api.tag.HTBlockPart
+import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.HTMaterial
+import hiiragi283.ragium.block.RagiumBlocks
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.item.RagiumItems
 import java.util.concurrent.CompletableFuture
@@ -21,6 +24,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
     override fun buildRecipes() {
         freezing()
         melting()
+        pyrolyzing()
     }
 
     private fun freezing() {
@@ -241,6 +245,58 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount = 90
             }
             recipeId suffix "_from_powder"
+        }.save(exporter)
+    }
+
+    private fun pyrolyzing() {
+        // Log -> Charcoal + Creosote
+        RagiumRecipeBuilders.pyrolyzing {
+            ingredient { +holderSet(ItemTags.LOGS_THAT_BURN) }
+            itemResult { +Items.CHARCOAL }
+            fluidResult {
+                +RagiumFluids.CREOSOTE
+                amount = 250
+            }
+            time /= 2
+            recipeId suffix "_from_logs"
+        }.save(exporter)
+        RagiumRecipeBuilders.pyrolyzing {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Other.WOOD) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Fuel.CHARCOAL).asItem() }
+            fluidResult {
+                +RagiumFluids.CREOSOTE
+                amount = 250
+            }
+            time /= 2
+        }.save(exporter)
+        // Coal -> Coal Coke + Creosote
+        RagiumRecipeBuilders.pyrolyzing {
+            ingredient { items { +Items.COAL } }
+            itemResult { +RagiumItems.COAL_COKE }
+            fluidResult {
+                +RagiumFluids.CREOSOTE
+                amount = 500
+            }
+            time /= 2
+        }.save(exporter)
+        RagiumRecipeBuilders.pyrolyzing {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Fuel.COAL) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Fuel.COAL_COKE) }
+            fluidResult {
+                +RagiumFluids.CREOSOTE
+                amount = 500
+            }
+            time /= 2
+        }.save(exporter)
+        RagiumRecipeBuilders.pyrolyzing {
+            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, HTMaterial.Fuel.COAL) }
+            itemResult { +RagiumBlocks.getOrThrow(HTBlockPart.STORAGE_BLOCK, HTMaterial.Fuel.COAL_COKE).asItem() }
+            fluidResult {
+                +RagiumFluids.CREOSOTE
+                amount = 500 * 9
+            }
+            time /= 2
+            time *= 9
         }.save(exporter)
     }
 

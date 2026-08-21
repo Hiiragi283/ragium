@@ -9,6 +9,7 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
+import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.HTCompoundRecipeLookup
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
@@ -52,7 +53,13 @@ data object RagiumRecipeLookups {
     @JvmField
     val MELTING: HTCompoundRecipeLookup<HTItemToFluidRecipe> = create(RagiumConstants.MELTING)
 
+    @JvmField
+    val PYROLYZING: HTCompoundRecipeLookup<HTItemToItemAndFluidRecipe> = create(RagiumConstants.PYROLYZING)
+
     // Chemical
+    @JvmField
+    val BATHING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.BATHING)
+
     @JvmField
     val ELECTROLYZING: HTRecipeLookup<RTElectrolyzingRecipe> = create(RagiumRecipeTypes.ELECTROLYZING)
 
@@ -72,6 +79,7 @@ data object RagiumRecipeLookups {
 
         FREEZING.fromRecipeType(RagiumRecipeTypes.FREEZING, identity())
         MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())
+        PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING, identity())
 
         BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
         BREWING.addSubLookup { contextMap: ContextMap ->

@@ -6,8 +6,10 @@ import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
+import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.item.RagiumItems
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
@@ -28,6 +30,9 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.MELTING, ItemStack(Items.MAGMA_BLOCK))
+
+    @JvmField
+    val PYROLYZING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumItems.COAL_COKE)
 
     // Chemical
     @JvmField

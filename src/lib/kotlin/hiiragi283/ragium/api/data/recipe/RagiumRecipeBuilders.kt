@@ -7,6 +7,7 @@ import hiiragi283.lib.data.recipe.HTDoubleItemToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToFluidRecipeBuilder
+import hiiragi283.lib.data.recipe.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
@@ -15,6 +16,7 @@ import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
+import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTSmeltingRecipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -69,6 +71,14 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTItemToItemRecipeBuilder(HTConstants.SMELTING, ::RTSmeltingRecipe).apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun pyrolyzing(builderAction: HTItemToItemAndFluidRecipeBuilder<RTPyrolyzingRecipe>.() -> Unit): HTItemToItemAndFluidRecipeBuilder<RTPyrolyzingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemToItemAndFluidRecipeBuilder(RagiumConstants.PYROLYZING, ::RTPyrolyzingRecipe).apply(builderAction)
     }
 
     // Chemical

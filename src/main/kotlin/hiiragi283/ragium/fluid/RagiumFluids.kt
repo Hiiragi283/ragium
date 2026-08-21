@@ -99,6 +99,11 @@ data object RagiumFluids {
 
     //    Chemical    //
 
+    // 3rd
+    @JvmField
+    val CREOSOTE: HTFluidContent.Flowing = REGISTER.registerFlowing("creosote") { properties = liquid() }
+
+    // 4th
     @JvmField
     val NAOH_SOLUTION: HTFluidContent.Virtual = REGISTER.registerVirtual("sodium_hydroxide_solution") { properties = liquid() }
 }

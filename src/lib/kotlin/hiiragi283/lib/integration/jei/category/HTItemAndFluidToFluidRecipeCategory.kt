@@ -32,7 +32,7 @@ class HTItemAndFluidToFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTH
                 builder
                     .addInputSlot(getPosition(2), getPosition(0))
                     .add(ingredient)
-                    .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
+                    .setSlotBackground(HTBackgroundType.INPUT)
             },
         )
         // output
