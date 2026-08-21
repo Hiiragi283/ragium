@@ -37,9 +37,9 @@ class HTMixingRecipeBuilder : HTProgressRecipeBuilder<HTMixingRecipe>(RagiumCons
 
     @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
-    @PublishedApi internal var itemResult: Option<HTItemResult> by HTDelegates.optionalOnceInitialize()
+    @PublishedApi internal var itemResult: Option<HTItemResult> by HTDelegates.onceInitialize { Option.none() }
 
-    @PublishedApi internal var fluidResult: Option<HTFluidResult> by HTDelegates.optionalOnceInitialize()
+    @PublishedApi internal var fluidResult: Option<HTFluidResult> by HTDelegates.onceInitialize { Option.none() }
 
     operator fun HTItemIngredient.unaryPlus() {
         itemIngredients += this

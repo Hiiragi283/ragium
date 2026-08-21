@@ -34,11 +34,11 @@ class HTRefiningRecipeBuilder : HTProgressRecipeBuilder<HTRefiningRecipe>(Ragium
 
     @PublishedApi internal var ingredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
-    @PublishedApi internal var catalyst: Option<HTItemIngredient> by HTDelegates.optionalOnceInitialize()
+    @PublishedApi internal var catalyst: Option<HTItemIngredient> by HTDelegates.onceInitialize { Option.none() }
 
     @PublishedApi internal val fluidResults: MutableList<HTFluidResult> = mutableListOf()
 
-    @PublishedApi internal var itemResult: Option<HTItemResult> by HTDelegates.optionalOnceInitialize()
+    @PublishedApi internal var itemResult: Option<HTItemResult> by HTDelegates.onceInitialize { Option.none() }
 
     operator fun HTFluidIngredient.unaryPlus() {
         ingredient = this

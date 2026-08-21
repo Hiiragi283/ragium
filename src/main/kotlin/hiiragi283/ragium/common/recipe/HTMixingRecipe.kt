@@ -3,13 +3,13 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.base.HTProgressData
+import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.base.HTRecipeFactories
 import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
-import hiiragi283.core.api.recipe.progress.HTProgressData
-import hiiragi283.core.api.recipe.progress.HTTriProgressProvider
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
@@ -30,8 +30,8 @@ class HTMixingRecipe(
     val result: Ior<HTItemResult, HTFluidResult>,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.TripleInput<HTMixingRecipe.Input, ItemStack, ItemStack, FluidStack>,
-    HTRecipeFactories.DoubleItemAndFluid<Ior<ItemStack, FluidStack>>,
-    HTTriProgressProvider.Simple<ItemStack, ItemStack, FluidStack>,
+    HTRecipeFactories.DoubleItemAndFluid<HTMixingRecipe.Input, Ior<ItemStack, FluidStack>>,
+    HTProgressRecipe.Simple<HTMixingRecipe.Input>,
     HTSerializableRecipe<HTMixingRecipe.Input> {
     companion object {
         @JvmField
@@ -69,13 +69,15 @@ class HTMixingRecipe(
         return test(firstItem, secondItem, fluid)
     }
 
+    override fun getMatchingStacks(input: Input): Triple<ItemStack, ItemStack, FluidStack> = getMatchingStacks(input.firstItem, input.secondItem, input.fluid)
+
     override fun getMatchingStacks(first: ItemStack, second: ItemStack, third: FluidStack): Triple<ItemStack, ItemStack, FluidStack> = Triple(
         primary.getMatchingStack(first),
         secondary?.getMatchingStack(second) ?: ItemStack.EMPTY,
         fluidIngredient.getMatchingStack(third),
     )
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: FluidStack): Ior<ItemStack, FluidStack> = result.mapLeft { it.createOrEmpty() }.mapRight { it.create() }
+    override fun apply(first: ItemStack, second: ItemStack, third: FluidStack): Ior<ItemStack, FluidStack> = result.mapLeft { it.createOrEmpty() }.mapRight { it.create() }
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
 

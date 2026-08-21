@@ -3,9 +3,9 @@ package hiiragi283.ragium.common.recipe.cache.completed
 import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTInputHandler
 import hiiragi283.core.api.recipe.handler.HTOutputHandler
-import hiiragi283.core.api.recipe.progress.HTProgressData
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTWashingCompletedRecipe(
@@ -13,10 +13,10 @@ class HTWashingCompletedRecipe(
     private val inputHandler: HTInputHandler<ItemStack>,
     private val waterHandler: HTInputHandler<FluidStack>,
     private val outputHandler: HTOutputHandler<ItemStack>,
-) : HTCompletedRecipe.WithProgress<HTWashingRecipe>(recipe) {
-    private val outputs: Iterable<ItemStack> = recipe.assemble(inputHandler.getStack())
+) : HTCompletedRecipe.WithProgress<SingleRecipeInput, HTWashingRecipe>(recipe) {
+    private val outputs: Iterable<ItemStack> = recipe.assemble(input)
 
-    override fun getProgress(): HTProgressData = recipe.getProgressData(inputHandler.getStack(), waterHandler.getStack())
+    override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputHandler.getStack())
 
     override fun canComplete(): Boolean = outputs.all(outputHandler::canInsert)
 

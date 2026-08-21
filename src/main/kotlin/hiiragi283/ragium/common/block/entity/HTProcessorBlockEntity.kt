@@ -5,6 +5,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.handler.HTTypedProgressHandler
@@ -140,7 +141,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
         //    ProgressHandler    //
 
-        abstract inner class ProgressHandler<RECIPE : Any, COMP : HTCompletedRecipe.WithProgress<RECIPE>> : RecipeHandler<RECIPE, COMP>() {
+        abstract inner class ProgressHandler<RECIPE : HTProgressRecipe<*>, COMP : HTCompletedRecipe.WithProgress<*, RECIPE>> : RecipeHandler<RECIPE, COMP>() {
             override fun getMaxProgress(recipe: COMP): Int = recipe
                 .getProgress()
                 .getProcessTime(handler.currentEnergyPerTick)
@@ -149,7 +150,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             final override fun getProgress(level: ServerLevel, pos: BlockPos): Int = handler.consume()
         }
 
-        abstract inner class SimpleProgressHandler<RECIPE : Any, COMP : HTCompletedRecipe.WithProgress<RECIPE>>(private val sound: HTSoundInstance) : ProgressHandler<RECIPE, COMP>() {
+        abstract inner class SimpleProgressHandler<RECIPE : HTProgressRecipe<*>, COMP : HTCompletedRecipe.WithProgress<*, RECIPE>>(private val sound: HTSoundInstance) : ProgressHandler<RECIPE, COMP>() {
             constructor(sound: SoundEvent) : this(HTSoundInstance(sound))
 
             final override fun getCompleteSound(): HTSoundInstance = sound

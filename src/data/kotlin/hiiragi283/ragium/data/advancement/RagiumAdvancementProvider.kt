@@ -5,7 +5,7 @@ import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.advancement.AdvancementKey
 import hiiragi283.core.api.data.advancement.HTAdvancementProvider
 import hiiragi283.core.api.data.advancement.builder.HTAdvancementBuilder
-import hiiragi283.core.api.item.HTItemLike
+import hiiragi283.core.api.item.HTItemInstanceLike
 import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.part.CommonParts
@@ -28,15 +28,17 @@ import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.world.item.ItemStack
 
 class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTAdvancementProvider(packOutput, future, RagiumAPI.MOD_ID) {
     private fun getItem(part: HTPartKey, key: HTMaterialKey): HTMaterialContents.ItemEntry = HiiragiCoreAccess.INSTANCE.registeredContents.items.getResult(part, key).getOrThrow()
 
-    private fun <T> createSimple(key: AdvancementKey, parentKey: AdvancementKey, item: T) where T : HTItemLike<*>, T : HTIdLike {
+    private fun <T> createSimple(key: AdvancementKey, parentKey: AdvancementKey, item: T) where T : HTItemInstanceLike, T : HTIdLike {
+        val stack: ItemStack = item.toStack()
         HTAdvancementBuilder.create(key) {
             +parentKey
-            display { +item.toStack() }
-            inventory("has_${item.path}") { +ItemPredicate.Builder.item().of(item) }
+            display { +stack }
+            inventory("has_${item.path}") { +ItemPredicate.Builder.item().of(stack.item) }
         }.save(exporter)
     }
 

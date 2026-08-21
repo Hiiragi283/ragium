@@ -35,6 +35,8 @@ class RTEnchantingRecipe(ingredient: HTItemIngredient, val holder: Holder<Enchan
         return enchantment.getMaxCost(enchantment.maxLevel)
     }
 
+    override fun getMatchingStacks(input: HTEnchantingRecipe.Input): Triple<ItemStack, ItemStack, Int> = getMatchingStacks(input.base, input.addition, input.expAmount)
+
     override fun getMatchingStacks(first: ItemStack, second: ItemStack, third: Int): Triple<ItemStack, ItemStack, Int> = Triple(
         ItemStack.EMPTY,
         ingredient.getMatchingStack(second),

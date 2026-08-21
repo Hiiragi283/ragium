@@ -15,9 +15,11 @@ class HTEnchantingCompletedRecipe(
     private val outputHandler: HTOutputHandler<ItemStack>,
 ) : HTCompletedRecipe<HTEnchantingRecipe>(recipe) {
     private val output: ItemStack = recipe.assemble(
-        baseInputHandler.getStack(),
-        additionInputHandler.getStack(),
-        expFluidInputHandler.getStack().amount,
+        HTEnchantingRecipe.Input(
+            baseInputHandler.getStack(),
+            additionInputHandler.getStack(),
+            expFluidInputHandler.getStack().amount,
+        ),
     )
 
     override fun canComplete(): Boolean = outputHandler.canInsert(output)

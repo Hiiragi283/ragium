@@ -17,5 +17,5 @@ abstract class HTBasicEnchantingRecipe(val ingredient: HTItemIngredient) : HTEnc
 
     override fun getRequiredAdditionAmount(base: ItemStack, addition: ItemStack, expAmount: Int): Int = ingredient.getMatchingStack(addition).count
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: Int): ItemStack = applyEnchantment(firstInput)
+    override fun assemble(input: HTEnchantingRecipe.Input): ItemStack = applyEnchantment(input.base)
 }

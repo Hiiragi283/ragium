@@ -3,13 +3,13 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.base.HTProgressData
+import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.base.HTRecipeFactories
 import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
-import hiiragi283.core.api.recipe.progress.HTBiProgressProvider
-import hiiragi283.core.api.recipe.progress.HTProgressData
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
@@ -33,7 +33,7 @@ class HTRefiningRecipe(
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.ItemAndFluid,
     HTRecipeFactories.ItemAndFluid<HTChemicalResult>,
-    HTBiProgressProvider.Simple<ItemStack, FluidStack>,
+    HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField
@@ -53,7 +53,7 @@ class HTRefiningRecipe(
 
     override fun getMatchingStacks(first: ItemStack, second: FluidStack): Pair<ItemStack, FluidStack> = catalyst.fold(ItemStack::EMPTY) { it.getMatchingStack(first) } to ingredient.getMatchingStack(second)
 
-    override fun assemble(firstInput: ItemStack, secondInput: FluidStack): HTChemicalResult = HTChemicalResult.create(fluidResults, itemResult)
+    override fun apply(first: ItemStack, second: FluidStack): HTChemicalResult = HTChemicalResult.create(fluidResults, itemResult)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.REFINING
 

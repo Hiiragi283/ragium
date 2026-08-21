@@ -35,11 +35,11 @@ class HTChemicalReactingRecipeBuilder : HTProgressRecipeBuilder<HTChemicalReacti
 
     @PublishedApi internal val ingredients: MutableList<HTFluidIngredient> = mutableListOf()
 
-    @PublishedApi internal var catalyst: Option<HTItemIngredient> by HTDelegates.optionalOnceInitialize()
+    @PublishedApi internal var catalyst: Option<HTItemIngredient> by HTDelegates.onceInitialize { Option.none() }
 
     @PublishedApi internal val fluidResults: MutableList<HTFluidResult> = mutableListOf()
 
-    @PublishedApi internal var itemResult: Option<HTItemResult> by HTDelegates.optionalOnceInitialize()
+    @PublishedApi internal var itemResult: Option<HTItemResult> by HTDelegates.onceInitialize { Option.none() }
 
     operator fun HTFluidIngredient.unaryPlus() {
         ingredients += this

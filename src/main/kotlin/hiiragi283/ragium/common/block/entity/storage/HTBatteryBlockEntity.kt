@@ -101,7 +101,7 @@ abstract class HTBatteryBlockEntity<T : HTEnergyHandler>(type: BlockEntityType<*
         val input: ItemStack = inputHandler.getItemStack()
         val recipe: HCChargingRecipe = cache.findFirstRecipe(input, level) ?: return false
 
-        val result: ItemStack = recipe.assemble(input)
+        val result: ItemStack = recipe.apply(input)
         if (!outputHandler.canInsert(result)) return false
         val requiredEnergy: Int = recipe.energy
         if (handler.extract(requiredEnergy, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) < requiredEnergy) return false

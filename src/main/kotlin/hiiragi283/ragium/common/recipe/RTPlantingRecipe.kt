@@ -4,9 +4,9 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTRecipeResultHelper
 import hiiragi283.core.api.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.base.HTProgressData
+import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.progress.HTBiProgressProvider
-import hiiragi283.core.api.recipe.progress.HTProgressData
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.codec.listOrElement
@@ -24,7 +24,7 @@ class RTPlantingRecipe(
     val results: List<HTChancedItemResult>,
     override val progressData: HTProgressData,
 ) : HTPlantingRecipe,
-    HTBiProgressProvider.Simple<ItemStack, ItemStack>,
+    HTProgressRecipe.Simple<RecipeInput>,
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField
@@ -43,7 +43,7 @@ class RTPlantingRecipe(
 
     override fun getRequiredPlantStack(first: ItemStack): ItemStack = plant.getMatchingStack(first)
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack): Iterable<ItemStack> = results.map(HTChancedItemResult::createOrEmpty).let(HTRecipeResultHelper::mergeStacks)
+    override fun apply(first: ItemStack, second: ItemStack): Iterable<ItemStack> = results.map(HTChancedItemResult::createOrEmpty).let(HTRecipeResultHelper::mergeStacks)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PLANTING
 

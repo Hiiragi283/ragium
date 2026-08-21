@@ -156,7 +156,7 @@ open class HTTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Blo
         val stack: ItemStack = inputHandler.getItemStack()
         val recipe: HTTankEmptyingRecipe = emptyingCache.findFirstRecipe(stack, level) ?: return false
 
-        val (item: ItemStack, fluid: FluidStack) = recipe.assemble(stack)
+        val (item: ItemStack, fluid: FluidStack) = recipe.apply(stack)
         if (outputHandler.canInsert(item) && fluidOutputHandler.canInsert(fluid)) {
             // outputs
             outputHandler.insert(item)
@@ -175,7 +175,7 @@ open class HTTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Blo
 
         val recipe: HTTankFillingRecipe = fillingCache.findFirstRecipe(itemStack, fluidStack, level) ?: return false
 
-        val filledContainer: ItemStack = recipe.assemble(itemStack, fluidStack)
+        val filledContainer: ItemStack = recipe.apply(itemStack, fluidStack)
         if (outputHandler.canInsert(filledContainer)) {
             outputHandler.insert(filledContainer)
             recipe.getMatchingStacks(itemStack, fluidStack).let { (first: ItemStack, second: FluidStack) ->

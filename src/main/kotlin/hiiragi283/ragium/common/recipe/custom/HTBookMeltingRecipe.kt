@@ -1,11 +1,12 @@
 package hiiragi283.ragium.common.recipe.custom
 
 import hiiragi283.core.api.recipe.base.HTItemToFluidRecipe
-import hiiragi283.core.api.recipe.progress.HTProgressData
+import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.util.HTExperienceHelper
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.neoforge.fluids.FluidStack
 
@@ -19,12 +20,12 @@ data object HTBookMeltingRecipe : HTItemToFluidRecipe {
         else -> ItemStack.EMPTY
     }
 
-    override fun assemble(input: ItemStack): FluidStack = getStoredEnchantments(input)
+    override fun apply(input: ItemStack): FluidStack = getStoredEnchantments(input)
         .let(HTExperienceHelper::getTotalMinCost)
         .let(HTExperienceHelper::fluidAmountFromExp)
         .let(HCFluids.EXPERIENCE::toStack)
 
-    override fun getProgressData(input: ItemStack): HTProgressData = HTProgressData.time(getStoredEnchantments(input).keySet().size * 100)
+    override fun getProgressData(input: SingleRecipeInput): HTProgressData = HTProgressData.time(getStoredEnchantments(input.item()).keySet().size * 100)
 
     override fun isIncomplete(): Boolean = false
 }

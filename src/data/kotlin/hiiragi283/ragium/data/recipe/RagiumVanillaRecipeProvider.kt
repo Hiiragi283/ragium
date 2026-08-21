@@ -6,7 +6,7 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.color.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.data.recipe.IngredientBuilder
-import hiiragi283.core.api.item.HTSimpleItemLike
+import hiiragi283.core.api.item.HTItemInstanceLike
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.property.getDefaultPart
@@ -38,6 +38,7 @@ import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
@@ -118,7 +119,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
-    private inline fun mechanical(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun mechanical(block: HTItemInstanceLike, builderAction: IngredientBuilder.() -> Unit) {
         HTShapedRecipeBuilder.create {
             +"AAA"
             +"BCB"
@@ -131,7 +132,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
-    private inline fun heat(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun heat(block: HTItemInstanceLike, builderAction: IngredientBuilder.() -> Unit) {
         HTShapedRecipeBuilder.create {
             +"AAA"
             +"BCB"
@@ -144,7 +145,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
-    private inline fun chemical(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun chemical(block: HTItemInstanceLike, builderAction: IngredientBuilder.() -> Unit) {
         HTShapedRecipeBuilder.create {
             +"AAA"
             +"BCB"
@@ -157,7 +158,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
-    private inline fun cold(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun cold(block: HTItemInstanceLike, builderAction: IngredientBuilder.() -> Unit) {
         HTShapedRecipeBuilder.create {
             +"AAA"
             +"BCB"
@@ -170,7 +171,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
-    private inline fun electronics(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun electronics(block: HTItemInstanceLike, builderAction: IngredientBuilder.() -> Unit) {
         HTShapedRecipeBuilder.create {
             +"AAA"
             +"BCB"
@@ -183,7 +184,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
-    private inline fun arcane(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun arcane(block: HTItemInstanceLike, builderAction: IngredientBuilder.() -> Unit) {
         HTShapedRecipeBuilder.create {
             +"AAA"
             +"BCB"
@@ -231,20 +232,21 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     }
 
     private fun variableStorage(
-        block: HTSimpleItemLike,
+        block: HTItemInstanceLike,
         top: HTMaterialKey,
         core: TagKey<Item>,
         largeCore: TagKey<Item> = core,
     ) {
         // Shaped
         val defaultPart: TagKey<Item> = materialManager[top]?.getDefaultPart(top) ?: return
+        val stack: ItemStack = block.toStack()
         HTShapedRecipeBuilder.create {
             crossLayered()
             define('A') { +tag(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY) }
             define('B') { +defaultPart }
             define('C') { +Tags.Items.GLASS_BLOCKS }
             define('D') { +core }
-            +block.toStack()
+            +stack.copy()
         }.save(exporter)
         // x10 Capacity
         HTShapedRecipeBuilder.create {
@@ -253,7 +255,8 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('B') { +tag(CommonTagPrefixes.STORAGE_BLOCK, top) }
             define('C') { +Tags.Items.GLASS_BLOCKS }
             define('D') { +largeCore }
-            +createItemStack(block, RagiumDataComponents.CAPACITY_SCALE, 10)
+            stack.set(RagiumDataComponents.CAPACITY_SCALE, 10)
+            +stack
             recipeId prefix "larger_"
         }.save(exporter)
     }
