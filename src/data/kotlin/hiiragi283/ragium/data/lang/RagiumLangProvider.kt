@@ -30,11 +30,13 @@ interface RagiumLangProvider {
         }
         // Item
         RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemPart, material: HTMaterial, item: HTHasTranslationKey) ->
-            if (part == HTItemPart.DUST && material == HTMaterial.Other.WOOD) {
-                provider.add(item, HTLangName("Sawdust", "おがくず"))
-            } else {
-                provider.add(item, part, material)
+            var patternProvider: HTLangPatternProvider = part
+            if (part == HTItemPart.DUST) {
+                if (material is HTMaterial.Other && material.isPulp) {
+                    patternProvider = HTLangPatternProvider("%s Pulp", "%sパルプ")
+                }
             }
+            provider.add(item, patternProvider, material)
         }
         provider.add(RagiumItems.COAL_COKE, HTMaterial.Fuel.COAL_COKE)
         // Text

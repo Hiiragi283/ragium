@@ -67,6 +67,7 @@ data object Ragium : HTCommonMod() {
         event.register(Registries.RECIPE_SERIALIZER) { helper ->
             helper.register(RagiumAPI.id(RagiumConstants.ASSEMBLING), RagiumRecipeSerializers.ASSEMBLING)
             helper.register(RagiumAPI.id(RagiumConstants.CRUSHING), RagiumRecipeSerializers.CRUSHING)
+            helper.register(RagiumAPI.id(RagiumConstants.CUTTING), RagiumRecipeSerializers.CUTTING)
 
             helper.register(RagiumAPI.id(RagiumConstants.FREEZING), RagiumRecipeSerializers.FREEZING)
             helper.register(RagiumAPI.id(RagiumConstants.MELTING), RagiumRecipeSerializers.MELTING)

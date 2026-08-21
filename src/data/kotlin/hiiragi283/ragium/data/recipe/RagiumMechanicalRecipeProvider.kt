@@ -20,6 +20,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     override fun buildRecipes() {
         assembling()
         crushing()
+        cutting()
     }
 
     private fun assembling() {
@@ -326,6 +327,35 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 recipeId suffix "_from_raw"
             }.save(exporter)
         }
+
+        // Book -> 3x Paper Pulp
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.BOOK } }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Other.PAPER)
+                count = 3
+            }
+            recipeId suffix "_from_book"
+        }.save(exporter)
+    }
+
+    private fun cutting() {
+        // Sapling -> Stick
+        RagiumRecipeBuilders.cutting {
+            ingredient { +holderSet(ItemTags.SAPLINGS) }
+            primary { +Items.STICK }
+            recipeId suffix "_from_saplings"
+        }.save(exporter)
+        // Book -> Leather + 3x Paper
+        RagiumRecipeBuilders.cutting {
+            ingredient { items { +Items.BOOK } }
+            primary {
+                +Items.PAPER
+                count = 3
+            }
+            secondary { +Items.LEATHER }
+            recipeId suffix "_from_book"
+        }.save(exporter)
     }
 
     override fun getName(): String = "Mechanical Recipes"

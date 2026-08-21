@@ -9,28 +9,30 @@ import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.item.RagiumItems
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
 data object RagiumJeiRecipeTypes {
     // Mechanical
     @JvmField
-    val ASSEMBLING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, RagiumItems.COAL_COKE)
+    val ASSEMBLING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, ItemStack(Items.CRAFTER))
 
     @JvmField
-    val CRUSHING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.CRUSHING, RagiumItems.COAL_COKE)
+    val CRUSHING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.CRUSHING, ItemStack(Items.FLINT))
+
+    @JvmField
+    val CUTTING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.CUTTING, ItemStack(Items.IRON_AXE))
 
     // Heat
     @JvmField
-    val FREEZING: HTHolderJeiRecipeType<HTItemAndFluidToItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.FREEZING, RagiumItems.COAL_COKE)
+    val FREEZING: HTHolderJeiRecipeType<HTItemAndFluidToItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.FREEZING, ItemStack(Items.ICE))
 
     @JvmField
-    val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.MELTING, RagiumItems.COAL_COKE)
+    val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.MELTING, ItemStack(Items.MAGMA_BLOCK))
 
     // Chemical
     @JvmField
-    val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> = HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, RagiumItems.COAL_COKE)
+    val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> = HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, ItemStack(Items.LIGHTNING_ROD))
 
     // Bio
     @JvmField

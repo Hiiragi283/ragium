@@ -90,19 +90,20 @@ sealed interface HTMaterial :
         override val materialName: String = name.lowercase()
     }
 
-    enum class Other(langName: HTLangName) :
+    enum class Other(val isPulp: Boolean, langName: HTLangName) :
         HTMaterial,
         HTLangName by langName {
         // Minecraft
-        WOOD("Wood", "木"),
-        GLASS("Glass", "ガラス"),
-        OBSIDIAN("Obsidian", "黒曜石"),
+        WOOD(true, "Wood", "木"),
+        GLASS(false, "Glass", "ガラス"),
+        OBSIDIAN(false, "Obsidian", "黒曜石"),
+        PAPER(true, "Paper", "紙"),
 
         // Common
-        SILICON("Silicon", "シリコン"),
+        SILICON(false, "Silicon", "シリコン"),
         ;
 
-        constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
+        constructor(isPulp: Boolean, enName: String, jaName: String) : this(isPulp, HTLangName(enName, jaName))
 
         override val materialName: String = name.lowercase()
     }

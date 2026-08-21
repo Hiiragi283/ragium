@@ -29,6 +29,9 @@ data object RagiumRecipeTypes {
     @JvmField
     val CRUSHING: HTRecipeType<RTCrushingRecipe> = create(RagiumConstants.CRUSHING)
 
+    @JvmField
+    val CUTTING: HTRecipeType<RTCuttingRecipe> = create(RagiumConstants.CUTTING)
+
     // Heat
     @JvmField
     val FREEZING: HTRecipeType<RTFreezingRecipe> = create(RagiumConstants.FREEZING)

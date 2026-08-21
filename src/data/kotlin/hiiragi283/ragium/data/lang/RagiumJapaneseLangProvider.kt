@@ -54,6 +54,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         // Recipe Type
         add(RagiumRecipeTypes.ASSEMBLING, "組立")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
+        add(RagiumRecipeTypes.CUTTING, "切断")
 
         add(RagiumRecipeTypes.FREEZING, "冷凍")
         add(RagiumRecipeTypes.MELTING, "溶融")

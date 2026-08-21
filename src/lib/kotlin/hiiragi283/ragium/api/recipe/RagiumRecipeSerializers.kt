@@ -10,6 +10,9 @@ data object RagiumRecipeSerializers {
     @JvmField
     val CRUSHING: RecipeSerializer<RTCrushingRecipe> = RTCrushingRecipe.SERIALIZER
 
+    @JvmField
+    val CUTTING: RecipeSerializer<RTCuttingRecipe> = RTCuttingRecipe.SERIALIZER
+
     // Heat
     @JvmField
     val FREEZING: RecipeSerializer<RTFreezingRecipe> = RTFreezingRecipe.SERIALIZER

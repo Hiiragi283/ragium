@@ -53,6 +53,7 @@ data object RagiumItems {
             HTMaterial.Other.WOOD,
             HTMaterial.Other.GLASS,
             HTMaterial.Other.OBSIDIAN,
+            HTMaterial.Other.PAPER,
         ).forEach { put(HTItemPart.DUST, it) }
         // Gear
         setOf(

@@ -6,7 +6,7 @@ import net.minecraft.core.component.DataComponentType
 import net.neoforged.neoforge.common.MutableDataComponentHolder
 
 interface DataComponentSetter {
-    fun <T : Any> set(type: DataComponentType<T>, value: T)
+    operator fun <T : Any> set(type: DataComponentType<T>, value: T)
 
     fun <T : Any> remove(type: DataComponentType<T>)
 

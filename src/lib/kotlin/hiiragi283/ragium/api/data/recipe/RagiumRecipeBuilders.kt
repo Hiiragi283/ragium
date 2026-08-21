@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTBrewingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
+import hiiragi283.ragium.api.recipe.RTCuttingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
 import hiiragi283.ragium.api.recipe.RTSmeltingRecipe
@@ -36,6 +37,14 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTItemToDoubleItemRecipeBuilder(RagiumConstants.CRUSHING, ::RTCrushingRecipe).apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun cutting(builderAction: HTItemToDoubleItemRecipeBuilder<RTCuttingRecipe>.() -> Unit): HTItemToDoubleItemRecipeBuilder<RTCuttingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemToDoubleItemRecipeBuilder(RagiumConstants.CUTTING, ::RTCuttingRecipe).apply(builderAction)
     }
 
     // Heat

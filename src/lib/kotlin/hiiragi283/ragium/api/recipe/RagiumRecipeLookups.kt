@@ -43,6 +43,9 @@ data object RagiumRecipeLookups {
     @JvmField
     val CRUSHING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.CRUSHING)
 
+    @JvmField
+    val CUTTING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.CUTTING)
+
     // Heat
     @JvmField
     val FREEZING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.FREEZING)
@@ -66,6 +69,7 @@ data object RagiumRecipeLookups {
     fun init() {
         ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING, identity())
         CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING, identity())
+        CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING, identity())
 
         FREEZING.fromRecipeType(RagiumRecipeTypes.FREEZING, identity())
         MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())
