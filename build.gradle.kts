@@ -85,13 +85,9 @@ val clientModule: SourceSet = sourceSets.register("client") {
     compileClasspath += mainModule.output + mainModule.compileClasspath
     runtimeClasspath += mainModule.output + mainModule.runtimeClasspath
 }.get()
-val integrationModule: SourceSet = sourceSets.register("integration") {
+val dataModule: SourceSet = sourceSets.register("data") {
     compileClasspath += clientModule.output + clientModule.compileClasspath
     runtimeClasspath += clientModule.output + clientModule.runtimeClasspath
-}.get()
-val dataModule: SourceSet = sourceSets.register("data") {
-    compileClasspath += integrationModule.output + integrationModule.compileClasspath
-    runtimeClasspath += integrationModule.output + integrationModule.runtimeClasspath
 }.get()
 
 repositories {
@@ -168,15 +164,6 @@ neoForge {
             programArgument("--nogui")
         }
 
-        register("integration") {
-            client()
-            gameDirectory = rootProject.file("run")
-            sourceSet = integrationModule
-
-            jvmArgument("-Dmixin.debug.export=true")
-            devLogin = true
-        }
-
         register("data") {
             clientData()
             sourceSet = dataModule
@@ -220,7 +207,6 @@ neoForge {
             sourceSet(libModule)
             sourceSet(sourceSets.main.get())
             sourceSet(clientModule)
-            sourceSet(integrationModule)
             sourceSet(dataModule)
         }
     }
@@ -257,13 +243,11 @@ dependencies {
         val libCompileClasspath: Configuration = named("libCompileClasspath").get()
         val compileClasspath: Configuration = named("compileClasspath").get()
         val clientCompileClasspath: Configuration = named("clientCompileClasspath").get()
-        val integrationCompileClasspath: Configuration = named("integrationCompileClasspath").get()
         val dataCompileClasspath: Configuration = named("dataCompileClasspath").get()
 
         libCompileClasspath.extendsFrom(compileClasspath)
         compileClasspath.extendsFrom(clientCompileClasspath)
-        clientCompileClasspath.extendsFrom(integrationCompileClasspath)
-        integrationCompileClasspath.extendsFrom(dataCompileClasspath)
+        clientCompileClasspath.extendsFrom(dataCompileClasspath)
     }
 
     implementation(libs.kff)
@@ -272,10 +256,6 @@ dependencies {
     implementation(libs.bundles.common.impl)
     compileOnly(libs.bundles.common.compile)
     runtimeOnly(libs.bundles.common.runtime)
-
-    "integrationImplementation"(libs.bundles.integration.impl)
-    "integrationCompileOnly"(libs.bundles.integration.compile)
-    "integrationRuntimeOnly"(libs.bundles.integration.runtime)
 }
 
 // Example configuration to allow publishing using the maven-publish plugin
@@ -345,7 +325,7 @@ dokka {
     dokkaSourceSets {
         configureEach {
             sourceRoots.from(
-                listOf(libModule, clientModule, integrationModule)
+                listOf(libModule, clientModule)
                     .map { it.kotlin }
                     .map { it.srcDirs.filter { "lib" in it.path } },
             )
@@ -438,15 +418,12 @@ tasks {
         from("LICENSE") {
             rename { "${it}_hiiragi_core" }
         }
-        from(libModule.output, clientModule.output, integrationModule.output)
-        from(dataModule.output) {
-            this.include("**/core/data/bootstrap/**")
-        }
+        from(libModule.output, clientModule.output)
     }
 
     named<Jar>("sourcesJar") {
-        dependsOn("libClasses", "clientClasses", "integrationClasses")
+        dependsOn("libClasses", "clientClasses")
         duplicatesStrategy = DuplicatesStrategy.FAIL
-        from(libModule.allSource, clientModule.allSource, integrationModule.allSource)
+        from(libModule.allSource, clientModule.allSource)
     }
 }
