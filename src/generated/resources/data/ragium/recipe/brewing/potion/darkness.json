@@ -8,7 +8,11 @@
       "potions": "minecraft:mundane"
     }
   },
-  "fluid_result": {
+  "item_ingredient": {
+    "count": 1,
+    "ingredient": "#c:gems/echo"
+  },
+  "result": {
     "type": "ragium:potion",
     "amount": 1000,
     "contents": {
@@ -21,10 +25,6 @@
       ],
       "custom_name": "darkness"
     }
-  },
-  "item_ingredient": {
-    "count": 1,
-    "ingredient": "#c:gems/echo"
   },
   "time": 200
 }

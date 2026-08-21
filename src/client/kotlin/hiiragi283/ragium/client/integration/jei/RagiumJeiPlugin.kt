@@ -4,8 +4,8 @@ import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
 import hiiragi283.lib.integration.jei.category.HTDoubleItemToItemRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTItemAndFluidToFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToItemRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToFluidRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
@@ -78,7 +78,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Chemical
             RTElectrolyzingRecipeCategory(guiHelper),
             // Bio
-            HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.BREWING),
+            HTItemAndFluidToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.BREWING),
             // Electronics
             // Arcane
         )

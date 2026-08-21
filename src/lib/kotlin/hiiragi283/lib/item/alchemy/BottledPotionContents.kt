@@ -2,7 +2,6 @@ package hiiragi283.lib.item.alchemy
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
-import hiiragi283.lib.registry.VanillaFluidContents
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.text.Text
@@ -14,9 +13,11 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
+import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
@@ -85,7 +86,7 @@ data class BottledPotionContents @JvmOverloads constructor(val contents: PotionC
     val isWater: Boolean get() = potion == Potions.WATER && bottleType == HTBottleType.DEFAULT
 
     fun toFluidTemplate(amount: Int = FluidType.BUCKET_VOLUME): FluidStackTemplate = when (this.isWater) {
-        true -> VanillaFluidContents.WATER.toTemplate(amount)
+        true -> FluidStackTemplate(Fluids.WATER, amount)
         false -> HTPotionFluidAccess.INSTANCE.fluidContent.toTemplate(
             amount,
             HTPotionHelper.createFluidPatch(HTPotionFluidAccess.INSTANCE.fluidContent.get(), this@BottledPotionContents),
@@ -95,7 +96,7 @@ data class BottledPotionContents @JvmOverloads constructor(val contents: PotionC
     fun toFluidStack(amount: Int = FluidType.BUCKET_VOLUME): FluidStack = toFluidTemplate(amount).create()
 
     fun toBucketTemplate(): ItemStackTemplate = when (this.isWater) {
-        true -> VanillaFluidContents.WATER.bucketHolder.toTemplate()
+        true -> ItemStackTemplate(Items.WATER_BUCKET)
         false -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.toTemplate(patch = HTPotionHelper.createItemPatch(this@BottledPotionContents))
     }!!
 

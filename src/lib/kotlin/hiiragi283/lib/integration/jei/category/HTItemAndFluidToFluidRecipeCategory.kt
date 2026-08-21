@@ -12,8 +12,8 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.RecipeIngredientRole
 import net.minecraft.world.item.crafting.Ingredient
 
-class HTItemAndFluidToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem>) : HTHolderRecipeCategory<HTItemAndFluidToRecipe.BasicItem>(guiHelper, recipeType, 18 * 6, 18 * 1, HTItemAndFluidToRecipe.BasicItem.SIMPLE_CODEC) {
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemAndFluidToRecipe.BasicItem, focuses: IFocusGroup) {
+class HTItemAndFluidToFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid>) : HTHolderRecipeCategory<HTItemAndFluidToRecipe.BasicFluid>(guiHelper, recipeType, 18 * 6, 18 * 1, HTItemAndFluidToRecipe.BasicFluid.SIMPLE_CODEC) {
+    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemAndFluidToRecipe.BasicFluid, focuses: IFocusGroup) {
         // input
         recipe.fluidIngredient.let {
             builder
@@ -36,13 +36,15 @@ class HTItemAndFluidToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHo
             },
         )
         // output
-        builder
-            .addOutputSlot(getPosition(5), getPosition(0))
-            .add(recipe.result)
-            .setSlotBackground(HTBackgroundType.OUTPUT)
+        recipe.result.let {
+            builder
+                .addOutputSlot(getPosition(5), getPosition(0))
+                .add(it)
+                .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
+        }
     }
 
-    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemAndFluidToRecipe.BasicItem, focuses: IFocusGroup) {
+    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemAndFluidToRecipe.BasicFluid, focuses: IFocusGroup) {
         builder.addRecipePlus(getPosition(1))
         builder.addRecipeArrow(recipe).setPosition(getPosition(3.25), getPosition(0))
     }

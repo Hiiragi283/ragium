@@ -8,7 +8,11 @@
       "potions": "minecraft:mundane"
     }
   },
-  "fluid_result": {
+  "item_ingredient": {
+    "count": 1,
+    "ingredient": "minecraft:rotten_flesh"
+  },
+  "result": {
     "type": "ragium:potion",
     "amount": 1000,
     "contents": {
@@ -21,10 +25,6 @@
       ],
       "custom_name": "hunger"
     }
-  },
-  "item_ingredient": {
-    "count": 1,
-    "ingredient": "minecraft:rotten_flesh"
   },
   "time": 200
 }

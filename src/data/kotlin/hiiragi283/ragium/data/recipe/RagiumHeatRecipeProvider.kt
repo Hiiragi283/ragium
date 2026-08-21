@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
-import hiiragi283.lib.registry.VanillaFluidContents
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
@@ -28,7 +27,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Water -> Snowball
         RagiumRecipeBuilders.freezing {
             catalyst { items { +RagiumItems.BALL_SHAPE_PATTERN } }
-            fluidIngredient { +holderSet(VanillaFluidContents.WATER) }
+            fluidIngredient { +waterSet() }
             result {
                 +Items.SNOWBALL
                 count = 4
@@ -37,7 +36,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Water -> Ice
         RagiumRecipeBuilders.freezing {
             catalyst { items { +RagiumItems.BLOCK_SHAPE_PATTERN } }
-            fluidIngredient { +holderSet(VanillaFluidContents.WATER) }
+            fluidIngredient { +waterSet() }
             result { +Items.ICE }
         }.save(exporter)
         // Water + Ice -> Packed Ice
@@ -46,7 +45,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 items { +Items.ICE }
                 count = 5
             }
-            fluidIngredient { +holderSet(VanillaFluidContents.WATER) }
+            fluidIngredient { +waterSet() }
             result { +Items.PACKED_ICE }
         }.save(exporter)
         // Water + Packed Ice -> Blue Ice
@@ -56,7 +55,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 count = 5
             }
             fluidIngredient {
-                +holderSet(VanillaFluidContents.WATER)
+                +waterSet()
                 amount *= 3
             }
             result { +Items.BLUE_ICE }
@@ -65,7 +64,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Lava -> Obsidian
         RagiumRecipeBuilders.freezing {
             catalyst { items { +RagiumItems.BLOCK_SHAPE_PATTERN } }
-            fluidIngredient { +holderSet(VanillaFluidContents.LAVA) }
+            fluidIngredient { +lavaSet() }
             result { +Items.OBSIDIAN }
         }.save(exporter)
 

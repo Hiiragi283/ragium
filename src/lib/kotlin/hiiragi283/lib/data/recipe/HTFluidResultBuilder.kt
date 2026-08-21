@@ -4,7 +4,6 @@ import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.registry.HTDeferredHolder
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.registry.VanillaFluidContents
 import hiiragi283.lib.registry.createKey
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
@@ -15,6 +14,8 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.Fluids
+import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
@@ -64,15 +65,15 @@ class HTFluidResultBuilder {
     }
 
     fun water() {
-        +VanillaFluidContents.WATER
+        +Fluids.WATER
     }
 
     fun lava() {
-        +VanillaFluidContents.LAVA
+        +Fluids.LAVA
     }
 
     fun milk() {
-        +VanillaFluidContents.MILK
+        +NeoForgeMod.MILK
     }
 
     // Potion

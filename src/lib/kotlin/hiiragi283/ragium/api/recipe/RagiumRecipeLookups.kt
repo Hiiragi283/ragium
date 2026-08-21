@@ -5,8 +5,8 @@ import hiiragi283.lib.collection.buildListMultiMap
 import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
+import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
-import hiiragi283.lib.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
@@ -58,7 +58,7 @@ data object RagiumRecipeLookups {
 
     // Bio
     @JvmField
-    val BREWING: HTCompoundRecipeLookup<HTItemOrFluidRecipe> = create(RagiumConstants.BREWING)
+    val BREWING: HTCompoundRecipeLookup<HTItemAndFluidToFluidRecipe> = create(RagiumConstants.BREWING)
 
     // Electronics
 
@@ -83,7 +83,7 @@ data object RagiumRecipeLookups {
                         RagiumRecipeBuilders.brewing {
                             itemIngredient { +mix.ingredient }
                             fluidIngredient { +HTPotionFluidIngredient(mix.from()) }
-                            fluidResult { +mix.to() }
+                            result { +mix.to() }
                         }.save { _, recipe: RTBrewingRecipe ->
                             put(mix.to().asSupplier().getId().modifyPath { "/${RagiumConstants.BREWING}/$it" }, recipe)
                         }

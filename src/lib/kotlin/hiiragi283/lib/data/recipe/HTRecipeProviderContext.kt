@@ -55,6 +55,12 @@ abstract class HTRecipeProviderContext {
      */
     protected fun holderSet(content: HTFluidContent): HolderSet<Fluid> = holderSet(content.fluidTag)
 
+    protected fun waterSet(): HolderSet<Fluid> = holderSet(Tags.Fluids.WATER)
+
+    protected fun lavaSet(): HolderSet<Fluid> = holderSet(Tags.Fluids.LAVA)
+
+    protected fun milkSet(): HolderSet<Fluid> = holderSet(Tags.Fluids.MILK)
+
     // Recipe Builder
     protected inline fun netheriteUpgrade(builderAction: HTSmithingRecipeBuilder.() -> Unit): HTSmithingRecipeBuilder = HTSmithingRecipeBuilder.create {
         template { items { +Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE } }

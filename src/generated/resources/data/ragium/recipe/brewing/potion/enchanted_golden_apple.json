@@ -8,7 +8,11 @@
       "potions": "minecraft:mundane"
     }
   },
-  "fluid_result": {
+  "item_ingredient": {
+    "count": 1,
+    "ingredient": "minecraft:enchanted_golden_apple"
+  },
+  "result": {
     "type": "ragium:potion",
     "amount": 1000,
     "contents": {
@@ -39,10 +43,6 @@
       ],
       "custom_name": "enchanted_golden_apple"
     }
-  },
-  "item_ingredient": {
-    "count": 1,
-    "ingredient": "minecraft:enchanted_golden_apple"
   },
   "time": 200
 }
