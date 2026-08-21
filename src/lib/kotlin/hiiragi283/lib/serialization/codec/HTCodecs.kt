@@ -36,7 +36,7 @@ import net.minecraft.util.ExtraCodecs
 import org.apache.commons.lang3.math.Fraction
 
 /**
- * Hiiragi Coreとそれを前提とするmodで使用される[Codec]と[MapCodec]をまとめたクラスです。
+ * Hiiragi Seriesで使用される[Codec]と[MapCodec]をまとめたクラスです。
  * @author Hiiragi Tsubasa
  * @since 0.16.0
  */

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api
 
+import hiiragi283.lib.gui.sync.HTSyncablePayload
 import hiiragi283.lib.recipe.result.HTItemResultType
 import hiiragi283.lib.resource.toId
 import net.minecraft.core.Registry
@@ -14,9 +15,13 @@ data object RagiumRegistries {
     @JvmField
     val ITEM_RESULT_TYPE: Registry<HTItemResultType<*>> = createRegistry(Keys.ITEM_RESULT_TYPE)
 
+    @JvmField
+    val SYNCABLE_SLOT_TYPE: Registry<HTSyncablePayload.Type<*>> = createRegistry(Keys.SYNCABLE_SLOT_TYPE)
+
     @SubscribeEvent
     fun registerNewRegistry(event: NewRegistryEvent) {
         event.register(ITEM_RESULT_TYPE)
+        event.register(SYNCABLE_SLOT_TYPE)
     }
 
     @JvmStatic
@@ -27,6 +32,9 @@ data object RagiumRegistries {
     data object Keys {
         @JvmField
         val ITEM_RESULT_TYPE: ResourceKey<Registry<HTItemResultType<*>>> = createKey("item_result_type")
+
+        @JvmField
+        val SYNCABLE_SLOT_TYPE: ResourceKey<Registry<HTSyncablePayload.Type<*>>> = createKey("syncable_payload_type")
 
         @JvmStatic
         private fun <T : Any> createKey(path: String): ResourceKey<Registry<T>> = ResourceKey.createRegistryKey(RagiumAPI.MOD_ID.toId(path))

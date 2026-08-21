@@ -1,9 +1,13 @@
 package hiiragi283.ragium
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.gui.sync.HTFluidSyncPayload
+import hiiragi283.lib.gui.sync.HTIntSyncPayload
+import hiiragi283.lib.gui.sync.HTItemSyncPayload
 import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.item.alchemy.HTPotionFluidManager
 import hiiragi283.lib.mod.HTCommonMod
+import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -20,6 +24,8 @@ import hiiragi283.ragium.block.RagiumBlocks
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.item.HTPotionBucketItem
 import hiiragi283.ragium.item.RagiumItems
+import hiiragi283.ragium.network.HTUpdateBlockEntityPacket
+import hiiragi283.ragium.network.HTUpdateMenuPacket
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Items
@@ -29,6 +35,7 @@ import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.transfer.access.ItemAccess
@@ -91,6 +98,11 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id("tag"), HTItemResult.TagEntry.TYPE)
         }
+        event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
+            helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)
+            helper.register(RagiumAPI.id(HTConstants.ITEM), HTItemSyncPayload.TYPE)
+            helper.register(RagiumAPI.id(HTConstants.FLUID), HTFluidSyncPayload.TYPE)
+        }
     }
 
     override fun commonSetup(event: FMLCommonSetupEvent) {
@@ -106,5 +118,10 @@ data object Ragium : HTCommonMod() {
             { _, access: ItemAccess -> HTPotionBucketItem.BucketHandler(access) },
             RagiumFluids.POTION.bucketHolder,
         )
+    }
+
+    override fun registerPayload(registrar: PayloadRegistrar) {
+        registrar.playToClient(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC, HTPayloadHandlers::handleS2C)
+        registrar.playBidirectional(HTUpdateMenuPacket.TYPE, HTUpdateMenuPacket.STREAM_CODEC, HTPayloadHandlers::handleBoth)
     }
 }

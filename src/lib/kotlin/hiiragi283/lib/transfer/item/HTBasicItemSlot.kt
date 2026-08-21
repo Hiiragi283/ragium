@@ -51,7 +51,30 @@ open class HTBasicItemSlot(
         )
     }
 
-    override var stackIn: ItemStack = ItemStack.EMPTY
+    private var stackIn: ItemStack = ItemStack.EMPTY
+
+    override var stack: ItemStack
+        get() = stackIn.copy()
+        set(value) {
+            setStackUnchecked(value, true)
+        }
+
+    override fun setStackInternal(stack: ItemStack) {
+        setStackUnchecked(stack, false)
+    }
+
+    private fun setStackUnchecked(other: ItemStack, validate: Boolean) {
+        val resource: ItemResource = getResourceFrom(other)
+        if (resource.isEmpty) {
+            if (this.stack.isEmpty) return
+            this.stackIn = ItemStack.EMPTY
+        } else if (!validate || isValid(resource)) {
+            this.stackIn = other
+        } else {
+            error("Invalid stack for slot: $other")
+        }
+        onRootCommit(this.stack)
+    }
 
     final override fun getResourceFrom(stack: ItemStack): ItemResource = ItemResource.of(stack)
 
@@ -71,10 +94,10 @@ open class HTBasicItemSlot(
     //    ValueIOSerializable    //
 
     override fun serialize(output: ValueOutput) {
-        output.store(HTConstants.ITEM, ItemStack.OPTIONAL_CODEC, stackIn)
+        output.store(HTConstants.ITEM, ItemStack.OPTIONAL_CODEC, stack)
     }
 
     override fun deserialize(input: ValueInput) {
-        input.read(HTConstants.ITEM, ItemStack.OPTIONAL_CODEC).ifPresent(::stackIn::set)
+        input.read(HTConstants.ITEM, ItemStack.OPTIONAL_CODEC).ifPresent(::stack::set)
     }
 }

@@ -40,7 +40,7 @@ open class HTBasicFluidTank(
         fun output(capacity: Int, listener: Runnable?): HTBasicFluidTank = create(capacity, listener, canInsert = HTTransferPredicates.internalOnly())
     }
 
-    override var stackIn: FluidStack = FluidStack.EMPTY
+    override var stack: FluidStack = FluidStack.EMPTY
 
     final override fun getResourceFrom(stack: FluidStack): FluidResource = FluidResource.of(stack)
 
@@ -55,10 +55,10 @@ open class HTBasicFluidTank(
     //    ValueIOSerializable    //
 
     override fun serialize(output: ValueOutput) {
-        output.store(HTConstants.FLUID, FluidStack.OPTIONAL_CODEC, stackIn)
+        output.store(HTConstants.FLUID, FluidStack.OPTIONAL_CODEC, stack)
     }
 
     override fun deserialize(input: ValueInput) {
-        input.read(HTConstants.FLUID, FluidStack.OPTIONAL_CODEC).ifPresent(::stackIn::set)
+        input.read(HTConstants.FLUID, FluidStack.OPTIONAL_CODEC).ifPresent(::stack::set)
     }
 }

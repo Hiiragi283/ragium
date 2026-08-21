@@ -24,7 +24,7 @@ import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStack
 
 /**
- * Hiiragi Coreとそれを前提とするmodで使用される[IRecipeCategory]の拡張クラスです。
+ * Hiiragi Seriesで使用される[IRecipeCategory]の拡張クラスです。
  *
  * 参照 : [Mekanism - BaseRecipeCategory](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/client/recipe_viewer/jei/BaseRecipeCategory.java)
  * @author Hiiragi Tsubasa

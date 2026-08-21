@@ -2,6 +2,7 @@ package hiiragi283.ragium.block.entity
 
 import com.mojang.logging.LogUtils
 import hiiragi283.lib.block.entity.HTAbstractBlockEntity
+import hiiragi283.ragium.network.HTUpdateBlockEntityPacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -9,6 +10,7 @@ import net.minecraft.network.Connection
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.ProblemReporter
+import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -18,6 +20,7 @@ import net.minecraft.world.level.redstone.Orientation
 import net.minecraft.world.level.storage.TagValueOutput
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
+import net.neoforged.neoforge.network.PacketDistributor
 import org.slf4j.Logger
 
 /**
@@ -76,8 +79,8 @@ abstract class HTExtendedBlockEntity(type: BlockEntityType<*>, pos: BlockPos, bl
      */
     fun sendUpdatePacket(level: ServerLevel) {
         if (isRemoved) return
-        // val payload: HTUpdateBlockEntityPacket = HTUpdateBlockEntityPacket.create(this) ?: return TODO
-        // PacketDistributor.sendToPlayersTrackingChunk(level, ChunkPos.containing(blockPos), payload)
+        val payload: HTUpdateBlockEntityPacket = HTUpdateBlockEntityPacket.create(this) ?: return
+        PacketDistributor.sendToPlayersTrackingChunk(level, ChunkPos.containing(blockPos), payload)
     }
 
     /**

@@ -1,5 +1,7 @@
 package hiiragi283.lib.util
 
+import java.util.function.Consumer
+import java.util.function.Supplier
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -42,6 +44,15 @@ data object HTDelegates {
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
             check(this.value == null) { "Property ${property.name} has already initialized" }
             this.value = value
+        }
+    }
+
+    @JvmRecord
+    data class LazyDelegate<T : Any>(private val getter: Supplier<out T>, private val setter: Consumer<in T>) : ReadWriteProperty<Any?, T> {
+        override fun getValue(thisRef: Any?, property: KProperty<*>): T = getter.get()
+
+        override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+            setter.accept(value)
         }
     }
 }
