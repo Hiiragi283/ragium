@@ -1,6 +1,5 @@
 package hiiragi283.ragium.gui.widget
 
-import hiiragi283.core.setup.HCWidgetTypes
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.widget.HTWidget
@@ -19,14 +18,14 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
     HTIngredientWidget {
     abstract fun getStack(): ItemStack
 
-    final override fun getType(): HTWidgetType<*> = HCWidgetTypes.ITEM
+    final override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.ITEM
 
     final override fun getIngredient(): ItemStack = getStack()
 
     //    Container    //
 
     class Container(val slot: Slot, backgroundType: HTBackgroundType) : HTItemWidget(backgroundType) {
-        constructor(slot: HTBasicItemSlot, x: Int, y: Int, backgroundType: HTBackgroundType) : this(HTContainerItemSlot.create(slot, x, y, backgroundType), backgroundType)
+        constructor(slot: HTBasicItemSlot, index: Int, x: Int, y: Int, backgroundType: HTBackgroundType) : this(HTContainerItemSlot.create(slot, index, x, y, backgroundType), backgroundType)
 
         override fun getStack(): ItemStack = slot.item
 

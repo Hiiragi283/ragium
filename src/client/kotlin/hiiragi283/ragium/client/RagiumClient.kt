@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.client.event.HTRegisterWidgetRendererEvent
 import hiiragi283.lib.client.fluid.FluidStackTintSource
 import hiiragi283.lib.client.fluid.HTFluidModelRegister
 import hiiragi283.lib.client.mod.HTClientMod
@@ -9,8 +10,11 @@ import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
+import hiiragi283.ragium.client.gui.widget.HTItemWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTWidgetRendererManager
 import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.gui.widget.RagiumWidgetTypes
 import java.awt.Color
 import net.minecraft.client.resources.model.sprite.Material
 import net.neoforged.api.distmarker.Dist
@@ -26,6 +30,11 @@ data object RagiumClient : HTClientMod() {
 
     override fun clientSetup(event: FMLClientSetupEvent) {
         HTWidgetRendererManager.init()
+    }
+
+    override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
+        event.register(RagiumWidgetTypes.FLUID, ::HTFluidWidgetRenderer)
+        event.register(RagiumWidgetTypes.ITEM, ::HTItemWidgetRenderer)
     }
 
     override fun registerFluidModels(register: HTFluidModelRegister) {

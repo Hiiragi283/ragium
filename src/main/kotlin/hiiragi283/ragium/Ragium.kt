@@ -4,6 +4,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.sync.HTFluidSyncPayload
 import hiiragi283.lib.gui.sync.HTIntSyncPayload
 import hiiragi283.lib.gui.sync.HTItemSyncPayload
+import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.item.alchemy.HTPotionFluidManager
 import hiiragi283.lib.mod.HTCommonMod
@@ -22,6 +23,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.block.RagiumBlocks
 import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.item.HTPotionBucketItem
 import hiiragi283.ragium.item.RagiumItems
 import hiiragi283.ragium.network.HTUpdateBlockEntityPacket
@@ -102,6 +104,11 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)
             helper.register(RagiumAPI.id(HTConstants.ITEM), HTItemSyncPayload.TYPE)
             helper.register(RagiumAPI.id(HTConstants.FLUID), HTFluidSyncPayload.TYPE)
+        }
+        event.register(RagiumRegistries.Keys.WIDGET_TYPE) { helper ->
+            for (widgetType: HTWidgetType<*> in RagiumWidgetTypes.allTypes) {
+                helper.register(widgetType.getId(), widgetType)
+            }
         }
     }
 

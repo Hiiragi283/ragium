@@ -1,5 +1,6 @@
 package hiiragi283.lib.client.mod
 
+import hiiragi283.lib.client.event.HTRegisterWidgetRendererEvent
 import hiiragi283.lib.client.fluid.HTFluidModelRegister
 import net.minecraft.client.color.block.BlockTintSources
 import net.minecraft.client.color.item.ItemTintSource
@@ -29,6 +30,7 @@ abstract class HTClientMod {
         val container: ModContainer = LOADING_CONTEXT.activeContainer
 
         eventBus.addListener(::clientSetup)
+        eventBus.addListener(::registerWidgetRenderer)
         eventBus.addListener(::registerBlockColors)
         eventBus.addListener(::registerItemColors)
         eventBus.addListener { event: RegisterFluidModelsEvent -> HTFluidModelRegister(event).let(::registerFluidModels) }
@@ -55,6 +57,11 @@ abstract class HTClientMod {
      * レジストリへの登録後のセットアップを行います。
      */
     protected open fun clientSetup(event: FMLClientSetupEvent) {}
+
+    /**
+     * ウィジェットのレンダラーを登録します。
+     */
+    protected open fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {}
 
     /**
      * [BlockTintSources]を登録します。
