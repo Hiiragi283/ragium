@@ -1,5 +1,6 @@
 {
   "values": [
+    "#c:buckets/calcium_hydroxide_solution",
     "#c:buckets/chloride",
     "#c:buckets/creosote",
     "#c:buckets/dye/black",
@@ -19,7 +20,9 @@
     "#c:buckets/dye/white",
     "#c:buckets/dye/yellow",
     "#c:buckets/honey",
+    "#c:buckets/hydrochloric_acid",
     "#c:buckets/hydrogen",
+    "#c:buckets/hydrogen_chloride",
     "#c:buckets/molten_blaze",
     "#c:buckets/molten_ender",
     "#c:buckets/molten_glass",
@@ -28,6 +31,9 @@
     "#c:buckets/ominous_flux",
     "#c:buckets/oxygen",
     "#c:buckets/potion",
-    "#c:buckets/sodium_hydroxide_solution"
+    "#c:buckets/sodium_hydroxide_solution",
+    "#c:buckets/sulfur_dioxide",
+    "#c:buckets/sulfur_trioxide",
+    "#c:buckets/sulfuric_acid"
   ]
 }

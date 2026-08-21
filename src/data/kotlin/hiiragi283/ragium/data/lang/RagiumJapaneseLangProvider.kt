@@ -32,6 +32,12 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
         addFluid(RagiumFluids.NAOH_SOLUTION, "水酸化ナトリウム水溶液")
+        addFluid(RagiumFluids.SULFUR_DIOXIDE, "二酸化硫黄")
+        addFluid(RagiumFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
+        addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
+        addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
+        addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
+        addFluid(RagiumFluids.CAOH_SOLUTION, "水酸化カルシウム水溶液")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")

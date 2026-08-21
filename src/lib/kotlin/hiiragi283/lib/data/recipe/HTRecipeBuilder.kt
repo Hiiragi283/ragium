@@ -101,18 +101,18 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
      * @param exporter 生成したレシピの出力先
      */
     open fun save(exporter: HTRecipeExporter) {
-        this.save { id: Identifier, recipe: RECIPE -> exporter.accept(RecipeKey(id), recipe, conditions) }
+        this.save { id: RecipeKey, recipe: RECIPE -> exporter.accept(id, recipe, conditions) }
     }
 
     /**
      * 生成したレシピを処理します。
      * @param consumer 生成されたレシピIDとレシピを処理するブロック
      */
-    fun <R> save(consumer: (id: Identifier, recipe: RECIPE) -> R): R {
+    fun <R> save(consumer: (id: RecipeKey, recipe: RECIPE) -> R): R {
         contract {
             callsInPlace(consumer, InvocationKind.EXACTLY_ONCE)
         }
-        return consumer(recipeId.id.withPrefix("$prefix/"), createRecipe())
+        return consumer(RecipeKey(recipeId.id.withPrefix("$prefix/")), createRecipe())
     }
 
     /**

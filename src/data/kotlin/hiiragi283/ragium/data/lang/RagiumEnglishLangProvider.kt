@@ -32,6 +32,12 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
         addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
+        addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
+        addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
+        addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
+        addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "Hydrogen Chloride")
+        addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
+        addFluid(RagiumFluids.CAOH_SOLUTION, "Calcium Hydroxide Solution")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")

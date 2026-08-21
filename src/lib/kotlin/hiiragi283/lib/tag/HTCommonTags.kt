@@ -3,10 +3,12 @@ package hiiragi283.lib.tag
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.resource.toId
 import net.minecraft.tags.BlockTags
+import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.material.Fluid
 
 /**
  * 共通の[TagKey]をまとめたクラスです。
@@ -19,8 +21,15 @@ data object HTCommonTags {
         private fun common(vararg path: String): TagKey<Block> = BlockTags.create(HTConstants.COMMON.toId(*path))
     }
 
+    data object Fluids {
+        @JvmField
+        val ALKALI_SOLUTION: TagKey<Fluid> = common("alkali_solution")
+
+        @JvmStatic
+        private fun common(vararg path: String): TagKey<Fluid> = FluidTags.create(HTConstants.COMMON.toId(*path))
+    }
+
     data object Items {
-        // Pearls
         @JvmStatic
         private fun common(vararg path: String): TagKey<Item> = ItemTags.create(HTConstants.COMMON.toId(*path))
     }

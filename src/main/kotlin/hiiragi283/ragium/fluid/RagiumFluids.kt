@@ -106,4 +106,23 @@ data object RagiumFluids {
     // 4th
     @JvmField
     val NAOH_SOLUTION: HTFluidContent.Virtual = REGISTER.registerVirtual("sodium_hydroxide_solution") { properties = liquid() }
+
+    @JvmField
+    val SULFUR_DIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("sulfur_dioxide") { properties = gaseous() }
+
+    @JvmField
+    val SULFUR_TRIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("sulfur_trioxide") { properties = gaseous() }
+
+    @JvmField
+    val SULFURIC_ACID: HTFluidContent.Virtual = REGISTER.registerVirtual("sulfuric_acid") { properties = liquid() }
+
+    @JvmField
+    val HYDROGEN_CHLORIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen_chloride") { properties = gaseous() }
+
+    @JvmField
+    val HYDROCHLORIC_ACID: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrochloric_acid") { properties = liquid() }
+
+    // 5th
+    @JvmField
+    val CAOH_SOLUTION: HTFluidContent.Virtual = REGISTER.registerVirtual("calcium_hydroxide_solution") { properties = liquid() }
 }

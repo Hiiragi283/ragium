@@ -18,7 +18,6 @@ import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -29,6 +28,7 @@ import hiiragi283.ragium.item.HTPotionBucketItem
 import hiiragi283.ragium.item.RagiumItems
 import hiiragi283.ragium.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.network.HTUpdateMenuPacket
+import hiiragi283.ragium.recipe.RagiumRecipeLookups
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Items

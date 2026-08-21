@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.recipe
 
 import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.buildListMultiMap
@@ -17,17 +17,30 @@ import hiiragi283.lib.recipe.lookup.HTRecipeLookupContext
 import hiiragi283.lib.recipe.lookup.HTVanillaRecipeLookup
 import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.registry.asSupplier
+import hiiragi283.lib.registry.getDataMap
 import hiiragi283.lib.resource.modifyPath
 import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import hiiragi283.ragium.api.recipe.RTBathingRecipe
+import hiiragi283.ragium.api.recipe.RTBrewingRecipe
+import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.fluid.RagiumFluids
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.util.context.ContextMap
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
+import net.neoforged.neoforge.registries.datamaps.builtin.Oxidizable
 
 data object RagiumRecipeLookups {
     @JvmStatic
@@ -82,6 +95,34 @@ data object RagiumRecipeLookups {
         PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING, identity())
 
         BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
+        BATHING.addSubLookup { contextMap: ContextMap ->
+            val registries: HolderLookup.Provider = contextMap.getOptional(HTRecipeLookupContext.REGISTRIES) ?: return@addSubLookup mapOf()
+            val oxidizableMap: Map<Holder<Block>, Oxidizable> = registries.lookupOrThrow(Registries.BLOCK).getDataMap(NeoForgeDataMaps.OXIDIZABLES)
+            val recipeMap: MutableMap<RecipeKey, RTBathingRecipe> = mutableMapOf()
+            for ((key: Holder<Block>, value: Oxidizable) in oxidizableMap) {
+                val base: Item = key.value().asItem()
+                val oxidized: Item = value.nextOxidationStage().asItem()
+                RagiumRecipeBuilders.bathing {
+                    itemIngredient { items { +base } }
+                    fluidIngredient {
+                        +registries.getOrThrow(RagiumFluids.OXYGEN.fluidTag)
+                        amount = 250
+                    }
+                    result { +oxidized }
+                    recipeId prefix "oxidization/"
+                }.save(recipeMap::put)
+                RagiumRecipeBuilders.bathing {
+                    itemIngredient { items { +oxidized } }
+                    fluidIngredient {
+                        +registries.getOrThrow(RagiumFluids.HYDROGEN.fluidTag)
+                        amount = 250
+                    }
+                    result { +base }
+                    recipeId prefix "reduction/"
+                }.save(recipeMap::put)
+            }
+            recipeMap
+        }
 
         BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
         BREWING.addSubLookup { contextMap: ContextMap ->
