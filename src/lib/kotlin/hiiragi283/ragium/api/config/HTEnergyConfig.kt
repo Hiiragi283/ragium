@@ -1,0 +1,59 @@
+package hiiragi283.ragium.api.config
+
+import hiiragi283.lib.HTConstants
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.text.RagiumTranslation
+import java.util.function.IntSupplier
+import net.neoforged.neoforge.common.ModConfigSpec
+
+@JvmRecord
+data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: IntSupplier) {
+    fun getCapacity(): Int = capacity.asInt
+
+    fun getUsage(): Int = rate.asInt
+
+    companion object {
+        @JvmStatic
+        private fun energyCapacity(builder: ModConfigSpec.Builder, value: Int): ModConfigSpec.IntValue = builder
+            .translation(RagiumTranslation.CONFIG_ENERGY_CAPACITY)
+            .defineInRange("energy_capacity", value, 1, Int.MAX_VALUE)
+
+        @JvmStatic
+        private fun energyRate(builder: ModConfigSpec.Builder, value: Int): ModConfigSpec.IntValue = builder
+            .translation(RagiumTranslation.CONFIG_ENERGY_RATE)
+            .defineInRange("energy_rate", value, 1, Int.MAX_VALUE)
+
+        @JvmStatic
+        fun createMachine(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTEnergyConfig = createBlock(builder, name, rate, rate * 20 * 10 * 10)
+
+        @JvmStatic
+        fun createBlock(
+            builder: ModConfigSpec.Builder,
+            name: String,
+            usage: Int,
+            capacity: Int,
+        ): HTEnergyConfig = create(builder, "${HTConstants.BLOCK}.${RagiumAPI.MOD_ID}.$name", name, usage, capacity)
+
+        @JvmStatic
+        fun createItem(
+            builder: ModConfigSpec.Builder,
+            name: String,
+            usage: Int,
+            capacity: Int,
+        ): HTEnergyConfig = create(builder, "${HTConstants.ITEM}.${RagiumAPI.MOD_ID}.$name", name, usage, capacity)
+
+        @JvmStatic
+        fun create(
+            builder: ModConfigSpec.Builder,
+            translationKey: String,
+            name: String,
+            usage: Int,
+            capacity: Int,
+        ): HTEnergyConfig {
+            builder.translation(translationKey).push(name)
+            val config = HTEnergyConfig(energyCapacity(builder, capacity), energyRate(builder, usage))
+            builder.pop()
+            return config
+        }
+    }
+}

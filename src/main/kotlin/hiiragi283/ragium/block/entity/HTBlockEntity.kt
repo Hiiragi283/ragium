@@ -127,7 +127,6 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
     //    HTOwnedBlockEntity    //
 
     final override var ownerId: UUID? = null
-        private set
 
     //    Capability    //
 
@@ -135,7 +134,7 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
     protected val itemHandlerManager: HTResourceCapabilityManager<ItemResource, HTItemSlot>?
 
     init {
-        initializeVariables()
+        initializeVariables(::setOnlySave)
         fluidHandlerManager = createFluidHandler(::setOnlySave)?.let(::HTResourceCapabilityManager)
         itemHandlerManager = createItemHandler(::setOnlySave)?.let(::HTResourceCapabilityManager)
     }
@@ -143,7 +142,7 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
     /**
      * [fluidHandlerManager]や[itemHandlerManager]が初期化される前に変数を初期化します。
      */
-    protected open fun initializeVariables() {}
+    protected open fun initializeVariables(listener: Runnable) {}
 
     // Fluid
     fun hasFluidHandler(): Boolean = fluidHandlerManager != null
