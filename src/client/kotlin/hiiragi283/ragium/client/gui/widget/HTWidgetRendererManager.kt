@@ -1,9 +1,9 @@
 package hiiragi283.ragium.client.gui.widget
 
-import hiiragi283.lib.client.event.HTRegisterWidgetRendererEvent
-import hiiragi283.lib.client.gui.widget.HTWidgetRendererFactory
+import hiiragi283.lib.event.HTRegisterWidgetRendererEvent
 import hiiragi283.lib.gui.HTGuiAccess
 import hiiragi283.lib.gui.widget.HTWidget
+import hiiragi283.lib.gui.widget.HTWidgetRendererFactory
 import hiiragi283.lib.gui.widget.HTWidgetType
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.MenuScreens

@@ -1,12 +1,12 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.client.event.HTRegisterWidgetRendererEvent
-import hiiragi283.lib.client.fluid.FluidStackTintSource
-import hiiragi283.lib.client.fluid.HTFluidModelRegister
-import hiiragi283.lib.client.mod.HTClientMod
 import hiiragi283.lib.color.HTDefaultColor
+import hiiragi283.lib.event.HTRegisterWidgetRendererEvent
+import hiiragi283.lib.fluid.FluidStackTintSource
+import hiiragi283.lib.fluid.HTFluidModelRegister
 import hiiragi283.lib.item.alchemy.HTPotionHelper
+import hiiragi283.lib.mod.HTClientMod
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI

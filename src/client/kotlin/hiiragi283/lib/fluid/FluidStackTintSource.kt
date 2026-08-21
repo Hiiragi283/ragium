@@ -1,4 +1,4 @@
-package hiiragi283.lib.client.fluid
+package hiiragi283.lib.fluid
 
 import net.minecraft.world.level.material.FluidState
 import net.neoforged.neoforge.client.fluid.FluidTintSource

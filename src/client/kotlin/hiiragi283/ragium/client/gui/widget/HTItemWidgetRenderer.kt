@@ -1,8 +1,8 @@
 package hiiragi283.ragium.client.gui.widget
 
-import hiiragi283.lib.client.gui.widget.HTAbstractWidgetRenderer
 import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.HTGuiAccess
+import hiiragi283.lib.gui.widget.HTAbstractWidgetRenderer
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.gui.widget.HTItemWidget
 import net.minecraft.client.Minecraft

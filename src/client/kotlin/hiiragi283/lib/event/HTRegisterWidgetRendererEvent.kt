@@ -1,7 +1,7 @@
-package hiiragi283.lib.client.event
+package hiiragi283.lib.event
 
-import hiiragi283.lib.client.gui.widget.HTWidgetRendererFactory
 import hiiragi283.lib.gui.widget.HTWidget
+import hiiragi283.lib.gui.widget.HTWidgetRendererFactory
 import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.client.gui.components.Renderable

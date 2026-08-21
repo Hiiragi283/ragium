@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.lib.client.fluid
+package hiiragi283.lib.fluid
 
 import hiiragi283.lib.registry.HTFluidContent
 import kotlin.contracts.ExperimentalContracts

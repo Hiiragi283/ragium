@@ -1,4 +1,4 @@
-package hiiragi283.lib.client.fluid
+package hiiragi283.lib.fluid
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.resource.toId

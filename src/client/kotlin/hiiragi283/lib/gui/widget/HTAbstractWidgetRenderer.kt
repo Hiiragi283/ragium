@@ -1,8 +1,7 @@
-package hiiragi283.lib.client.gui.widget
+package hiiragi283.lib.gui.widget
 
 import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.HTGuiAccess
-import hiiragi283.lib.gui.widget.HTWidget
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.components.Renderable
 

@@ -1,7 +1,7 @@
-package hiiragi283.lib.client.mod
+package hiiragi283.lib.mod
 
-import hiiragi283.lib.client.event.HTRegisterWidgetRendererEvent
-import hiiragi283.lib.client.fluid.HTFluidModelRegister
+import hiiragi283.lib.event.HTRegisterWidgetRendererEvent
+import hiiragi283.lib.fluid.HTFluidModelRegister
 import net.minecraft.client.color.block.BlockTintSources
 import net.minecraft.client.color.item.ItemTintSource
 import net.minecraft.world.entity.Entity
