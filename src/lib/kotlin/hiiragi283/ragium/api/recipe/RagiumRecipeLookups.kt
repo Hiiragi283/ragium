@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe
 
 import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.buildListMultiMap
-import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
@@ -84,7 +83,7 @@ data object RagiumRecipeLookups {
                         RagiumRecipeBuilders.brewing {
                             itemIngredient { +mix.ingredient }
                             fluidIngredient { +HTPotionFluidIngredient(mix.from()) }
-                            fluidResult { +BottledPotionContents(mix.to()).toFluidTemplate() }
+                            fluidResult { +mix.to() }
                         }.save { _, recipe: RTBrewingRecipe ->
                             put(mix.to().asSupplier().getId().modifyPath { "/${RagiumConstants.BREWING}/$it" }, recipe)
                         }

@@ -1,12 +1,14 @@
 package hiiragi283.lib.item.alchemy
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import hiiragi283.lib.registry.VanillaFluidContents
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.text.Text
 import kotlin.jvm.optionals.getOrNull
 import net.minecraft.core.Holder
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.effect.MobEffectInstance
@@ -25,16 +27,19 @@ import net.neoforged.neoforge.fluids.FluidType
  * @since 26.1.0
  */
 @JvmRecord
-data class BottledPotionContents(val contents: PotionContents, val bottleType: HTBottleType) : HTHasText {
+data class BottledPotionContents @JvmOverloads constructor(val contents: PotionContents, val bottleType: HTBottleType = HTBottleType.DEFAULT) : HTHasText {
     companion object {
         @JvmField
-        val CODEC: Codec<BottledPotionContents> = HTCodecs.record { instance ->
+        val MAP_CODEC: MapCodec<BottledPotionContents> = HTCodecs.recordMap { instance ->
             instance
                 .group(
                     PotionContents.CODEC.fieldOf("contents").forGetter(BottledPotionContents::contents),
                     HTBottleType.CODEC.optionalFieldOf("bottle_type", HTBottleType.DEFAULT).forGetter(BottledPotionContents::bottleType),
                 ).apply(instance, ::BottledPotionContents)
         }
+
+        @JvmField
+        val CODEC: Codec<BottledPotionContents> = Codec.withAlternative(MAP_CODEC.codec(), HTCodecs.holder(Registries.POTION), ::BottledPotionContents)
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, BottledPotionContents> = StreamCodec.composite(

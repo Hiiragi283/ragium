@@ -33,12 +33,4 @@ data object HTPayloadHandlers {
                 null
             }
     }
-
-    fun <T> handleBoth(payload: T, context: IPayloadContext) where T : HTCustomPayload.S2C, T : HTCustomPayload.C2S {
-        if (context.player().level().isClientSide) {
-            handleS2C(payload, context)
-        } else {
-            handleC2S(payload, context)
-        }
-    }
 }

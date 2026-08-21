@@ -11,6 +11,7 @@ import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
+import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
@@ -96,6 +97,10 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id("potion"), HTPotionFluidIngredient.TYPE)
         }
 
+        event.register(RagiumRegistries.Keys.FLUID_RESULT_TYPE) { helper ->
+            helper.register(RagiumAPI.id("simple"), HTFluidResult.SimpleEntry.TYPE)
+            helper.register(RagiumAPI.id("potion"), HTFluidResult.PotionEntry.TYPE)
+        }
         event.register(RagiumRegistries.Keys.ITEM_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id("tag"), HTItemResult.TagEntry.TYPE)
@@ -129,6 +134,6 @@ data object Ragium : HTCommonMod() {
 
     override fun registerPayload(registrar: PayloadRegistrar) {
         registrar.playToClient(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC, HTPayloadHandlers::handleS2C)
-        registrar.playBidirectional(HTUpdateMenuPacket.TYPE, HTUpdateMenuPacket.STREAM_CODEC, HTPayloadHandlers::handleBoth)
+        registrar.playBidirectional(HTUpdateMenuPacket.TYPE, HTUpdateMenuPacket.STREAM_CODEC, HTPayloadHandlers::handleS2C, HTPayloadHandlers::handleC2S)
     }
 }

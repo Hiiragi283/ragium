@@ -82,7 +82,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
                 RagiumRegistries.ITEM_RESULT_TYPE.byNameCodec(),
                 Entry::type,
                 HTItemResultType<*>::codec,
-                SimpleEntry.MAP_CODEC,
+                SimpleEntry.CODEC,
             ).xmap(
                 { DFUEither.unwrap(it) },
                 { entry: Entry ->
@@ -110,7 +110,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
         HTKeyLike<Item> {
         companion object {
             @JvmField
-            val MAP_CODEC: MapCodec<SimpleEntry> = HTCodecs.recordMap { instance ->
+            val CODEC: MapCodec<SimpleEntry> = HTCodecs.recordMap { instance ->
                 instance.group(
                     Item.CODEC.fieldOf(HTConstants.ID).forGetter(SimpleEntry::item),
                     DataComponentPatch.CODEC.optionalFieldOf(HTConstants.COMPONENTS, DataComponentPatch.EMPTY).forGetter(SimpleEntry::components),
@@ -127,7 +127,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
             )
 
             @JvmField
-            val TYPE: HTItemResultType<SimpleEntry> = HTItemResultType(MAP_CODEC, STREAM_CODEC)
+            val TYPE: HTItemResultType<SimpleEntry> = HTItemResultType(CODEC, STREAM_CODEC)
         }
 
         constructor(template: ItemStackTemplate) : this(template.item(), template.components())

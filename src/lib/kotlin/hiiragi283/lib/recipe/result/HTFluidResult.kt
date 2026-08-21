@@ -1,70 +1,157 @@
 package hiiragi283.lib.recipe.result
 
 import com.mojang.serialization.Codec
-import hiiragi283.lib.fluid.transmuteCopy
+import com.mojang.serialization.MapCodec
+import hiiragi283.lib.HTConstants
+import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.registry.getKeyOrThrow
+import hiiragi283.lib.resource.HTIdLike
+import hiiragi283.lib.resource.HTKeyLike
+import hiiragi283.lib.serialization.codec.HTCodecs
+import hiiragi283.lib.util.DFUEither
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumRegistries
+import net.minecraft.core.Holder
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
-import net.minecraft.world.level.material.FlowingFluid
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
+import net.neoforged.neoforge.fluids.FluidType
 
 /**
- * 液体の完成品を提供するクラスです。
+ * 液体の完成品を表すインターフェースです。
  * @author Hiiragi Tsubasa
- * @since 26.1.0
+ * @since 21.1.0
  */
-@JvmInline
-value class HTFluidResult private constructor(@PublishedApi internal val template: FluidStackTemplate) : HTRecipeResult<FluidStack> {
+@JvmRecord
+data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<FluidStack> {
     companion object {
         @JvmField
-        val CODEC: Codec<HTFluidResult> = FluidStackTemplate.CODEC.xmap(::create, HTFluidResult::template)
-
-        @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTFluidResult> = FluidStackTemplate.STREAM_CODEC.map(::create, HTFluidResult::template)
-
-        /**
-         * 液体流が指定されている場合，液体源に置き換えます。
-         */
-        @JvmStatic
-        private fun validate(template: FluidStackTemplate): FluidStackTemplate {
-            val fluid: Fluid = template.typeHolder().value()
-            return when {
-                !fluid.isSource(fluid.defaultFluidState()) && fluid is FlowingFluid -> template.transmuteCopy(fluid.source)!!
-                else -> template
-            }
+        val MAP_CODEC: MapCodec<HTFluidResult> = HTCodecs.recordMap { instance ->
+            instance.group(
+                Entry.MAP_CODEC.forGetter(HTFluidResult::entry),
+                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.AMOUNT).forGetter(HTFluidResult::amount),
+            ).apply(instance, ::HTFluidResult)
         }
 
-        /**
-         * 新しい[HTFluidResult]のインスタンスを作成します。
-         */
-        @JvmStatic
-        fun create(stack: FluidStack): HTFluidResult = stack.let(FluidStackTemplate::fromNonEmptyStack).let(::create)
+        @JvmField
+        val CODEC: Codec<HTFluidResult> = Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) { it.toResult() }
 
-        /**
-         * 新しい[HTFluidResult]のインスタンスを作成します。
-         */
-        @JvmStatic
-        fun create(template: FluidStackTemplate): HTFluidResult = template.let(::validate).let(::HTFluidResult)
+        @JvmField
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTFluidResult> = StreamCodec.composite(
+            Entry.STREAM_CODEC,
+            HTFluidResult::entry,
+            ByteBufCodecs.VAR_INT,
+            HTFluidResult::amount,
+            ::HTFluidResult,
+        )
     }
 
-    /**
-     * 完成品の液体量
-     */
-    inline val amount: Int get() = template.amount()
+    constructor(template: FluidStackTemplate) : this(SimpleEntry(template), template.amount())
+
+    constructor(stack: FluidStack) : this(SimpleEntry(stack), stack.amount())
 
     /**
      * このインスタンスのコピーを作成します。
-     * @param newAmount 新しい液体量
+     * @param newAmount 新しい量
      */
-    fun copyWithAmount(newAmount: Int): HTFluidResult = create(template.withAmount(newAmount))
+    fun copyWithAmount(newAmount: Int): HTFluidResult = HTFluidResult(entry, newAmount)
 
-    /**
-     * 液体の完成品を取得します。
-     */
-    override fun create(): FluidStack = template.create()
+    override fun create(): FluidStack = entry.create(amount)
 
-    override fun getId(): Identifier = template.getKeyOrThrow().identifier()
+    override fun getId(): Identifier = entry.getId()
+
+    //    Entry    //
+
+    interface Entry : HTIdLike {
+        companion object {
+            @JvmField
+            val MAP_CODEC: MapCodec<Entry> = NeoForgeExtraCodecs.dispatchMapOrElse(
+                RagiumRegistries.FLUID_RESULT_TYPE.byNameCodec(),
+                Entry::type,
+                HTFluidResultType<*>::codec,
+                SimpleEntry.CODEC,
+            ).xmap(
+                { DFUEither.unwrap(it) },
+                { entry: Entry ->
+                    when (entry) {
+                        is SimpleEntry -> DFUEither.right(entry)
+                        else -> DFUEither.left(entry)
+                    }
+                },
+            )
+
+            @JvmField
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> = ByteBufCodecs.registry(RagiumRegistries.Keys.FLUID_RESULT_TYPE).dispatch(Entry::type, HTFluidResultType<*>::streamCodec)
+        }
+
+        fun type(): HTFluidResultType<*>
+
+        fun create(amount: Int = FluidType.BUCKET_VOLUME): FluidStack
+
+        fun toResult(amount: Int = FluidType.BUCKET_VOLUME): HTFluidResult = HTFluidResult(this, amount)
+    }
+
+    @JvmRecord
+    data class SimpleEntry @JvmOverloads constructor(val fluid: Holder<Fluid>, val components: DataComponentPatch = DataComponentPatch.EMPTY) :
+        Entry,
+        HTKeyLike<Fluid> {
+        companion object {
+            @JvmField
+            val CODEC: MapCodec<SimpleEntry> = HTCodecs.recordMap { instance ->
+                instance.group(
+                    FluidStack.FLUID_HOLDER_CODEC.fieldOf(HTConstants.ID).forGetter(SimpleEntry::fluid),
+                    DataComponentPatch.CODEC.optionalFieldOf(HTConstants.COMPONENTS, DataComponentPatch.EMPTY).forGetter(SimpleEntry::components),
+                ).apply(instance, ::SimpleEntry)
+            }
+
+            @JvmField
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, SimpleEntry> = StreamCodec.composite(
+                FluidStack.FLUID_HOLDER_STREAM_CODEC,
+                SimpleEntry::fluid,
+                DataComponentPatch.STREAM_CODEC,
+                SimpleEntry::components,
+                ::SimpleEntry,
+            )
+
+            @JvmField
+            val TYPE: HTFluidResultType<SimpleEntry> = HTFluidResultType(CODEC, STREAM_CODEC)
+        }
+
+        constructor(template: FluidStackTemplate) : this(template.fluid(), template.components())
+
+        constructor(stack: FluidStack) : this(stack.typeHolder(), stack.componentsPatch)
+
+        override fun type(): HTFluidResultType<*> = TYPE
+
+        override fun create(amount: Int): FluidStack = FluidStack(fluid, amount, components)
+
+        override fun getKey(): ResourceKey<Fluid> = fluid.getKeyOrThrow()
+    }
+
+    @JvmRecord
+    data class PotionEntry(val contents: BottledPotionContents) : Entry {
+        companion object {
+            @JvmField
+            val CODEC: MapCodec<PotionEntry> = BottledPotionContents.MAP_CODEC.xmap(::PotionEntry, PotionEntry::contents)
+
+            @JvmField
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, PotionEntry> = BottledPotionContents.STREAM_CODEC.map(::PotionEntry, PotionEntry::contents)
+
+            @JvmField
+            val TYPE: HTFluidResultType<PotionEntry> = HTFluidResultType(CODEC, STREAM_CODEC)
+        }
+
+        override fun type(): HTFluidResultType<*> = TYPE
+
+        override fun create(amount: Int): FluidStack = contents.toFluidStack(amount)
+
+        override fun getId(): Identifier = contents.potion?.getKeyOrThrow()?.identifier() ?: RagiumAPI.id("potion")
+    }
 }

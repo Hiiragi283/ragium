@@ -52,7 +52,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.ROTTEN_FLESH } }
             fluidIngredient { +HTPotionFluidIngredient(Potions.MUNDANE) }
-            potionResult(PotionContents(customEffects = listOf(MobEffectInstance(MobEffects.HUNGER, 900)), customName = "hunger"))
+            fluidResult { +PotionContents(customEffects = listOf(MobEffectInstance(MobEffects.HUNGER, 900)), customName = "hunger") }
             recipeId replace "potion/hunger"
         }.save(exporter)
         // Wither
@@ -67,7 +67,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         RagiumRecipeBuilders.brewing {
             itemIngredient { +holderSet(CommonTagPrefixes.GEM, HTMaterial.Gem.ECHO) }
             fluidIngredient { +HTPotionFluidIngredient(Potions.MUNDANE) }
-            potionResult(PotionContents(customEffects = listOf(MobEffectInstance(MobEffects.DARKNESS, 900)), customName = "darkness"))
+            fluidResult { +PotionContents(customEffects = listOf(MobEffectInstance(MobEffects.DARKNESS, 900)), customName = "darkness") }
             recipeId replace "potion/darkness"
         }.save(exporter)
 
@@ -75,25 +75,25 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.GOLDEN_APPLE } }
             fluidIngredient { +HTPotionFluidIngredient(Potions.MUNDANE) }
-            potionResult(
-                PotionContents(
+            fluidResult {
+                +PotionContents(
                     customColor = 0xff9900,
                     customEffects = extractEffects(Consumables.GOLDEN_APPLE),
                     customName = "golden_apple",
-                ),
-            )
+                )
+            }
             recipeId replace "potion/golden_apple"
         }.save(exporter)
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.ENCHANTED_GOLDEN_APPLE } }
             fluidIngredient { +HTPotionFluidIngredient(Potions.MUNDANE) }
-            potionResult(
-                PotionContents(
+            fluidResult {
+                +PotionContents(
                     customColor = 0xff9900,
                     customEffects = extractEffects(Consumables.ENCHANTED_GOLDEN_APPLE),
                     customName = "enchanted_golden_apple",
-                ),
-            )
+                )
+            }
             recipeId replace "potion/enchanted_golden_apple"
         }.save(exporter)
     }

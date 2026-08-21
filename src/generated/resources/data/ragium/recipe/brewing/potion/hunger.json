@@ -9,21 +9,18 @@
     }
   },
   "fluid_result": {
+    "type": "ragium:potion",
     "amount": 1000,
-    "components": {
-      "minecraft:potion_contents": {
-        "custom_effects": [
-          {
-            "duration": 900,
-            "id": "minecraft:hunger",
-            "show_icon": true
-          }
-        ],
-        "custom_name": "hunger"
-      },
-      "ragium:bottle_type": "default"
-    },
-    "id": "ragium:potion"
+    "contents": {
+      "custom_effects": [
+        {
+          "duration": 900,
+          "id": "minecraft:hunger",
+          "show_icon": true
+        }
+      ],
+      "custom_name": "hunger"
+    }
   },
   "item_ingredient": {
     "count": 1,

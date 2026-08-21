@@ -1,12 +1,21 @@
 package hiiragi283.lib.data.recipe
 
-import hiiragi283.lib.fluid.HTFluidInstanceLike
+import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.recipe.result.HTFluidResult
+import hiiragi283.lib.registry.HTDeferredHolder
+import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.VanillaFluidContents
+import hiiragi283.lib.registry.createKey
 import hiiragi283.lib.util.HTBuilderMarker
-import kotlin.properties.Delegates
+import hiiragi283.lib.util.HTDelegates
 import net.minecraft.core.Holder
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
 
@@ -17,28 +26,41 @@ import net.neoforged.neoforge.fluids.FluidType
  */
 @HTBuilderMarker
 class HTFluidResultBuilder {
-    @PublishedApi internal var result: HTFluidResult by Delegates.notNull()
+    @PublishedApi internal var entry: HTFluidResult.Entry by HTDelegates.onceInitialize()
+    var amount: Int by HTDelegates.onceInitialize { FluidType.BUCKET_VOLUME }
 
-    var amount: Int
-        get() = result.amount
-        set(value) {
-            result = result.copyWithAmount(value)
-        }
+    operator fun HTFluidResult.Entry.unaryPlus() {
+        entry = this
+    }
 
-    operator fun FluidStackTemplate.unaryPlus() {
-        result = HTFluidResult.create(this)
+    // Simple
+    operator fun Identifier.unaryPlus() {
+        +Registries.FLUID.createKey(this)
+    }
+
+    operator fun ResourceKey<Fluid>.unaryPlus() {
+        +HTDeferredHolder(this).delegate
+    }
+
+    @JvmName("unaryPlusFluid")
+    operator fun Holder<Fluid>.unaryPlus() {
+        +HTFluidResult.SimpleEntry(this)
     }
 
     operator fun Fluid.unaryPlus() {
         +FluidStackTemplate(this, FluidType.BUCKET_VOLUME)
     }
 
-    operator fun Holder<Fluid>.unaryPlus() {
-        +FluidStackTemplate(this, FluidType.BUCKET_VOLUME)
+    operator fun FluidStackTemplate.unaryPlus() {
+        +HTFluidResult.SimpleEntry(this)
     }
 
-    operator fun HTFluidInstanceLike.unaryPlus() {
-        this.toTemplate()?.let { +it }
+    operator fun FluidStack.unaryPlus() {
+        +HTFluidResult.SimpleEntry(this)
+    }
+
+    operator fun HTFluidContent.unaryPlus() {
+        +this.sourceHolder
     }
 
     fun water() {
@@ -53,5 +75,19 @@ class HTFluidResultBuilder {
         +VanillaFluidContents.MILK
     }
 
-    fun build(): HTFluidResult = result
+    // Potion
+    @JvmName("unaryPlusPotion")
+    operator fun Holder<Potion>.unaryPlus() {
+        +BottledPotionContents(this)
+    }
+
+    operator fun PotionContents.unaryPlus() {
+        +BottledPotionContents(this)
+    }
+
+    operator fun BottledPotionContents.unaryPlus() {
+        +HTFluidResult.PotionEntry(this)
+    }
+
+    fun build(): HTFluidResult = HTFluidResult(entry, amount)
 }

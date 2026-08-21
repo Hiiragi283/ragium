@@ -1,0 +1,12 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": {
+    "count": 1,
+    "ingredient": "#minecraft:saplings"
+  },
+  "primary_result": {
+    "count": 1,
+    "id": "minecraft:stick"
+  },
+  "time": 200
+}

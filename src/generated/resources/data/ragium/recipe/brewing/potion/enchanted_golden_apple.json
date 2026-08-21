@@ -9,39 +9,36 @@
     }
   },
   "fluid_result": {
+    "type": "ragium:potion",
     "amount": 1000,
-    "components": {
-      "minecraft:potion_contents": {
-        "custom_color": 16750848,
-        "custom_effects": [
-          {
-            "amplifier": 1,
-            "duration": 400,
-            "id": "minecraft:regeneration",
-            "show_icon": true
-          },
-          {
-            "duration": 6000,
-            "id": "minecraft:resistance",
-            "show_icon": true
-          },
-          {
-            "duration": 6000,
-            "id": "minecraft:fire_resistance",
-            "show_icon": true
-          },
-          {
-            "amplifier": 3,
-            "duration": 2400,
-            "id": "minecraft:absorption",
-            "show_icon": true
-          }
-        ],
-        "custom_name": "enchanted_golden_apple"
-      },
-      "ragium:bottle_type": "default"
-    },
-    "id": "ragium:potion"
+    "contents": {
+      "custom_color": 16750848,
+      "custom_effects": [
+        {
+          "amplifier": 1,
+          "duration": 400,
+          "id": "minecraft:regeneration",
+          "show_icon": true
+        },
+        {
+          "duration": 6000,
+          "id": "minecraft:resistance",
+          "show_icon": true
+        },
+        {
+          "duration": 6000,
+          "id": "minecraft:fire_resistance",
+          "show_icon": true
+        },
+        {
+          "amplifier": 3,
+          "duration": 2400,
+          "id": "minecraft:absorption",
+          "show_icon": true
+        }
+      ],
+      "custom_name": "enchanted_golden_apple"
+    }
   },
   "item_ingredient": {
     "count": 1,
