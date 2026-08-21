@@ -36,6 +36,9 @@ data object RagiumJeiRecipeTypes {
 
     // Chemical
     @JvmField
+    val BATHING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> = HTJeiRecipeType(RagiumRecipeTypes.BATHING, ItemStack(Items.GLASS_BOTTLE))
+
+    @JvmField
     val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> = HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, ItemStack(Items.LIGHTNING_ROD))
 
     // Bio

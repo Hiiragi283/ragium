@@ -4,15 +4,42 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.item.RagiumItems
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.world.item.Items
 
 class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
+        bathing()
         electrolyzing()
+    }
+
+    private fun bathing() {
+        // Wood Pulp + NaOH aq -> Paper Pulp
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Other.WOOD) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.NAOH_SOLUTION)
+                amount = 250
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Other.PAPER) }
+            recipeId suffix "_from_wood"
+        }.save(exporter)
+        // Paper Pulp + Water -> Paper
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Other.PAPER) }
+            fluidIngredient {
+                +waterSet()
+                amount = 250
+            }
+            result { +Items.PAPER }
+            recipeId suffix "_from_pulp"
+        }.save(exporter)
     }
 
     private fun electrolyzing() {

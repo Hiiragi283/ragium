@@ -81,6 +81,8 @@ data object RagiumRecipeLookups {
         MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())
         PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING, identity())
 
+        BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
+
         BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
         BREWING.addSubLookup { contextMap: ContextMap ->
             val multiMap: ListMultiMap<Identifier, RTBrewingRecipe> = buildListMultiMap {

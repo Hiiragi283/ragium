@@ -84,6 +84,7 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id(HTConstants.SMELTING), RagiumRecipeSerializers.SMELTING)
             helper.register(RagiumAPI.id(RagiumConstants.PYROLYZING), RagiumRecipeSerializers.PYROLYZING)
 
+            helper.register(RagiumAPI.id(RagiumConstants.BATHING), RagiumRecipeSerializers.BATHING)
             helper.register(RagiumAPI.id(RagiumConstants.ELECTROLYZING), RagiumRecipeSerializers.ELECTROLYZING)
 
             helper.register(RagiumAPI.id(RagiumConstants.BREWING), RagiumRecipeSerializers.BREWING)

@@ -28,6 +28,9 @@ data object RagiumRecipeSerializers {
 
     // Chemical
     @JvmField
+    val BATHING: RecipeSerializer<RTBathingRecipe> = RTBathingRecipe.SERIALIZER
+
+    @JvmField
     val ELECTROLYZING: RecipeSerializer<RTElectrolyzingRecipe> = RTElectrolyzingRecipe.SERIALIZER
 
     // Bio

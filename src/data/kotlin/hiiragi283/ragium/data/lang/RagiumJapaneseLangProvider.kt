@@ -61,6 +61,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
 
+        add(RagiumRecipeTypes.BATHING, "化学洗浄")
         add(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
 
         add(RagiumRecipeTypes.BREWING, "醸造")

@@ -262,7 +262,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Other.WOOD) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Fuel.CHARCOAL).asItem() }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Fuel.CHARCOAL) }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 250
@@ -290,7 +290,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, HTMaterial.Fuel.COAL) }
-            itemResult { +RagiumBlocks.getOrThrow(HTBlockPart.STORAGE_BLOCK, HTMaterial.Fuel.COAL_COKE).asItem() }
+            itemResult { +RagiumBlocks.getOrThrow(HTBlockPart.STORAGE_BLOCK, HTMaterial.Fuel.COAL_COKE) }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 500 * 9

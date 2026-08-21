@@ -11,6 +11,7 @@ import hiiragi283.lib.data.recipe.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
+import hiiragi283.ragium.api.recipe.RTBathingRecipe
 import hiiragi283.ragium.api.recipe.RTBrewingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
@@ -82,6 +83,14 @@ data object RagiumRecipeBuilders {
     }
 
     // Chemical
+    @JvmStatic
+    inline fun bathing(builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTBathingRecipe>.() -> Unit): HTItemAndFluidToRecipeBuilder.ToItem<RTBathingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemAndFluidToRecipeBuilder.ToItem(RagiumConstants.BATHING, ::RTBathingRecipe).apply(builderAction)
+    }
+
     @JvmStatic
     inline fun electrolyzing(builderAction: RTElectrolyzingRecipeBuilder.() -> Unit): RTElectrolyzingRecipeBuilder {
         contract {

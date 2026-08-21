@@ -1,6 +1,7 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.recipe.result.HTItemResult
+import hiiragi283.lib.registry.HTDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
@@ -49,6 +50,10 @@ class HTItemResultBuilder {
 
     operator fun ItemStack.unaryPlus() {
         +HTItemResult.SimpleEntry(this)
+    }
+
+    operator fun HTDeferredBlockAndItem<*, *>.unaryPlus() {
+        +this.item
     }
 
     // Tag
