@@ -9,6 +9,7 @@ import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.client.gui.widget.HTWidgetRendererManager
 import hiiragi283.ragium.fluid.RagiumFluids
 import java.awt.Color
 import net.minecraft.client.resources.model.sprite.Material
@@ -16,11 +17,16 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.fluids.FluidStack
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
 data object RagiumClient : HTClientMod() {
     override fun initialize(eventBus: IEventBus, container: ModContainer) {}
+
+    override fun clientSetup(event: FMLClientSetupEvent) {
+        HTWidgetRendererManager.init()
+    }
 
     override fun registerFluidModels(register: HTFluidModelRegister) {
         for ((color: HTDefaultColor, content: HTFluidContent) in RagiumFluids.DYES.asSequenceWithColor()) {

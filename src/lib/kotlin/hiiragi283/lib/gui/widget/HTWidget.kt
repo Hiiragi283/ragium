@@ -74,7 +74,7 @@ interface HTWidget {
     /**
      * このウィジェットの上で文字を入力すると呼び出されます。
      */
-    fun charTyped(codePoint: Char, modifiers: Int): Boolean = false
+    fun charTyped(codePoint: Char): Boolean = false
 
     /**
      * クライアント側のウィジェットへのアクセスを表すインターフェースです。
