@@ -2,13 +2,18 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.lib.data.DataComponentType
 import hiiragi283.lib.item.alchemy.HTBottleType
+import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.core.component.DataComponentType
-import net.neoforged.neoforge.fluids.FluidStackTemplate
+import net.minecraft.network.codec.ByteBufCodecs
+import net.neoforged.neoforge.fluids.SimpleFluidContent
 
 data object RagiumDataComponents {
     @JvmField
     val BOTTLE_TYPE: DataComponentType<HTBottleType> = DataComponentType(HTBottleType.CODEC, HTBottleType.STREAM_CODEC)
 
     @JvmField
-    val FLUID: DataComponentType<FluidStackTemplate> = DataComponentType(FluidStackTemplate.CODEC, FluidStackTemplate.STREAM_CODEC)
+    val ENERGY: DataComponentType<Int> = DataComponentType(HTCodecs.NON_NEGATIVE_INT, ByteBufCodecs.VAR_INT)
+
+    @JvmField
+    val FLUID: DataComponentType<SimpleFluidContent> = DataComponentType(SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
 }

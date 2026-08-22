@@ -1,5 +1,7 @@
 package hiiragi283.lib.mod
 
+import hiiragi283.lib.capability.HTFluidCapabilities
+import hiiragi283.lib.capability.HTItemCapabilities
 import hiiragi283.lib.transfer.HTHandlerProvider
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.Entity
@@ -13,7 +15,6 @@ import net.neoforged.fml.ModContainer
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.capabilities.BlockCapability
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ICapabilityProvider
 import net.neoforged.neoforge.capabilities.ItemCapability
@@ -106,8 +107,8 @@ abstract class HTCommonMod {
         }
 
         fun <BE> registerBlockEntity(type: BlockEntityType<BE>) where BE : BlockEntity, BE : HTHandlerProvider {
-            this.registerBlockEntity(Capabilities.Item.BLOCK, type) { blockEntity: BE, side: Direction? -> blockEntity.getItemHandler(side) }
-            this.registerBlockEntity(Capabilities.Fluid.BLOCK, type) { blockEntity: BE, side: Direction? -> blockEntity.getFluidHandler(side) }
+            this.registerBlockEntity(HTItemCapabilities.block, type) { blockEntity: BE, side: Direction? -> blockEntity.getItemHandler(side) }
+            this.registerBlockEntity(HTFluidCapabilities.block, type) { blockEntity: BE, side: Direction? -> blockEntity.getFluidHandler(side) }
         }
 
         //    Entity    //

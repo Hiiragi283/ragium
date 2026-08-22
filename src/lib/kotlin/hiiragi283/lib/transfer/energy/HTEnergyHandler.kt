@@ -18,7 +18,7 @@ interface HTEnergyHandler {
     fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int
 
     @Suppress("NonExtendableApiUsage")
-    class Wrapper(private val delegate: HTEnergyHandler) : EnergyHandler {
+    class Wrapper(val delegate: HTEnergyHandler) : EnergyHandler {
         override fun getAmountAsLong(): Long = amountAsInt.toLong()
 
         override fun getAmountAsInt(): Int = delegate.amount

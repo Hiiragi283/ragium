@@ -4,6 +4,8 @@ import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.HTGuiAccess
 import hiiragi283.lib.gui.widget.HTAbstractWidgetRenderer
 import hiiragi283.lib.gui.widget.HTWidget
+import hiiragi283.lib.text.Text
+import java.util.function.Consumer
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphicsExtractor
@@ -12,7 +14,7 @@ import net.minecraft.client.renderer.texture.SpriteContents
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling
 import net.minecraft.resources.Identifier
-import net.minecraft.util.FormattedCharSequence
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.neoforge.client.ClientTooltipFlag
 
@@ -28,7 +30,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
         if (bounds.contains(mouseX, mouseY)) {
             graphics.setTooltipForNextFrame(
                 font,
-                collectTooltips(getTooltipFlag()),
+                buildList { collectTooltips({ text: Text -> this.add(text.visualOrderText) }, Item.TooltipContext.EMPTY, getTooltipFlag()) },
                 mouseX,
                 mouseY,
             )
@@ -39,7 +41,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
         if (!shouldRender()) return
         val sprite: TextureAtlasSprite = getSprite()
         val color: Int = getColor()
-        val fillLevel = getScaledLevel().toInt()
+        val fillLevel: Int = getScaledLevel().toInt()
 
         val spriteContents: SpriteContents = sprite.contents()
         val tileScaling = GuiSpriteScaling.Tile(spriteContents.width(), spriteContents.height())
@@ -91,5 +93,5 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
 
     protected abstract fun getLevel(): Float
 
-    protected abstract fun collectTooltips(flag: TooltipFlag): List<FormattedCharSequence>
+    protected abstract fun collectTooltips(consumer: Consumer<Text>, context: Item.TooltipContext, flag: TooltipFlag)
 }

@@ -1,6 +1,8 @@
 package hiiragi283.ragium
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.capability.HTEnergyCapabilities
+import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.gui.sync.HTFluidSyncPayload
 import hiiragi283.lib.gui.sync.HTIntSyncPayload
 import hiiragi283.lib.gui.sync.HTItemSyncPayload
@@ -42,7 +44,6 @@ import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
-import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.NeoForgeRegistries
@@ -80,6 +81,7 @@ data object Ragium : HTCommonMod() {
         }
         event.register(Registries.DATA_COMPONENT_TYPE) { helper ->
             helper.register(RagiumAPI.id("bottle_type"), RagiumDataComponents.BOTTLE_TYPE)
+            helper.register(RagiumAPI.id(HTConstants.ENERGY), RagiumDataComponents.ENERGY)
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
         }
         event.register(Registries.MENU) { helper ->
@@ -142,7 +144,7 @@ data object Ragium : HTCommonMod() {
         registerBlockEntities(helper)
 
         helper.registerItem(
-            Capabilities.Fluid.ITEM,
+            HTFluidCapabilities.item,
             { _, access: ItemAccess -> HTPotionBucketItem.BucketHandler(access) },
             RagiumFluids.POTION.bucketHolder,
         )
@@ -151,7 +153,7 @@ data object Ragium : HTCommonMod() {
     private fun registerBlockEntities(helper: CapabilityHelper) {
         fun <BE : HTProcessorBlockEntity.Energized> registerProcessor(type: BlockEntityType<BE>) {
             helper.registerBlockEntity(type)
-            helper.registerBlockEntity(Capabilities.Energy.BLOCK, type) { processor: BE, _ -> HTEnergyHandler.Wrapper(processor.handler) }
+            helper.registerBlockEntity(HTEnergyCapabilities.block, type) { processor: BE, _ -> HTEnergyHandler.Wrapper(processor.handler) }
         }
 
         // Machine

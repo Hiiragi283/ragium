@@ -3,14 +3,17 @@ package hiiragi283.ragium.client.gui.widget
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.HTGuiAccess
+import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.gui.widget.HTEnergySlotWidget
+import java.util.function.Consumer
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.data.AtlasIds
 import net.minecraft.resources.Identifier
-import net.minecraft.util.FormattedCharSequence
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.TooltipFlag
 
 class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) : HTSpriteWidgetRenderer<HTEnergySlotWidget>(gui, widget) {
@@ -34,5 +37,7 @@ class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) :
 
     override fun getLevel(): Float = widget.filledLevel
 
-    override fun collectTooltips(flag: TooltipFlag): List<FormattedCharSequence> = listOf() // TODO
+    override fun collectTooltips(consumer: Consumer<Text>, context: Item.TooltipContext, flag: TooltipFlag) {
+        HTStorageHelper.addEnergyTooltip(widget, consumer, flag.isCreative)
+    }
 }
