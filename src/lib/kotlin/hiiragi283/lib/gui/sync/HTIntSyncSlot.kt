@@ -49,5 +49,7 @@ interface HTIntSyncSlot : HTSyncableSlot {
         }
 
         override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTIntSyncPayload = HTIntSyncPayload(this.amountAsInt)
+
+        override fun toString(): String = "HTIntSyncSlot(amount=$amountAsInt)"
     }
 }

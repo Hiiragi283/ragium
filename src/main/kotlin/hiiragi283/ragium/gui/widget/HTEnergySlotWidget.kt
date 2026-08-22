@@ -11,4 +11,6 @@ class HTEnergySlotWidget(
 ) : HTAbstractWidget(x, y, 18, 18),
     HTEnergyHandler by handler {
     override fun getType(): HTWidgetType<HTEnergySlotWidget> = RagiumWidgetTypes.ENERGY
+
+    override fun toString(): String = "HTEnergySlotWidget(bounds=$bounds, amount=$amount, capacity=$capacity)"
 }

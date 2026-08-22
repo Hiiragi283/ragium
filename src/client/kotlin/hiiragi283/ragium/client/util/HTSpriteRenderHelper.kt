@@ -22,8 +22,8 @@ object HTSpriteRenderHelper {
         graphics: GuiGraphicsExtractor,
         texture: Identifier,
         bounds: HTBounds,
-        uOffset: Int = 0,
-        vOffset: Int = 0,
+        uOffset: Float = 0f,
+        vOffset: Float = 0f,
         textureWidth: Int = bounds.width,
         textureHeight: Int = bounds.height,
     ) {
@@ -50,12 +50,12 @@ object HTSpriteRenderHelper {
         y: Int,
         width: Int,
         height: Int,
-        uOffset: Int = 0,
-        vOffset: Int = 0,
+        uOffset: Float = 0f,
+        vOffset: Float = 0f,
         textureWidth: Int = width,
         textureHeight: Int = height,
     ) {
-        graphics.blitSprite(
+        graphics.blit(
             RenderPipelines.GUI_TEXTURED,
             fixTextureId(texture),
             x,

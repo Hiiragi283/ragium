@@ -5,6 +5,7 @@ import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.block.RagiumBlocks
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.item.RagiumItems
 import net.minecraft.data.PackOutput
@@ -15,6 +16,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
     override fun addTranslations() {
         addPatternTranslations(this)
 
+        // Block
+        add(RagiumBlocks.MELTER, "Melter")
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")
         add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
@@ -74,5 +77,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         // Text
         add(RagiumTranslation.RAGIUM, "Ragium")
+
+        add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
+        add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
     }
 }

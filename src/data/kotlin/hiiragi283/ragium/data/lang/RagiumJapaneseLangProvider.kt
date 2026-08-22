@@ -5,6 +5,7 @@ import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.block.RagiumBlocks
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.item.RagiumItems
 import net.minecraft.data.PackOutput
@@ -15,6 +16,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
     override fun addTranslations() {
         addPatternTranslations(this)
 
+        // Block
+        add(RagiumBlocks.MELTER, "溶融炉")
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
         add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
@@ -74,5 +77,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")
+
+        add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")
+        add(RagiumTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
     }
 }

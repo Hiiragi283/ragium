@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.client.renderer.texture.SpriteContents
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling
+import net.minecraft.resources.Identifier
 import net.minecraft.util.FormattedCharSequence
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.neoforge.client.ClientTooltipFlag
@@ -36,7 +37,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
 
     private fun renderSprite(bounds: HTBounds, graphics: GuiGraphicsExtractor) {
         if (!shouldRender()) return
-        val sprite: TextureAtlasSprite = getSprite() ?: return
+        val sprite: TextureAtlasSprite = getSprite()
         val color: Int = getColor()
         val fillLevel: Float = getScaledLevel()
 
@@ -76,7 +77,13 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
 
     protected abstract fun shouldRender(): Boolean
 
-    protected abstract fun getSprite(): TextureAtlasSprite?
+    protected abstract fun getSprite(): TextureAtlasSprite
+
+    protected fun getSprite(atlasId: Identifier, id: Identifier): TextureAtlasSprite = Minecraft
+        .getInstance()
+        .atlasManager
+        .getAtlasOrThrow(atlasId)
+        .getSprite(id)
 
     protected abstract fun getColor(): Int
 

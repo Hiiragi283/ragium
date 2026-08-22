@@ -9,7 +9,6 @@ import hiiragi283.ragium.gui.widget.HTFluidWidget
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.renderer.block.FluidModel
-import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.resources.Identifier
 import net.minecraft.util.FormattedCharSequence
@@ -32,10 +31,7 @@ class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) : HTSpriteW
         .fluidStateModelSet
         .get(widget.resource.fluid.defaultFluidState())
 
-    override fun getSprite(): TextureAtlasSprite? = getModel()
-        .stillMaterial()
-        .sprite()
-        .takeUnless { it.atlasLocation() == MissingTextureAtlasSprite.getLocation() }
+    override fun getSprite(): TextureAtlasSprite = getModel().stillMaterial().sprite()
 
     override fun getColor(): Int = getModel().fluidTintSource()?.colorAsStack(widget.getFluidStack()) ?: 0
 
@@ -44,7 +40,10 @@ class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) : HTSpriteW
         is HTFluidWidget.Tank -> widget.currentFilledLevel
     }.coerceAtMost(1f)
 
-    override fun collectTooltips(flag: TooltipFlag): List<FormattedCharSequence> = widget.getFluidStack()
-        .getTooltipLines(Item.TooltipContext.of(null), null, flag)
-        .map(Text::getVisualOrderText)
+    override fun collectTooltips(flag: TooltipFlag): List<FormattedCharSequence> = when {
+        widget.isEmpty -> listOf()
+        else -> widget.getFluidStack()
+            .getTooltipLines(Item.TooltipContext.of(null), null, flag)
+            .map(Text::getVisualOrderText)
+    }
 }

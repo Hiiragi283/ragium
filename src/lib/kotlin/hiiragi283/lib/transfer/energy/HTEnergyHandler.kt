@@ -8,7 +8,10 @@ interface HTEnergyHandler {
     val amount: Int
     val capacity: Int
 
+    val isEmpty: Boolean get() = amount == 0
+
     val needed: Int get() = capacity - amount
+    val filledLevel: Float get() = amount.toFloat() / capacity.toFloat()
 
     fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int
 

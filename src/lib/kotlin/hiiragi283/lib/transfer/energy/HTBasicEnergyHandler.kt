@@ -38,11 +38,11 @@ open class HTBasicEnergyHandler(
 
     private var amountIn: Int = 0
 
-    final override var amount: Int
-        get() = amountIn
-        set(value) {
-            setAmountUnchecked(value, true)
-        }
+    override val amount: Int get() = amountIn
+
+    fun setAmount(amount: Int) {
+        setAmountUnchecked(amount, true)
+    }
 
     protected fun setAmountInternal(amount: Int) {
         setAmountUnchecked(amount, false)
@@ -50,14 +50,14 @@ open class HTBasicEnergyHandler(
 
     protected fun setAmountUnchecked(amount: Int, validate: Boolean) {
         if (amount == 0) {
-            if (this.amount == 0) return
+            if (this.amountIn == 0) return
             this.amountIn = 0
         } else if (!validate || amount > 0) {
             this.amountIn = amount.coerceIn(0, capacity)
         } else {
             error("Invalid amount for storage: $amount")
         }
-        onRootCommit(this.amount)
+        onRootCommit(this.amountIn)
     }
 
     override fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
@@ -75,7 +75,7 @@ open class HTBasicEnergyHandler(
     override fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
         TransferPreconditions.checkNonNegative(amount)
         if (!this.canExtract.test(access)) return 0
-        val extracted: Int = minOf(this.amount, amount)
+        val extracted: Int = minOf(this.amountIn, amount)
         if (extracted > 0) {
             this.updateSnapshots(transaction)
             amountIn -= extracted
@@ -87,7 +87,7 @@ open class HTBasicEnergyHandler(
     //    ValueIOSerializable    //
 
     override fun serialize(output: ValueOutput) {
-        output.putInt(HTConstants.AMOUNT, amount)
+        output.putInt(HTConstants.AMOUNT, amountIn)
     }
 
     override fun deserialize(input: ValueInput) {
@@ -96,13 +96,15 @@ open class HTBasicEnergyHandler(
 
     //    SnapshotJournal    //
 
-    override fun createSnapshot(): Int = amount
+    override fun createSnapshot(): Int = amountIn
 
     override fun revertToSnapshot(snapshot: Int) {
-        this.amount = snapshot
+        this.amountIn = snapshot
     }
 
     override fun onRootCommit(originalState: Int) {
         listener?.run()
     }
+
+    override fun toString(): String = "HTBasicEnergyHandler(amount=$amountIn, capacity=$capacity)"
 }

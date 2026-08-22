@@ -36,6 +36,9 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
     private fun registerBlockModels(generators: BlockModelGenerators) {
         RagiumBlocks.MATERIAL_BLOCKS.values.forEach { generators.createTrivialCube(it.get()) }
+
+        // Machine
+        generators.createNonTemplateModelBlock(RagiumBlocks.MELTER.get())
     }
 
     private fun registerItemModels(generators: ItemModelGenerators) {

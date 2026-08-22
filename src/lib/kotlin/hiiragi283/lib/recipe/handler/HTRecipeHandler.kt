@@ -3,10 +3,15 @@ package hiiragi283.lib.recipe.handler
 import hiiragi283.lib.recipe.HTRecipeFactory
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
+import net.neoforged.neoforge.common.util.ValueIOSerializable
 
-abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRecipeFactory<INPUT, OUTPUT>> {
-    var progress: Int = 0
-    var maxProgress: Int = 0
+abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRecipeFactory<INPUT, OUTPUT>> : ValueIOSerializable {
+    private var progress: Int = 0
+    private var maxProgress: Int = 0
+
+    val progression: Float get() = progress.toFloat() / maxProgress
 
     private fun updateProgress(maxProgress: Int) {
         this.maxProgress = maxProgress
@@ -39,9 +44,9 @@ abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRec
         }
 
         // アウトプットに完成品を搬出できるか判定する
+        val output: OUTPUT = recipe.produce(input)
+        outputCache = output
         if (!canProgress) {
-            val output: OUTPUT = recipe.produce(input)
-            outputCache = output
             if (canComplete(recipe, input, output)) {
                 canProgress = true
             } else {
@@ -61,7 +66,7 @@ abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRec
         if (progress >= maxProgress) {
             progress -= maxProgress
             canProgress = false
-            onComplete(recipe, inputCache!!, outputCache!!)
+            onComplete(recipe, input, output)
             inputCache = null
             outputCache = null
         }
@@ -79,4 +84,18 @@ abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRec
     protected abstract fun getProgress(): Int
 
     protected abstract fun onComplete(recipe: RECIPE, input: INPUT, output: OUTPUT)
+
+    override fun serialize(output: ValueOutput) {
+        output.putInt("progress", progress)
+        output.putInt("max_progress", maxProgress)
+    }
+
+    override fun deserialize(input: ValueInput) {
+        input.getInt("max_progress").ifPresent { maxProgress: Int ->
+            this.maxProgress = maxProgress
+            input.getInt("progress").ifPresent { progress: Int ->
+                this.progress = progress
+            }
+        }
+    }
 }

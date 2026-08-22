@@ -18,7 +18,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTFluidSyncSlot(property: ReadWriteProperty<Any?, FluidStack>) : HTIntSyncSlot {
     constructor(property: KMutableProperty0<FluidStack>) : this(HTDelegates.LazyDelegate(property::get, property::set))
 
-    constructor(tank: HTBasicFluidTank) : this(tank::stack)
+    constructor(tank: HTBasicFluidTank) : this(HTDelegates.LazyDelegate(tank::getStackCopy, tank::setStack))
 
     private var lastStack: FluidStack = FluidStack.EMPTY
 
@@ -56,4 +56,6 @@ class HTFluidSyncSlot(property: ReadWriteProperty<Any?, FluidStack>) : HTIntSync
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: FluidStack) {
         asFluidStack = value
     }
+
+    override fun toString(): String = "HTFluidSyncSlot(stack=$asFluidStack)"
 }

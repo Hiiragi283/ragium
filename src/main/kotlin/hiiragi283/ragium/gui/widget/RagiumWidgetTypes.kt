@@ -20,4 +20,7 @@ data object RagiumWidgetTypes {
 
     @JvmField
     val ITEM: HTWidgetType<HTItemWidget> = create(HTConstants.ITEM)
+
+    @JvmField
+    val PROGRESS: HTWidgetType<HTProgressWidget> = create("progress")
 }

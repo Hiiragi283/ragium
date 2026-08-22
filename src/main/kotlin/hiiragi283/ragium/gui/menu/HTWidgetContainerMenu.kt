@@ -4,6 +4,7 @@ import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.sync.HTSyncableSlot
 import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetHolder
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.gui.factory.HTWidgetHolderContext
 import hiiragi283.ragium.gui.widget.HTItemWidget
 import net.minecraft.world.entity.player.Inventory
@@ -34,7 +35,7 @@ class HTWidgetContainerMenu(
     private inner class WidgetHolderImpl : HTWidgetHolder {
         override fun <WIDGET : HTWidget> addWidget(widget: WIDGET): WIDGET {
             widgets += widget
-            // HiiragiCoreAPI.LOGGER.debug("Added widget: {}", widget)
+            RagiumAPI.LOGGER.debug("Added widget: {}", widget)
             if (widget is HTItemWidget.Container) {
                 addSlot(widget.slot)
             }
@@ -43,7 +44,7 @@ class HTWidgetContainerMenu(
 
         override fun track(slot: HTSyncableSlot, type: HTSyncType) {
             this@HTWidgetContainerMenu.addTrackedSlot(slot, type)
-            // HiiragiCoreAPI.LOGGER.debug("Added syncable slot: {} for {}", slot, type)
+            RagiumAPI.LOGGER.debug("Added syncable slot: {} for {}", slot, type)
         }
 
         override var rows: Int = 3

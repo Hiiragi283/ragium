@@ -41,12 +41,16 @@ sealed class HTFluidWidget(view: HTFluidView, private val stackSetter: FluidStac
     //    Slot    //
 
     class Slot(view: HTFluidView, stackSetter: FluidStackSetter?, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : HTFluidWidget(view, stackSetter, x, y, backgroundType, 18, 18, isGhost) {
-        constructor(tank: HTBasicFluidTank, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(tank, tank::stack::set, x, y, backgroundType, isGhost)
+        constructor(tank: HTBasicFluidTank, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(tank, tank::setStack, x, y, backgroundType, isGhost)
+
+        override fun toString(): String = "HTFluidWidget.Slot(bounds=$bounds, stack=${this.getFluidStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
     }
 
     //    Tank    //
 
     class Tank(view: HTFluidView, stackSetter: FluidStackSetter?, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : HTFluidWidget(view, stackSetter, x, y, backgroundType, 18, 18 * 3, isGhost) {
-        constructor(tank: HTBasicFluidTank, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(tank, tank::stack::set, x, y, backgroundType, isGhost)
+        constructor(tank: HTBasicFluidTank, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(tank, tank::setStack, x, y, backgroundType, isGhost)
+
+        override fun toString(): String = "HTFluidWidget.Tank(bounds=$bounds, stack=${this.getFluidStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
     }
 }

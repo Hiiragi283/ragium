@@ -6,6 +6,7 @@ import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.sync.HTSyncablePayload
 import hiiragi283.lib.gui.sync.HTSyncableSlot
 import hiiragi283.lib.text.Text
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.gui.menu.HTContainerMenu
 import hiiragi283.ragium.network.HTUpdateMenuPacket
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
@@ -32,15 +33,14 @@ abstract class HTContainerScreen<MENU : HTContainerMenu<*>>(menu: MENU, inventor
                         val payload: HTSyncablePayload = slot.createPayload(access, changeType) ?: return@mapIndexedNotNull null
                         index to payload
                     }
-                    // .onEach { (index: Int, payload: HTSyncablePayload) -> HiiragiCoreAPI.LOGGER.debug("Index: {}, Payload: {}", index, payload) }
+                    .onEach { (index: Int, payload: HTSyncablePayload) -> RagiumAPI.LOGGER.debug("Index: {}, Payload: {}", index, payload) }
                     .toMap(),
             )?.let(ClientPacketDistributor::sendToServer)
     }
 
     //    HTGuiAccess    //
 
-    override val carried: ItemStack
-        get() = menu.carried
+    override val carried: ItemStack get() = menu.carried
 
     //    Extensions    //
 

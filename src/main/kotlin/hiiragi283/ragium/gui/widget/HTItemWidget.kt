@@ -34,6 +34,8 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
         override fun onInit(access: HTWidget.Access) {
             access.isActive = false
         }
+
+        override fun toString(): String = "HTItemWidget.Container(slot=$slot, backgroundType=$backgroundType)"
     }
 
     //    Fake    //
@@ -43,7 +45,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
         HTGhostWidget {
         constructor(stackGetter: () -> ItemStack, stackSetter: ItemStackSetter?, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(stackGetter, stackSetter, HTBounds.createSlot(x - 1, y - 1), backgroundType, isGhost)
 
-        constructor(slot: HTBasicItemSlot, bounds: HTBounds, backgroundType: HTBackgroundType, isGhost: Boolean) : this(slot::stack, slot::stack::set, bounds, backgroundType, isGhost)
+        constructor(slot: HTBasicItemSlot, bounds: HTBounds, backgroundType: HTBackgroundType, isGhost: Boolean) : this(slot::getStackCopy, slot::setStack, bounds, backgroundType, isGhost)
 
         constructor(slot: HTBasicItemSlot, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(slot, HTBounds.createSlot(x - 1, y - 1), backgroundType, isGhost)
 
@@ -60,5 +62,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
                 stackSetter?.invoke(stack)
             }
         }
+
+        override fun toString(): String = "HTItemWidget.Fake(bounds=$bounds, stack=${getStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
     }
 }

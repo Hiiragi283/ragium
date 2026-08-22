@@ -9,6 +9,7 @@ import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.block.RagiumBlocks
 import hiiragi283.ragium.item.RagiumItems
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -29,7 +30,7 @@ data object RagiumJeiRecipeTypes {
     val FREEZING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> = HTJeiRecipeType(RagiumRecipeTypes.FREEZING, ItemStack(Items.ICE))
 
     @JvmField
-    val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.MELTING, ItemStack(Items.MAGMA_BLOCK))
+    val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
     val PYROLYZING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumItems.COAL_COKE)

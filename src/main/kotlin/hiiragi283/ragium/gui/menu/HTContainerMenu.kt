@@ -7,6 +7,7 @@ import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.sync.HTSyncableMenu
 import hiiragi283.lib.gui.sync.HTSyncablePayload
 import hiiragi283.lib.gui.sync.HTSyncableSlot
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.gui.HTContainerItemSlot
 import hiiragi283.ragium.network.HTUpdateMenuPacket
 import net.minecraft.core.RegistryAccess
@@ -95,7 +96,7 @@ abstract class HTContainerMenu<C>(
             if (slotType.isInput || !slotType.isOutput) {
                 inputSlots += slotCount
             }
-            // HiiragiCoreAPI.LOGGER.info("${slot.slotType} slot: $slotCount")
+            RagiumAPI.LOGGER.info("${slot.slotType} slot: $slotCount")
         }
         slotCount++
         return super.addSlot(slot)
@@ -105,13 +106,13 @@ abstract class HTContainerMenu<C>(
         // hotbar
         for (index: Int in 0..8) {
             hotBarSlots.add(slotCount)
-            // HiiragiCoreAPI.LOGGER.debug("Hotbar slot: $slotCount")
+            RagiumAPI.LOGGER.debug("Hotbar slot: $slotCount")
             addSlot(Slot(inventory, index, HTSlotHelper.getSlotPosX(index), 161 + yOffset))
         }
         // inventory
         for (index: Int in 0..26) {
             inventorySlots.add(slotCount)
-            // HiiragiCoreAPI.LOGGER.debug("Inventory slot: $slotCount")
+            RagiumAPI.LOGGER.debug("Inventory slot: $slotCount")
             addSlot(
                 Slot(
                     inventory,
@@ -217,7 +218,7 @@ abstract class HTContainerMenu<C>(
                     val changeType: HTChangeType = slot.getChange() ?: continue
                     val payload: HTSyncablePayload = slot.createPayload(access, changeType) ?: continue
                     this[i] = payload
-                    // HiiragiCoreAPI.LOGGER.debug("Index: {}, Payload: {}", i, payload)
+                    RagiumAPI.LOGGER.debug("Added sync value index: {}, payload: {}", i, payload)
                 }
             }?.let { PacketDistributor.sendToPlayer(player, it) }
         }
@@ -226,7 +227,6 @@ abstract class HTContainerMenu<C>(
     /**
      * 参照 : [Mekanism - MekanismContainer.sendAllDataToRemote]
      */
-
     override fun sendAllDataToRemote() {
         super.sendAllDataToRemote()
         val player: Player = inventory.player

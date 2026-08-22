@@ -12,6 +12,8 @@ import net.minecraft.world.level.block.Block
 
 class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) : HTBlockLootTableProvider(registries, RagiumAPI.MOD_ID, RagiumBlocks.REGISTER.asBlockSequence()) {
     override fun generate() {
+        knownBlocks.forEach(::dropSelf)
+
         RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: HTMaterial, block: SupplierWithId<Block>) ->
             when (part) {
                 HTBlockPart.ORE -> TODO()

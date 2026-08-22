@@ -41,13 +41,13 @@ open class HTBasicFluidTank(
         fun output(capacity: Int, listener: Runnable?): HTBasicFluidTank = create(capacity, listener, canInsert = HTTransferPredicates.internalOnly())
     }
 
-    private var stackIn = FluidStack.EMPTY
+    private var stackIn: FluidStack = FluidStack.EMPTY
 
-    override var stack: FluidStack
-        get() = stackIn.copy()
-        set(value) {
-            setStackUnchecked(value, true)
-        }
+    override fun getStackCopy(): FluidStack = stackIn.copy()
+
+    override fun setStack(stack: FluidStack) {
+        setStackUnchecked(stack, true)
+    }
 
     override fun setStackInternal(stack: FluidStack) {
         setStackUnchecked(stack, false)
@@ -56,14 +56,14 @@ open class HTBasicFluidTank(
     private fun setStackUnchecked(other: FluidStack, validate: Boolean) {
         val resource: FluidResource = getResourceFrom(other)
         if (resource.isEmpty) {
-            if (this.stack.isEmpty) return
-            this.stack = FluidStack.EMPTY
+            if (this.stackIn.isEmpty) return
+            this.stackIn = FluidStack.EMPTY
         } else if (!validate || isValid(resource)) {
-            this.stack = other
+            this.stackIn = other
         } else {
             error("Invalid stack for tank: $other")
         }
-        onRootCommit(this.stackIn)
+        onRootCommit(getStackCopy())
     }
 
     final override fun getResourceFrom(stack: FluidStack): FluidResource = FluidResource.of(stack)
@@ -74,15 +74,13 @@ open class HTBasicFluidTank(
 
     final override fun createStack(resource: FluidResource, amount: Int): FluidStack = resource.toStack(amount)
 
-    final override fun copyStack(stack: FluidStack): FluidStack = stack.copy()
-
     //    ValueIOSerializable    //
 
     override fun serialize(output: ValueOutput) {
-        output.store(HTConstants.FLUID, FluidStack.OPTIONAL_CODEC, stack)
+        output.store(HTConstants.FLUID, FluidStack.OPTIONAL_CODEC, getStackCopy())
     }
 
     override fun deserialize(input: ValueInput) {
-        input.read(HTConstants.FLUID, FluidStack.OPTIONAL_CODEC).ifPresent(::stack::set)
+        input.read(HTConstants.FLUID, FluidStack.OPTIONAL_CODEC).ifPresent(::setStackInternal)
     }
 }

@@ -5,6 +5,7 @@ import hiiragi283.lib.gui.HTGuiAccess
 import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetRendererFactory
 import hiiragi283.lib.gui.widget.HTWidgetType
+import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.MenuScreens
 import net.neoforged.fml.ModLoader
@@ -21,7 +22,7 @@ internal object HTWidgetRendererManager {
         val map: MutableMap<HTWidgetType<*>, HTWidgetRendererFactory<*, *>> = hashMapOf()
         HTRegisterWidgetRendererEvent(map::put).let(ModLoader::postEvent)
         this.factories = map
-        // HiiragiCoreAPI.LOGGER.info("Initialized Widget Renderer Manager")
+        RagiumAPI.LOGGER.info("Initialized Widget Renderer Manager")
     }
 
     @Suppress("UNCHECKED_CAST")

@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.config
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.config.definePositiveInt
+import hiiragi283.lib.config.translation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.text.RagiumTranslation
 import java.util.function.IntSupplier
@@ -16,12 +18,12 @@ data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: I
         @JvmStatic
         private fun energyCapacity(builder: ModConfigSpec.Builder, value: Int): ModConfigSpec.IntValue = builder
             .translation(RagiumTranslation.CONFIG_ENERGY_CAPACITY)
-            .defineInRange("energy_capacity", value, 1, Int.MAX_VALUE)
+            .definePositiveInt("energy_capacity", value)
 
         @JvmStatic
         private fun energyRate(builder: ModConfigSpec.Builder, value: Int): ModConfigSpec.IntValue = builder
             .translation(RagiumTranslation.CONFIG_ENERGY_RATE)
-            .defineInRange("energy_rate", value, 1, Int.MAX_VALUE)
+            .definePositiveInt("energy_rate", value)
 
         @JvmStatic
         fun createMachine(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTEnergyConfig = createBlock(builder, name, rate, rate * 20 * 10 * 10)

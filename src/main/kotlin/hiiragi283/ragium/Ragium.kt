@@ -13,6 +13,7 @@ import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
+import hiiragi283.lib.transfer.energy.HTEnergyHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
@@ -22,7 +23,10 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.block.RagiumBlocks
+import hiiragi283.ragium.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.item.HTPotionBucketItem
 import hiiragi283.ragium.item.RagiumItems
@@ -32,12 +36,14 @@ import hiiragi283.ragium.recipe.RagiumRecipeLookups
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
@@ -51,6 +57,8 @@ data object Ragium : HTCommonMod() {
         RagiumFluids.register(eventBus)
         RagiumBlocks.register(eventBus)
         RagiumItems.register(eventBus)
+
+        RagiumBlockEntityTypes.register(eventBus)
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
         container.registerConfig(ModConfig.Type.SERVER, RagiumConfig.SERVER_SPEC)
@@ -73,6 +81,10 @@ data object Ragium : HTCommonMod() {
         event.register(Registries.DATA_COMPONENT_TYPE) { helper ->
             helper.register(RagiumAPI.id("bottle_type"), RagiumDataComponents.BOTTLE_TYPE)
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
+        }
+        event.register(Registries.MENU) { helper ->
+            helper.register(HTBlockWidgetHolderContext.MENU_TYPE.getId(), IMenuTypeExtension.create(HTBlockWidgetHolderContext::create))
+            // helper.register(HTItemWidgetHolderContext.MENU_TYPE.getId(), IMenuTypeExtension.create(HTItemWidgetHolderContext::create)) TODO
         }
         event.register(Registries.RECIPE_SERIALIZER) { helper ->
             helper.register(RagiumAPI.id(RagiumConstants.ASSEMBLING), RagiumRecipeSerializers.ASSEMBLING)
@@ -127,6 +139,8 @@ data object Ragium : HTCommonMod() {
     }
 
     override fun registerCapabilities(helper: CapabilityHelper) {
+        registerBlockEntities(helper)
+
         helper.registerItem(
             Capabilities.Fluid.ITEM,
             { _, access: ItemAccess -> HTPotionBucketItem.BucketHandler(access) },
@@ -134,8 +148,18 @@ data object Ragium : HTCommonMod() {
         )
     }
 
+    private fun registerBlockEntities(helper: CapabilityHelper) {
+        fun <BE : HTProcessorBlockEntity.Energized> registerProcessor(type: BlockEntityType<BE>) {
+            helper.registerBlockEntity(type)
+            helper.registerBlockEntity(Capabilities.Energy.BLOCK, type) { processor: BE, _ -> HTEnergyHandler.Wrapper(processor.handler) }
+        }
+
+        // Machine
+        registerProcessor(RagiumBlockEntityTypes.MELTER.get())
+    }
+
     override fun registerPayload(registrar: PayloadRegistrar) {
         registrar.playToClient(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC, HTPayloadHandlers::handleS2C)
-        registrar.playBidirectional(HTUpdateMenuPacket.TYPE, HTUpdateMenuPacket.STREAM_CODEC, HTPayloadHandlers::handleS2C, HTPayloadHandlers::handleC2S)
+        registrar.playBidirectional(HTUpdateMenuPacket.TYPE, HTUpdateMenuPacket.STREAM_CODEC, HTPayloadHandlers::handleS2C)
     }
 }

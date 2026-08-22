@@ -7,14 +7,19 @@ import hiiragi283.lib.fluid.FluidStackTintSource
 import hiiragi283.lib.fluid.HTFluidModelRegister
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.mod.HTClientMod
+import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
+import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTItemWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTWidgetRendererManager
 import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.gui.widget.RagiumWidgetTypes
+import hiiragi283.ragium.network.HTUpdateMenuPacket
 import java.awt.Color
 import net.minecraft.client.resources.model.sprite.Material
 import net.neoforged.api.distmarker.Dist
@@ -22,6 +27,8 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
+import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent
 import net.neoforged.neoforge.fluids.FluidStack
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
@@ -32,7 +39,12 @@ data object RagiumClient : HTClientMod() {
         HTWidgetRendererManager.init()
     }
 
+    override fun registerClientPayload(event: RegisterClientPayloadHandlersEvent) {
+        event.register(HTUpdateMenuPacket.TYPE, HTPayloadHandlers::handleC2S)
+    }
+
     override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
+        event.register(RagiumWidgetTypes.ENERGY, ::HTEnergySlotWidgetRenderer)
         event.register(RagiumWidgetTypes.FLUID, ::HTFluidWidgetRenderer)
         event.register(RagiumWidgetTypes.ITEM, ::HTItemWidgetRenderer)
     }
@@ -124,5 +136,9 @@ data object RagiumClient : HTClientMod() {
             setDull()
             colorTint(Color(0x336699))
         }
+    }
+
+    override fun registerScreens(event: RegisterMenuScreensEvent) {
+        event.register(HTBlockWidgetHolderContext.MENU_TYPE.get(), ::HTWidgetContainerScreen)
     }
 }

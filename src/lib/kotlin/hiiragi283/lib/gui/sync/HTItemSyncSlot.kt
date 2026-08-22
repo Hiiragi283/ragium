@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack
 class HTItemSyncSlot(property: ReadWriteProperty<Any?, ItemStack>) : HTIntSyncSlot {
     constructor(property: KMutableProperty0<ItemStack>) : this(HTDelegates.LazyDelegate(property::get, property::set))
 
-    constructor(slot: HTBasicItemSlot) : this(slot::stack)
+    constructor(slot: HTBasicItemSlot) : this(HTDelegates.LazyDelegate(slot::getStackCopy, slot::setStack))
 
     private var lastStack: ItemStack = ItemStack.EMPTY
 
@@ -56,4 +56,6 @@ class HTItemSyncSlot(property: ReadWriteProperty<Any?, ItemStack>) : HTIntSyncSl
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: ItemStack) {
         asItemStack = value
     }
+
+    override fun toString(): String = "HTItemSyncSlot(stack=$asItemStack)"
 }

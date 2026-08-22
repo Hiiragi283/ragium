@@ -55,6 +55,7 @@ class HTUpdateMenuPacket private constructor(val containerId: Int, val map: Map<
         if (container.containerId == this.containerId) {
             for ((index: Int, payload: HTSyncablePayload) in map) {
                 payload.setValue(container, index)
+                RagiumAPI.LOGGER.debug("Received sync value index: {}, payload: {}", index, payload)
             }
         }
     }

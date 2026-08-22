@@ -37,7 +37,7 @@ class HTContainerItemSlot(
             index,
             x,
             y,
-            slot::stack::set,
+            slot::setStack,
             slot::isStackValidForInsert,
             slotType,
         )
@@ -52,7 +52,7 @@ class HTContainerItemSlot(
     override fun mayPlace(itemStack: ItemStack): Boolean {
         val (resource: ItemResource, count: Int) = itemStack.toResourcePair()
         if (slot.resource.isEmpty) {
-            return useTransaction { slot.insert(resource, count, it, HTTransferAccess.MANUAL) } < count
+            return useTransaction { slot.insert(resource, count, it, HTTransferAccess.MANUAL) } <= count
         }
         if (useTransaction { slot.extractSelf(1, it, HTTransferAccess.MANUAL) } == 0) return false
         return manualFilter.test(resource, HTTransferAccess.MANUAL)

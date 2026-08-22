@@ -31,7 +31,7 @@ class HTWidgetContainerScreen(menu: HTWidgetContainerMenu, inventory: Inventory,
     override fun extractBackground(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, a: Float) {
         super.extractBackground(graphics, mouseX, mouseY, a)
         val slotHeight: Int = 18 * rows + 17
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BACKGROUND, startX, startY, 0, 0, imageWidth, slotHeight, 256, 256)
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BACKGROUND, startX, startY + slotHeight, 0, 126, imageWidth, 96, 256, 256)
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, startX, startY, 0f, 0f, imageWidth, slotHeight, 256, 256)
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, startX, startY + slotHeight, 0f, 126f, imageWidth, 96, 256, 256)
     }
 }

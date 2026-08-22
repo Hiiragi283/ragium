@@ -16,6 +16,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
+import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent
 import thedarkcolour.kotlinforforge.neoforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 
@@ -30,6 +31,7 @@ abstract class HTClientMod {
         val container: ModContainer = LOADING_CONTEXT.activeContainer
 
         eventBus.addListener(::clientSetup)
+        eventBus.addListener(::registerClientPayload)
         eventBus.addListener(::registerWidgetRenderer)
         eventBus.addListener(::registerBlockColors)
         eventBus.addListener(::registerItemColors)
@@ -57,6 +59,8 @@ abstract class HTClientMod {
      * レジストリへの登録後のセットアップを行います。
      */
     protected open fun clientSetup(event: FMLClientSetupEvent) {}
+
+    protected open fun registerClientPayload(event: RegisterClientPayloadHandlersEvent) {}
 
     /**
      * ウィジェットのレンダラーを登録します。

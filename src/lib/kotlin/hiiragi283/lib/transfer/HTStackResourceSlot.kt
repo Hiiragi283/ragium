@@ -10,7 +10,9 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 abstract class HTStackResourceSlot<S : Any, T : Resource> :
     SnapshotJournal<S>(),
     HTResourceSlot<T> {
-    abstract var stack: S
+    abstract fun getStackCopy(): S
+
+    abstract fun setStack(stack: S)
 
     protected abstract fun setStackInternal(stack: S)
 
@@ -21,8 +23,6 @@ abstract class HTStackResourceSlot<S : Any, T : Resource> :
     protected abstract fun isSame(stack: S, resource: T): Boolean
 
     protected abstract fun createStack(resource: T, amount: Int): S
-
-    protected abstract fun copyStack(stack: S): S
 
     /**
      * 指定したリソースをこのスロットに搬入できるか判定します。
@@ -57,7 +57,7 @@ abstract class HTStackResourceSlot<S : Any, T : Resource> :
     override fun insert(resource: T, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount)
         val amountIn: Int = this.amount
-        if (amountIn == 0 || isSame(this.stack, resource)) {
+        if (amountIn == 0 || isSame(getStackCopy(), resource)) {
             if (isStackValidForInsert(resource, access)) {
                 val needed: Int = minOf(inputRate(access), getNeeded(resource))
                 val inserted: Int = minOf(amount, needed)
@@ -73,7 +73,7 @@ abstract class HTStackResourceSlot<S : Any, T : Resource> :
 
     override fun extract(resource: T, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount)
-        if (isSame(this.stack, resource) && canStackExtract(resource, access)) {
+        if (isSame(getStackCopy(), resource) && canStackExtract(resource, access)) {
             val amountIn: Int = this.amount
             val stored: Int = minOf(outputRate(access), amountIn)
             val extracted: Int = minOf(amount, stored)
@@ -86,13 +86,13 @@ abstract class HTStackResourceSlot<S : Any, T : Resource> :
         return 0
     }
 
-    final override val resource: T get() = stack.let(::getResourceFrom)
+    final override val resource: T get() = getStackCopy().let(::getResourceFrom)
 
-    final override val amount: Int get() = stack.let(::getAmountFrom)
+    final override val amount: Int get() = getStackCopy().let(::getAmountFrom)
 
     //    SnapshotJournal    //
 
-    final override fun createSnapshot(): S = stack.let(::copyStack)
+    final override fun createSnapshot(): S = getStackCopy()
 
     final override fun revertToSnapshot(snapshot: S) {
         setStackInternal(snapshot)

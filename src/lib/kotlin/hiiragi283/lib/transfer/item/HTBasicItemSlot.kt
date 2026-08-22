@@ -53,11 +53,11 @@ open class HTBasicItemSlot(
 
     private var stackIn: ItemStack = ItemStack.EMPTY
 
-    override var stack: ItemStack
-        get() = stackIn.copy()
-        set(value) {
-            setStackUnchecked(value, true)
-        }
+    override fun getStackCopy(): ItemStack = stackIn.copy()
+
+    override fun setStack(stack: ItemStack) {
+        setStackUnchecked(stack, true)
+    }
 
     override fun setStackInternal(stack: ItemStack) {
         setStackUnchecked(stack, false)
@@ -66,14 +66,14 @@ open class HTBasicItemSlot(
     private fun setStackUnchecked(other: ItemStack, validate: Boolean) {
         val resource: ItemResource = getResourceFrom(other)
         if (resource.isEmpty) {
-            if (this.stack.isEmpty) return
+            if (this.stackIn.isEmpty) return
             this.stackIn = ItemStack.EMPTY
         } else if (!validate || isValid(resource)) {
             this.stackIn = other
         } else {
             error("Invalid stack for slot: $other")
         }
-        onRootCommit(this.stack)
+        onRootCommit(getStackCopy())
     }
 
     final override fun getResourceFrom(stack: ItemStack): ItemResource = ItemResource.of(stack)
@@ -84,8 +84,6 @@ open class HTBasicItemSlot(
 
     final override fun createStack(resource: ItemResource, amount: Int): ItemStack = resource.toStack(amount)
 
-    final override fun copyStack(stack: ItemStack): ItemStack = stack.copy()
-
     override fun getCapacity(resource: ItemResource): Int = when (resource.isEmpty) {
         true -> capacity
         false -> minOf(resource.maxStackSize, capacity)
@@ -94,10 +92,10 @@ open class HTBasicItemSlot(
     //    ValueIOSerializable    //
 
     override fun serialize(output: ValueOutput) {
-        output.store(HTConstants.ITEM, ItemStack.OPTIONAL_CODEC, stack)
+        output.store(HTConstants.ITEM, ItemStack.OPTIONAL_CODEC, getStackCopy())
     }
 
     override fun deserialize(input: ValueInput) {
-        input.read(HTConstants.ITEM, ItemStack.OPTIONAL_CODEC).ifPresent(::stack::set)
+        input.read(HTConstants.ITEM, ItemStack.OPTIONAL_CODEC).ifPresent(::setStackInternal)
     }
 }
