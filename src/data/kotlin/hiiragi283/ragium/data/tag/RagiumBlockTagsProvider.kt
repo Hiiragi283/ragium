@@ -34,6 +34,7 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
         ).forEach { (material: HTMaterial, block: Block) -> tags(CommonTagPrefixes.STORAGE_BLOCK, material).add(block.asSupplier()) }
         // Machine
         pickaxe
+            .add(RagiumBlocks.FREEZER)
             .add(RagiumBlocks.MELTER)
     }
 }

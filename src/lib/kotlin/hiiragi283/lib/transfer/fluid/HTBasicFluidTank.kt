@@ -24,10 +24,10 @@ open class HTBasicFluidTank(
         fun create(
             capacity: Int,
             listener: Runnable?,
-            canInsert: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             canExtract: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
+            canInsert: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
-        ): HTBasicFluidTank = HTBasicFluidTank(HTTransferValidators.validateCapacity(capacity), canInsert, canExtract, filter, listener)
+        ): HTBasicFluidTank = HTBasicFluidTank(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, filter, listener)
 
         @JvmStatic
         fun input(
@@ -35,7 +35,7 @@ open class HTBasicFluidTank(
             listener: Runnable?,
             canInsert: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
             filter: Predicate<FluidResource> = canInsert,
-        ): HTBasicFluidTank = create(capacity, listener, canInsert = { resource, _ -> canInsert.test(resource) }, canExtract = HTTransferPredicates.notExternal(), filter = filter)
+        ): HTBasicFluidTank = create(capacity, listener, HTTransferPredicates.notExternal(), { resource, _ -> canInsert.test(resource) }, filter)
 
         @JvmStatic
         fun output(capacity: Int, listener: Runnable?): HTBasicFluidTank = create(capacity, listener, canInsert = HTTransferPredicates.internalOnly())

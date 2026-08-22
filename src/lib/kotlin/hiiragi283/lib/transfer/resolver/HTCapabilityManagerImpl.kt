@@ -1,5 +1,6 @@
 package hiiragi283.lib.transfer.resolver
 
+import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.transfer.holder.HTCapabilityHolder
 import net.minecraft.core.Direction
 
@@ -16,7 +17,7 @@ open class HTCapabilityManagerImpl<HOLDER : HTCapabilityHolder, SLOT : Any, HAND
     private val proxyCreator: ProxyCreator<HOLDER, HANDLER>,
     private val containerGetter: (HOLDER, Direction?) -> List<SLOT>,
 ) : HTCapabilityManager<SLOT> {
-    private val handlers: MutableMap<Direction, HANDLER> = mutableMapOf()
+    private val handlers: MutableMap<Direction, HANDLER> = mutableEnumMapOf()
     private var readOnlyHandler: HANDLER? = null
 
     override fun <T : Any> resolve(side: Direction?): T? = when {
@@ -34,12 +35,7 @@ open class HTCapabilityManagerImpl<HOLDER : HTCapabilityHolder, SLOT : Any, HAND
             }
             return readOnlyHandler as? T
         }
-        var handler: HANDLER? = handlers[side]
-        if (handler == null) {
-            handler = proxyCreator.create(side, holder)
-            handlers[side] = handler
-        }
-        return handler as? T
+        return handlers.computeIfAbsent(side) { proxyCreator.create(it, holder) } as? T
     }
 
     fun interface ProxyCreator<HOLDER, HANDLER> {

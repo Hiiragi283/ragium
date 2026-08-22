@@ -38,7 +38,7 @@ class HTContainerItemSlot(
             x,
             y,
             slot::setStack,
-            slot::isStackValidForInsert,
+            slot::isValidForInsert,
             slotType,
         )
     }

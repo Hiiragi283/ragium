@@ -17,6 +17,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addPatternTranslations(this)
 
         // Block
+        add(RagiumBlocks.FREEZER, "Freezer")
         add(RagiumBlocks.MELTER, "Melter")
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")

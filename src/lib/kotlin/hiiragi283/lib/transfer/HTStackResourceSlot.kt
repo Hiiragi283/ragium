@@ -30,7 +30,7 @@ abstract class HTStackResourceSlot<S : Any, T : Resource> :
      * @param access このスロットへのアクセスの種類
      * @return 搬入できる場合は`true`
      */
-    open fun isStackValidForInsert(resource: T, access: HTTransferAccess): Boolean = isValid(resource)
+    open fun isValidForInsert(resource: T, access: HTTransferAccess): Boolean = isValid(resource)
 
     /**
      * 指定したリソースをこのスロットから搬出できるか判定します。
@@ -38,7 +38,7 @@ abstract class HTStackResourceSlot<S : Any, T : Resource> :
      * @param access このスロットへのアクセスの種類
      * @return 搬出できる場合は`true`
      */
-    open fun canStackExtract(resource: T, access: HTTransferAccess): Boolean = true
+    open fun canResourceExtract(resource: T, access: HTTransferAccess): Boolean = true
 
     /**
      * 一度に搬入される量の上限を返します。
@@ -58,7 +58,7 @@ abstract class HTStackResourceSlot<S : Any, T : Resource> :
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount)
         val amountIn: Int = this.amount
         if (amountIn == 0 || isSame(getStackCopy(), resource)) {
-            if (isStackValidForInsert(resource, access)) {
+            if (isValidForInsert(resource, access)) {
                 val needed: Int = minOf(inputRate(access), getNeeded(resource))
                 val inserted: Int = minOf(amount, needed)
                 if (inserted > 0) {
@@ -73,7 +73,7 @@ abstract class HTStackResourceSlot<S : Any, T : Resource> :
 
     override fun extract(resource: T, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount)
-        if (isSame(getStackCopy(), resource) && canStackExtract(resource, access)) {
+        if (isSame(getStackCopy(), resource) && canResourceExtract(resource, access)) {
             val amountIn: Int = this.amount
             val stored: Int = minOf(outputRate(access), amountIn)
             val extracted: Int = minOf(amount, stored)
@@ -109,9 +109,9 @@ abstract class HTStackResourceSlot<S : Any, T : Resource> :
         private val filter: Predicate<T>,
         private val listener: Runnable?,
     ) : HTStackResourceSlot<S, T>() {
-        override fun isStackValidForInsert(resource: T, access: HTTransferAccess): Boolean = super.isStackValidForInsert(resource, access) && canInsert.test(resource, access)
+        override fun isValidForInsert(resource: T, access: HTTransferAccess): Boolean = super.isValidForInsert(resource, access) && canInsert.test(resource, access)
 
-        override fun canStackExtract(resource: T, access: HTTransferAccess): Boolean = super.canStackExtract(resource, access) && canExtract.test(resource, access)
+        override fun canResourceExtract(resource: T, access: HTTransferAccess): Boolean = super.canResourceExtract(resource, access) && canExtract.test(resource, access)
 
         override fun onRootCommit(originalState: S) {
             listener?.run()

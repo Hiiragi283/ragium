@@ -45,10 +45,7 @@ open class HTBasicItemSlot(
         )
 
         @JvmStatic
-        fun output(listener: Runnable?): HTBasicItemSlot = create(
-            listener,
-            canInsert = HTTransferPredicates.internalOnly(),
-        )
+        fun output(listener: Runnable?): HTBasicItemSlot = create(listener, canInsert = HTTransferPredicates.internalOnly())
     }
 
     private var stackIn: ItemStack = ItemStack.EMPTY

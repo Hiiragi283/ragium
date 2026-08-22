@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.block.HTBasicEntityBlock
 import hiiragi283.ragium.block.RagiumBlocks
+import hiiragi283.ragium.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.block.entity.machine.HTMelterBlockEntity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -30,6 +31,9 @@ data object RagiumBlockEntityTypes {
     // Mechanical
 
     // Heat
+    @JvmField
+    val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> = registerTick(RagiumConstants.FREEZER, ::HTFreezerBlockEntity)
+
     @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick(RagiumConstants.MELTER, ::HTMelterBlockEntity)
 

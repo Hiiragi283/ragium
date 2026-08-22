@@ -76,5 +76,8 @@ data object RagiumBlocks {
 
     // Heat
     @JvmField
+    val FREEZER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.FREEZER)
+
+    @JvmField
     val MELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.MELTER)
 }

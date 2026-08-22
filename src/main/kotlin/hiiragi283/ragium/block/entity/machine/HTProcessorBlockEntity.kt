@@ -5,6 +5,8 @@ import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.sync.HTIntSyncSlot
 import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.widget.HTWidgetHolder
+import hiiragi283.lib.recipe.HTRecipeFactory
+import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
@@ -18,6 +20,7 @@ import hiiragi283.ragium.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.transfer.holder.HTBasicItemSlotHolder
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
@@ -105,6 +108,14 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
         override fun readValue(input: ValueInput) {
             super.readValue(input)
             input.readChild(HTConstants.ENERGY, handler)
+        }
+
+        //    EnergizedHandler    //
+
+        abstract inner class EnergizedHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE> : HTRecipeHandler<INPUT, OUTPUT, RECIPE>() where RECIPE : HTRecipeFactory<INPUT, OUTPUT>, RECIPE : HTProgressRecipe<INPUT> {
+            final override fun getMaxProgress(recipe: RECIPE, input: INPUT): Int = recipe.getProgressData(input).getProcessTime(handler.currentEnergyPerTick).let(::updateAndGetProgress)
+
+            final override fun getProgress(): Int = handler.consume()
         }
     }
 }

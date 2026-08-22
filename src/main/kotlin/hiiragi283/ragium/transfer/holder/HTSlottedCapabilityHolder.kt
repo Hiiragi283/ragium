@@ -1,5 +1,6 @@
 package hiiragi283.ragium.transfer.holder
 
+import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.transfer.holder.HTCapabilityHolder
 import net.minecraft.core.Direction
 
@@ -24,7 +25,7 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
     ) {
         private var hasBuilt = false
         private val slots: MutableList<SLOT> = mutableListOf()
-        private val slotMap: MutableMap<HTSlotInfo, MutableList<SLOT>> = mutableMapOf()
+        private val slotMap: MutableMap<HTSlotInfo, MutableList<SLOT>> = mutableEnumMapOf()
 
         private fun putSlot(info: HTSlotInfo, slot: SLOT) {
             val list: MutableList<SLOT> = slotMap[info] ?: mutableListOf()

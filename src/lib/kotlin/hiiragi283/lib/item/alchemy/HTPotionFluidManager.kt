@@ -15,7 +15,7 @@ data object HTPotionFluidManager {
      * 登録されている[液体][Fluid]の一覧
      */
     @JvmStatic
-    val handlers: Map<Fluid, Handler> field: MutableMap<Fluid, Handler> = hashMapOf()
+    val handlers: Map<Fluid, Handler> field: MutableMap<Fluid, Handler> = mutableMapOf()
 
     /**
      * 新しい液体ポーションを登録します。

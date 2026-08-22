@@ -6,7 +6,6 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.handler.HTInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
-import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.canInsert
 import hiiragi283.lib.recipe.handler.insert
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
@@ -36,7 +35,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER.get(), pos, state) {
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
-        recipeHandler = object : HTRecipeHandler<SingleRecipeInput, FluidStack, HTItemToFluidRecipe>() {
+        recipeHandler = object : EnergizedHandler<SingleRecipeInput, FluidStack, HTItemToFluidRecipe>() {
             private val cache: HTRecipeCache<SingleRecipeInput, HTItemToFluidRecipe> = HTRecipeCache(RagiumRecipeLookups.MELTING)
             private val inputSlot: HTInputSlot.Single<ItemResource> by lazy { HTInputSlot.Single(this@HTMelterBlockEntity.inputSlot) }
             private val outputSlot: HTOutputSlot<FluidResource> by lazy { HTOutputSlot.Single(this@HTMelterBlockEntity.outputTank) }
@@ -49,10 +48,6 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
                 val inputCount: Int = recipe.getRequiredAmount(input.item())
                 return inputCount != 0 && useTransaction { transaction: Transaction -> inputSlot.canExtract(inputCount, transaction) && outputSlot.canInsert(output, transaction) }
             }
-
-            override fun getMaxProgress(recipe: HTItemToFluidRecipe, input: SingleRecipeInput): Int = recipe.getProgressData(input).getProcessTime(handler.currentEnergyPerTick).let(::updateAndGetProgress)
-
-            override fun getProgress(): Int = handler.consume()
 
             override fun onComplete(recipe: HTItemToFluidRecipe, input: SingleRecipeInput, output: FluidStack) {
                 useTransaction { transaction: Transaction ->
