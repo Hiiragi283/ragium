@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ragium:block/cutting_machine"
+    }
+  }
+}

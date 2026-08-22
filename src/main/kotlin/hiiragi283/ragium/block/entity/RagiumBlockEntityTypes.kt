@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.block.HTBasicEntityBlock
 import hiiragi283.ragium.block.RagiumBlocks
+import hiiragi283.ragium.block.entity.machine.HTCrusherBlockEntity
+import hiiragi283.ragium.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.block.entity.machine.HTMelterBlockEntity
 import net.minecraft.world.level.block.Block
@@ -29,6 +31,11 @@ data object RagiumBlockEntityTypes {
     private fun <BE : HTBlockEntity> registerTick(name: String, factory: BlockEntityType.BlockEntitySupplier<BE>): HTDeferredBlockEntityType<BE> = REGISTER.registerType(name, factory, HTBlockEntity::tickServer, HTBlockEntity::tickClient)
 
     // Mechanical
+    @JvmField
+    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick(RagiumConstants.CRUSHER, ::HTCrusherBlockEntity)
+
+    @JvmField
+    val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> = registerTick(RagiumConstants.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
 
     // Heat
     @JvmField

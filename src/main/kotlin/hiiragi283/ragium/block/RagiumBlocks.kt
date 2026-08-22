@@ -73,6 +73,11 @@ data object RagiumBlocks {
     //    Machine    //
 
     // Mechanical
+    @JvmField
+    val CRUSHER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CRUSHER)
+
+    @JvmField
+    val CUTTING_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE)
 
     // Heat
     @JvmField

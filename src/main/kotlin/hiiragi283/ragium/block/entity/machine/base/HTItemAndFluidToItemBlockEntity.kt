@@ -9,6 +9,7 @@ import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
+import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -20,7 +21,6 @@ import hiiragi283.ragium.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -65,10 +65,12 @@ abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, private
                     outputSlot.insert(output, transaction)
                     transaction.commit()
                 }
-                playSound(SoundEvents.BUCKET_FILL_POWDER_SNOW)
+                playSound(getCompletedSound())
             }
         }
     }
+
+    protected abstract fun getCompletedSound(): HTSoundInstance
 
     private lateinit var inputTank: HTBasicFluidTank
 

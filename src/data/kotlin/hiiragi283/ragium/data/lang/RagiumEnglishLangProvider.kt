@@ -17,6 +17,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addPatternTranslations(this)
 
         // Block
+        add(RagiumBlocks.CRUSHER, "Crusher")
+        add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
+
         add(RagiumBlocks.FREEZER, "Freezer")
         add(RagiumBlocks.MELTER, "Melter")
         // Fluid

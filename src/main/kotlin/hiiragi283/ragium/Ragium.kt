@@ -157,6 +157,9 @@ data object Ragium : HTCommonMod() {
         }
 
         // Machine
+        registerProcessor(RagiumBlockEntityTypes.CRUSHER.get())
+        registerProcessor(RagiumBlockEntityTypes.CUTTING_MACHINE.get())
+
         registerProcessor(RagiumBlockEntityTypes.FREEZER.get())
         registerProcessor(RagiumBlockEntityTypes.MELTER.get())
     }

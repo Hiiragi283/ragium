@@ -17,6 +17,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addPatternTranslations(this)
 
         // Block
+        add(RagiumBlocks.CRUSHER, "破砕機")
+        add(RagiumBlocks.CUTTING_MACHINE, "裁断機")
+
         add(RagiumBlocks.FREEZER, "冷凍機")
         add(RagiumBlocks.MELTER, "溶融炉")
         // Fluid
