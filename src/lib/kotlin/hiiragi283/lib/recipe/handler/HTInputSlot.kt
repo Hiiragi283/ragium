@@ -1,39 +1,72 @@
 package hiiragi283.lib.recipe.handler
 
-import hiiragi283.lib.transfer.HTResourceSlot
-import hiiragi283.lib.transfer.HTResourceView
 import hiiragi283.lib.transfer.HTTransferAccess
-import net.neoforged.neoforge.transfer.TransferPreconditions
-import net.neoforged.neoforge.transfer.resource.Resource
+import hiiragi283.lib.transfer.fluid.HTFluidTank
+import hiiragi283.lib.transfer.fluid.getFluidStack
+import hiiragi283.lib.transfer.item.HTItemSlot
+import hiiragi283.lib.transfer.item.getItemStack
+import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
-interface HTInputSlot<T : Resource> {
+/**
+ * レシピの入力となるスロットを表すクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
+interface HTInputSlot {
+    /**
+     * 材料を消費します。
+     * @param amount 搬出する数量
+     * @param transaction 現在のトランザクション
+     * @return 実際に消費される数量
+     */
     fun extract(amount: Int, transaction: TransactionContext): Int
 
+    /**
+     * 材料を消費できるか判定します。
+     * @param amount 搬出する数量
+     * @param transaction 現在のトランザクション
+     * @return 実際に消費される数量が[amount]と等しい場合は`true`
+     */
     fun canExtract(amount: Int, transaction: TransactionContext): Boolean = extract(amount, transaction) == amount
 
     //    Single    //
 
-    data class Single<T : Resource>(private val slot: HTResourceSlot<T>) :
-        HTInputSlot<T>,
-        HTResourceView<T> by slot {
+    /**
+     * 単一のスロットに対する[HTInputSlot]の拡張インターフェースです。
+     * @param STACK 保持しているスタックのクラス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
+    interface Single<STACK : Any> : HTInputSlot {
+        /**
+         * 保持しているスタックを取得します。
+         */
+        fun getStack(): STACK
+    }
+
+    /**
+     * [アイテム][ItemStack]向けの[Single]の実装クラスです。
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
+    @JvmRecord
+    data class SingleItem(private val slot: HTItemSlot) : Single<ItemStack> {
+        override fun getStack(): ItemStack = slot.getItemStack()
+
         override fun extract(amount: Int, transaction: TransactionContext): Int = slot.extractSelf(amount, transaction, HTTransferAccess.INTERNAL)
     }
 
-    //    Multiple    //
-
+    /**
+     * [液体][FluidStack]向けの[Single]の実装クラスです。
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     @JvmRecord
-    data class Multiple<T : Resource>(private val slots: Iterable<HTResourceSlot<T>>) : HTInputSlot<T> {
-        constructor(vararg slots: HTResourceSlot<T>) : this(slots.asIterable())
+    data class SingleFluid(private val tank: HTFluidTank) : Single<FluidStack> {
+        override fun getStack(): FluidStack = tank.getFluidStack()
 
-        override fun extract(amount: Int, transaction: TransactionContext): Int {
-            TransferPreconditions.checkNonNegative(amount)
-            var extracted = 0
-            for (slot: HTResourceSlot<T> in slots) {
-                extracted += slot.extractSelf(amount, transaction, HTTransferAccess.INTERNAL)
-                if (extracted == amount) break
-            }
-            return extracted
-        }
+        override fun extract(amount: Int, transaction: TransactionContext): Int = tank.extractSelf(amount, transaction, HTTransferAccess.INTERNAL)
     }
 }

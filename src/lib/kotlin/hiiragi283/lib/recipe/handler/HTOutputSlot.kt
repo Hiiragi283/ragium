@@ -1,61 +1,70 @@
 package hiiragi283.lib.recipe.handler
 
-import hiiragi283.lib.transfer.HTResourceSlot
 import hiiragi283.lib.transfer.HTTransferAccess
+import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.fluid.toResourcePair
+import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.lib.transfer.item.toResourcePair
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.transfer.TransferPreconditions
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.item.ItemResource
-import net.neoforged.neoforge.transfer.resource.Resource
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
-interface HTOutputSlot<T : Resource> {
-    fun insert(resource: T, amount: Int, transaction: TransactionContext): Int
+/**
+ * レシピの出力となるスロットを表すクラスです。
+ * @param STACK 搬入するスタックのクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
+interface HTOutputSlot<STACK : Any> {
+    /**
+     * 完成品を搬入します。
+     * @param stack 搬入する完成品
+     * @param transaction 現在のトランザクション
+     * @return 実際に搬入される数量
+     */
+    fun insert(stack: STACK, transaction: TransactionContext): Int
 
-    fun canInsert(resource: T, amount: Int, transaction: TransactionContext): Boolean = insert(resource, amount, transaction) == amount
+    /**
+     * 完成品を搬入できるか判定します。
+     * @param stack 搬入する完成品
+     * @param transaction 現在のトランザクション
+     * @return 実際に消費される数量が[stack]の数量と等しい場合は`true`
+     */
+    fun canInsert(stack: STACK, transaction: TransactionContext): Boolean
 
     //    Single    //
 
+    /**
+     * [アイテム][ItemStack]向けの[HTOutputSlot]の実装クラスです。
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     @JvmRecord
-    data class Single<T : Resource>(private val slot: HTResourceSlot<T>) : HTOutputSlot<T> {
-        override fun insert(resource: T, amount: Int, transaction: TransactionContext): Int = slot.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)
-    }
-
-    //    Multiple    //
-
-    @JvmRecord
-    data class Multiple<T : Resource>(private val slots: Iterable<HTResourceSlot<T>>) : HTOutputSlot<T> {
-        constructor(vararg slots: HTResourceSlot<T>) : this(slots.asIterable())
-
-        override fun insert(resource: T, amount: Int, transaction: TransactionContext): Int {
-            TransferPreconditions.checkNonEmptyNonNegative(resource, amount)
-            var inserted = 0
-            for (slot: HTResourceSlot<T> in slots) {
-                inserted += slot.insert(resource, amount - inserted, transaction, HTTransferAccess.INTERNAL)
-                if (inserted == amount) break
-            }
-            return inserted
+    data class SingleItem(private val slot: HTItemSlot) : HTOutputSlot<ItemStack> {
+        override fun insert(stack: ItemStack, transaction: TransactionContext): Int {
+            if (stack.isEmpty) return 0
+            val (resource: ItemResource, amount: Int) = stack.toResourcePair()
+            return slot.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)
         }
+
+        override fun canInsert(stack: ItemStack, transaction: TransactionContext): Boolean = insert(stack, transaction) == stack.count()
+    }
+
+    /**
+     * [液体][FluidStack]向けの[HTOutputSlot]の実装クラスです。
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
+    @JvmRecord
+    data class SingleFluid(private val tank: HTFluidTank) : HTOutputSlot<FluidStack> {
+        override fun insert(stack: FluidStack, transaction: TransactionContext): Int {
+            if (stack.isEmpty) return 0
+            val (resource: FluidResource, amount: Int) = stack.toResourcePair()
+            return tank.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)
+        }
+
+        override fun canInsert(stack: FluidStack, transaction: TransactionContext): Boolean = insert(stack, transaction) == stack.amount()
     }
 }
-
-//    Extensions    //
-
-fun HTOutputSlot<FluidResource>.insert(stack: FluidStack, transaction: TransactionContext): Int {
-    if (stack.isEmpty) return 0
-    val (resource: FluidResource, amount: Int) = stack.toResourcePair()
-    return this.insert(resource, amount, transaction)
-}
-
-fun HTOutputSlot<FluidResource>.canInsert(stack: FluidStack, transaction: TransactionContext): Boolean = this.insert(stack, transaction) == stack.amount()
-
-fun HTOutputSlot<ItemResource>.insert(stack: ItemStack, transaction: TransactionContext): Int {
-    if (stack.isEmpty) return 0
-    val (resource: ItemResource, amount: Int) = stack.toResourcePair()
-    return this.insert(resource, amount, transaction)
-}
-
-fun HTOutputSlot<ItemResource>.canInsert(stack: ItemStack, transaction: TransactionContext): Boolean = this.insert(stack, transaction) == stack.count()

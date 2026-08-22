@@ -6,15 +6,11 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.handler.HTInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
-import hiiragi283.lib.recipe.handler.canInsert
-import hiiragi283.lib.recipe.handler.insert
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
-import hiiragi283.lib.transfer.fluid.getFluidStack
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
-import hiiragi283.lib.transfer.item.getItemStack
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.gui.widget.HTFluidWidget
@@ -28,8 +24,6 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.transfer.fluid.FluidResource
-import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, private val cache: HTRecipeCache<HTItemAndFluidRecipeInput, HTItemAndFluidToItemRecipe>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(type, pos, state) {
@@ -38,11 +32,11 @@ abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, private
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
         recipeHandler = object : EnergizedHandler<HTItemAndFluidRecipeInput, ItemStack, HTItemAndFluidToItemRecipe>() {
-            private val inputTank: HTInputSlot.Single<FluidResource> by lazy { HTInputSlot.Single(this@HTItemAndFluidToItemBlockEntity.inputTank) }
-            private val inputSlot: HTInputSlot.Single<ItemResource> by lazy { HTInputSlot.Single(this@HTItemAndFluidToItemBlockEntity.inputSlot) }
-            private val outputSlot: HTOutputSlot<ItemResource> by lazy { HTOutputSlot.Single(this@HTItemAndFluidToItemBlockEntity.outputSlot) }
+            private val inputTank: HTInputSlot.SingleFluid by lazy { HTInputSlot.SingleFluid(this@HTItemAndFluidToItemBlockEntity.inputTank) }
+            private val inputSlot: HTInputSlot.SingleItem by lazy { HTInputSlot.SingleItem(this@HTItemAndFluidToItemBlockEntity.inputSlot) }
+            private val outputSlot: HTOutputSlot<ItemStack> by lazy { HTOutputSlot.SingleItem(this@HTItemAndFluidToItemBlockEntity.outputSlot) }
 
-            override fun createInput(): HTItemAndFluidRecipeInput = HTItemAndFluidRecipeInput(inputSlot.getItemStack(), inputTank.getFluidStack())
+            override fun createInput(): HTItemAndFluidRecipeInput = HTItemAndFluidRecipeInput(inputSlot.getStack(), inputTank.getStack())
 
             override fun findRecipe(level: ServerLevel, input: HTItemAndFluidRecipeInput): HTItemAndFluidToItemRecipe? = cache.findFirstRecipe(input, level)
 

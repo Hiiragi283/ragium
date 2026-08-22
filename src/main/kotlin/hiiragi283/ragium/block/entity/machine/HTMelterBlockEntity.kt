@@ -6,12 +6,9 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.handler.HTInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
-import hiiragi283.lib.recipe.handler.canInsert
-import hiiragi283.lib.recipe.handler.insert
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
-import hiiragi283.lib.transfer.item.getItemStack
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.config.HTEnergyConfig
@@ -28,8 +25,6 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.transfer.fluid.FluidResource
-import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER.get(), pos, state) {
@@ -37,10 +32,10 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
         super.initializeVariables(listener)
         recipeHandler = object : EnergizedHandler<SingleRecipeInput, FluidStack, HTItemToFluidRecipe>() {
             private val cache: HTRecipeCache<SingleRecipeInput, HTItemToFluidRecipe> = HTRecipeCache(RagiumRecipeLookups.MELTING)
-            private val inputSlot: HTInputSlot.Single<ItemResource> by lazy { HTInputSlot.Single(this@HTMelterBlockEntity.inputSlot) }
-            private val outputSlot: HTOutputSlot<FluidResource> by lazy { HTOutputSlot.Single(this@HTMelterBlockEntity.outputTank) }
+            private val inputSlot: HTInputSlot.SingleItem by lazy { HTInputSlot.SingleItem(this@HTMelterBlockEntity.inputSlot) }
+            private val outputSlot: HTOutputSlot<FluidStack> by lazy { HTOutputSlot.SingleFluid(this@HTMelterBlockEntity.outputTank) }
 
-            override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getItemStack())
+            override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
 
             override fun findRecipe(level: ServerLevel, input: SingleRecipeInput): HTItemToFluidRecipe? = cache.findFirstRecipe(input, level)
 
