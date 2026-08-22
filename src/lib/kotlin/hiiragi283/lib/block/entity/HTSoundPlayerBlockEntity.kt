@@ -1,6 +1,8 @@
 package hiiragi283.lib.block.entity
 
+import hiiragi283.lib.sounds.HTSoundInstance
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -31,5 +33,10 @@ interface HTSoundPlayerBlockEntity : HTAbstractBlockEntity {
      */
     fun playSound(sound: SoundEvent, volume: Float = 1f, pitch: Float = 1f) {
         getLevelResult().onRight { it.playSound(null, getSoundPos(), sound, getSoundSource(), volume, pitch) }
+    }
+
+    fun playSound(instance: HTSoundInstance) {
+        val (sound: Holder<SoundEvent>, volume: Float, pitch: Float) = instance
+        playSound(sound.value(), volume, pitch)
     }
 }

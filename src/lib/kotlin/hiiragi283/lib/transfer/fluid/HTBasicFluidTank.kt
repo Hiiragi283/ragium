@@ -4,6 +4,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.transfer.HTStackResourceSlot
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
+import hiiragi283.lib.transfer.HTTransferValidators
 import java.util.function.BiPredicate
 import java.util.function.Predicate
 import net.minecraft.world.level.storage.ValueInput
@@ -26,7 +27,7 @@ open class HTBasicFluidTank(
             canInsert: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             canExtract: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
-        ): HTBasicFluidTank = HTBasicFluidTank(capacity, canInsert, canExtract, filter, listener)
+        ): HTBasicFluidTank = HTBasicFluidTank(HTTransferValidators.validateCapacity(capacity), canInsert, canExtract, filter, listener)
 
         @JvmStatic
         fun input(

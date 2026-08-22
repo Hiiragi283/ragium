@@ -2,9 +2,9 @@ package hiiragi283.lib.transfer.item
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.transfer.HTStackResourceSlot
-import hiiragi283.lib.transfer.HTStorageValidators
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
+import hiiragi283.lib.transfer.HTTransferValidators
 import java.util.function.BiPredicate
 import java.util.function.Predicate
 import net.minecraft.world.item.Item
@@ -28,7 +28,7 @@ open class HTBasicItemSlot(
             canExtract: BiPredicate<ItemResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<ItemResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue(),
-        ): HTBasicItemSlot = HTBasicItemSlot(HTStorageValidators.validateLimit(limit), canExtract, canInsert, filter, listener)
+        ): HTBasicItemSlot = HTBasicItemSlot(HTTransferValidators.validateLimit(limit), canExtract, canInsert, filter, listener)
 
         @JvmStatic
         fun input(

@@ -14,7 +14,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTBaseMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(type, pos, state),
     HTBlockEntityWithMenu {
     protected fun getTankCapacity(): IntSupplier = RagiumConfig.SERVER.machine.tankCapacity

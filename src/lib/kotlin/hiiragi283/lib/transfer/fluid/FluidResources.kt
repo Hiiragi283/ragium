@@ -33,18 +33,18 @@ fun FluidStackTemplate.toResourcePair(): Pair<FluidResource, Int> = FluidResourc
 typealias HTFluidView = HTResourceView<FluidResource>
 
 /**
- * [FluidResource]向けの[HTResourceSlot]のエイリアスです。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-typealias HTFluidTank = HTResourceSlot<FluidResource>
-
-/**
  * この[HTFluidView][this]から[FluidStack]を取得します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
 fun HTFluidView.getFluidStack(): FluidStack = this.resource.toStack(this.amount)
+
+/**
+ * [FluidResource]向けの[HTResourceSlot]のエイリアスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
+typealias HTFluidTank = HTResourceSlot<FluidResource>
 
 /**
  * [FluidResource]向けの[ResourceHandler]のエイリアスです。

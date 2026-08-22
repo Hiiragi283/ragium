@@ -33,18 +33,18 @@ fun ItemStackTemplate.toResourcePair(): Pair<ItemResource, Int> = ItemResource.o
 typealias HTItemView = HTResourceView<ItemResource>
 
 /**
- * [ItemResource]向けの[HTResourceSlot]のエイリアスです。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-typealias HTItemSlot = HTResourceSlot<ItemResource>
-
-/**
  * この[HTItemView][this]から[ItemStack]を取得します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
 fun HTItemView.getItemStack(): ItemStack = this.resource.toStack(this.amount)
+
+/**
+ * [ItemResource]向けの[HTResourceSlot]のエイリアスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
+typealias HTItemSlot = HTResourceSlot<ItemResource>
 
 /**
  * [ItemResource]向けの[ResourceHandler]のエイリアスです。

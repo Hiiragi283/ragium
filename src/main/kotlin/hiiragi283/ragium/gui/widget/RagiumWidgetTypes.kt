@@ -13,6 +13,9 @@ data object RagiumWidgetTypes {
     private fun <T : HTWidget> create(name: String): HTWidgetType<T> = HTWidgetType<T>(RagiumAPI.id(name)).also(allTypes::add)
 
     @JvmField
+    val ENERGY: HTWidgetType<HTEnergySlotWidget> = create(HTConstants.ENERGY)
+
+    @JvmField
     val FLUID: HTWidgetType<HTFluidWidget> = create(HTConstants.FLUID)
 
     @JvmField
