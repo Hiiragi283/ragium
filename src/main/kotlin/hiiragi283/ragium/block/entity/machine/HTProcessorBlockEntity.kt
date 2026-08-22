@@ -42,7 +42,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
     protected open fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {}
 
-    fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4)) {
+    fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(3.75)) {
         widgetHolder += HTProgressWidget.createArrow(recipeHandler::progression, x, HTSlotHelper.getSlotPosY(1))
     }
 

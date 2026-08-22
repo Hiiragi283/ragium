@@ -81,7 +81,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
         super.setupMenu(widgetHolder)
         addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1.5))
         // progress
-        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
+        addProgressBar(widgetHolder)
         // input
         widgetHolder += HTItemWidget.Container(
             inputSlot,

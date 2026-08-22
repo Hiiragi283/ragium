@@ -15,6 +15,7 @@ import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTItemWidgetRenderer
+import hiiragi283.ragium.client.gui.widget.HTProgressWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTWidgetRendererManager
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.gui.factory.HTBlockWidgetHolderContext
@@ -49,6 +50,7 @@ data object RagiumClient : HTClientMod() {
         event.register(RagiumWidgetTypes.ENERGY, ::HTEnergySlotWidgetRenderer)
         event.register(RagiumWidgetTypes.FLUID, ::HTFluidWidgetRenderer)
         event.register(RagiumWidgetTypes.ITEM, ::HTItemWidgetRenderer)
+        event.register(RagiumWidgetTypes.PROGRESS, ::HTProgressWidgetRenderer)
     }
 
     override fun registerFluidModels(register: HTFluidModelRegister) {
