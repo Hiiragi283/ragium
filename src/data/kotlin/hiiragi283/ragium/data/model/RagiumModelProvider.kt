@@ -38,11 +38,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         RagiumBlocks.MATERIAL_BLOCKS.values.forEach { generators.createTrivialCube(it.get()) }
 
         // Machine
-        generators.createNonTemplateModelBlock(RagiumBlocks.CRUSHER.get())
-        generators.createNonTemplateModelBlock(RagiumBlocks.CUTTING_MACHINE.get())
-
-        generators.createNonTemplateModelBlock(RagiumBlocks.FREEZER.get())
-        generators.createNonTemplateModelBlock(RagiumBlocks.MELTER.get())
+        RagiumBlocks.MACHINES.values.forEach { generators.createNonTemplateModelBlock(it.get()) }
     }
 
     private fun registerItemModels(generators: ItemModelGenerators) {

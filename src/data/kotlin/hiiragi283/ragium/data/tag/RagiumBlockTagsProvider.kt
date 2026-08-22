@@ -8,6 +8,7 @@ import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTBlockPart
+import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.block.RagiumBlocks
 import java.util.concurrent.CompletableFuture
@@ -33,12 +34,13 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             HTMaterial.Gem.AMETHYST to Blocks.AMETHYST_BLOCK,
         ).forEach { (material: HTMaterial, block: Block) -> tags(CommonTagPrefixes.STORAGE_BLOCK, material).add(block.asSupplier()) }
         // Machine
-        pickaxe
-            // Mechanical
-            .add(RagiumBlocks.CRUSHER)
-            .add(RagiumBlocks.CUTTING_MACHINE)
-            // Heat
-            .add(RagiumBlocks.FREEZER)
-            .add(RagiumBlocks.MELTER)
+        for (machineType: HTMachineType in HTMachineType.entries) {
+            getOrCreateRawBuilder(createTag(HTMachineType.PREFIX, machineType)) // TODO
+            for (block: HTKeyLike<Block> in RagiumBlocks.MACHINES[machineType]) {
+                tags(HTMachineType.PREFIX, machineType).add(block)
+            }
+        }
+
+        RagiumBlocks.MACHINES.values.forEach(pickaxe::add)
     }
 }

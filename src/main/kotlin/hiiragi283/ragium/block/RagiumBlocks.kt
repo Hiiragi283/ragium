@@ -1,6 +1,8 @@
 package hiiragi283.ragium.block
 
+import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.Table
+import hiiragi283.lib.collection.buildListMultiMap
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItemRegister
@@ -11,6 +13,7 @@ import hiiragi283.lib.util.Identity
 import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTBlockPart
+import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.block.entity.RagiumBlockEntityTypes
 import net.minecraft.world.item.Item
@@ -85,4 +88,13 @@ data object RagiumBlocks {
 
     @JvmField
     val MELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.MELTER)
+
+    @JvmField
+    val MACHINES: ListMultiMap<HTMachineType, HTBasicDeferredBlockAndItem<HTMachineBlock>> = buildListMultiMap(sortedMapOf()) {
+        put(HTMachineType.MECHANICAL, CRUSHER)
+        put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
+
+        put(HTMachineType.HEAT, FREEZER)
+        put(HTMachineType.HEAT, MELTER)
+    }
 }

@@ -5,6 +5,7 @@ import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.registry.createKey
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import hiiragi283.lib.tag.RawTagKey
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -78,13 +79,11 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
         builder(tagKeyIn)
     }
 
-    /**
-     * @since 26.1.3
-     */
     protected fun createKey(id: Identifier): ResourceKey<T> = registryKey.createKey(id)
 
-    /**
-     * @since 26.1.3
-     */
     protected fun createKey(namespace: String, path: String): ResourceKey<T> = registryKey.createKey(namespace, path)
+
+    protected fun createTag(tagKey: RawTagKey): TagKey<T> = tagKey.create(registryKey)
+
+    protected fun createTag(prefix: HTTagPrefix, material: HTMaterialLike): TagKey<T> = createTag(prefix.materialTag(material))
 }
