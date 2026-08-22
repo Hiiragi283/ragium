@@ -55,6 +55,7 @@ object HTSpriteRenderHelper {
         textureWidth: Int = width,
         textureHeight: Int = height,
     ) {
+        graphics.enableScissor(x, y, x + width, y + height)
         graphics.blit(
             RenderPipelines.GUI_TEXTURED,
             fixTextureId(texture),
@@ -67,5 +68,6 @@ object HTSpriteRenderHelper {
             textureWidth,
             textureHeight,
         )
+        graphics.disableScissor()
     }
 }

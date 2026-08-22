@@ -7,13 +7,13 @@ import hiiragi283.lib.world.getBlockEntityResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.block.entity.HTExtendedBlockEntity
 import net.minecraft.client.Minecraft
-import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.storage.TagValueInput
 import net.minecraft.world.level.storage.ValueInput
@@ -49,7 +49,7 @@ data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val 
 
     override fun type(): CustomPacketPayload.Type<HTUpdateBlockEntityPacket> = TYPE
 
-    override fun handle(player: AbstractClientPlayer, minecraft: Minecraft) {
+    override fun handle(player: Player, minecraft: Minecraft) {
         val level: Level = player.level()
         level.getBlockEntityResult<HTExtendedBlockEntity>(pos)
             .printError(LOGGER)

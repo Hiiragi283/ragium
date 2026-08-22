@@ -24,7 +24,7 @@ class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) : HTSpriteW
         HTSpriteRenderHelper.blit(graphics, texture, bounds)
     }
 
-    override fun shouldRender(): Boolean = !widget.resource.isEmpty
+    override fun shouldRender(): Boolean = !widget.isEmpty
 
     private fun getModel(): FluidModel = Minecraft.getInstance()
         .modelManager

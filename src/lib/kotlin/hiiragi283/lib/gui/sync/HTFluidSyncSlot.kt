@@ -2,6 +2,8 @@ package hiiragi283.lib.gui.sync
 
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.util.HTDelegates
+import java.util.function.Consumer
+import java.util.function.Supplier
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
@@ -16,9 +18,11 @@ import net.neoforged.neoforge.fluids.FluidStack
  * @since 26.1.0
  */
 class HTFluidSyncSlot(property: ReadWriteProperty<Any?, FluidStack>) : HTIntSyncSlot {
+    constructor(getter: Supplier<FluidStack>, setter: Consumer<FluidStack>) : this(HTDelegates.LazyDelegate(getter, setter))
+
     constructor(property: KMutableProperty0<FluidStack>) : this(HTDelegates.LazyDelegate(property::get, property::set))
 
-    constructor(tank: HTBasicFluidTank) : this(HTDelegates.LazyDelegate(tank::getStackCopy, tank::setStack))
+    constructor(tank: HTBasicFluidTank) : this(tank::getStackCopy, tank::setStack)
 
     private var lastStack: FluidStack = FluidStack.EMPTY
 

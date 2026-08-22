@@ -23,7 +23,7 @@ class HTResourceHandler<T : Resource>(val slots: List<HTResourceSlot<T>>) : Reso
 
     override fun isValid(index: Int, resource: T): Boolean = getSlot(index).isValid(resource)
 
-    override fun insert(index: Int, resource: T, amount: Int, transaction: TransactionContext): Int = slots[index].insert(resource, amount, transaction, HTTransferAccess.EXTERNAL)
+    override fun insert(index: Int, resource: T, amount: Int, transaction: TransactionContext): Int = getSlot(index).insert(resource, amount, transaction, HTTransferAccess.EXTERNAL)
 
-    override fun extract(index: Int, resource: T, amount: Int, transaction: TransactionContext): Int = slots[index].extract(resource, amount, transaction, HTTransferAccess.EXTERNAL)
+    override fun extract(index: Int, resource: T, amount: Int, transaction: TransactionContext): Int = getSlot(index).extract(resource, amount, transaction, HTTransferAccess.EXTERNAL)
 }

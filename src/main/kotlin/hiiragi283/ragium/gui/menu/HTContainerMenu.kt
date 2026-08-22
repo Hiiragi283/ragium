@@ -211,7 +211,6 @@ abstract class HTContainerMenu<C>(
         val access: RegistryAccess = player.registryAccess()
         if (player is ServerPlayer) {
             HTUpdateMenuPacket.create(containerId) {
-                val trackedSlots: MutableList<Pair<HTSyncableSlot, HTSyncType>> = this@HTContainerMenu.trackedSlots
                 for (i: Int in trackedSlots.indices) {
                     val (slot: HTSyncableSlot, syncType: HTSyncType) = trackedSlots[i]
                     if (!syncType.allowS2C) continue
@@ -238,6 +237,7 @@ abstract class HTContainerMenu<C>(
                     slot.getChange()
                     val payload: HTSyncablePayload = slot.createPayload(access, HTChangeType.FULL) ?: continue
                     this[i] = payload
+                    RagiumAPI.LOGGER.debug("Force sync value index: {}, payload: {}", i, payload)
                 }
             }?.let { PacketDistributor.sendToPlayer(player, it) }
         }

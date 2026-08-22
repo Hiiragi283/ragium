@@ -19,6 +19,7 @@ import hiiragi283.ragium.client.gui.widget.HTWidgetRendererManager
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.gui.widget.RagiumWidgetTypes
+import hiiragi283.ragium.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.network.HTUpdateMenuPacket
 import java.awt.Color
 import net.minecraft.client.resources.model.sprite.Material
@@ -40,7 +41,8 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerClientPayload(event: RegisterClientPayloadHandlersEvent) {
-        event.register(HTUpdateMenuPacket.TYPE, HTPayloadHandlers::handleC2S)
+        event.register(HTUpdateBlockEntityPacket.TYPE, HTPayloadHandlers::handleS2C)
+        event.register(HTUpdateMenuPacket.TYPE, HTPayloadHandlers::handleS2C)
     }
 
     override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {

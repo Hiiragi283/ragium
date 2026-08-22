@@ -1,10 +1,9 @@
 package hiiragi283.lib.network
 
 import net.minecraft.client.Minecraft
-import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
-import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.player.Player
 
 /**
  * Hiiragi Seriesで使用される[CustomPacketPayload]の拡張インターフェースです。
@@ -23,7 +22,7 @@ sealed interface HTCustomPayload : CustomPacketPayload {
          * @param player クライアント側のプレイヤー
          * @param minecraft クライアントのインスタンス
          */
-        fun handle(player: AbstractClientPlayer, minecraft: Minecraft)
+        fun handle(player: Player, minecraft: Minecraft)
     }
 
     /**
@@ -37,6 +36,6 @@ sealed interface HTCustomPayload : CustomPacketPayload {
          * @param player サーバー側のプレイヤー
          * @param server サーバーのインスタンス
          */
-        fun handle(player: ServerPlayer, server: MinecraftServer)
+        fun handle(player: ServerPlayer)
     }
 }

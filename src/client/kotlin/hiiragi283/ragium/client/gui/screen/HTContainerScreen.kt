@@ -33,7 +33,7 @@ abstract class HTContainerScreen<MENU : HTContainerMenu<*>>(menu: MENU, inventor
                         val payload: HTSyncablePayload = slot.createPayload(access, changeType) ?: return@mapIndexedNotNull null
                         index to payload
                     }
-                    .onEach { (index: Int, payload: HTSyncablePayload) -> RagiumAPI.LOGGER.debug("Index: {}, Payload: {}", index, payload) }
+                    .onEach { (index: Int, payload: HTSyncablePayload) -> RagiumAPI.LOGGER.debug("Added sync value index: {}, payload: {}", index, payload) }
                     .toMap(),
             )?.let(ClientPacketDistributor::sendToServer)
     }

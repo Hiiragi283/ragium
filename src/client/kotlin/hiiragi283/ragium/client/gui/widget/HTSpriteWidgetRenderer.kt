@@ -39,7 +39,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
         if (!shouldRender()) return
         val sprite: TextureAtlasSprite = getSprite()
         val color: Int = getColor()
-        val fillLevel: Float = getScaledLevel()
+        val fillLevel = getScaledLevel().toInt()
 
         val spriteContents: SpriteContents = sprite.contents()
         val tileScaling = GuiSpriteScaling.Tile(spriteContents.width(), spriteContents.height())
@@ -53,9 +53,9 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
             RenderPipelines.GUI_TEXTURED,
             sprite,
             x,
-            y,
+            y + height - fillLevel,
             width,
-            height,
+            fillLevel,
             0,
             0,
             tileScaling.width,
