@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.item.HTPotionBucketItem
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.level.pathfinder.PathType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.common.SoundActions
 import net.neoforged.neoforge.fluids.FluidType
@@ -102,6 +103,31 @@ data object RagiumFluids {
     // 3rd
     @JvmField
     val CREOSOTE: HTFluidContent.Flowing = REGISTER.registerFlowing("creosote") { properties = liquid() }
+
+    @JvmField
+    val CRUDE_OIL: HTFluidContent.Flowing = REGISTER.registerFlowing("crude_oil") {
+        properties = molten()
+            .canSwim(false)
+            .pathType(PathType.LAVA)
+            .density(3000)
+            .viscosity(6000)
+            .motionScale(0.0001)
+        typeFactory = { HTExplosiveFluidType(2f, it) }
+
+        blockProperties = { it.speedFactor(0.4f) }
+    }
+
+    @JvmField
+    val NAPHTHA: HTFluidContent.Flowing = REGISTER.registerFlowing("naphtha") {
+        properties = liquid()
+        typeFactory = { HTExplosiveFluidType(3f, it) }
+    }
+
+    @JvmField
+    val FUEL: HTFluidContent.Flowing = REGISTER.registerFlowing("fuel") {
+        properties = liquid()
+        typeFactory = { HTExplosiveFluidType(4f, it) }
+    }
 
     // 4th
     @JvmField

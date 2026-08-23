@@ -2,15 +2,15 @@
   "type": "ragium:pyrolyzing",
   "fluid_result": {
     "amount": 250,
-    "id": "ragium:creosote"
+    "id": "ragium:crude_oil"
   },
   "ingredient": {
-    "count": 4,
-    "items": "#c:dusts/wood"
+    "count": 1,
+    "items": "minecraft:soul_sand"
   },
   "item_result": {
     "count": 1,
-    "id": "ragium:charcoal_dust"
+    "id": "minecraft:sand"
   },
-  "time": 100
+  "time": 200
 }

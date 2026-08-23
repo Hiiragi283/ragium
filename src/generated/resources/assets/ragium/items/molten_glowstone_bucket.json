@@ -5,7 +5,7 @@
     "fluid": "ragium:molten_glowstone",
     "textures": {
       "base": "minecraft:item/bucket",
-      "fluid": "neoforge:item/mask/bucket_fluid",
+      "fluid": "neoforge:item/mask/bucket_fluid_drip",
       "particle": "minecraft:item/bucket"
     }
   }

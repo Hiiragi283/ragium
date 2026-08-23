@@ -39,6 +39,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.CHLORINE, "Chlorine")
 
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
+        addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
+        addFluid(RagiumFluids.NAPHTHA, "Naphtha")
+        addFluid(RagiumFluids.FUEL, "Fuel")
         addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")

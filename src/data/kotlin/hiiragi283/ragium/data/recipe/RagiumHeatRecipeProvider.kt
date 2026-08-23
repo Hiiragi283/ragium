@@ -241,7 +241,10 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             recipeId suffix "_from_logs"
         }.save(exporter)
         RagiumRecipeBuilders.pyrolyzing {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.WOOD) }
+            ingredient {
+                +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.WOOD)
+                count = 4
+            }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.CHARCOAL) }
             fluidResult {
                 +RagiumFluids.CREOSOTE
@@ -277,6 +280,27 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             time /= 2
             time *= 9
+        }.save(exporter)
+
+        // Soul Sand -> Sand + Crude Oil
+        RagiumRecipeBuilders.pyrolyzing {
+            ingredient { items { +Items.SOUL_SAND } }
+            itemResult { +Items.SAND }
+            fluidResult {
+                +RagiumFluids.CRUDE_OIL
+                amount = 250
+            }
+            recipeId replace "crude_oil_from_soul_sand"
+        }.save(exporter)
+        // Soul Soil -> Clay + Crude Oil
+        RagiumRecipeBuilders.pyrolyzing {
+            ingredient { items { +Items.SOUL_SOIL } }
+            itemResult { +Items.CLAY }
+            fluidResult {
+                +RagiumFluids.CRUDE_OIL
+                amount = 250
+            }
+            recipeId replace "crude_oil_from_soul_soil"
         }.save(exporter)
     }
 
