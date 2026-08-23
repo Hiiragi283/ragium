@@ -7,7 +7,7 @@ import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
-import hiiragi283.ragium.gui.widget.HTEnergySlotWidget
+import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import java.util.function.Consumer
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.renderer.texture.TextureAtlasSprite

@@ -12,9 +12,9 @@ import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
-import hiiragi283.ragium.block.RagiumBlocks
-import hiiragi283.ragium.fluid.RagiumFluids
-import hiiragi283.ragium.item.RagiumItems
+import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.item.RagiumItems
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput

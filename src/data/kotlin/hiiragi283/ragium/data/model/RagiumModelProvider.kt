@@ -3,9 +3,9 @@ package hiiragi283.ragium.data.model
 import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.block.RagiumBlocks
-import hiiragi283.ragium.fluid.RagiumFluids
-import hiiragi283.ragium.item.RagiumItems
+import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.client.data.models.BlockModelGenerators
 import net.minecraft.client.data.models.ItemModelGenerators
 import net.minecraft.data.PackOutput

@@ -13,9 +13,9 @@ import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTItemPart
-import hiiragi283.ragium.block.RagiumBlocks
-import hiiragi283.ragium.fluid.RagiumFluids
-import hiiragi283.ragium.item.RagiumItems
+import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.item.RagiumItems
 
 interface RagiumLangProvider {
     fun addPatternTranslations(provider: HTLangProvider) {

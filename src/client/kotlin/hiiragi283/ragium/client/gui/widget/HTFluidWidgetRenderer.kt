@@ -6,7 +6,7 @@ import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.fluid.getFluidStack
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
-import hiiragi283.ragium.gui.widget.HTFluidWidget
+import hiiragi283.ragium.common.gui.widget.HTFluidWidget
 import java.util.function.Consumer
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphicsExtractor

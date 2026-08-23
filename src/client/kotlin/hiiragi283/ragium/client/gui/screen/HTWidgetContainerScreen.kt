@@ -4,7 +4,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.gui.widget.HTGuiWidget
-import hiiragi283.ragium.gui.menu.HTWidgetContainerMenu
+import hiiragi283.ragium.common.gui.menu.HTWidgetContainerMenu
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.resources.Identifier

@@ -5,9 +5,9 @@ import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.block.RagiumBlocks
-import hiiragi283.ragium.fluid.RagiumFluids
-import hiiragi283.ragium.item.RagiumItems
+import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseLangProvider(output: PackOutput) :

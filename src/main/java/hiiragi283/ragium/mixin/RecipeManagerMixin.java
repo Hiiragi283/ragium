@@ -2,7 +2,7 @@ package hiiragi283.ragium.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import hiiragi283.ragium.event.RagiumRuntimeRecipeProvider;
+import hiiragi283.ragium.common.event.RagiumRuntimeRecipeProvider;
 import java.util.Collection;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.crafting.RecipeHolder;

@@ -10,8 +10,8 @@ import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.block.RagiumBlocks
-import hiiragi283.ragium.item.RagiumItems
+import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 

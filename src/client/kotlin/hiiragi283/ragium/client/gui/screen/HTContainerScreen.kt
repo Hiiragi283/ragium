@@ -7,8 +7,8 @@ import hiiragi283.lib.gui.sync.HTSyncablePayload
 import hiiragi283.lib.gui.sync.HTSyncableSlot
 import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.gui.menu.HTContainerMenu
-import hiiragi283.ragium.network.HTUpdateMenuPacket
+import hiiragi283.ragium.common.gui.menu.HTContainerMenu
+import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.core.RegistryAccess
 import net.minecraft.world.entity.player.Inventory

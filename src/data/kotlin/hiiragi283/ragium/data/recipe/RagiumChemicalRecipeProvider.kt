@@ -7,8 +7,8 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.tag.HTItemPart
-import hiiragi283.ragium.fluid.RagiumFluids
-import hiiragi283.ragium.item.RagiumItems
+import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.item.RagiumItems
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput

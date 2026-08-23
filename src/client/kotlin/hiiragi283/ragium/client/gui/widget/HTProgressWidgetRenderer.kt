@@ -4,8 +4,8 @@ import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.HTGuiAccess
 import hiiragi283.lib.gui.widget.HTAbstractWidgetRenderer
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
-import hiiragi283.ragium.gui.widget.HTFillDirection
-import hiiragi283.ragium.gui.widget.HTProgressWidget
+import hiiragi283.ragium.common.gui.widget.HTFillDirection
+import hiiragi283.ragium.common.gui.widget.HTProgressWidget
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.resources.Identifier
 

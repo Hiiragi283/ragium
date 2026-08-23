@@ -11,7 +11,7 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTMachineType
-import hiiragi283.ragium.block.RagiumBlocks
+import hiiragi283.ragium.common.block.RagiumBlocks
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries

@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.render
 import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.item.tooltip.HTMemoryDiscTooltipComponent
+import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent

@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.event
 
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.fluid.RagiumFluids
+import hiiragi283.ragium.common.fluid.RagiumFluids
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber

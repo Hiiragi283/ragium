@@ -4,7 +4,7 @@ import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.HTGuiAccess
 import hiiragi283.lib.gui.widget.HTAbstractWidgetRenderer
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
-import hiiragi283.ragium.gui.widget.HTItemWidget
+import hiiragi283.ragium.common.gui.widget.HTItemWidget
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphicsExtractor

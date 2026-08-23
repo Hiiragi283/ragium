@@ -6,9 +6,9 @@ import hiiragi283.lib.material.HTMaterialCategory
 import hiiragi283.lib.material.VanillaMaterials
 import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTItemPart
-import hiiragi283.ragium.block.RagiumBlocks
-import hiiragi283.ragium.item.RagiumItems
-import hiiragi283.ragium.material.RagiumMaterialHelper
+import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.item.RagiumItems
+import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup

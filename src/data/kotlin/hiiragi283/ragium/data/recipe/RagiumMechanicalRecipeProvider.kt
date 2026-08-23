@@ -12,9 +12,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.RagiumTags
-import hiiragi283.ragium.item.RagiumItems
-import hiiragi283.ragium.material.RagiumMaterialHelper
-import hiiragi283.ragium.material.RagiumMaterials
+import hiiragi283.ragium.common.item.RagiumItems
+import hiiragi283.ragium.common.material.RagiumMaterialHelper
+import hiiragi283.ragium.common.material.RagiumMaterials
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput

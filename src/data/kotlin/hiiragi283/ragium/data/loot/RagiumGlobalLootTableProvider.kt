@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.loot
 
 import hiiragi283.lib.registry.createKey
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.item.RagiumItems
+import hiiragi283.ragium.common.item.RagiumItems
 import java.util.function.BiConsumer
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
