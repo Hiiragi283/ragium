@@ -43,27 +43,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             fluidIngredient { +waterSet() }
             result { +Items.ICE }
         }.save(exporter)
-        // Water + Ice -> Packed Ice
-        RagiumRecipeBuilders.freezing {
-            itemIngredient {
-                items { +Items.ICE }
-                count = 5
-            }
-            fluidIngredient { +waterSet() }
-            result { +Items.PACKED_ICE }
-        }.save(exporter)
-        // Water + Packed Ice -> Blue Ice
-        RagiumRecipeBuilders.freezing {
-            itemIngredient {
-                items { +Items.PACKED_ICE }
-                count = 5
-            }
-            fluidIngredient {
-                +waterSet()
-                amount *= 3
-            }
-            result { +Items.BLUE_ICE }
-        }.save(exporter)
 
         // Lava -> Obsidian
         RagiumRecipeBuilders.freezing {

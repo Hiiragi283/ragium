@@ -23,6 +23,9 @@ data object RagiumTags {
         val FLOURS_WHEAT: TagKey<Item> = common("flours", "wheat")
 
         @JvmField
+        val PAPER: TagKey<Item> = common("paper")
+
+        @JvmField
         val PLASTICS: TagKey<Item> = common("plastics")
 
         @JvmField

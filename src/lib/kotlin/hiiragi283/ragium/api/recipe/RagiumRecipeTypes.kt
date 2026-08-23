@@ -27,6 +27,9 @@ data object RagiumRecipeTypes {
     val ASSEMBLING: HTRecipeType<RTAssemblingRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
+    val COMPRESSING: HTRecipeType<RTCompressingRecipe> = create(RagiumConstants.COMPRESSING)
+
+    @JvmField
     val CRUSHING: HTRecipeType<RTCrushingRecipe> = create(RagiumConstants.CRUSHING)
 
     @JvmField

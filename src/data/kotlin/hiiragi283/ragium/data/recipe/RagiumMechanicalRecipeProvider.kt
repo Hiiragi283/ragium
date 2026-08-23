@@ -19,6 +19,7 @@ import net.neoforged.neoforge.common.Tags
 class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
         assembling()
+        compressing()
         crushing()
         cutting()
     }
@@ -163,6 +164,55 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 8
             }
             result { +Items.PIGLIN_HEAD }
+        }.save(exporter)
+    }
+
+    private fun compressing() {
+        // Snow -> Snow Block
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +Items.SNOW }
+                count = 8
+            }
+            result { +Items.SNOW_BLOCK }
+        }.save(exporter)
+        // Snow Block -> Ice
+        RagiumRecipeBuilders.compressing {
+            ingredient { items { +Items.SNOW_BLOCK } }
+            result { +Items.ICE }
+        }.save(exporter)
+        // Ice -> Packed Ice
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +Items.ICE }
+                count = 6
+            }
+            result { +Items.PACKED_ICE }
+        }.save(exporter)
+        // Packed Ice -> Blue Ice
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +Items.PACKED_ICE }
+                count = 6
+            }
+            result { +Items.BLUE_ICE }
+        }.save(exporter)
+
+        // Moss Carpet -> Moss
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +Items.MOSS_CARPET }
+                count = 8
+            }
+            result { +Items.MOSS_BLOCK }
+        }.save(exporter)
+        // Sculk Vein -> Sculk
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +Items.SCULK_VEIN }
+                count = 8
+            }
+            result { +Items.SCULK }
         }.save(exporter)
     }
 

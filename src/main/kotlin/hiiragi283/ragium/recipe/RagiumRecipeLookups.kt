@@ -10,6 +10,7 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
+import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.HTCompoundRecipeLookup
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
@@ -54,6 +55,9 @@ data object RagiumRecipeLookups {
     val ASSEMBLING: HTCompoundRecipeLookup<HTDoubleItemToItemRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
+    val COMPRESSING: HTCompoundRecipeLookup<HTItemToItemRecipe> = create(RagiumConstants.COMPRESSING)
+
+    @JvmField
     val CRUSHING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.CRUSHING)
 
     @JvmField
@@ -87,6 +91,7 @@ data object RagiumRecipeLookups {
     @JvmStatic
     fun init() {
         ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING, identity())
+        COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING, identity())
         CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING, identity())
         CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING, identity())
 

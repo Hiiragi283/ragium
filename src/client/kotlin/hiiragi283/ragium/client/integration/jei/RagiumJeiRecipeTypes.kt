@@ -7,6 +7,7 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
+import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.block.RagiumBlocks
@@ -18,6 +19,9 @@ data object RagiumJeiRecipeTypes {
     // Mechanical
     @JvmField
     val ASSEMBLING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, ItemStack(Items.CRAFTER))
+
+    @JvmField
+    val COMPRESSING: HTHolderJeiRecipeType<HTItemToItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.COMPRESSING, ItemStack(Items.ANVIL))
 
     @JvmField
     val CRUSHING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 6,
+    "ingredient": "minecraft:ice"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:packed_ice"
+  },
+  "time": 200
+}

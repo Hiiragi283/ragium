@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 8,
+    "ingredient": "minecraft:moss_carpet"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:moss_block"
+  },
+  "time": 200
+}

@@ -8,6 +8,9 @@ data object RagiumRecipeSerializers {
     val ASSEMBLING: RecipeSerializer<RTAssemblingRecipe> = RTAssemblingRecipe.SERIALIZER
 
     @JvmField
+    val COMPRESSING: RecipeSerializer<RTCompressingRecipe> = RTCompressingRecipe.SERIALIZER
+
+    @JvmField
     val CRUSHING: RecipeSerializer<RTCrushingRecipe> = RTCrushingRecipe.SERIALIZER
 
     @JvmField
