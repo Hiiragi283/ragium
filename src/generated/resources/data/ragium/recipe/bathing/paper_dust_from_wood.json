@@ -2,11 +2,11 @@
   "type": "ragium:bathing",
   "fluid_ingredient": {
     "amount": 250,
-    "ingredient": "#c:sodium_hydroxide_solution"
+    "fluids": "#c:sodium_hydroxide_solution"
   },
   "item_ingredient": {
     "count": 1,
-    "ingredient": "#c:dusts/wood"
+    "items": "#c:dusts/wood"
   },
   "result": {
     "count": 1,

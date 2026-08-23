@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 1,
-    "ingredient": [
+    "items": [
       "minecraft:snow_block",
       "minecraft:ice"
     ]

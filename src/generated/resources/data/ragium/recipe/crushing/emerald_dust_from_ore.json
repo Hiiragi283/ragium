@@ -2,7 +2,7 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "ingredient": "#c:ores/emerald"
+    "items": "#c:ores/emerald"
   },
   "primary_result": {
     "count": 2,

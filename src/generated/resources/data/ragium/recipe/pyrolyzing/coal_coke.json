@@ -6,7 +6,7 @@
   },
   "ingredient": {
     "count": 1,
-    "ingredient": "minecraft:coal"
+    "items": "minecraft:coal"
   },
   "item_result": {
     "count": 1,

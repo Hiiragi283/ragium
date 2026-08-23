@@ -2,7 +2,7 @@
   "type": "ragium:assembling",
   "primary_ingredient": {
     "count": 1,
-    "ingredient": "minecraft:blackstone"
+    "items": "minecraft:blackstone"
   },
   "result": {
     "count": 1,
@@ -10,7 +10,7 @@
   },
   "secondary_ingredient": {
     "count": 8,
-    "ingredient": "#c:dusts/gold"
+    "items": "#c:dusts/gold"
   },
   "time": 200
 }

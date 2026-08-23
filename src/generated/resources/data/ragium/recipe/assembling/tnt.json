@@ -2,7 +2,7 @@
   "type": "ragium:assembling",
   "primary_ingredient": {
     "count": 4,
-    "ingredient": "#c:sands"
+    "items": "#c:sands"
   },
   "result": {
     "count": 2,
@@ -10,7 +10,7 @@
   },
   "secondary_ingredient": {
     "count": 5,
-    "ingredient": "#c:gunpowders"
+    "items": "#c:gunpowders"
   },
   "time": 200
 }

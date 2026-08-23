@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 1,
-    "ingredient": "minecraft:blue_ice"
+    "items": "minecraft:blue_ice"
   },
   "result": {
     "amount": 81000,

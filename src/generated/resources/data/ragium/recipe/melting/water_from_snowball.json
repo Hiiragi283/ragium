@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 4,
-    "ingredient": "minecraft:snowball"
+    "items": "minecraft:snowball"
   },
   "result": {
     "amount": 1000,

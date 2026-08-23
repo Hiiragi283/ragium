@@ -6,7 +6,7 @@
   },
   "ingredient": {
     "count": 1,
-    "ingredient": "#c:dusts/wood"
+    "items": "#c:dusts/wood"
   },
   "item_result": {
     "count": 1,

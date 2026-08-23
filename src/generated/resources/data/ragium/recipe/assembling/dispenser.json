@@ -2,7 +2,7 @@
   "type": "ragium:assembling",
   "primary_ingredient": {
     "count": 1,
-    "ingredient": "minecraft:dropper"
+    "items": "minecraft:dropper"
   },
   "result": {
     "count": 1,
@@ -10,7 +10,7 @@
   },
   "secondary_ingredient": {
     "count": 1,
-    "ingredient": "#c:tools/bow"
+    "items": "#c:tools/bow"
   },
   "time": 200
 }

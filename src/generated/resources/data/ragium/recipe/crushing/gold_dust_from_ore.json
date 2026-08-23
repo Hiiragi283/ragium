@@ -2,7 +2,7 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "ingredient": "#c:ores/gold"
+    "items": "#c:ores/gold"
   },
   "primary_result": {
     "count": 2,

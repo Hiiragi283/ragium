@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 1,
-    "ingredient": "#c:rods/blaze"
+    "items": "#c:rods/blaze"
   },
   "result": {
     "amount": 180,

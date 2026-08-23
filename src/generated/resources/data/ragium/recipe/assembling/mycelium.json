@@ -2,7 +2,7 @@
   "type": "ragium:assembling",
   "primary_ingredient": {
     "count": 1,
-    "ingredient": "minecraft:dirt"
+    "items": "minecraft:dirt"
   },
   "result": {
     "count": 1,
@@ -10,7 +10,7 @@
   },
   "secondary_ingredient": {
     "count": 1,
-    "ingredient": "#c:mushrooms"
+    "items": "#c:mushrooms"
   },
   "time": 200
 }

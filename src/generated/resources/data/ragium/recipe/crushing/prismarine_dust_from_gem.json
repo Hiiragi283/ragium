@@ -2,7 +2,7 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "ingredient": "#c:gems/prismarine"
+    "items": "#c:gems/prismarine"
   },
   "primary_result": {
     "count": 1,

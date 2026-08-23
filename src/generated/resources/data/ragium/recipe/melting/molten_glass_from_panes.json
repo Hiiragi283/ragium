@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 8,
-    "ingredient": "#c:glass_panes"
+    "items": "#c:glass_panes"
   },
   "result": {
     "amount": 3000,

@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 1,
-    "ingredient": "minecraft:blaze_powder"
+    "items": "minecraft:blaze_powder"
   },
   "result": {
     "amount": 90,

@@ -2,7 +2,7 @@
   "type": "ragium:cutting",
   "ingredient": {
     "count": 1,
-    "ingredient": "#minecraft:saplings"
+    "items": "#minecraft:saplings"
   },
   "primary_result": {
     "count": 1,

@@ -6,7 +6,7 @@
   },
   "ingredient": {
     "count": 1,
-    "ingredient": "#c:storage_blocks/coal"
+    "items": "#c:storage_blocks/coal"
   },
   "item_result": {
     "count": 1,

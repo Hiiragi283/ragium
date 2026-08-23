@@ -2,7 +2,7 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "ingredient": "#c:ingots/iron"
+    "items": "#c:ingots/iron"
   },
   "primary_result": {
     "count": 1,

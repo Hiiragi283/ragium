@@ -2,7 +2,7 @@
   "type": "ragium:assembling",
   "primary_ingredient": {
     "count": 1,
-    "ingredient": "#c:ingots/copper"
+    "items": "#c:ingots/copper"
   },
   "result": {
     "count": 2,
@@ -10,7 +10,7 @@
   },
   "secondary_ingredient": {
     "count": 1,
-    "ingredient": "minecraft:torch"
+    "items": "minecraft:torch"
   },
   "time": 200
 }

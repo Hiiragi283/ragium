@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 1,
-    "ingredient": "#c:dusts/glowstone"
+    "items": "#c:dusts/glowstone"
   },
   "result": {
     "amount": 90,

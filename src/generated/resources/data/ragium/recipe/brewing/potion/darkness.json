@@ -2,7 +2,7 @@
   "type": "ragium:brewing",
   "fluid_ingredient": {
     "amount": 1000,
-    "ingredient": {
+    "fluids": {
       "neoforge:ingredient_type": "ragium:potion",
       "bottle_type": "default",
       "potions": "minecraft:mundane"
@@ -10,7 +10,7 @@
   },
   "item_ingredient": {
     "count": 1,
-    "ingredient": "#c:gems/echo"
+    "items": "#c:gems/echo"
   },
   "result": {
     "type": "ragium:potion",

@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 1,
-    "ingredient": "minecraft:packed_ice"
+    "items": "minecraft:packed_ice"
   },
   "result": {
     "amount": 9000,

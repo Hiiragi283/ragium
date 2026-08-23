@@ -2,7 +2,7 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "ingredient": "minecraft:coal"
+    "items": "minecraft:coal"
   },
   "primary_result": {
     "count": 1,

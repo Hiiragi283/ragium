@@ -2,7 +2,7 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "ingredient": "#c:ingots/advanced_ragi_alloy"
+    "items": "#c:ingots/advanced_ragi_alloy"
   },
   "primary_result": {
     "count": 1,

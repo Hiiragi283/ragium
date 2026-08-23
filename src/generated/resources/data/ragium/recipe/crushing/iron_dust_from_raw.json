@@ -2,7 +2,7 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 3,
-    "ingredient": "#c:raw_materials/iron"
+    "items": "#c:raw_materials/iron"
   },
   "primary_result": {
     "count": 4,

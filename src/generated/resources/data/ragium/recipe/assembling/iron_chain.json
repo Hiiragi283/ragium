@@ -2,7 +2,7 @@
   "type": "ragium:assembling",
   "primary_ingredient": {
     "count": 1,
-    "ingredient": "#c:ingots/iron"
+    "items": "#c:ingots/iron"
   },
   "result": {
     "count": 3,
@@ -10,7 +10,7 @@
   },
   "secondary_ingredient": {
     "count": 3,
-    "ingredient": "#c:nuggets/iron"
+    "items": "#c:nuggets/iron"
   },
   "time": 200
 }

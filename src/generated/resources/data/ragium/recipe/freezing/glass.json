@@ -3,7 +3,7 @@
   "catalyst": "ragium:block_shape_pattern",
   "fluid_ingredient": {
     "amount": 1000,
-    "ingredient": "#c:molten_glass"
+    "fluids": "#c:molten_glass"
   },
   "result": {
     "count": 1,

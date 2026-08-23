@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 1,
-    "ingredient": "#c:dusts/redstone"
+    "items": "#c:dusts/redstone"
   },
   "result": {
     "amount": 90,

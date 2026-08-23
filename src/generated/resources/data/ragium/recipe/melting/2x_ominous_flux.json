@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 1,
-    "ingredient": {
+    "items": {
       "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "minecraft:ominous_bottle_amplifier": 2

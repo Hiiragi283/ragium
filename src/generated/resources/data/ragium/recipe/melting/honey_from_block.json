@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 1,
-    "ingredient": "minecraft:honey_block"
+    "items": "minecraft:honey_block"
   },
   "result": {
     "amount": 1000,

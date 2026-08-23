@@ -6,7 +6,7 @@
   },
   "ingredient": {
     "count": 1,
-    "ingredient": "#minecraft:logs_that_burn"
+    "items": "#minecraft:logs_that_burn"
   },
   "item_result": {
     "count": 1,

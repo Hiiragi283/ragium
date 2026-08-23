@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 1,
-    "ingredient": "#c:ender_pearls"
+    "items": "#c:ender_pearls"
   },
   "result": {
     "amount": 90,

@@ -2,11 +2,11 @@
   "type": "ragium:bathing",
   "fluid_ingredient": {
     "amount": 250,
-    "ingredient": "#c:water"
+    "fluids": "#c:water"
   },
   "item_ingredient": {
     "count": 1,
-    "ingredient": "#c:dusts/paper"
+    "items": "#c:dusts/paper"
   },
   "result": {
     "count": 1,
