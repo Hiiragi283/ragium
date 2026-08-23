@@ -22,6 +22,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.FREEZER, "Freezer")
         add(RagiumBlocks.MELTER, "Melter")
+
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")
         add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
@@ -45,6 +46,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "Hydrogen Chloride")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
         addFluid(RagiumFluids.CAOH_SOLUTION, "Calcium Hydroxide Solution")
+
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
@@ -54,6 +56,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.ELDER_HEART, "Elder Heart")
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
+
+        add(RagiumItems.MEMORY_DISC, "Memory Disc")
 
         add(RagiumItems.BLOCK_SHAPE_PATTERN, "Shape Pattern (Block)")
         add(RagiumItems.INGOT_SHAPE_PATTERN, "Shape Pattern (Ingot)")
@@ -85,5 +89,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
+
+        add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"Scanned Item: %1$s")
     }
 }

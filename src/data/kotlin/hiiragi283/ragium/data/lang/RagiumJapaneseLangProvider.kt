@@ -22,6 +22,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.FREEZER, "冷凍機")
         add(RagiumBlocks.MELTER, "溶融炉")
+
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
         add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
@@ -45,6 +46,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
         addFluid(RagiumFluids.CAOH_SOLUTION, "水酸化カルシウム水溶液")
+
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
@@ -54,6 +56,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")
+
+        add(RagiumItems.MEMORY_DISC, "メモリーディスク")
 
         add(RagiumItems.BLOCK_SHAPE_PATTERN, "形状パターン（ブロック）")
         add(RagiumItems.INGOT_SHAPE_PATTERN, "形状パターン（インゴット）")
@@ -85,5 +89,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
+
+        add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"スキャン済み: %1$s")
     }
 }

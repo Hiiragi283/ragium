@@ -5,6 +5,7 @@ import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.world.item.ItemStackTemplate
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
 data object RagiumDataComponents {
@@ -16,4 +17,7 @@ data object RagiumDataComponents {
 
     @JvmField
     val FLUID: DataComponentType<SimpleFluidContent> = DataComponentType(SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
+
+    @JvmField
+    val MEMORY_DISC_DATA: DataComponentType<ItemStackTemplate> = DataComponentType(ItemStackTemplate.CODEC, ItemStackTemplate.STREAM_CODEC)
 }

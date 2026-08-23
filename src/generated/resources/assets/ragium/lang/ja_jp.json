@@ -114,6 +114,7 @@
   "item.ragium.light_gray_dye_bucket": "薄灰色の染料入りバケツ",
   "item.ragium.lime_dye_bucket": "黄緑色の染料入りバケツ",
   "item.ragium.magenta_dye_bucket": "赤紫色の染料入りバケツ",
+  "item.ragium.memory_disc": "メモリーディスク",
   "item.ragium.molten_blaze_bucket": "ブレイズの血液入りバケツ",
   "item.ragium.molten_ender_bucket": "共振エンダー入りバケツ",
   "item.ragium.molten_glass_bucket": "溶融ガラス入りバケツ",
@@ -238,5 +239,6 @@
   "tag.item.c.buckets.sodium_hydroxide_solution": "水酸化ナトリウム水溶液入りバケツ",
   "tag.item.c.buckets.sulfur_dioxide": "二酸化硫黄入りバケツ",
   "tag.item.c.buckets.sulfur_trioxide": "三酸化硫黄入りバケツ",
-  "tag.item.c.buckets.sulfuric_acid": "硫酸入りバケツ"
+  "tag.item.c.buckets.sulfuric_acid": "硫酸入りバケツ",
+  "tooltip.ragium.memory_disc_data": "スキャン済み: %1$s"
 }

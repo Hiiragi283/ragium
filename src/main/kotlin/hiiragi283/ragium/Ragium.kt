@@ -83,6 +83,7 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id("bottle_type"), RagiumDataComponents.BOTTLE_TYPE)
             helper.register(RagiumAPI.id(HTConstants.ENERGY), RagiumDataComponents.ENERGY)
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
+            helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
         }
         event.register(Registries.MENU) { helper ->
             helper.register(HTBlockWidgetHolderContext.MENU_TYPE.getId(), IMenuTypeExtension.create(HTBlockWidgetHolderContext::create))

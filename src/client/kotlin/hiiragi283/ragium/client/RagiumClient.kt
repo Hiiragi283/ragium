@@ -17,9 +17,11 @@ import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTItemWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTProgressWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTWidgetRendererManager
+import hiiragi283.ragium.client.render.HTMemoryDiscClientTooltipComponent
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.gui.widget.RagiumWidgetTypes
+import hiiragi283.ragium.item.tooltip.HTMemoryDiscTooltipComponent
 import hiiragi283.ragium.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.network.HTUpdateMenuPacket
 import java.awt.Color
@@ -29,13 +31,20 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
+import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent
 import net.neoforged.neoforge.fluids.FluidStack
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
 data object RagiumClient : HTClientMod() {
-    override fun initialize(eventBus: IEventBus, container: ModContainer) {}
+    override fun initialize(eventBus: IEventBus, container: ModContainer) {
+        eventBus.addListener { event: RegisterClientTooltipComponentFactoriesEvent ->
+            event.register(HTMemoryDiscTooltipComponent::class.java, ::HTMemoryDiscClientTooltipComponent)
+        }
+
+        configScreen(container)
+    }
 
     override fun clientSetup(event: FMLClientSetupEvent) {
         HTWidgetRendererManager.init()

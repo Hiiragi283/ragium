@@ -11,6 +11,9 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     // Config
     CONFIG_ENERGY_CAPACITY("config", "energy_capacity"),
     CONFIG_ENERGY_RATE("config", "energy_rate"),
+
+    // Tooltips
+    TOOLTIPS_MEMORY_DISC_DATA(HTConstants.TOOLTIP, "memory_disc_data"),
     ;
 
     override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".")).toLanguageKey(type)

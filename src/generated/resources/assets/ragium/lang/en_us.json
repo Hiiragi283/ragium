@@ -114,6 +114,7 @@
   "item.ragium.light_gray_dye_bucket": "Light Gray Dye Bucket",
   "item.ragium.lime_dye_bucket": "Lime Dye Bucket",
   "item.ragium.magenta_dye_bucket": "Magenta Dye Bucket",
+  "item.ragium.memory_disc": "Memory Disc",
   "item.ragium.molten_blaze_bucket": "Blaze Blood Bucket",
   "item.ragium.molten_ender_bucket": "Resonant Ender Bucket",
   "item.ragium.molten_glass_bucket": "Molten Glass Bucket",
@@ -238,5 +239,6 @@
   "tag.item.c.buckets.sodium_hydroxide_solution": "Sodium Hydroxide Solution Bucket",
   "tag.item.c.buckets.sulfur_dioxide": "Sulfur Dioxide Bucket",
   "tag.item.c.buckets.sulfur_trioxide": "Sulfur Trioxide Bucket",
-  "tag.item.c.buckets.sulfuric_acid": "Sulfuric Acid Bucket"
+  "tag.item.c.buckets.sulfuric_acid": "Sulfuric Acid Bucket",
+  "tooltip.ragium.memory_disc_data": "Scanned Item: %1$s"
 }

@@ -132,6 +132,11 @@ data object RagiumItems {
     @JvmField
     val WITHER_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_star") { it.rarity(Rarity.UNCOMMON) }
 
+    //    Parts    //
+
+    @JvmField
+    val MEMORY_DISC: HTSimpleDeferredItem = REGISTER.registerItem("memory_disc", ::HTMemoryDiscItem)
+
     //    Tool    //
 
     @JvmStatic
