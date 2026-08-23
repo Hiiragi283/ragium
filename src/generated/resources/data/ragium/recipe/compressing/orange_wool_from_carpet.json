@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 3,
+    "items": "minecraft:orange_carpet"
+  },
+  "result": {
+    "count": 2,
+    "id": "minecraft:orange_wool"
+  },
+  "time": 200
+}

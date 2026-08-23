@@ -19,7 +19,6 @@ import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
@@ -139,12 +138,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         // Fuel
         for (fuel: HTMaterial.Fuel in HTMaterial.Fuel.entries) {
-            val base: Item = when (fuel) {
-                HTMaterial.Fuel.COAL -> Items.COAL
-                HTMaterial.Fuel.CHARCOAL -> Items.CHARCOAL
-                HTMaterial.Fuel.COAL_COKE -> RagiumItems.COAL_COKE
-            }.asItem()
-
+            val base: HTSimpleDeferredItem = fuel.baseItem
             // Storage
             baseToBlock(fuel, Ingredient.of(base), base)
             // Tiny

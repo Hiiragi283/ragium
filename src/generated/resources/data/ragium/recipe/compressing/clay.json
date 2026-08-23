@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:mud"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:clay"
+  },
+  "time": 200
+}

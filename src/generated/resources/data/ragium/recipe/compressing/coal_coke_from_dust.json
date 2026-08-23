@@ -1,12 +1,12 @@
 {
   "type": "ragium:compressing",
   "ingredient": {
-    "count": 8,
-    "items": "minecraft:moss_carpet"
+    "count": 1,
+    "items": "#c:dusts/coal_coke"
   },
   "result": {
     "count": 1,
-    "id": "minecraft:moss_block"
+    "id": "ragium:coal_coke"
   },
   "time": 200
 }

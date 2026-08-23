@@ -1,7 +1,10 @@
 package hiiragi283.ragium.api.tag
 
 import hiiragi283.lib.data.lang.HTLangName
+import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.HTMaterialLike
+import hiiragi283.ragium.api.RagiumAPI
 
 sealed interface HTMaterial :
     HTMaterialLike,
@@ -22,6 +25,12 @@ sealed interface HTMaterial :
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
+
+        val baseItem: HTSimpleDeferredItem get() = when (this) {
+            COAL -> vanillaId("coal")
+            CHARCOAL -> vanillaId("charcoal")
+            COAL_COKE -> RagiumAPI.id("coal_coke")
+        }.let(::HTSimpleDeferredItem)
 
         override val materialName: String = name.lowercase()
     }

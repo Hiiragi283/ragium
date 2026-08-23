@@ -1,5 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
+import hiiragi283.lib.color.HTDefaultColor
+import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
@@ -198,13 +200,33 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             result { +Items.BLUE_ICE }
         }.save(exporter)
 
+        // Mud -> Clay
+        RagiumRecipeBuilders.compressing {
+            ingredient { items { +Items.MUD } }
+            result { +Items.CLAY }
+        }.save(exporter)
         // Moss Carpet -> Moss
         RagiumRecipeBuilders.compressing {
             ingredient {
                 items { +Items.MOSS_CARPET }
-                count = 8
+                count = 3
             }
-            result { +Items.MOSS_BLOCK }
+            result {
+                +Items.MOSS_BLOCK
+                count = 2
+            }
+            recipeId suffix "_from_carpet"
+        }.save(exporter)
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +Items.PALE_MOSS_CARPET }
+                count = 3
+            }
+            result {
+                +Items.PALE_MOSS_BLOCK
+                count = 2
+            }
+            recipeId suffix "_from_carpet"
         }.save(exporter)
         // Sculk Vein -> Sculk
         RagiumRecipeBuilders.compressing {
@@ -214,18 +236,45 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             result { +Items.SCULK }
         }.save(exporter)
+
+        // XX Carpet -> XX Wool
+        for (color: HTDefaultColor in HTDefaultColor.entries) {
+            RagiumRecipeBuilders.compressing {
+                ingredient {
+                    items { +VanillaColoredCollections.CARPET[color] }
+                    count = 3
+                }
+                result {
+                    +VanillaColoredCollections.WOOL[color]
+                    count = 2
+                }
+                recipeId suffix "_from_carpet"
+            }.save(exporter)
+        }
+
+        // XX Dust -> XX
+        for (fuel: HTMaterial.Fuel in HTMaterial.Fuel.entries) {
+            RagiumRecipeBuilders.compressing {
+                ingredient { +holderSet(CommonTagPrefixes.DUST, fuel) }
+                result { +fuel.baseItem }
+                recipeId suffix "_from_dust"
+            }.save(exporter)
+        }
+
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                +holderSet(CommonTagPrefixes.DUST, HTMaterial.Other.WOOD)
+                count = 2
+            }
+            result { +RagiumItems.PARTICLE_BOARD }
+        }.save(exporter)
     }
 
     private fun crushing() {
         // XX Dust
         for (fuel: HTMaterial.Fuel in HTMaterial.Fuel.entries) {
-            val input: Item = when (fuel) {
-                HTMaterial.Fuel.COAL -> Items.COAL
-                HTMaterial.Fuel.CHARCOAL -> Items.CHARCOAL
-                HTMaterial.Fuel.COAL_COKE -> RagiumItems.COAL_COKE
-            }.asItem()
             RagiumRecipeBuilders.crushing {
-                ingredient { items { +input } }
+                ingredient { items { +fuel.baseItem } }
                 primary { +RagiumItems.getOrThrow(HTItemPart.DUST, fuel) }
             }.save(exporter)
         }
