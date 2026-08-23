@@ -2,12 +2,13 @@ package hiiragi283.ragium.api.tag
 
 import hiiragi283.lib.data.lang.HTLangPatternProvider
 import hiiragi283.lib.tag.CommonTagPrefixes
+import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 
 sealed interface HTPart : HTLangPatternProvider {
     val tagPrefix: HTTagPrefix
 
-    fun createName(material: HTMaterial): String
+    fun createName(material: HTMaterialLike): String
 }
 
 enum class HTBlockPart(private val idPattern: String, override val tagPrefix: HTTagPrefix, provider: HTLangPatternProvider) :
@@ -23,7 +24,7 @@ enum class HTBlockPart(private val idPattern: String, override val tagPrefix: HT
 
     constructor(idPattern: String, tagPrefix: HTTagPrefix, enPattern: String, jaPattern: String) : this(idPattern, tagPrefix, HTLangPatternProvider(enPattern, jaPattern))
 
-    override fun createName(material: HTMaterial): String = idPattern.replace("%s", material.materialName)
+    override fun createName(material: HTMaterialLike): String = idPattern.replace("%s", material.materialName)
 }
 
 enum class HTItemPart(private val idPattern: String, override val tagPrefix: HTTagPrefix, provider: HTLangPatternProvider) :
@@ -41,5 +42,5 @@ enum class HTItemPart(private val idPattern: String, override val tagPrefix: HTT
 
     constructor(idPattern: String, tagPrefix: HTTagPrefix, enPattern: String, jaPattern: String) : this(idPattern, tagPrefix, HTLangPatternProvider(enPattern, jaPattern))
 
-    override fun createName(material: HTMaterial): String = idPattern.replace("%s", material.materialName)
+    override fun createName(material: HTMaterialLike): String = idPattern.replace("%s", material.materialName)
 }

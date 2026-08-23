@@ -1,11 +1,12 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.material.CommonMaterials
+import hiiragi283.lib.material.VanillaMaterials
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.tag.HTItemPart
-import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.fluid.RagiumFluids
 import hiiragi283.ragium.item.RagiumItems
 import java.util.concurrent.CompletableFuture
@@ -22,17 +23,17 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     private fun bathing() {
         // Wood Pulp + NaOH aq -> Paper Pulp
         RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Other.WOOD) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.WOOD) }
             fluidIngredient {
                 +holderSet(RagiumFluids.NAOH_SOLUTION)
                 amount = 250
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Other.PAPER) }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.PAPER) }
             recipeId suffix "_from_wood"
         }.save(exporter)
         // Paper Pulp + Water -> Paper
         RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Other.PAPER) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.PAPER) }
             fluidIngredient {
                 +waterSet()
                 amount = 250
@@ -55,7 +56,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }.save(exporter)
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
         RagiumRecipeBuilders.electrolyzing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, HTMaterial.Mineral.SALT) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, CommonMaterials.SALT) }
             fluidIngredient { +waterSet() }
             result {
                 +RagiumFluids.HYDROGEN

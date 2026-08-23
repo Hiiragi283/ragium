@@ -4,6 +4,9 @@ import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
 import hiiragi283.lib.collection.buildTable
+import hiiragi283.lib.material.CommonMaterials
+import hiiragi283.lib.material.HTMaterial
+import hiiragi283.lib.material.VanillaMaterials
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItemRegister
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
@@ -14,7 +17,6 @@ import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTMachineType
-import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.block.entity.RagiumBlockEntityTypes
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -63,11 +65,10 @@ data object RagiumBlocks {
             this[part, material] = REGISTER.registerSimple(part.createName(material), blockProp, itemProp)
         }
 
-        register(HTBlockPart.STORAGE_BLOCK, HTMaterial.Fuel.CHARCOAL, copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF))
-        register(HTBlockPart.STORAGE_BLOCK, HTMaterial.Fuel.COAL_COKE, copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY))
-        register(HTBlockPart.STORAGE_BLOCK, HTMaterial.Gem.ECHO, copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN))
-        register(HTBlockPart.STORAGE_BLOCK, HTMaterial.Gem.RAGI_CRYSTAL, copyOf(Blocks.DIAMOND_BLOCK).mapColor(MapColor.COLOR_RED))
-        register(HTBlockPart.STORAGE_BLOCK, HTMaterial.Metal.STEEL, copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_LIGHT_GRAY))
+        register(HTBlockPart.STORAGE_BLOCK, VanillaMaterials.CHARCOAL, copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF))
+        register(HTBlockPart.STORAGE_BLOCK, CommonMaterials.COAL_COKE, copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY))
+        register(HTBlockPart.STORAGE_BLOCK, VanillaMaterials.ECHO, copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN))
+        register(HTBlockPart.STORAGE_BLOCK, CommonMaterials.STEEL, copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_LIGHT_GRAY))
     }
 
     @JvmStatic

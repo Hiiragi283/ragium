@@ -3,13 +3,14 @@ package hiiragi283.ragium.data.tag
 import hiiragi283.lib.collection.forEach
 import hiiragi283.lib.data.tag.HTTagBuilder
 import hiiragi283.lib.data.tag.HTTagsProvider
+import hiiragi283.lib.material.HTMaterial
+import hiiragi283.lib.material.VanillaMaterials
 import hiiragi283.lib.registry.asSupplier
 import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTMachineType
-import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.block.RagiumBlocks
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
@@ -29,10 +30,10 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
         }
 
         setOf(
-            HTMaterial.Mineral.GLOWSTONE to Blocks.GLOWSTONE,
-            HTMaterial.Gem.QUARTZ to Blocks.QUARTZ_BLOCK,
-            HTMaterial.Gem.AMETHYST to Blocks.AMETHYST_BLOCK,
-        ).forEach { (material: HTMaterial, block: Block) -> tags(CommonTagPrefixes.STORAGE_BLOCK, material).add(block.asSupplier()) }
+            VanillaMaterials.GLOWSTONE to Blocks.GLOWSTONE,
+            VanillaMaterials.QUARTZ to Blocks.QUARTZ_BLOCK,
+            VanillaMaterials.AMETHYST to Blocks.AMETHYST_BLOCK,
+        ).forEach { (material: VanillaMaterials, block: Block) -> tags(CommonTagPrefixes.STORAGE_BLOCK, material).add(block.asSupplier()) }
         // Machine
         for (machineType: HTMachineType in HTMachineType.entries) {
             getOrCreateRawBuilder(createTag(HTMachineType.PREFIX, machineType)) // TODO

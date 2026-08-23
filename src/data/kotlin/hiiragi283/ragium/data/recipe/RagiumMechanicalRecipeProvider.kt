@@ -3,13 +3,18 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.material.HTMaterial
+import hiiragi283.lib.material.HTMaterialCategory
+import hiiragi283.lib.material.VanillaMaterials
+import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.tag.HTItemPart
-import hiiragi283.ragium.api.tag.HTMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.item.RagiumItems
+import hiiragi283.ragium.material.RagiumMaterialHelper
+import hiiragi283.ragium.material.RagiumMaterials
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -31,7 +36,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         RagiumRecipeBuilders.assembling {
             primary { items { +Items.BLACKSTONE } }
             secondary {
-                +holderSet(CommonTagPrefixes.DUST, HTMaterial.Metal.GOLD)
+                +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.GOLD)
                 count = 8
             }
             result { +Items.GILDED_BLACKSTONE }
@@ -75,9 +80,9 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         // XX Ingot + XX Nugget -> XX Chain
         setOf(
-            HTMaterial.Metal.COPPER to Items.COPPER_CHAIN.unaffected(),
-            HTMaterial.Metal.IRON to Items.IRON_CHAIN,
-        ).forEach { (metal: HTMaterial.Metal, chain: Item) ->
+            VanillaMaterials.COPPER to Items.COPPER_CHAIN.unaffected(),
+            VanillaMaterials.IRON to Items.IRON_CHAIN,
+        ).forEach { (metal: VanillaMaterials, chain: Item) ->
             RagiumRecipeBuilders.assembling {
                 primary { +holderSet(CommonTagPrefixes.INGOT, metal) }
                 secondary {
@@ -92,9 +97,9 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
         // XX Ingot + Torch -> XX Lantern
         setOf(
-            HTMaterial.Metal.COPPER to Items.COPPER_LANTERN.unaffected(),
-            HTMaterial.Metal.IRON to Items.LANTERN,
-        ).forEach { (metal: HTMaterial.Metal, lantern: Item) ->
+            VanillaMaterials.COPPER to Items.COPPER_LANTERN.unaffected(),
+            VanillaMaterials.IRON to Items.LANTERN,
+        ).forEach { (metal: VanillaMaterials, lantern: Item) ->
             RagiumRecipeBuilders.assembling {
                 primary { +holderSet(CommonTagPrefixes.INGOT, metal) }
                 secondary { items { +Items.TORCH } }
@@ -105,7 +110,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
         RagiumRecipeBuilders.assembling {
-            primary { +holderSet(CommonTagPrefixes.INGOT, HTMaterial.Metal.IRON) }
+            primary { +holderSet(CommonTagPrefixes.INGOT, VanillaMaterials.IRON) }
             secondary { items { +Items.SOUL_TORCH } }
             result {
                 +Items.SOUL_LANTERN
@@ -115,7 +120,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Iron Ingot + Chest -> Hopper
         RagiumRecipeBuilders.assembling {
             primary {
-                +holderSet(CommonTagPrefixes.INGOT, HTMaterial.Metal.IRON)
+                +holderSet(CommonTagPrefixes.INGOT, VanillaMaterials.IRON)
                 count = 5
             }
             secondary { +holderSet(Tags.Items.CHESTS_WOODEN) }
@@ -253,17 +258,18 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
 
         // XX Dust -> XX
-        for (fuel: HTMaterial.Fuel in HTMaterial.Fuel.entries) {
+        for (fuel: HTMaterial in RagiumMaterialHelper.MANAGER[HTMaterialCategory.FUEL]) {
+            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel) ?: continue
             RagiumRecipeBuilders.compressing {
                 ingredient { +holderSet(CommonTagPrefixes.DUST, fuel) }
-                result { +fuel.baseItem }
+                result { +baseItem }
                 recipeId suffix "_from_dust"
             }.save(exporter)
         }
 
         RagiumRecipeBuilders.compressing {
             ingredient {
-                +holderSet(CommonTagPrefixes.DUST, HTMaterial.Other.WOOD)
+                +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.WOOD)
                 count = 2
             }
             result { +RagiumItems.PARTICLE_BOARD }
@@ -272,14 +278,15 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
     private fun crushing() {
         // XX Dust
-        for (fuel: HTMaterial.Fuel in HTMaterial.Fuel.entries) {
+        for (fuel: HTMaterial in RagiumMaterialHelper.MANAGER[HTMaterialCategory.FUEL]) {
+            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel) ?: continue
             RagiumRecipeBuilders.crushing {
-                ingredient { items { +fuel.baseItem } }
+                ingredient { items { +baseItem } }
                 primary { +RagiumItems.getOrThrow(HTItemPart.DUST, fuel) }
             }.save(exporter)
         }
 
-        for (gem: HTMaterial.Gem in HTMaterial.Gem.entries) {
+        for (gem: HTMaterial in RagiumMaterialHelper.MANAGER[HTMaterialCategory.GEM]) {
             RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(CommonTagPrefixes.GEM, gem) }
                 primary { +RagiumItems.getOrThrow(HTItemPart.DUST, gem) }
@@ -287,7 +294,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
 
-        for (metal: HTMaterial.Metal in HTMaterial.Metal.entries) {
+        for (metal: HTMaterial in RagiumMaterialHelper.MANAGER[HTMaterialCategory.METAL]) {
             RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(CommonTagPrefixes.INGOT, metal) }
                 primary { +RagiumItems.getOrThrow(HTItemPart.DUST, metal) }
@@ -297,12 +304,12 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(ItemTags.PLANKS) }
-            primary { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Other.WOOD) }
+            primary { +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.WOOD) }
             recipeId suffix "_from_planks"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.GLASS_BLOCKS) }
-            primary { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Other.GLASS) }
+            primary { +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.GLASS) }
             recipeId suffix "_from_block"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
@@ -311,53 +318,53 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 8
             }
             primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Other.GLASS)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.GLASS)
                 count = 3
             }
             recipeId suffix "_from_pane"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
-            primary { +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Other.OBSIDIAN) }
+            primary { +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.OBSIDIAN) }
         }.save(exporter)
 
         // XX Ore -> XX Dust
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Fuel.COAL) }
+            ingredient { +holderSet(CommonTagPrefixes.ORE, VanillaMaterials.COAL) }
             primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Fuel.COAL)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.COAL)
                 count = 2
             }
             secondary {
-                +RagiumItems.getOrThrow(HTItemPart.TINY, HTMaterial.Fuel.COAL)
+                +RagiumItems.getOrThrow(HTItemPart.TINY, VanillaMaterials.COAL)
                 count = 3
             }
             recipeId suffix "_from_ore"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Mineral.REDSTONE) }
+            ingredient { +holderSet(CommonTagPrefixes.ORE, VanillaMaterials.REDSTONE) }
             primary {
                 +Items.REDSTONE
                 count = 6
             }
             secondary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Mineral.RAGINITE)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterials.RAGINITE)
             }
             recipeId suffix "_from_ore"
         }.save(exporter)
 
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Gem.LAPIS) }
+            ingredient { +holderSet(CommonTagPrefixes.ORE, VanillaMaterials.LAPIS) }
             primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Gem.LAPIS)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.LAPIS)
                 count = 6
             }
             recipeId suffix "_from_ore"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Gem.QUARTZ) }
+            ingredient { +holderSet(CommonTagPrefixes.ORE, VanillaMaterials.QUARTZ) }
             primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Gem.QUARTZ)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.QUARTZ)
                 count = 4
             }
             secondary {
@@ -366,26 +373,26 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             recipeId suffix "_from_ore"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Gem.DIAMOND) }
+            ingredient { +holderSet(CommonTagPrefixes.ORE, VanillaMaterials.DIAMOND) }
             primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Gem.DIAMOND)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.DIAMOND)
                 count = 2
             }
             recipeId suffix "_from_ore"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Gem.EMERALD) }
+            ingredient { +holderSet(CommonTagPrefixes.ORE, VanillaMaterials.EMERALD) }
             primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Gem.EMERALD)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.EMERALD)
                 count = 2
             }
             recipeId suffix "_from_ore"
         }.save(exporter)
 
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Metal.COPPER) }
+            ingredient { +holderSet(CommonTagPrefixes.ORE, VanillaMaterials.COPPER) }
             primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Metal.COPPER)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.COPPER)
                 count = 3
             }
             secondary {
@@ -395,25 +402,24 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             recipeId suffix "_from_ore"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Metal.IRON) }
+            ingredient { +holderSet(CommonTagPrefixes.ORE, VanillaMaterials.IRON) }
             primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Metal.IRON)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.IRON)
                 count = 2
             }
             secondary { +Items.FLINT }
             recipeId suffix "_from_ore"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, HTMaterial.Metal.GOLD) }
+            ingredient { +holderSet(CommonTagPrefixes.ORE, VanillaMaterials.GOLD) }
             primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Metal.GOLD)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.GOLD)
                 count = 2
             }
             recipeId suffix "_from_ore"
         }.save(exporter)
         // Raw XX -> XX Dust
-        for (metal: HTMaterial.Metal in HTMaterial.Metal.entries) {
-            if (!metal.isElement) continue
+        for (metal: HTMaterial in setOf(VanillaMaterials.COPPER, VanillaMaterials.IRON, VanillaMaterials.GOLD)) {
             RagiumRecipeBuilders.crushing {
                 ingredient {
                     +holderSet(CommonTagPrefixes.RAW_MATERIALS, metal)
@@ -431,7 +437,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.BOOK } }
             primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, HTMaterial.Other.PAPER)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.PAPER)
                 count = 3
             }
             recipeId suffix "_from_book"

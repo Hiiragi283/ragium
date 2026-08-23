@@ -1,13 +1,17 @@
 package hiiragi283.ragium.item
 
+import hiiragi283.lib.HTComparators
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildSetMultiMap
 import hiiragi283.lib.collection.flatMapTable
+import hiiragi283.lib.material.CommonMaterials
+import hiiragi283.lib.material.HTMaterial
+import hiiragi283.lib.material.VanillaMaterials
 import hiiragi283.lib.registry.HTDeferredItemRegister
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTItemPart
-import hiiragi283.ragium.api.tag.HTMaterial
+import hiiragi283.ragium.material.RagiumMaterials
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 import net.neoforged.bus.api.IEventBus
@@ -28,72 +32,70 @@ data object RagiumItems {
         // Dust
         setOf(
             // Fuel
-            HTMaterial.Fuel.COAL,
-            HTMaterial.Fuel.CHARCOAL,
-            HTMaterial.Fuel.COAL_COKE,
+            VanillaMaterials.COAL,
+            VanillaMaterials.CHARCOAL,
+            CommonMaterials.COAL_COKE,
             // Mineral
-            HTMaterial.Mineral.SALT,
-            HTMaterial.Mineral.NITER,
-            HTMaterial.Mineral.BORAX,
-            HTMaterial.Mineral.RAGINITE,
+            CommonMaterials.SALT,
+            CommonMaterials.NITER,
+            CommonMaterials.BORAX,
+            RagiumMaterials.RAGINITE,
             // Gem
-            HTMaterial.Gem.LAPIS,
-            HTMaterial.Gem.QUARTZ,
-            HTMaterial.Gem.AMETHYST,
-            HTMaterial.Gem.DIAMOND,
-            HTMaterial.Gem.EMERALD,
-            HTMaterial.Gem.ECHO,
-            HTMaterial.Gem.PRISMARINE,
-            HTMaterial.Gem.RAGI_CRYSTAL,
+            VanillaMaterials.LAPIS,
+            VanillaMaterials.QUARTZ,
+            VanillaMaterials.AMETHYST,
+            VanillaMaterials.DIAMOND,
+            VanillaMaterials.EMERALD,
+            VanillaMaterials.ECHO,
+            VanillaMaterials.PRISMARINE,
             // Metal
-            HTMaterial.Metal.COPPER,
-            HTMaterial.Metal.IRON,
-            HTMaterial.Metal.GOLD,
+            VanillaMaterials.COPPER,
+            VanillaMaterials.IRON,
+            VanillaMaterials.GOLD,
             // Other
-            HTMaterial.Other.WOOD,
-            HTMaterial.Other.GLASS,
-            HTMaterial.Other.OBSIDIAN,
-            HTMaterial.Other.PAPER,
+            VanillaMaterials.WOOD,
+            VanillaMaterials.GLASS,
+            VanillaMaterials.OBSIDIAN,
+            VanillaMaterials.PAPER,
         ).forEach { put(HTItemPart.DUST, it) }
         // Gear
         setOf(
             // Gem
-            HTMaterial.Gem.DIAMOND,
-            HTMaterial.Gem.EMERALD,
+            VanillaMaterials.DIAMOND,
+            VanillaMaterials.EMERALD,
             // Metal
-            HTMaterial.Metal.COPPER,
-            HTMaterial.Metal.IRON,
-            HTMaterial.Metal.GOLD,
+            VanillaMaterials.COPPER,
+            VanillaMaterials.IRON,
+            VanillaMaterials.GOLD,
             // Other
-            HTMaterial.Other.WOOD,
+            VanillaMaterials.WOOD,
         ).forEach {
             put(HTItemPart.GEAR, it)
         }
-        // Gem
-        put(HTItemPart.GEM, HTMaterial.Gem.RAGI_CRYSTAL)
-
         // Fuel
-        HTMaterial.Fuel.entries.forEach { put(HTItemPart.TINY, it) }
+        setOf(
+            VanillaMaterials.COAL,
+            VanillaMaterials.CHARCOAL,
+            CommonMaterials.COAL_COKE,
+        ).forEach { put(HTItemPart.TINY, it) }
         // Alloy
         setOf(
             HTItemPart.DUST,
             HTItemPart.GEAR,
             HTItemPart.NUGGET,
-        ).forEach { put(it, HTMaterial.Metal.NETHERITE) }
+        ).forEach { put(it, VanillaMaterials.NETHERITE) }
         setOf(
             HTItemPart.DUST,
             HTItemPart.INGOT,
             HTItemPart.NUGGET,
         ).forEach {
-            put(it, HTMaterial.Metal.STEEL)
-            put(it, HTMaterial.Metal.RAGI_ALLOY)
-            put(it, HTMaterial.Metal.ADVANCED_RAGI_ALLOY)
+            put(it, CommonMaterials.STEEL)
         }
     }.flatMapTable { (part: HTItemPart, materials: Collection<HTMaterial>) ->
         materials
-            .toSortedSet()
+            .toSortedSet(compareBy(HTComparators.ID, HTMaterial::getId))
             .map { material: HTMaterial ->
-                val item: HTSimpleDeferredItem = if (material == HTMaterial.Metal.NETHERITE) {
+                val item: HTSimpleDeferredItem = if (material == VanillaMaterials.NETHERITE) {
                     REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties -> properties.fireResistant() }
                 } else {
                     REGISTER.registerSimpleItem(part.createName(material))
@@ -106,7 +108,7 @@ data object RagiumItems {
     fun getOrThrow(part: HTItemPart, material: HTMaterial): HTSimpleDeferredItem = MATERIAL_ITEMS[part, material] ?: error("Unregistered item: ${part.createName(material)}")
 
     @JvmField
-    val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(HTMaterial.Fuel.COAL_COKE.materialName)
+    val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(CommonMaterials.COAL_COKE.path)
 
     @JvmField
     val BAMBOO_CHARCOAL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("bamboo_charcoal")
