@@ -7,7 +7,7 @@ import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.convert
-import hiiragi283.lib.serialization.network.asOption
+import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.Option
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -53,7 +53,7 @@ interface HTItemToDoubleItemRecipe :
                 Basic::ingredient,
                 HTItemResult.STREAM_CODEC,
                 Basic::primary,
-                HTItemResult.STREAM_CODEC.asOption(),
+                HTStreamCodecs.option(HTItemResult.STREAM_CODEC),
                 Basic::secondary,
                 HTProgressData.STREAM_CODEC,
                 Basic::progressData,

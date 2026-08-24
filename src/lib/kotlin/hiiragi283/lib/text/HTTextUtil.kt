@@ -21,7 +21,6 @@ import net.neoforged.fml.ModContainer
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforgespi.language.IModInfo
-import org.apache.commons.lang3.math.Fraction
 import org.apache.commons.lang3.text.WordUtils
 
 /**
@@ -102,7 +101,7 @@ object HTTextUtil {
                     is Float -> current = DOUBLE_FORMAT.format(arg.toDouble()).toText()
                     is Double -> current = DOUBLE_FORMAT.format(arg).toText()
                     is Boolean -> current = boolText(arg)
-                    is Fraction -> current = DOUBLE_FORMAT.format(arg.toDouble()).toText()
+                    // is Fraction -> current = DOUBLE_FORMAT.format(arg.toDouble()).toText()
                     // Formatting
                     is TextColor -> {
                         if (cachedStyle.color == null) {

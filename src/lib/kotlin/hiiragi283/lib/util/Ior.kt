@@ -42,13 +42,16 @@ sealed class Ior<out A, out B> {
         }
 
         /**
-         * 指定された[left]と[right]を[Ior]に変換します。
+         * 指定された[pair]を[Ior]に変換します。
          */
         @JvmStatic
-        fun <A : Any, B : Any> fromOption(left: Option<A>, right: Option<B>): Option<Ior<A, B>> = left.fold(
-            { right.map { Right(it) } },
-            { leftValue -> right.fold({ Left(leftValue) }, { Both(leftValue, it) }).some() },
-        )
+        fun <A, B> fromPair(pair: Pair<A, B>): Both<A, B> = Both(pair.first, pair.second)
+
+        /**
+         * 指定された[either]を[Ior]に変換します。
+         */
+        @JvmStatic
+        fun <A, B> fromEither(either: Either<A, B>): Ior<A, B> = either.fold({ Left(it) }, { Right(it) })
     }
 
     /**

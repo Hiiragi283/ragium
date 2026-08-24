@@ -15,7 +15,7 @@ import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.convert
-import hiiragi283.lib.serialization.network.asOption
+import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.listOf
 import hiiragi283.lib.util.Option
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -48,7 +48,7 @@ data class RTElectrolyzingRecipe(
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, RTElectrolyzingRecipe> = StreamCodec.composite(
-            HTItemIngredient.STREAM_CODEC.asOption(),
+            HTStreamCodecs.option(HTItemIngredient.STREAM_CODEC),
             RTElectrolyzingRecipe::itemIngredient,
             HTFluidIngredient.STREAM_CODEC,
             RTElectrolyzingRecipe::fluidIngredient,

@@ -5,11 +5,13 @@ import hiiragi283.lib.tag.createTagKey
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
+import hiiragi283.lib.util.Option
 import io.netty.buffer.ByteBuf
 import java.util.UUID
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.UUIDUtil
+import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.network.codec.ByteBufCodecs
@@ -18,23 +20,13 @@ import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ByIdMap
-import org.apache.commons.lang3.math.Fraction
 
 /**
  * Hiiragi Seriesで使用される[StreamCodec]をまとめたクラスです。
  * @author Hiiragi Tsubasa
- * @since 0.16.0
+ * @since 26.1.0
  */
 data object HTStreamCodecs {
-    @JvmField
-    val FRACTION: StreamCodec<ByteBuf, Fraction> = StreamCodec.composite(
-        ByteBufCodecs.VAR_INT,
-        Fraction::getNumerator,
-        ByteBufCodecs.VAR_INT,
-        Fraction::getDenominator,
-        Fraction::getFraction,
-    )
-
     @JvmField
     val TEXT: StreamCodec<RegistryFriendlyByteBuf, Text> = ComponentSerialization.STREAM_CODEC
 
@@ -51,6 +43,18 @@ data object HTStreamCodecs {
      */
     @JvmStatic
     fun <B : ByteBuf, K : Any, V : Any> mapOf(keyCodec: StreamCodec<in B, K>, valueCodec: StreamCodec<in B, V>): StreamCodec<B, Map<K, V>> = ByteBufCodecs.map(::LinkedHashMap, keyCodec, valueCodec)
+
+    /**
+     * [Option]でラップされた[StreamCodec]を作成します。
+     */
+    @JvmStatic
+    fun <B : ByteBuf, V : Any> option(codec: StreamCodec<in B, V>): StreamCodec<B, Option<V>> = object : StreamCodec<B, Option<V>> {
+        override fun encode(output: B, value: Option<V>) {
+            FriendlyByteBuf.writeNullable(output, value.getOrNull(), codec)
+        }
+
+        override fun decode(input: B): Option<V> = Option.fromNullable(FriendlyByteBuf.readNullable(input, codec))
+    }
 
     /**
      * [Either]の[StreamCodec]を作成します。

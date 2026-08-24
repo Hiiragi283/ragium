@@ -5,21 +5,16 @@ package hiiragi283.lib.serialization.codec
 import com.mojang.datafixers.kinds.App
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
-import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.MapCodec
-import com.mojang.serialization.MapLike
-import com.mojang.serialization.RecordBuilder
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.text.Text
-import hiiragi283.lib.util.DFUPair
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.Option
+import hiiragi283.lib.util.java
 import hiiragi283.lib.util.kotlin
-import hiiragi283.lib.util.some
 import java.util.UUID
-import java.util.stream.Stream
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -33,26 +28,13 @@ import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
-import org.apache.commons.lang3.math.Fraction
 
 /**
  * Hiiragi Seriesで使用される[Codec]と[MapCodec]をまとめたクラスです。
  * @author Hiiragi Tsubasa
- * @since 0.16.0
+ * @since 26.1.0
  */
 data object HTCodecs {
-    @JvmField
-    val FRACTION: Codec<Fraction> = xor(Codec.STRING, Codec.INT)
-        .xmap(
-            { either: Either<String, Int> -> either.fold(Fraction::getFraction) { Fraction.getFraction(it, 1) } },
-            { fraction: Fraction ->
-                when (fraction.denominator) {
-                    1 -> Either.Right(fraction.numerator)
-                    else -> Either.Left(fraction.toString())
-                }
-            },
-        )
-
     @JvmField
     val TEXT: Codec<Text> = ComponentSerialization.CODEC
 
@@ -68,28 +50,7 @@ data object HTCodecs {
      * 参照 : [DataFixerUpper - ExtraCodecs.optionalEmptyMap][ExtraCodecs.optionalEmptyMap]
      */
     @JvmStatic
-    fun <A : Any> option(codec: Codec<A>): Codec<Option<A>> = OptionCodec(codec)
-
-    /**
-     * @suppress
-     */
-    @JvmRecord
-    private data class OptionCodec<A : Any>(private val codec: Codec<A>) : Codec<Option<A>> {
-        override fun <T> encode(input: Option<A>, ops: DynamicOps<T>, prefix: T): DataResult<T> = input.fold(
-            { DataResult.success(ops.emptyMap()) },
-            { codec.encode(it, ops, prefix) },
-        )
-
-        private fun <T> isEmptyMap(ops: DynamicOps<T>, input: T): Boolean = ops.getMap(input).result().kotlin.fold(
-            { false },
-            { it.entries().findAny().isEmpty },
-        )
-
-        override fun <T> decode(ops: DynamicOps<T>, input: T): DataResult<DFUPair<Option<A>, T>> = when {
-            isEmptyMap(ops, input) -> DataResult.success(DFUPair.of(Option.none(), input))
-            else -> codec.decode(ops, input).map { pair: DFUPair<A, T> -> pair.mapFirst { it.some() } }
-        }
-    }
+    fun <A : Any> option(codec: Codec<A>): Codec<Option<A>> = ExtraCodecs.optionalEmptyMap(codec).xmap({ it.kotlin }, { it.java })
 
     @JvmStatic
     fun <A : Any, B : Any> pair(first: Codec<A>, second: Codec<B>): MapCodec<Pair<A, B>> = recordMap { instance ->
@@ -116,7 +77,7 @@ data object HTCodecs {
      * @see Codec.either
      */
     @JvmStatic
-    fun <A, B> either(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> = HTEitherCodec(left, right, false)
+    fun <A : Any, B : Any> either(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> = Codec.either(left, right).xmap({ it.kotlin }, { it.java })
 
     /**
      * [Either]の[Codec]を作成します。
@@ -127,37 +88,18 @@ data object HTCodecs {
      * @see Codec.xor
      */
     @JvmStatic
-    fun <A, B> xor(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> = HTEitherCodec(left, right, true)
+    fun <A : Any, B : Any> xor(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> = Codec.xor(left, right).xmap({ it.kotlin }, { it.java })
 
     /**
-     * @suppress
-     * @see com.mojang.serialization.codecs.EitherCodec
-     * @see com.mojang.serialization.codecs.XorCodec
+     * [Either]の[Codec]を作成します。
+     * @param A 左側の値となるクラス
+     * @param B 右側の値となるクラス
+     * @param left 左側の値の[Codec]
+     * @param right 右側の値の[Codec]
+     * @see Codec.either
      */
-    @JvmRecord
-    private data class HTEitherCodec<A, B>(val left: Codec<A>, val right: Codec<B>, val isStrict: Boolean) : Codec<Either<A, B>> {
-        override fun <T : Any> encode(input: Either<A, B>, ops: DynamicOps<T>, prefix: T): DataResult<T> = input.fold(
-            { left.encode(it, ops, prefix) },
-            { right.encode(it, ops, prefix) },
-        )
-
-        override fun <T : Any> decode(ops: DynamicOps<T>, input: T): DataResult<DFUPair<Either<A, B>, T>> {
-            val leftRead: DataResult<DFUPair<Either<A, B>, T>> = left.decode(ops, input).map { it.mapFirst { Either.Left(it) } }
-            val rightRead: DataResult<DFUPair<Either<A, B>, T>> = right.decode(ops, input).map { it.mapFirst { Either.Right(it) } }
-            val leftResult: Option<DFUPair<Either<A, B>, T>> = leftRead.result().kotlin
-            val rightResult: Option<DFUPair<Either<A, B>, T>> = rightRead.result().kotlin
-            if (isStrict && (leftResult.isSome() && rightResult.isSome())) {
-                return DataResult.error({ "Both alternatives read successfully, can not pick the correct one; first: ${leftResult.getOrNull()} second: ${rightResult.getOrNull()}" }, leftResult.getOrNull())
-            }
-            if (leftResult.isSome()) {
-                return leftRead
-            }
-            if (rightResult.isSome()) {
-                return rightRead
-            }
-            return leftRead.apply2({ _, second -> second }, rightRead)
-        }
-    }
+    @JvmStatic
+    fun <A : Any, B : Any> mapEither(left: MapCodec<A>, right: MapCodec<B>): MapCodec<Either<A, B>> = Codec.mapEither(left, right).xmap({ it.kotlin }, { it.java })
 
     /**
      * [Ior]の[MapCodec]を作成します。
@@ -167,12 +109,15 @@ data object HTCodecs {
      * @param right 右側の値の[MapCodec]
      */
     @JvmStatic
-    fun <A, B> ior(left: MapCodec<A>, right: MapCodec<B>): MapCodec<Ior<A, B>> = HTIorMapCodec(left, right)
+    fun <A : Any, B : Any> ior(left: MapCodec<A>, right: MapCodec<B>): MapCodec<Ior<A, B>> = mapEither(
+        mapEither(left, right),
+        mapPair(left, right),
+    ).xmap(
+        { either: Either<Either<A, B>, Pair<A, B>> -> either.fold(Ior.Companion::fromEither, Ior.Companion::fromPair) },
+        Ior<A, B>::unwrap,
+    )
 
-    /**
-     * @suppress
-     */
-    private data class HTIorMapCodec<A, B>(val left: MapCodec<A>, val right: MapCodec<B>) : MapCodec<Ior<A, B>>() {
+    /*private data class HTIorMapCodec<A, B>(val left: MapCodec<A>, val right: MapCodec<B>) : MapCodec<Ior<A, B>>() {
         override fun <T : Any> keys(ops: DynamicOps<T>): Stream<T> = Stream.concat(left.keys(ops), right.keys(ops))
 
         override fun <T : Any> decode(ops: DynamicOps<T>, input: MapLike<T>): DataResult<Ior<A, B>> {
@@ -212,13 +157,7 @@ data object HTCodecs {
                 this.right.encode(right, ops, prefix)
             },
         )
-    }
-
-    /**
-     * @see net.neoforged.neoforge.common.util.NeoForgeExtraCodecs.dispatchMapOrElse
-     */
-    @JvmStatic
-    fun <A : Any, E : Any, B : Any> dispatchOrElse(typeCodec: Codec<A>, typeGetter: (E) -> A, codecGetter: (A) -> MapCodec<out E>, fallbackCodec: Codec<B>): Codec<Either<E, B>> = xor(typeCodec.dispatch(typeGetter, codecGetter), fallbackCodec)
+    }*/
 
     /**
      * [Enum]の[Codec]を返します。
@@ -256,52 +195,16 @@ data object HTCodecs {
     //    Ranged    //
 
     /**
-     * @see ExtraCodecs.intRangeWithMessage
-     */
-    @JvmStatic
-    fun <N> numberRange(codec: Codec<N>, range: ClosedRange<N>): Codec<N> where N : Number, N : Comparable<N> = codec.validate { number: N ->
-        when (number) {
-            in range -> DataResult.success(number)
-            else -> DataResult.error { "Value must be within range $range: $number" }
-        }
-    }
-
-    /**
      * `0`以上の値を対象とする[Int]の[Codec]
      */
     @JvmField
     val NON_NEGATIVE_INT: Codec<Int> = ExtraCodecs.NON_NEGATIVE_INT
 
     /**
-     * `0`以上の値を対象とする[Long]の[Codec]
-     * @see mekanism.api.SerializerHelper.POSITIVE_LONG_CODEC
-     */
-    @JvmField
-    val NON_NEGATIVE_LONG: Codec<Long> = numberRange(Codec.LONG, 0..Long.MAX_VALUE)
-
-    /**
-     * `0`以上の値を対象とする[Fraction]の[Codec]
-     */
-    @JvmField
-    val NON_NEGATIVE_FRACTION: Codec<Fraction> = FRACTION.validate { fraction: Fraction ->
-        when {
-            fraction < Fraction.ZERO -> DataResult.error { "Value must be non-negative: $fraction" }
-            else -> DataResult.success(fraction)
-        }
-    }
-
-    /**
      * `1`以上の値を対象とする[Int]の[Codec]
      */
     @JvmField
     val POSITIVE_INT: Codec<Int> = ExtraCodecs.POSITIVE_INT
-
-    /**
-     * `1`以上の値を対象とする[Long]の[Codec]
-     * @see mekanism.api.SerializerHelper.POSITIVE_LONG_CODEC
-     */
-    @JvmField
-    val POSITIVE_LONG: Codec<Long> = numberRange(Codec.LONG, 1..Long.MAX_VALUE)
 
     //    Registry    //
 

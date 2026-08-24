@@ -13,7 +13,6 @@ import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.codec.convert
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -65,10 +64,10 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
                 factory: HTItemAndFluidToRecipeBuilder.Factory<RESULT, RECIPE>,
             ): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
                 instance.group(
-                    Codec.mapEither(
+                    HTCodecs.mapEither(
                         Ingredient.CODEC.fieldOf(HTConstants.CATALYST),
                         HTItemIngredient.CODEC.fieldOf(HTConstants.ITEM_INGREDIENT),
-                    ).convert().forGetter(Basic<OUTPUT, RESULT>::itemIngredient),
+                    ).forGetter(Basic<OUTPUT, RESULT>::itemIngredient),
                     HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID_INGREDIENT).forGetter(Basic<OUTPUT, RESULT>::fluidIngredient),
                     resultCodec.fieldOf(HTConstants.RESULT).forGetter(Basic<OUTPUT, RESULT>::result),
                     HTProgressData.CODEC.forGetter(Basic<OUTPUT, RESULT>::progressData),
