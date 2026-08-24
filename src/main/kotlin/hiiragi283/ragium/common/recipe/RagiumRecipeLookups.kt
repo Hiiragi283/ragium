@@ -27,6 +27,7 @@ import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
 import hiiragi283.ragium.api.recipe.RTBrewingRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
+import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import kotlin.collections.iterator
@@ -73,6 +74,9 @@ data object RagiumRecipeLookups {
 
     @JvmField
     val PYROLYZING: HTCompoundRecipeLookup<HTItemToItemAndFluidRecipe> = create(RagiumConstants.PYROLYZING)
+
+    @JvmField
+    val REFINING: HTRecipeLookup<RTRefiningRecipe> = create(RagiumRecipeTypes.REFINING)
 
     // Chemical
     @JvmField

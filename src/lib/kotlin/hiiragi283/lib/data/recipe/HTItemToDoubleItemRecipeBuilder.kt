@@ -29,7 +29,7 @@ class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        ingredient = IngredientBuilder().apply(builderAction).buildSized()
+        +IngredientBuilder().apply(builderAction).buildSized()
     }
 
     // Result

@@ -47,7 +47,7 @@ class HTDoubleItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        result = HTItemResultBuilder().apply(builderAction).build()
+        +HTItemResultBuilder().apply(builderAction).build()
     }
 
     //    Factory    //

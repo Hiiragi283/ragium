@@ -169,6 +169,7 @@
   "recipe_type.ragium.freezing": "冷凍",
   "recipe_type.ragium.melting": "溶融",
   "recipe_type.ragium.pyrolyzing": "熱分解",
+  "recipe_type.ragium.refining": "蒸留",
   "tag.fluid.c.calcium_hydroxide_solution": "水酸化カルシウム水溶液",
   "tag.fluid.c.chloride": "塩素",
   "tag.fluid.c.creosote": "クレオソート",

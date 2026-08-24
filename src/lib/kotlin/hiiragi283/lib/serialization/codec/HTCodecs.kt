@@ -96,7 +96,7 @@ data object HTCodecs {
      * @param B 右側の値となるクラス
      * @param left 左側の値の[Codec]
      * @param right 右側の値の[Codec]
-     * @see Codec.either
+     * @see Codec.mapEither
      */
     @JvmStatic
     fun <A : Any, B : Any> mapEither(left: MapCodec<A>, right: MapCodec<B>): MapCodec<Either<A, B>> = Codec.mapEither(left, right).xmap({ it.kotlin }, { it.java })

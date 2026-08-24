@@ -6,6 +6,8 @@ import hiiragi283.lib.text.Text
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.Option
+import hiiragi283.lib.util.java
+import hiiragi283.lib.util.kotlin
 import io.netty.buffer.ByteBuf
 import java.util.UUID
 import net.minecraft.core.Holder
@@ -57,6 +59,23 @@ data object HTStreamCodecs {
     }
 
     /**
+     * [Pair]の[StreamCodec]を作成します。
+     * @param BUF パケットのクラス
+     * @param A 左側の値となるクラス
+     * @param B 右側の値となるクラス
+     * @param left 左側の値の[StreamCodec]
+     * @param right 右側の値の[StreamCodec]
+     */
+    @JvmStatic
+    fun <BUF : ByteBuf, A : Any, B : Any> pair(left: StreamCodec<in BUF, A>, right: StreamCodec<in BUF, B>): StreamCodec<BUF, Pair<A, B>> = StreamCodec.composite(
+        left,
+        Pair<A, B>::first,
+        right,
+        Pair<A, B>::second,
+        ::Pair,
+    )
+
+    /**
      * [Either]の[StreamCodec]を作成します。
      * @param BUF パケットのクラス
      * @param A 左側の値となるクラス
@@ -66,24 +85,7 @@ data object HTStreamCodecs {
      * @see ByteBufCodecs.either
      */
     @JvmStatic
-    fun <BUF : ByteBuf, A : Any, B : Any> either(left: StreamCodec<in BUF, A>, right: StreamCodec<in BUF, B>): StreamCodec<BUF, Either<A, B>> = EitherCodec(left, right)
-
-    private class EitherCodec<B : ByteBuf, L : Any, R : Any>(private val left: StreamCodec<in B, L>, private val right: StreamCodec<in B, R>) : StreamCodec<B, Either<L, R>> {
-        override fun encode(output: B, value: Either<L, R>) {
-            value.onLeft {
-                output.writeBoolean(true)
-                left.encode(output, it)
-            }.onRight {
-                output.writeBoolean(false)
-                right.encode(output, it)
-            }
-        }
-
-        override fun decode(input: B): Either<L, R> = when (input.readBoolean()) {
-            true -> Either.Left(left.decode(input))
-            false -> Either.Right(right.decode(input))
-        }
-    }
+    fun <BUF : ByteBuf, A : Any, B : Any> either(left: StreamCodec<in BUF, A>, right: StreamCodec<in BUF, B>): StreamCodec<BUF, Either<A, B>> = ByteBufCodecs.either(left, right).map({ it.kotlin }, { it.java })
 
     /**
      * [Ior]の[StreamCodec]を作成します。
@@ -94,37 +96,13 @@ data object HTStreamCodecs {
      * @param right 右側の値の[StreamCodec]
      */
     @JvmStatic
-    fun <BUF : ByteBuf, A : Any, B : Any> ior(left: StreamCodec<in BUF, A>, right: StreamCodec<in BUF, B>): StreamCodec<BUF, Ior<A, B>> = HTIorStreamCodec(left, right)
-
-    private class HTIorStreamCodec<B : ByteBuf, L : Any, R : Any>(private val left: StreamCodec<in B, L>, private val right: StreamCodec<in B, R>) : StreamCodec<B, Ior<L, R>> {
-        override fun decode(buffer: B): Ior<L, R> = when (buffer.readInt()) {
-            1 -> Ior.Left(left.decode(buffer))
-            2 -> Ior.Right(right.decode(buffer))
-            else -> {
-                val leftIn: L = left.decode(buffer)
-                val rightIn: R = right.decode(buffer)
-                Ior.Both(leftIn, rightIn)
-            }
-        }
-
-        override fun encode(buffer: B, value: Ior<L, R>) {
-            value.fold(
-                {
-                    buffer.writeInt(1)
-                    left.encode(buffer, it)
-                },
-                {
-                    buffer.writeInt(2)
-                    right.encode(buffer, it)
-                },
-                { left: L, right: R ->
-                    buffer.writeInt(0)
-                    this.left.encode(buffer, left)
-                    this.right.encode(buffer, right)
-                },
-            )
-        }
-    }
+    fun <BUF : ByteBuf, A : Any, B : Any> ior(left: StreamCodec<in BUF, A>, right: StreamCodec<in BUF, B>): StreamCodec<BUF, Ior<A, B>> = either(
+        either(left, right),
+        pair(left, right),
+    ).map(
+        { either: Either<Either<A, B>, Pair<A, B>> -> either.fold(Ior.Companion::fromEither, Ior.Companion::fromPair) },
+        Ior<A, B>::unwrap,
+    )
 
     /**
      * [Enum]の[StreamCodec]を返します。

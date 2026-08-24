@@ -29,7 +29,7 @@ class HTItemToItemAndFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, 
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        ingredient = IngredientBuilder().apply(builderAction).buildSized()
+        +IngredientBuilder().apply(builderAction).buildSized()
     }
 
     // Result
@@ -37,18 +37,26 @@ class HTItemToItemAndFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, 
 
     @PublishedApi internal var fluidResult: HTFluidResult by HTDelegates.onceInitialize()
 
+    operator fun HTItemResult.unaryPlus() {
+        itemResult = this
+    }
+
+    operator fun HTFluidResult.unaryPlus() {
+        fluidResult = this
+    }
+
     inline fun itemResult(builderAction: HTItemResultBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        itemResult = HTItemResultBuilder().apply(builderAction).build()
+        +HTItemResultBuilder().apply(builderAction).build()
     }
 
     inline fun fluidResult(builderAction: HTFluidResultBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        fluidResult = HTFluidResultBuilder().apply(builderAction).build()
+        +HTFluidResultBuilder().apply(builderAction).build()
     }
 
     //    Factory    //

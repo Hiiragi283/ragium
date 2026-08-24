@@ -26,6 +26,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         freezing()
         melting()
         pyrolyzing()
+        refining()
     }
 
     private fun freezing() {
@@ -301,6 +302,49 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount = 250
             }
             recipeId replace "crude_oil_from_soul_soil"
+        }.save(exporter)
+    }
+
+    private fun refining() {
+        // Crude Oil -> Naphtha
+        RagiumRecipeBuilders.refining {
+            fluidIngredient { +holderSet(RagiumFluids.CRUDE_OIL) }
+            fluidResult {
+                +RagiumFluids.NAPHTHA
+                amount = 500
+            }
+        }.save(exporter)
+        RagiumRecipeBuilders.refining {
+            fluidIngredient { +holderSet(RagiumFluids.CRUDE_OIL) }
+            fluidResult {
+                +RagiumFluids.NAPHTHA
+                amount = 750
+            }
+        }
+        // Naphtha -> Fuel
+        RagiumRecipeBuilders.refining {
+            fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
+            fluidResult {
+                +RagiumFluids.FUEL
+                amount = 500
+            }
+        }.save(exporter)
+        RagiumRecipeBuilders.refining {
+            fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
+            fluidResult {
+                +RagiumFluids.FUEL
+                amount = 750
+            }
+        }
+
+        RagiumRecipeBuilders.refining {
+            itemIngredient { items { +Items.BLAZE_POWDER } }
+            fluidIngredient { +holderSet(RagiumFluids.CRUDE_OIL) }
+            fluidResult {
+                +RagiumFluids.FUEL
+                amount = 500
+            }
+            recipeId suffix "_from_crude_oil"
         }.save(exporter)
     }
 

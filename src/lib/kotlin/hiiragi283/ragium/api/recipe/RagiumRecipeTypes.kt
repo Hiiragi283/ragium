@@ -48,6 +48,9 @@ data object RagiumRecipeTypes {
     @JvmField
     val PYROLYZING: HTRecipeType<RTPyrolyzingRecipe> = create(RagiumConstants.PYROLYZING)
 
+    @JvmField
+    val REFINING: HTRecipeType<RTRefiningRecipe> = create(RagiumConstants.REFINING)
+
     // Chemical
     @JvmField
     val BATHING: HTRecipeType<RTBathingRecipe> = create(RagiumConstants.BATHING)

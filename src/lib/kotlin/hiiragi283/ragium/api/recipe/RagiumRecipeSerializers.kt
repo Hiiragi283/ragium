@@ -29,6 +29,9 @@ data object RagiumRecipeSerializers {
     @JvmField
     val PYROLYZING: RecipeSerializer<RTPyrolyzingRecipe> = RTPyrolyzingRecipe.SERIALIZER
 
+    @JvmField
+    val REFINING: RecipeSerializer<RTRefiningRecipe> = RTRefiningRecipe.SERIALIZER
+
     // Chemical
     @JvmField
     val BATHING: RecipeSerializer<RTBathingRecipe> = RTBathingRecipe.SERIALIZER

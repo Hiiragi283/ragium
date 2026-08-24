@@ -5,6 +5,7 @@ package hiiragi283.lib.data.recipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTCatalystOrIngredient
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
@@ -14,6 +15,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 
 abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RESULT, RECIPE>) : HTProgressRecipeBuilder<RECIPE>(prefix) {
@@ -26,25 +28,37 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
 
     @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
+    operator fun Ingredient.unaryPlus() {
+        itemIngredient = Either.Left(this)
+    }
+
+    operator fun HTItemIngredient.unaryPlus() {
+        itemIngredient = Either.Right(this)
+    }
+
+    operator fun HTFluidIngredient.unaryPlus() {
+        fluidIngredient = this
+    }
+
     inline fun catalyst(builderAction: IngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        itemIngredient = Either.Left(IngredientBuilder().apply(builderAction).build())
+        +IngredientBuilder().apply(builderAction).build()
     }
 
     inline fun itemIngredient(builderAction: IngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        itemIngredient = Either.Right(IngredientBuilder().apply(builderAction).buildSized())
+        +IngredientBuilder().apply(builderAction).buildSized()
     }
 
     inline fun fluidIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        fluidIngredient = FluidIngredientBuilder().apply(builderAction).buildSized()
+        +FluidIngredientBuilder().apply(builderAction).buildSized()
     }
 
     // Result
@@ -61,7 +75,7 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
             }
-            result = HTFluidResultBuilder().apply(builderAction).build()
+            +HTFluidResultBuilder().apply(builderAction).build()
         }
     }
 
@@ -72,7 +86,7 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
             }
-            result = HTItemResultBuilder().apply(builderAction).build()
+            +HTItemResultBuilder().apply(builderAction).build()
         }
     }
 

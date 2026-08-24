@@ -91,6 +91,14 @@ data object RagiumRecipeBuilders {
         return HTItemToItemAndFluidRecipeBuilder(RagiumConstants.PYROLYZING, ::RTPyrolyzingRecipe).apply(builderAction)
     }
 
+    @JvmStatic
+    inline fun refining(builderAction: RTRefiningRecipeBuilder.() -> Unit): RTRefiningRecipeBuilder {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return RTRefiningRecipeBuilder().apply(builderAction)
+    }
+
     // Chemical
     @JvmStatic
     inline fun bathing(builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTBathingRecipe>.() -> Unit): HTItemAndFluidToRecipeBuilder.ToItem<RTBathingRecipe> {
