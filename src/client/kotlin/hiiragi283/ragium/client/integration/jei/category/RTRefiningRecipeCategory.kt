@@ -29,7 +29,7 @@ class RTRefiningRecipeCategory(guiHelper: IGuiHelper) : HTHolderRecipeCategory<R
                 .add(it)
                 .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
         }
-        val itemOutput: IRecipeSlotBuilder = builder.addInputSlot(getPosition(7), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT)
+        val itemOutput: IRecipeSlotBuilder = builder.addOutputSlot(getPosition(7), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT)
         recipe.itemResult.onSome(itemOutput::add)
     }
 

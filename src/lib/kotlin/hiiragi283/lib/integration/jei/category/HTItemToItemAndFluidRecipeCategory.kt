@@ -26,7 +26,7 @@ class HTItemToItemAndFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHo
             builder
                 .addOutputSlot(getPosition(5), getPosition(0))
                 .add(it)
-                .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT, it.amount)
+                .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
         }
     }
 

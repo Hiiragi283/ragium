@@ -41,7 +41,7 @@ data object RagiumJeiRecipeTypes {
     val PYROLYZING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumItems.COAL_COKE)
 
     @JvmField
-    val REFINING: HTHolderJeiRecipeType<RTRefiningRecipe> = HTJeiRecipeType(RagiumRecipeTypes.REFINING, RagiumItems.COAL_COKE)
+    val REFINING: HTHolderJeiRecipeType<RTRefiningRecipe> = HTJeiRecipeType(RagiumRecipeTypes.REFINING, RagiumItems.TAR)
 
     // Chemical
     @JvmField

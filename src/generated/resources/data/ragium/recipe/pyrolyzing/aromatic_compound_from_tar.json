@@ -1,0 +1,16 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:aromatic_compound"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "ragium:tar"
+  },
+  "item_result": {
+    "count": 3,
+    "id": "ragium:tiny_coal_coke"
+  },
+  "time": 200
+}

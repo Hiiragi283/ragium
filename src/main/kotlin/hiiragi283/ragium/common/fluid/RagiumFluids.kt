@@ -129,6 +129,12 @@ data object RagiumFluids {
         typeFactory = { HTExplosiveFluidType(4f, it) }
     }
 
+    @JvmField
+    val AROMATIC_COMPOUND: HTFluidContent.Flowing = REGISTER.registerFlowing("aromatic_compound") {
+        properties = liquid()
+        typeFactory = { HTExplosiveFluidType(3f, it) }
+    }
+
     // 4th
     @JvmField
     val NAOH_SOLUTION: HTFluidContent.Virtual = REGISTER.registerVirtual("sodium_hydroxide_solution") { properties = liquid() }

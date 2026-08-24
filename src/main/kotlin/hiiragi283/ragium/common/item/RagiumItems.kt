@@ -36,9 +36,10 @@ data object RagiumItems {
             VanillaMaterials.CHARCOAL,
             CommonMaterials.COAL_COKE,
             // Mineral
-            CommonMaterials.SALT,
-            CommonMaterials.NITER,
             CommonMaterials.BORAX,
+            CommonMaterials.NITER,
+            CommonMaterials.SALT,
+            CommonMaterials.SULFUR,
             RagiumMaterials.RAGINITE,
             // Gem
             VanillaMaterials.LAPIS,
@@ -109,6 +110,9 @@ data object RagiumItems {
 
     @JvmField
     val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(CommonMaterials.COAL_COKE.path)
+
+    @JvmField
+    val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
 
     @JvmField
     val BAMBOO_CHARCOAL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("bamboo_charcoal")

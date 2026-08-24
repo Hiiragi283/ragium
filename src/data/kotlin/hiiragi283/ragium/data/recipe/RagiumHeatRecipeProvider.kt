@@ -142,24 +142,23 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
 
         // Ominous Bottle -> Ominous Flux
-        (OminousBottleAmplifier.MIN_AMPLIFIER..OminousBottleAmplifier.MAX_AMPLIFIER)
-            .forEach { amplifier: Int ->
-                RagiumRecipeBuilders.melting {
-                    ingredient {
-                        +DataComponentIngredient.of(
-                            false,
-                            DataComponents.OMINOUS_BOTTLE_AMPLIFIER,
-                            OminousBottleAmplifier(amplifier),
-                            Items.OMINOUS_BOTTLE,
-                        )
-                    }
-                    result {
-                        +RagiumFluids.OMINOUS_FLUX
-                        amount = 250 * (amplifier + 1)
-                    }
-                    recipeId prefix "${amplifier}x_"
-                }.save(exporter)
-            }
+        (OminousBottleAmplifier.MIN_AMPLIFIER..OminousBottleAmplifier.MAX_AMPLIFIER).forEach { amplifier: Int ->
+            RagiumRecipeBuilders.melting {
+                ingredient {
+                    +DataComponentIngredient.of(
+                        false,
+                        DataComponents.OMINOUS_BOTTLE_AMPLIFIER,
+                        OminousBottleAmplifier(amplifier),
+                        Items.OMINOUS_BOTTLE,
+                    )
+                }
+                result {
+                    +RagiumFluids.OMINOUS_FLUX
+                    amount = 250 * (amplifier + 1)
+                }
+                recipeId prefix "${amplifier}x_"
+            }.save(exporter)
+        }
         // Molten Glass
         RagiumRecipeBuilders.melting {
             ingredient { +holderSet(Tags.Items.GLASS_BLOCKS) }
@@ -303,12 +302,29 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             recipeId replace "crude_oil_from_soul_soil"
         }.save(exporter)
+        // Tar -> Aromatic Compound + Tiny Coal Coke
+        RagiumRecipeBuilders.pyrolyzing {
+            ingredient { items { +RagiumItems.TAR } }
+            itemResult {
+                +RagiumItems.getOrThrow(HTItemPart.TINY, CommonMaterials.COAL_COKE)
+                count = 3
+            }
+            fluidResult {
+                +RagiumFluids.AROMATIC_COMPOUND
+                amount = 250
+            }
+            recipeId replace "aromatic_compound_from_tar"
+        }.save(exporter)
     }
 
     private fun refining() {
         // Crude Oil -> Naphtha
         RagiumRecipeBuilders.refining {
             fluidIngredient { +holderSet(RagiumFluids.CRUDE_OIL) }
+            itemResult {
+                +RagiumItems.TAR
+                count = 2
+            }
             fluidResult {
                 +RagiumFluids.NAPHTHA
                 amount = 500
@@ -316,6 +332,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         RagiumRecipeBuilders.refining {
             fluidIngredient { +holderSet(RagiumFluids.CRUDE_OIL) }
+            itemResult { +RagiumItems.TAR }
             fluidResult {
                 +RagiumFluids.NAPHTHA
                 amount = 750
@@ -324,6 +341,10 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Naphtha -> Fuel
         RagiumRecipeBuilders.refining {
             fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
+            itemResult {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, CommonMaterials.SULFUR)
+                count = 2
+            }
             fluidResult {
                 +RagiumFluids.FUEL
                 amount = 500
@@ -331,6 +352,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         RagiumRecipeBuilders.refining {
             fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, CommonMaterials.SULFUR) }
             fluidResult {
                 +RagiumFluids.FUEL
                 amount = 750

@@ -12,6 +12,9 @@
     "ragium:coal_coke_block": {
       "burn_time": 32000
     },
+    "ragium:tar": {
+      "burn_time": 800
+    },
     "ragium:tiny_charcoal": {
       "burn_time": 200
     },

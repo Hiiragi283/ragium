@@ -12,9 +12,10 @@ enum class CommonMaterials(override val category: HTMaterialCategory, langName: 
     COAL_COKE(HTMaterialCategory.FUEL, "Coal Coke", "石炭コークス"),
 
     // Mineral
-    SALT(HTMaterialCategory.MINERAL, "Salt", "食塩"),
-    NITER(HTMaterialCategory.MINERAL, "Niter", "硝石"),
     BORAX(HTMaterialCategory.MINERAL, "Borax", "ホウ砂"),
+    NITER(HTMaterialCategory.MINERAL, "Niter", "硝石"),
+    SALT(HTMaterialCategory.MINERAL, "Salt", "食塩"),
+    SULFUR(HTMaterialCategory.MINERAL, "Sulfur", "硫黄"),
 
     // Metal
     STEEL(HTMaterialCategory.METAL, "Steel", "鋼鉄"),
