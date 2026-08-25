@@ -49,6 +49,8 @@ abstract class HTRecipeProviderContext {
      */
     protected fun holderSet(prefix: HTTagPrefix, material: HTMaterialLike): HolderSet<Item> = holderSet(prefix.itemTagKey(material))
 
+    protected fun holderSet(prefix: HTTagPrefix, vararg materials: HTMaterialLike): HolderSet<Item> = materials.map(prefix::itemTagKey).let(::holderSet)
+
     /**
      * [HolderSet]を取得します。
      * @param content 液体タグの提供元

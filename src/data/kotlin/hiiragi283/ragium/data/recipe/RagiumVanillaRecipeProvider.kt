@@ -32,6 +32,17 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     override fun buildRecipes() {
         material()
 
+        // Gunpowder
+        HTShapelessRecipeBuilder.create {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.COAL, VanillaMaterials.CHARCOAL) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, CommonMaterials.SULFUR) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, CommonMaterials.NITER) }
+            result {
+                +Items.GUNPOWDER
+                count = 3
+            }
+        }.save(exporter)
+
         // Bamboo Charcoal
         HTCookingRecipeBuilder.smelting {
             ingredient { items { +Items.BAMBOO } }

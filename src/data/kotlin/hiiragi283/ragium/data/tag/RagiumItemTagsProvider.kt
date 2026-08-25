@@ -56,6 +56,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
 
         builder(RagiumTags.Items.PAPER).addItem(Items.PAPER)
+        builder(RagiumTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
         builder(RagiumTags.Items.STICKY_BALLS).addTag(Tags.Items.SLIME_BALLS)
     }
 }
