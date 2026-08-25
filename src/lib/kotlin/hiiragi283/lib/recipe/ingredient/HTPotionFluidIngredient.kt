@@ -1,33 +1,26 @@
 package hiiragi283.lib.recipe.ingredient
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.lib.HTPhysicalSideHelper
-import hiiragi283.lib.fluid.FluidInstanceBuilder
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionFluidManager
 import hiiragi283.lib.item.alchemy.HTPotionHelper
-import hiiragi283.lib.recipe.display.SlotDisplay
+import hiiragi283.lib.recipe.display.HTPotionSlotDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import java.util.stream.Stream
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
-import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.alchemy.Potion
-import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.FluidIngredientType
-import net.neoforged.neoforge.fluids.crafting.display.FluidStackSlotDisplay
 
 /**
  * [HTPotionFluidManager]に基づいて液体ポーションを扱う[FluidIngredient]の実装クラスです。
@@ -42,8 +35,8 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>, val bottleTyp
         val CODEC: MapCodec<HTPotionFluidIngredient> = HTCodecs.recordMap { instance ->
             instance
                 .group(
-                    HTCodecs.holderSet(Registries.POTION).fieldOf("potions").forGetter(HTPotionFluidIngredient::potions),
-                    HTBottleType.CODEC.fieldOf("bottle_type").forGetter(HTPotionFluidIngredient::bottleType),
+                    HTCodecs.holderSet(Registries.POTION).fieldOf(HTConstants.POTIONS).forGetter(HTPotionFluidIngredient::potions),
+                    HTBottleType.FIELD_CODEC.forGetter(HTPotionFluidIngredient::bottleType),
                 ).apply(instance, ::HTPotionFluidIngredient)
         }
 
@@ -71,24 +64,7 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>, val bottleTyp
     @Suppress("DEPRECATION")
     override fun generateFluids(): Stream<Holder<Fluid>> = HTPotionFluidManager.handlers.keys.stream().map { it.builtInRegistryHolder() }
 
-    override fun display(): SlotDisplay = HTPotionFluidManager.handlers
-        .flatMap { (fluid: Fluid, handler: HTPotionFluidManager.Handler) ->
-            potions
-                .filter { it.value().isEnabled(HTPhysicalSideHelper.getFeatureFlags()) }
-                .map { potion: Holder<Potion> ->
-                    when (potion) {
-                        Potions.WATER -> FluidStack(Fluids.WATER, FluidType.BUCKET_VOLUME)
-                        else -> FluidInstanceBuilder.buildStack {
-                            +fluid
-                            components {
-                                set(DataComponents.POTION_CONTENTS, PotionContents(potion))
-                                handler[this] = bottleType
-                            }
-                        }
-                    }
-                }
-        }.map(::FluidStackSlotDisplay)
-        .let(::SlotDisplay)
+    override fun display(): SlotDisplay = HTPotionSlotDisplay(potions, bottleType)
 
     override fun isSimple(): Boolean = false
 

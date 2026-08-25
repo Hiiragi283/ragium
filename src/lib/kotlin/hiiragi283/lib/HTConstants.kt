@@ -14,7 +14,6 @@ data object HTConstants {
     const val STANDARD_TEMP = 300
 
     const val EXPERIMENTAL = "experimental"
-    const val MATERIAL = "material"
 
     //    Fluid    //
 
@@ -62,13 +61,16 @@ data object HTConstants {
     const val FLUIDS = "fluids"
 
     const val AMOUNT = "amount"
+    const val COUNT = "count"
     const val CAPACITY = "capacity"
-    const val BATTERIES = "batteries"
 
     const val ID = "id"
     const val TAG = "tag"
-    const val COUNT = "count"
     const val COMPONENTS = "components"
+
+    const val POTION = "potion"
+    const val POTIONS = "potions"
+    const val BOTTLE_TYPE = "bottle_type"
 
     //    Recipes    //
 
@@ -100,11 +102,6 @@ data object HTConstants {
     const val SECONDARY_RESULT = "secondary_result"
     const val ITEM_RESULT = "item_result"
     const val FLUID_RESULT = "fluid_result"
-
-    //    TagKey    //
-
-    const val ELEMENTS = "elements"
-    const val MINERALS = "minerals"
 
     //    Text    //
 

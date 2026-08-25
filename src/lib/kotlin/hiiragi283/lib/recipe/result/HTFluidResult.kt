@@ -152,6 +152,6 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
 
         override fun create(amount: Int): FluidStack = contents.toFluidStack(amount)
 
-        override fun getId(): Identifier = contents.potion?.getKeyOrThrow()?.identifier() ?: RagiumAPI.id("potion")
+        override fun getId(): Identifier = contents.potion?.getKeyOrThrow()?.identifier() ?: RagiumAPI.id(HTConstants.POTION)
     }
 }

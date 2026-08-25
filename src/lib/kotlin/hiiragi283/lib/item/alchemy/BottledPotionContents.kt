@@ -35,7 +35,7 @@ data class BottledPotionContents @JvmOverloads constructor(val contents: PotionC
             instance
                 .group(
                     PotionContents.CODEC.fieldOf("contents").forGetter(BottledPotionContents::contents),
-                    HTBottleType.CODEC.optionalFieldOf("bottle_type", HTBottleType.DEFAULT).forGetter(BottledPotionContents::bottleType),
+                    HTBottleType.FIELD_CODEC.forGetter(BottledPotionContents::bottleType),
                 ).apply(instance, ::BottledPotionContents)
         }
 

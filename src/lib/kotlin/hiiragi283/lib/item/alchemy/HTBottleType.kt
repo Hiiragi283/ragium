@@ -1,6 +1,8 @@
 package hiiragi283.lib.item.alchemy
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.item.HTItemInstanceLike
 import hiiragi283.lib.item.ItemStack
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -33,6 +35,9 @@ enum class HTBottleType :
     companion object {
         @JvmField
         val CODEC: Codec<HTBottleType> = HTCodecs.stringEnum(HTBottleType::getSerializedName)
+
+        @JvmField
+        val FIELD_CODEC: MapCodec<HTBottleType> = HTBottleType.CODEC.optionalFieldOf(HTConstants.BOTTLE_TYPE, DEFAULT)
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTBottleType> = HTStreamCodecs.enum()

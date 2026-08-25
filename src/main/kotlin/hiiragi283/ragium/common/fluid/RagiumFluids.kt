@@ -44,7 +44,7 @@ data object RagiumFluids {
     //    Vanilla    //
 
     @JvmField
-    val POTION: HTFluidContent.Virtual = REGISTER.registerVirtual("potion") {
+    val POTION: HTFluidContent.Virtual = REGISTER.registerVirtual(HTConstants.POTION) {
         properties = liquid()
         typeFactory = ::HTPotionFluidType
         bucketFactory = ::HTPotionBucketItem

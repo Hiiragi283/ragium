@@ -12,6 +12,7 @@ import hiiragi283.lib.item.alchemy.HTPotionFluidManager
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.recipe.HTRecipeType
+import hiiragi283.lib.recipe.display.HTPotionSlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -79,7 +80,7 @@ data object Ragium : HTCommonMod() {
             )
         }
         event.register(Registries.DATA_COMPONENT_TYPE) { helper ->
-            helper.register(RagiumAPI.id("bottle_type"), RagiumDataComponents.BOTTLE_TYPE)
+            helper.register(RagiumAPI.id(HTConstants.BOTTLE_TYPE), RagiumDataComponents.BOTTLE_TYPE)
             helper.register(RagiumAPI.id(HTConstants.ENERGY), RagiumDataComponents.ENERGY)
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
             helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
@@ -110,18 +111,21 @@ data object Ragium : HTCommonMod() {
                 helper.register(recipeType.getId(), recipeType)
             }
         }
+        event.register(Registries.SLOT_DISPLAY) { helper ->
+            helper.register(RagiumAPI.id(HTConstants.POTION), HTPotionSlotDisplay.TYPE)
+        }
 
         event.register(NeoForgeRegistries.Keys.FLUID_INGREDIENT_TYPES) { helper ->
-            helper.register(RagiumAPI.id("potion"), HTPotionFluidIngredient.TYPE)
+            helper.register(RagiumAPI.id(HTConstants.POTION), HTPotionFluidIngredient.TYPE)
         }
 
         event.register(RagiumRegistries.Keys.FLUID_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTFluidResult.SimpleEntry.TYPE)
-            helper.register(RagiumAPI.id("potion"), HTFluidResult.PotionEntry.TYPE)
+            helper.register(RagiumAPI.id(HTConstants.POTION), HTFluidResult.PotionEntry.TYPE)
         }
         event.register(RagiumRegistries.Keys.ITEM_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
-            helper.register(RagiumAPI.id("tag"), HTItemResult.TagEntry.TYPE)
+            helper.register(RagiumAPI.id(HTConstants.TAG), HTItemResult.TagEntry.TYPE)
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
             helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)
