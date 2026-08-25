@@ -1,12 +1,8 @@
 package hiiragi283.lib.registry
 
-import hiiragi283.lib.tag.HTMaterialLike
-import hiiragi283.lib.tag.HTTagPrefix
-import hiiragi283.lib.tag.RawTagKey
 import hiiragi283.lib.util.HTTextResult
 import hiiragi283.lib.util.flatMap
 import hiiragi283.lib.util.right
-import java.util.Optional
 import kotlin.jvm.optionals.getOrElse
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
@@ -30,14 +26,6 @@ fun <T : Any, R : Any> HolderLookup<T>.getDataMap(type: DataMapType<T, R>): Map<
     }
     return destination
 }
-
-fun <T : Any> HolderLookup.RegistryLookup<T>.get(prefix: HTTagPrefix, material: HTMaterialLike): Optional<HolderSet.Named<T>> = this.get(prefix.materialTag(material))
-
-fun <T : Any> HolderLookup.RegistryLookup<T>.get(key: RawTagKey): Optional<HolderSet.Named<T>> = this.get(key.create(this.key().toRegistryKey()))
-
-fun <T : Any> HolderLookup.RegistryLookup<T>.getResult(prefix: HTTagPrefix, material: HTMaterialLike): HTTextResult<HolderSet<T>> = this.getResult(prefix.materialTag(material))
-
-fun <T : Any> HolderLookup.RegistryLookup<T>.getResult(key: RawTagKey): HTTextResult<HolderSet<T>> = this.getResult(key.create(this.key().toRegistryKey()))
 
 //    Provider    //
 

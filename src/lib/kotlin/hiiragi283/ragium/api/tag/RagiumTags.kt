@@ -1,9 +1,11 @@
 package hiiragi283.ragium.api.tag
 
-import hiiragi283.lib.tag.RawTagKey
+import hiiragi283.lib.HTConstants
+import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.createTagKey
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.registries.Registries
+import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
@@ -35,7 +37,7 @@ data object RagiumTags {
         val STICKY_BALLS: TagKey<Item> = common("sticky_balls")
 
         @JvmStatic
-        private fun common(vararg path: String): TagKey<Item> = RawTagKey.common(*path).create(Registries.ITEM)
+        private fun common(vararg path: String): TagKey<Item> = ItemTags.create(HTConstants.COMMON.toId(*path))
 
         @JvmStatic
         private fun mod(vararg path: String): TagKey<Item> = Registries.ITEM.createTagKey(RagiumAPI.id(*path))

@@ -2,16 +2,10 @@ package hiiragi283.lib.data.tag
 
 import hiiragi283.lib.collection.SetMultiMap
 import hiiragi283.lib.registry.RegistryKey
-import hiiragi283.lib.registry.createKey
-import hiiragi283.lib.tag.HTMaterialLike
-import hiiragi283.lib.tag.HTTagPrefix
-import hiiragi283.lib.tag.RawTagKey
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
-import net.minecraft.resources.Identifier
-import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
 
@@ -63,27 +57,16 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
 
     /**
      * 新しい[HTTagBuilder]のインスタンスを作成します。
-     * @param prefix タグのプレフィックス
-     * @param material タグの種類を表す素材
-     */
-    protected fun tags(prefix: HTTagPrefix, material: HTMaterialLike): HTTagBuilder<T> = tags(prefix.rawCommonTag.create(registryKey), prefix.materialTag(material).create(registryKey))
-
-    /**
-     * 新しい[HTTagBuilder]のインスタンスを作成します。
      * @param tagKey 起点となるタグ
      * @param children [tagKey]からチェインして生成するタグ
      * @return [children]の最後の値に対する[HTTagBuilder]
      */
-    protected fun tags(tagKey: TagKey<T>, vararg children: TagKey<T>): HTTagBuilder<T> = children.fold(builder(tagKey)) { builder: HTTagBuilder<T>, tagKeyIn: TagKey<T> ->
+    protected fun builders(tagKey: TagKey<T>, vararg children: TagKey<T>): HTTagBuilder<T> = children.fold(builder(tagKey)) { builder: HTTagBuilder<T>, tagKeyIn: TagKey<T> ->
         builder.addTag(tagKeyIn)
         builder(tagKeyIn)
     }
 
-    protected fun createKey(id: Identifier): ResourceKey<T> = registryKey.createKey(id)
-
-    protected fun createKey(namespace: String, path: String): ResourceKey<T> = registryKey.createKey(namespace, path)
-
-    protected fun createTag(tagKey: RawTagKey): TagKey<T> = tagKey.create(registryKey)
-
-    protected fun createTag(prefix: HTTagPrefix, material: HTMaterialLike): TagKey<T> = createTag(prefix.materialTag(material))
+    protected fun createEmptyTag(tagKey: TagKey<T>) {
+        getOrCreateRawBuilder(tagKey)
+    }
 }

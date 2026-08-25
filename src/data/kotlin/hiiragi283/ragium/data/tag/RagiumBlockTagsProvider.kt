@@ -1,11 +1,10 @@
 package hiiragi283.ragium.data.tag
 
 import hiiragi283.lib.collection.forEach
+import hiiragi283.lib.data.tag.HTBlockTagsProvider
 import hiiragi283.lib.data.tag.HTTagBuilder
-import hiiragi283.lib.data.tag.HTTagsProvider
 import hiiragi283.lib.material.HTMaterial
 import hiiragi283.lib.material.VanillaMaterials
-import hiiragi283.lib.registry.asSupplier
 import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
@@ -14,18 +13,17 @@ import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.RagiumBlocks
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 
-class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) : HTTagsProvider<Block>(output, Registries.BLOCK, lookupProvider, RagiumAPI.MOD_ID) {
+class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) : HTBlockTagsProvider(output, lookupProvider, RagiumAPI.MOD_ID) {
     override fun appendTags(registries: HolderLookup.Provider) {
         val pickaxe: HTTagBuilder<Block> = builder(BlockTags.MINEABLE_WITH_PICKAXE)
         // Material
         RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: HTMaterial, block: HTKeyLike<Block>) ->
-            tags(part.tagPrefix, material).add(block)
+            builder(part.tagPrefix, material).add(block)
             pickaxe.add(block)
         }
 
@@ -33,12 +31,12 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             VanillaMaterials.GLOWSTONE to Blocks.GLOWSTONE,
             VanillaMaterials.QUARTZ to Blocks.QUARTZ_BLOCK,
             VanillaMaterials.AMETHYST to Blocks.AMETHYST_BLOCK,
-        ).forEach { (material: VanillaMaterials, block: Block) -> tags(CommonTagPrefixes.STORAGE_BLOCK, material).add(block.asSupplier()) }
+        ).forEach { (material: VanillaMaterials, block: Block) -> builder(CommonTagPrefixes.STORAGE_BLOCK, material).addBlock(block) }
         // Machine
         for (machineType: HTMachineType in HTMachineType.entries) {
-            getOrCreateRawBuilder(createTag(HTMachineType.PREFIX, machineType)) // TODO
+            createEmptyTag(createTag(HTMachineType.PREFIX, machineType)) // TODO
             for (block: HTKeyLike<Block> in RagiumBlocks.MACHINES[machineType]) {
-                tags(HTMachineType.PREFIX, machineType).add(block)
+                builder(HTMachineType.PREFIX, machineType).add(block)
             }
         }
 

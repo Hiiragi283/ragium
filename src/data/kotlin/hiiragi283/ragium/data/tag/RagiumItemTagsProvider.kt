@@ -35,17 +35,17 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
 
         HTMachineType.entries.forEach { copy(HTMachineType.PREFIX, it) }
         // Material
-        tags(CommonTagPrefixes.GEM, VanillaMaterials.ECHO).addItem(Items.ECHO_SHARD)
+        builder(CommonTagPrefixes.GEM, VanillaMaterials.ECHO).addItem(Items.ECHO_SHARD)
 
         RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemPart, material: HTMaterial, item: HTKeyLike<Item>) ->
-            tags(part.tagPrefix, material).add(item)
+            builder(part.tagPrefix, material).add(item)
             if (part == HTItemPart.NUGGET) {
                 builder(ItemTags.METAL_NUGGETS).add(item)
             }
         }
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
-            tags(Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)
+            builders(Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)
         }
 
         // Other

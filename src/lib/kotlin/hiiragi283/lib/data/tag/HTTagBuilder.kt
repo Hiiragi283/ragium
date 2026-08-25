@@ -1,9 +1,6 @@
 package hiiragi283.lib.data.tag
 
 import hiiragi283.lib.resource.HTKeyLike
-import hiiragi283.lib.tag.HTMaterialLike
-import hiiragi283.lib.tag.HTTagPrefix
-import hiiragi283.lib.tag.RawTagKey
 import hiiragi283.lib.util.HTBuilderMarker
 import java.util.function.Consumer
 import net.minecraft.resources.Identifier
@@ -48,25 +45,10 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
 
     /**
      * 指定した子タグをタグに追加します。
-     * @param prefix タグのプレフィックス
-     * @param material タグの種類を表す素材
-     * @param type このエントリの依存関係
-     */
-    fun addTag(prefix: HTTagPrefix, material: HTMaterialLike, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = addTag(prefix.materialTag(material), type)
-
-    /**
-     * 指定した子タグをタグに追加します。
      * @param child 子タグ
      * @param type このエントリの依存関係
      */
     fun addTag(child: TagKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = addTag(child.location, type)
-
-    /**
-     * 指定した子タグをタグに追加します。
-     * @param child 子タグとなる[RawTagKey]
-     * @param type このエントリの依存関係
-     */
-    fun addTag(child: RawTagKey, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = addTag(child.location, type)
 
     /**
      * 指定した子タグをタグに追加します。

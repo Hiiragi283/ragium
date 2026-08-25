@@ -1,26 +1,33 @@
 package hiiragi283.lib.tag
 
-import net.minecraft.core.registries.Registries
+import hiiragi283.lib.HTConstants
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
 
 /**
  * タグのプレフィックスを表すクラスです。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTTagPrefix(val rawCommonTag: RawTagKey, private val tagPattern: String) {
-    constructor(commonTagId: String, tagPattern: String) : this(RawTagKey.common(commonTagId), tagPattern)
+class HTTagPrefix(val rawCommonTag: BlockItemTag, private val tagPattern: String) {
+    constructor(commonTagId: String, tagPattern: String) : this(BlockItemTag(HTConstants.COMMON, commonTagId), tagPattern)
 
     /**
      * 素材の共通タグを生成します。
      * @param material 素材の種類
      */
-    fun materialTag(material: HTMaterialLike): RawTagKey = RawTagKey.common(tagPattern.replace("%s", material.materialName))
+    fun materialTag(material: HTMaterialLike): BlockItemTag = BlockItemTag(HTConstants.COMMON, tagPattern.replace("%s", material.materialName))
+
+    /**
+     * ブロックの素材の共通タグを生成します。
+     * @param material 素材の種類
+     */
+    fun blockTagKey(material: HTMaterialLike): TagKey<Block> = materialTag(material).block
 
     /**
      * アイテムの素材の共通タグを生成します。
      * @param material 素材の種類
      */
-    fun itemTagKey(material: HTMaterialLike): TagKey<Item> = materialTag(material).create(Registries.ITEM)
+    fun itemTagKey(material: HTMaterialLike): TagKey<Item> = materialTag(material).item
 }
