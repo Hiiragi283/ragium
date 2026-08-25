@@ -22,15 +22,15 @@ open class HTBasicEnergyHandler(
     ValueIOSerializable {
     companion object {
         @JvmStatic
-        fun input(listener: Runnable?, capacity: Int): HTBasicEnergyHandler = create(listener, capacity, HTTransferAccess.NOT_EXTERNAL, HTTransferPredicates.alwaysTrue())
+        fun input(capacity: Int, listener: Runnable?): HTBasicEnergyHandler = create(capacity, listener, HTTransferAccess.NOT_EXTERNAL, HTTransferPredicates.alwaysTrue())
 
         @JvmStatic
-        fun output(listener: Runnable?, capacity: Int): HTBasicEnergyHandler = create(listener, capacity, HTTransferPredicates.alwaysTrue(), HTTransferAccess.INTERNAL_ONLY)
+        fun output(capacity: Int, listener: Runnable?): HTBasicEnergyHandler = create(capacity, listener, HTTransferPredicates.alwaysTrue(), HTTransferAccess.INTERNAL_ONLY)
 
         @JvmStatic
         fun create(
-            listener: Runnable?,
             capacity: Int,
+            listener: Runnable?,
             canExtract: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue(),
             canInsert: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue(),
         ): HTBasicEnergyHandler = HTBasicEnergyHandler(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, listener)

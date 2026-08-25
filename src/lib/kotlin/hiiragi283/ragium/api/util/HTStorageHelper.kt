@@ -35,17 +35,25 @@ data object HTStorageHelper {
     //    Amount    //
 
     /**
-     * 参照 : [NeoForge - ItemHandlerHelper.calcRedstoneFromInventory][net.neoforged.neoforge.transfer.ResourceHandlerUtil.getRedstoneSignalFromResourceHandler], [Mekanism - MekanismUtils.redstoneLevelFromContents](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/util/MekanismUtils.java)
+     * 参照 : [NeoForge - ResourceHandlerUtil.getRedstoneSignalFromResourceHandler][net.neoforged.neoforge.transfer.ResourceHandlerUtil.getRedstoneSignalFromResourceHandler]
      */
     @JvmStatic
     fun calculateRedstoneLevel(views: Iterable<HTResourceView<*>>): Int {
-        var amountSum = 0
-        var capacitySum = 0
+        var proportion = 0.0f
+        var sampleCount = 0 // Number of samples in proportion
         for (view: HTResourceView<*> in views) {
-            amountSum += view.amount
-            capacitySum += view.currentCapacity
+            val indexFill: Int = view.amount
+            if (indexFill > 0) {
+                val capacity: Int = view.getCapacity(view.resource)
+                if (capacity > 0) {
+                    proportion += fixedFraction(indexFill, capacity)
+                    sampleCount++
+                }
+            }
         }
-        return calculateRedstoneLevel(amountSum, capacitySum)
+        if (sampleCount == 0) return Redstone.SIGNAL_NONE
+        proportion /= sampleCount.toFloat()
+        return Mth.lerpDiscrete(proportion, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
     }
 
     /**
@@ -53,6 +61,9 @@ data object HTStorageHelper {
      */
     @JvmStatic
     fun calculateRedstoneLevel(amount: Int, capacity: Int): Int = Mth.lerpDiscrete(fixedFraction(amount, capacity), Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+
+    @JvmStatic
+    fun calculateRedstoneLevel(view: HTResourceView<*>): Int = Mth.lerpDiscrete(view.currentFilledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
 
     @JvmStatic
     fun calculateRedstoneLevel(handler: HTEnergyHandler): Int = Mth.lerpDiscrete(handler.filledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)

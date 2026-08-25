@@ -1,6 +1,7 @@
 package hiiragi283.lib.recipe.handler
 
 import hiiragi283.lib.recipe.HTRecipeFactory
+import hiiragi283.lib.util.fixedFraction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.storage.ValueInput
@@ -11,7 +12,7 @@ abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRec
     private var progress: Int = 0
     private var maxProgress: Int = 0
 
-    val progression: Float get() = progress.toFloat() / maxProgress
+    val progression: Float get() = fixedFraction(progress, maxProgress)
 
     private fun updateProgress(maxProgress: Int) {
         this.maxProgress = maxProgress

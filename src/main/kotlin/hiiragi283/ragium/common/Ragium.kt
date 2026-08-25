@@ -15,7 +15,6 @@ import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.transfer.energy.HTEnergyHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
@@ -156,7 +155,7 @@ data object Ragium : HTCommonMod() {
     private fun registerBlockEntities(helper: CapabilityHelper) {
         fun <BE : HTProcessorBlockEntity.Energized> registerProcessor(type: BlockEntityType<BE>) {
             helper.registerBlockEntity(type)
-            helper.registerBlockEntity(HTEnergyCapabilities.block, type) { processor: BE, _ -> HTEnergyHandler.Wrapper(processor.handler) }
+            helper.registerBlockEntity(HTEnergyCapabilities.block, type) { processor: BE, _ -> processor.handler.asForge() }
         }
 
         // Machine

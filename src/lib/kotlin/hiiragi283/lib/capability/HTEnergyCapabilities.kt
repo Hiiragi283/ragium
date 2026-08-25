@@ -26,10 +26,9 @@ data object HTEnergyCapabilities : HTMultiCapability<EnergyHandler> {
     override val item: ItemCapability<EnergyHandler, ItemAccess> = Capabilities.Energy.ITEM
 
     /**
-     * 指定された[handler]を[EnergyHandler]に展開します。
+     * 指定された[handler]を[HTEnergyHandler]に展開します。
      */
     fun unwrap(handler: EnergyHandler): HTEnergyHandler = when (handler) {
-        is HTEnergyHandler.Wrapper -> handler.delegate
         is HTEnergyHandler -> handler
         else -> object : HTEnergyHandler {
             override val amount: Int get() = handler.amountAsInt
