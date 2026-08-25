@@ -28,24 +28,19 @@ data object HTRecipePredicates {
         HTRecipePredicate<INPUT>,
         Predicate<INPUT_A> {
         override fun test(input: INPUT_A): Boolean
-
-        /**
-         * 入力の消費量を取得します。
-         */
-        fun getRequiredAmount(input: INPUT_A): Int
     }
 
     /**
      * 1種類の液体を判定する[SingleInput]の拡張インターフェースです。
      */
-    interface SingleFluid : SingleInput<HTSingleFluidRecipeInput, FluidInstance> {
+    fun interface SingleFluid : SingleInput<HTSingleFluidRecipeInput, FluidInstance> {
         override fun matches(input: HTSingleFluidRecipeInput): Boolean = test(input.fluid)
     }
 
     /**
      * 1種類のアイテムを判定する[SingleInput]の拡張インターフェースです。
      */
-    interface SingleItem : SingleInput<SingleRecipeInput, ItemInstance> {
+    fun interface SingleItem : SingleInput<SingleRecipeInput, ItemInstance> {
         override fun matches(input: SingleRecipeInput): Boolean = test(input.item())
     }
 
@@ -61,17 +56,12 @@ data object HTRecipePredicates {
         HTRecipePredicate<INPUT>,
         BiPredicate<INPUT_A, INPUT_B> {
         override fun test(first: INPUT_A, second: INPUT_B): Boolean
-
-        /**
-         * 入力の消費量を取得します。
-         */
-        fun getRequiredAmount(first: INPUT_A, second: INPUT_B): Pair<Int, Int>
     }
 
     /**
      * 1種類のアイテムと液体を判定する[DoubleInput]の拡張インターフェースです。
      */
-    interface ItemAndFluid : DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance> {
+    fun interface ItemAndFluid : DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance> {
         override fun matches(input: HTItemAndFluidRecipeInput): Boolean {
             val (item: ItemInstance, fluid: FluidInstance) = input
             return test(item, fluid)
@@ -81,7 +71,7 @@ data object HTRecipePredicates {
     /**
      * 2種類のアイテムを判定する[DoubleInput]の拡張インターフェースです。
      */
-    interface DoubleItem : DoubleInput<RecipeInput, ItemInstance, ItemInstance> {
+    fun interface DoubleItem : DoubleInput<RecipeInput, ItemInstance, ItemInstance> {
         override fun matches(input: RecipeInput): Boolean = input.size() >= 2 && test(input.getItem(0), input.getItem(1))
     }
 
@@ -98,14 +88,12 @@ data object HTRecipePredicates {
         HTRecipePredicate<INPUT>,
         TriPredicate<INPUT_A, INPUT_B, INPUT_C> {
         override fun test(first: INPUT_A, second: INPUT_B, third: INPUT_C): Boolean
-
-        fun getRequiredAmount(first: INPUT_A, second: INPUT_B, third: INPUT_C): Triple<Int, Int, Int>
     }
 
     /**
      * 3種類のアイテムを判定する[TripleItem]の拡張インターフェースです。
      */
-    interface TripleItem : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance> {
+    fun interface TripleItem : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance> {
         override fun matches(input: RecipeInput): Boolean = input.size() >= 3 && test(input.getItem(0), input.getItem(1), input.getItem(2))
     }
 }

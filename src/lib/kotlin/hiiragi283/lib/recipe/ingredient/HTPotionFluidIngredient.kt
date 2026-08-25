@@ -7,9 +7,9 @@ import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionFluidManager
 import hiiragi283.lib.item.alchemy.HTPotionHelper
+import hiiragi283.lib.recipe.display.SlotDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
-import java.util.Objects
 import java.util.stream.Stream
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -36,7 +36,7 @@ import net.neoforged.neoforge.fluids.crafting.display.FluidStackSlotDisplay
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTPotionFluidIngredient(val potions: HolderSet<Potion>, val bottleType: HTBottleType) : FluidIngredient() {
+data class HTPotionFluidIngredient(val potions: HolderSet<Potion>, val bottleType: HTBottleType) : FluidIngredient() {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTPotionFluidIngredient> = HTCodecs.recordMap { instance ->
@@ -88,17 +88,9 @@ class HTPotionFluidIngredient(val potions: HolderSet<Potion>, val bottleType: HT
                     }
                 }
         }.map(::FluidStackSlotDisplay)
-        .let(SlotDisplay::Composite)
+        .let(::SlotDisplay)
 
     override fun isSimple(): Boolean = false
 
     override fun getType(): FluidIngredientType<*> = TYPE
-
-    override fun hashCode(): Int = Objects.hash(potions, bottleType)
-
-    override fun equals(obj: Any?): Boolean = (obj as? HTPotionFluidIngredient)?.let {
-        it.potions == this.potions && it.bottleType == this.bottleType
-    } ?: false
-
-    override fun toString(): String = "HTPotionFluidIngredient(potions=$potions, bottleType=$bottleType)"
 }

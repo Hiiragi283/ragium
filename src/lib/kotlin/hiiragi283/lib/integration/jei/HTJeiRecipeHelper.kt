@@ -3,6 +3,7 @@ package hiiragi283.lib.integration.jei
 import hiiragi283.lib.item.toTemplateOrNull
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.RecipeKey
+import hiiragi283.lib.recipe.display.SlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
@@ -31,7 +32,7 @@ data object HTJeiRecipeHelper {
     fun fakeFluid(stack: FluidStack, amount: Int): HTFluidIngredient = fakeFluid(FluidStackSlotDisplay(stack), amount)
 
     @JvmStatic
-    fun fakeFluid(fluids: Iterable<FluidStack>, amount: Int): HTFluidIngredient = fakeFluid(fluids.map(::FluidStackSlotDisplay).let(SlotDisplay::Composite), amount)
+    fun fakeFluid(fluids: Iterable<FluidStack>, amount: Int): HTFluidIngredient = fakeFluid(fluids.map(::FluidStackSlotDisplay).let(::SlotDisplay), amount)
 
     @JvmStatic
     fun fakeFluid(display: SlotDisplay, amount: Int): HTFluidIngredient = HTFluidIngredient(CustomDisplayFluidIngredient.of(FAKE_FLUID_INGREDIENT, display), amount)
@@ -53,7 +54,7 @@ data object HTJeiRecipeHelper {
 
     @JvmName("fakeItemTemplates")
     @JvmStatic
-    fun fakeItem(items: Iterable<ItemStackTemplate>, count: Int = 1): HTItemIngredient = fakeItem(items.map(SlotDisplay::ItemStackSlotDisplay).let(SlotDisplay::Composite), count)
+    fun fakeItem(items: Iterable<ItemStackTemplate>, count: Int = 1): HTItemIngredient = fakeItem(items.map(SlotDisplay::ItemStackSlotDisplay).let(::SlotDisplay), count)
 
     @JvmStatic
     fun fakeItem(display: SlotDisplay, count: Int = 1): HTItemIngredient = HTItemIngredient(CustomDisplayIngredient.of(FAKE_INGREDIENT, display), count)

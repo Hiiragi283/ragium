@@ -24,19 +24,24 @@ data object HTRecipeFactories {
         HTRecipeFactory<INPUT, OUTPUT>,
         Function<INPUT_A, OUTPUT> {
         override fun apply(input: INPUT_A): OUTPUT
+
+        /**
+         * 入力の消費量を取得します。
+         */
+        fun getRequiredAmount(input: INPUT_A): Int
     }
 
     /**
      * 1種類の液体から完成品を作る[SingleInput]の拡張インターフェースです。
      */
-    fun interface SingleFluidTo<OUTPUT : Any> : SingleInput<HTSingleFluidRecipeInput, FluidInstance, OUTPUT> {
+    interface SingleFluidTo<OUTPUT : Any> : SingleInput<HTSingleFluidRecipeInput, FluidInstance, OUTPUT> {
         override fun produce(input: HTSingleFluidRecipeInput): OUTPUT = apply(input.fluid)
     }
 
     /**
      * 1種類のアイテムから完成品を作る[SingleInput]の拡張インターフェースです。
      */
-    fun interface SingleItemTo<OUTPUT : Any> : SingleInput<SingleRecipeInput, ItemInstance, OUTPUT> {
+    interface SingleItemTo<OUTPUT : Any> : SingleInput<SingleRecipeInput, ItemInstance, OUTPUT> {
         override fun produce(input: SingleRecipeInput): OUTPUT = apply(input.item())
     }
 
@@ -46,19 +51,24 @@ data object HTRecipeFactories {
         HTRecipeFactory<INPUT, OUTPUT>,
         BiFunction<INPUT_A, INPUT_B, OUTPUT> {
         override fun apply(first: INPUT_A, second: INPUT_B): OUTPUT
+
+        /**
+         * 入力の消費量を取得します。
+         */
+        fun getRequiredAmount(first: INPUT_A, second: INPUT_B): Pair<Int, Int>
     }
 
     /**
      * 1種類のアイテムと液体から完成品を作る[DoubleInput]の拡張インターフェースです。
      */
-    fun interface ItemAndFluid<OUTPUT : Any> : DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance, OUTPUT> {
+    interface ItemAndFluid<OUTPUT : Any> : DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance, OUTPUT> {
         override fun produce(input: HTItemAndFluidRecipeInput): OUTPUT = apply(input.item, input.fluid)
     }
 
     /**
      * 2種類のアイテムから完成品を作る[DoubleInput]の拡張インターフェースです。
      */
-    fun interface DoubleItem<OUTPUT : Any> : DoubleInput<RecipeInput, ItemInstance, ItemInstance, OUTPUT> {
+    interface DoubleItem<OUTPUT : Any> : DoubleInput<RecipeInput, ItemInstance, ItemInstance, OUTPUT> {
         override fun produce(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
     }
 
@@ -68,12 +78,14 @@ data object HTRecipeFactories {
         HTRecipeFactory<INPUT, OUTPUT>,
         Function3<INPUT_A, INPUT_B, INPUT_C, OUTPUT> {
         override fun apply(first: INPUT_A, second: INPUT_B, third: INPUT_C): OUTPUT
+
+        fun getRequiredAmount(first: INPUT_A, second: INPUT_B, third: INPUT_C): Triple<Int, Int, Int>
     }
 
     /**
      * 3種類のアイテムから完成品を作る[TripleInput]の拡張インターフェースです。
      */
-    fun interface TripleItem<OUTPUT : Any> : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance, OUTPUT> {
+    interface TripleItem<OUTPUT : Any> : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance, OUTPUT> {
         override fun produce(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
     }
 }
