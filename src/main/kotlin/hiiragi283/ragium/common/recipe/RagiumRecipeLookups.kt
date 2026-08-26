@@ -20,6 +20,7 @@ import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.registry.asSupplier
 import hiiragi283.lib.registry.getDataMap
 import hiiragi283.lib.resource.modifyPath
+import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
@@ -151,12 +152,14 @@ data object RagiumRecipeLookups {
                     }
             }
             if (multiMap.isEmpty) return@addSubLookup mapOf()
-            val recipeMap: MutableMap<RecipeKey, RTBrewingRecipe> = mutableMapOf()
+            val recipeMap: MutableMap<RecipeKey, HTItemAndFluidToFluidRecipe> = mutableMapOf()
             for ((potionTo: Identifier, recipes: Collection<RTBrewingRecipe>) in multiMap.entries) {
                 recipes.forEachIndexed { index: Int, recipe: RTBrewingRecipe ->
                     recipeMap[RecipeKey(potionTo.withSuffix("_$index"))] = recipe
                 }
             }
+            recipeMap[RecipeKey(vanillaId("/${RagiumConstants.BREWING}/splash_potion"))] = RTSplashBrewingRecipe
+            recipeMap[RecipeKey(vanillaId("/${RagiumConstants.BREWING}/lingering_potion"))] = RTLingeringBrewingRecipe
             recipeMap
         }
     }

@@ -10,6 +10,13 @@ import net.minecraft.resources.ResourceKey
 import net.neoforged.neoforge.registries.DeferredHolder
 
 /**
+ * [HTDeferredHolder]のエイリアスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
+typealias HTSimpleDeferredHolder<R> = HTDeferredHolder<R, R>
+
+/**
  * Hiiragi Seriesで使用される[DeferredHolder]の拡張クラスです。
  * @param R レジストリの要素のクラス
  * @param T 要素のクラス

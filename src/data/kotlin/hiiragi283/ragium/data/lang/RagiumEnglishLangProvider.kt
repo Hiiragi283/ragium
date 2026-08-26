@@ -6,8 +6,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
+import hiiragi283.ragium.common.item.alchemy.RagiumPotions
 import net.minecraft.data.PackOutput
 
 class RagiumEnglishLangProvider(output: PackOutput) :
@@ -22,6 +24,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.FREEZER, "Freezer")
         add(RagiumBlocks.MELTER, "Melter")
+
+        add(RagiumBlocks.BREWERY, "Brewery")
 
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")
@@ -69,7 +73,12 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.INGOT_SHAPE_PATTERN, "Shape Pattern (Ingot)")
         add(RagiumItems.BALL_SHAPE_PATTERN, "Shape Pattern (Ball)")
 
+        // Mob Effect
+        add(RagiumMobEffects.FROSTBITE, "Frostbite")
+
         // Potion
+        addPotion(RagiumPotions.FROSTBITE, "Frostbite")
+
         addCustomPotion("hunger", "Hunger")
         addCustomPotion("darkness", "Darkness")
         addCustomPotion("golden_apple", "Golden Apple")

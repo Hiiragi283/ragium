@@ -6,8 +6,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
+import hiiragi283.ragium.common.item.alchemy.RagiumPotions
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseLangProvider(output: PackOutput) :
@@ -22,6 +24,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.FREEZER, "冷凍機")
         add(RagiumBlocks.MELTER, "溶融炉")
+
+        add(RagiumBlocks.BREWERY, "醸造機")
 
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
@@ -69,7 +73,12 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.INGOT_SHAPE_PATTERN, "形状パターン（インゴット）")
         add(RagiumItems.BALL_SHAPE_PATTERN, "形状パターン（ボール）")
 
+        // Mob Effect
+        add(RagiumMobEffects.FROSTBITE, "凍傷")
+
         // Potion
+        addPotion(RagiumPotions.FROSTBITE, "凍傷")
+
         addCustomPotion("hunger", "空腹")
         addCustomPotion("darkness", "暗闇")
         addCustomPotion("golden_apple", "金リンゴ")

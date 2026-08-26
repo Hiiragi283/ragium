@@ -53,8 +53,8 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
     /**
      * レシピの一覧を追加します。
      */
-    fun addRecipes(vararg recipes: Pair<Identifier, @UnsafeVariance RECIPE>) {
-        addSubLookup { recipes.associate { (id: Identifier, recipe: RECIPE) -> RecipeKey(id) to recipe } }
+    fun addRecipes(vararg recipes: Pair<RecipeKey, @UnsafeVariance RECIPE>) {
+        addSubLookup { recipes.toMap() }
     }
 
     /**

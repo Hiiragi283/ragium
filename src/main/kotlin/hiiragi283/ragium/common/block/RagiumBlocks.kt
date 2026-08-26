@@ -90,6 +90,14 @@ data object RagiumBlocks {
     @JvmField
     val MELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.MELTER)
 
+    // Chemical
+    // Bio
+    @JvmField
+    val BREWERY: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.BREWERY)
+
+    // Electronics
+    // Arcane
+
     @JvmField
     val MACHINES: ListMultiMap<HTMachineType, HTBasicDeferredBlockAndItem<HTMachineBlock>> = buildListMultiMap(sortedMapOf()) {
         put(HTMachineType.MECHANICAL, CRUSHER)
@@ -97,5 +105,7 @@ data object RagiumBlocks {
 
         put(HTMachineType.HEAT, FREEZER)
         put(HTMachineType.HEAT, MELTER)
+
+        put(HTMachineType.BIO, BREWERY)
     }
 }

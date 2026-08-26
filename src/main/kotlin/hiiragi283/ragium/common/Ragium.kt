@@ -27,11 +27,13 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
+import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.common.item.HTPotionBucketItem
 import hiiragi283.ragium.common.item.RagiumItems
+import hiiragi283.ragium.common.item.alchemy.RagiumPotions
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
@@ -60,6 +62,8 @@ data object Ragium : HTCommonMod() {
         RagiumItems.register(eventBus)
 
         RagiumBlockEntityTypes.register(eventBus)
+        RagiumMobEffects.register(eventBus)
+        RagiumPotions.register(eventBus)
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
         container.registerConfig(ModConfig.Type.SERVER, RagiumConfig.SERVER_SPEC)
@@ -168,6 +172,8 @@ data object Ragium : HTCommonMod() {
 
         registerProcessor(RagiumBlockEntityTypes.FREEZER.get())
         registerProcessor(RagiumBlockEntityTypes.MELTER.get())
+
+        registerProcessor(RagiumBlockEntityTypes.BREWERY.get())
     }
 
     override fun registerPayload(registrar: PayloadRegistrar) {

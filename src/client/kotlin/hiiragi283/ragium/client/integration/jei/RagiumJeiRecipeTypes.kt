@@ -52,7 +52,7 @@ data object RagiumJeiRecipeTypes {
 
     // Bio
     @JvmField
-    val BREWING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> = HTJeiRecipeType(RagiumRecipeTypes.BREWING, ItemStack(Items.BREWING_STAND))
+    val BREWING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> = HTJeiRecipeType(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
 
     // Electronics
 

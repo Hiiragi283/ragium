@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
@@ -43,6 +44,14 @@ data object RagiumBlockEntityTypes {
 
     @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick(RagiumConstants.MELTER, ::HTMelterBlockEntity)
+
+    // Chemical
+    // Bio
+    @JvmField
+    val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> = registerTick(RagiumConstants.BREWERY, ::HTBreweryBlockEntity)
+
+    // Electronics
+    // Arcane
 
     //    Event    //
 

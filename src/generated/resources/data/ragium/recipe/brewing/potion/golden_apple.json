@@ -4,7 +4,6 @@
     "amount": 1000,
     "fluids": {
       "neoforge:ingredient_type": "ragium:potion",
-      "bottle_type": "default",
       "potions": "minecraft:mundane"
     }
   },

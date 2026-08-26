@@ -1,5 +1,6 @@
 {
   "values": [
+    "#c:machines/bio",
     "#c:machines/heat",
     "#c:machines/mechanical"
   ]
