@@ -8,8 +8,11 @@ import hiiragi283.lib.registry.HTFluidContentRegister
 import hiiragi283.lib.resource.toId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTPotionBucketItem
+import hiiragi283.ragium.common.item.component.RagiumConsumables
+import net.minecraft.core.component.DataComponents
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.pathfinder.PathType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.common.SoundActions
@@ -48,6 +51,12 @@ data object RagiumFluids {
         properties = liquid()
         typeFactory = ::HTPotionFluidType
         bucketFactory = ::HTPotionBucketItem
+        bucketProperties = {
+            it
+                .component(DataComponents.CONSUMABLE, RagiumConsumables.FLUID_BUCKET)
+                .component(DataComponents.POTION_DURATION_SCALE, 4f)
+                .usingConvertsTo(Items.BUCKET)
+        }
     }
 
     @JvmField
