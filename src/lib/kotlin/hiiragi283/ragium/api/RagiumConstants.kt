@@ -40,6 +40,8 @@ data object RagiumConstants {
     const val COMPRESSING = "compressing"
     const val CRUSHING = "crushing"
     const val CUTTING = "cutting"
+    const val DRAINING = "draining"
+    const val FILLING = "filling"
 
     // Heat
     const val FREEZING = "freezing"

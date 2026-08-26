@@ -1,0 +1,16 @@
+{
+  "type": "ragium:filling",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:honey"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": "minecraft:glass_bottle"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:honey_bottle"
+  },
+  "time": 200
+}

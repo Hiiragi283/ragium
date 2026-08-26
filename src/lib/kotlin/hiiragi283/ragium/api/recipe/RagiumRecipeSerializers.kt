@@ -16,6 +16,12 @@ data object RagiumRecipeSerializers {
     @JvmField
     val CUTTING: RecipeSerializer<RTCuttingRecipe> = RTCuttingRecipe.SERIALIZER
 
+    @JvmField
+    val DRAINING: RecipeSerializer<RTDrainingRecipe> = RTDrainingRecipe.SERIALIZER
+
+    @JvmField
+    val FILLING: RecipeSerializer<RTFillingRecipe> = RTFillingRecipe.SERIALIZER
+
     // Heat
     @JvmField
     val FREEZING: RecipeSerializer<RTFreezingRecipe> = RTFreezingRecipe.SERIALIZER

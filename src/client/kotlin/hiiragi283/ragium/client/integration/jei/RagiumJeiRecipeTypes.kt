@@ -30,6 +30,12 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val CUTTING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
+    @JvmField
+    val DRAINING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.DRAINING, ItemStack(Items.GLASS_BOTTLE))
+
+    @JvmField
+    val FILLING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> = HTJeiRecipeType(RagiumRecipeTypes.FILLING, ItemStack(Items.GLASS_BOTTLE))
+
     // Heat
     @JvmField
     val FREEZING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> = HTJeiRecipeType(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)

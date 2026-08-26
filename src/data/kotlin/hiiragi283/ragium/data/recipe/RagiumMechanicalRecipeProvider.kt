@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import hiiragi283.ragium.common.material.RagiumMaterials
@@ -21,6 +22,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 
 class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
@@ -29,6 +31,8 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         compressing()
         crushing()
         cutting()
+        draining()
+        filling()
     }
 
     private fun assembling() {
@@ -461,6 +465,59 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             secondary { +Items.LEATHER }
             recipeId suffix "_from_book"
         }.save(exporter)
+    }
+
+    private fun draining() {
+        // Honey Bottle -> Glass Bottle + Honey
+        RagiumRecipeBuilders.draining {
+            ingredient { +holderSet(Tags.Items.DRINKS_HONEY) }
+            itemResult { +Items.GLASS_BOTTLE }
+            fluidResult {
+                +RagiumFluids.HONEY
+                amount = 250
+            }
+            recipeId replace "honey_from_bottle"
+        }.save(exporter)
+        // Wet Sponge -> Sponge + Water
+        RagiumRecipeBuilders.draining {
+            ingredient { items { +Items.WET_SPONGE } }
+            itemResult { +Items.SPONGE }
+            fluidResult { +Fluids.WATER }
+        }.save(exporter)
+    }
+
+    private fun filling() {
+        // Honey Bottle <- Glass Bottle + Honey
+        RagiumRecipeBuilders.filling {
+            itemIngredient { items { +Items.GLASS_BOTTLE } }
+            fluidIngredient {
+                +holderSet(RagiumFluids.HONEY)
+                amount = 250
+            }
+            result { +Items.HONEY_BOTTLE }
+        }.save(exporter)
+        // Dirt + Water -> Mud
+        RagiumRecipeBuilders.filling {
+            itemIngredient { items { +Items.DIRT } }
+            fluidIngredient {
+                +waterSet()
+                amount = 250
+            }
+            result { +Items.MUD }
+        }.save(exporter)
+
+        // XX Concrete Powder + Water -> XX Concrete
+        for (color: HTDefaultColor in HTDefaultColor.entries) {
+            RagiumRecipeBuilders.filling {
+                itemIngredient { items { +VanillaColoredCollections.CONCRETE_POWDER[color] } }
+                fluidIngredient {
+                    +waterSet()
+                    amount = 10
+                }
+                result { +VanillaColoredCollections.CONCRETE[color] }
+                recipeId suffix "_from_powder"
+            }.save(exporter)
+        }
     }
 
     override fun getName(): String = "Mechanical Recipes"

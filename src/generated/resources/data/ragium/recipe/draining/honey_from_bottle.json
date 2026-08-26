@@ -1,0 +1,16 @@
+{
+  "type": "ragium:draining",
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:honey"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "#c:drinks/honey"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "minecraft:glass_bottle"
+  },
+  "time": 200
+}

@@ -66,6 +66,12 @@ data object RagiumRecipeLookups {
     @JvmField
     val CUTTING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.CUTTING)
 
+    @JvmField
+    val DRAINING: HTCompoundRecipeLookup<HTItemToItemAndFluidRecipe> = create(RagiumConstants.DRAINING)
+
+    @JvmField
+    val FILLING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.FILLING)
+
     // Heat
     @JvmField
     val FREEZING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.FREEZING)
@@ -100,6 +106,8 @@ data object RagiumRecipeLookups {
         COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING, identity())
         CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING, identity())
         CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING, identity())
+        DRAINING.fromRecipeType(RagiumRecipeTypes.DRAINING, identity())
+        FILLING.fromRecipeType(RagiumRecipeTypes.FILLING, identity())
 
         FREEZING.fromRecipeType(RagiumRecipeTypes.FREEZING, identity())
         MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())

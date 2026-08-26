@@ -1,0 +1,16 @@
+{
+  "type": "ragium:draining",
+  "fluid_result": {
+    "amount": 1000,
+    "id": "minecraft:water"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:wet_sponge"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "minecraft:sponge"
+  },
+  "time": 200
+}

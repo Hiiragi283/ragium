@@ -16,6 +16,8 @@ import hiiragi283.ragium.api.recipe.RTBrewingRecipe
 import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
+import hiiragi283.ragium.api.recipe.RTDrainingRecipe
+import hiiragi283.ragium.api.recipe.RTFillingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
@@ -56,6 +58,22 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTItemToDoubleItemRecipeBuilder(RagiumConstants.CUTTING, ::RTCuttingRecipe).apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun draining(builderAction: HTItemToItemAndFluidRecipeBuilder<RTDrainingRecipe>.() -> Unit): HTItemToItemAndFluidRecipeBuilder<RTDrainingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemToItemAndFluidRecipeBuilder(RagiumConstants.DRAINING, ::RTDrainingRecipe).apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun filling(builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTFillingRecipe>.() -> Unit): HTItemAndFluidToRecipeBuilder.ToItem<RTFillingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemAndFluidToRecipeBuilder.ToItem(RagiumConstants.FILLING, ::RTFillingRecipe).apply(builderAction)
     }
 
     // Heat

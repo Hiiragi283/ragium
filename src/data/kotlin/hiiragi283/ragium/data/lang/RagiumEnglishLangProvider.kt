@@ -89,6 +89,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.COMPRESSING, "Compressing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
+        add(RagiumRecipeTypes.DRAINING, "Draining")
+        add(RagiumRecipeTypes.FILLING, "Filling")
 
         add(RagiumRecipeTypes.FREEZING, "Freezing")
         add(RagiumRecipeTypes.MELTING, "Melting")

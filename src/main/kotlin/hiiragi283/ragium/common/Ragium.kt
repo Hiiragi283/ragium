@@ -98,6 +98,8 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id(RagiumConstants.COMPRESSING), RagiumRecipeSerializers.COMPRESSING)
             helper.register(RagiumAPI.id(RagiumConstants.CRUSHING), RagiumRecipeSerializers.CRUSHING)
             helper.register(RagiumAPI.id(RagiumConstants.CUTTING), RagiumRecipeSerializers.CUTTING)
+            helper.register(RagiumAPI.id(RagiumConstants.DRAINING), RagiumRecipeSerializers.DRAINING)
+            helper.register(RagiumAPI.id(RagiumConstants.FILLING), RagiumRecipeSerializers.FILLING)
 
             helper.register(RagiumAPI.id(RagiumConstants.FREEZING), RagiumRecipeSerializers.FREEZING)
             helper.register(RagiumAPI.id(RagiumConstants.MELTING), RagiumRecipeSerializers.MELTING)
