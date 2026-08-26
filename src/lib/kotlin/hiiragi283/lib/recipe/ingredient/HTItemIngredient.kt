@@ -3,7 +3,6 @@ package hiiragi283.lib.recipe.ingredient
 import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.util.Either
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -14,8 +13,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.display.DisplayContentsFactory
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
-
-typealias HTCatalystOrIngredient = Either<Ingredient, HTItemIngredient>
 
 /**
  * [Item]向けの[HTIngredient]の実装クラスです。

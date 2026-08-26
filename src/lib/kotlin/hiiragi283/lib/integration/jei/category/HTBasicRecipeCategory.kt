@@ -93,11 +93,13 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
     // IRecipeSlotBuilder
     protected fun IRecipeSlotBuilder.setSlotBackground(type: HTBackgroundType): IRecipeSlotBuilder = this.setBackground(HTJeiDrawables.getSlot(type, guiHelper), -1, -1).setSlotName(type.name)
 
+    @Deprecated("Use `IRecipeSlotBuilder.setSlotBackground(HTBackgroundType) instead`", ReplaceWith("setSlotBackground(type)"))
     protected fun IRecipeSlotBuilder.setSlotBackground(type: HTBackgroundType, capacity: Int): IRecipeSlotBuilder = this
         .setBackground(HTJeiDrawables.getSlot(type, guiHelper), -1, -1)
         .setSlotName(type.name)
         .setFluidRenderer(fixCapacity(capacity), false, 16, 16)
 
+    @Deprecated("Use `IRecipeSlotBuilder.setSlotBackground(HTBackgroundType) instead`", ReplaceWith("setSlotBackground(type)"))
     protected fun IRecipeSlotBuilder.setTankBackground(type: HTBackgroundType, capacity: Int): IRecipeSlotBuilder = this
         .setBackground(HTJeiDrawables.getTank(type, guiHelper), -1, -1)
         .setSlotName(type.name)

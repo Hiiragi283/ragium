@@ -22,12 +22,10 @@ class HTItemToItemAndFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHo
             .add(recipe.itemResult)
             .setSlotBackground(HTBackgroundType.OUTPUT)
 
-        recipe.fluidResult.let {
-            builder
-                .addOutputSlot(getPosition(5), getPosition(0))
-                .add(it)
-                .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
-        }
+        builder
+            .addOutputSlot(getPosition(5), getPosition(0))
+            .add(recipe.fluidResult)
+            .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 
     override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemToItemAndFluidRecipe.Basic, focuses: IFocusGroup) {

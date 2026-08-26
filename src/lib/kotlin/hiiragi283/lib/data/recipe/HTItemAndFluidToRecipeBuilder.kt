@@ -9,7 +9,6 @@ import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
-import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.HTDelegates
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -29,11 +28,11 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
     @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
     operator fun Ingredient.unaryPlus() {
-        itemIngredient = Either.Left(this)
+        itemIngredient = HTCatalystOrIngredient(this)
     }
 
     operator fun HTItemIngredient.unaryPlus() {
-        itemIngredient = Either.Right(this)
+        itemIngredient = HTCatalystOrIngredient(this)
     }
 
     operator fun HTFluidIngredient.unaryPlus() {

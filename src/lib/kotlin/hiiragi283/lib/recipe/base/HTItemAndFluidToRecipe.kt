@@ -6,19 +6,15 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTCatalystOrIngredient
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
-import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.network.HTStreamCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 
@@ -64,10 +60,7 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
                 factory: HTItemAndFluidToRecipeBuilder.Factory<RESULT, RECIPE>,
             ): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
                 instance.group(
-                    HTCodecs.mapEither(
-                        Ingredient.CODEC.fieldOf(HTConstants.CATALYST),
-                        HTItemIngredient.CODEC.fieldOf(HTConstants.ITEM_INGREDIENT),
-                    ).forGetter(Basic<OUTPUT, RESULT>::itemIngredient),
+                    HTCatalystOrIngredient.MAP_CODEC.forGetter(Basic<OUTPUT, RESULT>::itemIngredient),
                     HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID_INGREDIENT).forGetter(Basic<OUTPUT, RESULT>::fluidIngredient),
                     resultCodec.fieldOf(HTConstants.RESULT).forGetter(Basic<OUTPUT, RESULT>::result),
                     HTProgressData.CODEC.forGetter(Basic<OUTPUT, RESULT>::progressData),
@@ -79,7 +72,7 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
                 resultCodec: StreamCodec<in RegistryFriendlyByteBuf, RESULT>,
                 factory: HTItemAndFluidToRecipeBuilder.Factory<RESULT, RECIPE>,
             ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
-                HTStreamCodecs.either(Ingredient.CONTENTS_STREAM_CODEC, HTItemIngredient.STREAM_CODEC),
+                HTCatalystOrIngredient.STREAM_CODEC,
                 Basic<OUTPUT, RESULT>::itemIngredient,
                 HTFluidIngredient.STREAM_CODEC,
                 Basic<OUTPUT, RESULT>::fluidIngredient,
@@ -91,9 +84,9 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
             )
         }
 
-        override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.fold({ HTIngredientHelper.unwrap(first).let(it::test) }, { it.test(first) }) && fluidIngredient.test(second)
+        override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.test(first) && fluidIngredient.test(second)
 
-        override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = itemIngredient.fold({ 0 }, { it.getRequiredAmount(first) }) to fluidIngredient.getRequiredAmount(second)
+        override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = itemIngredient.getRequiredAmount(first) to fluidIngredient.getRequiredAmount(second)
 
         override fun apply(first: ItemInstance, second: FluidInstance): OUTPUT = result.create()
     }

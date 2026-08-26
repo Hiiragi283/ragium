@@ -156,6 +156,11 @@ class HTFluidContentRegister(modId: String) {
         var bucketFactory: ItemWithContextFactory<Fluid, Item> = ::BucketItem
 
         /**
+         * 液体入りバケツのプロパティ
+         */
+        var bucketProperties: Identity<Item.Properties> = identity()
+
+        /**
          * 液体の共通タグ
          */
         var fluidTag: Identifier = HTConstants.COMMON.toId(name)
@@ -175,7 +180,7 @@ class HTFluidContentRegister(modId: String) {
             val bucketHolder: HTSimpleDeferredItem = itemRegister.registerItem(
                 "${name}_bucket",
                 { bucketFactory(sourceHolder.get(), it) },
-                { it.stacksTo(1).craftRemainder(Items.BUCKET) },
+                { bucketProperties(it).stacksTo(1).craftRemainder(Items.BUCKET) },
             )
             val content: CONTENT = createContent(typeHolder, sourceHolder, bucketHolder)
             contentsCache[sourceHolder.key] = content
