@@ -14,10 +14,12 @@ import mezz.jei.api.recipe.RecipeIngredientRole
 class HTItemAndFluidToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem>) : HTHolderRecipeCategory<HTItemAndFluidToRecipe.BasicItem>(guiHelper, recipeType, 18 * 6, 18 * 1, HTItemAndFluidToRecipe.BasicItem.SIMPLE_CODEC) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemAndFluidToRecipe.BasicItem, focuses: IFocusGroup) {
         // input
-        builder
-            .addInputSlot(getPosition(0), getPosition(0))
-            .add(recipe.fluidIngredient)
-            .setSlotBackground(HTBackgroundType.INPUT)
+        recipe.fluidIngredient.let {
+            builder
+                .addInputSlot(getPosition(0), getPosition(0))
+                .add(it)
+                .setSlotBackground(HTBackgroundType.INPUT, it.amount)
+        }
         val ingredient: HTCatalystOrIngredient = recipe.itemIngredient
         if (ingredient.isCatalyst) {
             builder

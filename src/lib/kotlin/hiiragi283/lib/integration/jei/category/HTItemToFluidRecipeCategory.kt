@@ -17,10 +17,12 @@ class HTItemToFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJei
             .add(recipe.ingredient)
             .setSlotBackground(HTBackgroundType.INPUT)
         // output
-        builder
-            .addOutputSlot(getPosition(3), getPosition(0))
-            .add(recipe.result)
-            .setSlotBackground(HTBackgroundType.OUTPUT)
+        recipe.result.let {
+            builder
+                .addOutputSlot(getPosition(3), getPosition(0))
+                .add(it)
+                .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
+        }
     }
 
     override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemToFluidRecipe.Basic, focuses: IFocusGroup) {

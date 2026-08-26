@@ -14,10 +14,12 @@ import mezz.jei.api.recipe.RecipeIngredientRole
 class HTItemAndFluidToFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid>) : HTHolderRecipeCategory<HTItemAndFluidToRecipe.BasicFluid>(guiHelper, recipeType, 18 * 6, 18 * 1, HTItemAndFluidToRecipe.BasicFluid.SIMPLE_CODEC) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemAndFluidToRecipe.BasicFluid, focuses: IFocusGroup) {
         // input
-        builder
-            .addInputSlot(getPosition(0), getPosition(0))
-            .add(recipe.fluidIngredient)
-            .setSlotBackground(HTBackgroundType.INPUT)
+        recipe.fluidIngredient.let {
+            builder
+                .addInputSlot(getPosition(0), getPosition(0))
+                .add(it)
+                .setSlotBackground(HTBackgroundType.INPUT, it.amount)
+        }
         val ingredient: HTCatalystOrIngredient = recipe.itemIngredient
         if (ingredient.isCatalyst) {
             builder
@@ -31,10 +33,12 @@ class HTItemAndFluidToFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTH
                 .setSlotBackground(HTBackgroundType.INPUT)
         }
         // output
-        builder
-            .addOutputSlot(getPosition(5), getPosition(0))
-            .add(recipe.result)
-            .setSlotBackground(HTBackgroundType.OUTPUT)
+        recipe.result.let {
+            builder
+                .addOutputSlot(getPosition(5), getPosition(0))
+                .add(it)
+                .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
+        }
     }
 
     override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemAndFluidToRecipe.BasicFluid, focuses: IFocusGroup) {
