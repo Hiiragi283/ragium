@@ -1,12 +1,11 @@
 package hiiragi283.lib.data.lang
 
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.registry.HTSimpleDeferredHolder
+import hiiragi283.lib.registry.HTPotionContent
 import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.HTHasTranslationKey
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.enchantment.Enchantment
 import net.neoforged.neoforge.common.data.LanguageProvider
 
@@ -81,8 +80,8 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
         add(content.bucketTag, bucketName)
     }
 
-    fun addPotion(potion: HTSimpleDeferredHolder<Potion>, value: String) {
-        addCustomPotion(potion.get().name(), value)
+    fun addPotion(content: HTPotionContent, value: String) {
+        addCustomPotion(content.get().name(), value)
     }
 
     fun addCustomPotion(name: String, value: String) {

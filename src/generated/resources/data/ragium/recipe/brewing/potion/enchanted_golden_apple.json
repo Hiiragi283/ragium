@@ -4,7 +4,7 @@
     "amount": 1000,
     "fluids": {
       "neoforge:ingredient_type": "ragium:potion",
-      "potions": "minecraft:mundane"
+      "potions": "minecraft:thick"
     }
   },
   "item_ingredient": {

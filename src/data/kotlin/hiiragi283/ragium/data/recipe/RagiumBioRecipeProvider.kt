@@ -51,7 +51,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         // Hunger
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.ROTTEN_FLESH } }
-            fluidIngredient { +HTPotionFluidIngredient(Potions.MUNDANE) }
+            fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
             result { +PotionContents(customEffects = listOf(MobEffectInstance(MobEffects.HUNGER, 900)), customName = "hunger") }
             recipeId replace "potion/hunger"
         }.save(exporter)
@@ -66,7 +66,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         // Darkness
         RagiumRecipeBuilders.brewing {
             itemIngredient { +holderSet(CommonTagPrefixes.GEM, VanillaMaterials.ECHO) }
-            fluidIngredient { +HTPotionFluidIngredient(Potions.MUNDANE) }
+            fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
             result { +PotionContents(customEffects = listOf(MobEffectInstance(MobEffects.DARKNESS, 900)), customName = "darkness") }
             recipeId replace "potion/darkness"
         }.save(exporter)
@@ -74,7 +74,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         // Golden Apple
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.GOLDEN_APPLE } }
-            fluidIngredient { +HTPotionFluidIngredient(Potions.MUNDANE) }
+            fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
             result {
                 +PotionContents(
                     customColor = 0xff9900,
@@ -86,7 +86,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         }.save(exporter)
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.ENCHANTED_GOLDEN_APPLE } }
-            fluidIngredient { +HTPotionFluidIngredient(Potions.MUNDANE) }
+            fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
             result {
                 +PotionContents(
                     customColor = 0xff9900,

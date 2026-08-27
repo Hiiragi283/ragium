@@ -1,0 +1,16 @@
+{
+  "type": "ragium:filling",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": "minecraft:dirt"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:mud"
+  },
+  "time": 200
+}

@@ -12,9 +12,6 @@ data object RagiumEventHandlers {
     @SubscribeEvent
     private fun registerBrewingRecipes(event: RegisterBrewingRecipesEvent) {
         val builder: PotionBrewing.Builder = event.builder
-        // Frostbite
-        builder.addStartMix(Items.SNOW_BLOCK, RagiumPotions.FROSTBITE)
-        builder.addMix(RagiumPotions.FROSTBITE, Items.REDSTONE, RagiumPotions.LONG_FROSTBITE)
-        builder.addMix(RagiumPotions.FROSTBITE, Items.GLOWSTONE_DUST, RagiumPotions.STRONG_FROSTBITE)
+        RagiumPotions.FROSTBITE.registerMix(builder, Items.SNOW_BLOCK)
     }
 }
