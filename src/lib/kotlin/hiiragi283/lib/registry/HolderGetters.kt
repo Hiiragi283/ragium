@@ -12,20 +12,10 @@ import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
-import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 fun <T : Any> HolderGetter<T>.getResult(key: ResourceKey<T>): HTTextResult<Holder<T>> = this.get(key).map(Holder<T>::right).getOrElse { HTTextResult("Missing element $key") }
 
 fun <T : Any> HolderGetter<T>.getResult(key: TagKey<T>): HTTextResult<HolderSet<T>> = this.get(key).map(HolderSet<T>::right).getOrElse { HTTextResult("Missing tag $key") }
-
-fun <T : Any, R : Any> HolderLookup<T>.getDataMap(type: DataMapType<T, R>): Map<Holder<T>, R> {
-    val destination: MutableMap<Holder<T>, R> = mutableMapOf()
-    for (holder: Holder<T> in this.listElements()) {
-        val data: R = holder.getData(type) ?: continue
-        destination[holder] = data
-    }
-    return destination
-}
 
 //    Provider    //
 
