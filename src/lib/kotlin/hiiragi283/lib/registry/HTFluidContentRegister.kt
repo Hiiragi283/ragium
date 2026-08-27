@@ -59,17 +59,17 @@ class HTFluidContentRegister(modId: String) {
      */
     fun asItemSequence(): Sequence<HTDeferredItem<*>> = itemRegister.asSequence()
 
-    private val contentsCache: MutableMap<ResourceKey<Fluid>, HTFluidContent> = mutableMapOf()
-
-    /**
-     * 登録された液体の[ResourceKey]の一覧
-     */
-    val keys: Set<ResourceKey<Fluid>> get() = contentsCache.keys
-
     /**
      * 登録された[HTFluidContent]の一覧
      */
-    val entries: Collection<HTFluidContent> get() = contentsCache.values
+    val entries: Set<HTFluidContent> field: MutableSet<HTFluidContent> = mutableSetOf()
+
+    /**
+     * 登録された[HTFluidContent]の一覧を取得します。
+     */
+    fun asSequence(): Sequence<HTFluidContent> = entries.asSequence()
+
+    private val contentsCache: MutableMap<ResourceKey<Fluid>, HTFluidContent> = mutableMapOf()
 
     /**
      * [HTFluidContent]を取得します。
@@ -77,11 +77,6 @@ class HTFluidContentRegister(modId: String) {
      * @return 対応する[HTFluidContent]がない場合はnull`
      */
     operator fun get(key: ResourceKey<Fluid>): HTFluidContent? = contentsCache[key]
-
-    /**
-     * 登録された[HTFluidContent]の一覧を取得します。
-     */
-    fun asSequence(): Sequence<HTFluidContent> = entries.asSequence()
 
     fun addAlias(from: String, to: String) {
         typeRegister.addAlias(from, to)
@@ -183,7 +178,11 @@ class HTFluidContentRegister(modId: String) {
                 { bucketProperties(it).stacksTo(1).craftRemainder(Items.BUCKET) },
             )
             val content: CONTENT = createContent(typeHolder, sourceHolder, bucketHolder)
+            entries += content
             contentsCache[sourceHolder.key] = content
+            if (content is HTFluidContent.Flowing) {
+                contentsCache[content.flowingHolder.key] = content
+            }
             return content
         }
 
