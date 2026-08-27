@@ -1,0 +1,16 @@
+{
+  "type": "ragium:planting",
+  "ingredient": {
+    "count": 8,
+    "items": "minecraft:acacia_sapling"
+  },
+  "primary_result": {
+    "count": 48,
+    "id": "minecraft:acacia_log"
+  },
+  "secondary_result": {
+    "count": 12,
+    "id": "minecraft:acacia_sapling"
+  },
+  "time": 200
+}

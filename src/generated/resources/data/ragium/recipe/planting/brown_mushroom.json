@@ -1,0 +1,12 @@
+{
+  "type": "ragium:planting",
+  "ingredient": {
+    "count": 8,
+    "items": "minecraft:brown_mushroom"
+  },
+  "primary_result": {
+    "count": 16,
+    "id": "minecraft:brown_mushroom"
+  },
+  "time": 200
+}

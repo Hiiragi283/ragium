@@ -214,9 +214,7 @@ data object Ragium : HTCommonMod() {
                             itemIngredient { +mix.ingredient }
                             fluidIngredient { +HTPotionFluidIngredient(mix.from()) }
                             result { +mix.to() }
-                        }.save { _, recipe: RTBrewingRecipe ->
-                            put(mix.to().asSupplier().getId().modifyPath { "/${RagiumConstants.BREWING}/$it" }, recipe)
-                        }
+                        }.build().let { (_, recipe: RTBrewingRecipe) -> put(mix.to().asSupplier().getId().modifyPath { "/${RagiumConstants.BREWING}/$it" }, recipe) }
                     }
             }
             if (multiMap.isEmpty) return@addSubLookup mapOf()
@@ -230,6 +228,7 @@ data object Ragium : HTCommonMod() {
             recipeMap[RecipeKey(vanillaId("/${RagiumConstants.BREWING}/lingering_potion"))] = RTLingeringBrewingRecipe
             recipeMap
         }
+        RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
     }
 
     override fun registerCapabilities(helper: CapabilityHelper) {

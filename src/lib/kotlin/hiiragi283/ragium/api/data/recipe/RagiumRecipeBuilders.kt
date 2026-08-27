@@ -20,6 +20,7 @@ import hiiragi283.ragium.api.recipe.RTDrainingRecipe
 import hiiragi283.ragium.api.recipe.RTFillingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
+import hiiragi283.ragium.api.recipe.RTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTSmeltingRecipe
 import kotlin.contracts.ExperimentalContracts
@@ -141,5 +142,13 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTItemAndFluidToRecipeBuilder.ToFluid(RagiumConstants.BREWING, ::RTBrewingRecipe).apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun planting(builderAction: HTItemToDoubleItemRecipeBuilder<RTPlantingRecipe>.() -> Unit): HTItemToDoubleItemRecipeBuilder<RTPlantingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemToDoubleItemRecipeBuilder(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
     }
 }

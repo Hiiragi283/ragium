@@ -69,6 +69,9 @@ data object RagiumRecipeSerializers {
     @JvmField
     val BREWING: RecipeSerializer<RTBrewingRecipe> = register(RagiumConstants.BREWING, RTBrewingRecipe.SERIALIZER)
 
+    @JvmField
+    val PLANTING: RecipeSerializer<RTPlantingRecipe> = register(RagiumConstants.PLANTING, RTPlantingRecipe.SERIALIZER)
+
     // Electronics
 
     // Arcane

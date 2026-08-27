@@ -1,0 +1,12 @@
+{
+  "type": "ragium:planting",
+  "ingredient": {
+    "count": 8,
+    "items": "minecraft:sugar_cane"
+  },
+  "primary_result": {
+    "count": 24,
+    "id": "minecraft:sugar_cane"
+  },
+  "time": 200
+}

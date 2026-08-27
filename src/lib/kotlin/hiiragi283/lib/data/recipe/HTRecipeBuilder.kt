@@ -3,6 +3,7 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.data.ConditionBuilder
+import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.util.HTBuilderMarker
 import kotlin.contracts.ExperimentalContracts
@@ -96,6 +97,8 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
         }
     }
 
+    fun build(): HTRecipeHolder<RECIPE> = HTRecipeHolder(RecipeKey(recipeId.id.withPrefix("$prefix/")), createRecipe())
+
     /**
      * レシピを生成します。
      * @param exporter 生成したレシピの出力先
@@ -108,11 +111,11 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
      * 生成したレシピを処理します。
      * @param consumer 生成されたレシピIDとレシピを処理するブロック
      */
-    fun <R> save(consumer: (id: RecipeKey, recipe: RECIPE) -> R): R {
+    inline fun <R> save(consumer: (id: RecipeKey, recipe: RECIPE) -> R): R {
         contract {
             callsInPlace(consumer, InvocationKind.EXACTLY_ONCE)
         }
-        return consumer(RecipeKey(recipeId.id.withPrefix("$prefix/")), createRecipe())
+        return build().let { (id: RecipeKey, recipe: RECIPE) -> consumer(id, recipe) }
     }
 
     /**

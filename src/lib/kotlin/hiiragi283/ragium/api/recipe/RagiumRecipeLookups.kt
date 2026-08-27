@@ -66,6 +66,9 @@ data object RagiumRecipeLookups {
     @JvmField
     val BREWING: HTCompoundRecipeLookup<HTItemAndFluidToFluidRecipe> = create(RagiumConstants.BREWING)
 
+    @JvmField
+    val PLANTING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.PLANTING)
+
     // Electronics
 
     // Arcane

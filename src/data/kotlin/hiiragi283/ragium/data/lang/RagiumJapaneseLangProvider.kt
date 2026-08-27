@@ -101,6 +101,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
 
         add(RagiumRecipeTypes.BREWING, "醸造")
+        add(RagiumRecipeTypes.PLANTING, "栽培")
 
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")

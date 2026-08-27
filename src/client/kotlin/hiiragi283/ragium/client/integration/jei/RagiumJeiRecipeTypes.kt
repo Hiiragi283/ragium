@@ -60,6 +60,9 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val BREWING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> = HTJeiRecipeType(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
 
+    @JvmField
+    val PLANTING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.PLANTING, ItemStack(Items.FLOWER_POT))
+
     // Electronics
 
     // Arcane

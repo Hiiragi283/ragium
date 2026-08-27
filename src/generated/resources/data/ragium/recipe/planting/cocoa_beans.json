@@ -1,0 +1,12 @@
+{
+  "type": "ragium:planting",
+  "ingredient": {
+    "count": 8,
+    "items": "minecraft:cocoa_beans"
+  },
+  "primary_result": {
+    "count": 16,
+    "id": "minecraft:cocoa_beans"
+  },
+  "time": 200
+}

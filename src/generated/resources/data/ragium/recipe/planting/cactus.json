@@ -1,0 +1,12 @@
+{
+  "type": "ragium:planting",
+  "ingredient": {
+    "count": 8,
+    "items": "minecraft:cactus"
+  },
+  "primary_result": {
+    "count": 24,
+    "id": "minecraft:cactus"
+  },
+  "time": 200
+}

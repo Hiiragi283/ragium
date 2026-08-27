@@ -101,6 +101,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
 
         add(RagiumRecipeTypes.BREWING, "Brewing")
+        add(RagiumRecipeTypes.PLANTING, "Planting")
 
         // Text
         add(RagiumTranslation.RAGIUM, "Ragium")
