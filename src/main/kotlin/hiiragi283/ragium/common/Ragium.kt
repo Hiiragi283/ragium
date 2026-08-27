@@ -120,23 +120,7 @@ data object Ragium : HTCommonMod() {
             // helper.register(HTItemWidgetHolderContext.MENU_TYPE.getId(), IMenuTypeExtension.create(HTItemWidgetHolderContext::create)) TODO
         }
         event.register(Registries.RECIPE_SERIALIZER) { helper ->
-            helper.register(RagiumAPI.id(RagiumConstants.ASSEMBLING), RagiumRecipeSerializers.ASSEMBLING)
-            helper.register(RagiumAPI.id(RagiumConstants.COMPRESSING), RagiumRecipeSerializers.COMPRESSING)
-            helper.register(RagiumAPI.id(RagiumConstants.CRUSHING), RagiumRecipeSerializers.CRUSHING)
-            helper.register(RagiumAPI.id(RagiumConstants.CUTTING), RagiumRecipeSerializers.CUTTING)
-            helper.register(RagiumAPI.id(RagiumConstants.DRAINING), RagiumRecipeSerializers.DRAINING)
-            helper.register(RagiumAPI.id(RagiumConstants.FILLING), RagiumRecipeSerializers.FILLING)
-
-            helper.register(RagiumAPI.id(RagiumConstants.FREEZING), RagiumRecipeSerializers.FREEZING)
-            helper.register(RagiumAPI.id(RagiumConstants.MELTING), RagiumRecipeSerializers.MELTING)
-            helper.register(RagiumAPI.id(HTConstants.SMELTING), RagiumRecipeSerializers.SMELTING)
-            helper.register(RagiumAPI.id(RagiumConstants.PYROLYZING), RagiumRecipeSerializers.PYROLYZING)
-            helper.register(RagiumAPI.id(RagiumConstants.REFINING), RagiumRecipeSerializers.REFINING)
-
-            helper.register(RagiumAPI.id(RagiumConstants.BATHING), RagiumRecipeSerializers.BATHING)
-            helper.register(RagiumAPI.id(RagiumConstants.ELECTROLYZING), RagiumRecipeSerializers.ELECTROLYZING)
-
-            helper.register(RagiumAPI.id(RagiumConstants.BREWING), RagiumRecipeSerializers.BREWING)
+            RagiumRecipeSerializers.allSerializers.forEach(helper::register)
         }
         event.register(Registries.RECIPE_TYPE) { helper ->
             for (recipeType: HTRecipeType<*> in RagiumRecipeTypes.allTypes) {
