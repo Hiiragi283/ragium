@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:buckets/water",
+    "#c:dyes/yellow",
+    "#c:dyes/yellow",
+    "#c:dyes/yellow",
+    "#c:dyes/yellow"
+  ],
+  "result": {
+    "id": "ragium:yellow_dye_bucket"
+  }
+}

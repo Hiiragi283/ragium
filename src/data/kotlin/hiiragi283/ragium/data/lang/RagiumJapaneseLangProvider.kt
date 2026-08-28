@@ -56,8 +56,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.CAOH_SOLUTION, "水酸化カルシウム水溶液")
 
         // Item
-        add(RagiumItems.TAR, "タール")
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
+        add(RagiumItems.TAR, "タール")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")

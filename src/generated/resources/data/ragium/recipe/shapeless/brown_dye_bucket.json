@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:buckets/water",
+    "#c:dyes/brown",
+    "#c:dyes/brown",
+    "#c:dyes/brown",
+    "#c:dyes/brown"
+  ],
+  "result": {
+    "id": "ragium:brown_dye_bucket"
+  }
+}

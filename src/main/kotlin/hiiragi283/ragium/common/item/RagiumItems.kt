@@ -108,15 +108,18 @@ data object RagiumItems {
     @JvmStatic
     fun getOrThrow(part: HTItemPart, material: HTMaterial): HTSimpleDeferredItem = MATERIAL_ITEMS[part, material] ?: error("Unregistered item: ${part.createName(material)}")
 
-    @JvmField
-    val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(CommonMaterials.COAL_COKE.path)
-
-    @JvmField
-    val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
-
+    // Mechanical
     @JvmField
     val BAMBOO_CHARCOAL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("bamboo_charcoal")
 
+    @JvmField
+    val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(CommonMaterials.COAL_COKE.path)
+
+    // Heat
+    @JvmField
+    val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
+
+    // Chemical
     @JvmField
     val PARTICLE_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("particle_board")
 
@@ -132,6 +135,11 @@ data object RagiumItems {
     @JvmField
     val SYNTHETIC_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("synthetic_fiber")
 
+    // Bio
+
+    // Electronics
+
+    // Arcane
     @JvmField
     val ELDER_HEART: HTSimpleDeferredItem = REGISTER.registerSimpleItem("elder_heart") { it.rarity(Rarity.UNCOMMON) }
 
@@ -143,8 +151,19 @@ data object RagiumItems {
 
     //    Parts    //
 
+    // Mechanical
+
+    // Heat
+
+    // Chemical
+
+    // Bio
+
+    // Electronics
     @JvmField
     val MEMORY_DISC: HTSimpleDeferredItem = REGISTER.registerItem("memory_disc", ::HTMemoryDiscItem)
+
+    // Arcane
 
     //    Tool    //
 

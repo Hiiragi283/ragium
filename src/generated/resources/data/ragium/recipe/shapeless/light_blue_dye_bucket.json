@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:buckets/water",
+    "#c:dyes/light_blue",
+    "#c:dyes/light_blue",
+    "#c:dyes/light_blue",
+    "#c:dyes/light_blue"
+  ],
+  "result": {
+    "id": "ragium:light_blue_dye_bucket"
+  }
+}

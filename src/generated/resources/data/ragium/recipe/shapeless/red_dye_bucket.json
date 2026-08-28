@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:buckets/water",
+    "#c:dyes/red",
+    "#c:dyes/red",
+    "#c:dyes/red",
+    "#c:dyes/red"
+  ],
+  "result": {
+    "id": "ragium:red_dye_bucket"
+  }
+}

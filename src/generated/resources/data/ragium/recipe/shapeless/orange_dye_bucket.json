@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:buckets/water",
+    "#c:dyes/orange",
+    "#c:dyes/orange",
+    "#c:dyes/orange",
+    "#c:dyes/orange"
+  ],
+  "result": {
+    "id": "ragium:orange_dye_bucket"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:buckets/water",
+    "#c:dyes/light_gray",
+    "#c:dyes/light_gray",
+    "#c:dyes/light_gray",
+    "#c:dyes/light_gray"
+  ],
+  "result": {
+    "id": "ragium:light_gray_dye_bucket"
+  }
+}

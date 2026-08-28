@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:buckets/water",
+    "#c:dyes/magenta",
+    "#c:dyes/magenta",
+    "#c:dyes/magenta",
+    "#c:dyes/magenta"
+  ],
+  "result": {
+    "id": "ragium:magenta_dye_bucket"
+  }
+}

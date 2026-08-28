@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:buckets/water",
+    "#c:dyes/purple",
+    "#c:dyes/purple",
+    "#c:dyes/purple",
+    "#c:dyes/purple"
+  ],
+  "result": {
+    "id": "ragium:purple_dye_bucket"
+  }
+}

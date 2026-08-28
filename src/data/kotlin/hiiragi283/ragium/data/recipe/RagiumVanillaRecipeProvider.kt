@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.recipe
 
+import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.HTShapedRecipeBuilder
@@ -17,6 +18,7 @@ import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import java.util.concurrent.CompletableFuture
@@ -27,9 +29,11 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.common.Tags
 
 class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
+        machine()
         material()
 
         // Gunpowder
@@ -66,6 +70,26 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 result { +item }
             }.save(exporter)
         }
+
+        // XX Dye Bucket
+        for (color: HTDefaultColor in HTDefaultColor.entries) {
+            HTShapelessRecipeBuilder.create {
+                ingredient { +holderSet(Tags.Items.BUCKETS_WATER) }
+                repeat(4) { ingredient { +holderSet(color.dyesTag) } }
+                result { +RagiumFluids.DYES[color].bucketHolder }
+            }.save(exporter)
+        }
+    }
+
+    //    Machine    //
+
+    private fun machine() {
+        // Mechanical
+        // Heat
+        // Chemical
+        // Bio
+        // Electronics
+        // Arcane
     }
 
     //    Material    //

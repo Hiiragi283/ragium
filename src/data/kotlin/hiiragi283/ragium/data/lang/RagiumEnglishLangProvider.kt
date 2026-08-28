@@ -56,8 +56,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.CAOH_SOLUTION, "Calcium Hydroxide Solution")
 
         // Item
-        add(RagiumItems.TAR, "Tar")
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
+        add(RagiumItems.TAR, "Tar")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")

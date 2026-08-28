@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:buckets/water",
+    "#c:dyes/white",
+    "#c:dyes/white",
+    "#c:dyes/white",
+    "#c:dyes/white"
+  ],
+  "result": {
+    "id": "ragium:white_dye_bucket"
+  }
+}

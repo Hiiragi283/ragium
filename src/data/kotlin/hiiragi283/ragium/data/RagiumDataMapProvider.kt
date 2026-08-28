@@ -25,9 +25,9 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
     private fun furnaceFuel() {
         val builder: Builder<FurnaceFuel, Item> = builder(NeoForgeDataMaps.FURNACE_FUELS)
+        builder.add(RagiumItems.BAMBOO_CHARCOAL, FurnaceFuel(200 * 6), false)
         builder.add(RagiumItems.COAL_COKE, FurnaceFuel(200 * 16), false)
         builder.add(RagiumItems.TAR, FurnaceFuel(200 * 4), false)
-        builder.add(RagiumItems.BAMBOO_CHARCOAL, FurnaceFuel(200 * 6), false)
 
         for (fuel: HTMaterial in RagiumMaterialHelper.MANAGER[HTMaterialCategory.FUEL]) {
             val time: Int = when (fuel) {

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:buckets/water",
+    "#c:dyes/cyan",
+    "#c:dyes/cyan",
+    "#c:dyes/cyan",
+    "#c:dyes/cyan"
+  ],
+  "result": {
+    "id": "ragium:cyan_dye_bucket"
+  }
+}

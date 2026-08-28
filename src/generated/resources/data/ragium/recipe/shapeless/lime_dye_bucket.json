@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:buckets/water",
+    "#c:dyes/lime",
+    "#c:dyes/lime",
+    "#c:dyes/lime",
+    "#c:dyes/lime"
+  ],
+  "result": {
+    "id": "ragium:lime_dye_bucket"
+  }
+}
