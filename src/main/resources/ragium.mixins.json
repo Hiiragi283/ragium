@@ -4,7 +4,9 @@
   "compatibilityLevel": "JAVA_25",
   "client": [],
   "mixins": [
-    "RecipeManagerMixin"
+    "RecipeManagerMixin",
+    "RegistryFixedCodecMixin",
+    "RegistryMixin"
   ],
   "minVersion": "0.8.3"
 }
