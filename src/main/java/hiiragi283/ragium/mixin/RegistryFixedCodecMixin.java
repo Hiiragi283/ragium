@@ -5,6 +5,7 @@ import com.mojang.serialization.DynamicOps;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.RegistryFixedCodec;
+import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,6 +21,7 @@ public abstract class RegistryFixedCodecMixin<E> {
             cancellable = true)
     private <T> void ragium$encode(
             Holder<E> input, DynamicOps<T> ops, T prefix, CallbackInfoReturnable<DataResult<T>> cir) {
+        if (!DatagenModLoader.isRunningDataGen()) return;
         // 入力がDeferredHolderかつ値が紐づかない場合，IDから強制的にエンコードさせる
         if (input instanceof DeferredHolder<E, ?> holder && !holder.isBound()) {
             cir.setReturnValue(Identifier.CODEC.encode(holder.getId(), ops, prefix));

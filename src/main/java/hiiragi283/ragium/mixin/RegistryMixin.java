@@ -7,6 +7,7 @@ import com.mojang.serialization.Encoder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
+import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public interface RegistryMixin<E> {
     @Inject(method = "holderByNameCodec", at = @At("RETURN"), cancellable = true)
     private void ragium$holderByNameCodec(CallbackInfoReturnable<Codec<Holder<E>>> cir) {
+        if (!DatagenModLoader.isRunningDataGen()) return;
         Codec<Holder<E>> original = cir.getReturnValue();
         cir.setReturnValue(Codec.of(
                 new Encoder<>() {
