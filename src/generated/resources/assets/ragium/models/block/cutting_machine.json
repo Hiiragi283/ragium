@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "ragium:block/mahcine/cutting_machine_front",
+    "side": "ragium:block/machine/casing/mechanical",
+    "top": "ragium:block/machine/casing/mechanical"
+  }
+}
