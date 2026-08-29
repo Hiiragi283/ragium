@@ -2,12 +2,12 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.registry.HTDeferredItemRegister
 import hiiragi283.core.api.registry.HTSimpleDeferredItem
-import hiiragi283.core.common.item.endgame.HTCreativeItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTBatteryItem
 import hiiragi283.ragium.common.item.HTElectricIgniterItem
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
+import hiiragi283.ragium.common.item.HTMemoryDiscItem
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.world.food.Foods
@@ -25,6 +25,9 @@ data object RagiumItems {
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
+        REGISTER.addAlias("mercury_bottle", "thermometer")
+        REGISTER.addAlias("ragi_matter", "ragi_ticket")
+
         REGISTER.register(eventBus)
 
         eventBus.addListener(::modifyComponents)
@@ -38,6 +41,12 @@ data object RagiumItems {
 
     @JvmField
     val CRYO_CHARGE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cryo_charge")
+
+    @JvmField
+    val AGAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("agar")
+
+    @JvmField
+    val AGAR_MEDIUM: HTSimpleDeferredItem = REGISTER.registerSimpleItem("agar_medium")
 
     // Nether
     @JvmField
@@ -57,16 +66,19 @@ data object RagiumItems {
 
     //    Parts    //
 
-    // Basic
+    // Mechanical
 
-    // Advanced
-    @JvmField
-    val MERCURY_BOTTLE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("mercury_bottle")
+    // Heat
 
+    // Chemical
     @JvmField
     val THERMOMETER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("thermometer") { it.rarity(Rarity.UNCOMMON) }
 
-    // Elite
+    // Bio
+
+    // Cold
+
+    // Electronics
     @JvmField
     val SILICON_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_wafer")
 
@@ -79,7 +91,13 @@ data object RagiumItems {
     @JvmField
     val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit") { it.rarity(Rarity.RARE) }
 
-    // Ultimate
+    @JvmField
+    val LASER_EMITTER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("laser_emitter")
+
+    @JvmField
+    val MEMORY_DISC: HTSimpleDeferredItem = REGISTER.registerItem("memory_disc", ::HTMemoryDiscItem)
+
+    // Arcane
     @JvmField
     val ARTIFICIAL_ARTIFACT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("artificial_artifact") { it.rarity(Rarity.EPIC) }
 
@@ -120,9 +138,6 @@ data object RagiumItems {
     // Ultimate
 
     //    End Game    //
-
-    @JvmField
-    val RAGI_MATTER: HTSimpleDeferredItem = REGISTER.registerItem("ragi_matter", ::HTCreativeItem)
 
     @JvmField
     val RAGI_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)

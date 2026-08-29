@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:thermometer",
+  "parent": "ragium:heating_coil",
   "criteria": {
     "has_pyrolyzer": {
       "conditions": {

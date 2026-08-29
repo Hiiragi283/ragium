@@ -2,19 +2,17 @@ package hiiragi283.ragium
 
 import hiiragi283.core.api.data.pack.HTDynamicDatapack
 import hiiragi283.core.api.mod.HTCommonMod
+import hiiragi283.core.common.storage.energy.HTBasicItemEnergyHandler
+import hiiragi283.core.common.storage.fluid.HTBasicItemFluidTank
 import hiiragi283.core.support.capability.HTEnergyCapabilities
 import hiiragi283.core.support.capability.HTItemCapabilities
-import hiiragi283.core.common.storage.energy.HTBasicItemEnergyHandler
 import hiiragi283.core.support.storage.energy.HTInfiniteEnergyHandler
-import hiiragi283.core.common.storage.fluid.HTBasicItemFluidTank
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
-import hiiragi283.ragium.support.storage.fluid.HTInfiniteItemFluidTank
-import hiiragi283.ragium.support.storage.fluid.HTVoidItemFluidTank
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -22,6 +20,8 @@ import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMiscRegister
+import hiiragi283.ragium.support.storage.fluid.HTInfiniteItemFluidTank
+import hiiragi283.ragium.support.storage.fluid.HTVoidItemFluidTank
 import java.util.function.IntSupplier
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -42,7 +42,7 @@ data object Ragium : HTCommonMod() {
         RagiumBlocks.register(eventBus)
         RagiumItems.register(eventBus)
 
-        container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
+        container.registerConfig(ModConfig.Type.SERVER, RagiumConfig.SERVER_SPEC)
 
         HTDynamicDatapack.addDomain(RagiumAPI.MOD_ID)
 
@@ -50,13 +50,9 @@ data object Ragium : HTCommonMod() {
     }
 
     override fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMapTypes.MOB_HEAD)
-
         event.register(RagiumDataMapTypes.COOLANT)
         event.register(RagiumDataMapTypes.MAGMATIC_FUEL)
         event.register(RagiumDataMapTypes.COMBUSTION_FUEL)
-
-        event.register(RagiumDataMapTypes.MATTER_POINT)
     }
 
     override fun commonSetup(event: FMLCommonSetupEvent) {
@@ -68,7 +64,7 @@ data object Ragium : HTCommonMod() {
 
         // Item
         helper.registerItemTank(
-            { container: ItemStack -> HTBasicItemFluidTank.create(container, getCapacity(container, RagiumConfig.COMMON.tankCapacity)) },
+            { container: ItemStack -> HTBasicItemFluidTank.create(container, getCapacity(container, RagiumConfig.SERVER.tankCapacity)) },
             RagiumBlocks.TANK,
         )
         helper.registerItemTank(::HTVoidItemFluidTank, RagiumBlocks.VOID_TANK)
@@ -76,14 +72,14 @@ data object Ragium : HTCommonMod() {
 
         helper.registerItem(
             HTEnergyCapabilities,
-            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, getCapacity(container, RagiumConfig.COMMON.batteryCapacity)) },
+            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, getCapacity(container, RagiumConfig.SERVER.batteryCapacity)) },
             RagiumBlocks.BATTERY,
         )
         helper.registerItem(HTEnergyCapabilities, { HTInfiniteEnergyHandler }, RagiumBlocks.CREATIVE_BATTERY)
 
         helper.registerItem(
             HTEnergyCapabilities,
-            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, RagiumConfig.COMMON.electricIgniter.getCapacity()) },
+            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, RagiumConfig.SERVER.electricIgniter.getCapacity()) },
             RagiumItems.ELECTRIC_IGNITER,
         )
         helper.registerItem(
@@ -114,7 +110,6 @@ data object Ragium : HTCommonMod() {
         registerProcessor(RagiumBlockEntityTypes.CRUSHER.get())
         registerProcessor(RagiumBlockEntityTypes.CUTTING_MACHINE.get())
         registerProcessor(RagiumBlockEntityTypes.ELECTRIC_FURNACE.get())
-        registerProcessor(RagiumBlockEntityTypes.PLANTER.get())
 
         registerProcessor(RagiumBlockEntityTypes.FREEZER.get())
         registerProcessor(RagiumBlockEntityTypes.MELTER.get())
@@ -125,9 +120,13 @@ data object Ragium : HTCommonMod() {
         registerProcessor(RagiumBlockEntityTypes.MIXER.get())
         registerProcessor(RagiumBlockEntityTypes.WASHER.get())
 
-        registerProcessor(RagiumBlockEntityTypes.FLUID_DUPLICATOR.get())
-        // Device
+        registerProcessor(RagiumBlockEntityTypes.PLANTER.get())
+
+        registerProcessor(RagiumBlockEntityTypes.PRINTER.get())
+        registerProcessor(RagiumBlockEntityTypes.SCANNER.get())
+
         helper.registerBlockEntity(RagiumBlockEntityTypes.ENCHANTER.get())
+        registerProcessor(RagiumBlockEntityTypes.FLUID_DUPLICATOR.get())
         registerProcessor(RagiumBlockEntityTypes.MASS_FABRICATOR.get())
         // Storage
         helper.registerBlockEntity(HTItemCapabilities, RagiumBlockEntityTypes.UNIVERSAL_CHEST.get(), HTUniversalChestBlockEntity::getItemHandler)

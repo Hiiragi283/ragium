@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/stainless_steel"
+    },
+    "B": {
+      "item": "ragium:electric_circuit"
+    },
+    "C": {
+      "item": "ragium:laser_emitter"
+    },
+    "D": {
+      "tag": "c:ingots/aluminum"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "DDD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:printer"
+  }
+}

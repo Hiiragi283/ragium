@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:plates/stainless_steel"
+    },
+    "B": {
+      "tag": "c:glass_blocks/colorless"
+    },
+    "C": {
+      "tag": "c:gems/ragi_crystal"
+    },
+    "D": {
+      "item": "ragium:electric_circuit"
+    }
+  },
+  "pattern": [
+    " AB",
+    "ACA",
+    "DA "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:laser_emitter"
+  }
+}

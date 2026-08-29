@@ -13,13 +13,13 @@ import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.common.recipe.cache.completed.HTAlloyingCompletedRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
-import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.common.recipe.cache.completed.HTAlloyingCompletedRecipe
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -97,7 +97,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorB
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTAlloyingRecipe, HTAlloyingCompletedRecipe>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTAlloyingRecipe, HTAlloyingCompletedRecipe>(SoundEvents.FIRE_EXTINGUISH) {
         private val cache = AlloyingCache()
         private val topInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(topInputSlot) }
         private val leftInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(leftInputSlot) }
@@ -113,18 +113,13 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorB
             rightInputHandler,
             outputHandler,
         )
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTAlloyingCompletedRecipe) {
-            recipe.complete()
-            playSound(SoundEvents.FIRE_EXTINGUISH)
-        }
     }
 
     private class AlloyingCache : HTTripleInputRecipeCache<ItemStack, ItemStack, ItemStack, HTAlloyingRecipe>(RagiumRecipeLookups.ALLOYING) {
         override fun isEmpty(firstInput: ItemStack, secondInput: ItemStack, thirdInput: ItemStack): Boolean = firstInput.isEmpty || secondInput.isEmpty
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.alloySmelter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.alloySmelter
 }

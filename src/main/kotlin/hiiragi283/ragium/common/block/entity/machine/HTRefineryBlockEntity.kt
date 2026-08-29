@@ -8,24 +8,24 @@ import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.support.recipe.cache.HTRecipeCaches
-import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.support.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.support.recipe.handler.HTItemInputHandler
 import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.common.recipe.cache.completed.HTRefiningCompletedRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
+import hiiragi283.ragium.config.HTEnergyConfig
+import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
 import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
-import hiiragi283.ragium.config.HTEnergyConfig
-import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.common.recipe.cache.completed.HTRefiningCompletedRecipe
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -100,7 +100,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlock
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTRefiningRecipe, HTRefiningCompletedRecipe>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTRefiningRecipe, HTRefiningCompletedRecipe>(SoundEvents.LAVA_POP) {
         private val cache: HTRecipeCaches.ItemAndFluid<HTRefiningRecipe> = HTRecipeCaches.ItemAndFluid(RagiumRecipeLookups.REFINING)
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
@@ -111,14 +111,9 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlock
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTRefiningRecipe? = cache.findFirstRecipe(itemInputHandler.getStack(), fluidInputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTRefiningRecipe): HTRefiningCompletedRecipe = HTRefiningCompletedRecipe(recipe, fluidInputHandler, itemInputHandler, firstFluidOutputHandler, secondFluidOutputHandler, itemOutputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTRefiningCompletedRecipe) {
-            recipe.complete()
-            playSound(SoundEvents.LAVA_POP)
-        }
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.refinery
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.refinery
 }

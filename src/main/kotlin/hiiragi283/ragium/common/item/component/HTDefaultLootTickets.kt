@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.item.component
 
+import hiiragi283.core.api.collection.mutableEnumMapOf
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.toResource
@@ -10,7 +11,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootTable
-import java.util.EnumMap
 
 enum class HTDefaultLootTickets(val targets: HTLootTicketTargets) {
     END_CITY(BuiltInLootTables.END_CITY_TREASURE),
@@ -46,7 +46,7 @@ enum class HTDefaultLootTickets(val targets: HTLootTicketTargets) {
 
     companion object {
         @JvmStatic
-        private val ticketCache: MutableMap<HTDefaultLootTickets, HTItemResourceType> = EnumMap(HTDefaultLootTickets::class.java)
+        private val ticketCache: MutableMap<HTDefaultLootTickets, HTItemResourceType> = mutableEnumMapOf()
 
         @JvmStatic
         fun getLootTicket(lootTicket: HTDefaultLootTickets, count: Int = 1): ItemStack = ticketCache

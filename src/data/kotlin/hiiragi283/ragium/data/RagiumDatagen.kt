@@ -11,16 +11,15 @@ import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider
 import hiiragi283.ragium.data.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.model.RagiumBlockStateProvider
 import hiiragi283.ragium.data.model.RagiumItemModelProvider
+import hiiragi283.ragium.data.recipe.RagiumArcaneRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumBasicRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumBioRecipeBuilder
 import hiiragi283.ragium.data.recipe.RagiumChemicalRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumCoolRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumEnchantingRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumColdRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumFluidRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumHeatRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumMaterialRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumMatterRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumPlantingRecipeBuilder
-import hiiragi283.ragium.data.recipe.RagiumUtilitiesRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProvider
 import hiiragi283.ragium.data.recipe.integration.RagiumAERecipeProvider
 import hiiragi283.ragium.data.recipe.integration.RagiumIERecipeProvider
 import hiiragi283.ragium.data.recipe.integration.RagiumMekRecipeProvider
@@ -55,14 +54,13 @@ object RagiumDatagen {
 
         event.createProvider(::RagiumBasicRecipeProvider)
         event.createProvider(::RagiumChemicalRecipeProvider)
-        event.createProvider(::RagiumCoolRecipeProvider)
-        event.createProvider(::RagiumEnchantingRecipeProvider)
+        event.createProvider(::RagiumColdRecipeProvider)
         event.createProvider(::RagiumFluidRecipeProvider)
         event.createProvider(::RagiumHeatRecipeProvider)
         event.createProvider(::RagiumMaterialRecipeProvider)
-        event.createProvider(::RagiumMatterRecipeProvider)
-        event.createProvider(::RagiumPlantingRecipeBuilder)
-        event.createProvider(::RagiumUtilitiesRecipeProvider)
+        event.createProvider(::RagiumArcaneRecipeProvider)
+        event.createProvider(::RagiumBioRecipeBuilder)
+        event.createProvider(::RagiumVanillaRecipeProvider)
 
         event.createProvider(::RagiumAERecipeProvider)
         event.createProvider(::RagiumIERecipeProvider)
@@ -83,6 +81,6 @@ object RagiumDatagen {
         event.createProviderWithHelper(::RagiumSpriteSourceProvider)
 
         event.createProviderWithHelper(::RagiumBlockStateProvider)
-        event.createProviderWithHelper(::RagiumItemModelProvider)
+        event.createProvider(::RagiumItemModelProvider)
     }
 }

@@ -1,0 +1,34 @@
+{
+  "parent": "ragium:advanced_ragi_alloy",
+  "criteria": {
+    "has_heating_coil": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:heating_coil"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.heating_coil.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:heating_coil"
+    },
+    "title": {
+      "translate": "advancement.ragium.heating_coil.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_heating_coil"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

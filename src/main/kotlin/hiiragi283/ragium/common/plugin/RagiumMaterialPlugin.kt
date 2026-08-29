@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.plugin
 
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.material.part.HTPartLike
+import hiiragi283.core.api.material.part.HTPartKey
 import hiiragi283.core.api.material.part.property.HTPartPropertyKeys
 import hiiragi283.core.api.material.part.property.addNamePattern
 import hiiragi283.core.api.material.property.HTDefaultPart
@@ -16,17 +16,21 @@ import hiiragi283.core.api.material.property.setName
 import hiiragi283.core.api.material.property.setTextureSet
 import hiiragi283.core.api.plugin.HTMaterialPlugin
 import hiiragi283.core.api.plugin.HTPlugin
-import hiiragi283.core.api.property.add
 import hiiragi283.core.common.material.CommonMaterialKeys
+import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
+import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
+import hiiragi283.ragium.api.material.property.setMolten
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.RagiumDynamicServerResources
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.part.RagiumParts
+import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
+import net.neoforged.neoforge.fluids.FluidType
 
 @HTPlugin
 data object RagiumMaterialPlugin : HTMaterialPlugin {
@@ -35,7 +39,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
     override fun getId(): ResourceLocation = RagiumAPI.id("material_plugin")
 
     override fun registerPart(registrar: HTMaterialPlugin.PartRegistrar) {
-        registrar.register("pellet", "%s_pellet") {
+        registrar.register(RagiumParts.PELLET, "%s_pellet") {
             put(HTPartPropertyKeys.TAG_PREFIX, RagiumTagPrefixes.PELLET)
 
             addNamePattern("%s Pellet", "%sペレット")
@@ -59,7 +63,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
         existing(provider)
     }
 
-    private val materialBlockSet: Set<HTPartLike> = setOf(
+    private val materialBlockSet: Set<HTPartKey> = setOf(
         CommonParts.ORE,
         CommonParts.ORE_DEEPSLATE,
         CommonParts.ORE_NETHER,
@@ -90,6 +94,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             addItemPrefixes(CommonParts.DUST, CommonParts.RAW, CommonParts.CRUSHED_ORE)
             put(HTMaterialPropertyKeys.ORE_RESULT_MULTIPLIER, fraction(3))
             put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
+            setMolten(RagiumFluids.MOLTEN_RAGINITE)
 
             setName("Raginite", "ラギナイト")
             setTextureSet("mineral", HTMaterialTextureSet.DULL)
@@ -119,7 +124,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
 
     @JvmStatic
     private fun alloy(provider: HTMaterialPlugin.MaterialProvider) {
-        val alloySet: Set<HTPartLike> = setOf(
+        val alloySet: Set<HTPartKey> = setOf(
             CommonParts.DUST,
             CommonParts.INGOT,
             CommonParts.NUGGET,
@@ -153,8 +158,8 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             addItemPrefixes(alloySet.minus(CommonParts.WIRE))
             put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.HIGH)
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.HIGH)
-            add(HTMaterialPropertyKeys.DISABLE_SMELTING)
             put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
+            setMolten(RagiumFluids.MOLTEN_STAINLESS_STEEL)
 
             setName("Stainless Steel", "ステンレス鋼")
             setTextureSet(HTMaterialTextureSet.SHINE)
@@ -173,6 +178,20 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
 
             addItemPrefixes(CommonParts.DUST, CommonParts.INGOT, CommonParts.PLATE)
         }
+        // Molten Fluid
+        provider.getBuilder(VanillaMaterialKeys.GLASS).apply {
+            put(RagiumMaterialPropertyKeys.DEFAULT_FLUID_AMOUNT, FluidType.BUCKET_VOLUME)
+            setMolten(HCFluids.MOLTEN_GLASS)
+        }
+
+        provider.getBuilder(VanillaMaterialKeys.ENDER).setMolten(HCFluids.MOLTEN_ENDER)
+        provider.getBuilder(VanillaMaterialKeys.BLAZE).setMolten(HCFluids.MOLTEN_BLAZE)
+
+        provider.getBuilder(CommonMaterialKeys.CINNABAR)[RagiumMaterialPropertyKeys.MELT_TO] = RagiumFluids.MERCURY
+
+        provider.getBuilder(HCMaterialKeys.CRIMSON_CRYSTAL).setMolten(HCFluids.MOLTEN_CRIMSON_CRYSTAL)
+        provider.getBuilder(HCMaterialKeys.WARPED_CRYSTAL).setMolten(HCFluids.MOLTEN_WARPED_CRYSTAL)
+        provider.getBuilder(HCMaterialKeys.ELDRITCH).setMolten(HCFluids.MOLTEN_ELDRITCH)
         // Matter Value
         provider.getBuilder(VanillaMaterialKeys.AMETHYST)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 32
 

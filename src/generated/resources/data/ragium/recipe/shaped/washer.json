@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/azure_steel"
+      "tag": "c:ingots/stainless_steel"
     },
     "B": {
       "item": "minecraft:iron_bars"
@@ -12,7 +12,7 @@
       "item": "ragium:thermometer"
     },
     "D": {
-      "tag": "c:ingots/steel"
+      "tag": "c:plates/carbon"
     }
   },
   "pattern": [

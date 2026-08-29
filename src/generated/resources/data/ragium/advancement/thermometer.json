@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:alloy_smelter",
+  "parent": "ragium:heating_coil",
   "criteria": {
     "has_thermometer": {
       "conditions": {

@@ -10,20 +10,20 @@ import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.support.recipe.cache.HTRecipeCaches
-import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.core.support.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
+import hiiragi283.ragium.config.HTEnergyConfig
+import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
 import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
-import hiiragi283.ragium.config.HTEnergyConfig
-import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -71,7 +71,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTItemToFluidRecipe, HTSingleToSingleCompletedRecipe.ItemToFluid>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTItemToFluidRecipe, HTSingleToSingleCompletedRecipe.ItemToFluid>(SoundEvents.LAVA_POP) {
         private val cache: HTRecipeCaches.SingleItem<HTItemToFluidRecipe> = HTRecipeCaches.SingleItem(RagiumRecipeLookups.MELTING)
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
@@ -79,14 +79,9 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemToFluidRecipe? = cache.findFirstRecipe(inputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTItemToFluidRecipe): HTSingleToSingleCompletedRecipe.ItemToFluid = HTSingleToSingleCompletedRecipe.ItemToFluid(recipe, inputHandler, outputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTSingleToSingleCompletedRecipe.ItemToFluid) {
-            recipe.complete()
-            playSound(SoundEvents.LAVA_POP)
-        }
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.melter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.melter
 }

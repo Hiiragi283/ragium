@@ -19,8 +19,8 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.core.support.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTChemicalReactingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
@@ -90,7 +90,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +ItemTags.LOGS_THAT_BURN
                 count = 8
             }
-            +HTItemResult.MaterialPart(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
+            itemResult {
+                +HTItemResult.MaterialPartEntry(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL)
+                count = 8
+            }
             fluidResult { +RagiumFluids.CREOSOTE }
             recipeId suffix "_from_log"
         }
@@ -100,7 +103,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +tag(RagiumTagPrefixes.PELLET, VanillaMaterialKeys.WOOD)
                 count = 8
             }
-            +HTItemResult.MaterialPart(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
+            itemResult {
+                +HTItemResult.MaterialPartEntry(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL)
+                count = 8
+            }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 500
@@ -115,7 +121,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +tag(CommonTagPrefixes.FUEL, VanillaMaterialKeys.COAL)
                 count = 8
             }
-            +HTItemResult.MaterialPart(CommonParts.FUEL, CommonMaterialKeys.COAL_COKE, 8)
+            itemResult {
+                +HTItemResult.MaterialPartEntry(CommonParts.FUEL, CommonMaterialKeys.COAL_COKE)
+                count = 8
+            }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 2000
@@ -126,7 +135,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL)
                 count = 8
             }
-            +HTItemResult.MaterialPart(CommonParts.DUST, CommonMaterialKeys.COAL_COKE, 8)
+            itemResult {
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, CommonMaterialKeys.COAL_COKE)
+                count = 8
+            }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 2000
@@ -134,7 +146,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }
         pyrolyzing {
             itemIngredient { +tag(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.COAL) }
-            +HTItemResult.MaterialPart(CommonParts.BLOCK, CommonMaterialKeys.COAL_COKE)
+            itemResult { +HTItemResult.MaterialPartEntry(CommonParts.BLOCK, CommonMaterialKeys.COAL_COKE) }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 2000
@@ -267,7 +279,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
 
     private fun rubber() {
         // Raw Rubber + Sulfur -> Rubber
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             result {
                 +HCItems.CURED_RUBBER
                 count = 2
@@ -276,7 +288,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             ingredient { +tag(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR) }
         }.save(exporter)
         // Raw Rubber + Sulfur + Carbon -> Rubber
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             result {
                 +HCItems.CURED_RUBBER
                 count = 3
@@ -356,7 +368,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +RagiumFluids.CRUDE_OIL
                 amount = 500
             }
-            +HTItemResult.MaterialPart(CommonParts.FUEL, RagiumMaterialKeys.PETROLEUM_COKE)
+            itemResult { +HTItemResult.MaterialPartEntry(CommonParts.FUEL, RagiumMaterialKeys.PETROLEUM_COKE) }
             fluidResult {
                 +RagiumFluids.NAPHTHA
                 amount = 300
@@ -383,7 +395,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +RagiumFluids.OXYGEN
                 amount = 250
             }
-            +HTItemResult.MaterialPart(CommonParts.PLATE, CommonMaterialKeys.PLASTIC, 2)
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.PLATE, CommonMaterialKeys.PLASTIC)
+                count = 2
+            }
         }.save(exporter)
 
         // CH4 + H2O -> Synthetic Gas
@@ -600,8 +615,15 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     }
 
     private fun silicon() {
+        // Quartz Dust + Water -> Mineral Water
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.QUARTZ) }
+            fluidIngredient { water() }
+            fluidResult { +RagiumFluids.MINERAL_WATER }
+        }.save(exporter)
+
         // Quartz + Coal -> Crude Silicon
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             result { +RagiumItems.CRUDE_SILICON }
             ingredient { +baseOrDust(VanillaMaterialKeys.QUARTZ) }
             ingredient {
@@ -610,7 +632,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
         }.save(exporter)
         // Quartz + Coal Coke -> Crude Silicon
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             result { +RagiumItems.CRUDE_SILICON }
             ingredient { +baseOrDust(VanillaMaterialKeys.QUARTZ) }
             ingredient { +baseOrDust(CommonMaterialKeys.COAL_COKE) }
@@ -623,18 +645,18 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +RagiumFluids.SULFURIC_ACID
                 amount = 500
             }
-            +HTItemResult.MaterialPart(CommonParts.DUST, CommonMaterialKeys.SILICON)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.DUST, CommonMaterialKeys.SILICON) }
         }.save(exporter)
 
         // Quartz Dust + Gold Plate + Plastic -> Circuit Board
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             result { +RagiumItems.CIRCUIT_BOARD }
             ingredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.QUARTZ) }
             ingredient { +tag(CommonTagPrefixes.PLATE, VanillaMaterialKeys.GOLD) }
             ingredient { +HiiragiCoreTags.Items.PLASTICS }
         }.save(exporter)
         // Silicon -> Silicon Wafer
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             result { +RagiumItems.SILICON_WAFER }
             ingredient {
                 +HiiragiCoreTags.Items.SILICON
@@ -644,7 +666,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             recipeId suffix "_from_crude_silicon"
             time *= 3
         }.save(exporter)
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             result { +RagiumItems.SILICON_WAFER }
             ingredient { +tag(CommonTagPrefixes.PLATE, CommonMaterialKeys.SILICON) }
             ingredient { +tag(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGI_CRYSTAL) }
@@ -659,14 +681,45 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 count = 4
             }
         }.save(exporter)
-        // Circuit Board + Circuit chip -> Electric Circuit
-        HTCombiningRecipeBuilder.assembling {
+        // Silicon Plate -> Circuit Chip
+        RagiumRecipeBuilder.printing {
+            primary { +tag(CommonTagPrefixes.PLATE, CommonMaterialKeys.SILICON) }
+            secondary { +tag(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) }
+            result {
+                +RagiumItems.CIRCUIT_CHIP
+                count = 6
+            }
+        }.save(exporter)
+        // Circuit Board + Circuit Chip -> Electric Circuit
+        RagiumRecipeBuilder.assembling {
             result { +RagiumItems.ELECTRIC_CIRCUIT }
-            ingredient { +RagiumItems.CIRCUIT_BOARD }
-            ingredient {
+            primary { +RagiumItems.CIRCUIT_BOARD }
+            secondary {
                 +RagiumItems.CIRCUIT_CHIP
                 count = 2
             }
+        }.save(exporter)
+
+        // Laser Emitter
+        HTShapedRecipeBuilder.create {
+            +" AB"
+            +"ACA"
+            +"DA "
+            define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.STAINLESS_STEEL) }
+            define('B') { +Tags.Items.GLASS_BLOCKS_COLORLESS }
+            define('C') { +tag(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) }
+            define('D') { +RagiumItems.ELECTRIC_CIRCUIT }
+            +RagiumItems.LASER_EMITTER.toStack()
+        }.save(exporter)
+
+        // Memory Disc
+        RagiumRecipeBuilder.assembling {
+            primary { +HiiragiCoreTags.Items.PLASTICS }
+            secondary {
+                +RagiumItems.CIRCUIT_CHIP
+                count = 2
+            }
+            result { +RagiumItems.MEMORY_DISC }
         }.save(exporter)
     }
 
@@ -817,7 +870,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }.save(exporter)
 
         // Ambrosia
-        HTCombiningRecipeBuilder.alloying {
+        HTAlloyingRecipeBuilder.create {
             result { +HCItems.AMBROSIA }
             ingredient { +HCItems.IRIDESCENT_POWDER }
             ingredient {

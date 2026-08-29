@@ -3,21 +3,21 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.support.recipe.cache.HTRecipeCaches
-import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.core.support.recipe.handler.HTItemInputHandler
 import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
+import hiiragi283.ragium.api.recipe.cache.completed.HTDoubleToMultiItemCompletedRecipe
 import hiiragi283.ragium.common.block.entity.machine.base.HTMultiItemBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.config.HTEnergyConfig
+import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
 import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
-import hiiragi283.ragium.config.HTEnergyConfig
-import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.api.recipe.cache.completed.HTDoubleToMultiItemCompletedRecipe
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -43,7 +43,7 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockE
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTPlantingRecipe, HTDoubleToMultiItemCompletedRecipe.Planting>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTPlantingRecipe, HTDoubleToMultiItemCompletedRecipe.Planting>(SoundEvents.GROWING_PLANT_CROP) {
         private val cache: HTRecipeCaches.DoubleItem<HTPlantingRecipe> = HTRecipeCaches.DoubleItem(RagiumRecipeLookups.PLANTING)
 
         private val plantInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(plantSlot) }
@@ -53,14 +53,9 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockE
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTPlantingRecipe? = cache.findFirstRecipe(plantInputHandler.getStack(), soilInputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTPlantingRecipe): HTDoubleToMultiItemCompletedRecipe.Planting = HTDoubleToMultiItemCompletedRecipe.Planting(recipe, plantInputHandler, soilInputHandler, outputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTDoubleToMultiItemCompletedRecipe.Planting) {
-            recipe.complete()
-            playSound(SoundEvents.GROWING_PLANT_CROP)
-        }
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.planter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.planter
 }

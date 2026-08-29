@@ -1,5 +1,6 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -13,11 +14,13 @@ import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.common.recipe.HTPrintingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
+import hiiragi283.ragium.common.recipe.RTSmeltingRecipe
 import net.minecraft.world.item.crafting.Recipe
 
 data object RagiumRecipeTypes {
@@ -27,7 +30,7 @@ data object RagiumRecipeTypes {
     @JvmStatic
     private fun <T : Recipe<*>> create(name: String): HTRecipeType<T> = HTRecipeType<T>(RagiumAPI.id(name)).also(allTypes::add)
 
-    // Machine - Basic
+    // Mechanical
     @JvmField
     val ALLOYING: HTRecipeType<HTAlloyingRecipe> = create(RagiumConst.ALLOYING)
 
@@ -41,9 +44,9 @@ data object RagiumRecipeTypes {
     val COMPRESSING: HTRecipeType<HTCompressingRecipe> = create(RagiumConst.COMPRESSING)
 
     @JvmField
-    val PLANTING: HTRecipeType<RTPlantingRecipe> = create(RagiumConst.PLANTING)
+    val SMELTING: HTRecipeType<RTSmeltingRecipe> = create(HTConst.SMELTING)
 
-    // Machine - Advanced
+    // Heat
     @JvmField
     val FREEZING: HTRecipeType<HTFreezingRecipe> = create(RagiumConst.FREEZING)
 
@@ -59,10 +62,7 @@ data object RagiumRecipeTypes {
     @JvmField
     val REFINING: HTRecipeType<HTRefiningRecipe> = create(RagiumConst.REFINING)
 
-    @JvmField
-    val WASHING: HTRecipeType<HTWashingRecipe> = create(RagiumConst.WASHING)
-
-    // Machine - Elite
+    // Chemical
     @JvmField
     val BATHING: HTRecipeType<HTBathingRecipe> = create(RagiumConst.BATHING)
 
@@ -72,7 +72,18 @@ data object RagiumRecipeTypes {
     @JvmField
     val MIXING: HTRecipeType<HTMixingRecipe> = create(RagiumConst.MIXING)
 
-    // Machine - Ultimate
+    @JvmField
+    val WASHING: HTRecipeType<HTWashingRecipe> = create(RagiumConst.WASHING)
+
+    // Bio
+    @JvmField
+    val PLANTING: HTRecipeType<RTPlantingRecipe> = create(RagiumConst.PLANTING)
+
+    // Electronics
+    @JvmField
+    val PRINTING: HTRecipeType<HTPrintingRecipe> = create(RagiumConst.PRINTING)
+
+    // Arcane
     @JvmField
     val ENCHANTING: HTRecipeType<RTEnchantingRecipe> = create(RagiumConst.ENCHANTING)
 }

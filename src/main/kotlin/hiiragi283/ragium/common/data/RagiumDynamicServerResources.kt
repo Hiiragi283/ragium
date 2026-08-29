@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.data
 
+import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.color.HTDefaultColor
 import hiiragi283.core.api.color.VanillaColoredCollections
 import hiiragi283.core.api.component1
@@ -7,18 +8,22 @@ import hiiragi283.core.api.component2
 import hiiragi283.core.api.data.pack.HTDynamicDataRegister
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.fraction
+import hiiragi283.core.api.material.HTMaterial
+import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.HTMaterialManager
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.material.part.HTPartLike
+import hiiragi283.core.api.material.part.HTPart
+import hiiragi283.core.api.material.part.HTPartKey
 import hiiragi283.core.api.material.part.property.getScaledAmount
-import hiiragi283.core.api.material.part.tagPrefix
+import hiiragi283.core.api.material.part.property.tagPrefix
 import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTExtraOreResultMap
+import hiiragi283.core.api.material.property.HTMaterialLevel
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.property.getOrDefault
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.core.api.registry.forEachData
 import hiiragi283.core.api.registry.toLike
@@ -26,19 +31,16 @@ import hiiragi283.core.api.resource.SimpleSupplierWithKey
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.common.data.HCDynamicRecipeProvider
+import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.part.RagiumParts
 import hiiragi283.ragium.setup.RagiumFluids
-import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
-import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.tags.TagKey
 import net.minecraft.util.Mth
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import net.neoforged.neoforge.registries.datamaps.builtin.Oxidizable
@@ -51,42 +53,67 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
 
         redox()
 
-        cutWoodFromDefinition()
+        // cutWoodFromDefinition()
         cutBedToPlanks()
         waxing()
 
         // Material
-        for (entry: HTMaterialManager.Entry in materialManager) {
-            // Basic
-            compressDustToPellet(entry)
-            compressIngotToPlate(entry)
+        for (material: HTMaterial in materialManager) {
+            // Mechanical
+            compressDustToPellet(material)
+            compressIngotToPlate(material)
 
-            cutBaseToRod(entry)
-            cutBlockToPlate(entry)
+            cutBaseToRod(material)
+            cutBlockToPlate(material)
+
+            electricSmeltDustToIngot(material)
             // Heat
-            // meltPrefixToMolten(entry, CommonParts.DUST)
-            // meltPrefixToMolten(entry, CommonParts.GEM)
-            // meltPrefixToMolten(entry, CommonParts.INGOT)
-            // meltPrefixToMolten(entry, CommonParts.PEARL)
+            freezeMoltenToPrefix(material, CommonParts.DUST)
+            freezeMoltenToPrefix(material, CommonParts.INGOT)
+            freezeMoltenToPrefix(material, CommonParts.GEM)
+            freezeMoltenToPrefix(material, CommonParts.PEARL)
 
-            implodeDustToPrefix(entry, CommonParts.GEM)
-            implodeDustToPrefix(entry, CommonParts.PEARL)
-            // Cool
-            // freezeMoltenToPrefix(entry, CommonParts.DUST)
-            // freezeMoltenToPrefix(entry, CommonParts.INGOT)
-            // freezeMoltenToPrefix(entry, CommonParts.GEM)
-            // freezeMoltenToPrefix(entry, CommonParts.PEARL)
+            freezeMoltenToPrefix(material, CommonParts.GEAR)
+            freezeMoltenToPrefix(material, CommonParts.PLATE)
+            freezeMoltenToPrefix(material, CommonParts.ROD)
+            freezeMoltenToPrefix(material, CommonParts.WIRE)
 
-            // freezeMoltenToPrefix(entry, CommonParts.GEAR)
-            // freezeMoltenToPrefix(entry, CommonParts.PLATE)
-            // freezeMoltenToPrefix(entry, CommonParts.ROD)
-            // freezeMoltenToPrefix(entry, CommonParts.WIRE)
+            meltPrefixToMolten(material, CommonParts.DUST)
+            meltPrefixToMolten(material, CommonParts.GEM)
+            meltPrefixToMolten(material, CommonParts.INGOT)
+            meltPrefixToMolten(material, CommonParts.PEARL)
             // Chemical
-            washCrushedOre(entry)
+            bathDustToGem(material, CommonParts.GEM)
+            bathDustToGem(material, CommonParts.PEARL)
+
+            washCrushedOre(material)
+            // Bio
+
+            // Electronics
+
+            // Arcane
         }
     }
 
     //    Bathing    //
+
+    @JvmStatic
+    private fun bathDustToGem(material: HTMaterial, gemPart: HTPartKey) {
+        val key: HTMaterialKey = material.key
+        // 材料が存在するか判定
+        val crushedPart: HTPartKey = material.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART)
+        val crushedPrefix: HTTagPrefix = partManager[crushedPart]?.tagPrefix ?: return
+        // レシピを登録
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +tag(crushedPrefix, key) }
+            fluidIngredient {
+                +RagiumFluids.MINERAL_WATER
+                amount = 250
+            }
+            result { +HTItemResult.MaterialPartEntry(gemPart, key) }
+            recipeId suffix "_from_${crushedPart.name}"
+        }.save(exporter)
+    }
 
     @JvmStatic
     private fun redox() {
@@ -120,28 +147,29 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
     //    Compressing    //
 
     @JvmStatic
-    private fun compressDustToPellet(entry: HTMaterialManager.Entry) {
-        val key: HTMaterialKey = entry.key
+    private fun compressDustToPellet(material: HTMaterial) {
+        val key: HTMaterialKey = material.key
         // 材料が存在するか判定
-        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART).tagPrefix ?: return
+        val crushedPart: HTPartKey = material.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART)
+        val crushedPrefix: HTTagPrefix = partManager[crushedPart]?.tagPrefix ?: return
         // レシピを登録
         RagiumRecipeBuilder.compressing {
             ingredient {
                 +tag(crushedPrefix, key)
                 count = 8
             }
-            result { +HTItemResult.MaterialPart(RagiumParts.PELLET, key) }
-            recipeId suffix "_from_dust"
+            result { +HTItemResult.MaterialPartEntry(RagiumParts.PELLET, key) }
+            recipeId suffix "_from_${crushedPart.name}"
         }.save(exporter)
     }
 
     @JvmStatic
-    private fun compressIngotToPlate(entry: HTMaterialManager.Entry) {
-        val key: HTMaterialKey = entry.key
+    private fun compressIngotToPlate(material: HTMaterial) {
+        val key: HTMaterialKey = material.key
         // レシピを登録
         RagiumRecipeBuilder.compressing {
             ingredient { +tag(CommonTagPrefixes.INGOT, key) }
-            result { +HTItemResult.MaterialPart(CommonParts.PLATE, key) }
+            result { +HTItemResult.MaterialPartEntry(CommonParts.PLATE, key) }
             recipeId suffix "_from_ingot"
         }.save(exporter)
     }
@@ -149,15 +177,15 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
     //    Cutting    //
 
     @JvmStatic
-    private fun cutBaseToRod(entry: HTMaterialManager.Entry) {
-        val key: HTMaterialKey = entry.key
+    private fun cutBaseToRod(material: HTMaterial) {
+        val key: HTMaterialKey = material.key
         // 材料が存在するか判定
-        val defaultPart: HTDefaultPart = entry.getDefaultPart() ?: return
+        val defaultPart: HTDefaultPart = material.getDefaultPart() ?: return
         val inputTag: TagKey<Item> = defaultPart.getTag(key)
         // 加工の前後でタグが一致する場合はパス
         if (inputTag == CommonTagPrefixes.ROD.itemTagKey(key)) return
         // プレフィックスのスケールから個数を算出
-        val (inputCount: Int, outputCount: Int) = CommonParts.ROD.getScaledAmount(1, entry)
+        val (inputCount: Int, outputCount: Int) = partManager.get(CommonParts.ROD)?.getScaledAmount(1, material) ?: return
         // レシピを登録
         RagiumRecipeBuilder.cutting {
             ingredient {
@@ -165,31 +193,30 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
                 count = inputCount
             }
             result {
-                +HTItemResult.MaterialPart(CommonParts.ROD, key)
+                +HTItemResult.MaterialPartEntry(CommonParts.ROD, key)
                 count = outputCount
             }
-            time = HCDynamicRecipeProvider.getTimeFromHardness(entry, time * 3) ?: return
+            time = HCDynamicRecipeProvider.getTimeFromHardness(material, time * 3) ?: return
             recipeId suffix "_from_${defaultPart.getSuffix()}"
         }.save(exporter)
     }
 
     @JvmStatic
-    private fun cutBlockToPlate(entry: HTMaterialManager.Entry) {
-        val key: HTMaterialKey = entry.key
+    private fun cutBlockToPlate(material: HTMaterial) {
+        val key: HTMaterialKey = material.key
         // レシピを登録
         RagiumRecipeBuilder.cutting {
             ingredient { +tag(CommonTagPrefixes.STORAGE_BLOCK, key) }
             result {
-                +HTItemResult.MaterialPart(CommonParts.PLATE, key)
-                count = entry.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount
+                +HTItemResult.MaterialPartEntry(CommonParts.PLATE, key)
+                count = material.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount
             }
-            time = HCDynamicRecipeProvider.getTimeFromHardness(entry, time * 3) ?: (time * 3)
+            time = HCDynamicRecipeProvider.getTimeFromHardness(material, time * 3) ?: (time * 3)
             recipeId suffix "_from_block"
         }.save(exporter)
     }
 
-    @JvmStatic
-    private fun cutWoodFromDefinition() {
+    /*private fun cutWoodFromDefinition() {
         for (type: WoodType in WoodTypeRegistry.INSTANCE) {
             val planks: ItemLike = type.getItemOfThis(VanillaWoodChildKeys.PLANKS) ?: continue
             // Stripped Log -> 6x Planks
@@ -349,7 +376,7 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
                 }.save(exporter)
             }
         }
-    }
+    }*/
 
     @JvmStatic
     private fun cutBedToPlanks() {
@@ -389,71 +416,93 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
 
     //    Freezing    //
 
-    /*private fun freezeMoltenToPrefix(entry: HTMaterialManager.Entry, part: HTPartLike) {
+    private fun freezeMoltenToPrefix(material: HTMaterial, partKey: HTPartKey) {
+        val part: HTPart = partManager[partKey] ?: return
         val prefix: HTTagPrefix = part.tagPrefix ?: return
+        // 液体材料を取得
+        val molten: HTFluidContent = material[RagiumMaterialPropertyKeys.SOLIDIFY_FROM] ?: return
         // レシピを登録
-        HTFreezingRecipeBuilder.create {
-            ingredient {
-                +HTFluidPart.MOLTEN.createTagKey(entry)
-                amount = part.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
+        RagiumRecipeBuilder.freezing {
+            fluidIngredient {
+                +molten
+                amount = part.getScaledAmount(material.getOrDefault(RagiumMaterialPropertyKeys.DEFAULT_FLUID_AMOUNT), material).toInt()
             }
-            catalyst = HCDynamicRecipeProvider.getBlueprint(prefix)
-            result { +HTItemResult.MaterialPart(part, entry) }
+            itemIngredient { +HCDynamicRecipeProvider.getBlueprint(prefix) }
+            result { +HTItemResult.MaterialPartEntry(part, material.key) }
             recipeId suffix "_from_molten"
-        }.save(exporter)
-    }*/
-
-    //    Imploding    //
-
-    @JvmStatic
-    private fun implodeDustToPrefix(entry: HTMaterialManager.Entry, part: HTPartLike) {
-        val key: HTMaterialKey = entry.key
-        // 材料が存在するか判定
-        val crushedPart: HTPartLike = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART)
-        val crushedPrefix: HTTagPrefix = crushedPart.tagPrefix ?: return
-        // レシピを登録
-        RagiumRecipeBuilder.imploding {
-            ingredient { +tag(crushedPrefix, key) }
-            result { +HTItemResult.MaterialPart(part, key) }
-            recipeId suffix "from_${crushedPart.asPartName()}"
         }.save(exporter)
     }
 
     //    Melting    //
 
-    /*private fun meltPrefixToMolten(entry: HTMaterialManager.Entry, part: HTPartLike) {
+    private fun meltPrefixToMolten(material: HTMaterial, partKey: HTPartKey) {
+        val part: HTPart = partManager[partKey] ?: return
         val prefix: HTTagPrefix = part.tagPrefix ?: return
         // 素材のプロパティから液体材料を取得
-        val fluidAmount: Int = part.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
+        val fluidAmount: Int = part.getScaledAmount(material.getOrDefault(RagiumMaterialPropertyKeys.DEFAULT_FLUID_AMOUNT), material).toInt()
         // 完成品を取得
-        val molten: HTMaterialContents.FluidEntry = HiiragiCoreAccess.INSTANCE.registeredFluids[HTFluidPart.MOLTEN, entry]
-            ?: return
+        val molten: HTFluidContent = material[RagiumMaterialPropertyKeys.MELT_TO] ?: return
         // レシピを登録
         RagiumRecipeBuilder.melting {
-            ingredient { +tag(prefix, entry) }
+            ingredient { +tag(prefix, material.key) }
             result {
                 +molten
                 amount = fluidAmount
             }
-            recipeId suffix "_from_${part.asPartName()}"
-            time = HCDynamicRecipeProvider.getTimeFromMelting(entry, time) ?: return
+            recipeId suffix "_from_${partKey.name}"
+            time = HCDynamicRecipeProvider.getTimeFromMelting(material, time) ?: return
         }.save(exporter)
-    }*/
+    }
+
+    //    Smelting    //
+
+    @JvmStatic
+    private fun getItem(part: HTPartKey, key: HTMaterialKey): HTMaterialContents.ItemEntry? = HiiragiCoreAccess.INSTANCE.getMaterialBlockOrItem(part, key)
+
+    /**
+     * @see HCDynamicRecipeProvider.smeltDustToIngot
+     */
+    @JvmStatic
+    private fun electricSmeltDustToIngot(material: HTMaterial) {
+        if (HTMaterialPropertyKeys.DISABLE_SMELTING in material) return
+        val key: HTMaterialKey = material.key
+        val dust: HTMaterialContents.ItemEntry = getItem(CommonParts.DUST, key) ?: return
+        val smeltedMaterial: HTMaterialKey = material[HTMaterialPropertyKeys.SMELTED_TO] ?: key
+        val ingot: HTMaterialContents.ItemEntry = getItem(CommonParts.INGOT, smeltedMaterial) ?: return
+        // 精錬の前後がどちらも既存アイテムの場合はパス
+        if (dust.isBuiltIn && ingot.isBuiltIn) return
+        // Electric Smelting
+        val meltingPoint: HTMaterialLevel = material.getOrDefault(HTMaterialPropertyKeys.MELTING_POINT)
+        val time: Int = when (meltingPoint) {
+            HTMaterialLevel.HIGH -> 20 * 20
+            HTMaterialLevel.HIGHEST -> 20 * 30
+            else -> return
+        }
+        RagiumRecipeBuilder.smelting {
+            ingredient { +dust }
+            result { +ingot }
+            this.time = time
+            recipeId suffix "_from_${CommonParts.DUST.name}"
+        }.save(exporter)
+    }
 
     //    Washing    //
 
     @JvmStatic
-    private fun washCrushedOre(entry: HTMaterialManager.Entry) {
-        val key: HTMaterialKey = entry.key
+    private fun washCrushedOre(material: HTMaterial) {
+        val key: HTMaterialKey = material.key
         // レシピを登録
         // 水 -> 主産物 + 副産物
         RagiumRecipeBuilder.washing {
             // 材料
             ingredient { +tag(CommonTagPrefixes.CRUSHED_ORE, key) }
             // 主産物
-            result { +HTItemResult.MaterialPart(CommonParts.DUST, key, CommonParts.CRUSHED_ORE.getScaledAmount(1, entry).toInt()) }
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, key)
+                count = partManager.getOrThrow(CommonParts.CRUSHED_ORE).getScaledAmount(1, material).toInt()
+            }
             // 副産物
-            entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
+            material[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
                 ?.getResult(HTExtraOreResultMap.Phase.WASH_CRUSHED)
                 ?.let { +it }
 
@@ -468,23 +517,27 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
                 amount = 250
             }
             // 主産物
-            val outputCount: Int = CommonParts.CRUSHED_ORE
-                .getScaledAmount(fraction(3, 2), entry)
+            val outputCount: Int = partManager
+                .getOrThrow(CommonParts.CRUSHED_ORE)
+                .getScaledAmount(fraction(3, 2), material)
                 .toFloat()
                 .let(Mth::ceil)
-            result { +HTItemResult.MaterialPart(CommonParts.DUST, key, outputCount) }
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, key)
+                count = outputCount
+            }
 
             recipeId suffix "_from_crushed_ore/sulfuric_acid"
         }
         // 水銀 -> 副産物 100%
         /*HTWashingRecipeBuilder.create(output) {
-            val (baseResult: HTItemResult, chance: Fraction) = entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
+            val (baseResult: HTItemResult, chance: Fraction) = material[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
                 ?.getResult(HTExtraOreResultMap.Phase.WASH_CRUSHED)
                 ?: return
             if (chance == Fraction.ZERO) return
             val inputAmount: Fraction = 250 * chance.invert()
             // 材料
-            itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
+            itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, material)
             fluidIngredient = inputCreator.create(RagiumFluids.MERCURY, inputAmount.toInt())
             // 主産物
             this.result = baseResult

@@ -7,21 +7,21 @@ import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
-import hiiragi283.core.client.data.HCClientResourceProvider
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.client.data.RagiumClientResourceProvider
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.render.HTBatteryRenderer
+import hiiragi283.ragium.client.render.HTMemoryDiscClientTooltipComponent
 import hiiragi283.ragium.client.render.HTTankRenderer
 import hiiragi283.ragium.client.render.block.HTCrateRenderer
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
+import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumWidgetTypes
-import net.mehvahdjukaar.moonlight.api.platform.RegHelper
+import java.awt.Color
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
@@ -33,21 +33,23 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
+import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
-import java.awt.Color
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
 data object RagiumClient : HTClientMod() {
     override fun initialize(eventBus: IEventBus, container: ModContainer) {
+        eventBus.addListener { event: RegisterClientTooltipComponentFactoriesEvent ->
+            event.register(HTMemoryDiscTooltipComponent::class.java, ::HTMemoryDiscClientTooltipComponent)
+        }
+
         configScreen(container)
 
-        HCClientResourceProvider.addSupportedNamespaces(RagiumAPI.MOD_ID)
         HTDynamicResourcePack.addDomain(RagiumAPI.MOD_ID)
 
-        RegHelper.registerDynamicResourceProvider(RagiumClientResourceProvider)
         RagiumAPI.LOGGER.info("Hiiragi-Core loaded on client side")
     }
 
@@ -116,6 +118,7 @@ data object RagiumClient : HTClientMod() {
     private fun registerFluidExtensions(event: RegisterClientExtensionsEvent) {
         // Overworld
         event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
+        event.molten(RagiumFluids.MOLTEN_STAINLESS_STEEL, Color(0xb0bad0))
 
         event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
         event.clear(RagiumFluids.STEAM, Color(0xcccccc))
@@ -136,6 +139,7 @@ data object RagiumClient : HTClientMod() {
         event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
 
         event.dull(RagiumFluids.NAOH_SOLUTION, Color(0x003399))
+        event.clear(RagiumFluids.MINERAL_WATER, Color(0x6699ff))
         event.dull(RagiumFluids.MERCURY, Color(0xcc99cc))
         // Nether
         event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))

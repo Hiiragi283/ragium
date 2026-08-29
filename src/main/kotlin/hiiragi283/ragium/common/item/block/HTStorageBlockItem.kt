@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 
 abstract class HTStorageBlockItem(block: Block, properties: Properties) : HTDescriptionBlockItem(block, properties) {
-    protected fun isCreative(stack: ItemStack): Boolean = stack.`is`(RagiumTags.Items.STORAGES_CREATIVE)
+    protected fun isCreative(stack: ItemStack): Boolean = stack.`is`(RagiumTags.BlockItems.STORAGES_CREATIVE.item)
 
     final override fun isFoil(stack: ItemStack): Boolean = super.isFoil(stack) || isCreative(stack)
 

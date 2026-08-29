@@ -7,17 +7,17 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.cache.completed.HTItemOrFluidCompletedRecipe
-import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
+import hiiragi283.core.api.sounds.HTSoundInstance
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.support.recipe.cache.HTRecipeCaches
-import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.support.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.support.recipe.handler.HTItemInputHandler
 import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
 import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
@@ -25,6 +25,7 @@ import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
@@ -95,7 +96,11 @@ abstract class HTItemOrFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTItemOrFluidRecipe, HTItemOrFluidCompletedRecipe>() {
+    protected inner class ItemOrFluidProgressHandler : SimpleProgressHandler<HTItemOrFluidRecipe, HTItemOrFluidCompletedRecipe> {
+        constructor(sound: HTSoundInstance) : super(sound)
+
+        constructor(sound: SoundEvent) : super(sound)
+
         private val cache: HTRecipeCaches.ItemAndFluid<out HTItemOrFluidRecipe> = HTRecipeCaches.ItemAndFluid(getLookup())
 
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
@@ -107,16 +112,7 @@ abstract class HTItemOrFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemOrFluidRecipe? = cache.findFirstRecipe(itemInputHandler.getStack(), fluidInputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTItemOrFluidRecipe): HTItemOrFluidCompletedRecipe = HTItemOrFluidCompletedRecipe(recipe, itemInputHandler, fluidInputHandler, itemOutputHandler, fluidOutputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTItemOrFluidCompletedRecipe) {
-            recipe.complete()
-            playSound()
-        }
     }
 
-    final override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
-
     protected abstract fun getLookup(): HTRecipeLookup<HTItemOrFluidRecipe>
-
-    protected abstract fun playSound()
 }

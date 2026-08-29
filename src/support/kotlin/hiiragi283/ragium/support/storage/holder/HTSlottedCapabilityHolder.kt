@@ -3,7 +3,6 @@ package hiiragi283.ragium.support.storage.holder
 import hiiragi283.core.api.storage.holder.HTCapabilityHolder
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.Direction
-import kotlin.collections.plusAssign
 
 /**
  * @see mekanism.common.capabilities.holder.ConfigHolder

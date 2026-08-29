@@ -22,8 +22,10 @@ import hiiragi283.ragium.common.block.entity.machine.HTFurnaceBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMassFabricatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTPrinterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTScannerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTStonecutterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTWasherBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
@@ -64,7 +66,7 @@ data object RagiumBlockEntityTypes {
 
     //    Machine    //
 
-    // Basic
+    // Mechanical
     @JvmField
     val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> = registerTick(RagiumConst.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
 
@@ -86,10 +88,7 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val ELECTRIC_FURNACE: HTDeferredBlockEntityType<HTFurnaceBlockEntity> = registerTick(RagiumConst.ELECTRIC_FURNACE, ::HTFurnaceBlockEntity)
 
-    @JvmField
-    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> = registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
-
-    // Advanced
+    // Heat
     @JvmField
     val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> = registerTick(RagiumConst.FREEZER, ::HTFreezerBlockEntity)
 
@@ -102,25 +101,33 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick(RagiumConst.REFINERY, ::HTRefineryBlockEntity)
 
+    // Chemical
+    @JvmField
+    val MIXER: HTDeferredBlockEntityType<HTBreweryBlockEntity> = registerTick(RagiumConst.MIXER, ::HTBreweryBlockEntity)
+
     @JvmField
     val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> = registerTick(RagiumConst.WASHER, ::HTWasherBlockEntity)
 
-    // Elite
+    // Bio
     @JvmField
     val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> = registerTick(RagiumConst.BREWERY, ::HTBreweryBlockEntity)
 
     @JvmField
-    val MIXER: HTDeferredBlockEntityType<HTBreweryBlockEntity> = registerTick(RagiumConst.MIXER, ::HTBreweryBlockEntity)
+    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> = registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
 
-    // Ultimate
+    // Electronics
     @JvmField
-    val FLUID_DUPLICATOR: HTDeferredBlockEntityType<HTFluidDuplicatorBlockEntity> = registerTick(RagiumConst.FLUID_DUPLICATOR, ::HTFluidDuplicatorBlockEntity)
+    val PRINTER: HTDeferredBlockEntityType<HTPrinterBlockEntity> = registerTick(RagiumConst.PRINTER, ::HTPrinterBlockEntity)
 
-    //    Device    //
+    @JvmField
+    val SCANNER: HTDeferredBlockEntityType<HTScannerBlockEntity> = registerTick(RagiumConst.SCANNER, ::HTScannerBlockEntity)
 
-    // Ultimate
+    // Arcane
     @JvmField
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> = registerTick(RagiumConst.ENCHANTER, ::HTEnchanterBlockEntity)
+
+    @JvmField
+    val FLUID_DUPLICATOR: HTDeferredBlockEntityType<HTFluidDuplicatorBlockEntity> = registerTick(RagiumConst.FLUID_DUPLICATOR, ::HTFluidDuplicatorBlockEntity)
 
     @JvmField
     val MASS_FABRICATOR: HTDeferredBlockEntityType<HTMassFabricatorBlockEntity> = registerTick(RagiumConst.MASS_FABRICATOR, ::HTMassFabricatorBlockEntity)

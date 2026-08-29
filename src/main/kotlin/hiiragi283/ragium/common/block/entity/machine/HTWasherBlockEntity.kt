@@ -8,23 +8,23 @@ import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.support.recipe.cache.HTRecipeCaches
-import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.support.recipe.handler.HTItemInputHandler
 import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.machine.base.HTMultiItemBlockEntity
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.common.recipe.cache.completed.HTWashingCompletedRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
+import hiiragi283.ragium.config.HTEnergyConfig
+import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
 import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
-import hiiragi283.ragium.config.HTEnergyConfig
-import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.common.recipe.cache.completed.HTWashingCompletedRecipe
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -84,7 +84,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockEn
 
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTWashingRecipe, HTWashingCompletedRecipe>() {
+    private inner class ProgressHandlerImpl : SimpleProgressHandler<HTWashingRecipe, HTWashingCompletedRecipe>(SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE) {
         private val cache: HTRecipeCaches.ItemAndFluid<HTWashingRecipe> = HTRecipeCaches.ItemAndFluid(RagiumRecipeLookups.WASHING)
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
@@ -93,14 +93,9 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockEn
         override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTWashingRecipe? = cache.findFirstRecipe(itemInputHandler.getStack(), fluidInputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTWashingRecipe): HTWashingCompletedRecipe = HTWashingCompletedRecipe(recipe, itemInputHandler, fluidInputHandler, outputHandler)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTWashingCompletedRecipe) {
-            recipe.complete()
-            playSound(SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE)
-        }
     }
 
-    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
+    override fun createHandler(): HTProgressHandler = ProgressHandlerImpl()
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.washer
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.washer
 }

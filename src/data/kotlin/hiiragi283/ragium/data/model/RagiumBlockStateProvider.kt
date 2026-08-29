@@ -34,6 +34,7 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
 
     override fun registerStatesAndModels() {
         // Material
+        simpleBlockAndItem(RagiumBlocks.HEATING_COIL, models().getExistingFile(RagiumBlocks.HEATING_COIL.blockId))
         cubeColumn(RagiumBlocks.INDUSTRIAL_TNT)
         // Machine
         frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, RagiumConst.MACHINE, basic)

@@ -13,7 +13,7 @@ import hiiragi283.core.support.gui.sync.HTFractionSyncSlot
 import hiiragi283.ragium.api.RagiumConst
 import org.apache.commons.lang3.math.Fraction
 
-class HTRecipeComponent(owner: HTBlockEntity, private val handler: HTProgressHandler<*>) :
+class HTRecipeComponent(owner: HTBlockEntity, private val handler: HTProgressHandler) :
     HTBlockEntityComponent,
     DataComponentSerializable.Empty {
     init {

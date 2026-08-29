@@ -30,7 +30,7 @@ class HTCreativeCrateBlockEntity(pos: BlockPos, state: BlockState) : HTCrateBloc
 
     private inner class CreativeItemSlot :
         HTItemStackResourceSlot(),
-        HTContentListener.Empty {
+        HTContentListener by HTContentListener.NOTHING {
         private var item: HTItemResourceType? = null
 
         override fun getStack(): ItemStack = item.toStackOrEmpty(Int.MAX_VALUE)

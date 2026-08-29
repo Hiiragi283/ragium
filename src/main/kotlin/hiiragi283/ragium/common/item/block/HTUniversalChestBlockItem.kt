@@ -30,9 +30,9 @@ class HTUniversalChestBlockItem(block: HTUniversalChestBlock, properties: Proper
     //    HTSubCreativeTabContents    //
 
     override fun addItems(baseItem: Holder<Item>, parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output) {
-        HTDefaultColor.entries
-            .map { color: HTDefaultColor -> createItemStack(baseItem.value(), HCDataComponents.COLOR, color) }
-            .forEach(output::accept)
+        for (color: HTDefaultColor in HTDefaultColor.entries) {
+            createItemStack(baseItem.value(), HCDataComponents.COLOR, color).let(output::accept)
+        }
     }
 
     override fun shouldAddDefault(): Boolean = false

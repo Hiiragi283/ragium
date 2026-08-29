@@ -8,6 +8,7 @@ import hiiragi283.core.api.data.recipe.HTItemResultBuilder
 import hiiragi283.core.api.data.recipe.HTProgressRecipeBuilder
 import hiiragi283.core.api.data.recipe.IngredientBuilder
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.util.HTDelegates
@@ -19,7 +20,6 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.crafting.Ingredient
 
 class HTRefiningRecipeBuilder : HTProgressRecipeBuilder<HTRefiningRecipe>(RagiumConst.REFINING) {
     companion object {
@@ -34,26 +34,22 @@ class HTRefiningRecipeBuilder : HTProgressRecipeBuilder<HTRefiningRecipe>(Ragium
 
     @PublishedApi internal var ingredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
-    @PublishedApi internal var catalyst: Option<Ingredient> by HTDelegates.optionalOnceInitialize()
+    @PublishedApi internal var catalyst: Option<HTItemIngredient> by HTDelegates.onceInitialize { Option.none() }
 
     @PublishedApi internal val fluidResults: MutableList<HTFluidResult> = mutableListOf()
 
-    @PublishedApi internal var itemResult: Option<HTItemResult> by HTDelegates.optionalOnceInitialize()
+    @PublishedApi internal var itemResult: Option<HTItemResult> by HTDelegates.onceInitialize { Option.none() }
 
     operator fun HTFluidIngredient.unaryPlus() {
         ingredient = this
     }
 
-    operator fun Ingredient.unaryPlus() {
+    operator fun HTItemIngredient.unaryPlus() {
         catalyst = this.some()
     }
 
     operator fun HTFluidResult.unaryPlus() {
         fluidResults += this
-    }
-
-    operator fun HTItemResult.unaryPlus() {
-        itemResult = this.some()
     }
 
     inline fun fluidIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
@@ -67,7 +63,7 @@ class HTRefiningRecipeBuilder : HTProgressRecipeBuilder<HTRefiningRecipe>(Ragium
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder().apply(builderAction).build()
+        +IngredientBuilder().apply(builderAction).buildSized()
     }
 
     inline fun fluidResult(builderAction: HTFluidResultBuilder.() -> Unit) {
@@ -81,7 +77,7 @@ class HTRefiningRecipeBuilder : HTProgressRecipeBuilder<HTRefiningRecipe>(Ragium
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HTItemResultBuilder().apply(builderAction).build()
+        itemResult = Option.some(HTItemResultBuilder().apply(builderAction).build())
     }
 
     override fun getPrimalId(): ResourceLocation = fluidResults[0].getId()

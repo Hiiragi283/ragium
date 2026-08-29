@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.recipe.cache.completed
 
-import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTInputHandler
 import hiiragi283.core.api.recipe.handler.HTOutputHandler
@@ -17,10 +16,10 @@ class HTRefiningCompletedRecipe(
     private val firstFluidOutputHandler: HTOutputHandler<FluidStack>,
     private val secondFluidOutputHandler: HTOutputHandler<FluidStack>,
     private val itemOutputHandler: HTOutputHandler<ItemStack>,
-) : HTCompletedRecipe.WithProgress<HTRefiningRecipe>(recipe) {
-    val output: HTChemicalResult = recipe.assemble(itemInputHandler.getStack(), fluidInputHandler.getStack())
+) : HTCompletedRecipe.WithProgress<HTItemAndFluidRecipeInput, HTRefiningRecipe>(recipe) {
+    val output: HTChemicalResult = recipe.assemble(input)
 
-    override fun getProgress(): HTProgressData = HTItemAndFluidRecipeInput(itemInputHandler.getStack(), fluidInputHandler.getStack()).let(recipe::getProgressData)
+    override fun createInput(): HTItemAndFluidRecipeInput = HTItemAndFluidRecipeInput(itemInputHandler.getStack(), fluidInputHandler.getStack())
 
     override fun canComplete(): Boolean {
         val (item: ItemStack, first: FluidStack, second: FluidStack) = output

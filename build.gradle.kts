@@ -381,7 +381,6 @@ spotless {
         target("src/**/*.kt")
         ktlint().editorConfigOverride(
             mapOf(
-                "ktlint_standard_import-ordering" to "disabled",
                 "ktlint_standard_comment-spacing" to "disabled",
             ),
         )
@@ -409,8 +408,8 @@ publishMods {
     modLoaders.add("neoforge")
 
     curseforge {
-        accessToken = providers.gradleProperty("CURSEFORGE_TOKEN")
-        projectId = providers.gradleProperty("CURSEFORGE_RAGIUM")
+        accessToken = providers.environmentVariable("CURSEFORGE")
+        projectId = "1299885"
         minecraftVersions.add(mcVersion)
         changelogType = "markdown"
         announcementTitle = "Download from CurseForge"
@@ -422,26 +421,29 @@ publishMods {
 
         requires("kotlin-for-forge")
         requires("selene")
+        requires("hiiragi-core")
         optional("jei")
         optional("guideme")
     }
     modrinth {
-        accessToken = providers.gradleProperty("MODRINTH_TOKEN")
-        projectId = providers.gradleProperty("MODRINTH_RAGIUM")
+        accessToken = providers.environmentVariable("MODRINTH")
+        projectId = "jBgE71lF"
         minecraftVersions.add(mcVersion)
         announcementTitle = "Download from Modrinth"
 
         requires("kotlin-for-forge")
         requires("moonlight")
+        requires("hiiragi-core")
         optional("jei")
         optional("guideme")
     }
     discord {
-        webhookUrl = providers.gradleProperty("DISCORD_TOKEN")
-        username = "Hiiragi Series Announcement"
+        webhookUrl = providers.environmentVariable("DISCORD")
+        username = "Ragium Announcement"
+        avatarUrl = "https://github.com/hiiragi283.png"
         content = changelog.map {
             """
-            ## 新しいバージョン「${rootProject.version}」がリリースされました！
+            ## Ragiumの新しいバージョン「${rootProject.version}」がリリースされました！
             ## Changelog
             $it
             """.trimIndent()

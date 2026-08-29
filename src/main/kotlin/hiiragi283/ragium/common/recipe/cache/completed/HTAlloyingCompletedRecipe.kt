@@ -1,12 +1,11 @@
 package hiiragi283.ragium.common.recipe.cache.completed
 
-import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTInputHandler
 import hiiragi283.core.api.recipe.handler.HTOutputHandler
-import hiiragi283.core.api.recipe.input.HTItemListRecipeInput
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeInput
 
 class HTAlloyingCompletedRecipe(
     recipe: HTAlloyingRecipe,
@@ -14,17 +13,10 @@ class HTAlloyingCompletedRecipe(
     private val secondaryInputHandler: HTInputHandler<ItemStack>,
     private val tertiaryInputHandler: HTInputHandler<ItemStack>,
     private val outputHandler: HTOutputHandler<ItemStack>,
-) : HTCompletedRecipe.WithProgress<HTAlloyingRecipe>(recipe) {
-    private val output: ItemStack = recipe.assemble(
-        primaryInputHandler.getStack(),
-        secondaryInputHandler.getStack(),
-        tertiaryInputHandler.getStack(),
-    )
+) : HTCompletedRecipe.WithProgress<RecipeInput, HTAlloyingRecipe>(recipe) {
+    private val output: ItemStack = recipe.assemble(input)
 
-    override fun getProgress(): HTProgressData = listOf(primaryInputHandler, secondaryInputHandler, tertiaryInputHandler)
-        .map(HTInputHandler<ItemStack>::getStack)
-        .let(::HTItemListRecipeInput)
-        .let(recipe::getProgressData)
+    override fun createInput(): RecipeInput = TODO()
 
     override fun canComplete(): Boolean = outputHandler.canInsert(output)
 

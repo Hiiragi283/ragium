@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
@@ -10,6 +9,7 @@ import hiiragi283.core.api.recipe.base.HTRecipeFactories
 import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -29,15 +29,12 @@ class HTAlloyingRecipe(
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTAlloyingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<HTAlloyingRecipe> = HTCodecs.recordMap { instance ->
             instance
                 .group(
-                    HTItemIngredient.CODEC
-                        .listOf(2, 3)
-                        .fieldOf(HTConst.INGREDIENT)
-                        .forGetter { listOfNotNull(it.primary, it.secondary, it.tertiary) },
+                    HTItemIngredient.CODEC.listOf(2, 3).fieldOf(HTConst.INGREDIENT).forGetter { listOfNotNull(it.primary, it.secondary, it.tertiary) },
                     HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTAlloyingRecipe::result),
-                    HTProgressData.CODEC.forGetter { it.progressData },
+                    HTProgressData.CODEC.forGetter(HTAlloyingRecipe::progressData),
                 ).apply(instance, ::HTAlloyingRecipe)
         }
     }
@@ -61,7 +58,7 @@ class HTAlloyingRecipe(
         tertiary?.getMatchingStack(third) ?: ItemStack.EMPTY,
     )
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: ItemStack): ItemStack = result.createOrEmpty()
+    override fun apply(first: ItemStack, second: ItemStack, third: ItemStack): ItemStack = result.createOrEmpty()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ALLOYING
 

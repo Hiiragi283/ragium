@@ -9,16 +9,16 @@ import hiiragi283.core.support.storage.item.HTItemStackResourceSlot
 import hiiragi283.ragium.api.block.entity.HTBlockEntityWithMenu
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.config.RagiumConfig
+import java.util.function.IntSupplier
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.block.state.BlockState
-import java.util.function.IntSupplier
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(type, pos, state),
     HTBlockEntityWithMenu {
-    protected fun getTankCapacity(): IntSupplier = RagiumConfig.COMMON.machine.tankCapacity
+    protected fun getTankCapacity(): IntSupplier = RagiumConfig.SERVER.machine.tankCapacity
 
     fun isActive(): Boolean = isActive(this.blockState)
 

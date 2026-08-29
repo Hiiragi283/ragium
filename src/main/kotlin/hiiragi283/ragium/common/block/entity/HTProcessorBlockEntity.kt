@@ -5,13 +5,16 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
+import hiiragi283.core.api.recipe.handler.HTTypedProgressHandler
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.serialization.value.read
 import hiiragi283.core.api.serialization.value.write
+import hiiragi283.core.api.sounds.HTSoundInstance
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.common.gui.widget.HTProgressWidget
@@ -19,16 +22,17 @@ import hiiragi283.core.support.gui.sync.HTIntSyncSlot
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.energy.HTMachineEnergyHandler
+import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTMachineBlockEntity(type, pos, state) {
-    protected lateinit var recipeHandler: HTProgressHandler<*>
+    protected lateinit var recipeHandler: HTProgressHandler
         private set
     protected lateinit var recipeComponent: HTRecipeComponent
         private set
@@ -39,7 +43,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
         recipeComponent = HTRecipeComponent(this, recipeHandler)
     }
 
-    protected abstract fun createHandler(): HTProgressHandler<*>
+    protected abstract fun createHandler(): HTProgressHandler
 
     fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4), vararg recipeTypes: HTRecipeViewerType<*>) {
         widgetHolder += HTProgressWidget.createArrow(
@@ -81,7 +85,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
     //    RecipeHandler    //
 
-    abstract class RecipeHandler<RECIPE : Any, COMP : HTCompletedRecipe<RECIPE>> : HTProgressHandler<COMP>() {
+    abstract inner class RecipeHandler<RECIPE : Any, COMP : HTCompletedRecipe<RECIPE>> : HTTypedProgressHandler<COMP>() {
         final override fun findRecipe(level: ServerLevel, pos: BlockPos): COMP? = findFirstRecipe(level, pos)?.let(::completeRecipe)
 
         protected abstract fun findFirstRecipe(level: ServerLevel, pos: BlockPos): RECIPE?
@@ -89,6 +93,13 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
         protected abstract fun completeRecipe(recipe: RECIPE): COMP
 
         override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: COMP): Boolean = recipe.canComplete()
+
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: COMP) {
+            recipe.complete()
+            playSound(getCompleteSound())
+        }
+
+        protected abstract fun getCompleteSound(): HTSoundInstance
     }
 
     //    Energized    //
@@ -130,13 +141,19 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
         //    ProgressHandler    //
 
-        abstract inner class ProgressHandler<RECIPE : Any, COMP : HTCompletedRecipe.WithProgress<RECIPE>> : RecipeHandler<RECIPE, COMP>() {
+        abstract inner class ProgressHandler<RECIPE : HTProgressRecipe<*>, COMP : HTCompletedRecipe.WithProgress<*, RECIPE>> : RecipeHandler<RECIPE, COMP>() {
             override fun getMaxProgress(recipe: COMP): Int = recipe
                 .getProgress()
                 .getProcessTime(handler.currentEnergyPerTick)
                 .let(::updateAndGetProgress)
 
             final override fun getProgress(level: ServerLevel, pos: BlockPos): Int = handler.consume()
+        }
+
+        abstract inner class SimpleProgressHandler<RECIPE : HTProgressRecipe<*>, COMP : HTCompletedRecipe.WithProgress<*, RECIPE>>(private val sound: HTSoundInstance) : ProgressHandler<RECIPE, COMP>() {
+            constructor(sound: SoundEvent) : this(HTSoundInstance(sound))
+
+            final override fun getCompleteSound(): HTSoundInstance = sound
         }
     }
 }

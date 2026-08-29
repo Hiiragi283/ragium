@@ -50,12 +50,12 @@ class RagiumMaterialRecipeProvider(packOutput: PackOutput, future: CompletableFu
         // Raw Meat -> Minced Meat
         HCRecipeBuilders.crushing {
             ingredient { +listOf(Tags.Items.FOODS_RAW_MEAT, Tags.Items.FOODS_RAW_FISH) }
-            +HTItemResult.MaterialPart(CommonParts.DUST, RagiumMaterialKeys.MEAT)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.DUST, RagiumMaterialKeys.MEAT) }
         }.save(exporter)
         // Minced Meat -> Meat Ingot
         RagiumRecipeBuilder.compressing {
             ingredient { +tag(CommonTagPrefixes.DUST, RagiumMaterialKeys.MEAT) }
-            +HTItemResult.MaterialPart(CommonParts.INGOT, RagiumMaterialKeys.MEAT)
+            result { +HTItemResult.MaterialPartEntry(CommonParts.INGOT, RagiumMaterialKeys.MEAT) }
         }.save(exporter)
         // Meat Ingot -> Cooked Meat Ingot
         HTCookingRecipeBuilder.smeltingAndSmoking {

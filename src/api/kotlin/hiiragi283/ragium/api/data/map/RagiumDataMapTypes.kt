@@ -3,17 +3,10 @@ package hiiragi283.ragium.api.data.map
 import com.mojang.serialization.Codec
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.storage.item.toResource
 import hiiragi283.ragium.api.RagiumAPI
-import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
@@ -22,10 +15,6 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType
  * @see mekanism.api.datamaps.IMekanismDataMapTypes
  */
 data object RagiumDataMapTypes {
-    // Entity Type
-    @JvmField
-    val MOB_HEAD: DataMapType<EntityType<*>, Holder<Item>> = create("mob_head", Registries.ENTITY_TYPE, HTCodecs.holder(Registries.ITEM))
-
     // Fluid
     @JvmField
     val COOLANT: DataMapType<Fluid, Int> = create("coolant", Registries.FLUID, HTCodecs.POSITIVE_INT)
@@ -36,22 +25,7 @@ data object RagiumDataMapTypes {
     @JvmField
     val COMBUSTION_FUEL: DataMapType<Fluid, Int> = createFuel("combustion")
 
-    // Item
-    @JvmField
-    val MATTER_POINT: DataMapType<Item, Int> = create("matter_point", Registries.ITEM, HTCodecs.POSITIVE_INT)
-
     //    Extensions    //
-
-    /**
-     * 指定した[entity]からエンチャントでドロップするモブの頭を取得します。
-     */
-    @JvmStatic
-    @Suppress("DEPRECATION")
-    fun getMobHead(entity: Entity): ItemStack = entity.type
-        .builtInRegistryHolder()
-        .getData(MOB_HEAD)
-        ?.let(::ItemStack)
-        ?: ItemStack.EMPTY
 
     /**
      * 指定した[resource]から，一度の処理に必要な冷却材の使用量を取得します。
@@ -70,15 +44,6 @@ data object RagiumDataMapTypes {
      */
     @JvmStatic
     fun getTimeFromCombustion(resource: HTFluidResourceType): Int = resource.getData(COMBUSTION_FUEL) ?: 0
-
-    @JvmStatic
-    fun getMatterPoint(resource: HTItemResourceType): Int = resource.getData(MATTER_POINT) ?: 0
-
-    @JvmStatic
-    fun getTotalMatterPoint(stack: ItemStack): Int {
-        val base: Int = stack.toResource()?.let(::getMatterPoint) ?: return 0
-        return base * stack.count
-    }
 
     @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: Codec<T>): DataMapType<R, T> = DataMapType

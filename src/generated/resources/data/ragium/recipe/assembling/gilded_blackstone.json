@@ -1,18 +1,16 @@
 {
   "type": "ragium:assembling",
-  "ingredient": [
-    {
-      "amount": 1,
-      "items": "minecraft:blackstone"
-    },
-    {
-      "amount": 8,
-      "items": "#c:dusts/gold"
-    }
-  ],
+  "primary": {
+    "amount": 1,
+    "items": "minecraft:blackstone"
+  },
   "result": {
     "count": 1,
     "id": "minecraft:gilded_blackstone"
+  },
+  "secondary": {
+    "amount": 8,
+    "items": "#c:dusts/gold"
   },
   "time": 200
 }

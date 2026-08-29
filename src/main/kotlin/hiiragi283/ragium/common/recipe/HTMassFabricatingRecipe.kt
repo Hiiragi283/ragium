@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.serialization.codec.HTCodecs
 import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.item.ItemStack
 
@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack
 data class HTMassFabricatingRecipe(val stack: ItemStack, val point: Int) {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTMassFabricatingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<HTMassFabricatingRecipe> = HTCodecs.recordMap { instance ->
             instance
                 .group(
                     ItemStack.CODEC.fieldOf(HTConst.ITEM).forGetter(HTMassFabricatingRecipe::stack),

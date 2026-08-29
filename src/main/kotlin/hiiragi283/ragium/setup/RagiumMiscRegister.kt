@@ -1,15 +1,15 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.HCRegistries
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.gui.widget.HTWidgetType
 import hiiragi283.core.api.item.HTCreativeModeTabHelper
-import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.recipe.ingredient.HTMemoryDiscIngredient
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
 import net.neoforged.neoforge.registries.NeoForgeRegistries
@@ -22,7 +22,7 @@ internal data object RagiumMiscRegister {
         event.register(Registries.CREATIVE_MODE_TAB) { helper ->
             helper.register(
                 RagiumCreativeTabs.COMMON,
-                HTCreativeModeTabHelper.createSimpleTab(RagiumTranslation.RAGIUM, HTSimpleDeferredItem(CommonParts.INGOT.createId(RagiumMaterialKeys.RAGI_ALLOY))) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+                HTCreativeModeTabHelper.createSimpleTab(RagiumTranslation.RAGIUM, HTSimpleDeferredItem(RagiumAPI.id("ragi_alloy_ingot"))) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     // Items
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, RagiumItems.REGISTER.asSequence())
                     // Blocks
@@ -37,6 +37,7 @@ internal data object RagiumMiscRegister {
             helper.register(RagiumAPI.id("capacity_scale"), RagiumDataComponents.CAPACITY_SCALE)
             helper.register(RagiumAPI.id("charge_power"), RagiumDataComponents.CHARGE_POWER)
             helper.register(RagiumAPI.id("loot_ticket"), RagiumDataComponents.LOOT_TICKET)
+            helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
             helper.register(RagiumAPI.id("spawner_mob"), RagiumDataComponents.SPAWNER_MOB)
         }
         // Recipe Serializer
@@ -46,19 +47,25 @@ internal data object RagiumMiscRegister {
 
             helper.register(RagiumAPI.id(RagiumConst.ALLOYING), RagiumRecipeSerializers.ALLOYING)
             helper.register(RagiumAPI.id(RagiumConst.ASSEMBLING), RagiumRecipeSerializers.ASSEMBLING)
-            helper.register(RagiumAPI.id(RagiumConst.PRINTING), RagiumRecipeSerializers.PRINTING)
             helper.register(RagiumAPI.id(RagiumConst.CUTTING), RagiumRecipeSerializers.CUTTING)
             helper.register(RagiumAPI.id(RagiumConst.COMPRESSING), RagiumRecipeSerializers.COMPRESSING)
-            helper.register(RagiumAPI.id(RagiumConst.PLANTING), RagiumRecipeSerializers.PLANTING)
+            helper.register(RagiumAPI.id(HTConst.SMELTING), RagiumRecipeSerializers.SMELTING)
+
             helper.register(RagiumAPI.id(RagiumConst.FREEZING), RagiumRecipeSerializers.FREEZING)
             helper.register(RagiumAPI.id(RagiumConst.IMPLODING), RagiumRecipeSerializers.IMPLODING)
             helper.register(RagiumAPI.id(RagiumConst.MELTING), RagiumRecipeSerializers.MELTING)
             helper.register(RagiumAPI.id(RagiumConst.PYROLYZING), RagiumRecipeSerializers.PYROLYZING)
             helper.register(RagiumAPI.id(RagiumConst.REFINING), RagiumRecipeSerializers.REFINING)
-            helper.register(RagiumAPI.id(RagiumConst.WASHING), RagiumRecipeSerializers.WASHING)
+
             helper.register(RagiumAPI.id(RagiumConst.BATHING), RagiumRecipeSerializers.BATHING)
             helper.register(RagiumAPI.id(RagiumConst.CHEMICAL_REACTING), RagiumRecipeSerializers.CHEMICAL_REACTING)
             helper.register(RagiumAPI.id(RagiumConst.MIXING), RagiumRecipeSerializers.MIXING)
+            helper.register(RagiumAPI.id(RagiumConst.WASHING), RagiumRecipeSerializers.WASHING)
+
+            helper.register(RagiumAPI.id(RagiumConst.PLANTING), RagiumRecipeSerializers.PLANTING)
+
+            helper.register(RagiumAPI.id(RagiumConst.PRINTING), RagiumRecipeSerializers.PRINTING)
+
             helper.register(RagiumAPI.id(RagiumConst.ENCHANTING, "holder"), RagiumRecipeSerializers.HOLDER_ENCHANTING)
         }
         // Recipe Type
@@ -71,6 +78,10 @@ internal data object RagiumMiscRegister {
         // Attachment Type
         event.register(NeoForgeRegistries.Keys.ATTACHMENT_TYPES) { helper ->
             helper.register(RagiumAPI.id(RagiumConst.UNIVERSAL_CHEST), RagiumAttachmentTypes.UNIVERSAL_CHEST)
+        }
+        // Ingredient Type
+        event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES) { helper ->
+            helper.register(RagiumAPI.id("memory_disc"), HTMemoryDiscIngredient.TYPE)
         }
 
         // Widget Type

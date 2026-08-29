@@ -27,12 +27,12 @@ import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.support.storage.fluid.HTFluidStackResourceSlot
 import hiiragi283.core.support.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
 import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
-import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
@@ -64,7 +64,7 @@ open class HTTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Blo
         return builder.build()
     }
 
-    protected open fun createTank(listener: HTContentListener): HTFluidStackResourceSlot = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.tankCapacity) }
+    protected open fun createTank(listener: HTContentListener): HTFluidStackResourceSlot = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.SERVER.tankCapacity) }
 
     final override fun getAmountView(): HTAmountView = tank
 
@@ -156,7 +156,7 @@ open class HTTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Blo
         val stack: ItemStack = inputHandler.getItemStack()
         val recipe: HTTankEmptyingRecipe = emptyingCache.findFirstRecipe(stack, level) ?: return false
 
-        val (item: ItemStack, fluid: FluidStack) = recipe.assemble(stack)
+        val (item: ItemStack, fluid: FluidStack) = recipe.apply(stack)
         if (outputHandler.canInsert(item) && fluidOutputHandler.canInsert(fluid)) {
             // outputs
             outputHandler.insert(item)
@@ -175,7 +175,7 @@ open class HTTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Blo
 
         val recipe: HTTankFillingRecipe = fillingCache.findFirstRecipe(itemStack, fluidStack, level) ?: return false
 
-        val filledContainer: ItemStack = recipe.assemble(itemStack, fluidStack)
+        val filledContainer: ItemStack = recipe.apply(itemStack, fluidStack)
         if (outputHandler.canInsert(filledContainer)) {
             outputHandler.insert(filledContainer)
             recipe.getMatchingStacks(itemStack, fluidStack).let { (first: ItemStack, second: FluidStack) ->
@@ -212,6 +212,6 @@ open class HTTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Blo
     //    Simple    //
 
     class Simple(pos: BlockPos, state: BlockState) : HTTankBlockEntity(RagiumBlockEntityTypes.TANK.get(), pos, state) {
-        override fun createTank(listener: HTContentListener): HTBasicFluidTank = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.tankCapacity) }
+        override fun createTank(listener: HTContentListener): HTBasicFluidTank = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.SERVER.tankCapacity) }
     }
 }

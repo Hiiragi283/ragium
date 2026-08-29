@@ -6,13 +6,16 @@
     }
   ],
   "type": "ragium:freezing",
-  "catalyst": {
-    "type": "hiiragi_core:blue_print",
-    "number": 1
-  },
-  "ingredient": {
+  "fluid_ingredient": {
     "amount": 1000,
     "fluids": "#c:phenolic_resin"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": {
+      "type": "hiiragi_core:blue_print",
+      "number": 1
+    }
   },
   "result": {
     "count": 1,

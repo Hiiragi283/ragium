@@ -1,18 +1,16 @@
 {
   "type": "ragium:assembling",
-  "ingredient": [
-    {
-      "amount": 1,
-      "items": "minecraft:dirt"
-    },
-    {
-      "amount": 8,
-      "items": "#minecraft:leaves"
-    }
-  ],
+  "primary": {
+    "amount": 1,
+    "items": "minecraft:dirt"
+  },
   "result": {
     "count": 1,
     "id": "minecraft:podzol"
+  },
+  "secondary": {
+    "amount": 8,
+    "items": "#minecraft:leaves"
   },
   "time": 200
 }

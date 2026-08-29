@@ -5,6 +5,7 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCRecipeLookups
@@ -19,10 +20,6 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CRUSHER.get(), pos, state) {
-    override fun playSound() {
-        playSound(SoundEvents.GRINDSTONE_USE)
-    }
-
     override fun getOutputSlotSize(): Int = 4
 
     override fun setupOutputSlots(widgetHolder: HTWidgetHolder) {
@@ -40,7 +37,9 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItem
 
     override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(HCRecipeViewerTypes.CRUSHING)
 
+    override fun createHandler(): HTProgressHandler = ItemToMultiItemProgressHandler(SoundEvents.GRINDSTONE_USE)
+
     override fun getLookup(): HTRecipeLookup<HTItemToMultiItemRecipe> = HCRecipeLookups.CRUSHING
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.crusher
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.crusher
 }

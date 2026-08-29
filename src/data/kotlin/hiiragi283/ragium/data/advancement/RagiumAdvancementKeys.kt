@@ -12,19 +12,19 @@ object RagiumAdvancementKeys {
     @JvmStatic
     val ROOT: AdvancementKey = create("root")
 
-    // Basic
+    // Mechanical
     @JvmStatic
     val RAGI_ALLOY: AdvancementKey = create(RagiumMaterialKeys.RAGI_ALLOY)
 
     @JvmStatic
     val ALLOY_SMELTER: AdvancementKey = create(RagiumConst.ALLOY_SMELTER)
 
-    // Advanced
-    @JvmStatic
-    val THERMOMETER: AdvancementKey = create("thermometer")
-
+    // Heat
     @JvmStatic
     val ADVANCED_RAGI_ALLOY: AdvancementKey = create(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+
+    @JvmStatic
+    val HEATING_COIL: AdvancementKey = create("heating_coil")
 
     @JvmStatic
     val REFINERY: AdvancementKey = create(RagiumConst.REFINERY)
@@ -44,23 +44,31 @@ object RagiumAdvancementKeys {
     @JvmStatic
     val WARPED_CRYSTAL: AdvancementKey = create(HCMaterialKeys.WARPED_CRYSTAL)
 
-    // Elite
-    @JvmStatic
-    val RAGI_CRYSTAL: AdvancementKey = create(RagiumMaterialKeys.RAGI_CRYSTAL)
-
     @JvmStatic
     val STAINLESS_STEEL: AdvancementKey = create(RagiumMaterialKeys.STAINLESS_STEEL)
+
+    // Chemical
+    @JvmStatic
+    val THERMOMETER: AdvancementKey = create("thermometer")
+
+    @JvmStatic
+    val MIXER: AdvancementKey = create(RagiumConst.MIXER)
+
+    // Bio
+    @JvmStatic
+    val BREWERY: AdvancementKey = create(RagiumConst.BREWERY)
+
+    // Cold
+
+    // Electronics
+    @JvmStatic
+    val RAGI_CRYSTAL: AdvancementKey = create(RagiumMaterialKeys.RAGI_CRYSTAL)
 
     @JvmStatic
     val ELECTRIC_CIRCUIT: AdvancementKey = create("electric_circuit")
 
     @JvmStatic
-    val BREWERY: AdvancementKey = create(RagiumConst.BREWERY)
-
-    @JvmStatic
-    val MIXER: AdvancementKey = create(RagiumConst.MIXER)
-
-    // Ultimate
+    val LASER_EMITTER: AdvancementKey = create("laser_emitter")
 
     @JvmStatic
     private fun create(key: HTMaterialKey): AdvancementKey = create(key.getId().path)

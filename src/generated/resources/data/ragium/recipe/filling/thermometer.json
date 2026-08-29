@@ -1,0 +1,22 @@
+{
+  "type": "hiiragi_core:filling",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": {
+      "type": "neoforge:compound",
+      "children": [
+        {
+          "tag": "c:mercury"
+        },
+        {
+          "tag": "c:ethanol"
+        }
+      ]
+    }
+  },
+  "item_ingredient": "minecraft:glass_bottle",
+  "result": {
+    "count": 1,
+    "id": "ragium:thermometer"
+  }
+}

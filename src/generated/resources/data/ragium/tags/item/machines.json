@@ -1,8 +1,11 @@
 {
   "values": [
-    "#ragium:machines/advanced",
-    "#ragium:machines/basic",
-    "#ragium:machines/elite",
-    "#ragium:machines/ultimate"
+    "#ragium:machines/arcane",
+    "#ragium:machines/bio",
+    "#ragium:machines/chemical",
+    "#ragium:machines/cold",
+    "#ragium:machines/electronics",
+    "#ragium:machines/heat",
+    "#ragium:machines/mechanical"
   ]
 }

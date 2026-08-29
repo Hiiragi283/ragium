@@ -1,15 +1,14 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.serialization.codec.HTCodecs
-import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
-import hiiragi283.ragium.support.recipe.base.HTBasicEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
+import hiiragi283.ragium.support.recipe.base.HTBasicEnchantingRecipe
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.ItemStack
@@ -22,7 +21,7 @@ class RTEnchantingRecipe(ingredient: HTItemIngredient, val holder: Holder<Enchan
     HTSerializableRecipe<HTEnchantingRecipe.Input> {
     companion object {
         @JvmField
-        val CODEC: MapCodec<RTEnchantingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<RTEnchantingRecipe> = HTCodecs.recordMap { instance ->
             instance
                 .group(
                     HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(RTEnchantingRecipe::ingredient),
@@ -35,6 +34,8 @@ class RTEnchantingRecipe(ingredient: HTItemIngredient, val holder: Holder<Enchan
         val enchantment: Enchantment = holder.value()
         return enchantment.getMaxCost(enchantment.maxLevel)
     }
+
+    override fun getMatchingStacks(input: HTEnchantingRecipe.Input): Triple<ItemStack, ItemStack, Int> = getMatchingStacks(input.base, input.addition, input.expAmount)
 
     override fun getMatchingStacks(first: ItemStack, second: ItemStack, third: Int): Triple<ItemStack, ItemStack, Int> = Triple(
         ItemStack.EMPTY,

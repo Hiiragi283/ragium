@@ -1,13 +1,13 @@
 package hiiragi283.ragium.api.recipe.cache.completed
 
-import hiiragi283.core.api.recipe.HTBiRecipeFactory
-import hiiragi283.core.api.recipe.base.HTProgressData
+import hiiragi283.core.api.recipe.HTRecipeFactory
+import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTInputHandler
 import hiiragi283.core.api.recipe.handler.HTOutputHandler
-import hiiragi283.core.api.recipe.input.HTItemListRecipeInput
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeInput
 
 /**
  * @see hiiragi283.core.api.recipe.cache.completed.HTSingleToMultiItemCompletedRecipe
@@ -15,15 +15,17 @@ import net.minecraft.world.item.ItemStack
 abstract class HTDoubleToMultiItemCompletedRecipe<
     INPUT_A : Any,
     INPUT_B : Any,
-    RECIPE : HTBiRecipeFactory<INPUT_A, INPUT_B, out Iterable<ItemStack>>,
+    RECIPE,
     >(
     recipe: RECIPE,
     protected val firstInputHandler: HTInputHandler<INPUT_A>,
     protected val secondInputHandler: HTInputHandler<INPUT_B>,
     protected val outputHandler: HTOutputHandler<ItemStack>,
     private val amountGetter: (RECIPE, INPUT_A, INPUT_B) -> Pair<INPUT_A, INPUT_B>,
-) : HTCompletedRecipe.WithProgress<RECIPE>(recipe) {
-    private val output: Iterable<ItemStack> = recipe.assemble(firstInputHandler.getStack(), secondInputHandler.getStack())
+) : HTCompletedRecipe.WithProgress<RecipeInput, RECIPE>(recipe) where RECIPE : HTRecipeFactory<RecipeInput, Iterable<ItemStack>>, RECIPE : HTProgressRecipe<RecipeInput> {
+    private val output: Iterable<ItemStack> = recipe.assemble(input)
+
+    override fun createInput(): RecipeInput = TODO()
 
     override fun canComplete(): Boolean = output.all(outputHandler::canInsert)
 
@@ -46,8 +48,5 @@ abstract class HTDoubleToMultiItemCompletedRecipe<
         secondInputHandler,
         outputHandler,
         HTPlantingRecipe::getMatchingStacks,
-    ) {
-        override fun getProgress(): HTProgressData = HTItemListRecipeInput(firstInputHandler.getStack(), secondInputHandler.getStack())
-            .let(recipe::getProgressData)
-    }
+    )
 }

@@ -6,14 +6,17 @@
     }
   ],
   "type": "ragium:printing",
-  "ingredient": {
+  "primary": {
     "amount": 1,
     "items": "#c:ingots/gold"
   },
-  "press": "ae2:logic_processor_press",
   "result": {
     "count": 1,
     "id": "ae2:printed_logic_processor"
+  },
+  "secondary": {
+    "amount": 1,
+    "items": "ae2:logic_processor_press"
   },
   "time": 200
 }

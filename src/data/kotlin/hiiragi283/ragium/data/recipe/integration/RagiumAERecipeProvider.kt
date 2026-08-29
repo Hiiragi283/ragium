@@ -12,8 +12,7 @@ import hiiragi283.core.common.integration.HCIConstants
 import hiiragi283.core.common.material.HCIntegrationMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTPrintingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
@@ -28,7 +27,7 @@ class RagiumAERecipeProvider(packOutput: PackOutput, future: CompletableFuture<H
         // Sky Stone Dust
         HCRecipeBuilders.crushing {
             ingredient { +AEBlocks.SKY_STONE_BLOCK }
-            result { +HTItemResult.MaterialPart(CommonParts.DUST, HCIntegrationMaterialKeys.SKY_STONE) }
+            result { +HTItemResult.MaterialPartEntry(CommonParts.DUST, HCIntegrationMaterialKeys.SKY_STONE) }
             recipeId suffix "_from_stone"
             condition { +condition }
         }.save(exporter)
@@ -58,8 +57,8 @@ class RagiumAERecipeProvider(packOutput: PackOutput, future: CompletableFuture<H
 
     private fun alloying() {
         // Fluix Crystal
-        HTCombiningRecipeBuilder.alloying {
-            result { +HTItemResult.MaterialPart(CommonParts.GEM, HCIntegrationMaterialKeys.FLUIX) }
+        HTAlloyingRecipeBuilder.create {
+            result { +HTItemResult.MaterialPartEntry(CommonParts.GEM, HCIntegrationMaterialKeys.FLUIX) }
             ingredient { +baseOrDust(HCIntegrationMaterialKeys.CERTUS_QUARTZ) }
             ingredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE) }
             ingredient { +baseOrDust(VanillaMaterialKeys.QUARTZ) }
@@ -71,7 +70,7 @@ class RagiumAERecipeProvider(packOutput: PackOutput, future: CompletableFuture<H
             AEItems.ENGINEERING_PROCESSOR to AEItems.ENGINEERING_PROCESSOR_PRINT,
             AEItems.LOGIC_PROCESSOR to AEItems.LOGIC_PROCESSOR_PRINT,
         ).forEach { (processor: ItemLike, print: ItemLike) ->
-            HTCombiningRecipeBuilder.alloying {
+            HTAlloyingRecipeBuilder.create {
                 result { +processor }
                 ingredient { +print }
                 ingredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE) }
@@ -82,27 +81,27 @@ class RagiumAERecipeProvider(packOutput: PackOutput, future: CompletableFuture<H
     }
 
     private fun printing() {
-        HTPrintingRecipeBuilder.create {
-            ingredient { +tag(CommonTagPrefixes.GEM, HCIntegrationMaterialKeys.CERTUS_QUARTZ) }
-            press { +AEItems.CALCULATION_PROCESSOR_PRESS }
+        RagiumRecipeBuilder.printing {
+            primary { +tag(CommonTagPrefixes.GEM, HCIntegrationMaterialKeys.CERTUS_QUARTZ) }
+            secondary { +AEItems.CALCULATION_PROCESSOR_PRESS }
             result { +AEItems.CALCULATION_PROCESSOR_PRINT }
             condition { +condition }
         }.save(exporter)
-        HTPrintingRecipeBuilder.create {
-            ingredient { +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND) }
-            press { +AEItems.ENGINEERING_PROCESSOR_PRESS }
+        RagiumRecipeBuilder.printing {
+            primary { +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND) }
+            secondary { +AEItems.ENGINEERING_PROCESSOR_PRESS }
             result { +AEItems.ENGINEERING_PROCESSOR_PRINT }
             condition { +condition }
         }.save(exporter)
-        HTPrintingRecipeBuilder.create {
-            ingredient { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD) }
-            press { +AEItems.LOGIC_PROCESSOR_PRESS }
+        RagiumRecipeBuilder.printing {
+            primary { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD) }
+            secondary { +AEItems.LOGIC_PROCESSOR_PRESS }
             result { +AEItems.LOGIC_PROCESSOR_PRINT }
             condition { +condition }
         }.save(exporter)
-        HTPrintingRecipeBuilder.create {
-            ingredient { +HiiragiCoreTags.Items.SILICON }
-            press { +AEItems.SILICON_PRESS }
+        RagiumRecipeBuilder.printing {
+            primary { +HiiragiCoreTags.Items.SILICON }
+            secondary { +AEItems.SILICON_PRESS }
             result { +AEItems.SILICON_PRINT }
             condition { +condition }
         }.save(exporter)

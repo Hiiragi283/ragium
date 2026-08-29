@@ -2,11 +2,11 @@ package hiiragi283.ragium.common.block.entity.component
 
 import hiiragi283.core.api.block.entity.HTBlockEntityComponent
 import hiiragi283.core.api.serialization.component.DataComponentGetter
+import hiiragi283.core.api.serialization.component.DataComponentSetter
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.setup.RagiumDataComponents
-import net.minecraft.core.component.DataComponentMap
 import java.util.function.IntSupplier
 
 class HTStorageCapacityComponent(owner: HTBlockEntity) : HTBlockEntityComponent {
@@ -26,11 +26,11 @@ class HTStorageCapacityComponent(owner: HTBlockEntity) : HTBlockEntityComponent 
         input.getInt("scale")?.let(::scale::set)
     }
 
-    override fun applyComponents(input: DataComponentGetter) {
-        input.use(RagiumDataComponents.CAPACITY_SCALE, ::scale::set)
+    override fun applyComponents(getter: DataComponentGetter) {
+        getter[RagiumDataComponents.CAPACITY_SCALE]?.let(::scale::set)
     }
 
-    override fun collectComponents(builder: DataComponentMap.Builder) {
-        builder.set(RagiumDataComponents.CAPACITY_SCALE, scale)
+    override fun collectComponents(setter: DataComponentSetter) {
+        setter[RagiumDataComponents.CAPACITY_SCALE] = scale
     }
 }

@@ -1,18 +1,16 @@
 {
   "type": "ragium:assembling",
-  "ingredient": [
-    {
-      "amount": 2,
-      "items": "#c:plates/carbon"
-    },
-    {
-      "amount": 1,
-      "items": "#c:plates/advanced_ragi_alloy"
-    }
-  ],
+  "primary": {
+    "amount": 2,
+    "items": "#c:plates/carbon"
+  },
   "result": {
     "count": 1,
     "id": "oritech:reinforced_carbon_sheet"
+  },
+  "secondary": {
+    "amount": 1,
+    "items": "#c:plates/advanced_ragi_alloy"
   },
   "time": 200
 }

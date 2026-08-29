@@ -1,0 +1,12 @@
+{
+  "type": "hiiragi_core:brewing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:crude_bio"
+  },
+  "fluid_result": {
+    "amount": 500,
+    "id": "ragium:ethanol"
+  },
+  "time": 200
+}

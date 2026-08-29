@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:electric_circuit",
+  "criteria": {
+    "has_laser_emitter": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:laser_emitter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.laser_emitter.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:laser_emitter"
+    },
+    "title": {
+      "translate": "advancement.ragium.laser_emitter.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_laser_emitter"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

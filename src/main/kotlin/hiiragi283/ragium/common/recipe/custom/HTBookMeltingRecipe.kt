@@ -20,18 +20,12 @@ data object HTBookMeltingRecipe : HTItemToFluidRecipe {
         else -> ItemStack.EMPTY
     }
 
-    override fun assemble(input: ItemStack): FluidStack = getStoredEnchantments(input)
+    override fun apply(input: ItemStack): FluidStack = getStoredEnchantments(input)
         .let(HTExperienceHelper::getTotalMinCost)
         .let(HTExperienceHelper::fluidAmountFromExp)
         .let(HCFluids.EXPERIENCE::toStack)
 
-    override fun getProgressData(input: SingleRecipeInput): HTProgressData = HTProgressData.time(
-        input
-            .item()
-            .let(::getStoredEnchantments)
-            .keySet()
-            .size * 100,
-    )
+    override fun getProgressData(input: SingleRecipeInput): HTProgressData = HTProgressData.time(getStoredEnchantments(input.item()).keySet().size * 100)
 
     override fun isIncomplete(): Boolean = false
 }

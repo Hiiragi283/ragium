@@ -29,6 +29,9 @@ object RagiumFluids {
     @JvmField
     val MOLTEN_RAGINITE: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_raginite") { properties = molten() }
 
+    @JvmField
+    val MOLTEN_STAINLESS_STEEL: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_stainless_steel") { properties = molten() }
+
     // H
     @JvmField
     val HYDROGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen") { properties = gas() }
@@ -80,6 +83,10 @@ object RagiumFluids {
     // Na
     @JvmField
     val NAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("sodium_hydroxide_solution") { properties = liquid() }
+
+    // Si
+    @JvmField
+    val MINERAL_WATER: HTFluidContent.Flowing = REGISTER.registerFlowing("mineral_water") { properties = liquid() }
 
     // Hg
     @JvmField

@@ -18,7 +18,6 @@ import hiiragi283.core.common.recipe.ingredient.HTBluePrintIngredient
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -29,68 +28,26 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.fluids.crafting.CompoundFluidIngredient
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 
 class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun buildRecipes() {
-        refining()
+        bathing()
         mixing()
         washing()
 
         tankInteraction()
     }
 
-    //    Refining    //
+    //    Bathing    //
 
-    private fun refining() {
-        waterRefining()
-        expRefining()
-        eldritchRefining()
+    private fun bathing() {
+        expBathing()
+        eldritchBathing()
     }
 
-    private fun waterRefining() {
-        // Cobblestone -> Mossy
-        HTMixingRecipeBuilder.create {
-            itemIngredient { +Tags.Items.COBBLESTONES_NORMAL }
-            fluidIngredient {
-                water()
-                amount = 250
-            }
-            itemResult { +Items.MOSSY_COBBLESTONE }
-            time /= 2
-        }.save(exporter)
-        // XX Concrete Powder -> XX Concrete
-        // Dirt + Water -> Mud
-        HTMixingRecipeBuilder.create {
-            itemIngredient { +Items.DIRT }
-            fluidIngredient {
-                water()
-                amount = 250
-            }
-            itemResult { +Items.MUD }
-            time /= 2
-        }.save(exporter)
-        // XX Dead Coral -> XX Coral
-        // Sponge -> Wet Sponge
-        HTMixingRecipeBuilder.create {
-            itemIngredient { +Items.SPONGE }
-            fluidIngredient { water() }
-            itemResult { +Items.WET_SPONGE }
-            time /= 2
-        }.save(exporter)
-
-        // Sawdust -> Paper
-        HTMixingRecipeBuilder.create {
-            itemIngredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD) }
-            fluidIngredient {
-                water()
-                amount = 125
-            }
-            itemResult { +Items.PAPER }
-            time /= 2
-        }.save(exporter)
-    }
-
-    private fun expRefining() {
+    private fun expBathing() {
         // Quartz Block -> Ghast Tear
         RagiumRecipeBuilder.bathing {
             itemIngredient { +tag(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ) }
@@ -133,7 +90,7 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
         }.save(exporter)
     }
 
-    private fun eldritchRefining() {
+    private fun eldritchBathing() {
         fun eldritch(multiplier: Int): FluidIngredientBuilder.() -> Unit = {
             +HiiragiCoreTags.Fluids.ELDRITCH
             amount = HTConst.INGOT_AMOUNT * multiplier
@@ -182,7 +139,7 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
                 +RagiumFluids.MOLTEN_RAGINITE
                 amount = HTConst.INGOT_AMOUNT * 6
             }
-            +HTItemResult.MaterialPart(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            itemResult { +HTItemResult.MaterialPartEntry(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) }
         }.save(exporter)
         // Liquid Dyes
         for ((color: HTDefaultColor, content: HTFluidContent) in HCFluids.DYES.asSequenceWithColor()) {
@@ -199,12 +156,12 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
                 }
             }.save(exporter)
             // Liquid Dye -> Dye
-            HTFreezingRecipeBuilder.create {
-                ingredient {
+            RagiumRecipeBuilder.freezing {
+                fluidIngredient {
                     +content
                     amount = 250
                 }
-                catalyst { +HTBluePrintIngredient(0) }
+                itemIngredient { +HTBluePrintIngredient(0) }
                 result { +VanillaColoredCollections.DYE[color] }
             }.save(exporter)
             // Gravel + Sand + Liquid Dye -> Concrete
@@ -238,6 +195,61 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
                 recipeId suffix "_by_water"
             }.save(exporter)
         }
+
+        // Blueprint
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Items.PAPER }
+            fluidIngredient {
+                +HCFluids.DYES[HTDefaultColor.BLUE]
+                amount = 250
+            }
+            itemResult { +HCItems.BLUEPRINT }
+        }.save(exporter)
+
+        waterMixing()
+    }
+
+    private fun waterMixing() {
+        // Cobblestone -> Mossy
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Tags.Items.COBBLESTONES_NORMAL }
+            fluidIngredient {
+                water()
+                amount = 250
+            }
+            itemResult { +Items.MOSSY_COBBLESTONE }
+            time /= 2
+        }.save(exporter)
+        // XX Concrete Powder -> XX Concrete
+        // Dirt + Water -> Mud
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Items.DIRT }
+            fluidIngredient {
+                water()
+                amount = 250
+            }
+            itemResult { +Items.MUD }
+            time /= 2
+        }.save(exporter)
+        // XX Dead Coral -> XX Coral
+        // Sponge -> Wet Sponge
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Items.SPONGE }
+            fluidIngredient { water() }
+            itemResult { +Items.WET_SPONGE }
+            time /= 2
+        }.save(exporter)
+
+        // Sawdust -> Paper
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD) }
+            fluidIngredient {
+                water()
+                amount = 125
+            }
+            itemResult { +Items.PAPER }
+            time /= 2
+        }.save(exporter)
     }
 
     //    Washing    //
@@ -257,11 +269,11 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
         RagiumRecipeBuilder.washing {
             ingredient { +Tags.Items.SANDS }
             result {
-                +HTItemResult.MaterialPart(CommonParts.DUST, VanillaMaterialKeys.QUARTZ)
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, VanillaMaterialKeys.QUARTZ)
                 chance = fraction(1, 2)
             }
             result {
-                +HTItemResult.MaterialPart(CommonParts.DUST, RagiumMaterialKeys.BORAX)
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, RagiumMaterialKeys.BORAX)
                 chance = fraction(1, 4)
             }
         }.save(exporter)
@@ -271,8 +283,14 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
                 +tag(CommonTagPrefixes.DUST, CommonMaterialKeys.ASH)
                 count = 4
             }
-            +HTItemResult.MaterialPart(CommonParts.DUST, CommonMaterialKeys.CARBON, 3)
-            +HTItemResult.MaterialPart(CommonParts.DUST, CommonMaterialKeys.CARBON).withChance(fraction(1, 4))
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, CommonMaterialKeys.CARBON)
+                count = 3
+            }
+            result {
+                +HTItemResult.MaterialPartEntry(CommonParts.DUST, CommonMaterialKeys.CARBON)
+                chance = fraction(1, 4)
+            }
             time = 20 * 5
         }.save(exporter)
     }
@@ -280,22 +298,18 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
     //    Tank Interaction    //
 
     private fun tankInteraction() {
-        HTTankInteractionRecipeBuilder.emptying {
-            ingredient { +RagiumItems.MERCURY_BOTTLE }
-            fluidResult {
-                +RagiumFluids.MERCURY
-                amount = 250
-            }
-            itemResult { +Items.GLASS_BOTTLE }
-        }.save(exporter)
-
+        // Glass Bottle + Mercury / Ethanol -> Thermometer
         HTTankInteractionRecipeBuilder.filling {
             itemIngredient { +Items.GLASS_BOTTLE }
             fluidIngredient {
-                +RagiumFluids.MERCURY
+                +setOf(RagiumFluids.MERCURY, RagiumFluids.ETHANOL)
+                    .map(HTFluidContent::fluidTag)
+                    .map(FluidIngredient::tag)
+                    .stream()
+                    .let(CompoundFluidIngredient::of)
                 amount = 250
             }
-            result { +RagiumItems.MERCURY_BOTTLE }
+            result { +RagiumItems.THERMOMETER }
         }.save(exporter)
     }
 

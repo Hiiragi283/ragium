@@ -10,4 +10,12 @@ import net.neoforged.neoforge.client.event.ClientTickEvent
 object RagiumClientEventHandler {
     @SubscribeEvent
     fun onClientTick(event: ClientTickEvent.Post) {}
+
+    /*fun onItemTooltip(event: ItemTooltipEvent) {
+        val stack: ItemStack = event.itemStack
+        // Memory Disc Data
+        stack.get(RagiumDataComponents.MEMORY_DISC_DATA)?.let { resource: HTItemResourceType ->
+            event.toolTip += RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA.translateColored(HTDefaultColor.YELLOW, resource)
+        }
+    }*/
 }

@@ -37,9 +37,9 @@ class HTMixingRecipeBuilder : HTProgressRecipeBuilder<HTMixingRecipe>(RagiumCons
 
     @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
-    @PublishedApi internal var itemResult: Option<HTItemResult> by HTDelegates.optionalOnceInitialize()
+    @PublishedApi internal var itemResult: Option<HTItemResult> by HTDelegates.onceInitialize { Option.none() }
 
-    @PublishedApi internal var fluidResult: Option<HTFluidResult> by HTDelegates.optionalOnceInitialize()
+    @PublishedApi internal var fluidResult: Option<HTFluidResult> by HTDelegates.onceInitialize { Option.none() }
 
     operator fun HTItemIngredient.unaryPlus() {
         itemIngredients += this
@@ -47,10 +47,6 @@ class HTMixingRecipeBuilder : HTProgressRecipeBuilder<HTMixingRecipe>(RagiumCons
 
     operator fun HTFluidIngredient.unaryPlus() {
         fluidIngredient = this
-    }
-
-    operator fun HTItemResult.unaryPlus() {
-        itemResult = this.some()
     }
 
     operator fun HTFluidResult.unaryPlus() {
@@ -75,7 +71,7 @@ class HTMixingRecipeBuilder : HTProgressRecipeBuilder<HTMixingRecipe>(RagiumCons
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HTItemResultBuilder().apply(builderAction).build()
+        itemResult = Option.some(HTItemResultBuilder().apply(builderAction).build())
     }
 
     inline fun fluidResult(builderAction: HTFluidResultBuilder.() -> Unit) {

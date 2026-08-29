@@ -28,11 +28,11 @@ import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.support.storage.energy.HTBasicEnergyHandler
 import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
+import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.support.storage.energy.HTVariableEnergyHandler
 import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.support.storage.holder.HTSlotInfo
-import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
@@ -101,7 +101,7 @@ abstract class HTBatteryBlockEntity<T : HTEnergyHandler>(type: BlockEntityType<*
         val input: ItemStack = inputHandler.getItemStack()
         val recipe: HCChargingRecipe = cache.findFirstRecipe(input, level) ?: return false
 
-        val result: ItemStack = recipe.assemble(input)
+        val result: ItemStack = recipe.apply(input)
         if (!outputHandler.canInsert(result)) return false
         val requiredEnergy: Int = recipe.energy
         if (handler.extract(requiredEnergy, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) < requiredEnergy) return false
@@ -124,7 +124,7 @@ abstract class HTBatteryBlockEntity<T : HTEnergyHandler>(type: BlockEntityType<*
                     listener.onContentsChanged()
                 },
                 {
-                    capacityComponent.getCapacity(RagiumConfig.COMMON.batteryCapacity)
+                    capacityComponent.getCapacity(RagiumConfig.SERVER.batteryCapacity)
                 },
             )
         }
