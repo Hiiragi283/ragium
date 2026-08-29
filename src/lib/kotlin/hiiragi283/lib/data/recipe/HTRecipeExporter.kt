@@ -12,7 +12,7 @@ import net.neoforged.neoforge.common.conditions.ICondition
  *
  * 参照 : [Minecraft - RecipeOutput][RecipeOutput]
  * @author Hiiragi Tsubasa
- * @since 21.1.0
+ * @since 26.1.0
  */
 fun interface HTRecipeExporter {
     /**

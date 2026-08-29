@@ -22,7 +22,7 @@ interface HTWidget {
     val bounds: HTBounds
 
     /**
-     * @since 0.12.0
+     * @since 26.1.0
      */
     fun onInit(access: Access) {}
 

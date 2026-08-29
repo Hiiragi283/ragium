@@ -35,6 +35,9 @@ interface HTSoundPlayerBlockEntity : HTAbstractBlockEntity {
         getLevelResult().onRight { it.playSound(null, getSoundPos(), sound, getSoundSource(), volume, pitch) }
     }
 
+    /**
+     * SEを鳴らします。
+     */
     fun playSound(instance: HTSoundInstance) {
         val (sound: Holder<SoundEvent>, volume: Float, pitch: Float) = instance
         playSound(sound.value(), volume, pitch)

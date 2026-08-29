@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe
 
 /**
  * クラフトレシピ向けの[HTRecipeBuilder]の実装クラスです。
+ * @param RECIPE 生成するレシピのクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

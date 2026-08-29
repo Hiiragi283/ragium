@@ -12,7 +12,7 @@ import net.minecraft.world.level.material.Fluid
  * [Holder]を受け取る処理を表すインターフェースです。
  * @param T レジストリの要素のクラス
  * @author Hiiragi Tsubasa
- * @since 21.1.0
+ * @since 26.1.0
  */
 @HTBuilderMarker
 interface HolderAcceptor<T : Any> {

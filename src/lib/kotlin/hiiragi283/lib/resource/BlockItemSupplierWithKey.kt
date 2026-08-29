@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.Block
 
 /**
  * @author Hiiragi Tsubasa
- * @since 21.1.0
+ * @since 26.1.0
  */
 typealias SimpleBlockItemSupplierWithKey = BlockItemSupplierWithKey<Block, Item>
 
@@ -14,7 +14,7 @@ typealias SimpleBlockItemSupplierWithKey = BlockItemSupplierWithKey<Block, Item>
  * @param BLOCK 提供するブロックのクラス
  * @param ITEM 提供するアイテムのクラス
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  */
 interface BlockItemSupplierWithKey<out BLOCK : Block, out ITEM : Item> {
     val block: SupplierWithKey<Block, BLOCK>

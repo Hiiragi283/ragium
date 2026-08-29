@@ -7,6 +7,7 @@ import net.minecraft.world.item.crafting.Recipe
 
 /**
  * [HTProgressData]を使用するレシピ向けの，[HTRecipeBuilder]の拡張クラスです。
+ * @param RECIPE 生成するレシピのクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

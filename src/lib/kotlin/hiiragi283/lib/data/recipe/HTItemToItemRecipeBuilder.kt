@@ -47,6 +47,11 @@ class HTItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private 
 
     //    Factory    //
 
+    /**
+     * @param RECIPE 生成するレシピのクラス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     fun interface Factory<out RECIPE : Any> {
         fun create(ingredient: HTItemIngredient, result: HTItemResult, progressData: HTProgressData): RECIPE
     }

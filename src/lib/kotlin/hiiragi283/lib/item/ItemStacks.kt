@@ -13,7 +13,7 @@ import net.minecraft.world.level.ItemLike
 /**
  * この[ItemLike][this]が空かどうか判定します。
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  */
 @Suppress("DEPRECATION")
 val ItemLike.isAir: Boolean get() = this.asItem().builtInRegistryHolder().isAir
@@ -30,7 +30,7 @@ fun ItemStackTemplate?.createOrEmpty(): ItemStack = this?.create() ?: ItemStack.
 /**
  * この[ItemStackTemplate][this]をコピーします。
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  */
 fun ItemStackTemplate.transmuteCopy(newItem: ItemLike, newCount: Int = this.count()): ItemStackTemplate? = when {
     newItem.isAir -> null

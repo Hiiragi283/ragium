@@ -23,7 +23,7 @@ import net.neoforged.neoforge.fluids.FluidType
 /**
  * [FluidStackTemplate]や[FluidStack]向けのビルダークラスです。
  * @author Hiiragi Tsubasa
- * @since 26.1.1
+ * @since 26.1.0
  */
 @HTBuilderMarker
 class FluidInstanceBuilder : HolderAcceptor.FluidAcceptor {

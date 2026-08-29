@@ -27,7 +27,7 @@ import net.neoforged.neoforge.fluids.FluidType
 /**
  * 液体の完成品を表すインターフェースです。
  * @author Hiiragi Tsubasa
- * @since 21.1.0
+ * @since 26.1.0
  */
 @JvmRecord
 data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<FluidStack> {

@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceKey
 /**
  * [キー][ResourceKey]を提供するインターフェースです。
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  * @see SupplierWithKey
  */
 interface HTKeyLike<R : Any> : HTIdLike {

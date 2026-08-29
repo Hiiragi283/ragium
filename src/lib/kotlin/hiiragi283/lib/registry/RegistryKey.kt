@@ -23,6 +23,6 @@ fun <T : Any> RegistryKey<T>.createKey(id: Identifier): ResourceKey<T> = Resourc
 
 /**
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  */
 fun <T : Any> ResourceKey<out Registry<out T>>.toRegistryKey(): RegistryKey<T> = ResourceKey.createRegistryKey(this.identifier())

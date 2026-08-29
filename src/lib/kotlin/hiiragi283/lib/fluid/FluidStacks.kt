@@ -19,7 +19,7 @@ fun FluidStackTemplate?.createOrEmpty(): FluidStack = this?.create() ?: FluidSta
 /**
  * この[FluidStackTemplate][this]をコピーします。
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  */
 fun FluidStackTemplate.transmuteCopy(newFluid: Fluid, newAmount: Int = this.amount()): FluidStackTemplate? = when {
     newFluid == Fluids.EMPTY -> null
@@ -49,7 +49,7 @@ fun FluidStack.toTemplateResult(): HTTextResult<FluidStackTemplate> = this.toTem
 /**
  * この[FluidStack][this]をコピーします。
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  */
 fun FluidStack.transmuteCopy(newFluid: Fluid, newAmount: Int = this.amount()): FluidStack = when {
     newFluid == Fluids.EMPTY -> FluidStack.EMPTY

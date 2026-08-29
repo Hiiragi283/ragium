@@ -17,7 +17,7 @@ import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 /**
  * [FluidIngredient]および[HTFluidIngredient]を作成するビルダークラスです。
  * @author Hiiragi Tsubasa
- * @since 26.1.1
+ * @since 26.1.0
  */
 @HTBuilderMarker
 class FluidIngredientBuilder {

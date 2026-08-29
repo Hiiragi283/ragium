@@ -32,9 +32,6 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
         val TIPPED_ARROW_PATTERN = HTLangPatternProvider("Arrow of %s", "%sの矢")
     }
 
-    /**
-     * [HTHasTranslationKey.translationKey]に基づいて翻訳名を追加します。
-     */
     fun add(translatable: HTHasTranslationKey, value: String) {
         add(translatable.translationKey, value)
     }

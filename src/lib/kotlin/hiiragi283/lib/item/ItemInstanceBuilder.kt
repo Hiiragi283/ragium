@@ -21,7 +21,7 @@ import net.minecraft.world.item.ItemStackTemplate
 /**
  * [ItemStackTemplate]や[ItemStack]向けのビルダークラスです。
  * @author Hiiragi Tsubasa
- * @since 26.1.1
+ * @since 26.1.0
  */
 @HTBuilderMarker
 class ItemInstanceBuilder : HolderAcceptor.ItemAcceptor {

@@ -67,7 +67,7 @@ interface MultiMap<K, out V> {
      * @param K キーのクラス
      * @param V 値のクラス
      * @author Hiiragi Tsubasa
-     * @since 26.1.1
+     * @since 26.1.0
      */
     interface Builder<K, V> {
         /**

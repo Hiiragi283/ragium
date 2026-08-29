@@ -28,7 +28,7 @@ import net.minecraft.world.item.ItemStack
  *
  * 参照 : [Mekanism - BaseRecipeCategory](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/client/recipe_viewer/jei/BaseRecipeCategory.java)
  * @author Hiiragi Tsubasa
- * @since 0.11.0
+ * @since 26.1.0
  */
 abstract class HTBasicRecipeCategory<RECIPE : Any>(
     private val guiHelper: IGuiHelper,

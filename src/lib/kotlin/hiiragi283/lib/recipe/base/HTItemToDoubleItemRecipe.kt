@@ -15,6 +15,11 @@ import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
+/**
+ * 1種類のアイテムから2種類のアイテムを作成するレシピを表すインターフェースです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 interface HTItemToDoubleItemRecipe :
     HTRecipePredicates.SingleItem,
     HTRecipeFactories.SingleItemTo<Pair<ItemStack, ItemStack>>,
@@ -30,6 +35,10 @@ interface HTItemToDoubleItemRecipe :
         override fun getProgressData(input: SingleRecipeInput): HTProgressData = this@HTItemToDoubleItemRecipe.getProgressData(input)
     }
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     open class Basic(val ingredient: HTItemIngredient, val primary: HTItemResult, val secondary: Option<HTItemResult>, override val progressData: HTProgressData) :
         HTItemToDoubleItemRecipe,
         HTProgressRecipe.Simple<SingleRecipeInput> {

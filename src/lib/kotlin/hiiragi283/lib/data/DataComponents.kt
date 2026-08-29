@@ -18,7 +18,7 @@ import net.minecraft.network.codec.StreamCodec
  * @param codec セーブとロードで使用されるコーデック
  * @param streamCodec クライアント側との同期に使用されるコーデック
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  */
 fun <T : Any> DataComponentType(codec: Codec<T>, streamCodec: StreamCodec<in RegistryFriendlyByteBuf, T>?): DataComponentType<T> {
     val builder: DataComponentType.Builder<T> = DataComponentType.builder<T>().persistent(codec)

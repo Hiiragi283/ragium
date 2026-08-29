@@ -13,6 +13,10 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 abstract class HTRecipeProviderContext {
     /**
      * レシピの出力先
@@ -38,7 +42,11 @@ abstract class HTRecipeProviderContext {
      */
     protected fun <T : Any> holderSet(tagKey: TagKey<T>): HolderSet<T> = this.registries.getOrThrow(tagKey)
 
-    protected fun <T : Any> holderSet(tagKeys: Iterable<TagKey<T>>): HolderSet<T> = tagKeys.map(::holderSet).sortedBy { it.unwrapKey().orElseThrow().location() }.let(::OrHolderSet)
+    protected fun <T : Any> holderSet(tagKeys: Iterable<TagKey<T>>): HolderSet<T> = when (tagKeys.count()) {
+        0 -> HolderSet.empty()
+        1 -> holderSet(tagKeys.first())
+        else -> tagKeys.map(::holderSet).sortedBy { it.unwrapKey().orElseThrow().location() }.let(::OrHolderSet)
+    }
 
     protected fun <T : Any> holderSet(vararg tagKeys: TagKey<T>): HolderSet<T> = holderSet(tagKeys.toSet())
 

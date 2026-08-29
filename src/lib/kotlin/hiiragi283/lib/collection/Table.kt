@@ -82,7 +82,7 @@ interface Table<R, C, out V> {
      * @param C 列のクラス
      * @param V 値のクラス
      * @author Hiiragi Tsubasa
-     * @since 26.1.1
+     * @since 26.1.0
      */
     interface Builder<R, C, V> {
         /**

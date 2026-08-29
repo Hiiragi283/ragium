@@ -38,7 +38,7 @@ abstract class AbstractMultiMap<K, out V, out C : Collection<V>>(protected val m
      * @param V 値のクラス
      * @param C コレクションのクラス
      * @author Hiiragi Tsubasa
-     * @since 26.1.1
+     * @since 26.1.0
      */
     @HTBuilderMarker
     abstract class Builder<K, V, out C : MutableCollection<V>>(protected val map: MutableMap<K, @UnsafeVariance C>) : MultiMap.Builder<K, V> {

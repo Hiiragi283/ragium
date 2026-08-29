@@ -13,19 +13,19 @@ import net.neoforged.neoforge.fluids.FluidStack
 interface HTFluidRecipeInput : RecipeInput {
     /**
      * 液体の種類数
-     * @since 26.1.2
+     * @since 26.1.0
      */
     val fluidSize: Int
 
     /**
      * 有効な液体のインデックスの範囲
-     * @since 26.1.2
+     * @since 26.1.0
      */
     val fluidIndices: IntRange get() = (0..<this.fluidSize)
 
     /**
      * 保持しているすべての液体が空かどうか
-     * @since 26.1.2
+     * @since 26.1.0
      */
     val isFluidEmpty: Boolean get() = this.fluidIndices.map(::getFluid).all(FluidStack::isEmpty)
 
@@ -36,7 +36,7 @@ interface HTFluidRecipeInput : RecipeInput {
 
     /**
      * 液体の[List]に変換します。
-     * @since 26.1.2
+     * @since 26.1.0
      */
     fun asFluidList(): List<FluidStack> = object : AbstractList<FluidStack>() {
         override val size: Int get() = this@HTFluidRecipeInput.fluidSize

@@ -40,7 +40,7 @@ private data object EmptyMultiMap : MultiMap<Nothing, Nothing> {
  * @param K キーのクラス
  * @param V 値のクラス
  * @author Hiiragi Tsubasa
- * @since 26.1.1
+ * @since 26.1.0
  */
 inline fun <K, V> buildListMultiMap(initialCapacity: Int = 10, builderAction: ListMultiMap.Builder<K, V>.() -> Unit): ListMultiMap<K, V> {
     contract {
@@ -68,7 +68,7 @@ inline fun <K, V> buildListMultiMap(map: MutableMap<K, MutableList<V>>, builderA
  * @param K キーのクラス
  * @param V 値のクラス
  * @author Hiiragi Tsubasa
- * @since 26.1.1
+ * @since 26.1.0
  */
 inline fun <K, V> buildSetMultiMap(initialCapacity: Int = 10, builderAction: SetMultiMap.Builder<K, V>.() -> Unit): SetMultiMap<K, V> {
     contract {
@@ -102,7 +102,7 @@ inline fun <K, V> buildSetMultiMap(map: MutableMap<K, MutableSet<V>>, builderAct
  * @param W [Table]の値のクラス
  * @param transform [MultiMap]の要素の組を[Triple]の一覧に変換するブロック
  * @author Hiiragi Tsubasa
- * @since 26.1.1
+ * @since 26.1.0
  */
 inline fun <K, V, R, C, W> MultiMap<K, V>.flatMapTable(transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>): Table<R, C, W> = this.flatMapTableTo(PairMapTable.Builder(), transform)
 
@@ -116,7 +116,7 @@ inline fun <K, V, R, C, W> MultiMap<K, V>.flatMapTable(transform: (Map.Entry<K, 
  * @param builder テーブルの値の受取先
  * @param transform [MultiMap]の要素の組を[Triple]の一覧に変換するブロック
  * @author Hiiragi Tsubasa
- * @since 26.1.1
+ * @since 26.1.0
  */
 inline fun <K, V, R, C, W, D : Table.Builder<R, C, W>> MultiMap<K, V>.flatMapTableTo(builder: D, transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>): Table<R, C, W> {
     this.entries.flatMap(transform).forEach(builder::put)
