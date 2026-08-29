@@ -1,27 +1,21 @@
-# Automatically build the project and run any configured tests for every push
-# and submitted pull request. This can help catch issues that only occur on
-# certain platforms or Java versions, and provides a first line of defense
-# against bad commits.
-
-name: build
+name: release
 on:
   push:
-    branches:
-      - "21.1"
-      - "26.1"
+    tags:
+      - "v*.*.*"
   pull_request:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build packages
+  release:
+    name: Release builds
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,7 +24,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          persist-credentials: false
+          fetch-depth: 0
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
@@ -38,14 +32,14 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
-        with:
-          cache-read-only: false
       - name: Make gradle wrapper executable
         run: chmod +x ./gradlew
       - name: Build
         run: ./gradlew build
-      - name: Capture build artifacts
-        uses: actions/upload-artifact@v7
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: Artifacts
-          path: build/libs/
+          tag_name: ${{ github.ref_name }}
+          generate_release_notes: true
+          files: |
+            build/libs/*.jar
