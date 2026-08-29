@@ -40,7 +40,7 @@ data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val 
 
     constructor(blockEntity: HTExtendedBlockEntity) : this(
         blockEntity.blockPos,
-        blockEntity.createReducedUpdateTag(blockEntity.getRegistryAccess())
+        blockEntity.createReducedUpdateTag(blockEntity.getRegistryAccess()),
     )
 
     override fun type(): CustomPacketPayload.Type<HTUpdateBlockEntityPacket> = TYPE
