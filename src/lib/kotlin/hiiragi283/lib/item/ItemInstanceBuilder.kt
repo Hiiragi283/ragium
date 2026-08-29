@@ -7,8 +7,6 @@ import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.registry.isAir
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
-import hiiragi283.lib.util.HTTextResult
-import hiiragi283.lib.util.right
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -43,14 +41,16 @@ class ItemInstanceBuilder : HolderAcceptor.ItemAcceptor {
          */
         @Suppress("DEPRECATION")
         @JvmStatic
-        inline fun buildSafeTemplate(builderAction: ItemInstanceBuilder.() -> Unit): HTTextResult<ItemStackTemplate> {
+        inline fun buildSafeTemplate(builderAction: ItemInstanceBuilder.() -> Unit): ItemStackTemplate? {
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
             }
             return ItemInstanceBuilder().apply(builderAction).run {
-                if (item.isAir) HTTextResult("Item must be non-air")
-                if (count <= 0) HTTextResult("Count must be positive")
-                ItemStackTemplate(item, count, patch).right()
+                when {
+                    item.isAir -> null
+                    count <= 0 -> null
+                    else -> ItemStackTemplate(item, count, patch)
+                }
             }
         }
 

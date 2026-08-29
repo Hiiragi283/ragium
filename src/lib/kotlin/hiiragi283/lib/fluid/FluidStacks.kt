@@ -1,7 +1,5 @@
 package hiiragi283.lib.fluid
 
-import hiiragi283.lib.util.HTTextResult
-import hiiragi283.lib.util.toTextResult
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
@@ -38,13 +36,6 @@ fun FluidStack.toTemplateOrNull(): FluidStackTemplate? = when {
     this.isEmpty -> null
     else -> FluidStackTemplate.fromNonEmptyStack(this)
 }
-
-/**
- * [FluidStack]を[FluidStackTemplate]に変換します。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-fun FluidStack.toTemplateResult(): HTTextResult<FluidStackTemplate> = this.toTemplateOrNull().toTextResult { "FluidStack must be non-empty" }
 
 /**
  * この[FluidStack][this]をコピーします。

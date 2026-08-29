@@ -1,9 +1,7 @@
 package hiiragi283.ragium.common.network
 
-import com.mojang.logging.LogUtils
 import hiiragi283.lib.network.HTCustomPayload
-import hiiragi283.lib.util.printError
-import hiiragi283.lib.world.getBlockEntityResult
+import hiiragi283.lib.world.getTypedBlockEntity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.block.entity.HTExtendedBlockEntity
 import net.minecraft.client.Minecraft
@@ -17,7 +15,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.storage.TagValueInput
 import net.minecraft.world.level.storage.ValueInput
-import org.slf4j.Logger
 
 /**
  * [HTExtendedBlockEntity]におけるサーバー側からクライアント側への同期に使用されるパケットのクラスです。
@@ -29,9 +26,6 @@ import org.slf4j.Logger
 data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val updateTag: CompoundTag) : HTCustomPayload.S2C {
     companion object {
         @JvmField
-        val LOGGER: Logger = LogUtils.getLogger()
-
-        @JvmField
         val TYPE = CustomPacketPayload.Type<HTUpdateBlockEntityPacket>(RagiumAPI.id("update_block_entity"))
 
         @JvmField
@@ -42,20 +36,20 @@ data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val 
             HTUpdateBlockEntityPacket::updateTag,
             ::HTUpdateBlockEntityPacket,
         )
-
-        @JvmStatic
-        fun create(blockEntity: HTExtendedBlockEntity): HTUpdateBlockEntityPacket? = blockEntity.getRegistryAccess().map { HTUpdateBlockEntityPacket(blockEntity.blockPos, blockEntity.createReducedUpdateTag(it)) }.getOrNull()
     }
+
+    constructor(blockEntity: HTExtendedBlockEntity) : this(
+        blockEntity.blockPos,
+        blockEntity.createReducedUpdateTag(blockEntity.getRegistryAccess())
+    )
 
     override fun type(): CustomPacketPayload.Type<HTUpdateBlockEntityPacket> = TYPE
 
     override fun handle(player: Player, minecraft: Minecraft) {
         val level: Level = player.level()
-        level.getBlockEntityResult<HTExtendedBlockEntity>(pos)
-            .printError(LOGGER)
-            .onRight { blockEntity: HTExtendedBlockEntity ->
-                val input: ValueInput = TagValueInput.create(blockEntity.createReporter(), level.registryAccess(), updateTag)
-                blockEntity.handleUpdateTag(input)
-            }
+        level.getTypedBlockEntity<HTExtendedBlockEntity>(pos)?.let { blockEntity: HTExtendedBlockEntity ->
+            val input: ValueInput = TagValueInput.create(blockEntity.createReporter(), level.registryAccess(), updateTag)
+            blockEntity.handleUpdateTag(input)
+        }
     }
 }

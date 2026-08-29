@@ -1,10 +1,9 @@
 package hiiragi283.lib
 
+import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.registry.RegistryKey
-import hiiragi283.lib.registry.lookupResult
-import hiiragi283.lib.util.HTTextResult
-import hiiragi283.lib.util.flatMap
-import hiiragi283.lib.util.toTextResult
+import hiiragi283.lib.util.Option
+import hiiragi283.lib.util.kotlin
 import net.minecraft.client.Minecraft
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
@@ -13,6 +12,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.world.flag.FeatureElement
 import net.minecraft.world.flag.FeatureFlagSet
 import net.minecraft.world.flag.FeatureFlags
+import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.item.crafting.RecipeMap
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.SubscribeEvent
@@ -48,10 +48,10 @@ data object HTPhysicalSideHelper {
      * @return クライアント側でワールドを読み込んでいない，またはサーバーのインスタンスが作成されていない場合は`null`
      */
     @JvmStatic
-    fun getRegistryAccess(): HTTextResult<RegistryAccess> = runForSide(Level::registryAccess, MinecraftServer::registryAccess).toTextResult { "Could not get active registry access" }
+    fun getRegistryAccess(): RegistryAccess = runForSide(Level::registryAccess, MinecraftServer::registryAccess) ?: RegistryAccess.EMPTY
 
     @JvmStatic
-    fun <T : Any> registry(registryKey: RegistryKey<T>): HTTextResult<Registry<T>> = getRegistryAccess().flatMap { it.lookupResult(registryKey) }
+    fun <T : Any> registry(registryKey: RegistryKey<T>): Option<Registry<T>> = getRegistryAccess().lookup(registryKey).kotlin
 
     //    Feature Flag    //
 
@@ -63,7 +63,7 @@ data object HTPhysicalSideHelper {
     fun getFeatureFlags(): FeatureFlagSet = runForSide(Level::enabledFeatures) { it.worldData.enabledFeatures() } ?: FeatureFlags.DEFAULT_FLAGS
 
     @JvmStatic
-    fun <T : FeatureElement> filteredLookup(registryKey: RegistryKey<T>): HTTextResult<HolderLookup.RegistryLookup<T>> = registry(registryKey).map { it.filterFeatures(getFeatureFlags()) }
+    fun <T : FeatureElement> filteredLookup(registryKey: RegistryKey<T>): Option<HolderLookup.RegistryLookup<T>> = registry(registryKey).map { it.filterFeatures(getFeatureFlags()) }
 
     @JvmStatic
     fun <T : FeatureElement> filteredLookup(registry: Registry<T>): HolderLookup.RegistryLookup<T> = registry.filterFeatures(getFeatureFlags())

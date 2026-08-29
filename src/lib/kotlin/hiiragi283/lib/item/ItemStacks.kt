@@ -1,8 +1,6 @@
 package hiiragi283.lib.item
 
 import hiiragi283.lib.registry.isAir
-import hiiragi283.lib.util.HTTextResult
-import hiiragi283.lib.util.toTextResult
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
@@ -59,10 +57,3 @@ fun ItemStack.toTemplateOrNull(): ItemStackTemplate? = when {
     this.isEmpty -> null
     else -> ItemStackTemplate.fromNonEmptyStack(this)
 }
-
-/**
- * [ItemStack]を[ItemStackTemplate]に変換します。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-fun ItemStack.toTemplateResult(): HTTextResult<ItemStackTemplate> = this.toTemplateOrNull().toTextResult { "ItemStack must be non-empty" }

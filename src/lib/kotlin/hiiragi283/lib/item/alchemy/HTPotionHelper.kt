@@ -3,7 +3,6 @@ package hiiragi283.lib.item.alchemy
 import hiiragi283.lib.data.DataComponentSetter
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.item.ItemInstanceBuilder
-import hiiragi283.lib.util.HTTextResult
 import kotlin.jvm.optionals.getOrNull
 import net.minecraft.core.Holder
 import net.minecraft.core.TypedInstance
@@ -76,7 +75,7 @@ data object HTPotionHelper {
      * @param count [ItemStack]の個数
      */
     @JvmStatic
-    fun createPotion(item: ItemLike, potion: Holder<Potion>, count: Int = 1): HTTextResult<ItemStackTemplate> = createPotion(item, PotionContents(potion), count)
+    fun createPotion(item: ItemLike, potion: Holder<Potion>, count: Int = 1): ItemStackTemplate? = createPotion(item, PotionContents(potion), count)
 
     /**
      * 指定した引数からポーションの[ItemStack]を作成します。
@@ -85,7 +84,7 @@ data object HTPotionHelper {
      * @param count [ItemStack]の個数
      */
     @JvmStatic
-    fun createPotion(item: ItemLike, contents: PotionContents, count: Int = 1): HTTextResult<ItemStackTemplate> = ItemInstanceBuilder.buildSafeTemplate {
+    fun createPotion(item: ItemLike, contents: PotionContents, count: Int = 1): ItemStackTemplate? = ItemInstanceBuilder.buildSafeTemplate {
         +item.asItem()
         this.count = count
         components { set(DataComponents.POTION_CONTENTS, contents) }

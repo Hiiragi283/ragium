@@ -32,7 +32,7 @@ interface HTSoundPlayerBlockEntity : HTAbstractBlockEntity {
      * @param pitch SEの高低
      */
     fun playSound(sound: SoundEvent, volume: Float = 1f, pitch: Float = 1f) {
-        getLevelResult().onRight { it.playSound(null, getSoundPos(), sound, getSoundSource(), volume, pitch) }
+        getLevel()?.playSound(null, getSoundPos(), sound, getSoundSource(), volume, pitch)
     }
 
     /**
