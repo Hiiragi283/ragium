@@ -16,9 +16,6 @@ jobs:
   release:
     name: Release builds
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
