@@ -12,19 +12,20 @@ import net.minecraft.world.item.crafting.RecipeInput
  */
 val RecipeInput.indices: IntRange get() = (0..<this.size())
 
-fun RecipeInput.getItemOrNull(index: Int): ItemStack? = if (index in indices) getItem(index) else null
-
-fun RecipeInput.getItemOrEmpty(index: Int): ItemStack = this.getItemOrNull(index) ?: ItemStack.EMPTY
-
 /**
- * アイテムの[List]に変換します。
+ * アイテムを取得します。
+ * @param index 取得するアイテムのインデックス
+ * @return [index]が[範囲][indices]に含まれていない場合`null`
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun RecipeInput.asList(): List<ItemStack> = object : AbstractList<ItemStack>() {
-    override val size: Int get() = this@asList.size()
+fun RecipeInput.getItemOrNull(index: Int): ItemStack? = if (index in indices) getItem(index) else null
 
-    override fun get(index: Int): ItemStack = this@asList.getItem(index)
-
-    override fun isEmpty(): Boolean = this@asList.isEmpty
-}
+/**
+ * アイテムを取得します。
+ * @param index 取得するアイテムのインデックス
+ * @return [index]が[範囲][indices]に含まれていない場合[ItemStack.EMPTY]
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
+fun RecipeInput.getItemOrEmpty(index: Int): ItemStack = this.getItemOrNull(index) ?: ItemStack.EMPTY

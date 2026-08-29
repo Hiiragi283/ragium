@@ -13,15 +13,16 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 
 data object RTLingeringBrewingRecipe : HTItemAndFluidToFluidRecipe {
-    override fun test(first: ItemInstance, second: FluidInstance): Boolean = first.`is`(Items.DRAGON_BREATH) && HTPotionHelper.getContents(second)?.bottleType == HTBottleType.SPLASH
+    override fun test(first: ItemInstance, second: FluidInstance): Boolean = when {
+        !first.`is`(Items.DRAGON_BREATH) -> false
+        HTPotionHelper.getContents(second)?.bottleType != HTBottleType.SPLASH -> false
+        else -> second.amount() >= FluidType.BUCKET_VOLUME
+    }
 
     override fun apply(first: ItemInstance, second: FluidInstance): FluidStack {
-        if (first.`is`(Items.DRAGON_BREATH)) {
-            val contents: BottledPotionContents = HTPotionHelper.getContents(second) ?: return FluidStack.EMPTY
-            if (!contents.isWater && contents.isEmpty) return FluidStack.EMPTY
-            return contents.copy(bottleType = HTBottleType.LINGERING).toFluidStack()
-        }
-        return FluidStack.EMPTY
+        val contents: BottledPotionContents = HTPotionHelper.getContents(second) ?: return FluidStack.EMPTY
+        if (!contents.isWater && contents.isEmpty) return FluidStack.EMPTY
+        return contents.copy(bottleType = HTBottleType.LINGERING).toFluidStack()
     }
 
     override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = when (test(first, second)) {
