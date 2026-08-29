@@ -2,7 +2,6 @@ package hiiragi283.lib.recipe.lookup
 
 import hiiragi283.lib.recipe.RecipeKey
 import net.minecraft.resources.Identifier
-import net.minecraft.util.context.ContextMap
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
@@ -65,10 +64,10 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
         this.lookups += lookup
     }
 
-    override fun getAllRecipes(contextMap: ContextMap): Map<RecipeKey, RECIPE> {
+    override fun getAllRecipes(context: HTRecipeLookup.Context): Map<RecipeKey, RECIPE> {
         val recipes: MutableMap<RecipeKey, RECIPE> = mutableMapOf()
         for (lookup: HTRecipeLookup<RECIPE> in lookups) {
-            recipes += lookup.getAllRecipes(contextMap)
+            recipes += lookup.getAllRecipes(context)
         }
         return recipes
     }
@@ -89,9 +88,9 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
  * @since 26.1.0
  */
 fun <INPUT : RecipeInput, RECIPE : Any, VANILLA_RECIPE : Recipe<INPUT>> HTCompoundRecipeLookup<RECIPE>.fromRecipeType(recipeType: RecipeType<VANILLA_RECIPE>, transform: (VANILLA_RECIPE) -> RECIPE?) {
-    this.addSubLookup { contextMap: ContextMap ->
+    this.addSubLookup { context: HTRecipeLookup.Context ->
         val map: MutableMap<RecipeKey, RECIPE> = mutableMapOf()
-        for (holder: RecipeHolder<VANILLA_RECIPE> in contextMap.getOrThrow(HTRecipeLookupContext.RECIPES).byType(recipeType)) {
+        for (holder: RecipeHolder<VANILLA_RECIPE> in context.recipeMap.byType(recipeType)) {
             val recipe: VANILLA_RECIPE = holder.value()
             val recipe1: RECIPE = transform(recipe) ?: continue
             map[holder.id()] = recipe1

@@ -74,8 +74,27 @@ data object HTPhysicalSideHelper {
     var cachedRecipes: RecipeMap = RecipeMap.EMPTY
         private set
 
+    /**
+     * 現在の[HTRecipeLookup.Context]を作成します。
+     * @since 21.1.1
+     */
+    @JvmStatic
+    fun createLookupContext(): HTRecipeLookup.Context = runForSide(
+        { level: Level -> HTRecipeLookup.Context(cachedRecipes, level.registryAccess()) },
+        { server: MinecraftServer -> HTRecipeLookup.Context(server.recipeManager.recipeMap(), server.registryAccess()) },
+    ) ?: HTRecipeLookup.Context.EMPTY
+
     @SubscribeEvent
     fun onRecipeSync(event: RecipesReceivedEvent) {
         cachedRecipes = event.recipeMap
     }
+
+    //    PotionBrewing    //
+
+    /**
+     * 現在の[PotionBrewing]を取得します。
+     * @since 21.1.1
+     */
+    @JvmStatic
+    fun getPotionBrewing(): PotionBrewing? = runForSide(Level::potionBrewing, MinecraftServer::potionBrewing)
 }
