@@ -57,5 +57,5 @@ class IngredientBuilder {
 
     fun build(): Ingredient = ingredient
 
-    fun buildSized(): HTItemIngredient = HTItemIngredient(build(), count)
+    fun buildSized(): HTItemIngredient = HTItemIngredient(ingredient, count)
 }
