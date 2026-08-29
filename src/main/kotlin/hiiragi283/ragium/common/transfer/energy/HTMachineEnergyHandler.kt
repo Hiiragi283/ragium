@@ -10,7 +10,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import java.util.function.Predicate
 
 /**
- * @see mekanism.common.capabilities.energy.MachineEnergyContainer
+ * 参考 : [Mekanism - MachineEnergyContainer](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/energy/MachineEnergyContainer.java)
  */
 sealed class HTMachineEnergyHandler<BE : HTBaseMachineBlockEntity>(
     capacity: Int,

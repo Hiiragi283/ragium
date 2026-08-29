@@ -5,7 +5,7 @@ import hiiragi283.lib.transfer.holder.HTCapabilityHolder
 import net.minecraft.core.Direction
 
 /**
- * @see mekanism.common.capabilities.holder.ConfigHolder
+ * 参考 : [Mekanism - ConfigHolder](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/holder/ConfigHolder.java)
  */
 abstract class HTSlottedCapabilityHolder<SLOT : Any>(
     configGetter: HTSlotInfoProvider?,
