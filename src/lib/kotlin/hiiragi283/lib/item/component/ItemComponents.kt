@@ -46,6 +46,11 @@ inline fun buildItemAttributeModifiers(builderAction: ItemAttributeModifiers.Bui
 
 //    PotionContents    //
 
+/**
+ * [PotionContents]のインスタンスを作成します。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 fun PotionContents(
     potion: Holder<Potion>? = null,
     customColor: Int? = null,

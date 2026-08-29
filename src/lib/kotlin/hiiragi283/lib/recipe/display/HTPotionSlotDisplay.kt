@@ -29,6 +29,13 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.display.ForFluidStacks
 
+/**
+ * [Potion]と[HTBottleType]に基づいた[SlotDisplay]の実装クラスです。
+ * @param potions 対象となるポーションの一覧
+ * @param bottleType 対象となるポーション瓶の種類
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 @JvmRecord
 data class HTPotionSlotDisplay(val potions: HolderSet<Potion>, val bottleType: HTBottleType) : SlotDisplay {
     companion object {

@@ -41,7 +41,7 @@ fun ItemStackTemplate.transmuteCopy(newItem: ItemLike, newCount: Int = this.coun
 
 /**
  * @author Hiiragi Tsubasa
- * @since 26.1.4
+ * @since 26.1.0
  */
 fun ItemStack(item: ItemLike, count: Int, patch: DataComponentPatch): ItemStack {
     val stack = ItemStack(item, count)

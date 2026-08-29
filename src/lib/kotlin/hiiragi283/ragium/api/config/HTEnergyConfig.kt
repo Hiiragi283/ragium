@@ -8,6 +8,13 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import java.util.function.IntSupplier
 import net.neoforged.neoforge.common.ModConfigSpec
 
+/**
+ * 機械のエネルギーに関するコンフィグを管理するクラスです。
+ * @param capacity エネルギーの容量
+ * @author rate エネルギーの生産/消費速度
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 @JvmRecord
 data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: IntSupplier) {
     fun getCapacity(): Int = capacity.asInt

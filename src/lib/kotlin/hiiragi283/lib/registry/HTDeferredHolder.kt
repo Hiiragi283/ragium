@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceKey
 import net.neoforged.neoforge.registries.DeferredHolder
 
 /**
- * [HTDeferredHolder]のエイリアスです。
+ * シンプルな[HTDeferredHolder]のエイリアスです。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

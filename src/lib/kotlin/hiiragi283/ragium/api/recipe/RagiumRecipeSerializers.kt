@@ -10,6 +10,11 @@ import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 
+/**
+ * Ragiumで使用される[RecipeSerializer]をまとめたクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 data object RagiumRecipeSerializers {
     @JvmStatic
     val allSerializers: Map<Identifier, RecipeSerializer<*>> field: MutableMap<Identifier, RecipeSerializer<*>> = mutableMapOf()

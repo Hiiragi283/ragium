@@ -6,6 +6,11 @@ import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
+/**
+ * Ragiumで使用される[DataMapType]をまとめたクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 data object RagiumDataMaps {
 
     @JvmStatic

@@ -32,14 +32,10 @@ data object HTPotionHelper {
     /**
      * 指定した[getter]から[PotionContents]を取得します。
      * @return 値を保持していない場合は[PotionContents.EMPTY]
-     * @since 26.1.0
      */
     @JvmStatic
     fun getPotion(getter: DataComponentGetter): PotionContents = getter.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
 
-    /**
-     * @since 26.1.0
-     */
     @JvmStatic
     fun setPotion(setter: DataComponentSetter, contents: PotionContents?) {
         setter.setOrRemove(DataComponents.POTION_CONTENTS, contents)
@@ -47,7 +43,6 @@ data object HTPotionHelper {
 
     /**
      * 指定した[getter]からポーションのMod IDを取得します。
-     * @since 26.1.0
      */
     @JvmStatic
     fun getPotionModId(getter: DataComponentGetter): String? = getPotion(getter)
@@ -67,7 +62,6 @@ data object HTPotionHelper {
 
     /**
      * 指定した[contents]からポーションの[ItemStack]を作成します。
-     * @since 26.1.0
      */
     @JvmStatic
     fun createPotion(contents: BottledPotionContents): ItemStackTemplate = ItemInstanceBuilder.buildTemplate {
@@ -100,7 +94,6 @@ data object HTPotionHelper {
     /**
      * 指定した[instance]から[BottledPotionContents]を取得します。
      * @return [BottledPotionContents]を取得できない場合は`null`
-     * @since 26.1.0
      */
     @JvmName("getContentsFromItem")
     @JvmStatic
@@ -113,7 +106,6 @@ data object HTPotionHelper {
     /**
      * 指定した[instance]から[BottledPotionContents]を取得します。
      * @return [BottledPotionContents]を取得できない場合は`null`
-     * @since 26.1.0
      */
     @JvmStatic
     fun <T> getContentsFromBottle(instance: T): BottledPotionContents? where T : TypedInstance<Item>, T : DataComponentGetter {
@@ -137,7 +129,6 @@ data object HTPotionHelper {
     /**
      * 指定した[instance]から[BottledPotionContents]を取得します。
      * @return [BottledPotionContents]を取得できない場合は`null`
-     * @since 26.1.0
      */
     @JvmName("getContentsFromFluid")
     @JvmStatic

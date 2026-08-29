@@ -1,5 +1,10 @@
 package hiiragi283.ragium.api
 
+/**
+ * Ragiumで使用される定数をまとめたクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 data object RagiumConstants {
     //    Blocks    //
 

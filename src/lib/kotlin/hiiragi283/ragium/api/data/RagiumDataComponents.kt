@@ -8,6 +8,11 @@ import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.world.item.ItemStackTemplate
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
+/**
+ * Ragiumで使用される[DataComponentType]をまとめたクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 data object RagiumDataComponents {
     @JvmField
     val BOTTLE_TYPE: DataComponentType<HTBottleType> = DataComponentType(HTBottleType.CODEC, HTBottleType.STREAM_CODEC)

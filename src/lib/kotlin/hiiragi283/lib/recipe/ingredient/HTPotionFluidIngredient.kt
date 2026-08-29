@@ -57,8 +57,7 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>, val bottleTyp
 
     override fun test(fluidStack: FluidStack): Boolean {
         val contents: BottledPotionContents = HTPotionHelper.getContents(fluidStack) ?: return false
-        if (contents.bottleType != bottleType) return false
-        return contents.potion?.let(potions::contains) ?: false
+        return contents.bottleType == bottleType && contents.potion?.let(potions::contains) ?: false
     }
 
     @Suppress("DEPRECATION")

@@ -4,6 +4,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 
 /**
+ * シンプルな[BlockItemSupplierWithKey]のエイリアスです。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

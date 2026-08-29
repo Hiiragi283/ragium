@@ -2,6 +2,11 @@ package hiiragi283.lib.resource
 
 import net.minecraft.resources.ResourceKey
 
+/**
+ * シンプルな[SupplierWithKey]のエイリアスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 typealias SimpleSupplierWithKey<R> = SupplierWithKey<R, R>
 
 /**

@@ -9,8 +9,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour
 
 typealias BlockFactory<BLOCK> = (BlockBehaviour.Properties) -> BLOCK
 
-typealias BlockWithContextFactory<C, BLOCK> = (C, BlockBehaviour.Properties) -> BLOCK
-
 /**
  * [ブロック][Block]向けの[HTDeferredRegister]の拡張クラスです。
  * @author Hiiragi Tsubasa
