@@ -9,8 +9,8 @@ import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTRecipeFactories
 import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.ingredient.test
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -63,7 +63,7 @@ data class RTElectrolyzingRecipe(
         val SERIALIZER: RecipeSerializer<RTElectrolyzingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.fold({ HTIngredientHelper.isEmpty(first) }, { it.test(first) }) && fluidIngredient.test(second)
+    override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.test(first) && fluidIngredient.test(second)
 
     override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = Pair(
         itemIngredient.fold({ 0 }, { it.getRequiredAmount(first) }),

@@ -12,7 +12,9 @@ import kotlin.contracts.contract
 import net.minecraft.core.HolderSet
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.fluids.crafting.CompoundFluidIngredient
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
+import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 
 /**
  * [FluidIngredient]および[HTFluidIngredient]を作成するビルダークラスです。
@@ -28,8 +30,24 @@ class FluidIngredientBuilder {
         ingredient = this
     }
 
+    /**
+     * @since 26.1.2
+     */
+    @JvmName("unaryPlusCompound")
+    operator fun List<FluidIngredient>.unaryPlus() {
+        +CompoundFluidIngredient(this)
+    }
+
     operator fun HolderSet<Fluid>.unaryPlus() {
         +FluidIngredient.of(this)
+    }
+
+    /**
+     * @since 26.1.2
+     */
+    @JvmName("unaryPlusOr")
+    operator fun List<HolderSet<Fluid>>.unaryPlus() {
+        +OrHolderSet(this)
     }
 
     inline fun fluids(builderAction: HolderAcceptor.FluidSetBuilder.() -> Unit) {
