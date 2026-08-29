@@ -2,7 +2,13 @@
   "type": "ragium:melting",
   "ingredient": {
     "count": 1,
-    "items": "#c:glass_blocks"
+    "items": {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/glass",
+        "#c:glass_blocks"
+      ]
+    }
   },
   "result": {
     "amount": 1000,

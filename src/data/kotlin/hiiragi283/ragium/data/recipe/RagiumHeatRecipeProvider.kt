@@ -161,7 +161,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }
         // Molten Glass
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.GLASS_BLOCKS) }
+            ingredient { +holderSet(Tags.Items.GLASS_BLOCKS, CommonTagPrefixes.DUST.itemTagKey(VanillaMaterials.GLASS)) }
             result { +RagiumFluids.MOLTEN_GLASS }
             recipeId suffix "_from_block"
         }.save(exporter)
