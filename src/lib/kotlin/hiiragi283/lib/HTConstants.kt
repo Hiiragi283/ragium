@@ -5,7 +5,7 @@ import net.minecraft.resources.Identifier
 import net.neoforged.neoforge.common.NeoForgeMod
 
 /**
- * Ragiumで使用される定数を集めたクラスです。
+ * Hiiragi Seriesで使用される定数を集めたクラスです。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

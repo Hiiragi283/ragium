@@ -27,7 +27,7 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
      * 指定した要素をタグに追加します。
      * @param like 要素のキーを提供する[HTKeyLike]
      * @param type このエントリの依存関係
-     * @since 26.1.3
+     * @since 26.1.0
      */
     fun add(like: HTKeyLike<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = add(like.getKey(), type)
 

@@ -3,7 +3,6 @@ package hiiragi283.lib.item.alchemy
 import hiiragi283.lib.data.DataComponentSetter
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.item.ItemInstanceBuilder
-import hiiragi283.lib.util.HTTextResult
 import kotlin.jvm.optionals.getOrNull
 import net.minecraft.core.Holder
 import net.minecraft.core.TypedInstance
@@ -24,7 +23,7 @@ import net.neoforged.neoforge.common.Tags
 
 /**
  * @author Hiiragi Tsubasa
- * @since 0.3.0
+ * @since 26.1.0
  */
 data object HTPotionHelper {
     //    DataComponentGetter    //
@@ -32,14 +31,10 @@ data object HTPotionHelper {
     /**
      * 指定した[getter]から[PotionContents]を取得します。
      * @return 値を保持していない場合は[PotionContents.EMPTY]
-     * @since 0.10.0
      */
     @JvmStatic
     fun getPotion(getter: DataComponentGetter): PotionContents = getter.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
 
-    /**
-     * @since 0.14.0
-     */
     @JvmStatic
     fun setPotion(setter: DataComponentSetter, contents: PotionContents?) {
         setter.setOrRemove(DataComponents.POTION_CONTENTS, contents)
@@ -47,7 +42,6 @@ data object HTPotionHelper {
 
     /**
      * 指定した[getter]からポーションのMod IDを取得します。
-     * @since 0.11.0
      */
     @JvmStatic
     fun getPotionModId(getter: DataComponentGetter): String? = getPotion(getter)
@@ -67,7 +61,6 @@ data object HTPotionHelper {
 
     /**
      * 指定した[contents]からポーションの[ItemStack]を作成します。
-     * @since 0.11.0
      */
     @JvmStatic
     fun createPotion(contents: BottledPotionContents): ItemStackTemplate = ItemInstanceBuilder.buildTemplate {
@@ -82,7 +75,7 @@ data object HTPotionHelper {
      * @param count [ItemStack]の個数
      */
     @JvmStatic
-    fun createPotion(item: ItemLike, potion: Holder<Potion>, count: Int = 1): HTTextResult<ItemStackTemplate> = createPotion(item, PotionContents(potion), count)
+    fun createPotion(item: ItemLike, potion: Holder<Potion>, count: Int = 1): ItemStackTemplate? = createPotion(item, PotionContents(potion), count)
 
     /**
      * 指定した引数からポーションの[ItemStack]を作成します。
@@ -91,7 +84,7 @@ data object HTPotionHelper {
      * @param count [ItemStack]の個数
      */
     @JvmStatic
-    fun createPotion(item: ItemLike, contents: PotionContents, count: Int = 1): HTTextResult<ItemStackTemplate> = ItemInstanceBuilder.buildSafeTemplate {
+    fun createPotion(item: ItemLike, contents: PotionContents, count: Int = 1): ItemStackTemplate? = ItemInstanceBuilder.buildSafeTemplate {
         +item.asItem()
         this.count = count
         components { set(DataComponents.POTION_CONTENTS, contents) }
@@ -100,7 +93,6 @@ data object HTPotionHelper {
     /**
      * 指定した[instance]から[BottledPotionContents]を取得します。
      * @return [BottledPotionContents]を取得できない場合は`null`
-     * @since 0.14.0
      */
     @JvmName("getContentsFromItem")
     @JvmStatic
@@ -113,7 +105,6 @@ data object HTPotionHelper {
     /**
      * 指定した[instance]から[BottledPotionContents]を取得します。
      * @return [BottledPotionContents]を取得できない場合は`null`
-     * @since 0.14.0
      */
     @JvmStatic
     fun <T> getContentsFromBottle(instance: T): BottledPotionContents? where T : TypedInstance<Item>, T : DataComponentGetter {
@@ -137,7 +128,6 @@ data object HTPotionHelper {
     /**
      * 指定した[instance]から[BottledPotionContents]を取得します。
      * @return [BottledPotionContents]を取得できない場合は`null`
-     * @since 0.14.0
      */
     @JvmName("getContentsFromFluid")
     @JvmStatic

@@ -23,7 +23,7 @@ class SetMultiMap<K, out V> private constructor(map: Map<K, Set<V>>) : AbstractM
      * @param K キーのクラス
      * @param V 値のクラス
      * @author Hiiragi Tsubasa
-     * @since 26.1.1
+     * @since 26.1.0
      */
     class Builder<K, V> : AbstractMultiMap.Builder<K, V, MutableSet<V>> {
         constructor(map: MutableMap<K, MutableSet<V>>) : super(map)

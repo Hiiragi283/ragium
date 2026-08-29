@@ -8,8 +8,6 @@ import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.isEmpty
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
-import hiiragi283.lib.util.HTTextResult
-import hiiragi283.lib.util.right
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -23,7 +21,7 @@ import net.neoforged.neoforge.fluids.FluidType
 /**
  * [FluidStackTemplate]や[FluidStack]向けのビルダークラスです。
  * @author Hiiragi Tsubasa
- * @since 26.1.1
+ * @since 26.1.0
  */
 @HTBuilderMarker
 class FluidInstanceBuilder : HolderAcceptor.FluidAcceptor {
@@ -45,14 +43,16 @@ class FluidInstanceBuilder : HolderAcceptor.FluidAcceptor {
          */
         @Suppress("DEPRECATION")
         @JvmStatic
-        inline fun buildSafeTemplate(builderAction: FluidInstanceBuilder.() -> Unit): HTTextResult<FluidStackTemplate> {
+        inline fun buildSafeTemplate(builderAction: FluidInstanceBuilder.() -> Unit): FluidStackTemplate? {
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
             }
             return FluidInstanceBuilder().apply(builderAction).run {
-                if (fluid.isEmpty) HTTextResult("Fluid must be non-empty")
-                if (amount <= 0) HTTextResult("Amount must be positive")
-                FluidStackTemplate(fluid, amount, patch).right()
+                when {
+                    fluid.isEmpty -> null
+                    amount <= 0 -> null
+                    else -> FluidStackTemplate(fluid, amount, patch)
+                }
             }
         }
 

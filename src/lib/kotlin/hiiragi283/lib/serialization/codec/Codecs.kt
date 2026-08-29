@@ -57,5 +57,9 @@ fun <A : Any> Codec<List<A>>.setOf(): Codec<Set<A>> = this.xmap(List<A>::toSet, 
 
 //    Option    //
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 @JvmName("convertToOption")
 fun <A : Any> MapCodec<Optional<A>>.convert(): MapCodec<Option<A>> = this.xmap({ it.kotlin }, { it.java })

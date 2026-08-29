@@ -16,6 +16,11 @@ import hiiragi283.ragium.api.RagiumConstants
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 
+/**
+ * Ragiumで使用される[HTRecipeLookup]をまとめたクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 data object RagiumRecipeLookups {
     @JvmStatic
     private fun <RECIPE : Any> create(path: String): HTCompoundRecipeLookup<RECIPE> = HTCompoundRecipeLookup.create(RagiumAPI.id(path))

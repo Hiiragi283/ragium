@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceKey
 /**
  * [キー][ResourceKey]を提供するインターフェースです。
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  * @see SupplierWithKey
  */
 interface HTKeyLike<R : Any> : HTIdLike {
@@ -19,10 +19,18 @@ interface HTKeyLike<R : Any> : HTIdLike {
 
     override fun getId(): Identifier = getKey().identifier()
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     interface Translatable<R : Any> :
         HTKeyLike<R>,
         HTIdLike.Translatable
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     fun interface SimpleTranslatable<R : Any> : Translatable<R> {
         override val translationKey: String get() = getKey().toLanguageKey()
 

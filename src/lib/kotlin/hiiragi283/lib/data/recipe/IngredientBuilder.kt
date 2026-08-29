@@ -19,7 +19,7 @@ import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 /**
  * [Ingredient]および[HTItemIngredient]を作成するビルダークラスです。
  * @author Hiiragi Tsubasa
- * @since 26.1.1
+ * @since 26.1.0
  */
 @HTBuilderMarker
 class IngredientBuilder {

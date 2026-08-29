@@ -12,6 +12,10 @@ fun interface HTLangName {
     fun getTranslatedName(type: HTLangType): String
 }
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 fun HTLangName(enName: String, jaName: String): HTLangName = EnJaLangName(enName, jaName)
 
 @JvmRecord

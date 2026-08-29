@@ -38,7 +38,7 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
     internal val conditions: MutableList<ICondition> = mutableListOf()
 
     /**
-     * @since 26.1.1
+     * @since 26.1.0
      */
     inline fun condition(builderAction: ConditionBuilder.() -> Unit) {
         contract {

@@ -13,6 +13,12 @@ import kotlin.contracts.contract
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 
+/**
+ * 1種類のアイテムから1種類のアイテムと液体を作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
+ * @param RECIPE 生成するレシピのクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 class HTItemToItemAndFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) : HTProgressRecipeBuilder<RECIPE>(prefix) {
     override fun getPrimalId(): Identifier = itemResult.getId()
 
@@ -61,6 +67,11 @@ class HTItemToItemAndFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, 
 
     //    Factory    //
 
+    /**
+     * @param RECIPE 生成するレシピのクラス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     fun interface Factory<out RECIPE : Any> {
         fun create(ingredient: HTItemIngredient, itemResult: HTItemResult, fluidResult: HTFluidResult, progressData: HTProgressData): RECIPE
     }

@@ -9,8 +9,19 @@ import mezz.jei.api.recipe.types.IRecipeType
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStack
 
+/**
+ * [HTRecipeHolder]向けの[HTJeiRecipeType]のエイリアスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 typealias HTHolderJeiRecipeType<T> = HTJeiRecipeType<HTRecipeHolder<T>>
 
+/**
+ * Hiiragi Seriesで使用される[IRecipeType]の実装クラスです。
+ * @param T 対象のレシピのクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 @Suppress("NonExtendableApiUsage")
 class HTJeiRecipeType<T : Any>(
     private val id: Identifier,
@@ -29,8 +40,20 @@ class HTJeiRecipeType<T : Any>(
     override fun toString(): String = "HTJeiRecipeType(uid=$uid)"
 }
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 inline fun <reified T : Any> HTJeiRecipeType(id: Identifier, hasText: HTHasText, icon: Either<Identifier, ItemStack>): HTJeiRecipeType<T> = HTJeiRecipeType(id, hasText, icon, T::class.java)
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 inline fun <reified T : Any> HTJeiRecipeType(id: HTIdLike.Translatable, icon: ItemStack): HTJeiRecipeType<T> = HTJeiRecipeType(id.getId(), id, Either.Right(icon))
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 inline fun <reified T : Any> HTJeiRecipeType(id: HTIdLike.Translatable, icon: HTItemInstanceLike): HTJeiRecipeType<T> = HTJeiRecipeType(id, icon.toStack())

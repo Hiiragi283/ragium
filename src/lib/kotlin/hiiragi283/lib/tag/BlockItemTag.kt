@@ -7,6 +7,11 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 
+/**
+ * [ブロック][Block]と[アイテム][Item]の[TagKey]を束ねたクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 @JvmRecord
 data class BlockItemTag(val block: TagKey<Block>, val item: TagKey<Item>) {
     constructor(location: Identifier) : this(Registries.BLOCK.createTagKey(location), Registries.ITEM.createTagKey(location))

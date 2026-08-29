@@ -30,6 +30,8 @@ import net.neoforged.neoforge.transfer.access.ItemAccess
 
 /**
  * 参照 : [Mekanism - StorageUtils](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/util/StorageUtils.java)
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
  */
 data object HTStorageHelper {
     //    Amount    //

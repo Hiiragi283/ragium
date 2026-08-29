@@ -4,7 +4,7 @@ package hiiragi283.lib.color
  * 色のバリエーションを持つ要素をまとめるクラスです。
  * @param T 要素のクラス
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  */
 data class HTColoredCollection<out T>(
     val white: T,

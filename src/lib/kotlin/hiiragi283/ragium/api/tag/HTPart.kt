@@ -5,12 +5,20 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 sealed interface HTPart : HTLangPatternProvider {
     val tagPrefix: HTTagPrefix
 
     fun createName(material: HTMaterialLike): String
 }
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 enum class HTBlockPart(private val idPattern: String, override val tagPrefix: HTTagPrefix, provider: HTLangPatternProvider) :
     HTPart,
     HTLangPatternProvider by provider {
@@ -27,6 +35,10 @@ enum class HTBlockPart(private val idPattern: String, override val tagPrefix: HT
     override fun createName(material: HTMaterialLike): String = idPattern.replace("%s", material.materialName)
 }
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 enum class HTItemPart(private val idPattern: String, override val tagPrefix: HTTagPrefix, provider: HTLangPatternProvider) :
     HTPart,
     HTLangPatternProvider by provider {

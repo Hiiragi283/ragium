@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.conditions.NeoForgeConditions
 /**
  * [ICondition]の一覧を作成するビルダークラスです。
  * @author Hiiragi Tsubasa
- * @since 26.1.1
+ * @since 26.1.0
  */
 @HTBuilderMarker
 @JvmInline

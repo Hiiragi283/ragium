@@ -1,7 +1,9 @@
 package hiiragi283.lib.recipe.lookup
 
 import hiiragi283.lib.recipe.RecipeKey
-import net.minecraft.util.context.ContextMap
+import net.minecraft.core.RegistryAccess
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.crafting.RecipeMap
 
 /**
  * レシピの一覧を提供するインターフェースです。
@@ -14,7 +16,22 @@ import net.minecraft.util.context.ContextMap
 fun interface HTRecipeLookup<out RECIPE> {
     /**
      * レシピの一覧を取得します。
-     * @param contextMap レシピのコンテキスト
      */
-    fun getAllRecipes(contextMap: ContextMap): Map<RecipeKey, RECIPE>
+    fun getAllRecipes(context: Context): Map<RecipeKey, RECIPE>
+
+    /**
+     * @param recipeMap レシピの一覧
+     * @param registries レジストリへのアクセス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.1
+     */
+    @JvmRecord
+    data class Context(val recipeMap: RecipeMap, val registries: RegistryAccess) {
+        companion object {
+            @JvmField
+            val EMPTY = Context(RecipeMap.EMPTY, RegistryAccess.EMPTY)
+        }
+
+        constructor(level: ServerLevel) : this(level.recipeAccess().recipeMap(), level.registryAccess())
+    }
 }

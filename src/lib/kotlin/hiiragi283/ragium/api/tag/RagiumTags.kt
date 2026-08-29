@@ -9,12 +9,17 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
+/**
+ * Ragiumで使用される[TagKey]をまとめたクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 data object RagiumTags {
-
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     data object Items {
-        @JvmField
-        val CROPS_WARPED_WART: TagKey<Item> = common("crops", "warped_wart")
-
         @JvmField
         val FOODS_DOUGH_WHEAT: TagKey<Item> = common("foods", "dough", "wheat")
 

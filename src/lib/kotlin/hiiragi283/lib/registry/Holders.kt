@@ -17,7 +17,7 @@ import net.neoforged.neoforge.registries.DeferredHolder
  * @param R 保持する値のクラス
  * @throws IllegalStateException [Holder.unwrapKey]の値が空の場合
  * @author Hiiragi Tsubasa
- * @since 0.17.0
+ * @since 26.1.0
  */
 fun <R : Any> Holder<R>.getKeyOrThrow(): ResourceKey<R> = this.unwrapKey().orElseThrow { error("Unregistered holder: $this") }
 
@@ -26,7 +26,7 @@ fun <R : Any> Holder<R>.getKeyOrThrow(): ResourceKey<R> = this.unwrapKey().orEls
  * @param R 保持する値のクラス
  * @throws IllegalStateException [Holder.kind]が[Holder.Kind.DIRECT]の場合
  * @author Hiiragi Tsubasa
- * @since 0.17.0
+ * @since 26.1.0
  */
 fun <R : Any> Holder<R>.asSupplier(): SimpleSupplierWithKey<R> = when (this.kind()) {
     Holder.Kind.REFERENCE -> HolderWithKey(this)
@@ -41,25 +41,46 @@ private data class HolderWithKey<R : Any>(private val holder: Holder<R>) : Simpl
 }
 
 /**
+ * この[DeferredHolder][this]を[HTDeferredHolder]に変換します。
  * @author Hiiragi Tsubasa
- * @since 21.1.0
+ * @since 26.1.0
  */
 fun <R : Any, T : R> DeferredHolder<R, T>.asSupplier(): HTDeferredHolder<R, T> = when (this) {
     is HTDeferredHolder<R, T> -> this
     else -> HTDeferredHolder(this.key)
 }
 
+/**
+ * この[TypedInstance][this]から[ResourceKey]を取得します。
+ * @param T 保持する値のクラス
+ * @throws IllegalStateException [Holder.unwrapKey]の値が空の場合
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 fun <T : Any> TypedInstance<T>.getKeyOrThrow(): ResourceKey<T> = this.typeHolder().getKeyOrThrow()
 
+/**
+ * この[TypedInstance][this]から[SimpleSupplierWithKey]を取得します。
+ * @param T 保持する値のクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 fun <T : Any> TypedInstance<T>.supplierWithKey(): SimpleSupplierWithKey<T> = this.typeHolder().asSupplier()
 
 //    Block    //
 
+/**
+ * この[Holder][this]が空かどうか判定します。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 val Holder<out ItemLike>.isAir: Boolean get() = this.`is`(HTConstants.Keys.AIR)
 
 /**
+ * この[Holder][this]を[SimpleBlockItemSupplierWithKey]に変換します。
+ * @throws IllegalStateException [Holder.kind]が[Holder.Kind.DIRECT]の場合
  * @author Hiiragi Tsubasa
- * @since 21.1.0
+ * @since 26.1.0
  */
 fun Holder<Block>.asBlockSupplier(): SimpleBlockItemSupplierWithKey = when (this.kind()) {
     Holder.Kind.REFERENCE -> BlockHolderWithKey(this)
@@ -80,11 +101,17 @@ private data class BlockHolderWithKey(override val block: SimpleSupplierWithKey<
 }
 
 /**
+ * この[DeferredHolder][this]を[HTDeferredBlockAndItem]に変換します。
  * @author Hiiragi Tsubasa
- * @since 21.1.0
+ * @since 26.1.0
  */
 fun <BLOCK : Block> DeferredHolder<Block, BLOCK>.asBlockSupplier(): HTDeferredBlockAndItem<BLOCK, Item> = HTDeferredBlockAndItem(this.id)
 
 //    Fluid    //
 
+/**
+ * この[Holder][this]が空かどうか判定します。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 val Holder<Fluid>.isEmpty: Boolean get() = this.`is`(HTConstants.Keys.EMPTY)

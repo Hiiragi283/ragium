@@ -85,6 +85,11 @@ data class BottledPotionContents @JvmOverloads constructor(val contents: PotionC
      */
     val isWater: Boolean get() = potion == Potions.WATER && bottleType == HTBottleType.DEFAULT
 
+    /**
+     * [FluidStackTemplate]に変換します。
+     * @param amount 液体量
+     * @return [isWater]が`true`の場合は水，それ以外の場合は液体ポーション
+     */
     fun toFluidTemplate(amount: Int = FluidType.BUCKET_VOLUME): FluidStackTemplate = when (this.isWater) {
         true -> FluidStackTemplate(Fluids.WATER, amount)
         false -> HTPotionFluidAccess.INSTANCE.fluidContent.toTemplate(
@@ -93,13 +98,26 @@ data class BottledPotionContents @JvmOverloads constructor(val contents: PotionC
         )
     }!!
 
+    /**
+     * [FluidStack]に変換します。
+     * @param amount 液体量
+     * @return [isWater]が`true`の場合は水，それ以外の場合は液体ポーション
+     */
     fun toFluidStack(amount: Int = FluidType.BUCKET_VOLUME): FluidStack = toFluidTemplate(amount).create()
 
+    /**
+     * [ItemStackTemplate]に変換します。
+     * @return [isWater]が`true`の場合は水入りバケツ，それ以外の場合は液体ポーション入りバケツ
+     */
     fun toBucketTemplate(): ItemStackTemplate = when (this.isWater) {
         true -> ItemStackTemplate(Items.WATER_BUCKET)
         false -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.toTemplate(patch = HTPotionHelper.createItemPatch(this@BottledPotionContents))
     }!!
 
+    /**
+     * [ItemStack]に変換します。
+     * @return [isWater]が`true`の場合は水入りバケツ，それ以外の場合は液体ポーション入りバケツ
+     */
     fun toBucketStack(): ItemStack = toBucketTemplate().create()
 
     override fun getText(): Text = contents.getName("${bottleType.asItem().descriptionId}.effect.")

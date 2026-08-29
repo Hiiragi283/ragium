@@ -26,6 +26,10 @@ interface HTIdLike {
      */
     val path: String get() = getId().path
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     interface Translatable :
         HTIdLike,
         HTHasTranslationKey,

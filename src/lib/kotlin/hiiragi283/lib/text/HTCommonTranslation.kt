@@ -4,7 +4,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.ragium.api.RagiumAPI
 
 /**
- * Ragiumで使用される[翻訳][HTTranslation]を集めたクラスです。
+ * Hiiragi Seriesで使用される[翻訳][HTTranslation]を集めたクラスです。
  *
  * 参照 : [Mekanism - APILang](https://github.com/mekanism/Mekanism/blob/26.1/src/api/java/mekanism/api/text/APILang.java)
  *       [Mekanism - MekanismLang](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/MekanismLang.java)

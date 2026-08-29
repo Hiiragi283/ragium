@@ -13,6 +13,12 @@ import kotlin.contracts.contract
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 
+/**
+ * 1種類のアイテムから2種類のアイテムを作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
+ * @param RECIPE 生成するレシピのクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) : HTProgressRecipeBuilder<RECIPE>(prefix) {
     override fun getPrimalId(): Identifier = primary.getId()
 
@@ -53,6 +59,11 @@ class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
 
     //    Factory    //
 
+    /**
+     * @param RECIPE 生成するレシピのクラス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     fun interface Factory<out RECIPE : Any> {
         fun create(ingredient: HTItemIngredient, primary: HTItemResult, secondary: Option<HTItemResult>, progressData: HTProgressData): RECIPE
     }

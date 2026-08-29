@@ -16,6 +16,13 @@ import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmithingTransformRecipe
 
+/**
+ * 鍛冶台レシピ向けの[HTRecipeBuilder]の実装クラスです。
+ *
+ * 参照 : [Minecraft - SmithingTransformRecipeBuilder][net.minecraft.data.recipes.SmithingTransformRecipeBuilder]
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 class HTSmithingRecipeBuilder : HTRecipeBuilder<SmithingTransformRecipe>(HTConstants.SMITHING) {
     companion object {
         @JvmStatic

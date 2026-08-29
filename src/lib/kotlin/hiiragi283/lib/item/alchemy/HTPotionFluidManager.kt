@@ -50,7 +50,7 @@ data object HTPotionFluidManager {
                 override fun get(getter: DataComponentGetter): HTBottleType? = getter.get(HTPotionFluidAccess.INSTANCE.bottleType)
 
                 override fun set(setter: DataComponentSetter, bottleType: HTBottleType) {
-                    setter.set(HTPotionFluidAccess.INSTANCE.bottleType, bottleType)
+                    setter[HTPotionFluidAccess.INSTANCE.bottleType] = bottleType
                 }
             }
         }

@@ -1,8 +1,6 @@
 package hiiragi283.lib.item
 
 import hiiragi283.lib.registry.isAir
-import hiiragi283.lib.util.HTTextResult
-import hiiragi283.lib.util.toTextResult
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
@@ -13,7 +11,7 @@ import net.minecraft.world.level.ItemLike
 /**
  * この[ItemLike][this]が空かどうか判定します。
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  */
 @Suppress("DEPRECATION")
 val ItemLike.isAir: Boolean get() = this.asItem().builtInRegistryHolder().isAir
@@ -30,7 +28,7 @@ fun ItemStackTemplate?.createOrEmpty(): ItemStack = this?.create() ?: ItemStack.
 /**
  * この[ItemStackTemplate][this]をコピーします。
  * @author Hiiragi Tsubasa
- * @since 26.1.3
+ * @since 26.1.0
  */
 fun ItemStackTemplate.transmuteCopy(newItem: ItemLike, newCount: Int = this.count()): ItemStackTemplate? = when {
     newItem.isAir -> null
@@ -41,7 +39,7 @@ fun ItemStackTemplate.transmuteCopy(newItem: ItemLike, newCount: Int = this.coun
 
 /**
  * @author Hiiragi Tsubasa
- * @since 26.1.4
+ * @since 26.1.0
  */
 fun ItemStack(item: ItemLike, count: Int, patch: DataComponentPatch): ItemStack {
     val stack = ItemStack(item, count)
@@ -59,10 +57,3 @@ fun ItemStack.toTemplateOrNull(): ItemStackTemplate? = when {
     this.isEmpty -> null
     else -> ItemStackTemplate.fromNonEmptyStack(this)
 }
-
-/**
- * [ItemStack]を[ItemStackTemplate]に変換します。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-fun ItemStack.toTemplateResult(): HTTextResult<ItemStackTemplate> = this.toTemplateOrNull().toTextResult { "ItemStack must be non-empty" }

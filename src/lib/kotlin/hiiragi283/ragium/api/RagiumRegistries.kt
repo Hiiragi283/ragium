@@ -12,6 +12,11 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegistryBuilder
 
+/**
+ * Ragiumで追加されるレジストリをまとめたクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 @EventBusSubscriber
 data object RagiumRegistries {
     @JvmField
@@ -39,6 +44,10 @@ data object RagiumRegistries {
         .sync(true)
         .create()
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     data object Keys {
         @JvmField
         val FLUID_RESULT_TYPE: ResourceKey<Registry<HTFluidResultType<*>>> = createKey("fluid_result_type")

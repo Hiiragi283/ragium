@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.ListMultiMap
@@ -18,7 +19,6 @@ import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.display.HTPotionSlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
-import hiiragi283.lib.recipe.lookup.HTRecipeLookupContext
 import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -52,12 +52,11 @@ import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.common.recipe.RTLingeringBrewingRecipe
 import hiiragi283.ragium.common.recipe.RTSplashBrewingRecipe
-import net.minecraft.core.HolderLookup
+import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
-import net.minecraft.util.context.ContextMap
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -175,8 +174,7 @@ data object Ragium : HTCommonMod() {
         RagiumRecipeLookups.PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING, identity())
 
         RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
-        RagiumRecipeLookups.BATHING.addSubLookup { contextMap: ContextMap ->
-            val registries: HolderLookup.Provider = contextMap.getOptional(HTRecipeLookupContext.REGISTRIES) ?: return@addSubLookup mapOf()
+        RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
             val recipeMap: MutableMap<RecipeKey, RTBathingRecipe> = mutableMapOf()
             for ((key: ResourceKey<Block>, value: Oxidizable) in BuiltInRegistries.BLOCK.getDataMap(NeoForgeDataMaps.OXIDIZABLES)) {
                 val base: Item = BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem()
@@ -204,9 +202,9 @@ data object Ragium : HTCommonMod() {
         }
 
         RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
-        RagiumRecipeLookups.BREWING.addSubLookup { contextMap: ContextMap ->
+        RagiumRecipeLookups.BREWING.addSubLookup {
             val multiMap: ListMultiMap<Identifier, RTBrewingRecipe> = buildListMultiMap {
-                contextMap.getOptional(HTRecipeLookupContext.BREWING)
+                HTPhysicalSideHelper.getPotionBrewing()
                     ?.let(PotionBrewing::potionMixes)
                     ?.asSequence()
                     ?.forEach { mix: PotionBrewing.Mix<Potion> ->

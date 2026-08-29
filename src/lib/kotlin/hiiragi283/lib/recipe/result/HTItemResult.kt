@@ -30,7 +30,7 @@ import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 /**
  * アイテムの完成品を表すインターフェースです。
  * @author Hiiragi Tsubasa
- * @since 21.1.0
+ * @since 26.1.0
  */
 @JvmRecord
 data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemStack> {

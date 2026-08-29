@@ -9,6 +9,11 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.OnDatapackSyncEvent
 
+/**
+ * Ragiumで使用される[HTRecipeType]をまとめたクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 @EventBusSubscriber
 data object RagiumRecipeTypes {
     @JvmStatic

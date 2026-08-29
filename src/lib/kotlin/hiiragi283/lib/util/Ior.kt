@@ -18,15 +18,6 @@ import kotlin.contracts.contract
 sealed class Ior<out A, out B> {
     companion object {
         /**
-         * 指定された[pair]を[Ior]に変換します。
-         */
-        @JvmStatic
-        fun <A, B> fromNullable(pair: Pair<A?, B?>?): Ior<A, B>? {
-            val (first: A?, second: B?) = pair ?: return null
-            return fromNullable(first, second)
-        }
-
-        /**
          * 指定された[left]と[right]を[Ior]に変換します。
          */
         @JvmStatic

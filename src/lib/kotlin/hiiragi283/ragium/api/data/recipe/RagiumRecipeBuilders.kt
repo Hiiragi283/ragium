@@ -27,6 +27,11 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+/**
+ * Ragiumで使用されるレシピビルダーをまとめたクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 data object RagiumRecipeBuilders {
     // Mechanical
     @JvmStatic

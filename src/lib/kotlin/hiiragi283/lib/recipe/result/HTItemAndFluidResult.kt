@@ -6,6 +6,11 @@ import java.util.Objects
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 
+/**
+ * アイテムと液体の完成品を保持するクラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 @JvmRecord
 data class HTItemAndFluidResult(val item: ItemStack, val fluid: FluidStack) {
     constructor(item: ItemStack) : this(item, FluidStack.EMPTY)

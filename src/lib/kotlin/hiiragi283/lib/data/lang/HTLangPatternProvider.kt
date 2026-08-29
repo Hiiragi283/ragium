@@ -22,13 +22,17 @@ fun interface HTLangPatternProvider {
 
     companion object {
         /**
-         * @since 21.1.0
+         * @since 26.1.0
          */
         @JvmField
         val IDENTITY: HTLangPatternProvider = IdentityLangPatternProvider
     }
 }
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 fun HTLangPatternProvider(enPattern: String, jaPattern: String): HTLangPatternProvider = EnJaLangPatternProvider(enPattern, jaPattern)
 
 private data object IdentityLangPatternProvider : HTLangPatternProvider {

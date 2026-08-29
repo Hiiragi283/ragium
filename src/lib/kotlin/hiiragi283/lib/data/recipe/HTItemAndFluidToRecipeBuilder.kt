@@ -17,6 +17,12 @@ import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 
+/**
+ * 1種類のアイテムと液体から1種類の完成品を作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
+ * @param RECIPE 生成するレシピのクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RESULT, RECIPE>) : HTProgressRecipeBuilder<RECIPE>(prefix) {
     final override fun getPrimalId(): Identifier = result.getId()
 
@@ -69,6 +75,12 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
 
     //    ToFluid    //
 
+    /**
+     * 1種類のアイテムと液体から1種類の液体を作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
+     * @param RECIPE 生成するレシピのクラス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     class ToFluid<out RECIPE : Recipe<*>>(prefix: String, factory: Factory<HTFluidResult, RECIPE>) : HTItemAndFluidToRecipeBuilder<HTFluidResult, RECIPE>(prefix, factory) {
         inline fun result(builderAction: HTFluidResultBuilder.() -> Unit) {
             contract {
@@ -80,6 +92,12 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
 
     //    ToItem    //
 
+    /**
+     * 1種類のアイテムと液体から1種類のアイテムを作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
+     * @param RECIPE 生成するレシピのクラス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     class ToItem<out RECIPE : Recipe<*>>(prefix: String, factory: Factory<HTItemResult, RECIPE>) : HTItemAndFluidToRecipeBuilder<HTItemResult, RECIPE>(prefix, factory) {
         inline fun result(builderAction: HTItemResultBuilder.() -> Unit) {
             contract {
@@ -91,6 +109,12 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
 
     //    Factory    //
 
+    /**
+     * @param RESULT レシピの完成品となるクラス
+     * @param RECIPE 生成するレシピのクラス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.0
+     */
     fun interface Factory<RESULT : HTRecipeResult<*>, out RECIPE : Any> {
         fun create(itemIngredient: HTCatalystOrIngredient, fluidIngredient: HTFluidIngredient, result: RESULT, progressData: HTProgressData): RECIPE
     }

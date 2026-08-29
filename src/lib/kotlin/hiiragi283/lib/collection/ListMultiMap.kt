@@ -23,7 +23,7 @@ class ListMultiMap<K, out V> private constructor(map: Map<K, List<V>>) : Abstrac
      * @param K キーのクラス
      * @param V 値のクラス
      * @author Hiiragi Tsubasa
-     * @since 26.1.1
+     * @since 26.1.0
      */
     class Builder<K, V> : AbstractMultiMap.Builder<K, V, MutableList<V>> {
         constructor(map: MutableMap<K, MutableList<V>>) : super(map)
