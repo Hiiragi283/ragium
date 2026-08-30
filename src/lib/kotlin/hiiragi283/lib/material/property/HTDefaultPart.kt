@@ -3,11 +3,11 @@ package hiiragi283.lib.material.property
 import hiiragi283.lib.material.HTMaterialAccess
 import hiiragi283.lib.material.HTMaterialContents
 import hiiragi283.lib.material.HTMaterialKey
-import hiiragi283.lib.material.part.CommonParts
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.util.Ior
+import hiiragi283.ragium.api.tag.HTItemPart
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
 import net.minecraft.resources.Identifier
@@ -76,7 +76,7 @@ sealed interface HTDefaultPart {
     data object Gem : HTDefaultPart {
         override fun getTag(key: HTMaterialKey): TagKey<Item> = CommonTagPrefixes.GEM.itemTagKey(key)
 
-        override fun getItem(key: HTMaterialKey): HTMaterialContents.ItemEntry? = HTMaterialAccess.INSTANCE.getMaterialBlockOrItem(CommonParts.GEM, key)
+        override fun getItem(key: HTMaterialKey): HTMaterialContents.ItemEntry? = HTMaterialAccess.INSTANCE.getMaterialBlockOrItem(HTItemPart.GEM, key)
 
         override fun getSuffix(): String = "gem"
     }
@@ -84,7 +84,7 @@ sealed interface HTDefaultPart {
     data object Ingot : HTDefaultPart {
         override fun getTag(key: HTMaterialKey): TagKey<Item> = CommonTagPrefixes.INGOT.itemTagKey(key)
 
-        override fun getItem(key: HTMaterialKey): HTMaterialContents.ItemEntry? = HTMaterialAccess.INSTANCE.getMaterialBlockOrItem(CommonParts.INGOT, key)
+        override fun getItem(key: HTMaterialKey): HTMaterialContents.ItemEntry? = HTMaterialAccess.INSTANCE.getMaterialBlockOrItem(HTItemPart.INGOT, key)
 
         override fun getSuffix(): String = "ingot"
     }

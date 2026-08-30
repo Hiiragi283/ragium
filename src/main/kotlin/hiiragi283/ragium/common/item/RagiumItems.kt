@@ -1,9 +1,11 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.lib.collection.Table
+import hiiragi283.lib.material.HTMaterialKey
 import hiiragi283.lib.registry.HTDeferredItemRegister
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.api.tag.HTItemPart
 import net.minecraft.world.item.Rarity
 import net.neoforged.bus.api.IEventBus
 
@@ -17,6 +19,12 @@ data object RagiumItems {
     }
 
     //    Ingredient    //
+
+    @JvmField
+    val MATERIAL_ITEMS: Table<HTItemPart, HTMaterialKey, HTSimpleDeferredItem> = TODO()
+
+    @JvmStatic
+    fun getOrThrow(part: HTItemPart, material: HTMaterialKey): HTSimpleDeferredItem = MATERIAL_ITEMS[part, material] ?: error("Unregistered item: ${part.createName(material)}")
 
     // Mechanical
     @JvmField

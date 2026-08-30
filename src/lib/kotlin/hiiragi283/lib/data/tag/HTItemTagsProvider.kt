@@ -21,8 +21,17 @@ import net.minecraft.world.level.block.Block
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTItemTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, private val blockTags: CompletableFuture<TagLookup<Block>>, modId: String) : HTTagsProvider.DataGen<Item>(output, Registries.ITEM, lookupProvider, modId) {
+abstract class HTItemTagsProvider : HTTagsProvider<Item> {
+    private val blockTags: CompletableFuture<TagLookup<Block>>
     private val tagsToCopy: MutableMap<TagKey<Block>, TagKey<Item>> = mutableMapOf()
+
+    constructor(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, parentProvider: CompletableFuture<TagLookup<Item>>, contentsGetter: CompletableFuture<TagLookup<Block>>, modId: String) : super(output, Registries.ITEM, lookupProvider, parentProvider, modId) {
+        this.blockTags = contentsGetter
+    }
+
+    constructor(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, contentsGetter: CompletableFuture<TagLookup<Block>>, modId: String) : super(output, Registries.ITEM, lookupProvider, modId) {
+        this.blockTags = contentsGetter
+    }
 
     /**
      * コピーするタグを追加します。
@@ -58,6 +67,15 @@ abstract class HTItemTagsProvider(output: PackOutput, lookupProvider: Completabl
      * @param item アイテムの値
      */
     protected fun HTTagBuilder<Item>.addItem(item: ItemLike): HTTagBuilder<Item> = this.add(item.asItem().asSupplier())
+
+    protected fun createTag(prefix: HTTagPrefix, material: HTTagMaterial): TagKey<Item> = prefix.itemTagKey(material)
+
+    /**
+     * 新しい[HTTagBuilder]のインスタンスを作成します。
+     * @param prefix タグのプレフィックス
+     * @param material タグの種類を表す素材
+     */
+    protected fun builders(prefix: HTTagPrefix, material: HTTagMaterial): HTTagBuilder<Item> = builders(prefix.rawCommonTag.item, prefix.itemTagKey(material))
 
     //    TagsProvider    //
 

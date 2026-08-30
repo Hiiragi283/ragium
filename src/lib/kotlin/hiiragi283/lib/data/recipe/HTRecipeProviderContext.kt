@@ -2,8 +2,6 @@ package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.material.HTMaterial
 import hiiragi283.lib.material.HTMaterialManager
-import hiiragi283.lib.material.part.HTPart
-import hiiragi283.lib.material.part.HTPartManager
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.HTIdLike
 import hiiragi283.lib.tag.HTTagMaterial
@@ -39,12 +37,6 @@ abstract class HTRecipeProviderContext {
     protected fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().path.replace("/", "_")}"
 
     // Material
-    /**
-     * 部品を管理するマネージャを取得します。
-     * @since 26.1.2
-     */
-    protected val partManager: HTPartManager by lazy(HTPart::getManager)
-
     /**
      * 素材を管理するマネージャを取得します。
      * @since 26.1.2

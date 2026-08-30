@@ -6,9 +6,9 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.material.HTMaterialAccess
 import hiiragi283.lib.material.HTMaterialContents
 import hiiragi283.lib.material.HTMaterialKey
-import hiiragi283.lib.material.part.HTPartKey
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.resource.toId
+import hiiragi283.ragium.api.tag.HTPart
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
@@ -86,7 +86,7 @@ abstract class HTRecipeProvider(packOutput: PackOutput, private val future: Comp
     /**
      * @since 26.1.2
      */
-    protected inline fun useItem(part: HTPartKey, material: HTMaterialKey, action: (HTMaterialContents.ItemEntry) -> Unit) {
+    protected inline fun useItem(part: HTPart, material: HTMaterialKey, action: (HTMaterialContents.ItemEntry) -> Unit) {
         HTMaterialAccess.INSTANCE
             .getRegisteredContents()
             .items

@@ -6,8 +6,7 @@
   "mixins": [
     "RecipeManagerMixin",
     "RegistryFixedCodecMixin",
-    "RegistryMixin",
-    "ReloadableServerResourcesMixin"
+    "RegistryMixin"
   ],
   "minVersion": "0.8.3"
 }

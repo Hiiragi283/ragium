@@ -1,12 +1,13 @@
 package hiiragi283.lib.data.recipe
 
+import hiiragi283.lib.material.HTMaterialAccess
 import hiiragi283.lib.material.HTMaterialKey
-import hiiragi283.lib.material.part.HTPartKey
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.registry.HTDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
+import hiiragi283.ragium.api.tag.HTPart
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.resources.Identifier
@@ -64,8 +65,9 @@ class HTItemResultBuilder {
     }
 
     // Material
-    operator fun Pair<HTPartKey, HTMaterialKey>.unaryPlus() {
-        +HTItemResult.MaterialEntry(this.first, this.second)
+    operator fun Pair<HTPart, HTMaterialKey>.unaryPlus() {
+        val (part: HTPart, key: HTMaterialKey) = this
+        HTMaterialAccess.INSTANCE.getMaterialBlockOrItem(part, key)?.item?.let { +it }
     }
 
     fun build(): HTItemResult = HTItemResult(entry, count)

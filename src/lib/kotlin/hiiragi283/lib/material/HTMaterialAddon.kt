@@ -1,12 +1,10 @@
 package hiiragi283.lib.material
 
 import hiiragi283.lib.collection.mapOptional
-import hiiragi283.lib.material.part.HTPartKey
-import hiiragi283.lib.property.HTPropertyGetter
 import hiiragi283.lib.property.HTPropertyMap
-import hiiragi283.lib.property.buildPropertyMap
 import hiiragi283.lib.registry.createKey
 import hiiragi283.lib.resource.HTKeyLike
+import hiiragi283.ragium.api.tag.HTPart
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
@@ -30,21 +28,6 @@ interface HTMaterialAddon : IExtensionPoint {
 
     val priority: Int
 
-    //    Part    //
-
-    /**
-     * 新規で部品を登録します。
-     */
-    fun registerPart(register: PartRegister) {}
-
-    fun interface PartRegister {
-        fun register(key: HTPartKey, idPattern: String, properties: HTPropertyGetter)
-
-        fun register(key: HTPartKey, idPattern: String, builderAction: HTPropertyMap.Mutable.() -> Unit) {
-            register(key, idPattern, buildPropertyMap(builderAction))
-        }
-    }
-
     //    Material    //
 
     /**
@@ -53,13 +36,13 @@ interface HTMaterialAddon : IExtensionPoint {
     fun registerExistingBlock(consumer: BlockConsumer) {}
 
     fun interface BlockConsumer {
-        fun accept(part: HTPartKey, material: HTMaterialKey, key: ResourceKey<Block>)
+        fun accept(part: HTPart, material: HTMaterialKey, key: ResourceKey<Block>)
 
-        fun accept(part: HTPartKey, material: HTMaterialKey, id: Identifier) {
+        fun accept(part: HTPart, material: HTMaterialKey, id: Identifier) {
             this.accept(part, material, Registries.BLOCK.createKey(id))
         }
 
-        fun accept(part: HTPartKey, material: HTMaterialKey, like: HTKeyLike<Block>) {
+        fun accept(part: HTPart, material: HTMaterialKey, like: HTKeyLike<Block>) {
             this.accept(part, material, like.getKey())
         }
     }
@@ -70,13 +53,13 @@ interface HTMaterialAddon : IExtensionPoint {
     fun registerExistingItem(consumer: ItemConsumer) {}
 
     fun interface ItemConsumer {
-        fun accept(part: HTPartKey, material: HTMaterialKey, key: ResourceKey<Item>)
+        fun accept(part: HTPart, material: HTMaterialKey, key: ResourceKey<Item>)
 
-        fun accept(part: HTPartKey, material: HTMaterialKey, id: Identifier) {
+        fun accept(part: HTPart, material: HTMaterialKey, id: Identifier) {
             this.accept(part, material, Registries.ITEM.createKey(id))
         }
 
-        fun accept(part: HTPartKey, material: HTMaterialKey, like: HTKeyLike<Item>) {
+        fun accept(part: HTPart, material: HTMaterialKey, like: HTKeyLike<Item>) {
             this.accept(part, material, like.getKey())
         }
     }
@@ -95,13 +78,13 @@ interface HTMaterialAddon : IExtensionPoint {
     fun registerMaterialItem(register: MaterialEntryRegister) {}
 
     fun interface MaterialEntryRegister {
-        fun register(material: HTMaterialKey, part: HTPartKey)
+        fun register(material: HTMaterialKey, part: HTPart)
 
-        fun registerAll(material: HTMaterialKey, parts: Iterable<HTPartKey>) {
+        fun registerAll(material: HTMaterialKey, parts: Iterable<HTPart>) {
             parts.forEach { register(material, it) }
         }
 
-        fun registerAll(material: HTMaterialKey, vararg parts: HTPartKey) {
+        fun registerAll(material: HTMaterialKey, vararg parts: HTPart) {
             parts.forEach { register(material, it) }
         }
     }

@@ -5,18 +5,13 @@ import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.ListMultiMap
-import hiiragi283.lib.collection.asSequence
 import hiiragi283.lib.collection.buildListMultiMap
-import hiiragi283.lib.data.pack.HTDynamicDatapack
 import hiiragi283.lib.gui.sync.HTFluidSyncPayload
 import hiiragi283.lib.gui.sync.HTIntSyncPayload
 import hiiragi283.lib.gui.sync.HTItemSyncPayload
 import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.item.alchemy.HTPotionFluidManager
-import hiiragi283.lib.material.HTMaterialAccess
-import hiiragi283.lib.material.HTMaterialAddon
-import hiiragi283.lib.material.HTMaterialKey
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.recipe.HTRecipeType
@@ -54,21 +49,16 @@ import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.common.item.HTPotionBucketItem
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
-import hiiragi283.ragium.common.material.RagiumMaterialAddon
-import hiiragi283.ragium.common.material.VanillaMaterialAddon
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.common.recipe.RTLingeringBrewingRecipe
 import hiiragi283.ragium.common.recipe.RTSplashBrewingRecipe
-import hiiragi283.ragium.internal.data.pack.HTPackSource
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
-import net.minecraft.server.packs.PackType
-import net.minecraft.server.packs.repository.Pack
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -79,12 +69,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
-import net.neoforged.fml.ModList
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension
-import net.neoforged.neoforge.event.AddPackFindersEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
@@ -105,18 +93,9 @@ data object Ragium : HTCommonMod() {
         RagiumMobEffects.register(eventBus)
         RagiumPotions.register(eventBus)
 
-        ModList.get()
-            .getModContainerById(HTConstants.MINECRAFT)
-            .ifPresent { it.registerExtensionPoint(HTMaterialAddon::class.java, VanillaMaterialAddon) }
-        container.registerExtensionPoint(HTMaterialAddon::class.java, RagiumMaterialAddon)
-
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
         container.registerConfig(ModConfig.Type.SERVER, RagiumConfig.SERVER_SPEC)
     }
-
-    @JvmStatic
-    private val TRIPLE_COMPARATOR: Comparator<Triple<Comparable<*>, HTMaterialKey, *>> =
-        compareBy<Triple<Comparable<*>, HTMaterialKey, *>> { it.first }.thenComparing { it.second }
 
     private fun register(event: RegisterEvent) {
         event.register(Registries.CREATIVE_MODE_TAB) { helper ->
@@ -129,23 +108,6 @@ data object Ragium : HTCommonMod() {
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumBlocks.REGISTER.asItemSequence())
                     // Fluids
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumFluids.REGISTER.asItemSequence())
-                },
-            )
-            helper.register(
-                RagiumAPI.id(HTConstants.MATERIAL),
-                HTCreativeModeTabHelper.createSimpleTab(RagiumTranslation.CREATIVE_TAB_MATERIAL, Items.IRON_INGOT) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-                    // Items
-                    HTCreativeModeTabHelper.addToDisplay(
-                        parameters,
-                        output,
-                        HTMaterialAccess.INSTANCE.getRegisteredContents().items.asSequence().sortedWith(TRIPLE_COMPARATOR).map { it.third.item },
-                    )
-                    // Blocks
-                    HTCreativeModeTabHelper.addToDisplay(
-                        parameters,
-                        output,
-                        HTMaterialAccess.INSTANCE.getRegisteredContents().blocks.asSequence().sortedWith(TRIPLE_COMPARATOR).map { it.third.item },
-                    )
                 },
             )
         }
@@ -182,7 +144,6 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumRegistries.Keys.ITEM_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id(HTConstants.TAG), HTItemResult.TagEntry.TYPE)
-            helper.register(RagiumAPI.id(HTConstants.MATERIAL), HTItemResult.MaterialEntry.TYPE)
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
             helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)
@@ -303,14 +264,5 @@ data object Ragium : HTCommonMod() {
     override fun registerPayload(registrar: PayloadRegistrar) {
         registrar.playToClient(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC)
         registrar.playBidirectional(HTUpdateMenuPacket.TYPE, HTUpdateMenuPacket.STREAM_CODEC, HTPayloadHandlers::handleC2S)
-    }
-
-    override fun registerPack(event: AddPackFindersEvent) {
-        val packType: PackType = event.packType
-        if (packType == PackType.SERVER_DATA) {
-            HTDynamicDatapack.clear()
-            event.addRepositorySource(HTPackSource(RagiumAPI.id("data").toString(), packType, Pack.Position.TOP, ::HTDynamicDatapack))
-            RagiumAPI.LOGGER.info("Added dynamic datapack")
-        }
     }
 }

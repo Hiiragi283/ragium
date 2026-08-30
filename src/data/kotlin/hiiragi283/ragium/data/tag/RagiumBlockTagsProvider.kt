@@ -1,12 +1,13 @@
 package hiiragi283.ragium.data.tag
 
+import hiiragi283.lib.collection.forEach
 import hiiragi283.lib.data.tag.HTBlockTagsProvider
 import hiiragi283.lib.data.tag.HTTagBuilder
-import hiiragi283.lib.data.tag.builders
 import hiiragi283.lib.material.HTMaterialKey
 import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -21,6 +22,11 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
     override fun appendTags(registries: HolderLookup.Provider) {
         val pickaxe: HTTagBuilder<Block> = builder(BlockTags.MINEABLE_WITH_PICKAXE)
         // Material
+        RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: HTMaterialKey, block: HTKeyLike<Block>) ->
+            builders(part.tagPrefix, material).add(block)
+            pickaxe.add(block)
+        }
+
         setOf(
             VanillaMaterialKeys.GLOWSTONE to Blocks.GLOWSTONE,
             VanillaMaterialKeys.QUARTZ to Blocks.QUARTZ_BLOCK,
@@ -28,7 +34,7 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
         ).forEach { (material: HTMaterialKey, block: Block) -> builders(CommonTagPrefixes.STORAGE_BLOCK, material).addBlock(block) }
         // Machine
         for (machineType: HTMachineType in HTMachineType.entries) {
-            createEmptyTag(HTMachineType.PREFIX.blockTagKey(machineType)) // TODO
+            createEmptyTag(createTag(HTMachineType.PREFIX, machineType)) // TODO
             for (block: HTKeyLike<Block> in RagiumBlocks.MACHINES[machineType]) {
                 builders(HTMachineType.PREFIX, machineType).add(block)
             }

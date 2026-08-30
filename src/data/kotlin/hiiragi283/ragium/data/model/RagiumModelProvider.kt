@@ -62,6 +62,8 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun registerBlockModels(generators: BlockModelGenerators) {
+        RagiumBlocks.MATERIAL_BLOCKS.values.forEach { generators.createTrivialCube(it.get()) }
+
         // Machine
         for ((machineType: HTMachineType, block: SupplierWithId<Block>) in RagiumBlocks.MACHINES.flatEntries) {
             val modelId: Identifier = machineModel(generators, machineType, block, false)

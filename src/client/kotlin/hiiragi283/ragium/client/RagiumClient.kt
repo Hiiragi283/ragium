@@ -12,7 +12,6 @@ import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.client.data.RagiumDynamicClientResources
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
@@ -181,8 +180,6 @@ data object RagiumClient : HTClientMod() {
         val packType: PackType = event.packType
         if (packType == PackType.CLIENT_RESOURCES) {
             HTDynamicResourcePack.clear()
-
-            RagiumDynamicClientResources.initialize()
 
             event.addRepositorySource(HTPackSource(RagiumAPI.id("asset").toString(), packType, Pack.Position.TOP, ::HTDynamicResourcePack))
 

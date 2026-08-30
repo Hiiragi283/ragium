@@ -1,10 +1,13 @@
 package hiiragi283.lib.data.tag
 
 import hiiragi283.lib.registry.asSupplier
+import hiiragi283.lib.tag.HTTagMaterial
+import hiiragi283.lib.tag.HTTagPrefix
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
+import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 
 /**
@@ -12,7 +15,11 @@ import net.minecraft.world.level.block.Block
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, modId: String) : HTTagsProvider.DataGen<Block>(output, Registries.BLOCK, lookupProvider, modId) {
+abstract class HTBlockTagsProvider : HTTagsProvider<Block> {
+    constructor(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, parentProvider: CompletableFuture<TagLookup<Block>>, modId: String) : super(output, Registries.BLOCK, lookupProvider, parentProvider, modId)
+
+    constructor(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, modId: String) : super(output, Registries.BLOCK, lookupProvider, modId)
+
     //    Extensions    //
 
     /**
@@ -20,4 +27,13 @@ abstract class HTBlockTagsProvider(output: PackOutput, lookupProvider: Completab
      * @param block ブロックの値
      */
     protected fun HTTagBuilder<Block>.addBlock(block: Block): HTTagBuilder<Block> = this.add(block.asSupplier())
+
+    protected fun createTag(prefix: HTTagPrefix, material: HTTagMaterial): TagKey<Block> = prefix.blockTagKey(material)
+
+    /**
+     * 新しい[HTTagBuilder]のインスタンスを作成します。
+     * @param prefix タグのプレフィックス
+     * @param material タグの種類を表す素材
+     */
+    protected fun builders(prefix: HTTagPrefix, material: HTTagMaterial): HTTagBuilder<Block> = builders(prefix.rawCommonTag.block, prefix.blockTagKey(material))
 }

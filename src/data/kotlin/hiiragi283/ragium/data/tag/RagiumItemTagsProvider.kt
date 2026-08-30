@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.tag
 
 import hiiragi283.lib.data.tag.HTItemTagsProvider
-import hiiragi283.lib.data.tag.builders
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI

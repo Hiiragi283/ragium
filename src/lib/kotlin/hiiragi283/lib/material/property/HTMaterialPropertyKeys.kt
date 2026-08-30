@@ -1,9 +1,9 @@
 package hiiragi283.lib.material.property
 
 import hiiragi283.lib.data.lang.HTLangName
-import hiiragi283.lib.material.part.HTPartKey
 import hiiragi283.lib.property.HTPropertyKey
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.tag.HTPart
 
 /**
  * @author Hiiragi Tsubasa
@@ -49,18 +49,12 @@ data object HTMaterialPropertyKeys {
     val LANG_NAME: HTPropertyKey.Simple<HTLangName> = HTPropertyKey.Simple(RagiumAPI.id("lang_name"))
 
     /**
-     * [部品][HTPartKey]に依存する[翻訳名][HTLangName]を管理する[プロパティキー][HTPropertyKey]
+     * [部品][HTPart]に依存する[翻訳名][HTLangName]を管理する[プロパティキー][HTPropertyKey]
      */
     @JvmField
-    val CUSTOM_LANG_NAME: HTPropertyKey.Defaulted<Map<HTPartKey, HTLangName>> = HTPropertyKey.Defaulted(RagiumAPI.id("custom_lang_name"), mapOf())
+    val CUSTOM_LANG_NAME: HTPropertyKey.Defaulted<Map<HTPart, HTLangName>> = HTPropertyKey.Defaulted(RagiumAPI.id("custom_lang_name"), mapOf())
 
     // Texture
     @JvmField
     val COLOR: HTPropertyKey.Simple<Int> = HTPropertyKey.Simple(RagiumAPI.id("color"))
-
-    /**
-     * テクスチャを生成する際のテンプレートを管理する[プロパティキー][HTPropertyKey]
-     */
-    @JvmField
-    val TEXTURE_SET: HTPropertyKey.Defaulted<HTMaterialTextureSet> = HTPropertyKey.Defaulted(RagiumAPI.id("texture_set"), HTMaterialTextureSet.DEFAULT)
 }
