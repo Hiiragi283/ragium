@@ -2,10 +2,21 @@ package hiiragi283.lib.material
 
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.forEach
+import hiiragi283.lib.item.HTItemInstanceLike
 import hiiragi283.lib.material.part.HTPart
 import hiiragi283.lib.material.part.HTPartKey
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.resource.HTIdLike
+import hiiragi283.lib.resource.HTKeyLike
+import hiiragi283.lib.resource.SimpleBlockItemSupplierWithKey
+import hiiragi283.lib.resource.SimpleSupplierWithKey
+import hiiragi283.lib.text.Text
+import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 
 /**
  * 素材に紐づいたコンテンツを管理するインターフェースです。
@@ -43,9 +54,19 @@ interface HTMaterialContents<out V : Any> : Table<HTPartKey, HTMaterialKey, V> {
      * @author Hiiragi Tsubasa
      * @since 26.1.2
      */
-    @JvmRecord
-    data class BlockEntry(val block: HTSimpleDeferredBlockAndItem, val isBuiltIn: Boolean) {
-        fun asItemEntry(): ItemEntry = ItemEntry(block.item, isBuiltIn)
+    data class BlockEntry(override val block: HTSimpleDeferredBlockAndItem, val isBuiltIn: Boolean) :
+        SimpleSupplierWithKey<Block>,
+        SimpleBlockItemSupplierWithKey,
+        HTIdLike.Translatable by block,
+        ItemLike by block,
+        HTItemInstanceLike by block {
+        override val item: HTSimpleDeferredItem = block.item
+
+        fun asItemEntry(): ItemEntry = ItemEntry(item, isBuiltIn)
+
+        override fun get(): Block = block.get()
+
+        override fun getKey(): ResourceKey<Block> = block.getKey()
     }
 
     //    ItemEntry    //
@@ -54,12 +75,25 @@ interface HTMaterialContents<out V : Any> : Table<HTPartKey, HTMaterialKey, V> {
      * @author Hiiragi Tsubasa
      * @since 26.1.2
      */
-    @JvmRecord
-    data class ItemEntry(val item: HTSimpleDeferredItem, val isBuiltIn: Boolean)
+    data class ItemEntry(val item: HTSimpleDeferredItem, val isBuiltIn: Boolean) :
+        SimpleSupplierWithKey<Item> by item,
+        HTKeyLike.Translatable<Item>,
+        ItemLike by item,
+        HTItemInstanceLike by item {
+        override val translationKey: String get() = item.translationKey
+
+        override fun getText(): Text = item.getText()
+
+        override fun getId(): Identifier = item.id
+    }
 }
 
 //    Extensions    //
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.2
+ */
 fun <V : Any> HTMaterialContents<V>.columnPart(key: HTMaterialKey): Sequence<Pair<HTPart, V>> = this.column(key)
     .asSequence()
     .mapNotNull { (partKey: HTPartKey, entry: V) ->
@@ -67,6 +101,10 @@ fun <V : Any> HTMaterialContents<V>.columnPart(key: HTMaterialKey): Sequence<Pai
         part to entry
     }
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.2
+ */
 inline fun <V : Any> HTMaterialContents<V>.forEachPart(action: (part: HTPart, material: HTMaterial, entry: V) -> Unit) {
     this.forEach { (partKey: HTPartKey, materialKey: HTMaterialKey, entry: V) ->
         val part: HTPart = HTPart.getManager()[partKey] ?: return@forEach

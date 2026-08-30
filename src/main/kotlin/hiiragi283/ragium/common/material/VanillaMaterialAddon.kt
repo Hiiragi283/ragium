@@ -53,6 +53,7 @@ data object VanillaMaterialAddon : HTMaterialAddon {
         ) {
             register.register(HTPartKey("ore/$name"), "${name}_%s_ore") {
                 put(HTPartPropertyKeys.TAG_PREFIX, CommonTagPrefixes.ORE)
+                put(HTPartPropertyKeys.IS_ORE, Unit)
 
                 put(HTPartPropertyKeys.BLOCK_PROP, properties)
                 put(HTPartPropertyKeys.ORE_STONE_TEX, stoneTexture)
@@ -63,6 +64,7 @@ data object VanillaMaterialAddon : HTMaterialAddon {
 
         register.register(CommonParts.ORE, "%s_ore") {
             put(HTPartPropertyKeys.TAG_PREFIX, CommonTagPrefixes.ORE)
+            put(HTPartPropertyKeys.IS_ORE, Unit)
 
             put(
                 HTPartPropertyKeys.BLOCK_PROP,

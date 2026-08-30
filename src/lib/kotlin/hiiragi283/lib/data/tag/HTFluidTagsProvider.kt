@@ -14,7 +14,7 @@ import net.neoforged.neoforge.common.Tags
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTFluidTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, modId: String) : HTTagsProvider<Fluid>(output, Registries.FLUID, lookupProvider, modId) {
+abstract class HTFluidTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, modId: String) : HTTagsProvider.DataGen<Fluid>(output, Registries.FLUID, lookupProvider, modId) {
     //    Extensions    //
 
     /**

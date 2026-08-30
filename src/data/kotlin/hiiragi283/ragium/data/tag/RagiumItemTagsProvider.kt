@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.tag
 
 import hiiragi283.lib.data.tag.HTItemTagsProvider
+import hiiragi283.lib.data.tag.builders
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
@@ -26,7 +27,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
 
         HTMachineType.entries.forEach { copy(HTMachineType.PREFIX, it) }
         // Material
-        builder(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO).addItem(Items.ECHO_SHARD)
+        builders(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO).addItem(Items.ECHO_SHARD)
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             builders(Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)

@@ -49,7 +49,7 @@ class HTFluidModelBuilder {
      */
     fun setClear() {
         still = Material(vanillaId(HTConstants.BLOCK, "water_still"))
-        flowing = Material(vanillaId(HTConstants.BLOCK, "water_flowing"))
+        flowing = Material(vanillaId(HTConstants.BLOCK, "water_flow"))
         overlay = Material(vanillaId(HTConstants.BLOCK, "water_overlay"))
     }
 

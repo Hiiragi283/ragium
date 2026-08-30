@@ -64,16 +64,19 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     private fun registerBlockModels(generators: BlockModelGenerators) {
         // Machine
         for ((machineType: HTMachineType, block: SupplierWithId<Block>) in RagiumBlocks.MACHINES.flatEntries) {
-            val inactiveModel: MultiVariant = BlockModelGenerators.plainVariant(machineModel(generators, machineType, block, false))
+            val modelId: Identifier = machineModel(generators, machineType, block, false)
+            val inactiveModel: MultiVariant = BlockModelGenerators.plainVariant(modelId)
             val activeModel: MultiVariant = BlockModelGenerators.plainVariant(machineModel(generators, machineType, block, true))
+            val blockIn: Block = block.get()
             generators.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(block.get())
+                MultiVariantGenerator.dispatch(blockIn)
                     .with(
                         PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
                             .select(false, inactiveModel)
                             .select(true, activeModel),
                     ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING),
             )
+            generators.registerSimpleItemModel(blockIn, modelId)
         }
     }
 

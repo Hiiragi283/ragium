@@ -27,6 +27,12 @@ data object HTPartPropertyKeys {
     val BLOCK_PROP: HTPropertyKey.Simple<BlockBehaviour.Properties> = HTPropertyKey.Simple(RagiumAPI.id("block_properties"))
 
     /**
+     * 鉱石にまつわる部品かどうか管理する[プロパティキー][HTPropertyKey]
+     */
+    @JvmField
+    val IS_ORE: HTPropertyKey.Simple<Unit> = HTPropertyKey.Simple(RagiumAPI.id("is_ore"))
+
+    /**
      * 鉱石ブロックの母岩部分のテクスチャを管理する[プロパティキー][HTPropertyKey]
      */
     @JvmField

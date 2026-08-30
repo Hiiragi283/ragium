@@ -156,12 +156,12 @@ data object HTMaterialContentsRegister {
     private fun registerMaterialItems(manager: HTMaterialManager, helper: RegisterEvent.RegisterHelper<Item>) {
         // 素材ブロックのアイテムを生成する
         materialBlocks.forEach { (_, key: HTMaterialKey, block: HTMaterialContents.BlockEntry) ->
-            val id: ResourceKey<Item> = block.block.item.key
+            val id: ResourceKey<Item> = block.item.key
             helper.register(
                 id,
                 HTMaterialBlockItem(
                     manager.getOrThrow(key),
-                    block.block.get(),
+                    block.get(),
                     Item.Properties().setId(id).useBlockDescriptionPrefix(),
                 ),
             )

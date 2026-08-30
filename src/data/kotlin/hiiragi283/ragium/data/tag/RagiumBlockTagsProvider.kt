@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.tag
 
 import hiiragi283.lib.data.tag.HTBlockTagsProvider
 import hiiragi283.lib.data.tag.HTTagBuilder
+import hiiragi283.lib.data.tag.builders
 import hiiragi283.lib.material.HTMaterialKey
 import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.tag.CommonTagPrefixes
@@ -24,12 +25,12 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             VanillaMaterialKeys.GLOWSTONE to Blocks.GLOWSTONE,
             VanillaMaterialKeys.QUARTZ to Blocks.QUARTZ_BLOCK,
             VanillaMaterialKeys.AMETHYST to Blocks.AMETHYST_BLOCK,
-        ).forEach { (material: HTMaterialKey, block: Block) -> builder(CommonTagPrefixes.STORAGE_BLOCK, material).addBlock(block) }
+        ).forEach { (material: HTMaterialKey, block: Block) -> builders(CommonTagPrefixes.STORAGE_BLOCK, material).addBlock(block) }
         // Machine
         for (machineType: HTMachineType in HTMachineType.entries) {
-            createEmptyTag(createTag(HTMachineType.PREFIX, machineType)) // TODO
+            createEmptyTag(HTMachineType.PREFIX.blockTagKey(machineType)) // TODO
             for (block: HTKeyLike<Block> in RagiumBlocks.MACHINES[machineType]) {
-                builder(HTMachineType.PREFIX, machineType).add(block)
+                builders(HTMachineType.PREFIX, machineType).add(block)
             }
         }
 

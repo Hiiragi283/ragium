@@ -13,6 +13,9 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     // Constants
     RAGIUM(HTConstants.CONSTANTS, "name"),
 
+    // Creative Mode Tab
+    CREATIVE_TAB_MATERIAL(HTConstants.ITEM_GROUP, HTConstants.MATERIAL),
+
     // Config
     CONFIG_ENERGY_CAPACITY("config", "energy_capacity"),
     CONFIG_ENERGY_RATE("config", "energy_rate"),
