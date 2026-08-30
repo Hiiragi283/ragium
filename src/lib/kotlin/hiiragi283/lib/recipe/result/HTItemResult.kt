@@ -191,7 +191,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
             val CODEC: MapCodec<MaterialEntry> = HTCodecs.recordMap { instance ->
                 instance.group(
                     HTPart.CODEC.fieldOf("part").forGetter(MaterialEntry::part),
-                    HTMaterialKey.CODEC.fieldOf("material").forGetter(MaterialEntry::key),
+                    HTMaterialKey.CODEC.fieldOf(HTConstants.MATERIAL).forGetter(MaterialEntry::key),
                 ).apply(instance, ::MaterialEntry)
             }
 

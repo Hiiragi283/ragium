@@ -5,8 +5,11 @@ import hiiragi283.lib.material.HTMaterialAccess
 import hiiragi283.lib.material.HTMaterialKey
 import hiiragi283.lib.property.HTPropertyGetter
 import hiiragi283.lib.property.HTPropertyManager
+import hiiragi283.lib.registry.RegistryKey
+import hiiragi283.lib.registry.createKey
 import hiiragi283.lib.resource.modifyPath
 import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.util.ExtraCodecs
 
 /**
@@ -33,6 +36,8 @@ class HTPart(override val key: HTPartKey, private val idPattern: String, getter:
     }
 
     fun createId(key: HTMaterialKey): Identifier = key.getId().modifyPath { idPattern.replace("%s", it) }
+
+    fun <T : Any> createKey(registryKey: RegistryKey<T>, key: HTMaterialKey): ResourceKey<T> = createId(key).let(registryKey::createKey)
 
     override fun equals(other: Any?): Boolean = (other as? HTPart)?.key == this.key
 

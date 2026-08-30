@@ -9,8 +9,10 @@
     "items": "#c:dusts/wood"
   },
   "item_result": {
+    "type": "ragium:material",
     "count": 1,
-    "id": "ragium:charcoal_dust"
+    "material": "ragium:charcoal",
+    "part": "dust"
   },
   "time": 100
 }

@@ -22,7 +22,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.internal.item.HTMaterialBlockItem
 import hiiragi283.ragium.internal.item.HTMaterialItem
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -144,8 +143,8 @@ data object HTMaterialContentsRegister {
                     for (partKey: HTPartKey in partKeys.toSortedSet()) {
                         val part: HTPart = partManager[partKey] ?: continue
                         val properties: BlockBehaviour.Properties = part[HTPartPropertyKeys.BLOCK_PROP] ?: continue
-                        val id: Identifier = part.createId(key)
-                        helper.register(id, Block(properties))
+                        val id: ResourceKey<Block> = part.createKey(Registries.BLOCK, key)
+                        helper.register(id, Block(properties.setId(id)))
                         put(partKey, key, HTMaterialContents.BlockEntry(HTSimpleDeferredBlockAndItem(id), false))
                     }
                 }
@@ -157,7 +156,15 @@ data object HTMaterialContentsRegister {
     private fun registerMaterialItems(manager: HTMaterialManager, helper: RegisterEvent.RegisterHelper<Item>) {
         // 素材ブロックのアイテムを生成する
         materialBlocks.forEach { (_, key: HTMaterialKey, block: HTMaterialContents.BlockEntry) ->
-            helper.register(block.block.getId(), HTMaterialBlockItem(manager.getOrThrow(key), block.block.get(), Item.Properties()))
+            val id: ResourceKey<Item> = block.block.item.key
+            helper.register(
+                id,
+                HTMaterialBlockItem(
+                    manager.getOrThrow(key),
+                    block.block.get(),
+                    Item.Properties().setId(id).useBlockDescriptionPrefix(),
+                ),
+            )
         }
         // 素材アイテムを生成する
         materialItems = buildTable {
@@ -166,8 +173,8 @@ data object HTMaterialContentsRegister {
                     val material: HTMaterial = manager[key] ?: continue
                     for (partKey: HTPartKey in partKeys.toSortedSet()) {
                         val part: HTPart = partManager[partKey] ?: continue
-                        val id: Identifier = part.createId(key)
-                        helper.register(id, HTMaterialItem(material, Item.Properties()))
+                        val id: ResourceKey<Item> = part.createKey(Registries.ITEM, key)
+                        helper.register(id, HTMaterialItem(material, Item.Properties().setId(id)))
                         put(partKey, key, HTMaterialContents.ItemEntry(HTSimpleDeferredItem(id), false))
                     }
                 }

@@ -9,8 +9,10 @@
     "items": "#c:dusts/wood"
   },
   "result": {
+    "type": "ragium:material",
     "count": 1,
-    "id": "ragium:paper_dust"
+    "material": "ragium:paper",
+    "part": "dust"
   },
   "time": 200
 }

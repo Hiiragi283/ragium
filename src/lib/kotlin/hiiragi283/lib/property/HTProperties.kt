@@ -57,13 +57,20 @@ operator fun HTPropertyMap.Mutable.plusAssign(key: HTPropertyKey<Unit>) {
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-inline fun <T : Any> HTPropertyMap.Mutable.computeIfAbsent(key: HTPropertyKey<T>, mapping: () -> T): T {
-    val oldValue: T? = get(key) ?: key.getDefaultOrNull()
-    if (oldValue == null) {
-        val newValue: T = mapping()
-        put(key, newValue)
-        return newValue
-    } else {
-        return oldValue
-    }
+inline fun <T : Any> HTPropertyMap.Mutable.computeIfAbsent(key: HTPropertyKey.Simple<T>, defaultValue: T, mapping: (T) -> T): T {
+    val oldValue: T = get(key) ?: defaultValue
+    val newValue: T = mapping(oldValue)
+    put(key, newValue)
+    return newValue
+}
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.2
+ */
+inline fun <T : Any> HTPropertyMap.Mutable.computeIfAbsent(key: HTPropertyKey.Defaulted<T>, mapping: (T) -> T): T {
+    val oldValue: T = get(key) ?: key.getDefaultOrNull()
+    val newValue: T = mapping(oldValue)
+    put(key, newValue)
+    return newValue
 }

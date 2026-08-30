@@ -1,13 +1,9 @@
 {
   "values": [
     "ragium:brewery",
-    "ragium:charcoal_block",
-    "ragium:coal_coke_block",
     "ragium:crusher",
     "ragium:cutting_machine",
-    "ragium:echo_block",
     "ragium:freezer",
-    "ragium:melter",
-    "ragium:steel_block"
+    "ragium:melter"
   ]
 }

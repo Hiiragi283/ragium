@@ -5,8 +5,10 @@
     "items": "#c:raw_materials/iron"
   },
   "primary_result": {
+    "type": "ragium:material",
     "count": 4,
-    "id": "ragium:iron_dust"
+    "material": "ragium:iron",
+    "part": "dust"
   },
   "time": 200
 }

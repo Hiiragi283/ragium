@@ -35,9 +35,9 @@ interface HTMaterialAddon : IExtensionPoint {
     /**
      * 新規で部品を登録します。
      */
-    fun registerPart(registrar: PartRegistrar) {}
+    fun registerPart(register: PartRegister) {}
 
-    fun interface PartRegistrar {
+    fun interface PartRegister {
         fun register(key: HTPartKey, idPattern: String, properties: HTPropertyGetter)
 
         fun register(key: HTPartKey, idPattern: String, builderAction: HTPropertyMap.Mutable.() -> Unit) {
@@ -90,7 +90,19 @@ interface HTMaterialAddon : IExtensionPoint {
         fun builder(key: HTMaterialKey): HTPropertyMap.Mutable
     }
 
-    fun registerMaterialBlock(consumer: (material: HTMaterialKey, part: HTPartKey) -> Unit) {}
+    fun registerMaterialBlock(register: MaterialEntryRegister) {}
 
-    fun registerMaterialItem(consumer: (material: HTMaterialKey, part: HTPartKey) -> Unit) {}
+    fun registerMaterialItem(register: MaterialEntryRegister) {}
+
+    fun interface MaterialEntryRegister {
+        fun register(material: HTMaterialKey, part: HTPartKey)
+
+        fun registerAll(material: HTMaterialKey, parts: Iterable<HTPartKey>) {
+            parts.forEach { register(material, it) }
+        }
+
+        fun registerAll(material: HTMaterialKey, vararg parts: HTPartKey) {
+            parts.forEach { register(material, it) }
+        }
+    }
 }

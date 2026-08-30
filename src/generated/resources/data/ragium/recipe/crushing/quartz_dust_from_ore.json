@@ -5,8 +5,10 @@
     "items": "#c:ores/quartz"
   },
   "primary_result": {
+    "type": "ragium:material",
     "count": 4,
-    "id": "ragium:quartz_dust"
+    "material": "ragium:quartz",
+    "part": "dust"
   },
   "secondary_result": {
     "count": 1,

@@ -51,6 +51,7 @@ import hiiragi283.ragium.common.item.HTPotionBucketItem
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
 import hiiragi283.ragium.common.material.RagiumMaterialAddon
+import hiiragi283.ragium.common.material.VanillaMaterialAddon
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.common.recipe.RTLingeringBrewingRecipe
@@ -98,7 +99,8 @@ data object Ragium : HTCommonMod() {
 
         ModList.get()
             .getModContainerById(HTConstants.MINECRAFT)
-            .ifPresent { it.registerExtensionPoint(HTMaterialAddon::class.java, RagiumMaterialAddon) }
+            .ifPresent { it.registerExtensionPoint(HTMaterialAddon::class.java, VanillaMaterialAddon) }
+        container.registerExtensionPoint(HTMaterialAddon::class.java, RagiumMaterialAddon)
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
         container.registerConfig(ModConfig.Type.SERVER, RagiumConfig.SERVER_SPEC)
@@ -151,6 +153,7 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumRegistries.Keys.ITEM_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id(HTConstants.TAG), HTItemResult.TagEntry.TYPE)
+            helper.register(RagiumAPI.id(HTConstants.MATERIAL), HTItemResult.MaterialEntry.TYPE)
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
             helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)

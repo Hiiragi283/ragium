@@ -5,8 +5,10 @@
     "items": "minecraft:book"
   },
   "primary_result": {
+    "type": "ragium:material",
     "count": 3,
-    "id": "ragium:paper_dust"
+    "material": "ragium:paper",
+    "part": "dust"
   },
   "time": 200
 }

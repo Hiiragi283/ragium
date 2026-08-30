@@ -9,8 +9,10 @@
     "items": "#c:dusts/coal"
   },
   "item_result": {
+    "type": "ragium:material",
     "count": 1,
-    "id": "ragium:coal_coke_dust"
+    "material": "ragium:coal_coke",
+    "part": "dust"
   },
   "time": 100
 }

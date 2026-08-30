@@ -5,8 +5,10 @@
     "items": "#minecraft:planks"
   },
   "primary_result": {
+    "type": "ragium:material",
     "count": 1,
-    "id": "ragium:wood_dust"
+    "material": "ragium:wood",
+    "part": "dust"
   },
   "time": 200
 }

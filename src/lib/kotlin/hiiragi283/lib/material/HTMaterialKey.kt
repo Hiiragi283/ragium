@@ -2,6 +2,7 @@ package hiiragi283.lib.material
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.resource.HTIdLike
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.HTTagMaterial
@@ -45,7 +46,7 @@ data class HTMaterialKey(private val id: Identifier) :
 
     override fun getId(): Identifier = id
 
-    override val translationKey: String get() = getId().toLanguageKey("material")
+    override val translationKey: String get() = getId().toLanguageKey(HTConstants.MATERIAL)
 
     override fun getText(): Text = translatableText(translationKey)
 
