@@ -97,6 +97,10 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     private fun registerItemModels(generators: ItemModelGenerators) {
         buildSet {
             addAll(RagiumItems.REGISTER.asSequence())
+
+            removeAll(RagiumItems.SHAPE_PATTERNS)
         }.forEach { generators.generateFlatItem(it) }
+
+        RagiumItems.SHAPE_PATTERNS.forEach { generators.generateFlatItem(it, template = ModelTemplates.FLAT_HANDHELD_ITEM) }
     }
 }

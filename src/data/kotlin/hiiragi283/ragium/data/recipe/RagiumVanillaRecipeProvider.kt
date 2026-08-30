@@ -70,6 +70,13 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 result { +item }
             }.save(exporter)
         }
+        // XX Shape Pattern
+        for (item: HTSimpleDeferredItem in RagiumItems.SHAPE_PATTERNS) {
+            HTStonecuttingRecipeBuilder.create {
+                ingredient { +holderSet(RagiumTags.Items.SHAPE_PATTERNS) }
+                result { +item }
+            }.save(exporter)
+        }
 
         // XX Dye Bucket
         for (color: HTDefaultColor in HTDefaultColor.entries) {
