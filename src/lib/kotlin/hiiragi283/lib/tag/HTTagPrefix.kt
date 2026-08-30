@@ -17,17 +17,17 @@ class HTTagPrefix(val rawCommonTag: BlockItemTag, private val tagPattern: String
      * 素材の共通タグを生成します。
      * @param material 素材の種類
      */
-    fun materialTag(material: HTMaterialLike): BlockItemTag = BlockItemTag(HTConstants.COMMON, tagPattern.replace("%s", material.materialName))
+    fun materialTag(material: HTTagMaterial): BlockItemTag = BlockItemTag(HTConstants.COMMON, tagPattern.replace("%s", material.materialName))
 
     /**
      * ブロックの素材の共通タグを生成します。
      * @param material 素材の種類
      */
-    fun blockTagKey(material: HTMaterialLike): TagKey<Block> = materialTag(material).block
+    fun blockTagKey(material: HTTagMaterial): TagKey<Block> = materialTag(material).block
 
     /**
      * アイテムの素材の共通タグを生成します。
      * @param material 素材の種類
      */
-    fun itemTagKey(material: HTMaterialLike): TagKey<Item> = materialTag(material).item
+    fun itemTagKey(material: HTTagMaterial): TagKey<Item> = materialTag(material).item
 }

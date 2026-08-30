@@ -12,6 +12,7 @@ import hiiragi283.lib.gui.sync.HTItemSyncPayload
 import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.item.alchemy.HTPotionFluidManager
+import hiiragi283.lib.material.HTMaterialAddon
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.recipe.HTRecipeType
@@ -23,6 +24,7 @@ import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.registry.asSupplier
+import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.resource.modifyPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.identity
@@ -48,10 +50,12 @@ import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.common.item.HTPotionBucketItem
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
+import hiiragi283.ragium.common.material.RagiumMaterialAddon
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.common.recipe.RTLingeringBrewingRecipe
 import hiiragi283.ragium.common.recipe.RTSplashBrewingRecipe
+import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
@@ -64,8 +68,10 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
+import net.neoforged.fml.ModList
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
@@ -89,6 +95,10 @@ data object Ragium : HTCommonMod() {
         RagiumBlockEntityTypes.register(eventBus)
         RagiumMobEffects.register(eventBus)
         RagiumPotions.register(eventBus)
+
+        ModList.get()
+            .getModContainerById(HTConstants.MINECRAFT)
+            .ifPresent { it.registerExtensionPoint(HTMaterialAddon::class.java, RagiumMaterialAddon) }
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
         container.registerConfig(ModConfig.Type.SERVER, RagiumConfig.SERVER_SPEC)
@@ -175,6 +185,9 @@ data object Ragium : HTCommonMod() {
 
         RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
+            val oxygen: HolderSet.Named<Fluid> = registries.getOrNull(RagiumFluids.OXYGEN.fluidTag) ?: return@addSubLookup mapOf()
+            val hydrogen: HolderSet.Named<Fluid> = registries.getOrNull(RagiumFluids.HYDROGEN.fluidTag) ?: return@addSubLookup mapOf()
+
             val recipeMap: MutableMap<RecipeKey, RTBathingRecipe> = mutableMapOf()
             for ((key: ResourceKey<Block>, value: Oxidizable) in BuiltInRegistries.BLOCK.getDataMap(NeoForgeDataMaps.OXIDIZABLES)) {
                 val base: Item = BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem()
@@ -182,7 +195,7 @@ data object Ragium : HTCommonMod() {
                 RagiumRecipeBuilders.bathing {
                     itemIngredient { items { +base } }
                     fluidIngredient {
-                        +registries.getOrThrow(RagiumFluids.OXYGEN.fluidTag)
+                        +oxygen
                         amount = 250
                     }
                     result { +oxidized }
@@ -191,7 +204,7 @@ data object Ragium : HTCommonMod() {
                 RagiumRecipeBuilders.bathing {
                     itemIngredient { items { +oxidized } }
                     fluidIngredient {
-                        +registries.getOrThrow(RagiumFluids.HYDROGEN.fluidTag)
+                        +hydrogen
                         amount = 250
                     }
                     result { +base }

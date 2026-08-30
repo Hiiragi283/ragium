@@ -1,7 +1,7 @@
 package hiiragi283.lib.data.tag
 
 import hiiragi283.lib.registry.asSupplier
-import hiiragi283.lib.tag.HTMaterialLike
+import hiiragi283.lib.tag.HTTagMaterial
 import hiiragi283.lib.tag.HTTagPrefix
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
@@ -28,12 +28,12 @@ abstract class HTBlockTagsProvider : HTTagsProvider<Block> {
      */
     protected fun HTTagBuilder<Block>.addBlock(block: Block): HTTagBuilder<Block> = this.add(block.asSupplier())
 
-    protected fun createTag(prefix: HTTagPrefix, material: HTMaterialLike): TagKey<Block> = prefix.blockTagKey(material)
+    protected fun createTag(prefix: HTTagPrefix, material: HTTagMaterial): TagKey<Block> = prefix.blockTagKey(material)
 
     /**
      * 新しい[HTTagBuilder]のインスタンスを作成します。
      * @param prefix タグのプレフィックス
      * @param material タグの種類を表す素材
      */
-    protected fun builder(prefix: HTTagPrefix, material: HTMaterialLike): HTTagBuilder<Block> = builders(prefix.rawCommonTag.block, prefix.blockTagKey(material))
+    protected fun builder(prefix: HTTagPrefix, material: HTTagMaterial): HTTagBuilder<Block> = builders(prefix.rawCommonTag.block, prefix.blockTagKey(material))
 }

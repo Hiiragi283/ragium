@@ -3,6 +3,10 @@ package hiiragi283.lib.data.recipe
 import com.google.gson.JsonElement
 import com.mojang.serialization.JsonOps
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.material.HTMaterialAccess
+import hiiragi283.lib.material.HTMaterialContents
+import hiiragi283.lib.material.HTMaterialKey
+import hiiragi283.lib.material.part.HTPartKey
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.resource.toId
 import java.util.Optional
@@ -78,6 +82,17 @@ abstract class HTRecipeProvider(packOutput: PackOutput, private val future: Comp
      * @return [modId]を[名前空間][Identifier.getNamespace]とする[ID][Identifier]
      */
     protected fun id(vararg path: String): Identifier = modId.toId(*path)
+
+    /**
+     * @since 26.1.2
+     */
+    protected inline fun useItem(part: HTPartKey, material: HTMaterialKey, action: (HTMaterialContents.ItemEntry) -> Unit) {
+        HTMaterialAccess.INSTANCE
+            .getRegisteredContents()
+            .items
+            .getOrThrow(part, material)
+            .let(action)
+    }
 
     //    Integration    //
 

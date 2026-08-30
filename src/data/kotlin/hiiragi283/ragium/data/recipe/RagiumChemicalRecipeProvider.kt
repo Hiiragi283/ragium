@@ -1,14 +1,13 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
-import hiiragi283.lib.material.CommonMaterials
-import hiiragi283.lib.material.VanillaMaterials
+import hiiragi283.lib.material.part.CommonParts
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
-import hiiragi283.ragium.api.tag.HTItemPart
 import hiiragi283.ragium.common.fluid.RagiumFluids
-import hiiragi283.ragium.common.item.RagiumItems
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -23,17 +22,17 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     private fun bathing() {
         // Wood Pulp + NaOH aq -> Paper Pulp
         RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.WOOD) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD) }
             fluidIngredient {
                 +holderSet(RagiumFluids.NAOH_SOLUTION)
                 amount = 250
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.PAPER) }
+            result { +(CommonParts.DUST to VanillaMaterialKeys.PAPER) }
             recipeId suffix "_from_wood"
         }.save(exporter)
         // Paper Pulp + Water -> Paper
         RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.PAPER) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterialKeys.PAPER) }
             fluidIngredient {
                 +waterSet()
                 amount = 250
@@ -56,7 +55,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }.save(exporter)
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
         RagiumRecipeBuilders.electrolyzing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, CommonMaterials.SALT) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterialKeys.SALT) }
             fluidIngredient { +waterSet() }
             result {
                 +RagiumFluids.HYDROGEN

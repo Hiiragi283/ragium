@@ -4,8 +4,14 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.material.HTMaterialAccess
+import hiiragi283.lib.material.HTMaterialKey
+import hiiragi283.lib.material.part.HTPart
+import hiiragi283.lib.material.part.HTPartKey
+import hiiragi283.lib.material.part.property.tagPrefix
 import hiiragi283.lib.registry.asSupplier
 import hiiragi283.lib.registry.getKeyOrThrow
+import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.resource.HTIdLike
 import hiiragi283.lib.resource.HTKeyLike
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -16,6 +22,7 @@ import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -175,5 +182,42 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
             ?: ItemStack.EMPTY
 
         override fun getId(): Identifier = tag.unwrapKey().orElseThrow().location()
+    }
+
+    @JvmRecord
+    data class MaterialEntry(val part: HTPart, val key: HTMaterialKey) : Entry {
+        companion object {
+            @JvmField
+            val CODEC: MapCodec<MaterialEntry> = HTCodecs.recordMap { instance ->
+                instance.group(
+                    HTPart.CODEC.fieldOf("part").forGetter(MaterialEntry::part),
+                    HTMaterialKey.CODEC.fieldOf("material").forGetter(MaterialEntry::key),
+                ).apply(instance, ::MaterialEntry)
+            }
+
+            @JvmField
+            val TYPE: HTItemResultType<MaterialEntry> = HTItemResultType(CODEC)
+        }
+
+        constructor(part: HTPartKey, key: HTMaterialKey) : this(HTPart.getManager().getOrThrow(part), key)
+
+        override fun type(): HTItemResultType<*> = TYPE
+
+        override fun create(): ItemStack {
+            val tagResult: ItemStack = part.tagPrefix
+                ?.itemTagKey(key)
+                ?.let(BuiltInRegistries.ITEM::getOrNull)
+                ?.let(::TagEntry)
+                ?.create()
+                ?: ItemStack.EMPTY
+            if (!tagResult.isEmpty) return tagResult
+            return HTMaterialAccess.INSTANCE
+                .getMaterialBlockOrItem(part.key, key)
+                ?.item
+                ?.toStack()
+                ?: ItemStack.EMPTY
+        }
+
+        override fun getId(): Identifier = part.createId(key)
     }
 }

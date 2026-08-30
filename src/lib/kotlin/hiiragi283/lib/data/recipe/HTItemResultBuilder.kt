@@ -1,5 +1,7 @@
 package hiiragi283.lib.data.recipe
 
+import hiiragi283.lib.material.HTMaterialKey
+import hiiragi283.lib.material.part.HTPartKey
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.registry.HTDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
@@ -59,6 +61,11 @@ class HTItemResultBuilder {
     // Tag
     operator fun HolderSet<Item>.unaryPlus() {
         +HTItemResult.TagEntry(this)
+    }
+
+    // Material
+    operator fun Pair<HTPartKey, HTMaterialKey>.unaryPlus() {
+        +HTItemResult.MaterialEntry(this.first, this.second)
     }
 
     fun build(): HTItemResult = HTItemResult(entry, count)

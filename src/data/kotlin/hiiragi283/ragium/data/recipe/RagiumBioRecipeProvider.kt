@@ -2,11 +2,11 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.item.component.PotionContents
-import hiiragi283.lib.material.VanillaMaterials
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -68,7 +68,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         // Unluck
         // Darkness
         RagiumRecipeBuilders.brewing {
-            itemIngredient { +holderSet(CommonTagPrefixes.GEM, VanillaMaterials.ECHO) }
+            itemIngredient { +holderSet(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO) }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
             result { +PotionContents(customEffects = listOf(MobEffectInstance(MobEffects.DARKNESS, 900)), customName = "darkness") }
             recipeId replace "potion/darkness"

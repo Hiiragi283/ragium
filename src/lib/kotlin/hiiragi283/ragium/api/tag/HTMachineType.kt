@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.tag
 
-import hiiragi283.lib.tag.HTMaterialLike
+import hiiragi283.lib.tag.HTTagMaterial
 import hiiragi283.lib.tag.HTTagPrefix
 
 /**
@@ -8,7 +8,7 @@ import hiiragi283.lib.tag.HTTagPrefix
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-enum class HTMachineType : HTMaterialLike {
+enum class HTMachineType : HTTagMaterial {
     MECHANICAL,
     HEAT,
     CHEMICAL,

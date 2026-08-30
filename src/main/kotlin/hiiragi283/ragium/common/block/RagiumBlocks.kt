@@ -1,26 +1,15 @@
 package hiiragi283.ragium.common.block
 
 import hiiragi283.lib.collection.ListMultiMap
-import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
-import hiiragi283.lib.collection.buildTable
-import hiiragi283.lib.material.CommonMaterials
-import hiiragi283.lib.material.HTMaterial
-import hiiragi283.lib.material.VanillaMaterials
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItemRegister
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockRegister
-import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
-import hiiragi283.lib.util.Identity
-import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
@@ -58,21 +47,6 @@ data object RagiumBlocks {
     )
 
     //    Ingredient    //
-
-    @JvmField
-    val MATERIAL_BLOCKS: Table<HTBlockPart, HTMaterial, HTSimpleDeferredBlockAndItem> = buildTable {
-        fun register(part: HTBlockPart, material: HTMaterial, blockProp: BlockBehaviour.Properties, itemProp: Identity<Item.Properties> = identity()) {
-            this[part, material] = REGISTER.registerSimple(part.createName(material), blockProp, itemProp)
-        }
-
-        register(HTBlockPart.STORAGE_BLOCK, VanillaMaterials.CHARCOAL, copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF))
-        register(HTBlockPart.STORAGE_BLOCK, CommonMaterials.COAL_COKE, copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY))
-        register(HTBlockPart.STORAGE_BLOCK, VanillaMaterials.ECHO, copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN))
-        register(HTBlockPart.STORAGE_BLOCK, CommonMaterials.STEEL, copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_LIGHT_GRAY))
-    }
-
-    @JvmStatic
-    fun getOrThrow(part: HTBlockPart, material: HTMaterial): HTSimpleDeferredBlockAndItem = MATERIAL_BLOCKS[part, material] ?: error("Unregistered block: ${part.createName(material)}")
 
     //    Machine    //
 

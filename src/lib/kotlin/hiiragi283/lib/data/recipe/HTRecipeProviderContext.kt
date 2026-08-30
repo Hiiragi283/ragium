@@ -1,8 +1,12 @@
 package hiiragi283.lib.data.recipe
 
+import hiiragi283.lib.material.HTMaterial
+import hiiragi283.lib.material.HTMaterialManager
+import hiiragi283.lib.material.part.HTPart
+import hiiragi283.lib.material.part.HTPartManager
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.HTIdLike
-import hiiragi283.lib.tag.HTMaterialLike
+import hiiragi283.lib.tag.HTTagMaterial
 import hiiragi283.lib.tag.HTTagPrefix
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
@@ -34,8 +38,20 @@ abstract class HTRecipeProviderContext {
 
     protected fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().path.replace("/", "_")}"
 
-    // Registry
+    // Material
+    /**
+     * 部品を管理するマネージャを取得します。
+     * @since 26.1.2
+     */
+    protected val partManager: HTPartManager by lazy(HTPart::getManager)
 
+    /**
+     * 素材を管理するマネージャを取得します。
+     * @since 26.1.2
+     */
+    protected val materialManager: HTMaterialManager by lazy(HTMaterial::getManager)
+
+    // Registry
     /**
      * [HolderSet]を取得します。
      * @param tagKey 対応するタグ
@@ -55,9 +71,9 @@ abstract class HTRecipeProviderContext {
      * @param prefix タグのプレフィックス
      * @param material タグの種類を表す素材
      */
-    protected fun holderSet(prefix: HTTagPrefix, material: HTMaterialLike): HolderSet<Item> = holderSet(prefix.itemTagKey(material))
+    protected fun holderSet(prefix: HTTagPrefix, material: HTTagMaterial): HolderSet<Item> = holderSet(prefix.itemTagKey(material))
 
-    protected fun holderSet(prefix: HTTagPrefix, vararg materials: HTMaterialLike): HolderSet<Item> = materials.map(prefix::itemTagKey).let(::holderSet)
+    protected fun holderSet(prefix: HTTagPrefix, vararg materials: HTTagMaterial): HolderSet<Item> = materials.map(prefix::itemTagKey).let(::holderSet)
 
     /**
      * [HolderSet]を取得します。
