@@ -17,6 +17,7 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent
+import net.neoforged.neoforge.event.AddPackFindersEvent
 import thedarkcolour.kotlinforforge.neoforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 
@@ -39,6 +40,7 @@ abstract class HTClientMod {
         eventBus.addListener(::registerClientExtensions)
         eventBus.addListener(::registerScreens)
         eventBus.addListener(::registerEntityRenderer)
+        eventBus.addListener(::registerPack)
 
         initialize(eventBus, container)
     }
@@ -96,4 +98,10 @@ abstract class HTClientMod {
      * [Entity]や[BlockEntity]のレンダラーを登録します。
      */
     protected open fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {}
+
+    /**
+     * 追加のリソースパックを登録します。
+     * @since 26.1.2
+     */
+    protected open fun registerPack(event: AddPackFindersEvent) {}
 }

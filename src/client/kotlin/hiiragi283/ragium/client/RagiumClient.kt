@@ -2,6 +2,7 @@ package hiiragi283.ragium.client
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.color.HTDefaultColor
+import hiiragi283.lib.data.pack.HTDynamicResourcePack
 import hiiragi283.lib.event.HTRegisterWidgetRendererEvent
 import hiiragi283.lib.fluid.FluidStackTintSource
 import hiiragi283.lib.fluid.HTFluidModelRegister
@@ -11,6 +12,7 @@ import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.client.data.RagiumDynamicClientResources
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
@@ -24,8 +26,11 @@ import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
+import hiiragi283.ragium.internal.data.pack.HTPackSource
 import java.awt.Color
 import net.minecraft.client.resources.model.sprite.Material
+import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.repository.Pack
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -34,6 +39,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent
+import net.neoforged.neoforge.event.AddPackFindersEvent
 import net.neoforged.neoforge.fluids.FluidStack
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
@@ -169,5 +175,18 @@ data object RagiumClient : HTClientMod() {
 
     override fun registerScreens(event: RegisterMenuScreensEvent) {
         event.register(HTBlockWidgetHolderContext.MENU_TYPE.get(), ::HTWidgetContainerScreen)
+    }
+
+    override fun registerPack(event: AddPackFindersEvent) {
+        val packType: PackType = event.packType
+        if (packType == PackType.CLIENT_RESOURCES) {
+            HTDynamicResourcePack.clear()
+
+            RagiumDynamicClientResources.initialize()
+
+            event.addRepositorySource(HTPackSource(RagiumAPI.id("asset").toString(), packType, Pack.Position.TOP, ::HTDynamicResourcePack))
+
+            RagiumAPI.LOGGER.info("Added dynamic resource pack")
+        }
     }
 }
