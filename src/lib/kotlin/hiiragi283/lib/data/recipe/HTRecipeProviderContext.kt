@@ -93,4 +93,18 @@ abstract class HTRecipeProviderContext {
         addition { +holderSet(Tags.Items.INGOTS_NETHERITE) }
         builderAction()
     }
+
+    //    Delegated    //
+
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.2
+     */
+    abstract class Delegated : HTRecipeProviderContext() {
+        protected lateinit var delegate: HTRecipeProviderContext
+
+        final override val exporter: HTRecipeExporter get() = delegate.exporter
+
+        final override val registries: HolderLookup.Provider get() = delegate.registries
+    }
 }

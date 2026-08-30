@@ -39,6 +39,9 @@ data class HTDeferredBlockAndItem<out BLOCK : Block, out ITEM : Item>(override v
     HTIdLike.Translatable by item,
     ItemLike by item,
     HTItemInstanceLike by item {
+    /**
+     * @since 26.1.2
+     */
     constructor(key: ResourceKey<Block>) : this(HTDeferredBlock(key), HTDeferredItem(key.identifier()))
 
     constructor(id: Identifier) : this(HTDeferredBlock(id), HTDeferredItem(id))

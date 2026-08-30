@@ -18,7 +18,6 @@ import hiiragi283.lib.material.property.HTMaterialPropertyKeys
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTTagPrefix
 import kotlin.system.measureTimeMillis
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
@@ -34,12 +33,12 @@ import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 
 data object RagiumDynamicServerResources {
     @JvmStatic
-    fun initialize(registries: HolderLookup.Provider) {
-        HTDynamicDataRegister.LOGGER.info("Ragium Data loading took {} ms", measureTimeMillis { initializeInternal(registries) })
+    fun initialize() {
+        HTDynamicDataRegister.LOGGER.info("Ragium Data loading took {} ms", measureTimeMillis(::initializeInternal))
     }
 
     @JvmStatic
-    private fun initializeInternal(registries: HolderLookup.Provider) {
+    private fun initializeInternal() {
         val existing: HTMaterialContents.Provider = HTMaterialAccess.INSTANCE.getExistingContents()
         val registered: HTMaterialContents.Provider = HTMaterialAccess.INSTANCE.getRegisteredContents()
         // Data Map
@@ -113,7 +112,7 @@ data object RagiumDynamicServerResources {
             }
         }
         // Recipe
-        RagiumDynamicRecipeProvider.initialize(registries)
+        RagiumDynamicRecipeProvider.initialize()
     }
 
     private inline fun <V : Any> HTMaterialContents<V>.forEachTag(action: (HTTagPrefix, HTMaterialKey, V) -> Unit) {

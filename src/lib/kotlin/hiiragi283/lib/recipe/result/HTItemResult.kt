@@ -184,6 +184,10 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
         override fun getId(): Identifier = tag.unwrapKey().orElseThrow().location()
     }
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.2
+     */
     @JvmRecord
     data class MaterialEntry(val part: HTPart, val key: HTMaterialKey) : Entry {
         companion object {
