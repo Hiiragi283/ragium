@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
-import java.util.stream.Stream
 import net.minecraft.client.data.models.BlockModelGenerators
 import net.minecraft.client.data.models.ItemModelGenerators
 import net.minecraft.client.data.models.MultiVariant
@@ -22,10 +21,8 @@ import net.minecraft.client.data.models.model.ModelTemplates
 import net.minecraft.client.data.models.model.TextureMapping
 import net.minecraft.client.data.models.model.TextureSlot
 import net.minecraft.client.resources.model.sprite.Material
-import net.minecraft.core.Holder
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 
 class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAPI.MOD_ID) {
@@ -66,19 +63,16 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
         // Machine
         for ((machineType: HTMachineType, block: SupplierWithId<Block>) in RagiumBlocks.MACHINES.flatEntries) {
-            val modelId: Identifier = machineModel(generators, machineType, block, false)
-            val inactiveModel: MultiVariant = BlockModelGenerators.plainVariant(modelId)
+            val inactiveModel: MultiVariant = BlockModelGenerators.plainVariant(machineModel(generators, machineType, block, false))
             val activeModel: MultiVariant = BlockModelGenerators.plainVariant(machineModel(generators, machineType, block, true))
-            val blockIn: Block = block.get()
             generators.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(blockIn)
+                MultiVariantGenerator.dispatch(block.get())
                     .with(
                         PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
                             .select(false, inactiveModel)
                             .select(true, activeModel),
                     ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING),
             )
-            generators.registerSimpleItemModel(blockIn, modelId)
         }
     }
 
@@ -109,8 +103,4 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
         RagiumItems.SHAPE_PATTERNS.forEach { generators.generateFlatItem(it, template = ModelTemplates.FLAT_HANDHELD_ITEM) }
     }
-
-    override fun getKnownBlocks(): Stream<out Holder<Block>> = Stream.empty()
-
-    override fun getKnownItems(): Stream<out Holder<Item>> = Stream.empty()
 }
