@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.resource.HTIdLike
 import hiiragi283.ragium.api.config.HTEnergyConfig
+import net.minecraft.resources.Identifier
 import net.neoforged.neoforge.common.ModConfigSpec
 
 data object RagiumConfig {
@@ -31,14 +31,14 @@ data object RagiumConfig {
 
     class Server(builder: ModConfigSpec.Builder) {
         @JvmField
-        val modIdComparator: Comparator<HTIdLike> = Comparator
-            .comparingInt { id: HTIdLike ->
+        val modIdComparator: Comparator<Identifier> = Comparator
+            .comparingInt { id: Identifier ->
                 val modIds: List<String> = tagOutputPriority.get()
                 when (val priority: Int = modIds.indexOf(id.namespace)) {
                     -1 -> modIds.size
                     else -> priority
                 }
-            }.thenBy(HTIdLike::namespace)
+            }.thenBy(Identifier::getNamespace)
 
         @JvmField
         val tagOutputPriority: ModConfigSpec.ConfigValue<List<String>> =

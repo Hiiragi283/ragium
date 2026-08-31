@@ -1,6 +1,6 @@
 package hiiragi283.lib.data
 
-import hiiragi283.lib.resource.BlockItemSupplierWithKey
+import hiiragi283.lib.registry.HTDeferredBlockAndItem
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.core.Holder
@@ -40,8 +40,8 @@ interface HolderAcceptor<T : Any> {
             +this.builtInRegistryHolder()
         }
 
-        operator fun BlockItemSupplierWithKey<*, *>.unaryPlus() {
-            +this.item.get()
+        operator fun HTDeferredBlockAndItem<*, *>.unaryPlus() {
+            +this.item
         }
     }
 

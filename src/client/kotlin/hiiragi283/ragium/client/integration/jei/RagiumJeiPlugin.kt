@@ -52,7 +52,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     override fun <T : Any> registerFluidSubtypes(registration: ISubtypeRegistration, platformFluidHelper: IPlatformFluidHelper<T>) {
-        registration.registerSubtypeInterpreter(platformFluidHelper.fluidIngredientType, RagiumFluids.POTION.get()) { stack: T, _ -> (stack as? FluidStack)?.let(HTPotionHelper::getContents) }
+        registration.registerSubtypeInterpreter(platformFluidHelper.fluidIngredientType, RagiumFluids.POTION.getOrThrow()) { stack: T, _ -> (stack as? FluidStack)?.let(HTPotionHelper::getContents) }
     }
 
     override fun registerExtraIngredients(registration: IExtraIngredientRegistration) {

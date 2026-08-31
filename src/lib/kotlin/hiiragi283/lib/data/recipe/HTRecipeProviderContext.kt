@@ -1,7 +1,7 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.resource.HTIdLike
+import hiiragi283.lib.resource.HTIdOrValue
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import net.minecraft.core.HolderLookup
@@ -30,7 +30,7 @@ abstract class HTRecipeProviderContext {
 
     //    Extensions    //
 
-    protected fun getHasName(id: HTIdLike): String = "has_${id.path}"
+    protected fun getHasName(id: HTIdOrValue<*>): String = "has_${id.idOrThrow.path}"
 
     protected fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().path.replace("/", "_")}"
 

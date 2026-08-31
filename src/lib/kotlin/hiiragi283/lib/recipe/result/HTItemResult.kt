@@ -4,10 +4,9 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.registry.asSupplier
+import hiiragi283.lib.registry.asKeyOrValue
 import hiiragi283.lib.registry.getKeyOrThrow
-import hiiragi283.lib.resource.HTIdLike
-import hiiragi283.lib.resource.HTKeyLike
+import hiiragi283.lib.resource.HTSimpleKeyOrValue
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.DFUEither
@@ -21,7 +20,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
@@ -75,7 +73,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
     //    Entry    //
 
-    interface Entry : HTIdLike {
+    interface Entry {
         companion object {
             @JvmField
             val MAP_CODEC: MapCodec<Entry> = NeoForgeExtraCodecs.dispatchMapOrElse(
@@ -102,12 +100,12 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
         fun create(): ItemStack
 
         fun toResult(count: Int = 1): HTItemResult = HTItemResult(this, count)
+
+        fun getId(): Identifier
     }
 
     @JvmRecord
-    data class SimpleEntry @JvmOverloads constructor(val item: Holder<Item>, val components: DataComponentPatch = DataComponentPatch.EMPTY) :
-        Entry,
-        HTKeyLike<Item> {
+    data class SimpleEntry @JvmOverloads constructor(val item: Holder<Item>, val components: DataComponentPatch = DataComponentPatch.EMPTY) : Entry {
         companion object {
             @JvmField
             val CODEC: MapCodec<SimpleEntry> = HTCodecs.recordMap { instance ->
@@ -138,7 +136,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
         override fun create(): ItemStack = ItemStack(item, 1, components)
 
-        override fun getKey(): ResourceKey<Item> = item.getKeyOrThrow()
+        override fun getId(): Identifier = item.getKeyOrThrow().identifier()
     }
 
     @JvmInline
@@ -167,10 +165,11 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
         override fun create(): ItemStack = tag
             .asSequence()
-            .map(Holder<Item>::asSupplier)
-            .sortedWith(RagiumConfig.SERVER.modIdComparator)
+            .map(Holder<Item>::asKeyOrValue)
+            .filter { it.keyOrNull != null }
+            .sortedWith(compareBy(RagiumConfig.SERVER.modIdComparator, HTSimpleKeyOrValue<Item>::idOrThrow))
             .firstOrNull()
-            ?.get()
+            ?.getOrNull()
             ?.let(::ItemStack)
             ?: ItemStack.EMPTY
 

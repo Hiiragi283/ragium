@@ -1,7 +1,8 @@
 package hiiragi283.lib.registry
 
 import hiiragi283.lib.item.HTItemInstanceLike
-import hiiragi283.lib.resource.HTKeyLike
+import hiiragi283.lib.text.HTHasText
+import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.lib.text.Text
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.Registries
@@ -27,7 +28,8 @@ typealias HTSimpleDeferredItem = HTDeferredItem<Item>
  */
 class HTDeferredItem<out ITEM : Item> :
     HTDeferredHolder<Item, ITEM>,
-    HTKeyLike.Translatable<Item>,
+    HTHasTranslationKey,
+    HTHasText,
     ItemLike,
     HTItemInstanceLike {
     constructor(key: ResourceKey<Item>) : super(key)

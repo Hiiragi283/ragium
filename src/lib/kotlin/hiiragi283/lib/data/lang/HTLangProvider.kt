@@ -78,7 +78,7 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
     }
 
     fun addPotion(content: HTPotionContent, value: String) {
-        addCustomPotion(content.get().name(), value)
+        addCustomPotion(content.getOrThrow().name(), value)
     }
 
     fun addCustomPotion(name: String, value: String) {

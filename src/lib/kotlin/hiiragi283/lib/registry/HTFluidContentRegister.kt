@@ -2,7 +2,7 @@ package hiiragi283.lib.registry
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.fluid.HTVirtualFluid
-import hiiragi283.lib.resource.SupplierWithKey
+import hiiragi283.lib.resource.HTKeyOrValue
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.createTagKey
 import hiiragi283.lib.util.HTBuilderMarker
@@ -250,7 +250,7 @@ class HTFluidContentRegister(modId: String) {
             bucketHolder: HTSimpleDeferredItem,
         ): HTFluidContent.Flowing {
             // Liquid Block
-            val blockHolder: SupplierWithKey<Block, LiquidBlock>?
+            val blockHolder: HTKeyOrValue<Block, LiquidBlock>?
             if (blockFactory == null) {
                 blockHolder = null
             } else {

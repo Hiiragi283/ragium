@@ -1,7 +1,6 @@
 package hiiragi283.lib.data.loot
 
-import hiiragi283.lib.resource.SupplierWithId
-import java.util.function.Supplier
+import hiiragi283.lib.resource.HTIdOrValue
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.loot.BlockLootSubProvider
@@ -20,11 +19,11 @@ import net.minecraft.world.level.storage.loot.LootTable
 abstract class HTBlockLootTableProvider(
     registries: HolderLookup.Provider,
     protected val modId: String,
-    private val rawBlocks: Sequence<SupplierWithId<Block>>,
+    private val rawBlocks: Sequence<HTIdOrValue<Block>>,
 ) : BlockLootSubProvider(emptySet(), FeatureFlags.REGISTRY.allFlags(), registries) {
     final override fun getKnownBlocks(): Iterable<Block> = rawBlocks
-        .filter { holder: SupplierWithId<Block> -> holder.namespace == modId }
-        .map(SupplierWithId<Block>::get)
+        .filter { holder: HTIdOrValue<Block> -> holder.idOrNull?.namespace == modId }
+        .mapNotNull(HTIdOrValue<Block>::getOrNull)
         .filter { block: Block -> block.lootTable.isPresent }
         .toList()
 
@@ -35,16 +34,16 @@ abstract class HTBlockLootTableProvider(
      */
     val fortune: Holder<Enchantment> by lazy { registries.holderOrThrow(Enchantments.FORTUNE) }
 
-    protected fun dropSelf(like: Supplier<out Block>) {
-        dropSelf(like.get())
+    protected fun dropSelf(like: HTIdOrValue<Block>) {
+        dropSelf(like.getOrThrow())
     }
 
-    protected fun add(like: Supplier<out Block>, table: LootTable.Builder) {
-        add(like.get(), table)
+    protected fun add(like: HTIdOrValue<Block>, table: LootTable.Builder) {
+        add(like.getOrThrow(), table)
     }
 
-    protected inline fun <BLOCK : Block> add(like: Supplier<BLOCK>, factory: (BLOCK) -> LootTable.Builder) {
-        val block: BLOCK = like.get()
+    protected inline fun <BLOCK : Block> add(like: HTIdOrValue<BLOCK>, factory: (BLOCK) -> LootTable.Builder) {
+        val block: BLOCK = like.getOrThrow()
         add(block, factory(block))
     }
 }
