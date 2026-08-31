@@ -32,8 +32,8 @@ value class HTFluidModelRegister(private val event: RegisterFluidModelsEvent) {
      */
     fun register(content: HTFluidContent, model: FluidModel.Unbaked) {
         when (content) {
-            is HTFluidContent.Flowing -> event.register(model, content.get(), content.flowingHolder.get())
-            is HTFluidContent.Virtual -> event.register(model, content.get())
+            is HTFluidContent.Flowing -> event.register(model, content.getOrThrow(), content.flowingHolder.get())
+            is HTFluidContent.Virtual -> event.register(model, content.getOrThrow())
         }
     }
 }

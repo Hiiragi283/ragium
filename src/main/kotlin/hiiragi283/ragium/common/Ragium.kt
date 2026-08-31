@@ -22,7 +22,6 @@ import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.registry.asSupplier
 import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.resource.modifyPath
 import hiiragi283.lib.resource.vanillaId
@@ -126,7 +125,7 @@ data object Ragium : HTCommonMod() {
         }
         event.register(Registries.RECIPE_TYPE) { helper ->
             for (recipeType: HTRecipeType<*> in RagiumRecipeTypes.allTypes) {
-                helper.register(recipeType.getId(), recipeType)
+                helper.register(recipeType.keyOrThrow, recipeType)
             }
         }
         event.register(Registries.SLOT_DISPLAY) { helper ->
@@ -152,7 +151,7 @@ data object Ragium : HTCommonMod() {
         }
         event.register(RagiumRegistries.Keys.WIDGET_TYPE) { helper ->
             for (widgetType: HTWidgetType<*> in RagiumWidgetTypes.allTypes) {
-                helper.register(widgetType.getId(), widgetType)
+                helper.register(widgetType.keyOrThrow, widgetType)
             }
         }
     }
@@ -160,7 +159,7 @@ data object Ragium : HTCommonMod() {
     override fun commonSetup(event: FMLCommonSetupEvent) {
         event.enqueueWork(::initRecipeLookups)
         event.enqueueWork {
-            HTPotionFluidManager.register(RagiumFluids.POTION.get(), HTPotionFluidManager.Handler.DEFAULT)
+            HTPotionFluidManager.register(RagiumFluids.POTION.getOrThrow(), HTPotionFluidManager.Handler.DEFAULT)
         }
     }
 
@@ -214,11 +213,13 @@ data object Ragium : HTCommonMod() {
                     ?.let(PotionBrewing::potionMixes)
                     ?.asSequence()
                     ?.forEach { mix: PotionBrewing.Mix<Potion> ->
-                        RagiumRecipeBuilders.brewing {
+                        val (_, recipe: RTBrewingRecipe) = RagiumRecipeBuilders.brewing {
                             itemIngredient { +mix.ingredient }
                             fluidIngredient { +HTPotionFluidIngredient(mix.from()) }
                             result { +mix.to() }
-                        }.build().let { (_, recipe: RTBrewingRecipe) -> put(mix.to().asSupplier().getId().modifyPath { "/${RagiumConstants.BREWING}/$it" }, recipe) }
+                        }.build()
+                        val id: Identifier = mix.to().key?.identifier()?.modifyPath { "/${RagiumConstants.BREWING}/$it" } ?: return@forEach
+                        put(id, recipe)
                     }
             }
             if (multiMap.isEmpty) return@addSubLookup mapOf()

@@ -1,6 +1,7 @@
 package hiiragi283.lib.registry
 
-import hiiragi283.lib.resource.HTKeyLike
+import hiiragi283.lib.text.HTHasText
+import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.lib.text.Text
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
@@ -15,7 +16,8 @@ import net.minecraft.world.effect.MobEffect
  */
 class HTDeferredMobEffect<EFFECT : MobEffect> :
     HTDeferredHolder<MobEffect, EFFECT>,
-    HTKeyLike.Translatable<MobEffect> {
+    HTHasTranslationKey,
+    HTHasText {
     constructor(key: ResourceKey<MobEffect>) : super(key)
 
     constructor(id: Identifier) : super(Registries.MOB_EFFECT, id)

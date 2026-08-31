@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.gui.factory
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.registry.HTDeferredHolder
-import hiiragi283.lib.resource.SupplierWithId
 import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.gui.menu.HTWidgetContainerMenu
@@ -27,7 +26,7 @@ data class HTBlockWidgetHolderContext(val factory: Factory, val player: Player, 
     MenuProvider {
     companion object {
         @JvmField
-        val MENU_TYPE: SupplierWithId<MenuType<HTWidgetContainerMenu>> = HTDeferredHolder(Registries.MENU, RagiumAPI.id(HTConstants.BLOCK))
+        val MENU_TYPE: HTDeferredHolder<MenuType<*>, MenuType<HTWidgetContainerMenu>> = HTDeferredHolder(Registries.MENU, RagiumAPI.id(HTConstants.BLOCK))
 
         @JvmStatic
         fun openMenu(player: Player, pos: BlockPos): Boolean {

@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.loot
 import hiiragi283.lib.collection.forEach
 import hiiragi283.lib.data.loot.HTBlockLootTableProvider
 import hiiragi283.lib.material.HTMaterial
-import hiiragi283.lib.resource.SupplierWithId
+import hiiragi283.lib.resource.HTIdOrValue
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTBlockPart
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -14,7 +14,7 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) : HTBlockL
     override fun generate() {
         knownBlocks.forEach(::dropSelf)
 
-        RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: HTMaterial, block: SupplierWithId<Block>) ->
+        RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: HTMaterial, block: HTIdOrValue<Block>) ->
             when (part) {
                 HTBlockPart.ORE -> TODO()
                 HTBlockPart.DEEPSLATE_ORE -> TODO()

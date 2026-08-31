@@ -52,7 +52,7 @@ data object RagiumBlocks {
 
     @JvmStatic
     private fun registerMachine(type: HTDeferredBlockEntityType<*>, properties: BlockBehaviour.Properties = machine()): HTBasicDeferredBlockAndItem<HTMachineBlock> = REGISTER.registerSimple(
-        type.path,
+        type.idOrThrow.path,
         properties,
         { prop: BlockBehaviour.Properties -> HTMachineBlock(type, prop) },
     )

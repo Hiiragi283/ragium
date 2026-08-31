@@ -42,6 +42,26 @@ fun vanillaId(vararg path: String): Identifier = Identifier.withDefaultNamespace
 
 inline fun Identifier.modifyPath(operator: Identity<String>): Identifier = this.namespace.toId(operator(this.path))
 
+/**
+ * この[Identifier]から，`block/`で前置された[ID][Identifier]を返します。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.2
+ */
+val Identifier.blockId: Identifier get() = when {
+    this.path.startsWith("block/") -> this
+    else -> this.withPrefix("block/")
+}
+
+/**
+ * この[Identifier]から，`item/`で前置された[ID][Identifier]を返します。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.2
+ */
+val Identifier.itemId: Identifier get() = when {
+    this.path.startsWith("item/") -> this
+    else -> this.withPrefix("item/")
+}
+
 //    ResourceKey    //
 
 /**
@@ -57,25 +77,3 @@ inline fun ResourceKey<*>.toLanguageKey(): String = this.identifier().toLanguage
  * @since 26.1.0
  */
 inline fun ResourceKey<*>.toLanguageKey(suffix: String): String = this.identifier().toLanguageKey(this.registryKey().identifier().path, suffix)
-
-//    HTIdLike    //
-
-/**
- * この[HTIdLike]から，`block/`で前置された[ID][HTIdLike.getId]を返します。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-val HTIdLike.blockId: Identifier get() = when {
-    this.path.startsWith("block/") -> getId()
-    else -> getId().withPrefix("block/")
-}
-
-/**
- * この[HTIdLike]から，`item/`で前置された[ID][HTIdLike.getId]を返します。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-val HTIdLike.itemId: Identifier get() = when {
-    this.path.startsWith("item/") -> getId()
-    else -> getId().withPrefix("item/")
-}

@@ -1,7 +1,7 @@
 package hiiragi283.lib.registry
 
 import hiiragi283.lib.fluid.HTFluidInstanceLike
-import hiiragi283.lib.resource.SimpleSupplierWithKey
+import hiiragi283.lib.resource.HTSimpleKeyOrValue
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -29,7 +29,7 @@ sealed class HTFluidContent(
     val fluidTag: TagKey<Fluid>,
     val bucketTag: TagKey<Item>,
 ) : HTFluidInstanceLike,
-    SimpleSupplierWithKey<Fluid> by sourceHolder {
+    HTSimpleKeyOrValue<Fluid> by sourceHolder {
     /**
      * 液体の種類を取得します。
      */

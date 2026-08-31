@@ -5,7 +5,7 @@ import hiiragi283.lib.data.tag.HTItemTagsProvider
 import hiiragi283.lib.material.HTMaterial
 import hiiragi283.lib.material.VanillaMaterials
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.resource.HTKeyLike
+import hiiragi283.lib.resource.HTSimpleKeyOrValue
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTBlockPart
@@ -37,7 +37,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         // Material
         builder(CommonTagPrefixes.GEM, VanillaMaterials.ECHO).addItem(Items.ECHO_SHARD)
 
-        RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemPart, material: HTMaterial, item: HTKeyLike<Item>) ->
+        RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemPart, material: HTMaterial, item: HTSimpleKeyOrValue<Item>) ->
             builder(part.tagPrefix, material).add(item)
             if (part == HTItemPart.NUGGET) {
                 builder(ItemTags.METAL_NUGGETS).add(item)
