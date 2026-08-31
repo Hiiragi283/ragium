@@ -31,14 +31,13 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
 
     constructor(output: PackOutput, registryKey: RegistryKey<T>, lookupProvider: CompletableFuture<HolderLookup.Provider>, modId: String) : super(output, registryKey, lookupProvider, modId)
 
-    private val entryCache = SetMultiMap.Builder<TagKey<T>, TagEntry>()
+    private val entryCache = SetMultiMap.SortedBuilder<TagKey<T>, TagEntry>(COMPARATOR)
 
     final override fun addTags(registries: HolderLookup.Provider) {
         appendTags(registries)
 
         entryCache.build().asMap().forEach { (tagKey: TagKey<T>, entries: Collection<TagEntry>) ->
             entries
-                .sortedWith(COMPARATOR)
                 .distinctBy(TagEntry::toString)
                 .forEach { entry: TagEntry -> getOrCreateRawBuilder(tagKey).add(entry) }
         }
