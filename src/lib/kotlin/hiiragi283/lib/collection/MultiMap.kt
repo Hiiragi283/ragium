@@ -95,6 +95,16 @@ interface MultiMap<K, out V> {
         fun putAll(key: K, values: Sequence<V>): Boolean
 
         /**
+         * @since 26.1.2
+         */
+        fun remove(key: K, value: V): Boolean
+
+        /**
+         * @since 26.1.2
+         */
+        fun removeAll(key: K): Collection<V>?
+
+        /**
          * [MultiMap]を生成します。
          */
         fun build(): MultiMap<K, V>

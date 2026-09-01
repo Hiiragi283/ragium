@@ -100,9 +100,14 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         buildSet {
             addAll(RagiumItems.REGISTER.asSequence())
 
-            removeAll(RagiumItems.SHAPE_PATTERNS)
+            remove(RagiumItems.BAMBOO_CHARCOAL)
+            remove(RagiumItems.WITHER_DOLL)
+            remove(RagiumItems.MEMORY_DISC)
         }.forEach { generators.generateFlatItem(it) }
 
-        RagiumItems.SHAPE_PATTERNS.forEach { generators.generateFlatItem(it, template = ModelTemplates.FLAT_HANDHELD_ITEM) }
+        generators.generateFlatItem(RagiumItems.BAMBOO_CHARCOAL, template = ModelTemplates.FLAT_HANDHELD_ITEM)
+        generators.generateFlatItem(RagiumItems.WITHER_DOLL, template = ModelTemplates.FLAT_HANDHELD_ITEM)
+
+        generators.generateFlatItem(RagiumItems.MEMORY_DISC, template = ModelTemplates.MUSIC_DISC)
     }
 }
