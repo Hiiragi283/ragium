@@ -168,7 +168,7 @@ class HTFluidContentRegister(modId: String) {
 
         fun build(): CONTENT {
             // Fluid Type
-            val typeHolder: HTDeferredFluidType<FluidType> = typeRegister.registerType(name, properties.descriptionId("block.${typeRegister.namespace}.$name"), typeFactory)
+            val typeHolder: HTDeferredFluidType<FluidType> = typeRegister.registerType(name, properties.descriptionId("block.${typeRegister.namespace}.$name").isWaterLike(true), typeFactory)
             // Fluid Holder
             val sourceHolder: HTDeferredHolder<Fluid, FLUID> = HTDeferredHolder(fluidRegister.createKey(name))
             // Bucket Item

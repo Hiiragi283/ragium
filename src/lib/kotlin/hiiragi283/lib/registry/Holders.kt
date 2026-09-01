@@ -26,17 +26,20 @@ fun <R : Any> Holder<R>.getKeyOrThrow(): ResourceKey<R> = this.key ?: error("Unr
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
+@Suppress("UNCHECKED_CAST")
 fun <R : Any> Holder<R>.asKeyOrValue(): HTSimpleKeyOrValue<R> = when (this) {
     is HTDeferredHolder<R, *> -> this
 
-    is Holder.Reference<R> -> HTSimpleKeyOrValue {
-        this.runCatching(Holder.Reference<R>::value).fold(
+    is DeferredHolder<R, *> -> HTDeferredHolder(this.key)
+
+    is Holder.Reference<R> -> this as HTSimpleKeyOrValue<R>
+
+    else -> HTSimpleKeyOrValue {
+        this.runCatching(Holder<R>::value).fold(
             { value: R -> this.key?.let { Ior.Both(it, value) } ?: Ior.Right(value) },
             { it -> this.key?.let { Ior.Left(it) } ?: throw it },
         )
     }
-
-    else -> error("Cannot convert direct holder $this to HTSimpleKeyOrValue")
 }
 
 /**
