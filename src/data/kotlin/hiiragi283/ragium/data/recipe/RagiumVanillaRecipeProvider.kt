@@ -30,7 +30,7 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun buildRecipes() {
+    override fun exportValues() {
         machine()
         material()
 

@@ -25,7 +25,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         }.save(exporter)
     }
 
-    override fun buildAdvancements() {
+    override fun exportValues() {
         // Root
         HTAdvancementBuilder.create(RagiumAdvancementKeys.ROOT) {
             display {

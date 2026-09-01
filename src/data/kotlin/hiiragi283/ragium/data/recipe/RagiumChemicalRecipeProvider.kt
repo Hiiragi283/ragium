@@ -14,7 +14,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Items
 
 class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun buildRecipes() {
+    override fun exportValues() {
         bathing()
         electrolyzing()
     }

@@ -1,23 +1,67 @@
 package hiiragi283.lib.data
 
+import com.google.gson.JsonElement
+import com.mojang.serialization.Codec
+import com.mojang.serialization.JsonOps
 import hiiragi283.lib.HTComparators
 import hiiragi283.lib.registry.HTFluidContent
+import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.resource.HTIdOrValue
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import java.util.Optional
+import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
+import net.minecraft.data.CachedOutput
+import net.minecraft.data.DataProvider
+import net.minecraft.data.PackOutput
+import net.minecraft.resources.RegistryOps
+import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.conditions.WithConditions
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.3
  */
-abstract class RegistryDataProvider {
+abstract class ExporterDataProvider<R : Any>(packOutput: PackOutput, private val future: CompletableFuture<HolderLookup.Provider>, registryKey: RegistryKey<R>, protected val modId: String, private val codec: Codec<Optional<WithConditions<R>>>) : DataProvider {
+    private val pathProvider: PackOutput.PathProvider = packOutput.createRegistryElementsPathProvider(registryKey)
+
+    protected lateinit var exporter: ConditionalExporter<R>
+        private set
+
+    /**
+     * レジストリへのアクセス
+     */
+    protected lateinit var registries: HolderLookup.Provider
+        private set
+
+    final override fun run(cache: CachedOutput): CompletableFuture<*> = future.thenCompose { registries ->
+        val map: MutableMap<ResourceKey<R>, WithConditions<R>> = hashMapOf()
+        this.registries = registries
+        this.exporter = createExporter(map)
+        exportValues()
+
+        val dynamicOps: RegistryOps<JsonElement> = registries.createSerializationContext(JsonOps.INSTANCE)
+        DataProvider.saveAll(
+            cache,
+            { conditions: WithConditions<R> -> codec.encodeStart(dynamicOps, Optional.of(conditions)).orThrow },
+            pathProvider::json,
+            map,
+        )
+    }
+
+    protected abstract fun createExporter(map: MutableMap<ResourceKey<R>, WithConditions<R>>): ConditionalExporter<R>
+
+    protected abstract fun exportValues()
+
+    //    Extensions    //
+
     protected fun getHasName(id: HTIdOrValue<*>): String = "has_${id.idOrThrow.path}"
 
     protected fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().path.replace("/", "_")}"
@@ -25,11 +69,6 @@ abstract class RegistryDataProvider {
     protected fun getHasName(prefix: HTTagPrefix, material: HTMaterialLike): String = getHasName(prefix.itemTagKey(material))
 
     // Registry
-
-    /**
-     * レジストリへのアクセス
-     */
-    protected abstract val registries: HolderLookup.Provider
 
     /**
      * [HolderSet]を取得します。

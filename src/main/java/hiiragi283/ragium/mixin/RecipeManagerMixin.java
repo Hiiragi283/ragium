@@ -3,8 +3,6 @@ package hiiragi283.ragium.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
-import hiiragi283.ragium.common.event.RagiumRuntimeRecipeProvider;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -32,8 +30,6 @@ public abstract class RecipeManagerMixin {
     private RecipeMap ragium$prepare(
             Iterable<RecipeHolder<?>> recipes, Operation<RecipeMap> original) {
         Collection<RecipeHolder<?>> recipes1 = (Collection<RecipeHolder<?>>) recipes;
-        RagiumRuntimeRecipeProvider.addRecipes(
-                (id, recipe, _) -> recipes1.add(new RecipeHolder<>(id, recipe)), registries);
         return original.call(recipes1);
     }
 }

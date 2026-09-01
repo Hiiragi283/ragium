@@ -22,7 +22,7 @@ import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect
 import net.neoforged.neoforge.common.Tags
 
 class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun buildRecipes() {
+    override fun exportValues() {
         brewing()
         planting()
     }

@@ -23,7 +23,7 @@ import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 
 class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun buildRecipes() {
+    override fun exportValues() {
         assembling()
         compressing()
         crushing()
