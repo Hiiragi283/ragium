@@ -8,10 +8,8 @@ import hiiragi283.lib.resource.toId
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.DataProvider
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.Tags
@@ -26,15 +24,13 @@ import net.neoforged.neoforge.common.conditions.WithConditions
 typealias HTRecipeExporter = ConditionalExporter<Recipe<*>>
 
 /**
- * Hiiragi Seriesで使用される，レシピ向けの[DataProvider]の抽象クラスです。
+ * Hiiragi Seriesで使用される，レシピ向けの[ExporterDataProvider]の拡張クラスです。
  * 参照 : [Minecraft - RecipeProvider][net.minecraft.data.recipes.RecipeProvider]
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>, modId: String) :
-    ExporterDataProvider<Recipe<*>>(packOutput, future, Registries.RECIPE, modId, Recipe.CONDITIONAL_CODEC),
-    DataProvider {
-    override fun createExporter(map: MutableMap<ResourceKey<Recipe<*>>, WithConditions<Recipe<*>>>): HTRecipeExporter = HTRecipeExporter { id: RecipeKey, recipe: Recipe<*>, conditions: List<ICondition> ->
+abstract class HTRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>, modId: String) : ExporterDataProvider<Recipe<*>>(packOutput, future, Registries.RECIPE, modId, Recipe.CONDITIONAL_CODEC) {
+    override fun createExporter(map: MutableMap<RecipeKey, WithConditions<Recipe<*>>>): HTRecipeExporter = HTRecipeExporter { id: RecipeKey, recipe: Recipe<*>, conditions: List<ICondition> ->
         val fixedId: RecipeKey = id.let(::modifyId)
         check(map.put(fixedId, WithConditions(conditions, recipe)) == null) { "Duplicate recipe ${fixedId.identifier()}" }
     }

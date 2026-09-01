@@ -26,12 +26,17 @@ import net.neoforged.neoforge.common.conditions.WithConditions
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 
 /**
+ * [ConditionalExporter]に基づいだ[DataProvider]の実装クラスです。
+ * @param R 登録する値のクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.3
  */
 abstract class ExporterDataProvider<R : Any>(packOutput: PackOutput, private val future: CompletableFuture<HolderLookup.Provider>, registryKey: RegistryKey<R>, protected val modId: String, private val codec: Codec<Optional<WithConditions<R>>>) : DataProvider {
     private val pathProvider: PackOutput.PathProvider = packOutput.createRegistryElementsPathProvider(registryKey)
 
+    /**
+     * 値の登録先
+     */
     protected lateinit var exporter: ConditionalExporter<R>
         private set
 
@@ -56,8 +61,14 @@ abstract class ExporterDataProvider<R : Any>(packOutput: PackOutput, private val
         )
     }
 
+    /**
+     * [ConditionalExporter]の新しいインスタンスを作成します。
+     */
     protected abstract fun createExporter(map: MutableMap<ResourceKey<R>, WithConditions<R>>): ConditionalExporter<R>
 
+    /**
+     * 値を登録します。
+     */
     protected abstract fun exportValues()
 
     //    Extensions    //
