@@ -2,6 +2,7 @@ package hiiragi283.lib.registry
 
 import hiiragi283.lib.util.Identity
 import hiiragi283.lib.util.identity
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -17,6 +18,22 @@ class HTDeferredBlockAndItemRegister(private val blockRegister: HTDeferredBlockR
     constructor(namespace: String) : this(HTDeferredBlockRegister(namespace))
 
     constructor(blockRegister: HTDeferredBlockRegister) : this(blockRegister, HTDeferredItemRegister(blockRegister.namespace))
+
+    /**
+     * @since 26.1.3
+     */
+    fun addAlias(from: String, to: String) {
+        blockRegister.addAlias(from, to)
+        itemRegister.addAlias(from, to)
+    }
+
+    /**
+     * @since 26.1.3
+     */
+    fun addAlias(from: Identifier, to: Identifier) {
+        blockRegister.addAlias(from, to)
+        itemRegister.addAlias(from, to)
+    }
 
     /**
      * 新しいブロックとアイテムをまとめて登録します。

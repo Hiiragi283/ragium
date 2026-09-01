@@ -1,5 +1,6 @@
 {
   "values": [
-    "#c:ingots/steel"
+    "#c:ingots/black_steel",
+    "#c:ingots/sooty_iron"
   ]
 }

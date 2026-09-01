@@ -33,6 +33,8 @@ data object RagiumBlocks {
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
+        REGISTER.addAlias("steel_block", "sooty_iron_block")
+
         REGISTER.register(eventBus)
     }
 
@@ -66,7 +68,8 @@ data object RagiumBlocks {
         register(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Fuel.CHARCOAL, copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF))
         register(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL_COKE, copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY))
         register(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Gem.ECHO, copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN))
-        register(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Metal.STEEL, copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_LIGHT_GRAY))
+        register(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Metal.SOOTY_IRON, copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY))
+        register(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Metal.BLACK_STEEL, copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK))
     }
 
     @JvmStatic

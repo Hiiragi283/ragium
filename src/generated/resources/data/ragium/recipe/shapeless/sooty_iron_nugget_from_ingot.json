@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:ingots/sooty_iron"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:sooty_iron_nugget"
+  }
+}

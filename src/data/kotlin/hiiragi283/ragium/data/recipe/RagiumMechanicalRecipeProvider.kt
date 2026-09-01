@@ -260,7 +260,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         // XX Dust -> XX
         for (fuel in RagiumMaterial.Fuel.entries) {
-            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel) ?: continue
+            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
             RagiumRecipeBuilders.compressing {
                 ingredient { +holderSet(CommonTagPrefixes.DUST, fuel) }
                 result { +baseItem }
@@ -280,7 +280,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     private fun crushing() {
         // XX Dust
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
-            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel) ?: continue
+            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
             RagiumRecipeBuilders.crushing {
                 ingredient { items { +baseItem } }
                 primary { +RagiumItems.getOrThrow(HTItemPart.DUST, fuel) }
@@ -296,9 +296,10 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
 
         for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS.get(HTItemPart.DUST, metal) ?: continue
             RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(CommonTagPrefixes.INGOT, metal) }
-                primary { +RagiumItems.getOrThrow(HTItemPart.DUST, metal) }
+                primary { +dust }
                 recipeId suffix "_from_ingot"
             }.save(exporter)
         }

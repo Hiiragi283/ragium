@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "type": "neoforge:or",
+      "values": [
+        "#c:tiny/charcoal",
+        "#c:tiny/coal"
+      ]
+    },
+    "B": "#c:ingots/iron"
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:sooty_iron_ingot"
+  }
+}

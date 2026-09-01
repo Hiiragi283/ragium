@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:storage_blocks/black_steel"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:black_steel_ingot"
+  }
+}

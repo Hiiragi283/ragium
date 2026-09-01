@@ -18,6 +18,10 @@ data object RagiumItems {
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
+        REGISTER.addAlias("steel_dust", "sooty_iron_dust")
+        REGISTER.addAlias("steel_ingot", "sooty_iron_ingot")
+        REGISTER.addAlias("steel_nugget", "sooty_iron_nugget")
+
         REGISTER.register(eventBus)
     }
 
@@ -48,7 +52,8 @@ data object RagiumItems {
         putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
         putAll(RagiumMaterial.Metal.GOLD, HTItemPart.DUST, HTItemPart.GEAR)
         putAll(RagiumMaterial.Metal.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
-        putAll(RagiumMaterial.Metal.STEEL, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET)
+        putAll(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
+        putAll(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
         // Other
         putAll(RagiumMaterial.Other.WOOD, HTItemPart.DUST, HTItemPart.GEAR)
         putAll(RagiumMaterial.Other.GLASS, HTItemPart.DUST)

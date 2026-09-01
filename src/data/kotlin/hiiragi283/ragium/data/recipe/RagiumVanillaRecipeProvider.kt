@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
@@ -117,20 +118,12 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         // XX <-> Storage Block
         baseToBlock(RagiumMaterial.Gem.ECHO, CommonTagPrefixes.GEM, Items.ECHO_SHARD, size = StorageBlockSize.FOUR)
-        baseToBlock(RagiumMaterial.Metal.STEEL, HTItemPart.INGOT)
+        baseToBlock(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT)
+        baseToBlock(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT)
         // Ingot <-> Nugget
         ingotToNugget(RagiumMaterial.Metal.NETHERITE, ingot = Items.NETHERITE_INGOT)
-        ingotToNugget(RagiumMaterial.Metal.STEEL)
-
-        // Alloy Dust
-        HTShapelessRecipeBuilder.create {
-            repeat(3) { ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.IRON) } }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL_COKE) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.STEEL)
-                count = 4
-            }
-        }.save(exporter)
+        ingotToNugget(RagiumMaterial.Metal.SOOTY_IRON)
+        ingotToNugget(RagiumMaterial.Metal.BLACK_STEEL)
 
         // Gear
         HTShapedRecipeBuilder.create {
@@ -171,7 +164,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         // Fuel
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
-            val base: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel) ?: continue
+            val base: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
             // Storage
             baseToBlock(fuel, Ingredient.of(base), base)
             // Tiny
@@ -189,6 +182,39 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 recipeId suffix "_from_tiny"
             }.save(exporter)
         }
+
+        // Sooty Iron
+        val ironIngot: HolderSet<Item> = holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
+        val sootyIronIngot: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+        HTShapedRecipeBuilder.create {
+            hollow8()
+            define('A') { +holderSet(CommonTagPrefixes.TINY, RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL) }
+            define('B') { +ironIngot }
+            result { +sootyIronIngot }
+        }.save(exporter)
+        HTShapedRecipeBuilder.create {
+            hollow4()
+            define('A') { +holderSet(CommonTagPrefixes.TINY, RagiumMaterial.Fuel.COAL_COKE) }
+            define('B') { +ironIngot }
+            result { +sootyIronIngot }
+            recipeId suffix "_from_coke"
+        }.save(exporter)
+        HTShapelessRecipeBuilder.create {
+            ingredient { +ironIngot }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL) }
+            result { +sootyIronIngot }
+            recipeId suffix "_by_dust"
+        }.save(exporter)
+        HTShapelessRecipeBuilder.create {
+            ingredient { +ironIngot }
+            ingredient { +ironIngot }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL_COKE) }
+            result {
+                +sootyIronIngot
+                count = 2
+            }
+            recipeId suffix "_by_coke_dust"
+        }.save(exporter)
     }
 
     private fun baseToBlock(
