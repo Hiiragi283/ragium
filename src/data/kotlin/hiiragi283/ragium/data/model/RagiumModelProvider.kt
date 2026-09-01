@@ -87,6 +87,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
                 mapping.put(TextureSlot.FRONT, Material(blockId.withSuffix("_front_active"))),
                 generators.modelOutput,
             )
+
             false -> ModelTemplates.CUBE_ORIENTABLE.createBlock(
                 block,
                 mapping.put(TextureSlot.FRONT, Material(blockId.withSuffix("_front"))),

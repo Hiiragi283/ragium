@@ -133,6 +133,7 @@ data object HTPotionHelper {
     @JvmStatic
     fun <T> getContents(instance: T): BottledPotionContents? where T : TypedInstance<Fluid>, T : DataComponentGetter = when {
         instance.`is`(Tags.Fluids.WATER) -> BottledPotionContents(Potions.WATER)
+
         else -> HTPotionFluidManager.getHandlerOrDefault(instance.typeHolder().value())[instance]?.let { bottleType: HTBottleType ->
             val contents: PotionContents = getPotion(instance)
             BottledPotionContents(contents, bottleType)

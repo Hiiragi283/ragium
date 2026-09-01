@@ -26,6 +26,7 @@ sealed class Ior<out A, out B> {
                 right != null -> Both(left, right)
                 else -> Left(left)
             }
+
             else -> when {
                 right != null -> Right(right)
                 else -> null

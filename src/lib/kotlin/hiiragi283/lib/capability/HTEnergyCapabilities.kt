@@ -30,6 +30,7 @@ data object HTEnergyCapabilities : HTMultiCapability<EnergyHandler> {
      */
     fun unwrap(handler: EnergyHandler): HTEnergyHandler = when (handler) {
         is HTEnergyHandler -> handler
+
         else -> object : HTEnergyHandler {
             override val amount: Int get() = handler.amountAsInt
             override val capacity: Int get() = handler.capacityAsInt

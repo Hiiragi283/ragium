@@ -49,6 +49,7 @@ fun <T : IIngredientAcceptor<T>> T.add(ingredient: HTStackPreview<FluidStack>): 
 fun <T : IIngredientAcceptor<T>> T.add(result: HTFluidResult): T = this.add(result.create())
 
 // Item
+
 /**
  * アイテムを登録します。
  * @param T アイテムの登録先

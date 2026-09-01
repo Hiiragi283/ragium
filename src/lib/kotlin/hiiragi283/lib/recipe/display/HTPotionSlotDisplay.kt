@@ -67,6 +67,7 @@ data class HTPotionSlotDisplay(val potions: HolderSet<Potion>, val bottleType: H
                 .map { HTPotionHelper.createPotion(it, bottleType) }
                 .map(ItemStackTemplate::create)
                 .map(builder::forStack)
+
         is ForFluidStacks<T> ->
             HTPotionFluidManager.handlers
                 .entries
@@ -78,6 +79,7 @@ data class HTPotionSlotDisplay(val potions: HolderSet<Potion>, val bottleType: H
                         .map { potion: Holder<Potion> ->
                             when (potion) {
                                 Potions.WATER -> FluidStack(Fluids.WATER, FluidType.BUCKET_VOLUME)
+
                                 else -> FluidInstanceBuilder.buildStack {
                                     +fluid
                                     components {
@@ -88,6 +90,7 @@ data class HTPotionSlotDisplay(val potions: HolderSet<Potion>, val bottleType: H
                             }
                         }
                 }.map(builder::forStack)
+
         else -> Stream.empty()
     }
 

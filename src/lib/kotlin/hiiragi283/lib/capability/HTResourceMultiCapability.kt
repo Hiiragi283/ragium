@@ -27,6 +27,7 @@ interface HTResourceMultiCapability<T : Resource> : HTMultiCapability<ResourceHa
      */
     fun unwrapSlots(handler: ResourceHandler<T>): List<HTResourceSlot<T>> = when (handler) {
         is HTResourceHandler<T> -> handler.slots
+
         else -> List(handler.size()) { index: Int ->
             object : HTResourceSlot<T> {
                 override fun isValid(resource: T): Boolean = handler.isValid(index, resource)

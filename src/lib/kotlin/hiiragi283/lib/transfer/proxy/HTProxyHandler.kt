@@ -19,8 +19,8 @@ abstract class HTProxyHandler(protected val side: Direction?, protected val hold
     protected val readOnly: Boolean = side == null
 
     protected val readOnlyInsert: Boolean
-        get() = readOnly || holder != null && !holder.canInsert(side)
+        get() = readOnly || (holder != null && !holder.canInsert(side))
 
     protected val readOnlyExtract: Boolean
-        get() = readOnly || holder != null && !holder.canExtract(side)
+        get() = readOnly || (holder != null && !holder.canExtract(side))
 }
