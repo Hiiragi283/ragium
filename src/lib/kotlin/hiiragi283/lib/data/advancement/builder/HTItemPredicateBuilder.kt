@@ -5,6 +5,11 @@ package hiiragi283.lib.data.advancement.builder
 import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
+import hiiragi283.lib.util.Option
+import hiiragi283.lib.util.java
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import net.minecraft.advancements.criterion.DataComponentMatchers
 import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.advancements.criterion.MinMaxBounds

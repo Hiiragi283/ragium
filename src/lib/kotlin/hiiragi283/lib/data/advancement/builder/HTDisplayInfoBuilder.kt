@@ -10,6 +10,11 @@ import hiiragi283.lib.item.ItemInstanceBuilder
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.text.translatableText
 import hiiragi283.lib.util.HTDelegates
+import hiiragi283.lib.util.Option
+import hiiragi283.lib.util.java
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.DisplayInfo
 import net.minecraft.core.ClientAsset

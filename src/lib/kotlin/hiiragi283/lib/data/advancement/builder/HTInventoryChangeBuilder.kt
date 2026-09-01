@@ -11,6 +11,9 @@ import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import net.minecraft.advancements.criterion.InventoryChangeTrigger
+import net.minecraft.advancements.criterion.ItemPredicate
+import net.minecraft.advancements.criterion.MinMaxBounds
 
 /**
  * @author Hiiragi Tsubasa

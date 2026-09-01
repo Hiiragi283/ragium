@@ -5,7 +5,10 @@ import hiiragi283.lib.data.ExporterDataProvider
 import net.minecraft.advancements.Advancement
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.CachedOutput
+import net.minecraft.data.DataProvider
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.RegistryOps
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.WithConditions
 import java.util.concurrent.CompletableFuture
