@@ -42,6 +42,22 @@ class HTDeferredBlockAndItemRegister(
     }
 
     /**
+     * @since 26.1.3
+     */
+    fun addAlias(from: String, to: String) {
+        blockRegister.addAlias(from, to)
+        itemRegister.addAlias(from, to)
+    }
+
+    /**
+     * @since 26.1.3
+     */
+    fun addAlias(from: Identifier, to: Identifier) {
+        blockRegister.addAlias(from, to)
+        itemRegister.addAlias(from, to)
+    }
+
+    /**
      * 新しいブロックとアイテムをまとめて登録します。
      * @param name ブロックとアイテムのIDのパス
      * @param blockProp ブロックのプロパティ
