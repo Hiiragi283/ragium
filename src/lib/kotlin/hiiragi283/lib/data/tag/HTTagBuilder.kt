@@ -1,6 +1,6 @@
 package hiiragi283.lib.data.tag
 
-import hiiragi283.lib.resource.HTKeyLike
+import hiiragi283.lib.resource.HTSimpleKeyOrValue
 import hiiragi283.lib.util.HTBuilderMarker
 import java.util.function.Consumer
 import net.minecraft.resources.Identifier
@@ -25,11 +25,11 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
 
     /**
      * 指定した要素をタグに追加します。
-     * @param like 要素のキーを提供する[HTKeyLike]
+     * @param like 要素のキーを提供する[HTSimpleKeyOrValue]
      * @param type このエントリの依存関係
      * @since 26.1.0
      */
-    fun add(like: HTKeyLike<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = add(like.getKey(), type)
+    fun add(like: HTSimpleKeyOrValue<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = add(like.keyOrThrow, type)
 
     /**
      * 指定した要素をタグに追加します。

@@ -1,9 +1,10 @@
 package hiiragi283.lib.registry
 
 import hiiragi283.lib.item.HTItemInstanceLike
-import hiiragi283.lib.resource.BlockItemSupplierWithKey
-import hiiragi283.lib.resource.HTIdLike
-import hiiragi283.lib.resource.SupplierWithKey
+import hiiragi283.lib.resource.HTKeyOrValue
+import hiiragi283.lib.text.HTHasText
+import hiiragi283.lib.text.HTHasTranslationKey
+import hiiragi283.lib.util.Ior
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.BlockItem
@@ -33,15 +34,18 @@ typealias HTBasicDeferredBlockAndItem<BLOCK> = HTDeferredBlockAndItem<BLOCK, Blo
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-data class HTDeferredBlockAndItem<out BLOCK : Block, out ITEM : Item>(override val block: HTDeferredBlock<BLOCK>, override val item: HTDeferredItem<ITEM>) :
-    SupplierWithKey<Block, BLOCK>,
-    BlockItemSupplierWithKey<BLOCK, ITEM>,
-    HTIdLike.Translatable by item,
+data class HTDeferredBlockAndItem<out BLOCK : Block, out ITEM : Item>(val block: HTDeferredBlock<BLOCK>, val item: HTDeferredItem<ITEM>) :
+    HTKeyOrValue<Block, BLOCK>,
+    HTHasTranslationKey by item,
+    HTHasText by item,
     ItemLike by item,
     HTItemInstanceLike by item {
+    /**
+     * @since 26.1.2
+     */
+    constructor(key: ResourceKey<Block>) : this(HTDeferredBlock(key), HTDeferredItem(key.identifier()))
+
     constructor(id: Identifier) : this(HTDeferredBlock(id), HTDeferredItem(id))
 
-    override fun get(): BLOCK = block.get()
-
-    override fun getKey(): ResourceKey<Block> = block.key
+    override fun unwrapWithKey(): Ior<ResourceKey<Block>, BLOCK> = block.unwrapWithKey()
 }

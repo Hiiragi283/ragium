@@ -22,7 +22,7 @@ import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.registry.asSupplier
+import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.resource.modifyPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.identity
@@ -52,6 +52,7 @@ import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.common.recipe.RTLingeringBrewingRecipe
 import hiiragi283.ragium.common.recipe.RTSplashBrewingRecipe
+import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
@@ -64,6 +65,7 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
@@ -98,7 +100,7 @@ data object Ragium : HTCommonMod() {
         event.register(Registries.CREATIVE_MODE_TAB) { helper ->
             helper.register(
                 RagiumAPI.id("common"),
-                HTCreativeModeTabHelper.createSimpleTab(RagiumTranslation.RAGIUM, Items.IRON_INGOT) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+                HTCreativeModeTabHelper.createSimpleTab(RagiumTranslation.RAGIUM, Items.RED_DYE) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     // Items
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumItems.REGISTER.asSequence())
                     // Blocks
@@ -123,7 +125,7 @@ data object Ragium : HTCommonMod() {
         }
         event.register(Registries.RECIPE_TYPE) { helper ->
             for (recipeType: HTRecipeType<*> in RagiumRecipeTypes.allTypes) {
-                helper.register(recipeType.getId(), recipeType)
+                helper.register(recipeType.keyOrThrow, recipeType)
             }
         }
         event.register(Registries.SLOT_DISPLAY) { helper ->
@@ -149,7 +151,7 @@ data object Ragium : HTCommonMod() {
         }
         event.register(RagiumRegistries.Keys.WIDGET_TYPE) { helper ->
             for (widgetType: HTWidgetType<*> in RagiumWidgetTypes.allTypes) {
-                helper.register(widgetType.getId(), widgetType)
+                helper.register(widgetType.keyOrThrow, widgetType)
             }
         }
     }
@@ -157,7 +159,7 @@ data object Ragium : HTCommonMod() {
     override fun commonSetup(event: FMLCommonSetupEvent) {
         event.enqueueWork(::initRecipeLookups)
         event.enqueueWork {
-            HTPotionFluidManager.register(RagiumFluids.POTION.get(), HTPotionFluidManager.Handler.DEFAULT)
+            HTPotionFluidManager.register(RagiumFluids.POTION.getOrThrow(), HTPotionFluidManager.Handler.DEFAULT)
         }
     }
 
@@ -175,6 +177,9 @@ data object Ragium : HTCommonMod() {
 
         RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
+            val oxygen: HolderSet.Named<Fluid> = registries.getOrNull(RagiumFluids.OXYGEN.fluidTag) ?: return@addSubLookup mapOf()
+            val hydrogen: HolderSet.Named<Fluid> = registries.getOrNull(RagiumFluids.HYDROGEN.fluidTag) ?: return@addSubLookup mapOf()
+
             val recipeMap: MutableMap<RecipeKey, RTBathingRecipe> = mutableMapOf()
             for ((key: ResourceKey<Block>, value: Oxidizable) in BuiltInRegistries.BLOCK.getDataMap(NeoForgeDataMaps.OXIDIZABLES)) {
                 val base: Item = BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem()
@@ -182,7 +187,7 @@ data object Ragium : HTCommonMod() {
                 RagiumRecipeBuilders.bathing {
                     itemIngredient { items { +base } }
                     fluidIngredient {
-                        +registries.getOrThrow(RagiumFluids.OXYGEN.fluidTag)
+                        +oxygen
                         amount = 250
                     }
                     result { +oxidized }
@@ -191,7 +196,7 @@ data object Ragium : HTCommonMod() {
                 RagiumRecipeBuilders.bathing {
                     itemIngredient { items { +oxidized } }
                     fluidIngredient {
-                        +registries.getOrThrow(RagiumFluids.HYDROGEN.fluidTag)
+                        +hydrogen
                         amount = 250
                     }
                     result { +base }
@@ -208,11 +213,13 @@ data object Ragium : HTCommonMod() {
                     ?.let(PotionBrewing::potionMixes)
                     ?.asSequence()
                     ?.forEach { mix: PotionBrewing.Mix<Potion> ->
-                        RagiumRecipeBuilders.brewing {
+                        val (_, recipe: RTBrewingRecipe) = RagiumRecipeBuilders.brewing {
                             itemIngredient { +mix.ingredient }
                             fluidIngredient { +HTPotionFluidIngredient(mix.from()) }
                             result { +mix.to() }
-                        }.build().let { (_, recipe: RTBrewingRecipe) -> put(mix.to().asSupplier().getId().modifyPath { "/${RagiumConstants.BREWING}/$it" }, recipe) }
+                        }.build()
+                        val id: Identifier = mix.to().key?.identifier()?.modifyPath { "/${RagiumConstants.BREWING}/$it" } ?: return@forEach
+                        put(id, recipe)
                     }
             }
             if (multiMap.isEmpty) return@addSubLookup mapOf()

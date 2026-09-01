@@ -1,6 +1,6 @@
 package hiiragi283.lib.data.tag
 
-import hiiragi283.lib.registry.asSupplier
+import hiiragi283.lib.registry.asKeyOrValue
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import java.util.concurrent.CompletableFuture
@@ -26,7 +26,7 @@ abstract class HTBlockTagsProvider : HTTagsProvider<Block> {
      * 指定した要素をタグに追加します。
      * @param block ブロックの値
      */
-    protected fun HTTagBuilder<Block>.addBlock(block: Block): HTTagBuilder<Block> = this.add(block.asSupplier())
+    protected fun HTTagBuilder<Block>.addBlock(block: Block): HTTagBuilder<Block> = this.add(block.asKeyOrValue())
 
     protected fun createTag(prefix: HTTagPrefix, material: HTMaterialLike): TagKey<Block> = prefix.blockTagKey(material)
 

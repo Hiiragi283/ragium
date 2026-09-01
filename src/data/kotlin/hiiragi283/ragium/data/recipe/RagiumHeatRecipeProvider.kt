@@ -1,13 +1,12 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
-import hiiragi283.lib.material.CommonMaterials
-import hiiragi283.lib.material.VanillaMaterials
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
-import hiiragi283.ragium.api.tag.HTBlockPart
-import hiiragi283.ragium.api.tag.HTItemPart
+import hiiragi283.ragium.api.material.HTBlockPart
+import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
@@ -161,7 +160,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }
         // Molten Glass
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.GLASS_BLOCKS, CommonTagPrefixes.DUST.itemTagKey(VanillaMaterials.GLASS)) }
+            ingredient { +holderSet(Tags.Items.GLASS_BLOCKS, CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Other.GLASS)) }
             result { +RagiumFluids.MOLTEN_GLASS }
             recipeId suffix "_from_block"
         }.save(exporter)
@@ -187,7 +186,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Molten Redstone
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.REDSTONE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
             result {
                 +RagiumFluids.MOLTEN_REDSTONE
                 amount = 90
@@ -195,7 +194,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Molten Glowstone
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.GLOWSTONE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.GLOWSTONE) }
             result {
                 +RagiumFluids.MOLTEN_GLOWSTONE
                 amount = 90
@@ -242,10 +241,10 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         RagiumRecipeBuilders.pyrolyzing {
             ingredient {
-                +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.WOOD)
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD)
                 count = 4
             }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, VanillaMaterials.CHARCOAL) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.CHARCOAL) }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 250
@@ -263,8 +262,8 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             time /= 2
         }.save(exporter)
         RagiumRecipeBuilders.pyrolyzing {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.COAL) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, CommonMaterials.COAL_COKE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.COAL_COKE) }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 500
@@ -272,8 +271,8 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             time /= 2
         }.save(exporter)
         RagiumRecipeBuilders.pyrolyzing {
-            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterials.COAL) }
-            itemResult { +RagiumBlocks.getOrThrow(HTBlockPart.STORAGE_BLOCK, CommonMaterials.COAL_COKE) }
+            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL) }
+            itemResult { +RagiumBlocks.getOrThrow(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL_COKE) }
             fluidResult {
                 +RagiumFluids.CREOSOTE
                 amount = 500 * 9
@@ -306,7 +305,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { items { +RagiumItems.TAR } }
             itemResult {
-                +RagiumItems.getOrThrow(HTItemPart.TINY, CommonMaterials.COAL_COKE)
+                +RagiumItems.getOrThrow(HTItemPart.TINY, RagiumMaterial.Fuel.COAL_COKE)
                 count = 3
             }
             fluidResult {
@@ -342,7 +341,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         RagiumRecipeBuilders.refining {
             fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
             itemResult {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, CommonMaterials.SULFUR)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR)
                 count = 2
             }
             fluidResult {
@@ -352,7 +351,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         RagiumRecipeBuilders.refining {
             fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, CommonMaterials.SULFUR) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR) }
             fluidResult {
                 +RagiumFluids.FUEL
                 amount = 750

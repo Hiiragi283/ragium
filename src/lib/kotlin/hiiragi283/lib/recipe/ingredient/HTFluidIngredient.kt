@@ -8,6 +8,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.context.ContextMap
+import net.minecraft.world.level.material.FlowingFluid
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import net.neoforged.neoforge.fluids.FluidInstance
@@ -58,6 +59,10 @@ data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
         .display()
         .resolve(contextMap, ForFluidStacks { it.copyWithAmount(amount) })
         .toList()
+        .filterNot { stack: FluidStack ->
+            val fluid: Fluid = stack.fluid
+            fluid is FlowingFluid && fluid == fluid.flowing
+        }
 }
 
 //    Extensions    //

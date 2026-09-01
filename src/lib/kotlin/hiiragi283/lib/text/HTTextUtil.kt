@@ -51,6 +51,7 @@ object HTTextUtil {
     @JvmStatic
     fun getModName(modId: String): String = when (modId) {
         HTConstants.COMMON -> "Common"
+
         else ->
             ModList
                 .get()
@@ -83,24 +84,40 @@ object HTTextUtil {
                 var current: MutableText? = null
                 when (arg) {
                     is Text -> current = arg.copy()
+
                     // Ragium
                     is HTHasText -> current = arg.getText().copy()
+
                     is HTHasTranslationKey -> current = translatableText(arg.translationKey)
+
                     // Vanilla
                     is Block -> current = arg.name.copy()
+
                     is EntityType<*> -> current = arg.description.copy()
+
                     is Fluid -> current = arg.fluidType.description.copy()
+
                     is FluidStack -> current = arg.hoverName.copy()
+
                     is Direction -> current = directionText(arg)
+
                     is Item -> current = ItemStack(arg).hoverName.copy()
+
                     is ItemStack -> current = arg.hoverName.copy()
+
                     is Level -> current = arg.description.copy()
+
                     // Primitive
                     is Int -> current = INT_FORMAT.format(arg.toLong()).toText()
+
                     is Long -> current = INT_FORMAT.format(arg).toText()
+
                     is Float -> current = DOUBLE_FORMAT.format(arg.toDouble()).toText()
+
                     is Double -> current = DOUBLE_FORMAT.format(arg).toText()
+
                     is Boolean -> current = boolText(arg)
+
                     // is Fraction -> current = DOUBLE_FORMAT.format(arg.toDouble()).toText()
                     // Formatting
                     is TextColor -> {
@@ -130,8 +147,10 @@ object HTTextUtil {
                             continue
                         }
                     }
+
                     // Other
                     is String -> current = arg.toText()
+
                     else -> if (!TranslatableContents.isAllowedPrimitiveArgument(arg)) {
                         current = arg.toString().toText()
                     }

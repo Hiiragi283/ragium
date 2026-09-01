@@ -47,9 +47,11 @@ abstract class HTContainerMenu<C>(
                         return ItemStack.EMPTY
                     }
                 }
+
                 in inventorySlots -> if (!moveToInventory(stackIn, hotBarSlots)) {
                     return ItemStack.EMPTY
                 }
+
                 in hotBarSlots -> if (!moveToInventory(stackIn, inventorySlots)) {
                     return ItemStack.EMPTY
                 }

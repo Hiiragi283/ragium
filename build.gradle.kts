@@ -1,5 +1,4 @@
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
-import me.modmuss50.mpp.ReleaseType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.slf4j.event.Level
 
@@ -15,7 +14,6 @@ plugins {
 
     alias(libs.plugins.axion.release)
     alias(libs.plugins.maven.publish)
-    alias(libs.plugins.mod.publish)
 }
 
 val modId = "ragium"
@@ -344,64 +342,14 @@ spotless {
     }
     java {
         target("src/**/*.java")
-        palantirJavaFormat("2.90.0")
-        endWithNewline()
-        formatAnnotations()
-        removeUnusedImports()
-    }
-}
-
-publishMods {
-    val mcVersion: Provider<String> = libs.versions.minecraft
-
-    file = tasks.jar.flatMap { it.archiveFile }
-    additionalFiles.from(tasks.named<Jar>("sourcesJar").flatMap { it.archiveFile })
-    changelog = providers.gradleProperty("CHANGELOG").orElse("")
-    type = ReleaseType.BETA
-    modLoaders.add("neoforge")
-
-    curseforge {
-        accessToken = providers.environmentVariable("CURSEFORGE")
-        projectId = "1299885"
-        minecraftVersions.add(mcVersion)
-        changelogType = "markdown"
-        announcementTitle = "Download from CurseForge"
-        projectSlug = "ragium"
-
-        javaVersions.add(JavaVersion.VERSION_21)
-        client = true
-        server = true
-
-        requires("kotlin-for-forge")
-        requires("selene")
-        requires("hiiragi-core")
-        optional("jei")
-        optional("guideme")
-    }
-    modrinth {
-        accessToken = providers.environmentVariable("MODRINTH")
-        projectId = "jBgE71lF"
-        minecraftVersions.add(mcVersion)
-        announcementTitle = "Download from Modrinth"
-
-        requires("kotlin-for-forge")
-        requires("moonlight")
-        requires("hiiragi-core")
-        optional("jei")
-        optional("guideme")
-    }
-    discord {
-        webhookUrl = providers.environmentVariable("DISCORD")
-        username = "Ragium Announcement"
-        avatarUrl = "https://github.com/hiiragi283.png"
-        content = changelog.map {
-            """
-            ## Ragiumの新しいバージョン「${rootProject.version}」がリリースされました！
-            ## Changelog
-            $it
-            """.trimIndent()
-        }
-        setPlatforms(publishMods.platforms.getByName("curseforge"), publishMods.platforms.getByName("modrinth"))
+        googleJavaFormat("1.36.1")
+            .aosp()
+            .reflowLongStrings()
+            .reorderImports(true)
+        // palantirJavaFormat("2.97.0")
+        // endWithNewline()
+        // formatAnnotations()
+        // removeUnusedImports()
     }
 }
 

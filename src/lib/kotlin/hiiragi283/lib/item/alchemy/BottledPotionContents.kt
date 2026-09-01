@@ -92,9 +92,10 @@ data class BottledPotionContents @JvmOverloads constructor(val contents: PotionC
      */
     fun toFluidTemplate(amount: Int = FluidType.BUCKET_VOLUME): FluidStackTemplate = when (this.isWater) {
         true -> FluidStackTemplate(Fluids.WATER, amount)
+
         false -> HTPotionFluidAccess.INSTANCE.fluidContent.toTemplate(
             amount,
-            HTPotionHelper.createFluidPatch(HTPotionFluidAccess.INSTANCE.fluidContent.get(), this@BottledPotionContents),
+            HTPotionHelper.createFluidPatch(HTPotionFluidAccess.INSTANCE.fluidContent.getOrThrow(), this@BottledPotionContents),
         )
     }!!
 

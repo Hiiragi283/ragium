@@ -45,16 +45,6 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
     }
 
     /**
-     * 進捗の翻訳名を追加します。
-     * @param title 進捗のタイトル名
-     * @param desc 進捗の説明
-     */
-    /*protected fun add(key: HTAdvancementKey, title: String, desc: String) {
-        add(key.titleKey, title)
-        add(key.descKey, desc)
-    }*/
-
-    /**
      * エンチャントの翻訳名を追加します。
      * @param value エンチャントの翻訳名
      * @param desc エンチャントの説明
@@ -78,7 +68,7 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
     }
 
     fun addPotion(content: HTPotionContent, value: String) {
-        addCustomPotion(content.get().name(), value)
+        addCustomPotion(content.getOrThrow().name(), value)
     }
 
     fun addCustomPotion(name: String, value: String) {

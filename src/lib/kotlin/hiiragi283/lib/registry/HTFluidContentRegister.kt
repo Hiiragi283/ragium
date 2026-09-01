@@ -2,7 +2,7 @@ package hiiragi283.lib.registry
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.fluid.HTVirtualFluid
-import hiiragi283.lib.resource.SupplierWithKey
+import hiiragi283.lib.resource.HTKeyOrValue
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.createTagKey
 import hiiragi283.lib.util.HTBuilderMarker
@@ -168,7 +168,7 @@ class HTFluidContentRegister(modId: String) {
 
         fun build(): CONTENT {
             // Fluid Type
-            val typeHolder: HTDeferredFluidType<FluidType> = typeRegister.registerType(name, properties.descriptionId("block.${typeRegister.namespace}.$name"), typeFactory)
+            val typeHolder: HTDeferredFluidType<FluidType> = typeRegister.registerType(name, properties.descriptionId("block.${typeRegister.namespace}.$name").isWaterLike(true), typeFactory)
             // Fluid Holder
             val sourceHolder: HTDeferredHolder<Fluid, FLUID> = HTDeferredHolder(fluidRegister.createKey(name))
             // Bucket Item
@@ -250,7 +250,7 @@ class HTFluidContentRegister(modId: String) {
             bucketHolder: HTSimpleDeferredItem,
         ): HTFluidContent.Flowing {
             // Liquid Block
-            val blockHolder: SupplierWithKey<Block, LiquidBlock>?
+            val blockHolder: HTKeyOrValue<Block, LiquidBlock>?
             if (blockFactory == null) {
                 blockHolder = null
             } else {

@@ -4,7 +4,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.data.model.createBlock
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.resource.SupplierWithId
+import hiiragi283.lib.resource.HTIdOrValue
 import hiiragi283.lib.resource.blockId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTMachineType
@@ -59,14 +59,14 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun registerBlockModels(generators: BlockModelGenerators) {
-        RagiumBlocks.MATERIAL_BLOCKS.values.forEach { generators.createTrivialCube(it.get()) }
+        RagiumBlocks.MATERIAL_BLOCKS.values.forEach { generators.createTrivialCube(it.getOrThrow()) }
 
         // Machine
-        for ((machineType: HTMachineType, block: SupplierWithId<Block>) in RagiumBlocks.MACHINES.flatEntries) {
+        for ((machineType: HTMachineType, block: HTIdOrValue<Block>) in RagiumBlocks.MACHINES.flatEntries) {
             val inactiveModel: MultiVariant = BlockModelGenerators.plainVariant(machineModel(generators, machineType, block, false))
             val activeModel: MultiVariant = BlockModelGenerators.plainVariant(machineModel(generators, machineType, block, true))
             generators.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(block.get())
+                MultiVariantGenerator.dispatch(block.getOrThrow())
                     .with(
                         PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
                             .select(false, inactiveModel)
@@ -76,19 +76,21 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         }
     }
 
-    private fun machineModel(generators: BlockModelGenerators, machineType: HTMachineType, block: SupplierWithId<Block>, isActive: Boolean): Identifier {
+    private fun machineModel(generators: BlockModelGenerators, machineType: HTMachineType, block: HTIdOrValue<Block>, isActive: Boolean): Identifier {
+        val blockId: Identifier = block.idOrThrow.blockId
         val mapping: TextureMapping = TextureMapping()
             .put(TextureSlot.TOP, Material(RagiumAPI.id(HTConstants.BLOCK, "machine_casing")))
             .put(TextureSlot.SIDE, Material(RagiumAPI.id(HTConstants.BLOCK, "machine_casing", machineType.materialName)))
         return when (isActive) {
             true -> ModelTemplates.CUBE_ORIENTABLE.create(
-                block.blockId.withSuffix("_active"),
-                mapping.put(TextureSlot.FRONT, Material(block.blockId.withSuffix("_front_active"))),
+                blockId.withSuffix("_active"),
+                mapping.put(TextureSlot.FRONT, Material(blockId.withSuffix("_front_active"))),
                 generators.modelOutput,
             )
+
             false -> ModelTemplates.CUBE_ORIENTABLE.createBlock(
                 block,
-                mapping.put(TextureSlot.FRONT, Material(block.blockId.withSuffix("_front"))),
+                mapping.put(TextureSlot.FRONT, Material(blockId.withSuffix("_front"))),
                 generators.modelOutput,
             )
         }
@@ -97,6 +99,15 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     private fun registerItemModels(generators: ItemModelGenerators) {
         buildSet {
             addAll(RagiumItems.REGISTER.asSequence())
+
+            remove(RagiumItems.BAMBOO_CHARCOAL)
+            remove(RagiumItems.WITHER_DOLL)
+            remove(RagiumItems.MEMORY_DISC)
         }.forEach { generators.generateFlatItem(it) }
+
+        generators.generateFlatItem(RagiumItems.BAMBOO_CHARCOAL, template = ModelTemplates.FLAT_HANDHELD_ITEM)
+        generators.generateFlatItem(RagiumItems.WITHER_DOLL, template = ModelTemplates.FLAT_HANDHELD_ITEM)
+
+        generators.generateFlatItem(RagiumItems.MEMORY_DISC, template = ModelTemplates.MUSIC_DISC)
     }
 }

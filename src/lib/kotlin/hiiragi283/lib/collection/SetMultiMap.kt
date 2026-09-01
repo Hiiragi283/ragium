@@ -1,5 +1,7 @@
 package hiiragi283.lib.collection
 
+import java.util.TreeSet
+
 /**
  * [Set]に基づいた[MultiMap]の実装クラスです。
  * @param K キーのクラス
@@ -33,6 +35,33 @@ class SetMultiMap<K, out V> private constructor(map: Map<K, Set<V>>) : AbstractM
         constructor(other: MultiMap<K, V>) : super(other)
 
         override fun emptyCollection(): MutableSet<V> = mutableSetOf()
+
+        override fun build(): SetMultiMap<K, V> = SetMultiMap(map)
+    }
+
+    /**
+     * [TreeSet]に基づいた[MultiMap.Builder]の抽象クラスです。
+     * @param K キーのクラス
+     * @param V 値のクラス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.2
+     */
+    class SortedBuilder<K, V> : AbstractMultiMap.Builder<K, V, TreeSet<V>> {
+        private val comparator: Comparator<V>
+
+        constructor(comparator: Comparator<V>, map: MutableMap<K, TreeSet<V>>) : super(map) {
+            this.comparator = comparator
+        }
+
+        constructor(comparator: Comparator<V>, initialCapacity: Int = 10) : super(initialCapacity) {
+            this.comparator = comparator
+        }
+
+        constructor(comparator: Comparator<V>, other: MultiMap<K, V>) : super(other) {
+            this.comparator = comparator
+        }
+
+        override fun emptyCollection(): TreeSet<V> = sortedSetOf(comparator)
 
         override fun build(): SetMultiMap<K, V> = SetMultiMap(map)
     }

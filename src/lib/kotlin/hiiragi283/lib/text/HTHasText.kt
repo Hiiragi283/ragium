@@ -12,4 +12,14 @@ fun interface HTHasText {
      * [テキスト][Text]を取得します。
      */
     fun getText(): Text
+
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.2
+     */
+    interface Translatable :
+        HTHasTranslationKey,
+        HTHasText {
+        override fun getText(): Text = translatableText(translationKey)
+    }
 }

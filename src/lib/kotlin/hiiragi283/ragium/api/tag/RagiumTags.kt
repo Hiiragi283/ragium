@@ -20,6 +20,7 @@ data object RagiumTags {
      * @since 26.1.0
      */
     data object Items {
+        // Common
         @JvmField
         val FOODS_DOUGH_WHEAT: TagKey<Item> = common("foods", "dough", "wheat")
 
@@ -40,6 +41,10 @@ data object RagiumTags {
 
         @JvmField
         val STICKY_BALLS: TagKey<Item> = common("sticky_balls")
+
+        // Modded
+        @JvmField
+        val SHAPE_PATTERNS: TagKey<Item> = mod("shape_patterns")
 
         @JvmStatic
         private fun common(vararg path: String): TagKey<Item> = ItemTags.create(HTConstants.COMMON.toId(*path))

@@ -1,6 +1,7 @@
 package hiiragi283.lib.registry
 
-import hiiragi283.lib.resource.SupplierWithKey
+import hiiragi283.lib.resource.HTKeyOrValue
+import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.Option
 import hiiragi283.lib.util.kotlin
 import net.minecraft.resources.Identifier
@@ -23,14 +24,12 @@ typealias HTSimpleDeferredHolder<R> = HTDeferredHolder<R, R>
  */
 open class HTDeferredHolder<R : Any, out T : R> :
     DeferredHolder<R, @UnsafeVariance T>,
-    SupplierWithKey<R, T> {
+    HTKeyOrValue<R, T> {
     constructor(key: ResourceKey<R>) : super(key)
 
     constructor(key: RegistryKey<R>, id: Identifier) : super(key.createKey(id))
 
-    fun getOrNull(): T? = if (this.isBound) get() else null
-
     fun asOption(): Option<T> = asOptional().kotlin
 
-    override fun getId(): Identifier = super<DeferredHolder>.getId()
+    final override fun unwrapWithKey(): Ior<ResourceKey<R>, T> = asOption().fold({ Ior.Left(this.key) }, { Ior.Both(this.key, it) })
 }

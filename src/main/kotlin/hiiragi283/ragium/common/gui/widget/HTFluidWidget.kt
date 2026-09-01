@@ -35,6 +35,7 @@ sealed class HTFluidWidget(view: HTFluidView, private val stackSetter: FluidStac
                 stackSetter?.invoke(stack)
             }
         }
+
         else -> null
     }
 

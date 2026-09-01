@@ -2,8 +2,7 @@ package hiiragi283.lib.data.model
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.resource.HTIdLike
-import hiiragi283.lib.resource.SupplierWithId
+import hiiragi283.lib.resource.HTIdOrValue
 import hiiragi283.lib.resource.blockId
 import hiiragi283.lib.resource.itemId
 import hiiragi283.lib.resource.toId
@@ -60,22 +59,22 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @param block ブロックの提供元
      * @param modelId 使用するモデルのID
      */
-    fun BlockModelGenerators.createAltModel(block: SupplierWithId<Block>, modelId: Identifier = block.blockId) {
-        this.createSimple(block.get(), modelId)
+    fun BlockModelGenerators.createAltModel(block: HTIdOrValue<Block>, modelId: Identifier = block.idOrThrow.blockId) {
+        this.createSimple(block.getOrThrow(), modelId)
     }
 
     /**
      * ハーフブロックのブロックJSONを生成します。
      */
-    fun BlockModelGenerators.createSlab(block: SupplierWithId<SlabBlock>, fullModel: Identifier, texture: Material = Material(block.blockId)) {
+    fun BlockModelGenerators.createSlab(block: HTIdOrValue<SlabBlock>, fullModel: Identifier, texture: Material = Material(block.idOrThrow.blockId)) {
         this.createSlab(block, fullModel, texture, texture, texture)
     }
 
     /**
      * ハーフブロックのブロックJSONを生成します。
      */
-    fun BlockModelGenerators.createSlab(block: SupplierWithId<SlabBlock>, fullModel: Identifier, top: Material, side: Material, bottom: Material) {
-        val slab: SlabBlock = block.get()
+    fun BlockModelGenerators.createSlab(block: HTIdOrValue<SlabBlock>, fullModel: Identifier, top: Material, side: Material, bottom: Material) {
+        val slab: SlabBlock = block.getOrThrow()
         val mapping: TextureMapping = TextureMapping().put(TextureSlot.TOP, top).put(TextureSlot.BOTTOM, bottom).put(TextureSlot.SIDE, side)
         val modelId: Identifier = ModelTemplates.SLAB_BOTTOM.createBlock(block, mapping, modelOutput)
 
@@ -93,15 +92,15 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
     /**
      * 階段ブロックのブロックJSONを生成します。
      */
-    fun BlockModelGenerators.createStairs(block: SupplierWithId<StairBlock>, texture: Material = Material(block.blockId)) {
+    fun BlockModelGenerators.createStairs(block: HTIdOrValue<StairBlock>, texture: Material = Material(block.idOrThrow.blockId)) {
         this.createStairs(block, texture, texture, texture)
     }
 
     /**
      * 階段ブロックのブロックJSONを生成します。
      */
-    fun BlockModelGenerators.createStairs(block: SupplierWithId<StairBlock>, top: Material, side: Material, bottom: Material) {
-        val stairs: StairBlock = block.get()
+    fun BlockModelGenerators.createStairs(block: HTIdOrValue<StairBlock>, top: Material, side: Material, bottom: Material) {
+        val stairs: StairBlock = block.getOrThrow()
         val mapping: TextureMapping = TextureMapping().put(TextureSlot.TOP, top).put(TextureSlot.BOTTOM, bottom).put(TextureSlot.SIDE, side)
         val modelId: Identifier = ModelTemplates.STAIRS_STRAIGHT.createBlock(block, mapping, modelOutput)
 
@@ -120,7 +119,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * 液体ブロックのブロックJSONを生成します。
      * @param fluidBlock 液体ブロックの提供元
      */
-    fun BlockModelGenerators.createFluid(fluidBlock: SupplierWithId<Block>) {
+    fun BlockModelGenerators.createFluid(fluidBlock: HTIdOrValue<Block>) {
         this.createAltModel(
             fluidBlock,
             HTModelTemplates.FLUID_BLOCK.createBlock(
@@ -139,8 +138,8 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @param layer モデルのテクスチャのパス
      * @param template 使用するモデルのテンプレート
      */
-    fun ItemModelGenerators.generateFlatItem(item: SupplierWithId<Item>, layer: Identifier = item.itemId, template: ModelTemplate = ModelTemplates.FLAT_ITEM) {
-        this.itemModelOutput.accept(item.get(), ItemModelUtils.plainModel(this.createFlatItemModel(item, layer, template)))
+    fun ItemModelGenerators.generateFlatItem(item: HTIdOrValue<Item>, layer: Identifier = item.idOrThrow.itemId, template: ModelTemplate = ModelTemplates.FLAT_ITEM) {
+        this.itemModelOutput.accept(item.getOrThrow(), ItemModelUtils.plainModel(this.createFlatItemModel(item, layer, template)))
     }
 
     /**
@@ -149,14 +148,14 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @param layers モデルのテクスチャのパス
      * @throws IllegalStateException [layers]のサイズが`0`または`4`以上の場合
      */
-    fun ItemModelGenerators.generateLayeredItem(item: SupplierWithId<Item>, vararg layers: Identifier) {
+    fun ItemModelGenerators.generateLayeredItem(item: HTIdOrValue<Item>, vararg layers: Identifier) {
         val (mapping: TextureMapping, template: ModelTemplate) = when (layers.size) {
             1 -> TextureMapping.layer0(Material(layers[0])) to ModelTemplates.FLAT_ITEM
             2 -> TextureMapping.layered(Material(layers[0]), Material(layers[1])) to ModelTemplates.TWO_LAYERED_ITEM
             3 -> TextureMapping.layered(Material(layers[0]), Material(layers[1]), Material(layers[2])) to ModelTemplates.THREE_LAYERED_ITEM
             else -> error("Cannot create item model with ${layers.size} layers")
         }
-        this.itemModelOutput.accept(item.get(), ItemModelUtils.plainModel(template.createItem(item, mapping, this.modelOutput)))
+        this.itemModelOutput.accept(item.getOrThrow(), ItemModelUtils.plainModel(template.createItem(item, mapping, this.modelOutput)))
     }
 
     /**
@@ -167,8 +166,8 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @return モデルのパス
      */
     fun ItemModelGenerators.createFlatItemModel(
-        item: HTIdLike,
-        layer: Identifier = item.itemId,
+        item: HTIdOrValue<*>,
+        layer: Identifier = item.idOrThrow.itemId,
         template: ModelTemplate = ModelTemplates.FLAT_ITEM,
     ): Identifier = template.createItem(item, TextureMapping.layer0(Material(layer)), this.modelOutput)
 
@@ -194,7 +193,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
                     material(HTConstants.NEOFORGE, "mask/bucket_fluid$suffix"),
                     Optional.empty(), // material(HTConstants.NEOFORGE, "mask/bucket_fluid_cover$suffix"),
                 ),
-                content.get(),
+                content.getOrThrow(),
                 content.getFluidType().isLighterThanAir,
                 true,
                 false,

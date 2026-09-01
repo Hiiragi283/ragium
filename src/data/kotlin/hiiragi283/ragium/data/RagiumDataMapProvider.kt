@@ -1,14 +1,10 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.lib.material.CommonMaterials
-import hiiragi283.lib.material.HTMaterial
-import hiiragi283.lib.material.HTMaterialCategory
-import hiiragi283.lib.material.VanillaMaterials
-import hiiragi283.ragium.api.tag.HTBlockPart
-import hiiragi283.ragium.api.tag.HTItemPart
+import hiiragi283.ragium.api.material.HTBlockPart
+import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
-import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import java.util.concurrent.CompletableFuture
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -29,12 +25,11 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         builder.add(RagiumItems.COAL_COKE, FurnaceFuel(200 * 16), false)
         builder.add(RagiumItems.TAR, FurnaceFuel(200 * 4), false)
 
-        for (fuel: HTMaterial in RagiumMaterialHelper.MANAGER[HTMaterialCategory.FUEL]) {
+        for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
             val time: Int = when (fuel) {
-                VanillaMaterials.COAL -> 1
-                VanillaMaterials.CHARCOAL -> 1
-                CommonMaterials.COAL_COKE -> 2
-                else -> continue
+                RagiumMaterial.Fuel.COAL -> 1
+                RagiumMaterial.Fuel.CHARCOAL -> 1
+                RagiumMaterial.Fuel.COAL_COKE -> 2
             } * 200
             RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, fuel]?.item?.let { storage: Holder<Item> ->
                 builder.add(storage, FurnaceFuel(time * 80), false)

@@ -38,11 +38,13 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
             slots += slot
             when (info) {
                 HTSlotInfo.NONE -> return slot
+
                 HTSlotInfo.BOTH -> {
                     putSlot(info, slot)
                     putSlot(HTSlotInfo.INPUT, slot)
                     putSlot(HTSlotInfo.OUTPUT, slot)
                 }
+
                 else -> {
                     putSlot(info, slot)
                     putSlot(HTSlotInfo.BOTH, slot)

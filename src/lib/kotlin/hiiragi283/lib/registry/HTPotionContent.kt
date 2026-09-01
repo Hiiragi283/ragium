@@ -1,6 +1,6 @@
 package hiiragi283.lib.registry
 
-import hiiragi283.lib.resource.SimpleSupplierWithKey
+import hiiragi283.lib.resource.HTSimpleKeyOrValue
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionBrewing
@@ -18,7 +18,7 @@ data class HTPotionContent(
     val baseHolder: HTSimpleDeferredHolder<Potion>,
     val longHolder: HTSimpleDeferredHolder<Potion>,
     val strongHolder: HTSimpleDeferredHolder<Potion>?,
-) : SimpleSupplierWithKey<Potion> by baseHolder {
+) : HTSimpleKeyOrValue<Potion> by baseHolder {
 
     /**
      * 醸造レシピを登録します。

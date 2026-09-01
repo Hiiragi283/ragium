@@ -31,7 +31,9 @@ data object HTItemDropHelper {
         val level: Level = entity.level()
         return when {
             level !is ServerLevel -> false
+
             entity is Player -> giveStackTo(entity, stack)
+
             else -> {
                 val remainStack: ItemStack =
                     entity.getCapability(Capabilities.Item.ENTITY)?.let { handler: ItemResourceHandler ->

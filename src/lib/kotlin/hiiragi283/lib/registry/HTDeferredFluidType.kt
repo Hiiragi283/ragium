@@ -1,6 +1,7 @@
 package hiiragi283.lib.registry
 
-import hiiragi283.lib.resource.HTKeyLike
+import hiiragi283.lib.text.HTHasText
+import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.lib.text.Text
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
@@ -15,7 +16,8 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
  */
 class HTDeferredFluidType<TYPE : FluidType> :
     HTDeferredHolder<FluidType, TYPE>,
-    HTKeyLike.Translatable<FluidType> {
+    HTHasTranslationKey,
+    HTHasText {
     constructor(key: ResourceKey<FluidType>) : super(key)
 
     constructor(id: Identifier) : super(NeoForgeRegistries.Keys.FLUID_TYPES, id)

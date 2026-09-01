@@ -66,5 +66,9 @@ abstract class AbstractMultiMap<K, out V, out C : Collection<V>>(protected val m
         override fun putAll(key: K, vararg values: V): Boolean = this.get(key).addAll(values)
 
         override fun putAll(key: K, values: Sequence<V>): Boolean = this.get(key).addAll(values)
+
+        override fun remove(key: K, value: V): Boolean = get(key).remove(value)
+
+        override fun removeAll(key: K): Collection<V>? = map.remove(key)
     }
 }
