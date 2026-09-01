@@ -92,3 +92,18 @@ inline fun <R, C, V> Table<R, C, V>.forEach(action: (Triple<R, C, V>) -> Unit) {
  * @since 26.1.0
  */
 fun <R, C, V> Table<R, C, V>.asSequence(): Sequence<Triple<R, C, V>> = this.entries.asSequence()
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.2
+ */
+fun <R, C, V1, V2> Table<R, C, V1>.mapValue(transform: (Triple<R, C, V1>) -> V2): Table<R, C, V2> = this.mapValueTo(PairMapTable.Builder(), transform)
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.2
+ */
+fun <R, C, V1, V2, T : Table.Builder<R, C, V2>> Table<R, C, V1>.mapValueTo(destination: T, transform: (Triple<R, C, V1>) -> V2): Table<R, C, V2> {
+    this.forEach { triple: Triple<R, C, V1> -> destination.put(triple.first, triple.second, transform(triple)) }
+    return destination.build()
+}

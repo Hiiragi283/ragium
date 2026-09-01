@@ -6,16 +6,13 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.lib.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.lib.data.recipe.HTStonecuttingRecipeBuilder
-import hiiragi283.lib.material.CommonMaterials
-import hiiragi283.lib.material.HTMaterial
-import hiiragi283.lib.material.HTMaterialCategory
-import hiiragi283.lib.material.VanillaMaterials
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.HTBlockPart
-import hiiragi283.ragium.api.tag.HTItemPart
+import hiiragi283.ragium.api.material.HTBlockPart
+import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -38,9 +35,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         // Gunpowder
         HTShapelessRecipeBuilder.create {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.COAL, VanillaMaterials.CHARCOAL) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, CommonMaterials.SULFUR) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, CommonMaterials.NITER) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
             result {
                 +Items.GUNPOWDER
                 count = 3
@@ -56,7 +53,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Particle Board
         HTShapedRecipeBuilder.create {
             hollow8()
-            define('A') { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.WOOD) }
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD) }
             define('B') { +holderSet(RagiumTags.Items.STICKY_BALLS) }
             result {
                 +RagiumItems.PARTICLE_BOARD
@@ -104,10 +101,10 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private fun material() {
         // XX Block -> XX
         setOf(
-            VanillaMaterials.GLOWSTONE to Items.GLOWSTONE_DUST,
-            VanillaMaterials.QUARTZ to Items.QUARTZ,
-            VanillaMaterials.AMETHYST to Items.AMETHYST_SHARD,
-        ).forEach { (material: VanillaMaterials, item: Item) ->
+            RagiumMaterial.Mineral.GLOWSTONE to Items.GLOWSTONE_DUST,
+            RagiumMaterial.Gem.QUARTZ to Items.QUARTZ,
+            RagiumMaterial.Gem.AMETHYST to Items.AMETHYST_SHARD,
+        ).forEach { (material: RagiumMaterial, item: Item) ->
             HTShapelessRecipeBuilder.create {
                 ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, material) }
                 result {
@@ -119,18 +116,18 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }
 
         // XX <-> Storage Block
-        baseToBlock(VanillaMaterials.ECHO, CommonTagPrefixes.GEM, Items.ECHO_SHARD, size = StorageBlockSize.FOUR)
-        baseToBlock(CommonMaterials.STEEL, HTItemPart.INGOT)
+        baseToBlock(RagiumMaterial.Gem.ECHO, CommonTagPrefixes.GEM, Items.ECHO_SHARD, size = StorageBlockSize.FOUR)
+        baseToBlock(RagiumMaterial.Metal.STEEL, HTItemPart.INGOT)
         // Ingot <-> Nugget
-        ingotToNugget(VanillaMaterials.NETHERITE, ingot = Items.NETHERITE_INGOT)
-        ingotToNugget(CommonMaterials.STEEL)
+        ingotToNugget(RagiumMaterial.Metal.NETHERITE, ingot = Items.NETHERITE_INGOT)
+        ingotToNugget(RagiumMaterial.Metal.STEEL)
 
         // Alloy Dust
         HTShapelessRecipeBuilder.create {
-            repeat(3) { ingredient { +holderSet(CommonTagPrefixes.DUST, VanillaMaterials.IRON) } }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, CommonMaterials.COAL_COKE) }
+            repeat(3) { ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.IRON) } }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL_COKE) }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, CommonMaterials.STEEL)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.STEEL)
                 count = 4
             }
         }.save(exporter)
@@ -140,28 +137,28 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             hollow4()
             define('A') { +holderSet(ItemTags.PLANKS) }
             define('B') { +holderSet(ItemTags.WOODEN_BUTTONS) }
-            result { +RagiumItems.getOrThrow(HTItemPart.GEAR, VanillaMaterials.WOOD) }
+            result { +RagiumItems.getOrThrow(HTItemPart.GEAR, RagiumMaterial.Other.WOOD) }
         }.save(exporter)
 
-        gear(CommonTagPrefixes.GEM, VanillaMaterials.DIAMOND)
-        gear(CommonTagPrefixes.GEM, VanillaMaterials.EMERALD)
-        gear(CommonTagPrefixes.INGOT, VanillaMaterials.COPPER)
-        gear(CommonTagPrefixes.INGOT, VanillaMaterials.IRON)
-        gear(CommonTagPrefixes.INGOT, VanillaMaterials.GOLD)
+        gear(CommonTagPrefixes.GEM, RagiumMaterial.Gem.DIAMOND)
+        gear(CommonTagPrefixes.GEM, RagiumMaterial.Gem.EMERALD)
+        gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.COPPER)
+        gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
+        gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD)
 
         netheriteUpgrade {
-            base { +holderSet(CommonTagPrefixes.GEAR, VanillaMaterials.DIAMOND) }
-            result { +RagiumItems.getOrThrow(HTItemPart.GEAR, VanillaMaterials.NETHERITE) }
+            base { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Gem.DIAMOND) }
+            result { +RagiumItems.getOrThrow(HTItemPart.GEAR, RagiumMaterial.Metal.NETHERITE) }
         }.save(exporter)
 
         // Dust -> Ingot
-        for (metal: HTMaterial in RagiumMaterialHelper.MANAGER[HTMaterialCategory.METAL]) {
+        for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
             val item: ItemLike = when (metal) {
-                VanillaMaterials.COPPER -> Items.COPPER_INGOT
-                VanillaMaterials.IRON -> Items.IRON_INGOT
-                VanillaMaterials.GOLD -> Items.GOLD_INGOT
-                VanillaMaterials.NETHERITE -> Items.NETHERITE_INGOT
+                RagiumMaterial.Metal.COPPER -> Items.COPPER_INGOT
+                RagiumMaterial.Metal.IRON -> Items.IRON_INGOT
+                RagiumMaterial.Metal.GOLD -> Items.GOLD_INGOT
+                RagiumMaterial.Metal.NETHERITE -> Items.NETHERITE_INGOT
                 else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, metal]
             } ?: continue
             HTCookingRecipeBuilder.smeltingAndBlasting {
@@ -173,7 +170,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }
 
         // Fuel
-        for (fuel: HTMaterial in RagiumMaterialHelper.MANAGER[HTMaterialCategory.FUEL]) {
+        for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
             val base: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel) ?: continue
             // Storage
             baseToBlock(fuel, Ingredient.of(base), base)
@@ -195,7 +192,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     }
 
     private fun baseToBlock(
-        material: HTMaterial,
+        material: RagiumMaterial,
         basePrefix: HTTagPrefix,
         base: ItemLike,
         block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
@@ -205,7 +202,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     }
 
     private fun baseToBlock(
-        material: HTMaterial,
+        material: RagiumMaterial,
         basePart: HTItemPart,
         block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
         size: StorageBlockSize = StorageBlockSize.NINE,
@@ -215,7 +212,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     }
 
     private fun baseToBlock(
-        material: HTMaterial,
+        material: RagiumMaterial,
         baseInput: Ingredient,
         base: ItemLike,
         block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
@@ -247,7 +244,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     }
 
     private fun ingotToNugget(
-        material: HTMaterial,
+        material: RagiumMaterial,
         ingot: ItemLike? = RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, material],
         nugget: ItemLike? = RagiumItems.MATERIAL_ITEMS[HTItemPart.NUGGET, material],
     ) {
@@ -269,11 +266,11 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
-    private fun gear(basePrefix: HTTagPrefix, material: HTMaterial) {
+    private fun gear(basePrefix: HTTagPrefix, material: RagiumMaterial) {
         HTShapedRecipeBuilder.create {
             hollow4()
             define('A') { +holderSet(basePrefix, material) }
-            define('B') { +holderSet(CommonTagPrefixes.GEAR, VanillaMaterials.WOOD) }
+            define('B') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Other.WOOD) }
             result { +RagiumItems.getOrThrow(HTItemPart.GEAR, material) }
         }.save(exporter)
     }

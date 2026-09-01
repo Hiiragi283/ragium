@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.tag
+package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.Codec
 import hiiragi283.lib.data.lang.HTLangPatternProvider

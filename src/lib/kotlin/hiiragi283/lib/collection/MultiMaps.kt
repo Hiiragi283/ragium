@@ -2,6 +2,8 @@
 
 package hiiragi283.lib.collection
 
+import hiiragi283.lib.util.identity
+import java.util.TreeSet
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -89,6 +91,62 @@ inline fun <K, V> buildSetMultiMap(map: MutableMap<K, MutableSet<V>>, builderAct
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
     return SetMultiMap.Builder(map).apply(builderAction).build()
+}
+
+/**
+ * 新しい[SetMultiMap]のインスタンスを作成します。
+ * @param K キーのクラス
+ * @param V 値のクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.2
+ */
+inline fun <K, V : Comparable<V>> buildSortedSetMultiMap(initialCapacity: Int = 10, builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit): SetMultiMap<K, V> {
+    contract {
+        callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+    }
+    return SetMultiMap.SortedBuilder<K, V>(compareBy(identity()), initialCapacity).apply(builderAction).build()
+}
+
+/**
+ * 新しい[SetMultiMap]のインスタンスを作成します。
+ * @param K キーのクラス
+ * @param V 値のクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.2
+ */
+inline fun <K, V : Comparable<V>> buildSortedSetMultiMap(map: MutableMap<K, TreeSet<V>>, builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit): SetMultiMap<K, V> {
+    contract {
+        callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+    }
+    return SetMultiMap.SortedBuilder(compareBy(identity()), map).apply(builderAction).build()
+}
+
+/**
+ * 新しい[SetMultiMap]のインスタンスを作成します。
+ * @param K キーのクラス
+ * @param V 値のクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.2
+ */
+inline fun <K, V> buildSortedSetMultiMap(comparator: Comparator<V>, initialCapacity: Int = 10, builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit): SetMultiMap<K, V> {
+    contract {
+        callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+    }
+    return SetMultiMap.SortedBuilder<K, V>(comparator, initialCapacity).apply(builderAction).build()
+}
+
+/**
+ * 新しい[SetMultiMap]のインスタンスを作成します。
+ * @param K キーのクラス
+ * @param V 値のクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.2
+ */
+inline fun <K, V> buildSortedSetMultiMap(comparator: Comparator<V>, map: MutableMap<K, TreeSet<V>>, builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit): SetMultiMap<K, V> {
+    contract {
+        callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+    }
+    return SetMultiMap.SortedBuilder(comparator, map).apply(builderAction).build()
 }
 
 //    Table    //
