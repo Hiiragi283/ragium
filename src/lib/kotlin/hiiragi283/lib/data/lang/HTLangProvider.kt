@@ -1,5 +1,8 @@
 package hiiragi283.lib.data.lang
 
+import hiiragi283.lib.data.advancement.AdvancementKey
+import hiiragi283.lib.data.advancement.descKey
+import hiiragi283.lib.data.advancement.titleKey
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTPotionContent
 import hiiragi283.lib.resource.toLanguageKey
@@ -53,6 +56,18 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
     protected fun add(key: ResourceKey<Enchantment>, value: String, desc: String) {
         add(key.toLanguageKey(), value)
         add(key.toLanguageKey("desc"), desc)
+    }
+
+    /**
+     * 進捗の翻訳名を追加します。
+     * @param title 進捗のタイトル名
+     * @param desc 進捗の説明
+     * @since 26.1.3
+     */
+    @JvmName("addAdvancement")
+    protected fun add(key: AdvancementKey, title: String, desc: String) {
+        add(key.titleKey, title)
+        add(key.descKey, desc)
     }
 
     /**

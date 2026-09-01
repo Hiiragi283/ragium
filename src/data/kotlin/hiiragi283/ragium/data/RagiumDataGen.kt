@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.lib.data.createLootTables
+import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
 import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider
 import hiiragi283.ragium.data.loot.RagiumBlockLootTableProvider
@@ -26,6 +27,8 @@ data object RagiumDataGen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent.Client) {
         // Server
+        event.createProvider(::RagiumAdvancementProvider)
+
         event.createProvider(::RagiumDataMapProvider)
 
         event.createLootTables(
