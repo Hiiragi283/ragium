@@ -7,8 +7,7 @@ import hiiragi283.lib.data.advancement.AdvancementKey
 import hiiragi283.lib.data.advancement.HTAdvancementExporter
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
-import hiiragi283.lib.util.Option
-import hiiragi283.lib.util.java
+import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -38,19 +37,19 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
         }
     }
 
-    var parent: Option<AdvancementKey> by HTDelegates.onceInitialize { Option.none() }
+    var parent: Optional<AdvancementKey> by HTDelegates.onceInitialize { Optional.empty() }
 
     operator fun AdvancementKey.unaryPlus() {
-        parent = Option.some(this)
+        parent = Optional.of(this)
     }
 
-    @PublishedApi internal var display: Option<DisplayInfo> by HTDelegates.onceInitialize { Option.none() }
+    @PublishedApi internal var display: Optional<DisplayInfo> by HTDelegates.onceInitialize { Optional.empty() }
     var rewards: AdvancementRewards = AdvancementRewards.EMPTY
     var requirements: AdvancementRequirements? = null
     var strategy: AdvancementRequirements.Strategy = AdvancementRequirements.Strategy.AND
 
     inline fun display(builderAction: HTDisplayInfoBuilder.() -> Unit) {
-        display = Option.some(HTDisplayInfoBuilder.create(key, builderAction))
+        display = Optional.of(HTDisplayInfoBuilder.create(key, builderAction))
     }
 
     //    Conditions    //
@@ -88,8 +87,8 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
 
     fun save(exporter: HTAdvancementExporter) {
         val adv = Advancement(
-            parent.map(AdvancementKey::identifier).java,
-            display.java,
+            parent.map(AdvancementKey::identifier),
+            display,
             rewards,
             criterions,
             this.requirements ?: strategy.create(criterions.keys),

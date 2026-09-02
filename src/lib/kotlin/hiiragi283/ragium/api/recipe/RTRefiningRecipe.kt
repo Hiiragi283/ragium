@@ -15,9 +15,9 @@ import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.codec.convert
 import hiiragi283.lib.serialization.network.HTStreamCodecs
-import hiiragi283.lib.util.Option
+import hiiragi283.lib.util.fold
+import java.util.Optional
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
@@ -28,9 +28,9 @@ import net.neoforged.neoforge.fluids.FluidStack
 
 @JvmRecord
 data class RTRefiningRecipe(
-    val itemIngredient: Option<HTItemIngredient>,
+    val itemIngredient: Optional<HTItemIngredient>,
     val fluidIngredient: HTFluidIngredient,
-    val itemResult: Option<HTItemResult>,
+    val itemResult: Optional<HTItemResult>,
     val fluidResult: HTFluidResult,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.ItemAndFluid,
@@ -41,9 +41,9 @@ data class RTRefiningRecipe(
         @JvmField
         val CODEC: MapCodec<RTRefiningRecipe> = HTCodecs.recordMap { instance ->
             instance.group(
-                HTItemIngredient.CODEC.optionalFieldOf(HTConstants.ITEM_INGREDIENT).convert().forGetter(RTRefiningRecipe::itemIngredient),
+                HTItemIngredient.CODEC.optionalFieldOf(HTConstants.ITEM_INGREDIENT).forGetter(RTRefiningRecipe::itemIngredient),
                 HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID_INGREDIENT).forGetter(RTRefiningRecipe::fluidIngredient),
-                HTItemResult.CODEC.optionalFieldOf(HTConstants.ITEM_RESULT).convert().forGetter(RTRefiningRecipe::itemResult),
+                HTItemResult.CODEC.optionalFieldOf(HTConstants.ITEM_RESULT).forGetter(RTRefiningRecipe::itemResult),
                 HTFluidResult.CODEC.fieldOf(HTConstants.FLUID_RESULT).forGetter(RTRefiningRecipe::fluidResult),
                 HTProgressData.CODEC.forGetter(RTRefiningRecipe::progressData),
             ).apply(instance, ::RTRefiningRecipe)
@@ -51,11 +51,11 @@ data class RTRefiningRecipe(
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, RTRefiningRecipe> = StreamCodec.composite(
-            HTStreamCodecs.option(HTItemIngredient.STREAM_CODEC),
+            HTStreamCodecs.optional(HTItemIngredient.STREAM_CODEC),
             RTRefiningRecipe::itemIngredient,
             HTFluidIngredient.STREAM_CODEC,
             RTRefiningRecipe::fluidIngredient,
-            HTStreamCodecs.option(HTItemResult.STREAM_CODEC),
+            HTStreamCodecs.optional(HTItemResult.STREAM_CODEC),
             RTRefiningRecipe::itemResult,
             HTFluidResult.STREAM_CODEC,
             RTRefiningRecipe::fluidResult,

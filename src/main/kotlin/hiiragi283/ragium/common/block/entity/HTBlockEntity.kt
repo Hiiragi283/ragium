@@ -5,7 +5,6 @@ import hiiragi283.lib.block.entity.HTOwnedBlockEntity
 import hiiragi283.lib.block.entity.HTSoundPlayerBlockEntity
 import hiiragi283.lib.item.HTItemDropHelper
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.readOption
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.HTHandlerProvider
 import hiiragi283.lib.transfer.fluid.FluidResourceHandler
@@ -111,9 +110,9 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
             }
         }
         // Custom Name
-        input.readOption("custom_name", HTCodecs.TEXT).onSome(::customName::set)
+        input.read("custom_name", HTCodecs.TEXT).ifPresent(::customName::set)
         // Owner
-        input.readOption(HTConstants.OWNER, HTCodecs.UUID).onSome(::ownerId::set)
+        input.read(HTConstants.OWNER, HTCodecs.UUID).ifPresent(::ownerId::set)
     }
 
     //    Nameable    //

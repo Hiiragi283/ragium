@@ -5,15 +5,14 @@ import hiiragi283.lib.tag.createTagKey
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
-import hiiragi283.lib.util.Option
 import hiiragi283.lib.util.java
 import hiiragi283.lib.util.kotlin
 import io.netty.buffer.ByteBuf
+import java.util.Optional
 import java.util.UUID
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.UUIDUtil
-import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.network.codec.ByteBufCodecs
@@ -47,16 +46,10 @@ data object HTStreamCodecs {
     fun <B : ByteBuf, K : Any, V : Any> mapOf(keyCodec: StreamCodec<in B, K>, valueCodec: StreamCodec<in B, V>): StreamCodec<B, Map<K, V>> = ByteBufCodecs.map(::LinkedHashMap, keyCodec, valueCodec)
 
     /**
-     * [Option]でラップされた[StreamCodec]を作成します。
+     * [Optional]でラップされた[StreamCodec]を作成します。
      */
     @JvmStatic
-    fun <B : ByteBuf, V : Any> option(codec: StreamCodec<in B, V>): StreamCodec<B, Option<V>> = object : StreamCodec<B, Option<V>> {
-        override fun encode(output: B, value: Option<V>) {
-            FriendlyByteBuf.writeNullable(output, value.getOrNull(), codec)
-        }
-
-        override fun decode(input: B): Option<V> = Option.fromNullable(FriendlyByteBuf.readNullable(input, codec))
-    }
+    fun <B : ByteBuf, V : Any> optional(codec: StreamCodec<in B, V>): StreamCodec<B, Optional<V>> = ByteBufCodecs.optional(codec)
 
     /**
      * [Pair]の[StreamCodec]を作成します。

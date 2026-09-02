@@ -11,9 +11,9 @@ import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
-import hiiragi283.lib.util.Option
 import hiiragi283.lib.util.java
 import hiiragi283.lib.util.kotlin
+import java.util.Optional
 import java.util.UUID
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -45,12 +45,10 @@ data object HTCodecs {
     fun <K : Any, V : Any> mapOf(keyCodec: Codec<K>, valueCodec: Codec<V>): Codec<Map<K, V>> = Codec.unboundedMap(keyCodec, valueCodec)
 
     /**
-     * [Option]でラップされた[Codec]を作成します。
-     *
-     * 参照 : [DataFixerUpper - ExtraCodecs.optionalEmptyMap][ExtraCodecs.optionalEmptyMap]
+     * [Optional]でラップされた[Codec]を作成します。
      */
     @JvmStatic
-    fun <A : Any> option(codec: Codec<A>): Codec<Option<A>> = ExtraCodecs.optionalEmptyMap(codec).xmap({ it.kotlin }, { it.java })
+    fun <A : Any> optional(codec: Codec<A>): Codec<Optional<A>> = ExtraCodecs.optionalEmptyMap(codec)
 
     @JvmStatic
     fun <A : Any, B : Any> pair(first: Codec<A>, second: Codec<B>): MapCodec<Pair<A, B>> = recordMap { instance ->

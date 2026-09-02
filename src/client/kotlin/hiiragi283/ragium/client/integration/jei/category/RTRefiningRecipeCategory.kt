@@ -21,7 +21,7 @@ class RTRefiningRecipeCategory(guiHelper: IGuiHelper) : HTHolderRecipeCategory<R
                 .setSlotBackground(HTBackgroundType.INPUT, it.amount)
         }
         val itemInput: IRecipeSlotBuilder = builder.addInputSlot(getPosition(2), getPosition(0)).setSlotBackground(HTBackgroundType.INPUT)
-        recipe.itemIngredient.onSome(itemInput::add)
+        recipe.itemIngredient.ifPresent(itemInput::add)
         // outputs
         recipe.fluidResult.let {
             builder
@@ -30,7 +30,7 @@ class RTRefiningRecipeCategory(guiHelper: IGuiHelper) : HTHolderRecipeCategory<R
                 .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
         }
         val itemOutput: IRecipeSlotBuilder = builder.addOutputSlot(getPosition(7), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT)
-        recipe.itemResult.onSome(itemOutput::add)
+        recipe.itemResult.ifPresent(itemOutput::add)
     }
 
     override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTRefiningRecipe, focuses: IFocusGroup) {

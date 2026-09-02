@@ -3,7 +3,8 @@ package hiiragi283.lib.recipe.ingredient
 import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.util.Option
+import hiiragi283.lib.util.fold
+import java.util.Optional
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -66,4 +67,4 @@ data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun Option<HTItemIngredient>.test(instance: ItemInstance): Boolean = this.fold({ HTIngredientHelper.isEmpty(instance) }, { it.test(instance) })
+fun Optional<HTItemIngredient>.test(instance: ItemInstance): Boolean = this.fold({ HTIngredientHelper.isEmpty(instance) }, { it.test(instance) })

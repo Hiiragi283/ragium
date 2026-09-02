@@ -1,11 +1,6 @@
 package hiiragi283.lib.serialization.codec
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.MapCodec
-import hiiragi283.lib.util.Option
-import hiiragi283.lib.util.java
-import hiiragi283.lib.util.kotlin
-import java.util.Optional
 import net.minecraft.util.ExtraCodecs
 
 //    List    //
@@ -54,12 +49,3 @@ fun <A : Any> Codec<A>.listOrElement(min: Int, max: Int): Codec<List<A>> = Extra
  * @since 26.1.0
  */
 fun <A : Any> Codec<List<A>>.setOf(): Codec<Set<A>> = this.xmap(List<A>::toSet, Set<A>::toList)
-
-//    Option    //
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-@JvmName("convertToOption")
-fun <A : Any> MapCodec<Optional<A>>.convert(): MapCodec<Option<A>> = this.xmap({ it.kotlin }, { it.java })

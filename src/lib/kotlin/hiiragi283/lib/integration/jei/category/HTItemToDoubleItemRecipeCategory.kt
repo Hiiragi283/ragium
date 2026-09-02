@@ -26,7 +26,7 @@ class HTItemToDoubleItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHold
         val slot: IRecipeSlotBuilder = builder
             .addOutputSlot(getPosition(5), getPosition(0))
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
-        recipe.secondary.onSome(slot::add)
+        recipe.secondary.ifPresent(slot::add)
     }
 
     override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemToDoubleItemRecipe.Basic, focuses: IFocusGroup) {

@@ -10,8 +10,8 @@ import net.minecraft.world.entity.EntityType
 class RagiumGlobalLootModifierProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) : HTGlobalLootModifierProvider(output, registries, RagiumAPI.MOD_ID) {
     override fun start() {
         // Drops Elder Heart from Elder Guardian
-        add(RagiumGlobalLootTableProvider.ELDER_HEART, condition(EntityType.ELDER_GUARDIAN).toList())
+        add(RagiumGlobalLootTableProvider.ELDER_HEART, condition(EntityType.ELDER_GUARDIAN))
         // Drops Trader Catalog from Wandering Trader
-        add(RagiumGlobalLootTableProvider.TRADER_CATALOG, condition(EntityType.WANDERING_TRADER).toList())
+        add(RagiumGlobalLootTableProvider.TRADER_CATALOG, condition(EntityType.WANDERING_TRADER))
     }
 }

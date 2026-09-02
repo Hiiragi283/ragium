@@ -22,7 +22,7 @@ class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) : HTHolderRecipeCateg
                 .setSlotBackground(HTBackgroundType.INPUT, it.amount)
         }
         val itemInput: IRecipeSlotBuilder = builder.addInputSlot(getPosition(2), getPosition(0)).setSlotBackground(HTBackgroundType.INPUT)
-        recipe.itemIngredient.onSome(itemInput::add)
+        recipe.itemIngredient.ifPresent(itemInput::add)
         // outputs
         val outputSlots: Array<IRecipeSlotBuilder> = Array(3) { index: Int -> builder.addOutputSlot(getPosition(5 + index), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT) }
         for (index: Int in recipe.results.indices) {

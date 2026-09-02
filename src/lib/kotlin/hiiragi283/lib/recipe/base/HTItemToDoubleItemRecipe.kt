@@ -6,9 +6,9 @@ import hiiragi283.lib.data.recipe.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.codec.convert
 import hiiragi283.lib.serialization.network.HTStreamCodecs
-import hiiragi283.lib.util.Option
+import hiiragi283.lib.util.fold
+import java.util.Optional
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
@@ -39,7 +39,7 @@ interface HTItemToDoubleItemRecipe :
      * @author Hiiragi Tsubasa
      * @since 26.1.0
      */
-    open class Basic(val ingredient: HTItemIngredient, val primary: HTItemResult, val secondary: Option<HTItemResult>, override val progressData: HTProgressData) :
+    open class Basic(val ingredient: HTItemIngredient, val primary: HTItemResult, val secondary: Optional<HTItemResult>, override val progressData: HTProgressData) :
         HTItemToDoubleItemRecipe,
         HTProgressRecipe.Simple<SingleRecipeInput> {
         companion object {
@@ -48,7 +48,7 @@ interface HTItemToDoubleItemRecipe :
                 instance.group(
                     HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
                     HTItemResult.CODEC.fieldOf(HTConstants.PRIMARY_RESULT).forGetter(Basic::primary),
-                    HTItemResult.CODEC.optionalFieldOf(HTConstants.SECONDARY_RESULT).convert().forGetter(Basic::secondary),
+                    HTItemResult.CODEC.optionalFieldOf(HTConstants.SECONDARY_RESULT).forGetter(Basic::secondary),
                     HTProgressData.CODEC.forGetter(Basic::progressData),
                 ).apply(instance, factory::create)
             }
@@ -62,7 +62,7 @@ interface HTItemToDoubleItemRecipe :
                 Basic::ingredient,
                 HTItemResult.STREAM_CODEC,
                 Basic::primary,
-                HTStreamCodecs.option(HTItemResult.STREAM_CODEC),
+                HTStreamCodecs.optional(HTItemResult.STREAM_CODEC),
                 Basic::secondary,
                 HTProgressData.STREAM_CODEC,
                 Basic::progressData,

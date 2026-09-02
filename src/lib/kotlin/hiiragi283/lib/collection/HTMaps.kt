@@ -1,7 +1,6 @@
 package hiiragi283.lib.collection
 
 import hiiragi283.lib.util.Either
-import hiiragi283.lib.util.Option
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
@@ -11,18 +10,6 @@ fun <K, V : Any> Map<K, Optional<out V>>.filterNotOptional(): Map<K, V> = this.f
 
 fun <K, V : Any, C : MutableMap<K, V>> Map<K, Optional<out V>>.filterNotOptionalTo(destination: C): C {
     for ((key: K, value: Optional<out V>) in this) {
-        val valueIn: V = value.getOrNull() ?: continue
-        destination[key] = valueIn
-    }
-    return destination
-}
-
-//    Option    //
-
-fun <K, V : Any> Map<K, Option<V>>.filterNotOption(): Map<K, V> = this.filterNotOptionTo(mutableMapOf())
-
-fun <K, V : Any, C : MutableMap<K, V>> Map<K, Option<V>>.filterNotOptionTo(destination: C): C {
-    for ((key: K, value: Option<V>) in this) {
         val valueIn: V = value.getOrNull() ?: continue
         destination[key] = valueIn
     }

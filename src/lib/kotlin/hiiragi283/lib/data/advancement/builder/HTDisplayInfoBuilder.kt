@@ -10,8 +10,7 @@ import hiiragi283.lib.item.ItemInstanceBuilder
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.text.translatableText
 import hiiragi283.lib.util.HTDelegates
-import hiiragi283.lib.util.Option
-import hiiragi283.lib.util.java
+import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -42,21 +41,21 @@ class HTDisplayInfoBuilder {
     @PublishedApi internal var icon: ItemStackTemplate by HTDelegates.onceInitialize()
     var titleText: Text by HTDelegates.onceInitialize()
     var descText: Text by HTDelegates.onceInitialize()
-    var backGround: Option<ClientAsset.ResourceTexture> by HTDelegates.onceInitialize { Option.none() }
+    var backGround: Optional<ClientAsset.ResourceTexture> by HTDelegates.onceInitialize { Optional.empty() }
     var type: AdvancementType by HTDelegates.onceInitialize { AdvancementType.TASK }
     var showToast: Boolean = true
     var showChat: Boolean = true
     var hidden: Boolean = false
 
     operator fun ClientAsset.ResourceTexture.unaryPlus() {
-        backGround = Option.some(this)
+        backGround = Optional.of(this)
     }
 
     fun build(): DisplayInfo = DisplayInfo(
         icon,
         titleText,
         descText,
-        backGround.java,
+        backGround,
         type,
         showToast,
         showChat,

@@ -1,7 +1,6 @@
 package hiiragi283.lib.collection
 
 import hiiragi283.lib.util.Either
-import hiiragi283.lib.util.Option
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
@@ -14,16 +13,6 @@ inline fun <T, R : Any, C : MutableCollection<in R>> Iterable<T>.mapOptionalTo(d
 fun <T : Any> Iterable<Optional<out T>>.filterNotOptional(): List<T> = this.filterNotOptionalTo(mutableListOf())
 
 fun <T : Any, C : MutableCollection<in T>> Iterable<Optional<out T>>.filterNotOptionalTo(destination: C): C = this.mapNotNullTo(destination) { it.getOrNull() }
-
-//    Option    //
-
-inline fun <T, R : Any> Iterable<T>.mapOption(transform: (T) -> Option<R>): List<R> = this.mapOptionTo(mutableListOf(), transform)
-
-inline fun <T, R : Any, C : MutableCollection<in R>> Iterable<T>.mapOptionTo(destination: C, transform: (T) -> Option<R>): C = this.mapNotNullTo(destination) { transform(it).getOrNull() }
-
-fun <T : Any> Iterable<Option<T>>.filterNotOption(): List<T> = this.filterNotOptionTo(mutableListOf())
-
-fun <T : Any, C : MutableCollection<in T>> Iterable<Option<T>>.filterNotOptionTo(destination: C): C = this.mapNotNullTo(destination) { it.getOrNull() }
 
 //    Either    //
 

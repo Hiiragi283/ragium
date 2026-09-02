@@ -10,9 +10,9 @@ import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.util.HTDelegates
-import hiiragi283.lib.util.Option
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
+import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -24,12 +24,12 @@ class RTElectrolyzingRecipeBuilder : HTProgressRecipeBuilder<RTElectrolyzingReci
     override fun createRecipe(): RTElectrolyzingRecipe = RTElectrolyzingRecipe(itemIngredient, fluidIngredient, results, progressData)
 
     // Ingredient
-    @PublishedApi internal var itemIngredient: Option<HTItemIngredient> by HTDelegates.onceInitialize { Option.none() }
+    @PublishedApi internal var itemIngredient: Optional<HTItemIngredient> by HTDelegates.onceInitialize { Optional.empty() }
 
     @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
     operator fun HTItemIngredient.unaryPlus() {
-        itemIngredient = Option.some(this)
+        itemIngredient = Optional.of(this)
     }
 
     operator fun HTFluidIngredient.unaryPlus() {

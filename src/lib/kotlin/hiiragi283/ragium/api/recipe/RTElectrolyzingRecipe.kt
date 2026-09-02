@@ -14,10 +14,10 @@ import hiiragi283.lib.recipe.ingredient.test
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.codec.convert
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.listOf
-import hiiragi283.lib.util.Option
+import hiiragi283.lib.util.fold
+import java.util.Optional
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
@@ -27,7 +27,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 
 @JvmRecord
 data class RTElectrolyzingRecipe(
-    val itemIngredient: Option<HTItemIngredient>,
+    val itemIngredient: Optional<HTItemIngredient>,
     val fluidIngredient: HTFluidIngredient,
     val results: List<HTFluidResult>,
     override val progressData: HTProgressData,
@@ -39,7 +39,7 @@ data class RTElectrolyzingRecipe(
         @JvmField
         val CODEC: MapCodec<RTElectrolyzingRecipe> = HTCodecs.recordMap { instance ->
             instance.group(
-                HTItemIngredient.CODEC.optionalFieldOf(HTConstants.ITEM_INGREDIENT).convert().forGetter(RTElectrolyzingRecipe::itemIngredient),
+                HTItemIngredient.CODEC.optionalFieldOf(HTConstants.ITEM_INGREDIENT).forGetter(RTElectrolyzingRecipe::itemIngredient),
                 HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID_INGREDIENT).forGetter(RTElectrolyzingRecipe::fluidIngredient),
                 HTFluidResult.CODEC.listOf(2, 3).fieldOf(HTConstants.RESULTS).forGetter(RTElectrolyzingRecipe::results),
                 HTProgressData.CODEC.forGetter(RTElectrolyzingRecipe::progressData),
@@ -48,7 +48,7 @@ data class RTElectrolyzingRecipe(
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, RTElectrolyzingRecipe> = StreamCodec.composite(
-            HTStreamCodecs.option(HTItemIngredient.STREAM_CODEC),
+            HTStreamCodecs.optional(HTItemIngredient.STREAM_CODEC),
             RTElectrolyzingRecipe::itemIngredient,
             HTFluidIngredient.STREAM_CODEC,
             RTElectrolyzingRecipe::fluidIngredient,

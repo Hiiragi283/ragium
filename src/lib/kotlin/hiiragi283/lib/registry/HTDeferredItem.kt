@@ -4,6 +4,7 @@ import hiiragi283.lib.item.HTItemInstanceLike
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.lib.text.Text
+import kotlin.jvm.optionals.getOrNull
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
@@ -42,7 +43,7 @@ class HTDeferredItem<out ITEM : Item> :
 
     override fun asItem(): ITEM = get()
 
-    override fun toTemplate(count: Int, patch: DataComponentPatch): ItemStackTemplate? = asOption().map { ItemStackTemplate(it, count, patch) }.getOrNull()
+    override fun toTemplate(count: Int, patch: DataComponentPatch): ItemStackTemplate? = asOptional().map { ItemStackTemplate(it, count, patch) }.getOrNull()
 
     override fun toStack(count: Int, patch: DataComponentPatch): ItemStack = when {
         this.isBound -> ItemStack(this, count, patch)
