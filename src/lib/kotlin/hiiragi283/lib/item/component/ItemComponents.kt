@@ -2,7 +2,7 @@
 
 package hiiragi283.lib.item.component
 
-import java.util.Optional
+import hiiragi283.lib.util.toOptional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -59,8 +59,8 @@ fun PotionContents(
 ): PotionContents = if (potion == null && customColor == null && customEffects.isEmpty() && customName == null) {
     PotionContents.EMPTY
 } else PotionContents(
-    Optional.ofNullable(potion),
-    Optional.ofNullable(customColor),
+    potion.toOptional(),
+    customColor.toOptional(),
     customEffects,
-    Optional.ofNullable(customName),
+    customName.toOptional(),
 )
