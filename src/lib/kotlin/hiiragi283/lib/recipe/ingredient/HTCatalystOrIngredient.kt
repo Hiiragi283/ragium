@@ -18,8 +18,8 @@ import net.minecraft.world.item.crafting.Ingredient
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-@JvmInline
-value class HTCatalystOrIngredient(private val content: Either<Ingredient, HTItemIngredient>) :
+@JvmRecord
+data class HTCatalystOrIngredient(private val content: Either<Ingredient, HTItemIngredient>) :
     HTIngredient<ItemInstance>,
     HTStackPreview<ItemStack> {
     companion object {

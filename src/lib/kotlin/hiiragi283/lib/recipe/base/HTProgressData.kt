@@ -72,8 +72,8 @@ sealed interface HTProgressData : HTHasText {
      * @author Hiiragi Tsubasa
      * @since 26.1.0
      */
-    @JvmInline
-    value class Time(val value: Int) : HTProgressData {
+    @JvmRecord
+    data class Time(val value: Int) : HTProgressData {
         companion object {
             @JvmField
             val CODEC: MapCodec<Time> = HTCodecs.NON_NEGATIVE_INT.fieldOf(HTConstants.TIME).xmap(::Time, Time::value)
@@ -98,8 +98,8 @@ sealed interface HTProgressData : HTHasText {
      * @author Hiiragi Tsubasa
      * @since 26.1.0
      */
-    @JvmInline
-    value class Energy(val value: Int) : HTProgressData {
+    @JvmRecord
+    data class Energy(val value: Int) : HTProgressData {
         companion object {
             @JvmField
             val CODEC: MapCodec<Energy> = HTCodecs.NON_NEGATIVE_INT.fieldOf(HTConstants.ENERGY).xmap(::Energy, Energy::value)

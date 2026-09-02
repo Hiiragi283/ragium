@@ -139,8 +139,8 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
         override fun getId(): Identifier = item.getKeyOrThrow().identifier()
     }
 
-    @JvmInline
-    value class TagEntry(val tag: HolderSet<Item>) : Entry {
+    @JvmRecord
+    data class TagEntry(val tag: HolderSet<Item>) : Entry {
         companion object {
             @JvmField
             val CODEC: MapCodec<TagEntry> = HTCodecs.holderSet(Registries.ITEM)

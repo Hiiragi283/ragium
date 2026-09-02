@@ -5,8 +5,8 @@ package hiiragi283.lib.data.lang
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-@JvmInline
-value class HTLangType(val name: String) : Comparable<HTLangType> {
+@JvmRecord
+data class HTLangType(val name: String) : Comparable<HTLangType> {
     companion object {
         @JvmStatic
         private val instances: MutableMap<String, HTLangType> = hashMapOf()
