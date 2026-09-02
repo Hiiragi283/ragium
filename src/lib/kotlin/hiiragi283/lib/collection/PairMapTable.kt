@@ -23,14 +23,22 @@ value class PairMapTable<R, C, out V> private constructor(private val map: Map<P
     override val size: Int get() = map.size
     override val isEmpty: Boolean get() = map.isEmpty()
 
-    override fun row(row: R): Map<C, V> = map.filterKeys { (rowIn: R, _) -> rowIn == row }.mapKeys { (key: Pair<R, C>, _) -> key.second }
+    override fun row(row: R): Map<C, V> = map.filterKeys { (rowIn: R, _) ->
+        rowIn == row
+    }.mapKeys { (key: Pair<R, C>, _) -> key.second }
 
-    override fun column(column: C): Map<R, V> = map.filterKeys { (_, columnIn: C) -> columnIn == column }.mapKeys { (key: Pair<R, C>, _) -> key.first }
+    override fun column(column: C): Map<R, V> = map.filterKeys { (_, columnIn: C) ->
+        columnIn == column
+    }.mapKeys { (key: Pair<R, C>, _) -> key.first }
 
     override val rowKeys: Set<R> get() = map.keys.mapTo(mutableSetOf()) { it.first }
     override val columnKeys: Set<C> get() = map.keys.mapTo(mutableSetOf()) { it.second }
     override val values: Collection<V> get() = map.values
-    override val entries: Set<Triple<R, C, V>> get() = map.entries.mapTo(mutableSetOf()) { (key: Pair<R, C>, value: V) -> Triple(key.first, key.second, value) }
+    override val entries: Set<Triple<R, C, V>> get() = map.entries.mapTo(
+        mutableSetOf()
+    ) { (key: Pair<R, C>, value: V) ->
+        Triple(key.first, key.second, value)
+    }
 
     /**
      * [PairMapTable]向けの[Table.Builder]の抽象クラスです。

@@ -2,9 +2,9 @@ package hiiragi283.ragium.api
 
 import com.mojang.logging.LogUtils
 import hiiragi283.lib.resource.toId
-import java.util.ServiceLoader
 import net.minecraft.resources.Identifier
 import org.slf4j.Logger
+import java.util.ServiceLoader
 
 /**
  * @author Hiiragi Tsubasa
@@ -32,5 +32,6 @@ data object RagiumAPI {
     fun id(vararg path: String): Identifier = MOD_ID.toId(*path)
 
     @JvmStatic
-    inline fun <reified T : Any> getService(): T = ServiceLoader.load(T::class.java, RagiumAPI::class.java.classLoader).single()
+    inline fun <reified T : Any> getService(): T =
+        ServiceLoader.load(T::class.java, RagiumAPI::class.java.classLoader).single()
 }

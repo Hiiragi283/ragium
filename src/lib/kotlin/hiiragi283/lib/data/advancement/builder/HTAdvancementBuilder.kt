@@ -7,10 +7,6 @@ import hiiragi283.lib.data.advancement.AdvancementKey
 import hiiragi283.lib.data.advancement.HTAdvancementExporter
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
-import java.util.Optional
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
@@ -20,6 +16,10 @@ import net.minecraft.advancements.CriterionTrigger
 import net.minecraft.advancements.CriterionTriggerInstance
 import net.minecraft.advancements.DisplayInfo
 import net.neoforged.neoforge.common.conditions.ICondition
+import java.util.Optional
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * @author Hiiragi Tsubasa
@@ -92,7 +92,7 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
             rewards,
             criterions,
             this.requirements ?: strategy.create(criterions.keys),
-            true,
+            true
         )
         exporter.accept(key, adv, conditions)
     }

@@ -15,7 +15,6 @@ import hiiragi283.lib.transfer.item.ItemResourceHandler
 import hiiragi283.lib.transfer.item.getItemStack
 import hiiragi283.lib.transfer.resolver.HTResourceCapabilityManager
 import hiiragi283.ragium.common.transfer.HTCapabilityCodec
-import java.util.UUID
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -27,6 +26,7 @@ import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.item.ItemResource
+import java.util.UUID
 
 /**
  * [HTExtendedBlockEntity]の拡張クラスです。
@@ -45,23 +45,13 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
 
     companion object {
         @JvmStatic
-        fun tickClient(
-            level: Level,
-            pos: BlockPos,
-            state: BlockState,
-            blockEntity: HTBlockEntity,
-        ) {
+        fun tickClient(level: Level, pos: BlockPos, state: BlockState, blockEntity: HTBlockEntity) {
             blockEntity.onUpdateClient(level, pos, state)
             blockEntity.ticks++
         }
 
         @JvmStatic
-        fun tickServer(
-            level: Level,
-            pos: BlockPos,
-            state: BlockState,
-            blockEntity: HTBlockEntity,
-        ) {
+        fun tickServer(level: Level, pos: BlockPos, state: BlockState, blockEntity: HTBlockEntity) {
             val serverLevel: ServerLevel = level as? ServerLevel ?: return
             val shouldUpdate: Boolean = blockEntity.onUpdateServer(serverLevel, pos, state)
             blockEntity.ticks++
@@ -152,7 +142,8 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
 
     fun getFluidTank(side: Direction?, index: Int): HTFluidTank? = getFluidTanks(side).getOrNull(index)
 
-    final override fun getFluidHandler(direction: Direction?): FluidResourceHandler? = fluidHandlerManager?.resolve(direction)
+    final override fun getFluidHandler(direction: Direction?): FluidResourceHandler? =
+        fluidHandlerManager?.resolve(direction)
 
     // Item
     fun hasItemHandler(): Boolean = itemHandlerManager != null
@@ -163,7 +154,8 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
 
     fun getItemSlot(side: Direction?, index: Int): HTItemSlot? = getItemSlots(side).getOrNull(index)
 
-    final override fun getItemHandler(direction: Direction?): ItemResourceHandler? = itemHandlerManager?.resolve(direction)
+    final override fun getItemHandler(direction: Direction?): ItemResourceHandler? =
+        itemHandlerManager?.resolve(direction)
 
     override fun preRemoveSideEffects(pos: BlockPos, state: BlockState) {
         val level: Level = this.level ?: return

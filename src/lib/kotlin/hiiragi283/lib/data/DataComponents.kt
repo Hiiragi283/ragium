@@ -3,15 +3,15 @@
 package hiiragi283.lib.data
 
 import com.mojang.serialization.Codec
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.core.component.DataComponentExactPredicate
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * 新しい[DataComponentType]のインスタンスを作成します。
@@ -20,7 +20,10 @@ import net.minecraft.network.codec.StreamCodec
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <T : Any> DataComponentType(codec: Codec<T>, streamCodec: StreamCodec<in RegistryFriendlyByteBuf, T>?): DataComponentType<T> {
+fun <T : Any> DataComponentType(
+    codec: Codec<T>,
+    streamCodec: StreamCodec<in RegistryFriendlyByteBuf, T>?
+): DataComponentType<T> {
     val builder: DataComponentType.Builder<T> = DataComponentType.builder<T>().persistent(codec)
     if (streamCodec != null) builder.networkSynchronized(streamCodec)
     return builder.build()
@@ -58,7 +61,9 @@ inline fun buildDataPatch(builderAction: DataComponentPatch.Builder.() -> Unit):
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun buildDataPredicate(builderAction: DataComponentExactPredicate.Builder.() -> Unit): DataComponentExactPredicate {
+inline fun buildDataPredicate(
+    builderAction: DataComponentExactPredicate.Builder.() -> Unit
+): DataComponentExactPredicate {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }

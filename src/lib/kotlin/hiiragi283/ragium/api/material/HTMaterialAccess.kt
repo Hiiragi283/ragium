@@ -16,9 +16,12 @@ interface HTMaterialAccess {
 
     val registered: HTMaterialContents.Provider
 
-    fun getMaterialBlock(part: HTBlockPart, key: RagiumMaterial): HTMaterialContents.BlockEntry? = existing.blocks[part, key] ?: registered.blocks[part, key]
+    fun getMaterialBlock(part: HTBlockPart, key: RagiumMaterial): HTMaterialContents.BlockEntry? =
+        existing.blocks[part, key] ?: registered.blocks[part, key]
 
-    fun getMaterialItem(part: HTItemPart, key: RagiumMaterial): HTMaterialContents.ItemEntry? = existing.items[part, key] ?: registered.items[part, key]
+    fun getMaterialItem(part: HTItemPart, key: RagiumMaterial): HTMaterialContents.ItemEntry? =
+        existing.items[part, key] ?: registered.items[part, key]
 
-    fun getMaterialBlockOrItem(part: HTPart, key: RagiumMaterial): HTMaterialContents.ItemEntry? = existing.getBlockOrItem(part, key) ?: registered.getBlockOrItem(part, key)
+    fun getMaterialBlockOrItem(part: HTPart, key: RagiumMaterial): HTMaterialContents.ItemEntry? =
+        existing.getBlockOrItem(part, key) ?: registered.getBlockOrItem(part, key)
 }

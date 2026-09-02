@@ -10,7 +10,8 @@ data object RagiumWidgetTypes {
     val allTypes: Set<HTWidgetType<*>> field: MutableSet<HTWidgetType<*>> = mutableSetOf()
 
     @JvmStatic
-    private fun <T : HTWidget> create(name: String): HTWidgetType<T> = HTWidgetType<T>(RagiumAPI.id(name)).also(allTypes::add)
+    private fun <T : HTWidget> create(name: String): HTWidgetType<T> =
+        HTWidgetType<T>(RagiumAPI.id(name)).also(allTypes::add)
 
     @JvmField
     val ENERGY: HTWidgetType<HTEnergySlotWidget> = create(HTConstants.ENERGY)

@@ -3,7 +3,6 @@
 package hiiragi283.lib.text
 
 import hiiragi283.lib.HTConstants
-import java.text.NumberFormat
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.ClickEvent
@@ -22,6 +21,7 @@ import net.neoforged.fml.ModList
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforgespi.language.IModInfo
 import org.apache.commons.lang3.text.WordUtils
+import java.text.NumberFormat
 
 /**
  * [テキスト][Text]に関するメソッドを集めたクラスです。

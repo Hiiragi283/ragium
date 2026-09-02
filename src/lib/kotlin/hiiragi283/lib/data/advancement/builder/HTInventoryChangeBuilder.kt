@@ -3,13 +3,13 @@
 package hiiragi283.lib.data.advancement.builder
 
 import hiiragi283.lib.util.HTDelegates
+import net.minecraft.advancements.criterion.InventoryChangeTrigger
+import net.minecraft.advancements.criterion.ItemPredicate
+import net.minecraft.advancements.criterion.MinMaxBounds
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import net.minecraft.advancements.criterion.InventoryChangeTrigger
-import net.minecraft.advancements.criterion.ItemPredicate
-import net.minecraft.advancements.criterion.MinMaxBounds
 
 /**
  * @author Hiiragi Tsubasa
@@ -18,7 +18,9 @@ import net.minecraft.advancements.criterion.MinMaxBounds
 class HTInventoryChangeBuilder {
     @PublishedApi internal val predicates: MutableList<ItemPredicate> = mutableListOf()
 
-    @PublishedApi internal var slots: InventoryChangeTrigger.TriggerInstance.Slots by HTDelegates.onceInitialize(InventoryChangeTrigger.TriggerInstance.Slots::ANY)
+    @PublishedApi internal var slots: InventoryChangeTrigger.TriggerInstance.Slots by HTDelegates.onceInitialize(
+        InventoryChangeTrigger.TriggerInstance.Slots::ANY
+    )
 
     operator fun ItemPredicate.unaryPlus() {
         predicates += this
@@ -47,8 +49,10 @@ class HTInventoryChangeBuilder {
         var full: MinMaxBounds.Ints = MinMaxBounds.Ints.ANY
         var empty: MinMaxBounds.Ints = MinMaxBounds.Ints.ANY
 
-        fun build(): InventoryChangeTrigger.TriggerInstance.Slots = InventoryChangeTrigger.TriggerInstance.Slots(occupied, full, empty)
+        fun build(): InventoryChangeTrigger.TriggerInstance.Slots =
+            InventoryChangeTrigger.TriggerInstance.Slots(occupied, full, empty)
     }
 
-    fun build(): InventoryChangeTrigger.TriggerInstance = InventoryChangeTrigger.TriggerInstance(Optional.empty(), slots, predicates)
+    fun build(): InventoryChangeTrigger.TriggerInstance =
+        InventoryChangeTrigger.TriggerInstance(Optional.empty(), slots, predicates)
 }

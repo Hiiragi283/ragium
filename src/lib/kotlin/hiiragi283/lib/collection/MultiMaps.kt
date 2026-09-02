@@ -44,7 +44,10 @@ private data object EmptyMultiMap : MultiMap<Nothing, Nothing> {
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <K, V> buildListMultiMap(initialCapacity: Int = 10, builderAction: ListMultiMap.Builder<K, V>.() -> Unit): ListMultiMap<K, V> {
+inline fun <K, V> buildListMultiMap(
+    initialCapacity: Int = 10,
+    builderAction: ListMultiMap.Builder<K, V>.() -> Unit
+): ListMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -58,7 +61,10 @@ inline fun <K, V> buildListMultiMap(initialCapacity: Int = 10, builderAction: Li
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <K, V> buildListMultiMap(map: MutableMap<K, MutableList<V>>, builderAction: ListMultiMap.Builder<K, V>.() -> Unit): ListMultiMap<K, V> {
+inline fun <K, V> buildListMultiMap(
+    map: MutableMap<K, MutableList<V>>,
+    builderAction: ListMultiMap.Builder<K, V>.() -> Unit
+): ListMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -72,7 +78,10 @@ inline fun <K, V> buildListMultiMap(map: MutableMap<K, MutableList<V>>, builderA
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <K, V> buildSetMultiMap(initialCapacity: Int = 10, builderAction: SetMultiMap.Builder<K, V>.() -> Unit): SetMultiMap<K, V> {
+inline fun <K, V> buildSetMultiMap(
+    initialCapacity: Int = 10,
+    builderAction: SetMultiMap.Builder<K, V>.() -> Unit
+): SetMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -86,7 +95,10 @@ inline fun <K, V> buildSetMultiMap(initialCapacity: Int = 10, builderAction: Set
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <K, V> buildSetMultiMap(map: MutableMap<K, MutableSet<V>>, builderAction: SetMultiMap.Builder<K, V>.() -> Unit): SetMultiMap<K, V> {
+inline fun <K, V> buildSetMultiMap(
+    map: MutableMap<K, MutableSet<V>>,
+    builderAction: SetMultiMap.Builder<K, V>.() -> Unit
+): SetMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -100,7 +112,10 @@ inline fun <K, V> buildSetMultiMap(map: MutableMap<K, MutableSet<V>>, builderAct
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-inline fun <K, V : Comparable<V>> buildSortedSetMultiMap(initialCapacity: Int = 10, builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit): SetMultiMap<K, V> {
+inline fun <K, V : Comparable<V>> buildSortedSetMultiMap(
+    initialCapacity: Int = 10,
+    builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit
+): SetMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -114,7 +129,10 @@ inline fun <K, V : Comparable<V>> buildSortedSetMultiMap(initialCapacity: Int = 
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-inline fun <K, V : Comparable<V>> buildSortedSetMultiMap(map: MutableMap<K, TreeSet<V>>, builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit): SetMultiMap<K, V> {
+inline fun <K, V : Comparable<V>> buildSortedSetMultiMap(
+    map: MutableMap<K, TreeSet<V>>,
+    builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit
+): SetMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -128,7 +146,11 @@ inline fun <K, V : Comparable<V>> buildSortedSetMultiMap(map: MutableMap<K, Tree
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-inline fun <K, V> buildSortedSetMultiMap(comparator: Comparator<V>, initialCapacity: Int = 10, builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit): SetMultiMap<K, V> {
+inline fun <K, V> buildSortedSetMultiMap(
+    comparator: Comparator<V>,
+    initialCapacity: Int = 10,
+    builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit
+): SetMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -142,7 +164,11 @@ inline fun <K, V> buildSortedSetMultiMap(comparator: Comparator<V>, initialCapac
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-inline fun <K, V> buildSortedSetMultiMap(comparator: Comparator<V>, map: MutableMap<K, TreeSet<V>>, builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit): SetMultiMap<K, V> {
+inline fun <K, V> buildSortedSetMultiMap(
+    comparator: Comparator<V>,
+    map: MutableMap<K, TreeSet<V>>,
+    builderAction: SetMultiMap.SortedBuilder<K, V>.() -> Unit
+): SetMultiMap<K, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -162,7 +188,9 @@ inline fun <K, V> buildSortedSetMultiMap(comparator: Comparator<V>, map: Mutable
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <K, V, R, C, W> MultiMap<K, V>.flatMapTable(transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>): Table<R, C, W> = this.flatMapTableTo(PairMapTable.Builder(), transform)
+inline fun <K, V, R, C, W> MultiMap<K, V>.flatMapTable(
+    transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>
+): Table<R, C, W> = this.flatMapTableTo(PairMapTable.Builder(), transform)
 
 /**
  * [Table]に変換します。
@@ -176,7 +204,10 @@ inline fun <K, V, R, C, W> MultiMap<K, V>.flatMapTable(transform: (Map.Entry<K, 
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <K, V, R, C, W, D : Table.Builder<R, C, W>> MultiMap<K, V>.flatMapTableTo(builder: D, transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>): Table<R, C, W> {
+inline fun <K, V, R, C, W, D : Table.Builder<R, C, W>> MultiMap<K, V>.flatMapTableTo(
+    builder: D,
+    transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>
+): Table<R, C, W> {
     this.entries.flatMap(transform).forEach(builder::put)
     return builder.build()
 }

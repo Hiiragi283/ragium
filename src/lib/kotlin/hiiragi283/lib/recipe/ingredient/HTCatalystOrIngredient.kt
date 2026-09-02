@@ -26,7 +26,7 @@ data class HTCatalystOrIngredient(private val content: Either<Ingredient, HTItem
         @JvmField
         val MAP_CODEC: MapCodec<HTCatalystOrIngredient> = HTCodecs.mapEither(
             Ingredient.CODEC.fieldOf(HTConstants.CATALYST),
-            HTItemIngredient.CODEC.fieldOf(HTConstants.ITEM_INGREDIENT),
+            HTItemIngredient.CODEC.fieldOf(HTConstants.ITEM_INGREDIENT)
         ).xmap(::HTCatalystOrIngredient, HTCatalystOrIngredient::content)
 
         @JvmField
@@ -35,7 +35,7 @@ data class HTCatalystOrIngredient(private val content: Either<Ingredient, HTItem
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTCatalystOrIngredient> = HTStreamCodecs.either(
             Ingredient.CONTENTS_STREAM_CODEC,
-            HTItemIngredient.STREAM_CODEC,
+            HTItemIngredient.STREAM_CODEC
         ).map(::HTCatalystOrIngredient, HTCatalystOrIngredient::content)
     }
 
@@ -49,11 +49,17 @@ data class HTCatalystOrIngredient(private val content: Either<Ingredient, HTItem
 
     override fun test(instance: ItemInstance): Boolean = content.fold({ testOnlyType(instance) }, { it.test(instance) })
 
-    override fun testOnlyType(instance: ItemInstance): Boolean = content.fold({ HTIngredientHelper.unwrap(instance).let(::testOnlyType) }, { it.testOnlyType(instance) })
+    override fun testOnlyType(instance: ItemInstance): Boolean = content.fold({
+        HTIngredientHelper.unwrap(instance).let(::testOnlyType)
+    }, { it.testOnlyType(instance) })
 
-    override fun getRequiredAmount(instance: ItemInstance): Int = content.fold({ 0 }, { it.getRequiredAmount(instance) })
+    override fun getRequiredAmount(instance: ItemInstance): Int = content.fold({
+        0
+    }, { it.getRequiredAmount(instance) })
 
     //    HTStackPreview    //
 
-    override fun getPreviewStacks(contextMap: ContextMap): List<ItemStack> = content.fold({ it.display().resolveForStacks(contextMap) }, { it.getPreviewStacks(contextMap) })
+    override fun getPreviewStacks(contextMap: ContextMap): List<ItemStack> = content.fold({
+        it.display().resolveForStacks(contextMap)
+    }, { it.getPreviewStacks(contextMap) })
 }

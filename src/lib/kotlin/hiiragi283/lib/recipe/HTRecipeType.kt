@@ -17,7 +17,8 @@ data class HTRecipeType<T : Recipe<*>>(private val id: Identifier) :
     HTKeyOrValue<RecipeType<*>, HTRecipeType<T>>,
     HTHasText.Translatable {
 
-    override fun unwrapWithKey(): Ior<ResourceKey<RecipeType<*>>, HTRecipeType<T>> = Ior.Both(Registries.RECIPE_TYPE.createKey(id), this)
+    override fun unwrapWithKey(): Ior<ResourceKey<RecipeType<*>>, HTRecipeType<T>> =
+        Ior.Both(Registries.RECIPE_TYPE.createKey(id), this)
 
     override val translationKey: String get() = keyOrThrow.toLanguageKey()
 }

@@ -3,12 +3,12 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.HTConstants
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.ShapedRecipe
 import net.minecraft.world.item.crafting.ShapedRecipePattern
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * 定形レシピ向けの[HTRecipeBuilder]の実装クラスです。
@@ -145,6 +145,6 @@ class HTShapedRecipeBuilder : HTCraftingRecipeBuilder<ShapedRecipe>(HTConstants.
         commonInfo(true),
         bookInfo(),
         ShapedRecipePattern.of(keys, patterns),
-        result,
+        result
     )
 }

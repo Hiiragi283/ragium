@@ -25,10 +25,11 @@ data object RTSplashBrewingRecipe : HTItemAndFluidToFluidRecipe {
         return contents.copy(bottleType = HTBottleType.SPLASH).toFluidStack()
     }
 
-    override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = when (test(first, second)) {
-        true -> 1 to FluidType.BUCKET_VOLUME
-        false -> 0 to 0
-    }
+    override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> =
+        when (test(first, second)) {
+            true -> 1 to FluidType.BUCKET_VOLUME
+            false -> 0 to 0
+        }
 
     override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData = HTProgressData.time(200)
 }

@@ -19,49 +19,62 @@ import net.minecraft.world.item.Items
 data object RagiumJeiRecipeTypes {
     // Mechanical
     @JvmField
-    val ASSEMBLING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, ItemStack(Items.CRAFTER))
+    val ASSEMBLING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, ItemStack(Items.CRAFTER))
 
     @JvmField
-    val COMPRESSING: HTHolderJeiRecipeType<HTItemToItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.COMPRESSING, ItemStack(Items.ANVIL))
+    val COMPRESSING: HTHolderJeiRecipeType<HTItemToItemRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.COMPRESSING, ItemStack(Items.ANVIL))
 
     @JvmField
-    val CRUSHING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
+    val CRUSHING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
 
     @JvmField
-    val CUTTING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
+    val CUTTING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField
-    val DRAINING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.DRAINING, ItemStack(Items.GLASS_BOTTLE))
+    val DRAINING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.DRAINING, ItemStack(Items.GLASS_BOTTLE))
 
     @JvmField
-    val FILLING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> = HTJeiRecipeType(RagiumRecipeTypes.FILLING, ItemStack(Items.GLASS_BOTTLE))
+    val FILLING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> =
+        HTJeiRecipeType(RagiumRecipeTypes.FILLING, ItemStack(Items.GLASS_BOTTLE))
 
     // Heat
     @JvmField
-    val FREEZING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> = HTJeiRecipeType(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
+    val FREEZING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> =
+        HTJeiRecipeType(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
 
     @JvmField
-    val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
+    val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
-    val PYROLYZING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumItems.COAL_COKE)
+    val PYROLYZING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumItems.COAL_COKE)
 
     @JvmField
     val REFINING: HTHolderJeiRecipeType<RTRefiningRecipe> = HTJeiRecipeType(RagiumRecipeTypes.REFINING, RagiumItems.TAR)
 
     // Chemical
     @JvmField
-    val BATHING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> = HTJeiRecipeType(RagiumRecipeTypes.BATHING, ItemStack(Items.GLASS_BOTTLE))
+    val BATHING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> =
+        HTJeiRecipeType(RagiumRecipeTypes.BATHING, ItemStack(Items.GLASS_BOTTLE))
 
     @JvmField
-    val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> = HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, ItemStack(Items.LIGHTNING_ROD))
+    val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =
+        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, ItemStack(Items.LIGHTNING_ROD))
 
     // Bio
     @JvmField
-    val BREWING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> = HTJeiRecipeType(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
+    val BREWING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> =
+        HTJeiRecipeType(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
 
     @JvmField
-    val PLANTING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> = HTJeiRecipeType(RagiumRecipeTypes.PLANTING, ItemStack(Items.FLOWER_POT))
+    val PLANTING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.PLANTING, ItemStack(Items.FLOWER_POT))
 
     // Electronics
 

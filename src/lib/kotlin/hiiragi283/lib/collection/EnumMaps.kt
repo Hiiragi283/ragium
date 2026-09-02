@@ -38,4 +38,5 @@ inline fun <reified K : Enum<K>, V> mutableEnumMapOf(): MutableMap<K, V> = EnumM
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <reified K : Enum<K>, V> mutableEnumMapOf(vararg pairs: Pair<K, V>): MutableMap<K, V> = pairs.toMap(mutableEnumMapOf())
+inline fun <reified K : Enum<K>, V> mutableEnumMapOf(vararg pairs: Pair<K, V>): MutableMap<K, V> =
+    pairs.toMap(mutableEnumMapOf())

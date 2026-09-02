@@ -15,7 +15,7 @@ class HTProgressWidget : HTAbstractWidget {
             x,
             y,
             24,
-            16,
+            16
         ).setTexture(RagiumAPI.id(HTConstants.TEXTURES, HTConstants.GUI, "arrow"))
     }
 
@@ -42,5 +42,6 @@ class HTProgressWidget : HTAbstractWidget {
 
     override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.PROGRESS
 
-    override fun toString(): String = "HTProgressWidget(bounds=$bounds, progress=${getProgress()}, fillDirection=$fillDirection)"
+    override fun toString(): String =
+        "HTProgressWidget(bounds=$bounds, progress=${getProgress()}, fillDirection=$fillDirection)"
 }

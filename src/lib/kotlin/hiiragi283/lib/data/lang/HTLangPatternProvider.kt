@@ -33,14 +33,16 @@ fun interface HTLangPatternProvider {
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun HTLangPatternProvider(enPattern: String, jaPattern: String): HTLangPatternProvider = EnJaLangPatternProvider(enPattern, jaPattern)
+fun HTLangPatternProvider(enPattern: String, jaPattern: String): HTLangPatternProvider =
+    EnJaLangPatternProvider(enPattern, jaPattern)
 
 private data object IdentityLangPatternProvider : HTLangPatternProvider {
     override fun translate(type: HTLangType, value: String): String = value
 }
 
 @JvmRecord
-private data class EnJaLangPatternProvider(private val enPattern: String, private val jaPattern: String) : HTLangPatternProvider {
+private data class EnJaLangPatternProvider(private val enPattern: String, private val jaPattern: String) :
+    HTLangPatternProvider {
     override fun translate(type: HTLangType, value: String): String = when (type) {
         HTLangTypes.JA_JP -> jaPattern
         else -> enPattern

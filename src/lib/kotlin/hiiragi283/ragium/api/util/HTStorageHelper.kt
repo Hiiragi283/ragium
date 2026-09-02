@@ -13,8 +13,6 @@ import hiiragi283.lib.transfer.HTResourceView
 import hiiragi283.lib.transfer.energy.HTEnergyHandler
 import hiiragi283.lib.util.fixedFraction
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import java.util.function.Consumer
-import kotlin.math.roundToInt
 import net.minecraft.ChatFormatting
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.util.Mth
@@ -27,6 +25,8 @@ import net.minecraft.world.level.redstone.Redstone
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.transfer.access.ItemAccess
+import java.util.function.Consumer
+import kotlin.math.roundToInt
 
 /**
  * 参照 : [Mekanism - StorageUtils](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/util/StorageUtils.java)
@@ -62,13 +62,16 @@ data object HTStorageHelper {
      * 参照 : [Mekanism - MekanismUtils.redstoneLevelFromContents](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/util/MekanismUtils.java)
      */
     @JvmStatic
-    fun calculateRedstoneLevel(amount: Int, capacity: Int): Int = Mth.lerpDiscrete(fixedFraction(amount, capacity), Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+    fun calculateRedstoneLevel(amount: Int, capacity: Int): Int =
+        Mth.lerpDiscrete(fixedFraction(amount, capacity), Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
 
     @JvmStatic
-    fun calculateRedstoneLevel(view: HTResourceView<*>): Int = Mth.lerpDiscrete(view.currentFilledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+    fun calculateRedstoneLevel(view: HTResourceView<*>): Int =
+        Mth.lerpDiscrete(view.currentFilledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
 
     @JvmStatic
-    fun calculateRedstoneLevel(handler: HTEnergyHandler): Int = Mth.lerpDiscrete(handler.filledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+    fun calculateRedstoneLevel(handler: HTEnergyHandler): Int =
+        Mth.lerpDiscrete(handler.filledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
 
     //    Energy    //
 
@@ -77,7 +80,7 @@ data object HTStorageHelper {
         item: ItemLike,
         amount: Int,
         count: Int = 1,
-        patch: DataComponentPatch = DataComponentPatch.EMPTY,
+        patch: DataComponentPatch = DataComponentPatch.EMPTY
     ): ItemStack {
         val stack = ItemStack(item, count, patch)
         updateEnergy(stack, amount)
@@ -106,7 +109,10 @@ data object HTStorageHelper {
         // Fluid Name and Amount
         when {
             isCreative -> HTCommonTranslation.STORED_FE.translate(HTCommonTranslation.INFINITE)
-            else -> HTCommonTranslation.STORED_FE.translate(HTCommonTranslation.FRACTION.translate(handler.amount, handler.capacity))
+
+            else -> HTCommonTranslation.STORED_FE.translate(
+                HTCommonTranslation.FRACTION.translate(handler.amount, handler.capacity)
+            )
         }.let(consumer::accept)
     }
 
@@ -130,7 +136,7 @@ data object HTStorageHelper {
         item: ItemLike,
         fluidStack: FluidStack,
         count: Int = 1,
-        patch: DataComponentPatch = DataComponentPatch.EMPTY,
+        patch: DataComponentPatch = DataComponentPatch.EMPTY
     ): ItemStack {
         val stack = ItemStack(item, count, patch)
         updateFluid(stack, fluidStack)
@@ -138,7 +144,8 @@ data object HTStorageHelper {
     }
 
     @JvmStatic
-    fun getFluid(container: ItemStack): FluidStack = container.getOrDefault(RagiumDataComponents.FLUID, SimpleFluidContent.EMPTY).copy()
+    fun getFluid(container: ItemStack): FluidStack =
+        container.getOrDefault(RagiumDataComponents.FLUID, SimpleFluidContent.EMPTY).copy()
 
     @JvmStatic
     fun updateFluid(container: ItemStack, newStack: FluidStack) {
@@ -156,7 +163,7 @@ data object HTStorageHelper {
         context: Item.TooltipContext,
         player: Player?,
         flag: TooltipFlag,
-        isCreative: Boolean,
+        isCreative: Boolean
     ) {
         // Empty name if stack is empty
         if (stack.isEmpty) {
@@ -192,7 +199,8 @@ data object HTStorageHelper {
 
     @JvmStatic
     private fun getFluidDurability(container: ItemStack): Double {
-        val bestRatio: Double = HTFluidCapabilities.getSlot(ItemAccess.forStack(container), 0)?.currentFilledLevel?.toDouble() ?: 0.0
+        val bestRatio: Double =
+            HTFluidCapabilities.getSlot(ItemAccess.forStack(container), 0)?.currentFilledLevel?.toDouble() ?: 0.0
         return 1 - bestRatio
     }
 

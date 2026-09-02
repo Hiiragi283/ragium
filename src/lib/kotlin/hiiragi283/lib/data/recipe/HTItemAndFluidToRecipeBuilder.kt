@@ -10,12 +10,12 @@ import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.util.HTDelegates
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * 1種類のアイテムと液体から1種類の完成品を作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
@@ -23,7 +23,10 @@ import net.minecraft.world.item.crafting.Recipe
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RESULT, RECIPE>) : HTProgressRecipeBuilder<RECIPE>(prefix) {
+abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
+    prefix: String,
+    private val factory: Factory<RESULT, RECIPE>
+) : HTProgressRecipeBuilder<RECIPE>(prefix) {
     final override fun getPrimalId(): Identifier = result.getId()
 
     final override fun createRecipe(): RECIPE = factory.create(itemIngredient, fluidIngredient, result, progressData)
@@ -81,7 +84,8 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
      * @author Hiiragi Tsubasa
      * @since 26.1.0
      */
-    class ToFluid<out RECIPE : Recipe<*>>(prefix: String, factory: Factory<HTFluidResult, RECIPE>) : HTItemAndFluidToRecipeBuilder<HTFluidResult, RECIPE>(prefix, factory) {
+    class ToFluid<out RECIPE : Recipe<*>>(prefix: String, factory: Factory<HTFluidResult, RECIPE>) :
+        HTItemAndFluidToRecipeBuilder<HTFluidResult, RECIPE>(prefix, factory) {
         inline fun result(builderAction: HTFluidResultBuilder.() -> Unit) {
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
@@ -98,7 +102,8 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
      * @author Hiiragi Tsubasa
      * @since 26.1.0
      */
-    class ToItem<out RECIPE : Recipe<*>>(prefix: String, factory: Factory<HTItemResult, RECIPE>) : HTItemAndFluidToRecipeBuilder<HTItemResult, RECIPE>(prefix, factory) {
+    class ToItem<out RECIPE : Recipe<*>>(prefix: String, factory: Factory<HTItemResult, RECIPE>) :
+        HTItemAndFluidToRecipeBuilder<HTItemResult, RECIPE>(prefix, factory) {
         inline fun result(builderAction: HTItemResultBuilder.() -> Unit) {
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
@@ -116,6 +121,11 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
      * @since 26.1.0
      */
     fun interface Factory<RESULT : HTRecipeResult<*>, out RECIPE : Any> {
-        fun create(itemIngredient: HTCatalystOrIngredient, fluidIngredient: HTFluidIngredient, result: RESULT, progressData: HTProgressData): RECIPE
+        fun create(
+            itemIngredient: HTCatalystOrIngredient,
+            fluidIngredient: HTFluidIngredient,
+            result: RESULT,
+            progressData: HTProgressData
+        ): RECIPE
     }
 }

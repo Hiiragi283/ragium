@@ -28,12 +28,8 @@ import net.neoforged.neoforge.world.inventory.StackCopySlot
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTContainerMenu<C>(
-    menuType: MenuType<*>,
-    containerId: Int,
-    val inventory: Inventory,
-    val context: C,
-) : AbstractContainerMenu(menuType, containerId),
+abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val inventory: Inventory, val context: C) :
+    AbstractContainerMenu(menuType, containerId),
     HTSyncableMenu {
     final override fun quickMoveStack(player: Player, index: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY
@@ -120,8 +116,8 @@ abstract class HTContainerMenu<C>(
                     inventory,
                     index + 9,
                     HTSlotHelper.getSlotPosX(index % 9),
-                    103 + (index / 9) * 18 + yOffset,
-                ),
+                    103 + (index / 9) * 18 + yOffset
+                )
             )
         }
     }
@@ -196,7 +192,8 @@ abstract class HTContainerMenu<C>(
 
     //    Slot Sync    //
 
-    val trackedSlots: List<Pair<HTSyncableSlot, HTSyncType>> field: MutableList<Pair<HTSyncableSlot, HTSyncType>> = mutableListOf()
+    val trackedSlots: List<Pair<HTSyncableSlot, HTSyncType>>
+        field: MutableList<Pair<HTSyncableSlot, HTSyncType>> = mutableListOf()
 
     fun addTrackedSlot(slot: HTSyncableSlot, type: HTSyncType) {
         trackedSlots += slot to type

@@ -11,13 +11,17 @@ import net.minecraft.world.level.block.Block
  * @since 26.1.0
  */
 class HTTagPrefix(val rawCommonTag: BlockItemTag, private val tagPattern: String) {
-    constructor(commonTagId: String, tagPattern: String) : this(BlockItemTag(HTConstants.COMMON, commonTagId), tagPattern)
+    constructor(
+        commonTagId: String,
+        tagPattern: String
+    ) : this(BlockItemTag(HTConstants.COMMON, commonTagId), tagPattern)
 
     /**
      * 素材の共通タグを生成します。
      * @param material 素材の種類
      */
-    fun materialTag(material: HTMaterialLike): BlockItemTag = BlockItemTag(HTConstants.COMMON, tagPattern.replace("%s", material.materialName))
+    fun materialTag(material: HTMaterialLike): BlockItemTag =
+        BlockItemTag(HTConstants.COMMON, tagPattern.replace("%s", material.materialName))
 
     /**
      * ブロックの素材の共通タグを生成します。

@@ -7,7 +7,9 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTPotionFluidType(properties: Properties) : HTFluidType(properties) {
-    override fun getDescription(stack: FluidStack): Text = HTPotionHelper.getContents(stack)?.getText() ?: super.getDescription()
+    override fun getDescription(stack: FluidStack): Text =
+        HTPotionHelper.getContents(stack)?.getText() ?: super.getDescription()
 
-    override fun getBucket(stack: FluidStack): ItemStack = HTPotionHelper.getContents(stack)?.toBucketStack() ?: super.getBucket(stack)
+    override fun getBucket(stack: FluidStack): ItemStack =
+        HTPotionHelper.getContents(stack)?.toBucketStack() ?: super.getBucket(stack)
 }

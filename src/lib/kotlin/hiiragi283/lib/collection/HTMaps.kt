@@ -18,9 +18,13 @@ fun <K, V : Any, C : MutableMap<K, V>> Map<K, Optional<out V>>.filterNotOptional
 
 //    Either    //
 
-fun <K, A, B> Map<K, Either<A, B>>.separateEither(): Pair<Map<K, A>, Map<K, B>> = this.separateEitherTo(mutableMapOf(), mutableMapOf())
+fun <K, A, B> Map<K, Either<A, B>>.separateEither(): Pair<Map<K, A>, Map<K, B>> =
+    this.separateEitherTo(mutableMapOf(), mutableMapOf())
 
-fun <K, A, B, CA : MutableMap<K, in A>, CB : MutableMap<K, in B>> Map<K, Either<A, B>>.separateEitherTo(destinationA: CA, destinationB: CB): Pair<CA, CB> {
+fun <K, A, B, CA : MutableMap<K, in A>, CB : MutableMap<K, in B>> Map<K, Either<A, B>>.separateEitherTo(
+    destinationA: CA,
+    destinationB: CB
+): Pair<CA, CB> {
     for ((key: K, value: Either<A, B>) in this) {
         value.fold({ destinationA[key] = it }, { destinationB[key] = it })
     }
@@ -34,20 +38,26 @@ fun <K, A, B, CA : MutableMap<K, in A>, CB : MutableMap<K, in B>> Map<K, Either<
 inline fun <K, V> Map<K, List<V>>.toMultiMap(): ListMultiMap<K, V> = ListMultiMap.copyOf(this)
 
 @JvmName("mapListMultiMapTo")
-inline fun <K, V, W> Map<K, V>.mapMultiMapTo(transform: (Map.Entry<K, V>) -> List<W>): ListMultiMap<K, W> = this.mapValues(transform).toMultiMap()
+inline fun <K, V, W> Map<K, V>.mapMultiMapTo(transform: (Map.Entry<K, V>) -> List<W>): ListMultiMap<K, W> =
+    this.mapValues(transform).toMultiMap()
 
 @Suppress("NOTHING_TO_INLINE")
 @JvmName("toSetMultiMap")
 inline fun <K, V> Map<K, Set<V>>.toMultiMap(): SetMultiMap<K, V> = SetMultiMap.copyOf(this)
 
 @JvmName("mapSetMultiMapTo")
-inline fun <K, V, W> Map<K, V>.mapMultiMapTo(transform: (Map.Entry<K, V>) -> Set<W>): SetMultiMap<K, W> = this.mapValues(transform).toMultiMap()
+inline fun <K, V, W> Map<K, V>.mapMultiMapTo(transform: (Map.Entry<K, V>) -> Set<W>): SetMultiMap<K, W> =
+    this.mapValues(transform).toMultiMap()
 
 //    Table    //
 
-inline fun <K, V, R, C, W> Map<K, V>.mapTable(transform: (Map.Entry<K, V>) -> Triple<R, C, W>): Table<R, C, W> = this.mapTableTo(PairMapTable.Builder(), transform)
+inline fun <K, V, R, C, W> Map<K, V>.mapTable(transform: (Map.Entry<K, V>) -> Triple<R, C, W>): Table<R, C, W> =
+    this.mapTableTo(PairMapTable.Builder(), transform)
 
-inline fun <K, V, R, C, W, D : Table.Builder<R, C, W>> Map<K, V>.mapTableTo(builder: D, transform: (Map.Entry<K, V>) -> Triple<R, C, W>): Table<R, C, W> {
+inline fun <K, V, R, C, W, D : Table.Builder<R, C, W>> Map<K, V>.mapTableTo(
+    builder: D,
+    transform: (Map.Entry<K, V>) -> Triple<R, C, W>
+): Table<R, C, W> {
     this.entries.map(transform).forEach(builder::put)
     return builder.build()
 }

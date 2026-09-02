@@ -4,7 +4,6 @@ import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.text.translatableText
-import java.util.Objects
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
@@ -14,6 +13,7 @@ import net.neoforged.neoforge.transfer.ItemAccessResourceHandler
 import net.neoforged.neoforge.transfer.access.ItemAccess
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.item.ItemResource
+import java.util.Objects
 
 class HTPotionBucketItem(properties: Properties) : HTPotionBasedItem(properties) {
     constructor(content: Fluid, properties: Properties) : this(properties)
@@ -27,7 +27,8 @@ class HTPotionBucketItem(properties: Properties) : HTPotionBasedItem(properties)
      * @see net.neoforged.neoforge.transfer.fluid.BucketResourceHandler
      */
     class BucketHandler(itemAccess: ItemAccess) : ItemAccessResourceHandler<FluidResource>(itemAccess, 1) {
-        override fun getResourceFrom(accessResource: ItemResource, index: Int): FluidResource = HTPotionHelper.getContents(accessResource)?.toFluidTemplate().let(FluidResource::of)
+        override fun getResourceFrom(accessResource: ItemResource, index: Int): FluidResource =
+            HTPotionHelper.getContents(accessResource)?.toFluidTemplate().let(FluidResource::of)
 
         override fun getAmountFrom(accessResource: ItemResource, index: Int): Int {
             val resource: FluidResource = getResourceFrom(accessResource, index)
@@ -37,7 +38,12 @@ class HTPotionBucketItem(properties: Properties) : HTPotionBasedItem(properties)
             }
         }
 
-        override fun update(accessResource: ItemResource, index: Int, newResource: FluidResource, newAmount: Int): ItemResource = when {
+        override fun update(
+            accessResource: ItemResource,
+            index: Int,
+            newResource: FluidResource,
+            newAmount: Int
+        ): ItemResource = when {
             newAmount == 0 -> ItemResource.of(Items.BUCKET)
 
             newAmount != FluidType.BUCKET_VOLUME -> ItemResource.EMPTY

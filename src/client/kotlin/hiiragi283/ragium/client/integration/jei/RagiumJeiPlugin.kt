@@ -46,13 +46,26 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             .map(Holder<Item>::value)
             .forEach { item: Item ->
                 if (item is HTPotionBasedItem) {
-                    registration.registerSubtypeInterpreter(item) { stack: ItemStack, _ -> HTPotionHelper.getContents(stack) }
+                    registration.registerSubtypeInterpreter(item) { stack: ItemStack, _ ->
+                        HTPotionHelper.getContents(stack)
+                    }
                 }
             }
     }
 
-    override fun <T : Any> registerFluidSubtypes(registration: ISubtypeRegistration, platformFluidHelper: IPlatformFluidHelper<T>) {
-        registration.registerSubtypeInterpreter(platformFluidHelper.fluidIngredientType, RagiumFluids.POTION.getOrThrow()) { stack: T, _ -> (stack as? FluidStack)?.let(HTPotionHelper::getContents) }
+    override fun <T : Any> registerFluidSubtypes(
+        registration: ISubtypeRegistration,
+        platformFluidHelper: IPlatformFluidHelper<T>
+    ) {
+        registration.registerSubtypeInterpreter(
+            platformFluidHelper.fluidIngredientType,
+            RagiumFluids.POTION.getOrThrow()
+        ) {
+                stack: T,
+                _
+            ->
+            (stack as? FluidStack)?.let(HTPotionHelper::getContents)
+        }
     }
 
     override fun registerExtraIngredients(registration: IExtraIngredientRegistration) {
@@ -64,7 +77,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 .map(::BottledPotionContents)
                 .filter { !it.isWater }
                 .map(BottledPotionContents::toFluidStack)
-                .toList(),
+                .toList()
         )
     }
 
@@ -89,7 +102,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RTElectrolyzingRecipeCategory(guiHelper),
             // Bio
             HTItemAndFluidToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.BREWING),
-            HTItemToDoubleItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PLANTING),
+            HTItemToDoubleItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PLANTING)
             // Electronics
             // Arcane
         )
@@ -110,7 +123,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.REFINING, RagiumRecipeLookups.REFINING)
         // Chemical
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.BATHING, RagiumRecipeLookups.BATHING)
-        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ELECTROLYZING, RagiumRecipeLookups.ELECTROLYZING)
+        HTJeiRecipeHelper.addRecipes(
+            registration,
+            RagiumJeiRecipeTypes.ELECTROLYZING,
+            RagiumRecipeLookups.ELECTROLYZING
+        )
         // Bio
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.BREWING, RagiumRecipeLookups.BREWING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.PLANTING, RagiumRecipeLookups.PLANTING)

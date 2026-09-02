@@ -8,15 +8,16 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
-import java.util.function.Consumer
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.data.AtlasIds
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.TooltipFlag
+import java.util.function.Consumer
 
-class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) : HTSpriteWidgetRenderer<HTEnergySlotWidget>(gui, widget) {
+class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) :
+    HTSpriteWidgetRenderer<HTEnergySlotWidget>(gui, widget) {
     companion object {
         @JvmField
         val SPRITE: Identifier = RagiumAPI.id(HTConstants.GUI, "energy_slot")

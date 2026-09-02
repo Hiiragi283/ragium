@@ -12,7 +12,14 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) : HTHolderRecipeCategory<RTElectrolyzingRecipe>(guiHelper, RagiumJeiRecipeTypes.ELECTROLYZING, 18 * 8, 18 * 1, RTElectrolyzingRecipe.CODEC) {
+class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) :
+    HTHolderRecipeCategory<RTElectrolyzingRecipe>(
+        guiHelper,
+        RagiumJeiRecipeTypes.ELECTROLYZING,
+        18 * 8,
+        18 * 1,
+        RTElectrolyzingRecipe.CODEC
+    ) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTElectrolyzingRecipe, focuses: IFocusGroup) {
         // inputs
         recipe.fluidIngredient.let {
@@ -21,10 +28,16 @@ class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) : HTHolderRecipeCateg
                 .add(it)
                 .setSlotBackground(HTBackgroundType.INPUT, it.amount)
         }
-        val itemInput: IRecipeSlotBuilder = builder.addInputSlot(getPosition(2), getPosition(0)).setSlotBackground(HTBackgroundType.INPUT)
+        val itemInput: IRecipeSlotBuilder = builder.addInputSlot(
+            getPosition(2),
+            getPosition(0)
+        ).setSlotBackground(HTBackgroundType.INPUT)
         recipe.itemIngredient.ifPresent(itemInput::add)
         // outputs
-        val outputSlots: Array<IRecipeSlotBuilder> = Array(3) { index: Int -> builder.addOutputSlot(getPosition(5 + index), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT) }
+        val outputSlots: Array<IRecipeSlotBuilder> =
+            Array(3) { index: Int ->
+                builder.addOutputSlot(getPosition(5 + index), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT)
+            }
         for (index: Int in recipe.results.indices) {
             val result: HTFluidResult = recipe.results[index]
             outputSlots[index]

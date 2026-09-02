@@ -7,13 +7,13 @@ import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.lib.transfer.item.getItemStack
 import hiiragi283.lib.transfer.item.toResourcePair
 import hiiragi283.lib.transfer.useTransaction
-import java.util.Optional
-import java.util.function.BiPredicate
-import java.util.function.Consumer
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.world.inventory.StackCopySlot
+import java.util.Optional
+import java.util.function.BiPredicate
+import java.util.function.Consumer
 
 class HTContainerItemSlot(
     val slot: HTItemSlot,
@@ -22,25 +22,20 @@ class HTContainerItemSlot(
     y: Int,
     private val stackSetter: Consumer<ItemStack>,
     private val manualFilter: BiPredicate<ItemResource, HTTransferAccess>,
-    val slotType: HTBackgroundType,
+    val slotType: HTBackgroundType
 ) : StackCopySlot(index, x, y) {
     companion object {
         @JvmStatic
-        fun create(
-            slot: HTBasicItemSlot,
-            index: Int,
-            x: Int,
-            y: Int,
-            slotType: HTBackgroundType,
-        ): HTContainerItemSlot = HTContainerItemSlot(
-            slot,
-            index,
-            x,
-            y,
-            slot::setStack,
-            slot::isValidForInsert,
-            slotType,
-        )
+        fun create(slot: HTBasicItemSlot, index: Int, x: Int, y: Int, slotType: HTBackgroundType): HTContainerItemSlot =
+            HTContainerItemSlot(
+                slot,
+                index,
+                x,
+                y,
+                slot::setStack,
+                slot::isValidForInsert,
+                slotType
+            )
     }
 
     override fun getStackCopy(): ItemStack = slot.getItemStack()
@@ -62,7 +57,8 @@ class HTContainerItemSlot(
 
     override fun getMaxStackSize(itemStack: ItemStack): Int = slot.getCapacity(ItemResource.of(itemStack))
 
-    override fun mayPickup(player: Player): Boolean = useTransaction { slot.extractSelf(1, it, HTTransferAccess.MANUAL) } > 0
+    override fun mayPickup(player: Player): Boolean =
+        useTransaction { slot.extractSelf(1, it, HTTransferAccess.MANUAL) } > 0
 
     override fun tryRemove(amount: Int, maxAmount: Int, player: Player): Optional<ItemStack> {
         if (!mayPickup(player)) {

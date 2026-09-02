@@ -8,7 +8,8 @@ import net.neoforged.neoforge.fluids.FluidStack
 data class HTFluidSyncPayload(val value: FluidStack) : HTSyncablePayload {
     companion object {
         @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTFluidSyncPayload> = FluidStack.OPTIONAL_STREAM_CODEC.map(::HTFluidSyncPayload, HTFluidSyncPayload::value)
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTFluidSyncPayload> =
+            FluidStack.OPTIONAL_STREAM_CODEC.map(::HTFluidSyncPayload, HTFluidSyncPayload::value)
 
         @JvmField
         val TYPE: HTSyncablePayload.Type<HTFluidSyncPayload> = HTSyncablePayload.Type(STREAM_CODEC)

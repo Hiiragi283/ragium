@@ -18,7 +18,6 @@ import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
-import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.data.PackOutput
@@ -28,8 +27,10 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
+import java.util.concurrent.CompletableFuture
 
-class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
+    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
         machine()
         material()
@@ -62,7 +63,11 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }
         }.save(exporter)
         // Synthetic
-        for (item: HTSimpleDeferredItem in listOf(RagiumItems.SYNTHETIC_FEATHER, RagiumItems.SYNTHETIC_FIBER, RagiumItems.SYNTHETIC_LEATHER)) {
+        for (item: HTSimpleDeferredItem in listOf(
+            RagiumItems.SYNTHETIC_FEATHER,
+            RagiumItems.SYNTHETIC_FIBER,
+            RagiumItems.SYNTHETIC_LEATHER
+        )) {
             HTStonecuttingRecipeBuilder.create {
                 ingredient { +holderSet(RagiumTags.Items.PLASTICS) }
                 result { +item }
@@ -104,7 +109,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         setOf(
             RagiumMaterial.Mineral.GLOWSTONE to Items.GLOWSTONE_DUST,
             RagiumMaterial.Gem.QUARTZ to Items.QUARTZ,
-            RagiumMaterial.Gem.AMETHYST to Items.AMETHYST_SHARD,
+            RagiumMaterial.Gem.AMETHYST to Items.AMETHYST_SHARD
         ).forEach { (material: RagiumMaterial, item: Item) ->
             HTShapelessRecipeBuilder.create {
                 ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, material) }
@@ -185,7 +190,10 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         // Sooty Iron
         val ironIngot: HolderSet<Item> = holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
-        val sootyIronIngot: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+        val sootyIronIngot: HTSimpleDeferredItem = RagiumItems.getOrThrow(
+            HTItemPart.INGOT,
+            RagiumMaterial.Metal.SOOTY_IRON
+        )
         HTShapedRecipeBuilder.create {
             hollow8()
             define('A') { +holderSet(CommonTagPrefixes.TINY, RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL) }
@@ -222,7 +230,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         basePrefix: HTTagPrefix,
         base: ItemLike,
         block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
-        size: StorageBlockSize = StorageBlockSize.NINE,
+        size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         baseToBlock(material, Ingredient.of(holderSet(basePrefix, material)), base, block, size)
     }
@@ -231,7 +239,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         material: RagiumMaterial,
         basePart: HTItemPart,
         block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
-        size: StorageBlockSize = StorageBlockSize.NINE,
+        size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         val base: ItemLike = RagiumItems.MATERIAL_ITEMS[basePart, material] ?: return
         baseToBlock(material, basePart.tagPrefix, base, block, size)
@@ -242,7 +250,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         baseInput: Ingredient,
         base: ItemLike,
         block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
-        size: StorageBlockSize = StorageBlockSize.NINE,
+        size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         if (block == null) return
         HTShapelessRecipeBuilder.create {
@@ -266,13 +274,13 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"AA"
             +"AB"
         }),
-        NINE(9, HTShapedRecipeBuilder::hollow8),
+        NINE(9, HTShapedRecipeBuilder::hollow8)
     }
 
     private fun ingotToNugget(
         material: RagiumMaterial,
         ingot: ItemLike? = RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, material],
-        nugget: ItemLike? = RagiumItems.MATERIAL_ITEMS[HTItemPart.NUGGET, material],
+        nugget: ItemLike? = RagiumItems.MATERIAL_ITEMS[HTItemPart.NUGGET, material]
     ) {
         if (ingot == null || nugget == null) return
         HTShapelessRecipeBuilder.create {

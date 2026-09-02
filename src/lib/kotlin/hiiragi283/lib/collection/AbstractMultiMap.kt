@@ -41,7 +41,8 @@ abstract class AbstractMultiMap<K, out V, out C : Collection<V>>(protected val m
      * @since 26.1.0
      */
     @HTBuilderMarker
-    abstract class Builder<K, V, out C : MutableCollection<V>>(protected val map: MutableMap<K, @UnsafeVariance C>) : MultiMap.Builder<K, V> {
+    abstract class Builder<K, V, out C : MutableCollection<V>>(protected val map: MutableMap<K, @UnsafeVariance C>) :
+        MultiMap.Builder<K, V> {
         constructor(initialCapacity: Int = 10) : this(LinkedHashMap(initialCapacity))
 
         constructor(other: MultiMap<K, V>) : this() {

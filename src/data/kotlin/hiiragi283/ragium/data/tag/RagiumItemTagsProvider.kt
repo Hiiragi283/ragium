@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
-import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
@@ -22,15 +21,22 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
+import java.util.concurrent.CompletableFuture
 
-class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, contentsGetter: CompletableFuture<TagLookup<Block>>) : HTItemTagsProvider(output, lookupProvider, contentsGetter, RagiumAPI.MOD_ID) {
+class RagiumItemTagsProvider(
+    output: PackOutput,
+    lookupProvider: CompletableFuture<HolderLookup.Provider>,
+    contentsGetter: CompletableFuture<TagLookup<Block>>
+) : HTItemTagsProvider(output, lookupProvider, contentsGetter, RagiumAPI.MOD_ID) {
     override fun appendTags(registries: HolderLookup.Provider) {
         // Copy
         copy(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Mineral.GLOWSTONE)
         copy(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Gem.QUARTZ)
         copy(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Gem.AMETHYST)
 
-        RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: RagiumMaterial, _) -> copy(part.tagPrefix, material) }
+        RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: RagiumMaterial, _) ->
+            copy(part.tagPrefix, material)
+        }
 
         HTMachineType.entries.forEach { copy(HTMachineType.PREFIX, it) }
         // Material

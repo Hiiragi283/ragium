@@ -1,8 +1,8 @@
 package hiiragi283.lib.recipe.widget
 
-import java.util.function.Consumer
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
+import java.util.function.Consumer
 
 /**
  * レシピビューワーからオブジェクトをドラッグ&ドロップ可能なウィジェットを表すインターフェースです。

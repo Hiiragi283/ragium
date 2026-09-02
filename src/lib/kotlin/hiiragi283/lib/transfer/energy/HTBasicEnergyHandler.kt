@@ -4,36 +4,39 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
-import java.util.function.Predicate
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.common.util.ValueIOSerializable
 import net.neoforged.neoforge.transfer.TransferPreconditions
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
+import java.util.function.Predicate
 
 open class HTBasicEnergyHandler(
     override val capacity: Int,
     protected val canExtract: Predicate<HTTransferAccess>,
     protected val canInsert: Predicate<HTTransferAccess>,
-    private val listener: Runnable?,
+    private val listener: Runnable?
 ) : SnapshotJournal<Int>(),
     HTEnergyHandler,
     ValueIOSerializable {
     companion object {
         @JvmStatic
-        fun input(capacity: Int, listener: Runnable?): HTBasicEnergyHandler = create(capacity, listener, HTTransferAccess.NOT_EXTERNAL, HTTransferPredicates.alwaysTrue())
+        fun input(capacity: Int, listener: Runnable?): HTBasicEnergyHandler =
+            create(capacity, listener, HTTransferAccess.NOT_EXTERNAL, HTTransferPredicates.alwaysTrue())
 
         @JvmStatic
-        fun output(capacity: Int, listener: Runnable?): HTBasicEnergyHandler = create(capacity, listener, HTTransferPredicates.alwaysTrue(), HTTransferAccess.INTERNAL_ONLY)
+        fun output(capacity: Int, listener: Runnable?): HTBasicEnergyHandler =
+            create(capacity, listener, HTTransferPredicates.alwaysTrue(), HTTransferAccess.INTERNAL_ONLY)
 
         @JvmStatic
         fun create(
             capacity: Int,
             listener: Runnable?,
             canExtract: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue(),
-            canInsert: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue(),
-        ): HTBasicEnergyHandler = HTBasicEnergyHandler(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, listener)
+            canInsert: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue()
+        ): HTBasicEnergyHandler =
+            HTBasicEnergyHandler(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, listener)
     }
 
     private var amountIn: Int = 0

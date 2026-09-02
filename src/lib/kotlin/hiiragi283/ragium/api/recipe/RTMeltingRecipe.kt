@@ -14,7 +14,8 @@ class RTMeltingRecipe(ingredient: HTItemIngredient, result: HTFluidResult, progr
     HTSerializableRecipe<SingleRecipeInput> {
     companion object {
         @JvmField
-        val SERIALIZER: RecipeSerializer<RTMeltingRecipe> = RecipeSerializer(codec(::RTMeltingRecipe), streamCodec(::RTMeltingRecipe))
+        val SERIALIZER: RecipeSerializer<RTMeltingRecipe> =
+            RecipeSerializer(codec(::RTMeltingRecipe), streamCodec(::RTMeltingRecipe))
     }
 
     override fun getSerializer(): RecipeSerializer<RTMeltingRecipe> = RagiumRecipeSerializers.MELTING

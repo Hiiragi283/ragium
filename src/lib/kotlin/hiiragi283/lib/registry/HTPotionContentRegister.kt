@@ -58,10 +58,19 @@ class HTPotionContentRegister(modId: String) {
      * @param strongEffects 強化されたポーション効果を提供するブロック
      * @return 新しい[HTPotionContent]のインスタンス
      */
-    fun registerPotion(name: String, baseEffects: PotionEffectProvider, longEffects: PotionEffectProvider, strongEffects: PotionEffectProvider? = null): HTPotionContent {
+    fun registerPotion(
+        name: String,
+        baseEffects: PotionEffectProvider,
+        longEffects: PotionEffectProvider,
+        strongEffects: PotionEffectProvider? = null
+    ): HTPotionContent {
         val baseHolder: HTSimpleDeferredHolder<Potion> = register.register(name) { _ -> Potion(name, *baseEffects()) }
-        val longHolder: HTSimpleDeferredHolder<Potion> = register.register("long_$name") { _ -> Potion(name, *longEffects()) }
-        val strongHolder: HTSimpleDeferredHolder<Potion>? = strongEffects?.let { register.register("strong_$name") { _ -> Potion(name, *it()) } }
+        val longHolder: HTSimpleDeferredHolder<Potion> = register.register("long_$name") { _ ->
+            Potion(name, *longEffects())
+        }
+        val strongHolder: HTSimpleDeferredHolder<Potion>? = strongEffects?.let {
+            register.register("strong_$name") { _ -> Potion(name, *it()) }
+        }
         val content = HTPotionContent(baseHolder, longHolder, strongHolder)
         entries += content
         contentsCache[baseHolder.key] = content
@@ -80,7 +89,7 @@ class HTPotionContentRegister(modId: String) {
         name,
         { arrayOf(MobEffectInstance(effect, 3600)) },
         { arrayOf(MobEffectInstance(effect, 9600)) },
-        { arrayOf(MobEffectInstance(effect, 1800, 1)) },
+        { arrayOf(MobEffectInstance(effect, 1800, 1)) }
     )
 
     /**
@@ -93,6 +102,6 @@ class HTPotionContentRegister(modId: String) {
         name,
         { arrayOf(MobEffectInstance(effect, 900)) },
         { arrayOf(MobEffectInstance(effect, 1800)) },
-        { arrayOf(MobEffectInstance(effect, 432, 1)) },
+        { arrayOf(MobEffectInstance(effect, 432, 1)) }
     )
 }

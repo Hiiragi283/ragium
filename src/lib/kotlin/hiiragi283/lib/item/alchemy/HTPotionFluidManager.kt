@@ -47,7 +47,8 @@ data object HTPotionFluidManager {
         companion object {
             @JvmField
             val DEFAULT: Handler = object : Handler {
-                override fun get(getter: DataComponentGetter): HTBottleType? = getter.get(HTPotionFluidAccess.INSTANCE.bottleType)
+                override fun get(getter: DataComponentGetter): HTBottleType? =
+                    getter.get(HTPotionFluidAccess.INSTANCE.bottleType)
 
                 override fun set(setter: DataComponentSetter, bottleType: HTBottleType) {
                     setter[HTPotionFluidAccess.INSTANCE.bottleType] = bottleType

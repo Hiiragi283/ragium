@@ -5,20 +5,20 @@ import hiiragi283.lib.transfer.HTStackResourceSlot
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
-import java.util.function.BiPredicate
-import java.util.function.Predicate
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.item.ItemResource
+import java.util.function.BiPredicate
+import java.util.function.Predicate
 
 open class HTBasicItemSlot(
     capacity: Int,
     canExtract: BiPredicate<ItemResource, HTTransferAccess>,
     canInsert: BiPredicate<ItemResource, HTTransferAccess>,
     filter: Predicate<ItemResource>,
-    listener: Runnable?,
+    listener: Runnable?
 ) : HTStackResourceSlot.Basic<ItemStack, ItemResource>(capacity, canExtract, canInsert, filter, listener) {
     companion object {
         @JvmStatic
@@ -27,25 +27,27 @@ open class HTBasicItemSlot(
             limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
             canExtract: BiPredicate<ItemResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<ItemResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
-            filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue(),
-        ): HTBasicItemSlot = HTBasicItemSlot(HTTransferValidators.validateLimit(limit), canExtract, canInsert, filter, listener)
+            filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue()
+        ): HTBasicItemSlot =
+            HTBasicItemSlot(HTTransferValidators.validateLimit(limit), canExtract, canInsert, filter, listener)
 
         @JvmStatic
         fun input(
             listener: Runnable?,
             limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
             canInsert: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue(),
-            filter: Predicate<ItemResource> = canInsert,
+            filter: Predicate<ItemResource> = canInsert
         ): HTBasicItemSlot = create(
             listener,
             limit,
             HTTransferPredicates.notExternal(),
             { stack: ItemResource, _ -> canInsert.test(stack) },
-            filter,
+            filter
         )
 
         @JvmStatic
-        fun output(listener: Runnable?): HTBasicItemSlot = create(listener, canInsert = HTTransferPredicates.internalOnly())
+        fun output(listener: Runnable?): HTBasicItemSlot =
+            create(listener, canInsert = HTTransferPredicates.internalOnly())
     }
 
     private var stackIn: ItemStack = ItemStack.EMPTY

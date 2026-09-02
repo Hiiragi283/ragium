@@ -11,12 +11,13 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.item.RagiumItems
-import java.util.concurrent.CompletableFuture
 import net.minecraft.core.ClientAsset
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import java.util.concurrent.CompletableFuture
 
-class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTAdvancementProvider(packOutput, future, RagiumAPI.MOD_ID) {
+class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
+    HTAdvancementProvider(packOutput, future, RagiumAPI.MOD_ID) {
     private fun createSimple(key: AdvancementKey, parentKey: AdvancementKey, item: HTSimpleDeferredItem) {
         HTAdvancementBuilder.create(key) {
             +parentKey

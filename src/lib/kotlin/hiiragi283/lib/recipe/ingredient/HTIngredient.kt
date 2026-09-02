@@ -1,8 +1,8 @@
 package hiiragi283.lib.recipe.ingredient
 
-import java.util.function.Predicate
 import net.minecraft.core.TypedInstance
 import net.minecraft.core.component.DataComponentGetter
+import java.util.function.Predicate
 
 /**
  * Hiiragi Seriesで使用される，レシピの材料を判定するインターフェースです。
@@ -12,7 +12,8 @@ import net.minecraft.core.component.DataComponentGetter
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-interface HTIngredient<INSTANCE> : Predicate<INSTANCE> where INSTANCE : TypedInstance<*>, INSTANCE : DataComponentGetter {
+interface HTIngredient<INSTANCE> :
+    Predicate<INSTANCE> where INSTANCE : TypedInstance<*>, INSTANCE : DataComponentGetter {
     /**
      * 条件を満たしているか判定します。
      */

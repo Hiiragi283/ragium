@@ -18,11 +18,16 @@ open class HTPotionBasedItem(properties: Properties) :
     Item(properties),
     HTSubCreativeTabContents {
 
-    override fun getCreatorModId(registries: HolderLookup.Provider, itemStack: ItemStack): String? = HTPotionHelper.getPotionModId(itemStack) ?: super.getCreatorModId(registries, itemStack)
+    override fun getCreatorModId(registries: HolderLookup.Provider, itemStack: ItemStack): String? =
+        HTPotionHelper.getPotionModId(itemStack) ?: super.getCreatorModId(registries, itemStack)
 
     //    HTSubCreativeTabContents    //
 
-    override fun addItems(baseItem: Holder<Item>, parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output) {
+    override fun addItems(
+        baseItem: Holder<Item>,
+        parameters: CreativeModeTab.ItemDisplayParameters,
+        output: CreativeModeTab.Output
+    ) {
         parameters.holders()
             .lookupOrThrow(Registries.POTION)
             .filterFeatures(parameters.enabledFeatures())

@@ -7,7 +7,6 @@ import hiiragi283.lib.transfer.fluid.getFluidStack
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
-import java.util.function.Consumer
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.renderer.block.FluidModel
@@ -15,8 +14,10 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.TooltipFlag
+import java.util.function.Consumer
 
-class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) : HTSpriteWidgetRenderer<HTFluidWidget>(gui, widget) {
+class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) :
+    HTSpriteWidgetRenderer<HTFluidWidget>(gui, widget) {
     override fun renderBackground(bounds: HTBounds, graphics: GuiGraphicsExtractor) {
         val texture: Identifier = when (widget) {
             is HTFluidWidget.Slot -> widget.backgroundType.slotTexture

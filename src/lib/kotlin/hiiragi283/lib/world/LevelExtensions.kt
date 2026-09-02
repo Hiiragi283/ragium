@@ -27,7 +27,8 @@ fun Vec3.getRangedAABB(radius: Number): AABB = AABB(this, this).inflate(radius.t
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <reified BE : BlockEntity> BlockGetter.getTypedBlockEntity(pos: BlockPos): BE? = this.getBlockEntity(pos) as? BE
+inline fun <reified BE : BlockEntity> BlockGetter.getTypedBlockEntity(pos: BlockPos): BE? =
+    this.getBlockEntity(pos) as? BE
 
 /**
  * 指定した[レベル][this]と[座標][pos]にブロック更新を発生させます。

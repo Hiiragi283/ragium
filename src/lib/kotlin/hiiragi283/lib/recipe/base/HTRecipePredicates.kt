@@ -3,13 +3,13 @@ package hiiragi283.lib.recipe.base
 import hiiragi283.lib.recipe.HTRecipePredicate
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
-import java.util.function.BiPredicate
-import java.util.function.Predicate
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.common.util.TriPredicate
 import net.neoforged.neoforge.fluids.FluidInstance
+import java.util.function.BiPredicate
+import java.util.function.Predicate
 
 /**
  * Hiiragi Seriesで使用される[HTRecipePredicate]をまとめたクラスです。
@@ -72,7 +72,8 @@ data object HTRecipePredicates {
      * 2種類のアイテムを判定する[DoubleInput]の拡張インターフェースです。
      */
     fun interface DoubleItem : DoubleInput<RecipeInput, ItemInstance, ItemInstance> {
-        override fun matches(input: RecipeInput): Boolean = input.size() >= 2 && test(input.getItem(0), input.getItem(1))
+        override fun matches(input: RecipeInput): Boolean =
+            input.size() >= 2 && test(input.getItem(0), input.getItem(1))
     }
 
     //    Triple Input    //
@@ -94,6 +95,7 @@ data object HTRecipePredicates {
      * 3種類のアイテムを判定する[TripleItem]の拡張インターフェースです。
      */
     fun interface TripleItem : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance> {
-        override fun matches(input: RecipeInput): Boolean = input.size() >= 3 && test(input.getItem(0), input.getItem(1), input.getItem(2))
+        override fun matches(input: RecipeInput): Boolean =
+            input.size() >= 3 && test(input.getItem(0), input.getItem(1), input.getItem(2))
     }
 }

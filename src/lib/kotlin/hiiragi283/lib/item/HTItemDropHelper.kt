@@ -79,5 +79,6 @@ data object HTItemDropHelper {
      * @return 正常にアイテムをドロップできた場合は`true`
      */
     @JvmStatic
-    fun dropStackAt(level: Level, pos: Position, stack: ItemStack): Boolean = ItemEntity(level, pos.x(), pos.y(), pos.z(), stack).let(level::addFreshEntity)
+    fun dropStackAt(level: Level, pos: Position, stack: ItemStack): Boolean =
+        ItemEntity(level, pos.x(), pos.y(), pos.z(), stack).let(level::addFreshEntity)
 }

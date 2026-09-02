@@ -27,7 +27,7 @@ sealed class HTFluidContent(
     val sourceHolder: HTDeferredHolder<Fluid, *>,
     val bucketHolder: HTSimpleDeferredItem,
     val fluidTag: TagKey<Fluid>,
-    val bucketTag: TagKey<Item>,
+    val bucketTag: TagKey<Item>
 ) : HTFluidInstanceLike,
     HTSimpleKeyOrValue<Fluid> by sourceHolder {
     /**
@@ -38,7 +38,8 @@ sealed class HTFluidContent(
     /**
      * 新しい[FluidStackTemplate]のインスタンスを作成します。
      */
-    override fun toTemplate(amount: Int, patch: DataComponentPatch): FluidStackTemplate? = sourceHolder.getOrNull()?.let { FluidStackTemplate(it, amount, patch) }
+    override fun toTemplate(amount: Int, patch: DataComponentPatch): FluidStackTemplate? =
+        sourceHolder.getOrNull()?.let { FluidStackTemplate(it, amount, patch) }
 
     /**
      * 新しい[FluidStack]のインスタンスを作成します。
@@ -58,7 +59,7 @@ sealed class HTFluidContent(
         sourceHolder: HTDeferredHolder<Fluid, *>,
         bucketHolder: HTSimpleDeferredItem,
         fluidTag: TagKey<Fluid>,
-        bucketTag: TagKey<Item>,
+        bucketTag: TagKey<Item>
     ) : HTFluidContent(typeHolder, sourceHolder, bucketHolder, fluidTag, bucketTag)
 
     /**
@@ -75,6 +76,6 @@ sealed class HTFluidContent(
         fluidTag: TagKey<Fluid>,
         bucketTag: TagKey<Item>,
         val flowingHolder: HTDeferredHolder<Fluid, FlowingFluid>,
-        val blockHolder: HTDeferredBlock<LiquidBlock>?,
+        val blockHolder: HTDeferredBlock<LiquidBlock>?
     ) : HTFluidContent(typeHolder, sourceHolder, bucketHolder, fluidTag, bucketTag)
 }

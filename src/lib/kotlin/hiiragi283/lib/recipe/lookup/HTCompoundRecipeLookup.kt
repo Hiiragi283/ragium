@@ -87,7 +87,10 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <INPUT : RecipeInput, RECIPE : Any, VANILLA_RECIPE : Recipe<INPUT>> HTCompoundRecipeLookup<RECIPE>.fromRecipeType(recipeType: RecipeType<VANILLA_RECIPE>, transform: (VANILLA_RECIPE) -> RECIPE?) {
+fun <INPUT : RecipeInput, RECIPE : Any, VANILLA_RECIPE : Recipe<INPUT>> HTCompoundRecipeLookup<RECIPE>.fromRecipeType(
+    recipeType: RecipeType<VANILLA_RECIPE>,
+    transform: (VANILLA_RECIPE) -> RECIPE?
+) {
     this.addSubLookup { context: HTRecipeLookup.Context ->
         val map: MutableMap<RecipeKey, RECIPE> = mutableMapOf()
         for (holder: RecipeHolder<VANILLA_RECIPE> in context.recipeMap.byType(recipeType)) {

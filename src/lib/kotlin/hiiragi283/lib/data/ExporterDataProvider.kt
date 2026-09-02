@@ -9,8 +9,6 @@ import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.resource.HTIdOrValue
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
-import java.util.Optional
-import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.data.CachedOutput
@@ -24,6 +22,8 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.WithConditions
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet
+import java.util.Optional
+import java.util.concurrent.CompletableFuture
 
 /**
  * [ConditionalExporter]に基づいだ[DataProvider]の実装クラスです。
@@ -31,7 +31,13 @@ import net.neoforged.neoforge.registries.holdersets.OrHolderSet
  * @author Hiiragi Tsubasa
  * @since 26.1.3
  */
-abstract class ExporterDataProvider<R : Any>(packOutput: PackOutput, private val future: CompletableFuture<HolderLookup.Provider>, registryKey: RegistryKey<R>, protected val modId: String, private val codec: Codec<Optional<WithConditions<R>>>) : DataProvider {
+abstract class ExporterDataProvider<R : Any>(
+    packOutput: PackOutput,
+    private val future: CompletableFuture<HolderLookup.Provider>,
+    registryKey: RegistryKey<R>,
+    protected val modId: String,
+    private val codec: Codec<Optional<WithConditions<R>>>
+) : DataProvider {
     private val pathProvider: PackOutput.PathProvider = packOutput.createRegistryElementsPathProvider(registryKey)
 
     /**
@@ -57,7 +63,7 @@ abstract class ExporterDataProvider<R : Any>(packOutput: PackOutput, private val
             cache,
             { conditions: WithConditions<R> -> codec.encodeStart(dynamicOps, Optional.of(conditions)).orThrow },
             pathProvider::json,
-            map,
+            map
         )
     }
 
@@ -77,7 +83,8 @@ abstract class ExporterDataProvider<R : Any>(packOutput: PackOutput, private val
 
     protected fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().path.replace("/", "_")}"
 
-    protected fun getHasName(prefix: HTTagPrefix, material: HTMaterialLike): String = getHasName(prefix.itemTagKey(material))
+    protected fun getHasName(prefix: HTTagPrefix, material: HTMaterialLike): String =
+        getHasName(prefix.itemTagKey(material))
 
     // Registry
 
@@ -100,9 +107,11 @@ abstract class ExporterDataProvider<R : Any>(packOutput: PackOutput, private val
      * @param prefix タグのプレフィックス
      * @param material タグの種類を表す素材
      */
-    protected fun holderSet(prefix: HTTagPrefix, material: HTMaterialLike): HolderSet<Item> = holderSet(prefix.itemTagKey(material))
+    protected fun holderSet(prefix: HTTagPrefix, material: HTMaterialLike): HolderSet<Item> =
+        holderSet(prefix.itemTagKey(material))
 
-    protected fun holderSet(prefix: HTTagPrefix, vararg materials: HTMaterialLike): HolderSet<Item> = materials.map(prefix::itemTagKey).let(::holderSet)
+    protected fun holderSet(prefix: HTTagPrefix, vararg materials: HTMaterialLike): HolderSet<Item> =
+        materials.map(prefix::itemTagKey).let(::holderSet)
 
     /**
      * [HolderSet]を取得します。

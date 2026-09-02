@@ -10,12 +10,17 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
-class RTDrainingRecipe(ingredient: HTItemIngredient, itemResult: HTItemResult, fluidResult: HTFluidResult, progressData: HTProgressData) :
-    HTItemToItemAndFluidRecipe.Basic(ingredient, itemResult, fluidResult, progressData),
+class RTDrainingRecipe(
+    ingredient: HTItemIngredient,
+    itemResult: HTItemResult,
+    fluidResult: HTFluidResult,
+    progressData: HTProgressData
+) : HTItemToItemAndFluidRecipe.Basic(ingredient, itemResult, fluidResult, progressData),
     HTSerializableRecipe<SingleRecipeInput> {
     companion object {
         @JvmField
-        val SERIALIZER: RecipeSerializer<RTDrainingRecipe> = RecipeSerializer(codec(::RTDrainingRecipe), streamCodec(::RTDrainingRecipe))
+        val SERIALIZER: RecipeSerializer<RTDrainingRecipe> =
+            RecipeSerializer(codec(::RTDrainingRecipe), streamCodec(::RTDrainingRecipe))
     }
 
     override fun getSerializer(): RecipeSerializer<RTDrainingRecipe> = RagiumRecipeSerializers.DRAINING

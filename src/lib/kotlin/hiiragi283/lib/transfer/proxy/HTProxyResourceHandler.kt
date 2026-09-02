@@ -17,8 +17,11 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTProxyResourceHandler<RESOURCE : Resource>(private val handler: ResourceHandler<RESOURCE>, side: Direction?, holder: HTCapabilityHolder?) :
-    HTProxyHandler(side, holder),
+class HTProxyResourceHandler<RESOURCE : Resource>(
+    private val handler: ResourceHandler<RESOURCE>,
+    side: Direction?,
+    holder: HTCapabilityHolder?
+) : HTProxyHandler(side, holder),
     ResourceHandler<RESOURCE> {
     override fun size(): Int = handler.size()
 

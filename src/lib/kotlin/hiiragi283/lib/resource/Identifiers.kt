@@ -69,11 +69,13 @@ val Identifier.itemId: Identifier get() = when {
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun ResourceKey<*>.toLanguageKey(): String = this.identifier().toLanguageKey(this.registryKey().identifier().path)
+inline fun ResourceKey<*>.toLanguageKey(): String =
+    this.identifier().toLanguageKey(this.registryKey().identifier().path)
 
 /**
  * この[ResourceKey]を翻訳キーに変換します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun ResourceKey<*>.toLanguageKey(suffix: String): String = this.identifier().toLanguageKey(this.registryKey().identifier().path, suffix)
+inline fun ResourceKey<*>.toLanguageKey(suffix: String): String =
+    this.identifier().toLanguageKey(this.registryKey().identifier().path, suffix)

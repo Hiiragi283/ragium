@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
-import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.PackOutput
@@ -19,8 +18,10 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.OminousBottleAmplifier
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient
+import java.util.concurrent.CompletableFuture
 
-class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
+    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
         freezing()
         melting()
@@ -148,7 +149,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                         false,
                         DataComponents.OMINOUS_BOTTLE_AMPLIFIER,
                         OminousBottleAmplifier(amplifier),
-                        Items.OMINOUS_BOTTLE,
+                        Items.OMINOUS_BOTTLE
                     )
                 }
                 result {
@@ -160,7 +161,9 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }
         // Molten Glass
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.GLASS_BLOCKS, CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Other.GLASS)) }
+            ingredient {
+                +holderSet(Tags.Items.GLASS_BLOCKS, CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Other.GLASS))
+            }
             result { +RagiumFluids.MOLTEN_GLASS }
             recipeId suffix "_from_block"
         }.save(exporter)

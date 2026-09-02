@@ -32,9 +32,19 @@ interface HTResourceMultiCapability<T : Resource> : HTMultiCapability<ResourceHa
             object : HTResourceSlot<T> {
                 override fun isValid(resource: T): Boolean = handler.isValid(index, resource)
 
-                override fun insert(resource: T, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = handler.insert(index, resource, amount, transaction)
+                override fun insert(
+                    resource: T,
+                    amount: Int,
+                    transaction: TransactionContext,
+                    access: HTTransferAccess
+                ): Int = handler.insert(index, resource, amount, transaction)
 
-                override fun extract(resource: T, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = handler.extract(index, resource, amount, transaction)
+                override fun extract(
+                    resource: T,
+                    amount: Int,
+                    transaction: TransactionContext,
+                    access: HTTransferAccess
+                ): Int = handler.extract(index, resource, amount, transaction)
 
                 override val resource: T get() = handler.getResource(index)
                 override val amount: Int get() = handler.getAmountAsInt(index)
@@ -53,26 +63,30 @@ interface HTResourceMultiCapability<T : Resource> : HTMultiCapability<ResourceHa
     /**
      * 指定した引数から[HTResourceSlot]の一覧を返します。
      */
-    fun getSlots(level: Level, pos: BlockPos, side: Direction?): List<HTResourceSlot<T>> = getCapability(level, pos, side)?.let(::unwrapSlots) ?: listOf()
+    fun getSlots(level: Level, pos: BlockPos, side: Direction?): List<HTResourceSlot<T>> =
+        getCapability(level, pos, side)?.let(::unwrapSlots) ?: listOf()
 
     /**
      * 指定した引数から[HTResourceSlot]を返します。
      * @return [index]に対応するスロットがない場合は`null`
      */
-    fun getSlot(level: Level, pos: BlockPos, side: Direction?, index: Int): HTResourceSlot<T>? = getSlots(level, pos, side).getOrNull(index)
+    fun getSlot(level: Level, pos: BlockPos, side: Direction?, index: Int): HTResourceSlot<T>? =
+        getSlots(level, pos, side).getOrNull(index)
 
     //    Entity    //
 
     /**
      * 指定した引数から[HTResourceSlot]の一覧を返します。
      */
-    fun getSlots(entity: Entity, side: Direction?): List<HTResourceSlot<T>> = getCapability(entity, side)?.let(::unwrapSlots) ?: listOf()
+    fun getSlots(entity: Entity, side: Direction?): List<HTResourceSlot<T>> =
+        getCapability(entity, side)?.let(::unwrapSlots) ?: listOf()
 
     /**
      * 指定した引数から[HTResourceSlot]を返します。
      * @return [index]に対応するスロットがない場合は`null`
      */
-    fun getSlot(entity: Entity, side: Direction?, index: Int): HTResourceSlot<T>? = getSlots(entity, side).getOrNull(index)
+    fun getSlot(entity: Entity, side: Direction?, index: Int): HTResourceSlot<T>? =
+        getSlots(entity, side).getOrNull(index)
 
     //    Item    //
 

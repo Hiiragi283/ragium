@@ -14,7 +14,8 @@ class RTCompressingRecipe(ingredient: HTItemIngredient, result: HTItemResult, pr
     HTSerializableRecipe<SingleRecipeInput> {
     companion object {
         @JvmField
-        val SERIALIZER: RecipeSerializer<RTCompressingRecipe> = RecipeSerializer(codec(::RTCompressingRecipe), streamCodec(::RTCompressingRecipe))
+        val SERIALIZER: RecipeSerializer<RTCompressingRecipe> =
+            RecipeSerializer(codec(::RTCompressingRecipe), streamCodec(::RTCompressingRecipe))
     }
 
     override fun getSerializer(): RecipeSerializer<RTCompressingRecipe> = RagiumRecipeSerializers.COMPRESSING

@@ -21,14 +21,26 @@ class HTCapabilityCodec<CONTAINER : ValueIOSerializable>(
     private val containerTag: String,
     private val containerKey: String,
     private val blockEntityGetter: (HTBlockEntity, Direction?) -> List<CONTAINER>,
-    private val canHandle: (HTBlockEntity) -> Boolean,
+    private val canHandle: (HTBlockEntity) -> Boolean
 ) {
     companion object {
         @JvmField
-        val ITEM: HTCapabilityCodec<HTItemSlot> = HTCapabilityCodec(HTConstants.ITEMS, HTConstants.SLOT, HTBlockEntity::getItemSlots, HTBlockEntity::hasItemHandler)
+        val ITEM: HTCapabilityCodec<HTItemSlot> =
+            HTCapabilityCodec(
+                HTConstants.ITEMS,
+                HTConstants.SLOT,
+                HTBlockEntity::getItemSlots,
+                HTBlockEntity::hasItemHandler
+            )
 
         @JvmField
-        val FLUID: HTCapabilityCodec<HTFluidTank> = HTCapabilityCodec(HTConstants.FLUIDS, HTConstants.TANK, HTBlockEntity::getFluidTanks, HTBlockEntity::hasFluidHandler)
+        val FLUID: HTCapabilityCodec<HTFluidTank> =
+            HTCapabilityCodec(
+                HTConstants.FLUIDS,
+                HTConstants.TANK,
+                HTBlockEntity::getFluidTanks,
+                HTBlockEntity::hasFluidHandler
+            )
 
         @JvmField
         val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, FLUID)

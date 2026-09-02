@@ -10,19 +10,21 @@ import hiiragi283.ragium.common.block.RagiumBlocks
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.level.block.Block
 
-class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) : HTBlockLootTableProvider(registries, RagiumAPI.MOD_ID, RagiumBlocks.REGISTER.asBlockSequence()) {
+class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
+    HTBlockLootTableProvider(registries, RagiumAPI.MOD_ID, RagiumBlocks.REGISTER.asBlockSequence()) {
     override fun generate() {
         knownBlocks.forEach(::dropSelf)
 
-        RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: RagiumMaterial, block: HTIdOrValue<Block>) ->
-            when (part) {
-                HTBlockPart.ORE -> TODO()
-                HTBlockPart.DEEPSLATE_ORE -> TODO()
-                HTBlockPart.NETHER_ORE -> TODO()
-                HTBlockPart.END_ORE -> TODO()
-                HTBlockPart.STORAGE_BLOCK -> dropSelf(block)
-                HTBlockPart.RAW_STORAGE_BLOCK -> dropSelf(block)
+        RagiumBlocks.MATERIAL_BLOCKS
+            .forEach { (part: HTBlockPart, material: RagiumMaterial, block: HTIdOrValue<Block>) ->
+                when (part) {
+                    HTBlockPart.ORE -> TODO()
+                    HTBlockPart.DEEPSLATE_ORE -> TODO()
+                    HTBlockPart.NETHER_ORE -> TODO()
+                    HTBlockPart.END_ORE -> TODO()
+                    HTBlockPart.STORAGE_BLOCK -> dropSelf(block)
+                    HTBlockPart.RAW_STORAGE_BLOCK -> dropSelf(block)
+                }
             }
-        }
     }
 }

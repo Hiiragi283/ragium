@@ -3,12 +3,12 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.HTConstants
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.core.NonNullList
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.ShapelessRecipe
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * 不定形レシピ向けの[HTRecipeBuilder]の実装クラスです。
@@ -45,6 +45,6 @@ class HTShapelessRecipeBuilder : HTCraftingRecipeBuilder<ShapelessRecipe>(HTCons
         commonInfo(true),
         bookInfo(),
         result,
-        NonNullList.copyOf(ingredients),
+        NonNullList.copyOf(ingredients)
     )
 }

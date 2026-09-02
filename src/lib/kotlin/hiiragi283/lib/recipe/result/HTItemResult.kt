@@ -37,12 +37,14 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
         val MAP_CODEC: MapCodec<HTItemResult> = HTCodecs.recordMap { instance ->
             instance.group(
                 Entry.MAP_CODEC.forGetter(HTItemResult::entry),
-                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.COUNT).orElse(1).forGetter(HTItemResult::count),
+                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.COUNT).orElse(1).forGetter(HTItemResult::count)
             ).apply(instance, ::HTItemResult)
         }
 
         @JvmField
-        val CODEC: Codec<HTItemResult> = Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) { it.toResult() }
+        val CODEC: Codec<HTItemResult> = Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) {
+            it.toResult()
+        }
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemResult> = StreamCodec.composite(
@@ -50,7 +52,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
             HTItemResult::entry,
             ByteBufCodecs.VAR_INT,
             HTItemResult::count,
-            ::HTItemResult,
+            ::HTItemResult
         )
     }
 
@@ -80,7 +82,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
                 RagiumRegistries.ITEM_RESULT_TYPE.byNameCodec(),
                 Entry::type,
                 HTItemResultType<*>::codec,
-                SimpleEntry.CODEC,
+                SimpleEntry.CODEC
             ).xmap(
                 { DFUEither.unwrap(it) },
                 { entry: Entry ->
@@ -88,11 +90,13 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
                         is SimpleEntry -> DFUEither.right(entry)
                         else -> DFUEither.left(entry)
                     }
-                },
+                }
             )
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> = ByteBufCodecs.registry(RagiumRegistries.Keys.ITEM_RESULT_TYPE).dispatch(Entry::type, HTItemResultType<*>::streamCodec)
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> = ByteBufCodecs.registry(
+                RagiumRegistries.Keys.ITEM_RESULT_TYPE
+            ).dispatch(Entry::type, HTItemResultType<*>::streamCodec)
         }
 
         fun type(): HTItemResultType<*>
@@ -105,13 +109,19 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
     }
 
     @JvmRecord
-    data class SimpleEntry @JvmOverloads constructor(val item: Holder<Item>, val components: DataComponentPatch = DataComponentPatch.EMPTY) : Entry {
+    data class SimpleEntry @JvmOverloads constructor(
+        val item: Holder<Item>,
+        val components: DataComponentPatch = DataComponentPatch.EMPTY
+    ) : Entry {
         companion object {
             @JvmField
             val CODEC: MapCodec<SimpleEntry> = HTCodecs.recordMap { instance ->
                 instance.group(
                     Item.CODEC.fieldOf(HTConstants.ID).forGetter(SimpleEntry::item),
-                    DataComponentPatch.CODEC.optionalFieldOf(HTConstants.COMPONENTS, DataComponentPatch.EMPTY).forGetter(SimpleEntry::components),
+                    DataComponentPatch.CODEC.optionalFieldOf(
+                        HTConstants.COMPONENTS,
+                        DataComponentPatch.EMPTY
+                    ).forGetter(SimpleEntry::components)
                 ).apply(instance, ::SimpleEntry)
             }
 
@@ -121,7 +131,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
                 SimpleEntry::item,
                 DataComponentPatch.STREAM_CODEC,
                 SimpleEntry::components,
-                ::SimpleEntry,
+                ::SimpleEntry
             )
 
             @JvmField
@@ -155,7 +165,9 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
                 .xmap(::TagEntry, TagEntry::tag)
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, TagEntry> = HTStreamCodecs.holderSet(Registries.ITEM).map(::TagEntry, TagEntry::tag)
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, TagEntry> = HTStreamCodecs.holderSet(
+                Registries.ITEM
+            ).map(::TagEntry, TagEntry::tag)
 
             @JvmField
             val TYPE: HTItemResultType<TagEntry> = HTItemResultType(CODEC, STREAM_CODEC)

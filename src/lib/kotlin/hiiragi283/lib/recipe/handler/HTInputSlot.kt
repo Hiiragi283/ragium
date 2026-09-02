@@ -55,7 +55,8 @@ interface HTInputSlot {
     data class SingleItem(private val slot: HTItemSlot) : Single<ItemStack> {
         override fun getStack(): ItemStack = slot.getItemStack()
 
-        override fun extract(amount: Int, transaction: TransactionContext): Int = slot.extractSelf(amount, transaction, HTTransferAccess.INTERNAL)
+        override fun extract(amount: Int, transaction: TransactionContext): Int =
+            slot.extractSelf(amount, transaction, HTTransferAccess.INTERNAL)
     }
 
     /**
@@ -67,6 +68,7 @@ interface HTInputSlot {
     data class SingleFluid(private val tank: HTFluidTank) : Single<FluidStack> {
         override fun getStack(): FluidStack = tank.getFluidStack()
 
-        override fun extract(amount: Int, transaction: TransactionContext): Int = tank.extractSelf(amount, transaction, HTTransferAccess.INTERNAL)
+        override fun extract(amount: Int, transaction: TransactionContext): Int =
+            tank.extractSelf(amount, transaction, HTTransferAccess.INTERNAL)
     }
 }

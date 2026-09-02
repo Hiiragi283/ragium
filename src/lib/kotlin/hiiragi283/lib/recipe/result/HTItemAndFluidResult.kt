@@ -2,9 +2,9 @@ package hiiragi283.lib.recipe.result
 
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
-import java.util.Objects
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
+import java.util.Objects
 
 /**
  * アイテムと液体の完成品を保持するクラスです。
@@ -19,13 +19,20 @@ data class HTItemAndFluidResult(val item: ItemStack, val fluid: FluidStack) {
 
     constructor(pair: Pair<ItemStack, FluidStack>) : this(pair.first, pair.second)
 
-    constructor(either: Either<ItemStack, FluidStack>) : this(either.leftOrNull() ?: ItemStack.EMPTY, either.getOrNull() ?: FluidStack.EMPTY)
+    constructor(either: Either<ItemStack, FluidStack>) : this(
+        either.leftOrNull() ?: ItemStack.EMPTY,
+        either.getOrNull() ?: FluidStack.EMPTY
+    )
 
-    constructor(ior: Ior<ItemStack, FluidStack>) : this(ior.getLeft() ?: ItemStack.EMPTY, ior.getRight() ?: FluidStack.EMPTY)
+    constructor(ior: Ior<ItemStack, FluidStack>) : this(
+        ior.getLeft() ?: ItemStack.EMPTY,
+        ior.getRight() ?: FluidStack.EMPTY
+    )
 
     override fun equals(other: Any?): Boolean = (other as? HTItemAndFluidResult)?.let {
         ItemStack.isSameItemSameComponents(it.item, this.item) && FluidStack.isSameFluid(it.fluid, this.fluid)
     } ?: false
 
-    override fun hashCode(): Int = Objects.hash(ItemStack.hashItemAndComponents(item), FluidStack.hashFluidAndComponents(fluid))
+    override fun hashCode(): Int =
+        Objects.hash(ItemStack.hashItemAndComponents(item), FluidStack.hashFluidAndComponents(fluid))
 }

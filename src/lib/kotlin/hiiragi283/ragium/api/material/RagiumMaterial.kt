@@ -28,7 +28,7 @@ sealed interface RagiumMaterial :
         CHARCOAL("Charcoal", "木炭"),
 
         // Common
-        COAL_COKE("Coal Coke", "石炭コークス"),
+        COAL_COKE("Coal Coke", "石炭コークス")
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -54,7 +54,7 @@ sealed interface RagiumMaterial :
         BORAX("Borax", "ホウ砂"),
 
         // Ragium
-        RAGINITE("Raginite", "ラギナイト"),
+        RAGINITE("Raginite", "ラギナイト")
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -74,7 +74,7 @@ sealed interface RagiumMaterial :
         DIAMOND("Diamond", "ダイヤモンド"),
         EMERALD("Emerald", "エメラルド"),
         ECHO("Echo", "残響"),
-        PRISMARINE("Prismarine", "プリズマリン"),
+        PRISMARINE("Prismarine", "プリズマリン")
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -107,7 +107,7 @@ sealed interface RagiumMaterial :
          */
         BLACK_STEEL("Black Steel", "黒鋼") {
             override val isElement: Boolean = false
-        },
+        }
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -127,7 +127,7 @@ sealed interface RagiumMaterial :
         PAPER(true, "Paper", "紙"),
 
         // Common
-        SILICON(false, "Silicon", "シリコン"),
+        SILICON(false, "Silicon", "シリコン")
         ;
 
         constructor(isPulp: Boolean, enName: String, jaName: String) : this(isPulp, HTLangName(enName, jaName))

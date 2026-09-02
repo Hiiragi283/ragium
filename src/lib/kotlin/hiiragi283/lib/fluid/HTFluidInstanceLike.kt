@@ -14,7 +14,10 @@ interface HTFluidInstanceLike {
     /**
      * 新しい[FluidStackTemplate]のインスタンスを作成します。
      */
-    fun toTemplate(amount: Int = FluidType.BUCKET_VOLUME, patch: DataComponentPatch = DataComponentPatch.EMPTY): FluidStackTemplate?
+    fun toTemplate(
+        amount: Int = FluidType.BUCKET_VOLUME,
+        patch: DataComponentPatch = DataComponentPatch.EMPTY
+    ): FluidStackTemplate?
 
     /**
      * 新しい[FluidStack]のインスタンスを作成します。

@@ -6,15 +6,15 @@ import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.core.HolderSet
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.CompoundFluidIngredient
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * [FluidIngredient]および[HTFluidIngredient]を作成するビルダークラスです。

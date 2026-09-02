@@ -5,19 +5,19 @@ import hiiragi283.lib.transfer.HTStackResourceSlot
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
-import java.util.function.BiPredicate
-import java.util.function.Predicate
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.fluid.FluidResource
+import java.util.function.BiPredicate
+import java.util.function.Predicate
 
 open class HTBasicFluidTank(
     capacity: Int,
     canExtract: BiPredicate<FluidResource, HTTransferAccess>,
     canInsert: BiPredicate<FluidResource, HTTransferAccess>,
     filter: Predicate<FluidResource>,
-    listener: Runnable?,
+    listener: Runnable?
 ) : HTStackResourceSlot.Basic<FluidStack, FluidResource>(capacity, canExtract, canInsert, filter, listener) {
     companion object {
         @JvmStatic
@@ -26,19 +26,23 @@ open class HTBasicFluidTank(
             listener: Runnable?,
             canExtract: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
-            filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
-        ): HTBasicFluidTank = HTBasicFluidTank(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, filter, listener)
+            filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue()
+        ): HTBasicFluidTank =
+            HTBasicFluidTank(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, filter, listener)
 
         @JvmStatic
         fun input(
             capacity: Int,
             listener: Runnable?,
             canInsert: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
-            filter: Predicate<FluidResource> = canInsert,
-        ): HTBasicFluidTank = create(capacity, listener, HTTransferPredicates.notExternal(), { resource, _ -> canInsert.test(resource) }, filter)
+            filter: Predicate<FluidResource> = canInsert
+        ): HTBasicFluidTank = create(capacity, listener, HTTransferPredicates.notExternal(), { resource, _ ->
+            canInsert.test(resource)
+        }, filter)
 
         @JvmStatic
-        fun output(capacity: Int, listener: Runnable?): HTBasicFluidTank = create(capacity, listener, canInsert = HTTransferPredicates.internalOnly())
+        fun output(capacity: Int, listener: Runnable?): HTBasicFluidTank =
+            create(capacity, listener, canInsert = HTTransferPredicates.internalOnly())
     }
 
     private var stackIn: FluidStack = FluidStack.EMPTY

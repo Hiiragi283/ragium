@@ -12,19 +12,22 @@ import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
+import net.minecraft.resources.Identifier
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import net.minecraft.resources.Identifier
 
 class RTElectrolyzingRecipeBuilder : HTProgressRecipeBuilder<RTElectrolyzingRecipe>(RagiumConstants.ELECTROLYZING) {
     override fun getPrimalId(): Identifier = results.first().getId()
 
-    override fun createRecipe(): RTElectrolyzingRecipe = RTElectrolyzingRecipe(itemIngredient, fluidIngredient, results, progressData)
+    override fun createRecipe(): RTElectrolyzingRecipe =
+        RTElectrolyzingRecipe(itemIngredient, fluidIngredient, results, progressData)
 
     // Ingredient
-    @PublishedApi internal var itemIngredient: Optional<HTItemIngredient> by HTDelegates.onceInitialize { Optional.empty() }
+    @PublishedApi internal var itemIngredient: Optional<HTItemIngredient> by HTDelegates.onceInitialize {
+        Optional.empty()
+    }
 
     @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 

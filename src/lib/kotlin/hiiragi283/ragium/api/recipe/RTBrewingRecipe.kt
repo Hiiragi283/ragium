@@ -10,12 +10,17 @@ import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import net.minecraft.world.item.crafting.RecipeSerializer
 
-class RTBrewingRecipe(itemIngredient: HTCatalystOrIngredient, fluidIngredient: HTFluidIngredient, result: HTFluidResult, progressData: HTProgressData) :
-    HTItemAndFluidToRecipe.BasicFluid(itemIngredient, fluidIngredient, result, progressData),
+class RTBrewingRecipe(
+    itemIngredient: HTCatalystOrIngredient,
+    fluidIngredient: HTFluidIngredient,
+    result: HTFluidResult,
+    progressData: HTProgressData
+) : HTItemAndFluidToRecipe.BasicFluid(itemIngredient, fluidIngredient, result, progressData),
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField
-        val SERIALIZER: RecipeSerializer<RTBrewingRecipe> = RecipeSerializer(codec(::RTBrewingRecipe), streamCodec(::RTBrewingRecipe))
+        val SERIALIZER: RecipeSerializer<RTBrewingRecipe> =
+            RecipeSerializer(codec(::RTBrewingRecipe), streamCodec(::RTBrewingRecipe))
     }
 
     override fun getSerializer(): RecipeSerializer<RTBrewingRecipe> = RagiumRecipeSerializers.BREWING

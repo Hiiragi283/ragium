@@ -9,8 +9,15 @@ import hiiragi283.ragium.common.gui.widget.HTProgressWidget
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.resources.Identifier
 
-class HTProgressWidgetRenderer(gui: HTGuiAccess, widget: HTProgressWidget) : HTAbstractWidgetRenderer<HTProgressWidget>(gui, widget) {
-    override fun render(bounds: HTBounds, graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, partialTick: Float) {
+class HTProgressWidgetRenderer(gui: HTGuiAccess, widget: HTProgressWidget) :
+    HTAbstractWidgetRenderer<HTProgressWidget>(gui, widget) {
+    override fun render(
+        bounds: HTBounds,
+        graphics: GuiGraphicsExtractor,
+        mouseX: Int,
+        mouseY: Int,
+        partialTick: Float
+    ) {
         val background: Identifier = widget.backgroundTexture ?: return
         HTSpriteRenderHelper.blit(graphics, background, bounds)
 
@@ -50,7 +57,7 @@ class HTProgressWidgetRenderer(gui: HTGuiAccess, widget: HTProgressWidget) : HTA
             widthFixed,
             heightFixed,
             textureWidth = width,
-            textureHeight = height,
+            textureHeight = height
         )
     }
 }

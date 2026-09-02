@@ -23,7 +23,8 @@ import net.minecraft.world.level.storage.ValueInput
  */
 @ConsistentCopyVisibility
 @JvmRecord
-data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val updateTag: CompoundTag) : HTCustomPayload.S2C {
+data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val updateTag: CompoundTag) :
+    HTCustomPayload.S2C {
     companion object {
         @JvmField
         val TYPE = CustomPacketPayload.Type<HTUpdateBlockEntityPacket>(RagiumAPI.id("update_block_entity"))
@@ -34,13 +35,13 @@ data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val 
             HTUpdateBlockEntityPacket::pos,
             ByteBufCodecs.TRUSTED_COMPOUND_TAG,
             HTUpdateBlockEntityPacket::updateTag,
-            ::HTUpdateBlockEntityPacket,
+            ::HTUpdateBlockEntityPacket
         )
     }
 
     constructor(blockEntity: HTExtendedBlockEntity) : this(
         blockEntity.blockPos,
-        blockEntity.createReducedUpdateTag(blockEntity.getRegistryAccess()),
+        blockEntity.createReducedUpdateTag(blockEntity.getRegistryAccess())
     )
 
     override fun type(): CustomPacketPayload.Type<HTUpdateBlockEntityPacket> = TYPE
@@ -48,7 +49,11 @@ data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val 
     override fun handle(player: Player, minecraft: Minecraft) {
         val level: Level = player.level()
         level.getTypedBlockEntity<HTExtendedBlockEntity>(pos)?.let { blockEntity: HTExtendedBlockEntity ->
-            val input: ValueInput = TagValueInput.create(blockEntity.createReporter(), level.registryAccess(), updateTag)
+            val input: ValueInput = TagValueInput.create(
+                blockEntity.createReporter(),
+                level.registryAccess(),
+                updateTag
+            )
             blockEntity.handleUpdateTag(input)
         }
     }

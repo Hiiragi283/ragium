@@ -1,7 +1,6 @@
 package hiiragi283.lib.capability
 
 import com.google.common.util.concurrent.Runnables
-import java.util.function.BooleanSupplier
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -13,6 +12,7 @@ import net.neoforged.neoforge.capabilities.BlockCapabilityCache
 import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.transfer.access.ItemAccess
+import java.util.function.BooleanSupplier
 
 /**
  * 複数のキャパビリティを束ねるインターフェース
@@ -35,13 +35,24 @@ interface HTMultiCapability<HANDLER : Any> {
      */
     fun getCapability(level: Level, pos: BlockPos, side: Direction?): HANDLER? = level.getCapability(block, pos, side)
 
-    fun createCache(level: ServerLevel, pos: BlockPos, side: Direction?): BlockCapabilityCache<HANDLER, Direction?> = BlockCapabilityCache.create(block, level, pos, side)
+    fun createCache(level: ServerLevel, pos: BlockPos, side: Direction?): BlockCapabilityCache<HANDLER, Direction?> =
+        BlockCapabilityCache.create(block, level, pos, side)
 
-    fun createCache(level: ServerLevel, pos: BlockPos, side: Direction?, validator: BooleanSupplier = BooleanSupplier { true }, listener: Runnable = Runnables.doNothing()): BlockCapabilityCache<HANDLER, Direction?> = BlockCapabilityCache.create(block, level, pos, side, validator, listener)
+    fun createCache(
+        level: ServerLevel,
+        pos: BlockPos,
+        side: Direction?,
+        validator: BooleanSupplier = BooleanSupplier {
+            true
+        },
+        listener: Runnable = Runnables.doNothing()
+    ): BlockCapabilityCache<HANDLER, Direction?> =
+        BlockCapabilityCache.create(block, level, pos, side, validator, listener)
 
     //    Entity    //
 
-    fun getCapability(entity: Entity, side: Direction?): HANDLER? = entity.getCapability(this@HTMultiCapability.entity, side)
+    fun getCapability(entity: Entity, side: Direction?): HANDLER? =
+        entity.getCapability(this@HTMultiCapability.entity, side)
 
     //    Item    //
 

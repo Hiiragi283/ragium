@@ -11,7 +11,14 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class RTRefiningRecipeCategory(guiHelper: IGuiHelper) : HTHolderRecipeCategory<RTRefiningRecipe>(guiHelper, RagiumJeiRecipeTypes.REFINING, 18 * 8, 18 * 1, RTRefiningRecipe.CODEC) {
+class RTRefiningRecipeCategory(guiHelper: IGuiHelper) :
+    HTHolderRecipeCategory<RTRefiningRecipe>(
+        guiHelper,
+        RagiumJeiRecipeTypes.REFINING,
+        18 * 8,
+        18 * 1,
+        RTRefiningRecipe.CODEC
+    ) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTRefiningRecipe, focuses: IFocusGroup) {
         // inputs
         recipe.fluidIngredient.let {
@@ -20,7 +27,10 @@ class RTRefiningRecipeCategory(guiHelper: IGuiHelper) : HTHolderRecipeCategory<R
                 .add(it)
                 .setSlotBackground(HTBackgroundType.INPUT, it.amount)
         }
-        val itemInput: IRecipeSlotBuilder = builder.addInputSlot(getPosition(2), getPosition(0)).setSlotBackground(HTBackgroundType.INPUT)
+        val itemInput: IRecipeSlotBuilder = builder.addInputSlot(
+            getPosition(2),
+            getPosition(0)
+        ).setSlotBackground(HTBackgroundType.INPUT)
         recipe.itemIngredient.ifPresent(itemInput::add)
         // outputs
         recipe.fluidResult.let {
@@ -29,7 +39,10 @@ class RTRefiningRecipeCategory(guiHelper: IGuiHelper) : HTHolderRecipeCategory<R
                 .add(it)
                 .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
         }
-        val itemOutput: IRecipeSlotBuilder = builder.addOutputSlot(getPosition(7), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT)
+        val itemOutput: IRecipeSlotBuilder = builder.addOutputSlot(
+            getPosition(7),
+            getPosition(0)
+        ).setSlotBackground(HTBackgroundType.OUTPUT)
         recipe.itemResult.ifPresent(itemOutput::add)
     }
 

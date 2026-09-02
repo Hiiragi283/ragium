@@ -10,7 +10,10 @@ import net.minecraft.client.gui.components.Renderable
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTAbstractWidgetRenderer<WIDGET : HTWidget>(protected val gui: HTGuiAccess, protected val widget: WIDGET) : Renderable {
+abstract class HTAbstractWidgetRenderer<WIDGET : HTWidget>(
+    protected val gui: HTGuiAccess,
+    protected val widget: WIDGET
+) : Renderable {
     final override fun extractRenderState(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, a: Float) {
         val bounds: HTBounds = widget.bounds.offset(gui.getGuiLeft(), gui.getGuiTop())
         render(bounds, graphics, mouseX, mouseY, a)
@@ -21,6 +24,6 @@ abstract class HTAbstractWidgetRenderer<WIDGET : HTWidget>(protected val gui: HT
         graphics: GuiGraphicsExtractor,
         mouseX: Int,
         mouseY: Int,
-        partialTick: Float,
+        partialTick: Float
     )
 }

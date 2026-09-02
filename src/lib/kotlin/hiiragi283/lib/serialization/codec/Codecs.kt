@@ -38,7 +38,8 @@ fun <A : Any> Codec<A>.listOrElement(range: IntRange): Codec<List<A>> = this.lis
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <A : Any> Codec<A>.listOrElement(min: Int, max: Int): Codec<List<A>> = ExtraCodecs.compactListCodec(this, this.listOf(min, max))
+fun <A : Any> Codec<A>.listOrElement(min: Int, max: Int): Codec<List<A>> =
+    ExtraCodecs.compactListCodec(this, this.listOf(min, max))
 
 //    Set    //
 

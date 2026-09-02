@@ -35,7 +35,9 @@ import kotlin.contracts.contract
 data object RagiumRecipeBuilders {
     // Mechanical
     @JvmStatic
-    inline fun assembling(builderAction: HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe>.() -> Unit): HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe> {
+    inline fun assembling(
+        builderAction: HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe>.() -> Unit
+    ): HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -43,7 +45,9 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun compressing(builderAction: HTItemToItemRecipeBuilder<RTCompressingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<RTCompressingRecipe> {
+    inline fun compressing(
+        builderAction: HTItemToItemRecipeBuilder<RTCompressingRecipe>.() -> Unit
+    ): HTItemToItemRecipeBuilder<RTCompressingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -51,7 +55,9 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun crushing(builderAction: HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe>.() -> Unit): HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe> {
+    inline fun crushing(
+        builderAction: HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe>.() -> Unit
+    ): HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -59,7 +65,9 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun cutting(builderAction: HTItemToDoubleItemRecipeBuilder<RTCuttingRecipe>.() -> Unit): HTItemToDoubleItemRecipeBuilder<RTCuttingRecipe> {
+    inline fun cutting(
+        builderAction: HTItemToDoubleItemRecipeBuilder<RTCuttingRecipe>.() -> Unit
+    ): HTItemToDoubleItemRecipeBuilder<RTCuttingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -67,7 +75,9 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun draining(builderAction: HTItemToItemAndFluidRecipeBuilder<RTDrainingRecipe>.() -> Unit): HTItemToItemAndFluidRecipeBuilder<RTDrainingRecipe> {
+    inline fun draining(
+        builderAction: HTItemToItemAndFluidRecipeBuilder<RTDrainingRecipe>.() -> Unit
+    ): HTItemToItemAndFluidRecipeBuilder<RTDrainingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -75,7 +85,9 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun filling(builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTFillingRecipe>.() -> Unit): HTItemAndFluidToRecipeBuilder.ToItem<RTFillingRecipe> {
+    inline fun filling(
+        builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTFillingRecipe>.() -> Unit
+    ): HTItemAndFluidToRecipeBuilder.ToItem<RTFillingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -84,7 +96,9 @@ data object RagiumRecipeBuilders {
 
     // Heat
     @JvmStatic
-    inline fun freezing(builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTFreezingRecipe>.() -> Unit): HTItemAndFluidToRecipeBuilder.ToItem<RTFreezingRecipe> {
+    inline fun freezing(
+        builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTFreezingRecipe>.() -> Unit
+    ): HTItemAndFluidToRecipeBuilder.ToItem<RTFreezingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -92,7 +106,9 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun melting(builderAction: HTItemToFluidRecipeBuilder<RTMeltingRecipe>.() -> Unit): HTItemToFluidRecipeBuilder<RTMeltingRecipe> {
+    inline fun melting(
+        builderAction: HTItemToFluidRecipeBuilder<RTMeltingRecipe>.() -> Unit
+    ): HTItemToFluidRecipeBuilder<RTMeltingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -100,7 +116,9 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun smelting(builderAction: HTItemToItemRecipeBuilder<RTSmeltingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<RTSmeltingRecipe> {
+    inline fun smelting(
+        builderAction: HTItemToItemRecipeBuilder<RTSmeltingRecipe>.() -> Unit
+    ): HTItemToItemRecipeBuilder<RTSmeltingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -108,7 +126,9 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun pyrolyzing(builderAction: HTItemToItemAndFluidRecipeBuilder<RTPyrolyzingRecipe>.() -> Unit): HTItemToItemAndFluidRecipeBuilder<RTPyrolyzingRecipe> {
+    inline fun pyrolyzing(
+        builderAction: HTItemToItemAndFluidRecipeBuilder<RTPyrolyzingRecipe>.() -> Unit
+    ): HTItemToItemAndFluidRecipeBuilder<RTPyrolyzingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -125,7 +145,9 @@ data object RagiumRecipeBuilders {
 
     // Chemical
     @JvmStatic
-    inline fun bathing(builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTBathingRecipe>.() -> Unit): HTItemAndFluidToRecipeBuilder.ToItem<RTBathingRecipe> {
+    inline fun bathing(
+        builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTBathingRecipe>.() -> Unit
+    ): HTItemAndFluidToRecipeBuilder.ToItem<RTBathingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -142,7 +164,9 @@ data object RagiumRecipeBuilders {
 
     // Bio
     @JvmStatic
-    inline fun brewing(builderAction: HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe>.() -> Unit): HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe> {
+    inline fun brewing(
+        builderAction: HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe>.() -> Unit
+    ): HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -150,7 +174,9 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun planting(builderAction: HTItemToDoubleItemRecipeBuilder<RTPlantingRecipe>.() -> Unit): HTItemToDoubleItemRecipeBuilder<RTPlantingRecipe> {
+    inline fun planting(
+        builderAction: HTItemToDoubleItemRecipeBuilder<RTPlantingRecipe>.() -> Unit
+    ): HTItemToDoubleItemRecipeBuilder<RTPlantingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }

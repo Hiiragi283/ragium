@@ -56,7 +56,7 @@ enum class HTCommonTranslation(type: String, vararg path: String) : HTTranslatio
     TOOLTIP_SHOW_DESCRIPTION(HTConstants.TOOLTIP, "show_description"),
     TOOLTIP_SHOW_DETAILS(HTConstants.TOOLTIP, "show_details"),
 
-    DATAPACK_WIP("datapack", "work_in_progress"),
+    DATAPACK_WIP("datapack", "work_in_progress")
     ;
 
     override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".")).toLanguageKey(type)

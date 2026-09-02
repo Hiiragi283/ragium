@@ -14,19 +14,22 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
+import net.minecraft.resources.Identifier
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import net.minecraft.resources.Identifier
 
 class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(RagiumConstants.REFINING) {
     override fun getPrimalId(): Identifier = fluidResult.getId()
 
-    override fun createRecipe(): RTRefiningRecipe = RTRefiningRecipe(itemIngredient, fluidIngredient, itemResult, fluidResult, progressData)
+    override fun createRecipe(): RTRefiningRecipe =
+        RTRefiningRecipe(itemIngredient, fluidIngredient, itemResult, fluidResult, progressData)
 
     // Ingredient
-    @PublishedApi internal var itemIngredient: Optional<HTItemIngredient> by HTDelegates.onceInitialize { Optional.empty() }
+    @PublishedApi internal var itemIngredient: Optional<HTItemIngredient> by HTDelegates.onceInitialize {
+        Optional.empty()
+    }
 
     @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 

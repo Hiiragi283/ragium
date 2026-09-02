@@ -6,14 +6,14 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.item.ItemInstanceBuilder
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.util.HTDelegates
-import java.util.Optional
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmithingTransformRecipe
+import java.util.Optional
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * 鍛冶台レシピ向けの[HTRecipeBuilder]の実装クラスです。
@@ -80,6 +80,6 @@ class HTSmithingRecipeBuilder : HTRecipeBuilder<SmithingTransformRecipe>(HTConst
         template,
         base,
         addition,
-        result,
+        result
     )
 }

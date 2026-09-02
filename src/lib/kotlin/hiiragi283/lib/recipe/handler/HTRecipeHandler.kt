@@ -8,7 +8,8 @@ import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.common.util.ValueIOSerializable
 
-abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRecipeFactory<INPUT, OUTPUT>> : ValueIOSerializable {
+abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRecipeFactory<INPUT, OUTPUT>> :
+    ValueIOSerializable {
     private var progress: Int = 0
     private var maxProgress: Int = 0
 

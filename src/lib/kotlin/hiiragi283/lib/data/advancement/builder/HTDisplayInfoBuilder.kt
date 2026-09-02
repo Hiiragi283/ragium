@@ -10,14 +10,14 @@ import hiiragi283.lib.item.ItemInstanceBuilder
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.text.translatableText
 import hiiragi283.lib.util.HTDelegates
-import java.util.Optional
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.DisplayInfo
 import net.minecraft.core.ClientAsset
 import net.minecraft.world.item.ItemStackTemplate
+import java.util.Optional
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * @author Hiiragi Tsubasa
@@ -59,7 +59,7 @@ class HTDisplayInfoBuilder {
         type,
         showToast,
         showChat,
-        hidden,
+        hidden
     )
 
     operator fun HTItemInstanceLike.unaryPlus() {

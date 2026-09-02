@@ -10,7 +10,7 @@ import net.minecraft.core.Direction
 abstract class HTSlottedCapabilityHolder<SLOT : Any>(
     configGetter: HTSlotInfoProvider?,
     private val slots: List<SLOT>,
-    private val slotMap: Map<HTSlotInfo, List<SLOT>>,
+    private val slotMap: Map<HTSlotInfo, List<SLOT>>
 ) : HTConfigCapabilityHolder(configGetter) {
     fun getSlots(side: Direction?): List<SLOT> = when {
         side == null || this.configGetter == null -> slots
@@ -21,7 +21,7 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
 
     abstract class Builder<SLOT : Any, HOLDER : HTCapabilityHolder>(
         protected val configGetter: HTSlotInfoProvider?,
-        private val factory: (HTSlotInfoProvider?, List<SLOT>, Map<HTSlotInfo, List<SLOT>>) -> HOLDER,
+        private val factory: (HTSlotInfoProvider?, List<SLOT>, Map<HTSlotInfo, List<SLOT>>) -> HOLDER
     ) {
         private var hasBuilt = false
         private val slots: MutableList<SLOT> = mutableListOf()

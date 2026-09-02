@@ -17,7 +17,6 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.fold
-import java.util.Optional
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
@@ -25,6 +24,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
+import java.util.Optional
 
 @JvmRecord
 data class RTRefiningRecipe(
@@ -32,7 +32,7 @@ data class RTRefiningRecipe(
     val fluidIngredient: HTFluidIngredient,
     val itemResult: Optional<HTItemResult>,
     val fluidResult: HTFluidResult,
-    override val progressData: HTProgressData,
+    override val progressData: HTProgressData
 ) : HTRecipePredicates.ItemAndFluid,
     HTRecipeFactories.ItemAndFluid<HTItemAndFluidResult>,
     HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
@@ -41,11 +41,15 @@ data class RTRefiningRecipe(
         @JvmField
         val CODEC: MapCodec<RTRefiningRecipe> = HTCodecs.recordMap { instance ->
             instance.group(
-                HTItemIngredient.CODEC.optionalFieldOf(HTConstants.ITEM_INGREDIENT).forGetter(RTRefiningRecipe::itemIngredient),
-                HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID_INGREDIENT).forGetter(RTRefiningRecipe::fluidIngredient),
+                HTItemIngredient.CODEC.optionalFieldOf(
+                    HTConstants.ITEM_INGREDIENT
+                ).forGetter(RTRefiningRecipe::itemIngredient),
+                HTFluidIngredient.CODEC.fieldOf(
+                    HTConstants.FLUID_INGREDIENT
+                ).forGetter(RTRefiningRecipe::fluidIngredient),
                 HTItemResult.CODEC.optionalFieldOf(HTConstants.ITEM_RESULT).forGetter(RTRefiningRecipe::itemResult),
                 HTFluidResult.CODEC.fieldOf(HTConstants.FLUID_RESULT).forGetter(RTRefiningRecipe::fluidResult),
-                HTProgressData.CODEC.forGetter(RTRefiningRecipe::progressData),
+                HTProgressData.CODEC.forGetter(RTRefiningRecipe::progressData)
             ).apply(instance, ::RTRefiningRecipe)
         }
 
@@ -61,23 +65,26 @@ data class RTRefiningRecipe(
             RTRefiningRecipe::fluidResult,
             HTProgressData.STREAM_CODEC,
             RTRefiningRecipe::progressData,
-            ::RTRefiningRecipe,
+            ::RTRefiningRecipe
         )
 
         @JvmField
         val SERIALIZER: RecipeSerializer<RTRefiningRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.test(first) && fluidIngredient.test(second)
+    override fun test(first: ItemInstance, second: FluidInstance): Boolean =
+        itemIngredient.test(first) && fluidIngredient.test(second)
 
     override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = Pair(
         itemIngredient.fold({ 0 }, { it.getRequiredAmount(first) }),
-        fluidIngredient.getRequiredAmount(second),
+        fluidIngredient.getRequiredAmount(second)
     )
 
     override fun apply(first: ItemInstance, second: FluidInstance): HTItemAndFluidResult {
         val stack: FluidStack = fluidResult.create()
-        return itemResult.map(HTItemResult::create).fold({ HTItemAndFluidResult(stack) }, { HTItemAndFluidResult(it, stack) })
+        return itemResult.map(HTItemResult::create).fold({
+            HTItemAndFluidResult(stack)
+        }, { HTItemAndFluidResult(it, stack) })
     }
 
     override fun getSerializer(): RecipeSerializer<RTRefiningRecipe> = RagiumRecipeSerializers.REFINING

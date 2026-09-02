@@ -145,7 +145,7 @@ sealed class Ior<out A, out B> {
     fun swap(): Ior<B, A> = fold(
         { Right(it) },
         { Left(it) },
-        { left: A, right: B -> Both(right, left) },
+        { left: A, right: B -> Both(right, left) }
     )
 
     /**
@@ -155,7 +155,7 @@ sealed class Ior<out A, out B> {
     fun unwrap(): Either<Either<A, B>, Pair<A, B>> = fold(
         { Either.Left(Either.Left(it)) },
         { Either.Left(Either.Right(it)) },
-        { left: A, right: B -> Either.Right(left to right) },
+        { left: A, right: B -> Either.Right(left to right) }
     )
 
     /**
@@ -165,7 +165,7 @@ sealed class Ior<out A, out B> {
     fun toPair(): Pair<A?, B?> = fold(
         { it to null },
         { null to it },
-        { left: A, right: B -> left to right },
+        { left: A, right: B -> left to right }
     )
 
     /**
@@ -175,7 +175,7 @@ sealed class Ior<out A, out B> {
     fun getRight(): B? = fold(
         { null },
         identity(),
-        { _: A, right: B -> right },
+        { _: A, right: B -> right }
     )
 
     /**
@@ -185,7 +185,7 @@ sealed class Ior<out A, out B> {
     fun getLeft(): A? = fold(
         identity(),
         { null },
-        { left: A, _: B -> left },
+        { left: A, _: B -> left }
     )
 
     /**

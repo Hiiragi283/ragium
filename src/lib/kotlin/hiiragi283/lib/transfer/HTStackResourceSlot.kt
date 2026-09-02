@@ -1,11 +1,11 @@
 package hiiragi283.lib.transfer
 
-import java.util.function.BiPredicate
-import java.util.function.Predicate
 import net.neoforged.neoforge.transfer.TransferPreconditions
 import net.neoforged.neoforge.transfer.resource.Resource
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
+import java.util.function.BiPredicate
+import java.util.function.Predicate
 
 abstract class HTStackResourceSlot<S : Any, T : Resource> :
     SnapshotJournal<S>(),
@@ -107,11 +107,13 @@ abstract class HTStackResourceSlot<S : Any, T : Resource> :
         private val canExtract: BiPredicate<T, HTTransferAccess>,
         private val canInsert: BiPredicate<T, HTTransferAccess>,
         private val filter: Predicate<T>,
-        private val listener: Runnable?,
+        private val listener: Runnable?
     ) : HTStackResourceSlot<S, T>() {
-        override fun isValidForInsert(resource: T, access: HTTransferAccess): Boolean = super.isValidForInsert(resource, access) && canInsert.test(resource, access)
+        override fun isValidForInsert(resource: T, access: HTTransferAccess): Boolean =
+            super.isValidForInsert(resource, access) && canInsert.test(resource, access)
 
-        override fun canResourceExtract(resource: T, access: HTTransferAccess): Boolean = super.canResourceExtract(resource, access) && canExtract.test(resource, access)
+        override fun canResourceExtract(resource: T, access: HTTransferAccess): Boolean =
+            super.canResourceExtract(resource, access) && canExtract.test(resource, access)
 
         override fun onRootCommit(originalState: S) {
             listener?.run()

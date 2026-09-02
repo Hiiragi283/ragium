@@ -28,50 +28,54 @@ data object RagiumItems {
     //    Ingredient    //
 
     @JvmField
-    val MATERIAL_ITEMS: Table<HTItemPart, RagiumMaterial, HTSimpleDeferredItem> = buildSortedSetMultiMap<RagiumMaterial, HTItemPart>(sortedMapOf(RagiumMaterial.COMPARATOR)) {
-        // Fuel
-        putAll(RagiumMaterial.Fuel.COAL, HTItemPart.DUST, HTItemPart.TINY)
-        putAll(RagiumMaterial.Fuel.CHARCOAL, HTItemPart.DUST, HTItemPart.TINY)
-        putAll(RagiumMaterial.Fuel.COAL_COKE, HTItemPart.DUST, HTItemPart.TINY)
-        // Mineral
-        for (mineral: RagiumMaterial.Mineral in RagiumMaterial.Mineral.entries) {
-            if (!mineral.isVanilla) {
-                putAll(mineral, HTItemPart.DUST)
+    val MATERIAL_ITEMS: Table<HTItemPart, RagiumMaterial, HTSimpleDeferredItem> =
+        buildSortedSetMultiMap<RagiumMaterial, HTItemPart>(sortedMapOf(RagiumMaterial.COMPARATOR)) {
+            // Fuel
+            putAll(RagiumMaterial.Fuel.COAL, HTItemPart.DUST, HTItemPart.TINY)
+            putAll(RagiumMaterial.Fuel.CHARCOAL, HTItemPart.DUST, HTItemPart.TINY)
+            putAll(RagiumMaterial.Fuel.COAL_COKE, HTItemPart.DUST, HTItemPart.TINY)
+            // Mineral
+            for (mineral: RagiumMaterial.Mineral in RagiumMaterial.Mineral.entries) {
+                if (!mineral.isVanilla) {
+                    putAll(mineral, HTItemPart.DUST)
+                }
+            }
+            // Gem
+            putAll(RagiumMaterial.Gem.LAPIS, HTItemPart.DUST)
+            putAll(RagiumMaterial.Gem.QUARTZ, HTItemPart.DUST)
+            putAll(RagiumMaterial.Gem.AMETHYST, HTItemPart.DUST)
+            putAll(RagiumMaterial.Gem.DIAMOND, HTItemPart.DUST, HTItemPart.GEAR)
+            putAll(RagiumMaterial.Gem.EMERALD, HTItemPart.DUST, HTItemPart.GEAR)
+            putAll(RagiumMaterial.Gem.ECHO, HTItemPart.DUST)
+            putAll(RagiumMaterial.Gem.PRISMARINE, HTItemPart.DUST)
+            // Metal
+            putAll(RagiumMaterial.Metal.COPPER, HTItemPart.DUST, HTItemPart.GEAR)
+            putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
+            putAll(RagiumMaterial.Metal.GOLD, HTItemPart.DUST, HTItemPart.GEAR)
+            putAll(RagiumMaterial.Metal.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
+            putAll(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
+            putAll(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
+            // Other
+            putAll(RagiumMaterial.Other.WOOD, HTItemPart.DUST, HTItemPart.GEAR)
+            putAll(RagiumMaterial.Other.GLASS, HTItemPart.DUST)
+            putAll(RagiumMaterial.Other.OBSIDIAN, HTItemPart.DUST)
+            putAll(RagiumMaterial.Other.PAPER, HTItemPart.DUST)
+        }.flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
+            parts.map { part: HTItemPart ->
+                val item: HTSimpleDeferredItem = if (material == RagiumMaterial.Metal.NETHERITE) {
+                    REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties ->
+                        properties.fireResistant()
+                    }
+                } else {
+                    REGISTER.registerSimpleItem(part.createName(material))
+                }
+                Triple(part, material, item)
             }
         }
-        // Gem
-        putAll(RagiumMaterial.Gem.LAPIS, HTItemPart.DUST)
-        putAll(RagiumMaterial.Gem.QUARTZ, HTItemPart.DUST)
-        putAll(RagiumMaterial.Gem.AMETHYST, HTItemPart.DUST)
-        putAll(RagiumMaterial.Gem.DIAMOND, HTItemPart.DUST, HTItemPart.GEAR)
-        putAll(RagiumMaterial.Gem.EMERALD, HTItemPart.DUST, HTItemPart.GEAR)
-        putAll(RagiumMaterial.Gem.ECHO, HTItemPart.DUST)
-        putAll(RagiumMaterial.Gem.PRISMARINE, HTItemPart.DUST)
-        // Metal
-        putAll(RagiumMaterial.Metal.COPPER, HTItemPart.DUST, HTItemPart.GEAR)
-        putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
-        putAll(RagiumMaterial.Metal.GOLD, HTItemPart.DUST, HTItemPart.GEAR)
-        putAll(RagiumMaterial.Metal.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
-        putAll(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
-        putAll(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
-        // Other
-        putAll(RagiumMaterial.Other.WOOD, HTItemPart.DUST, HTItemPart.GEAR)
-        putAll(RagiumMaterial.Other.GLASS, HTItemPart.DUST)
-        putAll(RagiumMaterial.Other.OBSIDIAN, HTItemPart.DUST)
-        putAll(RagiumMaterial.Other.PAPER, HTItemPart.DUST)
-    }.flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
-        parts.map { part: HTItemPart ->
-            val item: HTSimpleDeferredItem = if (material == RagiumMaterial.Metal.NETHERITE) {
-                REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties -> properties.fireResistant() }
-            } else {
-                REGISTER.registerSimpleItem(part.createName(material))
-            }
-            Triple(part, material, item)
-        }
-    }
 
     @JvmStatic
-    fun getOrThrow(part: HTItemPart, material: RagiumMaterial): HTSimpleDeferredItem = MATERIAL_ITEMS[part, material] ?: error("Unregistered item: ${part.createName(material)}")
+    fun getOrThrow(part: HTItemPart, material: RagiumMaterial): HTSimpleDeferredItem =
+        MATERIAL_ITEMS[part, material] ?: error("Unregistered item: ${part.createName(material)}")
 
     // Mechanical
     @JvmField
@@ -133,7 +137,8 @@ data object RagiumItems {
     //    Tool    //
 
     @JvmStatic
-    private fun registerShapePattern(name: String): HTSimpleDeferredItem = REGISTER.registerSimpleItem("${name}_shape_pattern") { it.stacksTo(1) }
+    private fun registerShapePattern(name: String): HTSimpleDeferredItem =
+        REGISTER.registerSimpleItem("${name}_shape_pattern") { it.stacksTo(1) }
 
     @JvmField
     val BLANK_SHAPE_PATTERN: HTSimpleDeferredItem = registerShapePattern("blank")
@@ -152,6 +157,6 @@ data object RagiumItems {
         BLANK_SHAPE_PATTERN,
         BLOCK_SHAPE_PATTERN,
         INGOT_SHAPE_PATTERN,
-        BALL_SHAPE_PATTERN,
+        BALL_SHAPE_PATTERN
     )
 }

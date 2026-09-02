@@ -19,7 +19,7 @@ class HTWidgetContainerMenu(
     menuType: MenuType<*>,
     containerId: Int,
     inventory: Inventory,
-    context: HTWidgetHolderContext,
+    context: HTWidgetHolderContext
 ) : HTContainerMenu<HTWidgetHolderContext>(menuType, containerId, inventory, context) {
     private val widgets: MutableList<HTWidget> = mutableListOf()
     val widgetHolder: HTWidgetHolder = WidgetHolderImpl()

@@ -20,7 +20,8 @@ data object RagiumRecipeTypes {
     val allTypes: Set<HTRecipeType<*>> field: MutableSet<HTRecipeType<*>> = mutableSetOf()
 
     @JvmStatic
-    private fun <T : Recipe<*>> create(name: String): HTRecipeType<T> = HTRecipeType<T>(RagiumAPI.id(name)).also(allTypes::add)
+    private fun <T : Recipe<*>> create(name: String): HTRecipeType<T> =
+        HTRecipeType<T>(RagiumAPI.id(name)).also(allTypes::add)
 
     @SubscribeEvent
     fun onDatapackSync(event: OnDatapackSyncEvent) {

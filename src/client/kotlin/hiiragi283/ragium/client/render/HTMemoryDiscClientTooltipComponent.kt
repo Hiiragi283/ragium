@@ -11,7 +11,10 @@ import net.minecraft.world.item.ItemStack
 
 @ConsistentCopyVisibility
 @JvmRecord
-data class HTMemoryDiscClientTooltipComponent private constructor(val data: ItemStack, val text: Text = RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA.translateColored(HTDefaultColor.YELLOW, data)) : ClientTooltipComponent {
+data class HTMemoryDiscClientTooltipComponent private constructor(
+    val data: ItemStack,
+    val text: Text = RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA.translateColored(HTDefaultColor.YELLOW, data)
+) : ClientTooltipComponent {
     constructor(tooltip: HTMemoryDiscTooltipComponent) : this(tooltip.data.create())
 
     override fun getHeight(font: Font): Int = 17 + font.lineHeight
@@ -26,7 +29,10 @@ data class HTMemoryDiscClientTooltipComponent private constructor(val data: Item
         graphics.item(data, x, y + font.lineHeight)
     }
 
-    override fun equals(other: Any?): Boolean = ItemStack.isSameItemSameComponents((other as? HTMemoryDiscClientTooltipComponent)?.data ?: ItemStack.EMPTY, this.data)
+    override fun equals(other: Any?): Boolean = ItemStack.isSameItemSameComponents(
+        (other as? HTMemoryDiscClientTooltipComponent)?.data ?: ItemStack.EMPTY,
+        this.data
+    )
 
     override fun hashCode(): Int = ItemStack.hashItemAndComponents(this.data)
 }

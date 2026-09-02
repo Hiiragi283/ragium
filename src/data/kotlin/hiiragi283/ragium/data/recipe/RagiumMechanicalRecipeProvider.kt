@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
-import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
@@ -21,8 +20,10 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
+import java.util.concurrent.CompletableFuture
 
-class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
+    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
         assembling()
         compressing()
@@ -82,7 +83,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // XX Ingot + XX Nugget -> XX Chain
         setOf(
             RagiumMaterial.Metal.COPPER to Items.COPPER_CHAIN.unaffected(),
-            RagiumMaterial.Metal.IRON to Items.IRON_CHAIN,
+            RagiumMaterial.Metal.IRON to Items.IRON_CHAIN
         ).forEach { (metal: RagiumMaterial.Metal, chain: Item) ->
             RagiumRecipeBuilders.assembling {
                 primary { +holderSet(CommonTagPrefixes.INGOT, metal) }
@@ -99,7 +100,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // XX Ingot + Torch -> XX Lantern
         setOf(
             RagiumMaterial.Metal.COPPER to Items.COPPER_LANTERN.unaffected(),
-            RagiumMaterial.Metal.IRON to Items.LANTERN,
+            RagiumMaterial.Metal.IRON to Items.LANTERN
         ).forEach { (metal: RagiumMaterial.Metal, lantern: Item) ->
             RagiumRecipeBuilders.assembling {
                 primary { +holderSet(CommonTagPrefixes.INGOT, metal) }

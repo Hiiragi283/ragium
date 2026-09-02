@@ -35,7 +35,9 @@ abstract class HTClientMod {
         eventBus.addListener(::registerWidgetRenderer)
         eventBus.addListener(::registerBlockColors)
         eventBus.addListener(::registerItemColors)
-        eventBus.addListener { event: RegisterFluidModelsEvent -> HTFluidModelRegister(event).let(::registerFluidModels) }
+        eventBus.addListener { event: RegisterFluidModelsEvent ->
+            HTFluidModelRegister(event).let(::registerFluidModels)
+        }
         eventBus.addListener(::registerClientExtensions)
         eventBus.addListener(::registerScreens)
         eventBus.addListener(::registerEntityRenderer)

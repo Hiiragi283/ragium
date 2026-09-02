@@ -63,35 +63,47 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
         // Machine
         for ((machineType: HTMachineType, block: HTIdOrValue<Block>) in RagiumBlocks.MACHINES.flatEntries) {
-            val inactiveModel: MultiVariant = BlockModelGenerators.plainVariant(machineModel(generators, machineType, block, false))
-            val activeModel: MultiVariant = BlockModelGenerators.plainVariant(machineModel(generators, machineType, block, true))
+            val inactiveModel: MultiVariant = BlockModelGenerators.plainVariant(
+                machineModel(generators, machineType, block, false)
+            )
+            val activeModel: MultiVariant = BlockModelGenerators.plainVariant(
+                machineModel(generators, machineType, block, true)
+            )
             generators.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block.getOrThrow())
                     .with(
                         PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
                             .select(false, inactiveModel)
-                            .select(true, activeModel),
-                    ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING),
+                            .select(true, activeModel)
+                    ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
             )
         }
     }
 
-    private fun machineModel(generators: BlockModelGenerators, machineType: HTMachineType, block: HTIdOrValue<Block>, isActive: Boolean): Identifier {
+    private fun machineModel(
+        generators: BlockModelGenerators,
+        machineType: HTMachineType,
+        block: HTIdOrValue<Block>,
+        isActive: Boolean
+    ): Identifier {
         val blockId: Identifier = block.idOrThrow.blockId
         val mapping: TextureMapping = TextureMapping()
             .put(TextureSlot.TOP, Material(RagiumAPI.id(HTConstants.BLOCK, "machine_casing")))
-            .put(TextureSlot.SIDE, Material(RagiumAPI.id(HTConstants.BLOCK, "machine_casing", machineType.materialName)))
+            .put(
+                TextureSlot.SIDE,
+                Material(RagiumAPI.id(HTConstants.BLOCK, "machine_casing", machineType.materialName))
+            )
         return when (isActive) {
             true -> ModelTemplates.CUBE_ORIENTABLE.create(
                 blockId.withSuffix("_active"),
                 mapping.put(TextureSlot.FRONT, Material(blockId.withSuffix("_front_active"))),
-                generators.modelOutput,
+                generators.modelOutput
             )
 
             false -> ModelTemplates.CUBE_ORIENTABLE.createBlock(
                 block,
                 mapping.put(TextureSlot.FRONT, Material(blockId.withSuffix("_front"))),
-                generators.modelOutput,
+                generators.modelOutput
             )
         }
     }

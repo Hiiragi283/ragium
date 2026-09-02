@@ -26,17 +26,23 @@ interface HTItemToItemAndFluidRecipe :
      * @author Hiiragi Tsubasa
      * @since 26.1.0
      */
-    open class Basic(val ingredient: HTItemIngredient, val itemResult: HTItemResult, val fluidResult: HTFluidResult, override val progressData: HTProgressData) :
-        HTItemToItemAndFluidRecipe,
+    open class Basic(
+        val ingredient: HTItemIngredient,
+        val itemResult: HTItemResult,
+        val fluidResult: HTFluidResult,
+        override val progressData: HTProgressData
+    ) : HTItemToItemAndFluidRecipe,
         HTProgressRecipe.Simple<SingleRecipeInput> {
         companion object {
             @JvmStatic
-            fun <RECIPE : Basic> codec(factory: (HTItemIngredient, HTItemResult, HTFluidResult, HTProgressData) -> RECIPE): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
+            fun <RECIPE : Basic> codec(
+                factory: (HTItemIngredient, HTItemResult, HTFluidResult, HTProgressData) -> RECIPE
+            ): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
                 instance.group(
                     HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
                     HTItemResult.CODEC.fieldOf(HTConstants.ITEM_RESULT).forGetter(Basic::itemResult),
                     HTFluidResult.CODEC.fieldOf(HTConstants.FLUID_RESULT).forGetter(Basic::fluidResult),
-                    HTProgressData.CODEC.forGetter(Basic::progressData),
+                    HTProgressData.CODEC.forGetter(Basic::progressData)
                 ).apply(instance, factory)
             }
 
@@ -44,7 +50,9 @@ interface HTItemToItemAndFluidRecipe :
             val SIMPLE_CODEC: MapCodec<Basic> = codec(::Basic)
 
             @JvmStatic
-            fun <RECIPE : Basic> streamCodec(factory: (HTItemIngredient, HTItemResult, HTFluidResult, HTProgressData) -> RECIPE): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
+            fun <RECIPE : Basic> streamCodec(
+                factory: (HTItemIngredient, HTItemResult, HTFluidResult, HTProgressData) -> RECIPE
+            ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
                 HTItemIngredient.STREAM_CODEC,
                 Basic::ingredient,
                 HTItemResult.STREAM_CODEC,
@@ -53,7 +61,7 @@ interface HTItemToItemAndFluidRecipe :
                 Basic::fluidResult,
                 HTProgressData.STREAM_CODEC,
                 Basic::progressData,
-                factory,
+                factory
             )
         }
 
@@ -61,6 +69,7 @@ interface HTItemToItemAndFluidRecipe :
 
         override fun getRequiredAmount(input: ItemInstance): Int = ingredient.getRequiredAmount(input)
 
-        override fun apply(input: ItemInstance): HTItemAndFluidResult = HTItemAndFluidResult(itemResult.create(), fluidResult.create())
+        override fun apply(input: ItemInstance): HTItemAndFluidResult =
+            HTItemAndFluidResult(itemResult.create(), fluidResult.create())
     }
 }

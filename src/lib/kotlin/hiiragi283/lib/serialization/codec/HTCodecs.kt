@@ -13,12 +13,6 @@ import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.java
 import hiiragi283.lib.util.kotlin
-import java.util.Optional
-import java.util.UUID
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
-import kotlin.enums.enumEntries
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryCodecs
@@ -28,6 +22,12 @@ import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
+import java.util.Optional
+import java.util.UUID
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+import kotlin.enums.enumEntries
 
 /**
  * Hiiragi Seriesで使用される[Codec]と[MapCodec]をまとめたクラスです。
@@ -42,7 +42,8 @@ data object HTCodecs {
     val UUID: Codec<UUID> = UUIDUtil.CODEC
 
     @JvmStatic
-    fun <K : Any, V : Any> mapOf(keyCodec: Codec<K>, valueCodec: Codec<V>): Codec<Map<K, V>> = Codec.unboundedMap(keyCodec, valueCodec)
+    fun <K : Any, V : Any> mapOf(keyCodec: Codec<K>, valueCodec: Codec<V>): Codec<Map<K, V>> =
+        Codec.unboundedMap(keyCodec, valueCodec)
 
     /**
      * [Optional]でラップされた[Codec]を作成します。
@@ -54,17 +55,18 @@ data object HTCodecs {
     fun <A : Any, B : Any> pair(first: Codec<A>, second: Codec<B>): MapCodec<Pair<A, B>> = recordMap { instance ->
         instance.group(
             first.fieldOf("first").forGetter(Pair<A, B>::first),
-            second.fieldOf("second").forGetter(Pair<A, B>::second),
+            second.fieldOf("second").forGetter(Pair<A, B>::second)
         ).apply(instance, ::Pair)
     }
 
     @JvmStatic
-    fun <A : Any, B : Any> mapPair(first: MapCodec<A>, second: MapCodec<B>): MapCodec<Pair<A, B>> = recordMap { instance ->
-        instance.group(
-            first.forGetter(Pair<A, B>::first),
-            second.forGetter(Pair<A, B>::second),
-        ).apply(instance, ::Pair)
-    }
+    fun <A : Any, B : Any> mapPair(first: MapCodec<A>, second: MapCodec<B>): MapCodec<Pair<A, B>> =
+        recordMap { instance ->
+            instance.group(
+                first.forGetter(Pair<A, B>::first),
+                second.forGetter(Pair<A, B>::second)
+            ).apply(instance, ::Pair)
+        }
 
     /**
      * [Either]の[Codec]を作成します。
@@ -75,7 +77,8 @@ data object HTCodecs {
      * @see Codec.either
      */
     @JvmStatic
-    fun <A : Any, B : Any> either(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> = Codec.either(left, right).xmap({ it.kotlin }, { it.java })
+    fun <A : Any, B : Any> either(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> =
+        Codec.either(left, right).xmap({ it.kotlin }, { it.java })
 
     /**
      * [Either]の[Codec]を作成します。
@@ -86,7 +89,8 @@ data object HTCodecs {
      * @see Codec.xor
      */
     @JvmStatic
-    fun <A : Any, B : Any> xor(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> = Codec.xor(left, right).xmap({ it.kotlin }, { it.java })
+    fun <A : Any, B : Any> xor(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> =
+        Codec.xor(left, right).xmap({ it.kotlin }, { it.java })
 
     /**
      * [Either]の[Codec]を作成します。
@@ -97,7 +101,8 @@ data object HTCodecs {
      * @see Codec.mapEither
      */
     @JvmStatic
-    fun <A : Any, B : Any> mapEither(left: MapCodec<A>, right: MapCodec<B>): MapCodec<Either<A, B>> = Codec.mapEither(left, right).xmap({ it.kotlin }, { it.java })
+    fun <A : Any, B : Any> mapEither(left: MapCodec<A>, right: MapCodec<B>): MapCodec<Either<A, B>> =
+        Codec.mapEither(left, right).xmap({ it.kotlin }, { it.java })
 
     /**
      * [Ior]の[MapCodec]を作成します。
@@ -109,10 +114,10 @@ data object HTCodecs {
     @JvmStatic
     fun <A : Any, B : Any> ior(left: MapCodec<A>, right: MapCodec<B>): MapCodec<Ior<A, B>> = mapEither(
         mapEither(left, right),
-        mapPair(left, right),
+        mapPair(left, right)
     ).xmap(
         { either: Either<Either<A, B>, Pair<A, B>> -> either.fold(Ior.Companion::fromEither, Ior.Companion::fromPair) },
-        Ior<A, B>::unwrap,
+        Ior<A, B>::unwrap
     )
 
     /*private data class HTIorMapCodec<A, B>(val left: MapCodec<A>, val right: MapCodec<B>) : MapCodec<Ior<A, B>>() {
@@ -163,16 +168,25 @@ data object HTCodecs {
      * @param factory [V]を[String]に変換するブロック
      */
     @JvmStatic
-    inline fun <reified V : Enum<V>> stringEnum(crossinline factory: (V) -> String?): Codec<V> = Codec.STRING.flatXmap<V>(
-        { name: String -> enumEntries<V>().firstOrNull { factory(it) == name }?.let { DataResult.success(it) } ?: DataResult.error { "Unknown element name: $name" } },
-        { value: V -> factory(value)?.let { DataResult.success(it) } ?: DataResult.error { "Element with unknown name: $value" } },
-    )
+    inline fun <reified V : Enum<V>> stringEnum(crossinline factory: (V) -> String?): Codec<V> =
+        Codec.STRING.flatXmap<V>(
+            { name: String ->
+                enumEntries<V>().firstOrNull { factory(it) == name }?.let { DataResult.success(it) }
+                    ?: DataResult.error { "Unknown element name: $name" }
+            },
+            { value: V ->
+                factory(value)?.let { DataResult.success(it) }
+                    ?: DataResult.error { "Element with unknown name: $value" }
+            }
+        )
 
     /**
      * [RecordCodecBuilder.mapCodec]を最適化した代替
      */
     @JvmStatic
-    inline fun <O> recordMap(builder: (RecordCodecBuilder.Instance<O>) -> App<RecordCodecBuilder.Mu<O>, O>): MapCodec<O> {
+    inline fun <O> recordMap(
+        builder: (RecordCodecBuilder.Instance<O>) -> App<RecordCodecBuilder.Mu<O>, O>
+    ): MapCodec<O> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -236,8 +250,10 @@ data object HTCodecs {
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> holderSet(registryKey: RegistryKey<T>): Codec<HolderSet<T>> = RegistryCodecs.homogeneousList(registryKey)
+    fun <T : Any> holderSet(registryKey: RegistryKey<T>): Codec<HolderSet<T>> =
+        RegistryCodecs.homogeneousList(registryKey)
 
     @JvmStatic
-    fun <T : Any> holderSet(registryKey: RegistryKey<T>, element: Codec<T>): Codec<HolderSet<T>> = RegistryCodecs.homogeneousList(registryKey, element)
+    fun <T : Any> holderSet(registryKey: RegistryKey<T>, element: Codec<T>): Codec<HolderSet<T>> =
+        RegistryCodecs.homogeneousList(registryKey, element)
 }

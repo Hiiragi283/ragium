@@ -28,5 +28,7 @@ open class HTDeferredHolder<R : Any, out T : R> :
 
     constructor(key: RegistryKey<R>, id: Identifier) : super(key.createKey(id))
 
-    final override fun unwrapWithKey(): Ior<ResourceKey<R>, T> = asOptional().fold({ Ior.Left(this.key) }, { Ior.Both(this.key, it) })
+    final override fun unwrapWithKey(): Ior<ResourceKey<R>, T> = asOptional().fold({
+        Ior.Left(this.key)
+    }, { Ior.Both(this.key, it) })
 }

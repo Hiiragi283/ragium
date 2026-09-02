@@ -6,16 +6,21 @@ import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
-import java.util.Optional
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SingleRecipeInput
+import java.util.Optional
 
-class RTCrushingRecipe(ingredient: HTItemIngredient, primary: HTItemResult, secondary: Optional<HTItemResult>, progressData: HTProgressData) :
-    HTItemToDoubleItemRecipe.Basic(ingredient, primary, secondary, progressData),
+class RTCrushingRecipe(
+    ingredient: HTItemIngredient,
+    primary: HTItemResult,
+    secondary: Optional<HTItemResult>,
+    progressData: HTProgressData
+) : HTItemToDoubleItemRecipe.Basic(ingredient, primary, secondary, progressData),
     HTSerializableRecipe<SingleRecipeInput> {
     companion object {
         @JvmField
-        val SERIALIZER: RecipeSerializer<RTCrushingRecipe> = RecipeSerializer(codec(::RTCrushingRecipe), streamCodec(::RTCrushingRecipe))
+        val SERIALIZER: RecipeSerializer<RTCrushingRecipe> =
+            RecipeSerializer(codec(::RTCrushingRecipe), streamCodec(::RTCrushingRecipe))
     }
 
     override fun getSerializer(): RecipeSerializer<RTCrushingRecipe> = RagiumRecipeSerializers.CRUSHING

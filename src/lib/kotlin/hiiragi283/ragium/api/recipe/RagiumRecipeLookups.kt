@@ -23,10 +23,13 @@ import net.minecraft.world.item.crafting.RecipeInput
  */
 data object RagiumRecipeLookups {
     @JvmStatic
-    private fun <RECIPE : Any> create(path: String): HTCompoundRecipeLookup<RECIPE> = HTCompoundRecipeLookup.create(RagiumAPI.id(path))
+    private fun <RECIPE : Any> create(path: String): HTCompoundRecipeLookup<RECIPE> =
+        HTCompoundRecipeLookup.create(RagiumAPI.id(path))
 
     @JvmStatic
-    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(recipeType: HTRecipeType<RECIPE>): HTRecipeLookup<RECIPE> = HTVanillaRecipeLookup(recipeType)
+    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(
+        recipeType: HTRecipeType<RECIPE>
+    ): HTRecipeLookup<RECIPE> = HTVanillaRecipeLookup(recipeType)
 
     // Mechanical
     @JvmField

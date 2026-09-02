@@ -9,7 +9,6 @@ import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.display.HTPotionSlotDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
-import java.util.stream.Stream
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
@@ -21,6 +20,7 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.FluidIngredientType
+import java.util.stream.Stream
 
 /**
  * [HTPotionFluidManager]に基づいて液体ポーションを扱う[FluidIngredient]の実装クラスです。
@@ -35,8 +35,10 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>, val bottleTyp
         val CODEC: MapCodec<HTPotionFluidIngredient> = HTCodecs.recordMap { instance ->
             instance
                 .group(
-                    HTCodecs.holderSet(Registries.POTION).fieldOf(HTConstants.POTIONS).forGetter(HTPotionFluidIngredient::potions),
-                    HTBottleType.FIELD_CODEC.forGetter(HTPotionFluidIngredient::bottleType),
+                    HTCodecs.holderSet(
+                        Registries.POTION
+                    ).fieldOf(HTConstants.POTIONS).forGetter(HTPotionFluidIngredient::potions),
+                    HTBottleType.FIELD_CODEC.forGetter(HTPotionFluidIngredient::bottleType)
                 ).apply(instance, ::HTPotionFluidIngredient)
         }
 
@@ -46,7 +48,7 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>, val bottleTyp
             HTPotionFluidIngredient::potions,
             HTBottleType.STREAM_CODEC,
             HTPotionFluidIngredient::bottleType,
-            ::HTPotionFluidIngredient,
+            ::HTPotionFluidIngredient
         )
 
         @JvmField
@@ -61,7 +63,9 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>, val bottleTyp
     }
 
     @Suppress("DEPRECATION")
-    override fun generateFluids(): Stream<Holder<Fluid>> = HTPotionFluidManager.handlers.keys.stream().map { it.builtInRegistryHolder() }
+    override fun generateFluids(): Stream<Holder<Fluid>> = HTPotionFluidManager.handlers.keys.stream().map {
+        it.builtInRegistryHolder()
+    }
 
     override fun display(): SlotDisplay = HTPotionSlotDisplay(potions, bottleType)
 

@@ -15,7 +15,9 @@ import net.minecraft.world.item.crafting.RecipeInput
  * @param RECIPE 提供するレシピのクラス
  * @param lookup レシピの提供元
  */
-class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(private val lookup: HTRecipeLookup<RECIPE>) {
+class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(
+    private val lookup: HTRecipeLookup<RECIPE>
+) {
     private var lastRecipe: HTRecipeHolder<RECIPE>? = null
 
     /**
@@ -32,7 +34,8 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(priv
      * @param level レシピ取得時のレベル
      * @return [input]に一致する最初のレシピ
      */
-    fun findFirstRecipe(input: INPUT, level: ServerLevel): RECIPE? = findFirstRecipe(input, HTRecipeLookup.Context(level))
+    fun findFirstRecipe(input: INPUT, level: ServerLevel): RECIPE? =
+        findFirstRecipe(input, HTRecipeLookup.Context(level))
 
     /**
      * レシピを取得します。
@@ -40,7 +43,8 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(priv
      * @param context レシピ取得時のコンテキスト
      * @return [input]に一致する最初のレシピ
      */
-    fun findFirstRecipe(input: INPUT, context: HTRecipeLookup.Context): RECIPE? = findFirstHolder(input, context)?.recipe
+    fun findFirstRecipe(input: INPUT, context: HTRecipeLookup.Context): RECIPE? =
+        findFirstHolder(input, context)?.recipe
 
     /**
      * [HTRecipeHolder]を取得します。

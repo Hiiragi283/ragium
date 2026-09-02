@@ -11,8 +11,21 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.RecipeIngredientRole
 
-class HTItemAndFluidToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem>) : HTHolderRecipeCategory<HTItemAndFluidToRecipe.BasicItem>(guiHelper, recipeType, 18 * 6, 18 * 1, HTItemAndFluidToRecipe.BasicItem.SIMPLE_CODEC) {
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemAndFluidToRecipe.BasicItem, focuses: IFocusGroup) {
+class HTItemAndFluidToItemRecipeCategory(
+    guiHelper: IGuiHelper,
+    recipeType: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem>
+) : HTHolderRecipeCategory<HTItemAndFluidToRecipe.BasicItem>(
+    guiHelper,
+    recipeType,
+    18 * 6,
+    18 * 1,
+    HTItemAndFluidToRecipe.BasicItem.SIMPLE_CODEC
+) {
+    override fun setupRecipe(
+        builder: IRecipeLayoutBuilder,
+        recipe: HTItemAndFluidToRecipe.BasicItem,
+        focuses: IFocusGroup
+    ) {
         // input
         recipe.fluidIngredient.let {
             builder
@@ -39,7 +52,11 @@ class HTItemAndFluidToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHo
             .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 
-    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemAndFluidToRecipe.BasicItem, focuses: IFocusGroup) {
+    override fun setupRecipeExtras(
+        builder: IRecipeExtrasBuilder,
+        recipe: HTItemAndFluidToRecipe.BasicItem,
+        focuses: IFocusGroup
+    ) {
         builder.addRecipePlus(getPosition(1))
         builder.addRecipeArrow(recipe).setPosition(getPosition(3.25), getPosition(0))
     }

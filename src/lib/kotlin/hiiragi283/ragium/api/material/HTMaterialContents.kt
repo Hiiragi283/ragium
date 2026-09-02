@@ -31,7 +31,10 @@ interface HTMaterialContents<R : HTPart, out V : Any> : Table<R, RagiumMaterial,
      * @author Hiiragi Tsubasa
      * @since 26.1.2
      */
-    data class Provider(val blocks: HTMaterialContents<HTBlockPart, BlockEntry>, val items: HTMaterialContents<HTItemPart, ItemEntry>) {
+    data class Provider(
+        val blocks: HTMaterialContents<HTBlockPart, BlockEntry>,
+        val items: HTMaterialContents<HTItemPart, ItemEntry>
+    ) {
         /**
          * 指定した部品と素材に対応する素材アイテムを取得します。
          * @return 対応するアイテムがない場合は`null`
