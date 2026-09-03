@@ -29,7 +29,7 @@ class HTItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private 
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder().apply(builderAction).buildSized()
+        +IngredientBuilder.buildSized(builderAction)
     }
 
     // Result
@@ -43,7 +43,7 @@ class HTItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private 
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HTItemResultBuilder().apply(builderAction).build()
+        +HTItemResultBuilder.build(builderAction)
     }
 
     //    Factory    //

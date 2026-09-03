@@ -36,7 +36,7 @@ class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder().apply(builderAction).buildSized()
+        +IngredientBuilder.buildSized(builderAction)
     }
 
     // Result
@@ -48,14 +48,14 @@ class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        primary = HTItemResultBuilder().apply(builderAction).build()
+        primary = HTItemResultBuilder.build(builderAction)
     }
 
     inline fun secondary(builderAction: HTItemResultBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        secondary = Optional.of(HTItemResultBuilder().apply(builderAction).build())
+        secondary = Optional.of(HTItemResultBuilder.build(builderAction))
     }
 
     //    Factory    //
