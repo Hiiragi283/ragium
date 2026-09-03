@@ -62,6 +62,7 @@ data object RagiumRegistries {
         val WIDGET_TYPE: ResourceKey<Registry<HTWidgetType<*>>> = createKey("widget_type")
 
         @JvmStatic
-        private fun <T : Any> createKey(path: String): ResourceKey<Registry<T>> = ResourceKey.createRegistryKey(RagiumAPI.MOD_ID.toId(path))
+        private fun <T : Any> createKey(path: String): ResourceKey<Registry<T>> =
+            ResourceKey.createRegistryKey(RagiumAPI.MOD_ID.toId(path))
     }
 }

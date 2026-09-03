@@ -102,24 +102,40 @@ abstract class HTCommonMod {
     protected value class CapabilityHelper(val event: RegisterCapabilitiesEvent) {
         //    Block    //
 
-        fun <T : Any, C, BE : BlockEntity> registerBlockEntity(capability: BlockCapability<T, C>, type: BlockEntityType<BE>, provider: ICapabilityProvider<BE, C, T>) {
+        fun <T : Any, C, BE : BlockEntity> registerBlockEntity(
+            capability: BlockCapability<T, C>,
+            type: BlockEntityType<BE>,
+            provider: ICapabilityProvider<BE, C, T>
+        ) {
             event.registerBlockEntity(capability, type, provider)
         }
 
         fun <BE> registerBlockEntity(type: BlockEntityType<BE>) where BE : BlockEntity, BE : HTHandlerProvider {
-            this.registerBlockEntity(HTItemCapabilities.block, type) { blockEntity: BE, side: Direction? -> blockEntity.getItemHandler(side) }
-            this.registerBlockEntity(HTFluidCapabilities.block, type) { blockEntity: BE, side: Direction? -> blockEntity.getFluidHandler(side) }
+            this.registerBlockEntity(HTItemCapabilities.block, type) { blockEntity: BE, side: Direction? ->
+                blockEntity.getItemHandler(side)
+            }
+            this.registerBlockEntity(HTFluidCapabilities.block, type) { blockEntity: BE, side: Direction? ->
+                blockEntity.getFluidHandler(side)
+            }
         }
 
         //    Entity    //
 
-        fun <T : Any, C, E : Entity> registerEntity(capability: EntityCapability<T, C>, type: EntityType<E>, provider: ICapabilityProvider<E, C, T>) {
+        fun <T : Any, C, E : Entity> registerEntity(
+            capability: EntityCapability<T, C>,
+            type: EntityType<E>,
+            provider: ICapabilityProvider<E, C, T>
+        ) {
             event.registerEntity(capability, type, provider)
         }
 
         //    Item    //
 
-        fun <T : Any, C> registerItem(capability: ItemCapability<T, C>, provider: ICapabilityProvider<ItemStack, C, T>, vararg items: ItemLike) {
+        fun <T : Any, C> registerItem(
+            capability: ItemCapability<T, C>,
+            provider: ICapabilityProvider<ItemStack, C, T>,
+            vararg items: ItemLike
+        ) {
             event.registerItem(capability, provider, *items)
         }
     }

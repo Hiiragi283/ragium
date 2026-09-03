@@ -5,8 +5,8 @@ import hiiragi283.lib.config.definePositiveInt
 import hiiragi283.lib.config.translation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.text.RagiumTranslation
-import java.util.function.IntSupplier
 import net.neoforged.neoforge.common.ModConfigSpec
+import java.util.function.IntSupplier
 
 /**
  * 機械のエネルギーに関するコンフィグを管理するクラスです。
@@ -33,23 +33,20 @@ data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: I
             .definePositiveInt("energy_rate", value)
 
         @JvmStatic
-        fun createMachine(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTEnergyConfig = createBlock(builder, name, rate, rate * 20 * 10 * 10)
+        fun createMachine(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTEnergyConfig = createBlock(
+            builder,
+            name,
+            rate,
+            rate * 20 * 10 * 10
+        )
 
         @JvmStatic
-        fun createBlock(
-            builder: ModConfigSpec.Builder,
-            name: String,
-            usage: Int,
-            capacity: Int,
-        ): HTEnergyConfig = create(builder, "${HTConstants.BLOCK}.${RagiumAPI.MOD_ID}.$name", name, usage, capacity)
+        fun createBlock(builder: ModConfigSpec.Builder, name: String, usage: Int, capacity: Int): HTEnergyConfig =
+            create(builder, "${HTConstants.BLOCK}.${RagiumAPI.MOD_ID}.$name", name, usage, capacity)
 
         @JvmStatic
-        fun createItem(
-            builder: ModConfigSpec.Builder,
-            name: String,
-            usage: Int,
-            capacity: Int,
-        ): HTEnergyConfig = create(builder, "${HTConstants.ITEM}.${RagiumAPI.MOD_ID}.$name", name, usage, capacity)
+        fun createItem(builder: ModConfigSpec.Builder, name: String, usage: Int, capacity: Int): HTEnergyConfig =
+            create(builder, "${HTConstants.ITEM}.${RagiumAPI.MOD_ID}.$name", name, usage, capacity)
 
         @JvmStatic
         fun create(
@@ -57,7 +54,7 @@ data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: I
             translationKey: String,
             name: String,
             usage: Int,
-            capacity: Int,
+            capacity: Int
         ): HTEnergyConfig {
             builder.translation(translationKey).push(name)
             val config = HTEnergyConfig(energyCapacity(builder, capacity), energyRate(builder, usage))

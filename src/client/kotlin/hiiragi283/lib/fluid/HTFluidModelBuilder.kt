@@ -5,12 +5,12 @@ import hiiragi283.lib.resource.toId
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.ragium.api.RagiumAPI
-import java.awt.Color
 import net.minecraft.client.renderer.block.FluidModel
 import net.minecraft.client.resources.model.sprite.Material
 import net.neoforged.neoforge.client.fluid.CustomFluidRenderer
 import net.neoforged.neoforge.client.fluid.FluidTintSource
 import net.neoforged.neoforge.client.fluid.FluidTintSources
+import java.awt.Color
 
 /**
  * [FluidModel.Unbaked]のビルダークラスです。

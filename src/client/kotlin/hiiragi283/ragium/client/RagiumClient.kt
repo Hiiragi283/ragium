@@ -24,7 +24,6 @@ import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
-import java.awt.Color
 import net.minecraft.client.resources.model.sprite.Material
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
@@ -35,6 +34,7 @@ import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactori
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent
 import net.neoforged.neoforge.fluids.FluidStack
+import java.awt.Color
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
 data object RagiumClient : HTClientMod() {
@@ -76,7 +76,11 @@ data object RagiumClient : HTClientMod() {
         }
         register.register(RagiumFluids.POTION) {
             setDull()
-            tintSource = FluidStackTintSource { stack: FluidStack -> "ff000000".hexToInt() or HTPotionHelper.getPotion(stack).color }
+            tintSource =
+                FluidStackTintSource { stack: FluidStack ->
+                    "ff000000".hexToInt() or
+                        HTPotionHelper.getPotion(stack).color
+                }
         }
         register.register(RagiumFluids.OMINOUS_FLUX) {
             setMolten()

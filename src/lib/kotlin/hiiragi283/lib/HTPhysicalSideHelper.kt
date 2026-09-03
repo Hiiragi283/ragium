@@ -2,8 +2,6 @@ package hiiragi283.lib
 
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.registry.RegistryKey
-import hiiragi283.lib.util.Option
-import hiiragi283.lib.util.kotlin
 import net.minecraft.client.Minecraft
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
@@ -20,6 +18,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import thedarkcolour.kotlinforforge.neoforge.forge.runForDist
+import java.util.Optional
 
 /**
  * 物理サイドに関する処理を扱うクラスです。
@@ -38,7 +37,7 @@ data object HTPhysicalSideHelper {
     @JvmStatic
     inline fun <T> runForSide(client: (Level) -> T, server: (MinecraftServer) -> T): T? = runForDist(
         { Minecraft.getInstance().level?.let(client) },
-        { ServerLifecycleHooks.getCurrentServer()?.let(server) },
+        { ServerLifecycleHooks.getCurrentServer()?.let(server) }
     )
 
     //    Registry    //
@@ -48,10 +47,11 @@ data object HTPhysicalSideHelper {
      * @return クライアント側でワールドを読み込んでいない，またはサーバーのインスタンスが作成されていない場合は`null`
      */
     @JvmStatic
-    fun getRegistryAccess(): RegistryAccess = runForSide(Level::registryAccess, MinecraftServer::registryAccess) ?: RegistryAccess.EMPTY
+    fun getRegistryAccess(): RegistryAccess =
+        runForSide(Level::registryAccess, MinecraftServer::registryAccess) ?: RegistryAccess.EMPTY
 
     @JvmStatic
-    fun <T : Any> registry(registryKey: RegistryKey<T>): Option<Registry<T>> = getRegistryAccess().lookup(registryKey).kotlin
+    fun <T : Any> registry(registryKey: RegistryKey<T>): Optional<Registry<T>> = getRegistryAccess().lookup(registryKey)
 
     //    Feature Flag    //
 
@@ -60,13 +60,16 @@ data object HTPhysicalSideHelper {
      * @return クライアント側でワールドを読み込んでいない，またはサーバーのインスタンスが作成されていない場合は`null`
      **/
     @JvmStatic
-    fun getFeatureFlags(): FeatureFlagSet = runForSide(Level::enabledFeatures) { it.worldData.enabledFeatures() } ?: FeatureFlags.DEFAULT_FLAGS
+    fun getFeatureFlags(): FeatureFlagSet =
+        runForSide(Level::enabledFeatures) { it.worldData.enabledFeatures() } ?: FeatureFlags.DEFAULT_FLAGS
 
     @JvmStatic
-    fun <T : FeatureElement> filteredLookup(registryKey: RegistryKey<T>): Option<HolderLookup.RegistryLookup<T>> = registry(registryKey).map { it.filterFeatures(getFeatureFlags()) }
+    fun <T : FeatureElement> filteredLookup(registryKey: RegistryKey<T>): Optional<HolderLookup.RegistryLookup<T>> =
+        registry(registryKey).map { it.filterFeatures(getFeatureFlags()) }
 
     @JvmStatic
-    fun <T : FeatureElement> filteredLookup(registry: Registry<T>): HolderLookup.RegistryLookup<T> = registry.filterFeatures(getFeatureFlags())
+    fun <T : FeatureElement> filteredLookup(registry: Registry<T>): HolderLookup.RegistryLookup<T> =
+        registry.filterFeatures(getFeatureFlags())
 
     //    RecipeMap    //
 
@@ -81,7 +84,9 @@ data object HTPhysicalSideHelper {
     @JvmStatic
     fun createLookupContext(): HTRecipeLookup.Context = runForSide(
         { level: Level -> HTRecipeLookup.Context(cachedRecipes, level.registryAccess()) },
-        { server: MinecraftServer -> HTRecipeLookup.Context(server.recipeManager.recipeMap(), server.registryAccess()) },
+        { server: MinecraftServer ->
+            HTRecipeLookup.Context(server.recipeManager.recipeMap(), server.registryAccess())
+        }
     ) ?: HTRecipeLookup.Context.EMPTY
 
     @SubscribeEvent

@@ -1,13 +1,13 @@
 package hiiragi283.lib.block.entity
 
 import com.mojang.authlib.GameProfile
-import java.util.UUID
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.neoforge.common.UsernameCache
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
+import java.util.UUID
 
 /**
  * 所有者を保持するインターフェースです。

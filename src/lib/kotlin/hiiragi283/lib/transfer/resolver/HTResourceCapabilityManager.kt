@@ -15,15 +15,16 @@ import net.neoforged.neoforge.transfer.resource.Resource
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  **/
-class HTResourceCapabilityManager<RESOURCE : Resource, SLOT : HTResourceSlot<RESOURCE>>(holder: HTResourceSlotHolder<SLOT>) :
-    HTCapabilityManagerImpl<HTResourceSlotHolder<SLOT>, SLOT, ResourceHandler<RESOURCE>>(
-        holder,
-        { side: Direction?, holderIn: HTResourceSlotHolder<SLOT> ->
-            HTProxyResourceHandler(
-                HTResourceHandler(holderIn.getSlots(side)),
-                side,
-                holderIn,
-            )
-        },
-        HTResourceSlotHolder<SLOT>::getSlots,
-    )
+class HTResourceCapabilityManager<RESOURCE : Resource, SLOT : HTResourceSlot<RESOURCE>>(
+    holder: HTResourceSlotHolder<SLOT>
+) : HTCapabilityManagerImpl<HTResourceSlotHolder<SLOT>, SLOT, ResourceHandler<RESOURCE>>(
+    holder,
+    { side: Direction?, holderIn: HTResourceSlotHolder<SLOT> ->
+        HTProxyResourceHandler(
+            HTResourceHandler(holderIn.getSlots(side)),
+            side,
+            holderIn
+        )
+    },
+    HTResourceSlotHolder<SLOT>::getSlots
+)

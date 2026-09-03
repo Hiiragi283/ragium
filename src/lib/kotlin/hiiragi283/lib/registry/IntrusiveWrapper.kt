@@ -15,7 +15,8 @@ import net.minecraft.world.level.material.Fluid
 /**
  * @suppress
  */
-private class IntrusiveWrapper<R : Any, out T : R>(private val value: T, private val holderGetter: (T) -> Holder<R>) : HTKeyOrValue<R, T> {
+private class IntrusiveWrapper<R : Any, out T : R>(private val value: T, private val holderGetter: (T) -> Holder<R>) :
+    HTKeyOrValue<R, T> {
     override fun unwrapWithKey(): Ior<ResourceKey<R>, T> = Ior.Both(holderGetter(value).getKeyOrThrow(), value)
 
     override fun toString(): String = "IntrusiveWrapper(value=$value)"
@@ -26,21 +27,24 @@ private class IntrusiveWrapper<R : Any, out T : R>(private val value: T, private
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <BLOCK : Block> BLOCK.asKeyOrValue(): HTKeyOrValue<Block, BLOCK> = IntrusiveWrapper(this, Block::builtInRegistryHolder)
+fun <BLOCK : Block> BLOCK.asKeyOrValue(): HTKeyOrValue<Block, BLOCK> =
+    IntrusiveWrapper(this, Block::builtInRegistryHolder)
 
 /**
  * この[EntityType][this]を[HTKeyOrValue]に変換します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <ENTITY : Entity> EntityType<ENTITY>.asKeyOrValue(): HTKeyOrValue<EntityType<*>, EntityType<ENTITY>> = IntrusiveWrapper(this, EntityType<*>::builtInRegistryHolder)
+fun <ENTITY : Entity> EntityType<ENTITY>.asKeyOrValue(): HTKeyOrValue<EntityType<*>, EntityType<ENTITY>> =
+    IntrusiveWrapper(this, EntityType<*>::builtInRegistryHolder)
 
 /**
  * この[Fluid][this]を[HTKeyOrValue]に変換します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <FLUID : Fluid> FLUID.asKeyOrValue(): HTKeyOrValue<Fluid, FLUID> = IntrusiveWrapper(this, Fluid::builtInRegistryHolder)
+fun <FLUID : Fluid> FLUID.asKeyOrValue(): HTKeyOrValue<Fluid, FLUID> =
+    IntrusiveWrapper(this, Fluid::builtInRegistryHolder)
 
 /**
  * この[Item][this]を[HTKeyOrValue]に変換します。

@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
@@ -17,65 +18,88 @@ import net.minecraft.world.item.crafting.RecipeSerializer
  */
 data object RagiumRecipeSerializers {
     @JvmStatic
-    val allSerializers: Map<Identifier, RecipeSerializer<*>> field: MutableMap<Identifier, RecipeSerializer<*>> = mutableMapOf()
+    val allSerializers: Map<Identifier, RecipeSerializer<*>>
+        field: MutableMap<Identifier, RecipeSerializer<*>> = Object2ObjectLinkedOpenHashMap()
 
     @JvmStatic
-    private fun <RECIPE : Recipe<*>> register(name: String, codec: MapCodec<RECIPE>, streamCodec: StreamCodec<RegistryFriendlyByteBuf, RECIPE>): RecipeSerializer<RECIPE> = register(name, RecipeSerializer(codec, streamCodec))
+    private fun <RECIPE : Recipe<*>> register(
+        name: String,
+        codec: MapCodec<RECIPE>,
+        streamCodec: StreamCodec<RegistryFriendlyByteBuf, RECIPE>
+    ): RecipeSerializer<RECIPE> = register(name, RecipeSerializer(codec, streamCodec))
 
     @JvmStatic
-    private fun <RECIPE : Recipe<*>> register(name: String, serializer: RecipeSerializer<RECIPE>): RecipeSerializer<RECIPE> {
+    private fun <RECIPE : Recipe<*>> register(
+        name: String,
+        serializer: RecipeSerializer<RECIPE>
+    ): RecipeSerializer<RECIPE> {
         allSerializers[RagiumAPI.id(name)] = serializer
         return serializer
     }
 
     // Mechanical
     @JvmField
-    val ASSEMBLING: RecipeSerializer<RTAssemblingRecipe> = register(RagiumConstants.ASSEMBLING, RTAssemblingRecipe.SERIALIZER)
+    val ASSEMBLING: RecipeSerializer<RTAssemblingRecipe> =
+        register(RagiumConstants.ASSEMBLING, RTAssemblingRecipe.SERIALIZER)
 
     @JvmField
-    val COMPRESSING: RecipeSerializer<RTCompressingRecipe> = register(RagiumConstants.COMPRESSING, RTCompressingRecipe.SERIALIZER)
+    val COMPRESSING: RecipeSerializer<RTCompressingRecipe> =
+        register(RagiumConstants.COMPRESSING, RTCompressingRecipe.SERIALIZER)
 
     @JvmField
-    val CRUSHING: RecipeSerializer<RTCrushingRecipe> = register(RagiumConstants.CRUSHING, RTCrushingRecipe.SERIALIZER)
+    val CRUSHING: RecipeSerializer<RTCrushingRecipe> =
+        register(RagiumConstants.CRUSHING, RTCrushingRecipe.SERIALIZER)
 
     @JvmField
-    val CUTTING: RecipeSerializer<RTCuttingRecipe> = register(RagiumConstants.CUTTING, RTCuttingRecipe.SERIALIZER)
+    val CUTTING: RecipeSerializer<RTCuttingRecipe> =
+        register(RagiumConstants.CUTTING, RTCuttingRecipe.SERIALIZER)
 
     @JvmField
-    val DRAINING: RecipeSerializer<RTDrainingRecipe> = register(RagiumConstants.DRAINING, RTDrainingRecipe.SERIALIZER)
+    val DRAINING: RecipeSerializer<RTDrainingRecipe> =
+        register(RagiumConstants.DRAINING, RTDrainingRecipe.SERIALIZER)
 
     @JvmField
-    val FILLING: RecipeSerializer<RTFillingRecipe> = register(RagiumConstants.FILLING, RTFillingRecipe.SERIALIZER)
+    val FILLING: RecipeSerializer<RTFillingRecipe> =
+        register(RagiumConstants.FILLING, RTFillingRecipe.SERIALIZER)
 
     // Heat
     @JvmField
-    val FREEZING: RecipeSerializer<RTFreezingRecipe> = register(RagiumConstants.FREEZING, RTFreezingRecipe.SERIALIZER)
+    val FREEZING: RecipeSerializer<RTFreezingRecipe> =
+        register(RagiumConstants.FREEZING, RTFreezingRecipe.SERIALIZER)
 
     @JvmField
-    val MELTING: RecipeSerializer<RTMeltingRecipe> = register(RagiumConstants.MELTING, RTMeltingRecipe.SERIALIZER)
+    val MELTING: RecipeSerializer<RTMeltingRecipe> =
+        register(RagiumConstants.MELTING, RTMeltingRecipe.SERIALIZER)
 
     @JvmField
-    val SMELTING: RecipeSerializer<RTSmeltingRecipe> = register(HTConstants.SMELTING, RTSmeltingRecipe.SERIALIZER)
+    val SMELTING: RecipeSerializer<RTSmeltingRecipe> =
+        register(HTConstants.SMELTING, RTSmeltingRecipe.SERIALIZER)
 
     @JvmField
-    val PYROLYZING: RecipeSerializer<RTPyrolyzingRecipe> = register(RagiumConstants.PYROLYZING, RTPyrolyzingRecipe.SERIALIZER)
+    val PYROLYZING: RecipeSerializer<RTPyrolyzingRecipe> =
+        register(RagiumConstants.PYROLYZING, RTPyrolyzingRecipe.SERIALIZER)
 
     @JvmField
-    val REFINING: RecipeSerializer<RTRefiningRecipe> = register(RagiumConstants.REFINING, RTRefiningRecipe.SERIALIZER)
+    val REFINING: RecipeSerializer<RTRefiningRecipe> =
+        register(RagiumConstants.REFINING, RTRefiningRecipe.SERIALIZER)
 
     // Chemical
     @JvmField
-    val BATHING: RecipeSerializer<RTBathingRecipe> = register(RagiumConstants.BATHING, RTBathingRecipe.SERIALIZER)
+    val BATHING: RecipeSerializer<RTBathingRecipe> =
+        register(RagiumConstants.BATHING, RTBathingRecipe.SERIALIZER)
 
     @JvmField
-    val ELECTROLYZING: RecipeSerializer<RTElectrolyzingRecipe> = register(RagiumConstants.ELECTROLYZING, RTElectrolyzingRecipe.SERIALIZER)
+    val ELECTROLYZING: RecipeSerializer<RTElectrolyzingRecipe> =
+        register(RagiumConstants.ELECTROLYZING, RTElectrolyzingRecipe.SERIALIZER)
 
     // Bio
     @JvmField
-    val BREWING: RecipeSerializer<RTBrewingRecipe> = register(RagiumConstants.BREWING, RTBrewingRecipe.SERIALIZER)
+    val BREWING: RecipeSerializer<RTBrewingRecipe> =
+        register(RagiumConstants.BREWING, RTBrewingRecipe.SERIALIZER)
 
     @JvmField
-    val PLANTING: RecipeSerializer<RTPlantingRecipe> = register(RagiumConstants.PLANTING, RTPlantingRecipe.SERIALIZER)
+    val PLANTING: RecipeSerializer<RTPlantingRecipe> =
+        register(RagiumConstants.PLANTING, RTPlantingRecipe.SERIALIZER)
 
     // Electronics
 

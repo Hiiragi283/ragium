@@ -21,8 +21,10 @@ data object RagiumDataComponents {
     val ENERGY: DataComponentType<Int> = DataComponentType(HTCodecs.NON_NEGATIVE_INT, ByteBufCodecs.VAR_INT)
 
     @JvmField
-    val FLUID: DataComponentType<SimpleFluidContent> = DataComponentType(SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
+    val FLUID: DataComponentType<SimpleFluidContent> =
+        DataComponentType(SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
 
     @JvmField
-    val MEMORY_DISC_DATA: DataComponentType<ItemStackTemplate> = DataComponentType(ItemStackTemplate.CODEC, ItemStackTemplate.STREAM_CODEC)
+    val MEMORY_DISC_DATA: DataComponentType<ItemStackTemplate> =
+        DataComponentType(ItemStackTemplate.CODEC, ItemStackTemplate.STREAM_CODEC)
 }

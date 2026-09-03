@@ -3,7 +3,7 @@ package hiiragi283.lib.recipe.ingredient
 import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.util.Option
+import hiiragi283.lib.util.fold
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.display.DisplayContentsFactory
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
+import java.util.Optional
 
 /**
  * [Item]向けの[HTIngredient]の実装クラスです。
@@ -30,8 +31,12 @@ data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
         @JvmField
         val CODEC: Codec<HTItemIngredient> = HTCodecs.record { instance ->
             instance.group(
-                NeoForgeExtraCodecs.aliasedFieldOf(Ingredient.CODEC, HTConstants.ITEMS, HTConstants.INGREDIENT).forGetter(HTItemIngredient::unsized),
-                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.COUNT).forGetter(HTItemIngredient::count),
+                NeoForgeExtraCodecs.aliasedFieldOf(
+                    Ingredient.CODEC,
+                    HTConstants.ITEMS,
+                    HTConstants.INGREDIENT
+                ).forGetter(HTItemIngredient::unsized),
+                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.COUNT).forGetter(HTItemIngredient::count)
             ).apply(instance, ::HTItemIngredient)
         }
 
@@ -41,7 +46,7 @@ data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
             HTItemIngredient::unsized,
             ByteBufCodecs.VAR_INT,
             HTItemIngredient::count,
-            ::HTItemIngredient,
+            ::HTItemIngredient
         )
     }
 
@@ -66,4 +71,5 @@ data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun Option<HTItemIngredient>.test(instance: ItemInstance): Boolean = this.fold({ HTIngredientHelper.isEmpty(instance) }, { it.test(instance) })
+fun Optional<HTItemIngredient>.test(instance: ItemInstance): Boolean =
+    this.fold({ HTIngredientHelper.isEmpty(instance) }, { it.test(instance) })

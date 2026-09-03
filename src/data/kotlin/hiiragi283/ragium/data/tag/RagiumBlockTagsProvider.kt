@@ -10,27 +10,31 @@ import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.RagiumBlocks
-import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import java.util.concurrent.CompletableFuture
 
-class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) : HTBlockTagsProvider(output, lookupProvider, RagiumAPI.MOD_ID) {
+class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
+    HTBlockTagsProvider(output, lookupProvider, RagiumAPI.MOD_ID) {
     override fun appendTags(registries: HolderLookup.Provider) {
         val pickaxe: HTTagBuilder<Block> = builder(BlockTags.MINEABLE_WITH_PICKAXE)
         // Material
-        RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: RagiumMaterial, block: HTSimpleKeyOrValue<Block>) ->
-            builder(part.tagPrefix, material).add(block)
-            pickaxe.add(block)
-        }
+        RagiumBlocks.MATERIAL_BLOCKS
+            .forEach { (part: HTBlockPart, material: RagiumMaterial, block: HTSimpleKeyOrValue<Block>) ->
+                builder(part.tagPrefix, material).add(block)
+                pickaxe.add(block)
+            }
 
         setOf(
             RagiumMaterial.Mineral.GLOWSTONE to Blocks.GLOWSTONE,
             RagiumMaterial.Gem.QUARTZ to Blocks.QUARTZ_BLOCK,
-            RagiumMaterial.Gem.AMETHYST to Blocks.AMETHYST_BLOCK,
-        ).forEach { (material: RagiumMaterial, block: Block) -> builder(CommonTagPrefixes.STORAGE_BLOCK, material).addBlock(block) }
+            RagiumMaterial.Gem.AMETHYST to Blocks.AMETHYST_BLOCK
+        ).forEach { (material: RagiumMaterial, block: Block) ->
+            builder(CommonTagPrefixes.STORAGE_BLOCK, material).addBlock(block)
+        }
         // Machine
         for (machineType: HTMachineType in HTMachineType.entries) {
             createEmptyTag(createTag(HTMachineType.PREFIX, machineType)) // TODO

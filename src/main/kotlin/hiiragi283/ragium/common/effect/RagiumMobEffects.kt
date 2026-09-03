@@ -17,5 +17,7 @@ data object RagiumMobEffects {
     }
 
     @JvmField
-    val FROSTBITE: HTDeferredMobEffect<HTDamageMobEffect> = REGISTER.register("frostbite") { _ -> HTDamageMobEffect(MobEffectCategory.HARMFUL, 0x3399cc, DamageSources::freeze) }
+    val FROSTBITE: HTDeferredMobEffect<HTDamageMobEffect> = REGISTER.register("frostbite") { _ ->
+        HTDamageMobEffect(MobEffectCategory.HARMFUL, 0x3399cc, DamageSources::freeze)
+    }
 }

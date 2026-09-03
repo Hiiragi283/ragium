@@ -34,8 +34,10 @@ typealias HTBasicDeferredBlockAndItem<BLOCK> = HTDeferredBlockAndItem<BLOCK, Blo
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-data class HTDeferredBlockAndItem<out BLOCK : Block, out ITEM : Item>(val block: HTDeferredBlock<BLOCK>, val item: HTDeferredItem<ITEM>) :
-    HTKeyOrValue<Block, BLOCK>,
+data class HTDeferredBlockAndItem<out BLOCK : Block, out ITEM : Item>(
+    val block: HTDeferredBlock<BLOCK>,
+    val item: HTDeferredItem<ITEM>
+) : HTKeyOrValue<Block, BLOCK>,
     HTHasTranslationKey by item,
     HTHasText by item,
     ItemLike by item,

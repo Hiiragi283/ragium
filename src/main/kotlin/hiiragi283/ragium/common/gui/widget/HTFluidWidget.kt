@@ -14,8 +14,16 @@ import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
 private typealias FluidStackSetter = (FluidStack) -> Unit
 
-sealed class HTFluidWidget(view: HTFluidView, private val stackSetter: FluidStackSetter?, x: Int, y: Int, val backgroundType: HTBackgroundType, width: Int, height: Int, val isGhost: Boolean) :
-    HTAbstractWidget(x - 1, y - 1, width, height),
+sealed class HTFluidWidget(
+    view: HTFluidView,
+    private val stackSetter: FluidStackSetter?,
+    x: Int,
+    y: Int,
+    val backgroundType: HTBackgroundType,
+    width: Int,
+    height: Int,
+    val isGhost: Boolean
+) : HTAbstractWidget(x - 1, y - 1, width, height),
     HTGhostWidget,
     HTIngredientWidget,
     HTFluidView by view {
@@ -41,17 +49,54 @@ sealed class HTFluidWidget(view: HTFluidView, private val stackSetter: FluidStac
 
     //    Slot    //
 
-    class Slot(view: HTFluidView, stackSetter: FluidStackSetter?, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : HTFluidWidget(view, stackSetter, x, y, backgroundType, 18, 18, isGhost) {
-        constructor(tank: HTBasicFluidTank, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(tank, tank::setStack, x, y, backgroundType, isGhost)
+    class Slot(
+        view: HTFluidView,
+        stackSetter: FluidStackSetter?,
+        x: Int,
+        y: Int,
+        backgroundType: HTBackgroundType,
+        isGhost: Boolean
+    ) : HTFluidWidget(view, stackSetter, x, y, backgroundType, 18, 18, isGhost) {
+        constructor(
+            tank: HTBasicFluidTank,
+            x: Int,
+            y: Int,
+            backgroundType: HTBackgroundType,
+            isGhost: Boolean
+        ) : this(tank, tank::setStack, x, y, backgroundType, isGhost)
 
-        override fun toString(): String = "HTFluidWidget.Slot(bounds=$bounds, stack=${this.getFluidStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
+        override fun toString(): String =
+            "HTFluidWidget.Slot(bounds=$bounds, stack=${this.getFluidStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
     }
 
     //    Tank    //
 
-    class Tank(view: HTFluidView, stackSetter: FluidStackSetter?, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : HTFluidWidget(view, stackSetter, x, y, backgroundType, 18, 18 * 3, isGhost) {
-        constructor(tank: HTBasicFluidTank, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(tank, tank::setStack, x, y, backgroundType, isGhost)
+    class Tank(
+        view: HTFluidView,
+        stackSetter: FluidStackSetter?,
+        x: Int,
+        y: Int,
+        backgroundType: HTBackgroundType,
+        isGhost: Boolean
+    ) : HTFluidWidget(
+        view,
+        stackSetter,
+        x,
+        y,
+        backgroundType,
+        18,
+        18 * 3,
+        isGhost
+    ) {
+        constructor(
+            tank: HTBasicFluidTank,
+            x: Int,
+            y: Int,
+            backgroundType: HTBackgroundType,
+            isGhost: Boolean
+        ) : this(tank, tank::setStack, x, y, backgroundType, isGhost)
 
-        override fun toString(): String = "HTFluidWidget.Tank(bounds=$bounds, stack=${this.getFluidStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
+        override fun toString(): String =
+            "HTFluidWidget.Tank(bounds=$bounds, stack=${this.getFluidStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
     }
 }

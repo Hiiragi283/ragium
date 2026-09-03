@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 
 internal class HTMaterialContentsImpl<R : HTPart, out V : Any>(
     table: Table<R, RagiumMaterial, V>,
-    private val errorFactory: (R, RagiumMaterial) -> String,
+    private val errorFactory: (R, RagiumMaterial) -> String
 ) : HTMaterialContents<R, V>,
     Table<R, RagiumMaterial, V> by table {
     override fun getErrorMessage(row: R, column: RagiumMaterial): String = errorFactory(row, column)

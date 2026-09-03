@@ -7,11 +7,11 @@ import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
+import net.minecraft.resources.Identifier
+import net.minecraft.world.item.crafting.Recipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import net.minecraft.resources.Identifier
-import net.minecraft.world.item.crafting.Recipe
 
 /**
  * 1種類のアイテムから1種類のアイテムと液体を作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
@@ -19,7 +19,8 @@ import net.minecraft.world.item.crafting.Recipe
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTItemToItemAndFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) : HTProgressRecipeBuilder<RECIPE>(prefix) {
+class HTItemToItemAndFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
+    HTProgressRecipeBuilder<RECIPE>(prefix) {
     override fun getPrimalId(): Identifier = itemResult.getId()
 
     override fun createRecipe(): RECIPE = factory.create(ingredient, itemResult, fluidResult, progressData)
@@ -73,6 +74,11 @@ class HTItemToItemAndFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, 
      * @since 26.1.0
      */
     fun interface Factory<out RECIPE : Any> {
-        fun create(ingredient: HTItemIngredient, itemResult: HTItemResult, fluidResult: HTFluidResult, progressData: HTProgressData): RECIPE
+        fun create(
+            ingredient: HTItemIngredient,
+            itemResult: HTItemResult,
+            fluidResult: HTFluidResult,
+            progressData: HTProgressData
+        ): RECIPE
     }
 }

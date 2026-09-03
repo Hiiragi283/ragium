@@ -3,7 +3,7 @@
 package hiiragi283.lib.text
 
 import hiiragi283.lib.HTConstants
-import java.text.NumberFormat
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.ClickEvent
@@ -22,6 +22,7 @@ import net.neoforged.fml.ModList
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforgespi.language.IModInfo
 import org.apache.commons.lang3.text.WordUtils
+import java.text.NumberFormat
 
 /**
  * [テキスト][Text]に関するメソッドを集めたクラスです。
@@ -73,7 +74,7 @@ object HTTextUtil {
         if (args.isEmpty()) {
             return translatableText(key)
         } else {
-            val formattedArgs: MutableList<Any> = mutableListOf()
+            val formattedArgs: MutableList<Any> = ObjectArrayList()
             var cachedStyle: Style = Style.EMPTY
             for (arg: Any? in args) {
                 if (arg == null) {

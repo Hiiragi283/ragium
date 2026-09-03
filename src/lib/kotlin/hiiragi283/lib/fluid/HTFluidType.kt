@@ -31,5 +31,6 @@ open class HTFluidType(properties: Properties) : FluidType(properties) {
         return name
     }
 
-    override fun isVaporizedOnPlacement(level: Level, pos: BlockPos, stack: FluidStack): Boolean = level.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pos)
+    override fun isVaporizedOnPlacement(level: Level, pos: BlockPos, stack: FluidStack): Boolean =
+        level.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pos)
 }

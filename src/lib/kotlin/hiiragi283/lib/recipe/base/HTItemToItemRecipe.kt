@@ -26,31 +26,37 @@ interface HTItemToItemRecipe :
      * @author Hiiragi Tsubasa
      * @since 26.1.0
      */
-    open class Basic(val ingredient: HTItemIngredient, val result: HTItemResult, override val progressData: HTProgressData) :
-        HTItemToItemRecipe,
+    open class Basic(
+        val ingredient: HTItemIngredient,
+        val result: HTItemResult,
+        override val progressData: HTProgressData
+    ) : HTItemToItemRecipe,
         HTProgressRecipe.Simple<SingleRecipeInput> {
         companion object {
             @JvmStatic
-            fun <RECIPE : Basic> codec(factory: HTItemToItemRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
-                instance.group(
-                    HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
-                    HTItemResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
-                    HTProgressData.CODEC.forGetter(Basic::progressData),
-                ).apply(instance, factory::create)
-            }
+            fun <RECIPE : Basic> codec(factory: HTItemToItemRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> =
+                HTCodecs.recordMap { instance ->
+                    instance.group(
+                        HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
+                        HTItemResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
+                        HTProgressData.CODEC.forGetter(Basic::progressData)
+                    ).apply(instance, factory::create)
+                }
 
             @JvmField
             val SIMPLE_CODEC: MapCodec<Basic> = codec(::Basic)
 
             @JvmStatic
-            fun <RECIPE : Basic> streamCodec(factory: HTItemToItemRecipeBuilder.Factory<RECIPE>): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
+            fun <RECIPE : Basic> streamCodec(
+                factory: HTItemToItemRecipeBuilder.Factory<RECIPE>
+            ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
                 HTItemIngredient.STREAM_CODEC,
                 Basic::ingredient,
                 HTItemResult.STREAM_CODEC,
                 Basic::result,
                 HTProgressData.STREAM_CODEC,
                 Basic::progressData,
-                factory::create,
+                factory::create
             )
         }
 

@@ -37,7 +37,7 @@ fun <R : Any> Holder<R>.asKeyOrValue(): HTSimpleKeyOrValue<R> = when (this) {
     else -> HTSimpleKeyOrValue {
         this.runCatching(Holder<R>::value).fold(
             { value: R -> this.key?.let { Ior.Both(it, value) } ?: Ior.Right(value) },
-            { it -> this.key?.let { Ior.Left(it) } ?: throw it },
+            { it -> this.key?.let { Ior.Left(it) } ?: throw it }
         )
     }
 }

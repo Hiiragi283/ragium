@@ -26,21 +26,43 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
-abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, private val cache: HTRecipeCache<HTItemAndFluidRecipeInput, HTItemAndFluidToItemRecipe>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(type, pos, state) {
-    constructor(type: BlockEntityType<*>, lookup: HTRecipeLookup<HTItemAndFluidToItemRecipe>, pos: BlockPos, state: BlockState) : this(type, HTRecipeCache(lookup), pos, state)
+abstract class HTItemAndFluidToItemBlockEntity(
+    type: BlockEntityType<*>,
+    private val cache: HTRecipeCache<HTItemAndFluidRecipeInput, HTItemAndFluidToItemRecipe>,
+    pos: BlockPos,
+    state: BlockState
+) : HTProcessorBlockEntity.Energized(type, pos, state) {
+    constructor(
+        type: BlockEntityType<*>,
+        lookup: HTRecipeLookup<HTItemAndFluidToItemRecipe>,
+        pos: BlockPos,
+        state: BlockState
+    ) : this(type, HTRecipeCache(lookup), pos, state)
 
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
         recipeHandler = object : EnergizedHandler<HTItemAndFluidRecipeInput, ItemStack, HTItemAndFluidToItemRecipe>() {
-            private val inputTank: HTInputSlot.SingleFluid by lazy { HTInputSlot.SingleFluid(this@HTItemAndFluidToItemBlockEntity.inputTank) }
-            private val inputSlot: HTInputSlot.SingleItem by lazy { HTInputSlot.SingleItem(this@HTItemAndFluidToItemBlockEntity.inputSlot) }
-            private val outputSlot: HTOutputSlot<ItemStack> by lazy { HTOutputSlot.SingleItem(this@HTItemAndFluidToItemBlockEntity.outputSlot) }
+            private val inputTank: HTInputSlot.SingleFluid by lazy {
+                HTInputSlot.SingleFluid(this@HTItemAndFluidToItemBlockEntity.inputTank)
+            }
+            private val inputSlot: HTInputSlot.SingleItem by lazy {
+                HTInputSlot.SingleItem(this@HTItemAndFluidToItemBlockEntity.inputSlot)
+            }
+            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
+                HTOutputSlot.SingleItem(this@HTItemAndFluidToItemBlockEntity.outputSlot)
+            }
 
-            override fun createInput(): HTItemAndFluidRecipeInput = HTItemAndFluidRecipeInput(inputSlot.getStack(), inputTank.getStack())
+            override fun createInput(): HTItemAndFluidRecipeInput =
+                HTItemAndFluidRecipeInput(inputSlot.getStack(), inputTank.getStack())
 
-            override fun findRecipe(level: ServerLevel, input: HTItemAndFluidRecipeInput): HTItemAndFluidToItemRecipe? = cache.findFirstRecipe(input, level)
+            override fun findRecipe(level: ServerLevel, input: HTItemAndFluidRecipeInput): HTItemAndFluidToItemRecipe? =
+                cache.findFirstRecipe(input, level)
 
-            override fun canComplete(recipe: HTItemAndFluidToItemRecipe, input: HTItemAndFluidRecipeInput, output: ItemStack): Boolean {
+            override fun canComplete(
+                recipe: HTItemAndFluidToItemRecipe,
+                input: HTItemAndFluidRecipeInput,
+                output: ItemStack
+            ): Boolean {
                 val (itemCount: Int, fluidAmount: Int) = recipe.getRequiredAmount(input.item, input.fluid)
                 useTransaction { transaction: Transaction ->
                     if (itemCount > 0 && !inputSlot.canExtract(itemCount, transaction)) {
@@ -53,7 +75,11 @@ abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, private
                 }
             }
 
-            override fun onComplete(recipe: HTItemAndFluidToItemRecipe, input: HTItemAndFluidRecipeInput, output: ItemStack) {
+            override fun onComplete(
+                recipe: HTItemAndFluidToItemRecipe,
+                input: HTItemAndFluidRecipeInput,
+                output: ItemStack
+            ) {
                 val (itemCount: Int, fluidAmount: Int) = recipe.getRequiredAmount(input.item, input.fluid)
                 useTransaction { transaction: Transaction ->
                     if (itemCount > 0) {
@@ -97,7 +123,7 @@ abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, private
             0,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
-            HTBackgroundType.INPUT,
+            HTBackgroundType.INPUT
         )
         widgetHolder.track(inputSlot)
         widgetHolder += HTFluidWidget.Tank(
@@ -105,7 +131,7 @@ abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, private
             HTSlotHelper.getSlotPosX(1),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
-            false,
+            false
         )
         widgetHolder.track(inputTank)
         // output
@@ -114,7 +140,7 @@ abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, private
             1,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT,
+            HTBackgroundType.OUTPUT
         )
         widgetHolder.track(outputSlot)
     }

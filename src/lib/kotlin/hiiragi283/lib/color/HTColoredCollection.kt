@@ -22,7 +22,7 @@ data class HTColoredCollection<out T>(
     val brown: T,
     val green: T,
     val red: T,
-    val black: T,
+    val black: T
 ) : AbstractCollection<T>() {
     companion object {
         @JvmField
@@ -42,7 +42,7 @@ data class HTColoredCollection<out T>(
             HTDefaultColor.BROWN,
             HTDefaultColor.GREEN,
             HTDefaultColor.RED,
-            HTDefaultColor.BLACK,
+            HTDefaultColor.BLACK
         )
     }
 
@@ -65,7 +65,10 @@ data class HTColoredCollection<out T>(
         HTDefaultColor.BLACK -> black
     }
 
-    fun asSequenceWithColor(): Sequence<Pair<HTDefaultColor, T>> = HTDefaultColor.entries.asSequence().map { it to get(it) }
+    fun asSequenceWithColor(): Sequence<Pair<HTDefaultColor, T>> = HTDefaultColor.entries.asSequence().map {
+        it to
+            get(it)
+    }
 
     fun asSequence(): Sequence<T> = HTDefaultColor.entries.asSequence().map(::get)
 
@@ -91,27 +94,29 @@ data class HTColoredCollection<out T>(
         transform(brown),
         transform(green),
         transform(red),
-        transform(black),
+        transform(black)
     )
 
-    inline fun <U, R> zip(other: HTColoredCollection<U>, transform: (T, U) -> R): HTColoredCollection<R> = HTColoredCollection(
-        transform(white, other.white),
-        transform(orange, other.orange),
-        transform(magenta, other.magenta),
-        transform(lightBlue, other.lightBlue),
-        transform(yellow, other.yellow),
-        transform(lime, other.lime),
-        transform(pink, other.pink),
-        transform(gray, other.gray),
-        transform(lightGray, other.lightGray),
-        transform(cyan, other.cyan),
-        transform(purple, other.purple),
-        transform(blue, other.blue),
-        transform(brown, other.brown),
-        transform(green, other.green),
-        transform(red, other.red),
-        transform(black, other.black),
-    )
+    inline fun <U, R> zip(other: HTColoredCollection<U>, transform: (T, U) -> R): HTColoredCollection<R> =
+        HTColoredCollection(
+            transform(white, other.white),
+            transform(orange, other.orange),
+            transform(magenta, other.magenta),
+            transform(lightBlue, other.lightBlue),
+            transform(yellow, other.yellow),
+            transform(lime, other.lime),
+            transform(pink, other.pink),
+            transform(gray, other.gray),
+            transform(lightGray, other.lightGray),
+            transform(cyan, other.cyan),
+            transform(purple, other.purple),
+            transform(blue, other.blue),
+            transform(brown, other.brown),
+            transform(green, other.green),
+            transform(red, other.red),
+            transform(black, other.black)
+        )
 }
 
-inline fun <T> HTColoredCollection(init: (color: HTDefaultColor) -> T): HTColoredCollection<T> = HTColoredCollection.VALUES.map(init)
+inline fun <T> HTColoredCollection(init: (color: HTDefaultColor) -> T): HTColoredCollection<T> =
+    HTColoredCollection.VALUES.map(init)

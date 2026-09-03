@@ -4,6 +4,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -17,10 +18,11 @@ import net.neoforged.neoforge.event.OnDatapackSyncEvent
 @EventBusSubscriber
 data object RagiumRecipeTypes {
     @JvmStatic
-    val allTypes: Set<HTRecipeType<*>> field: MutableSet<HTRecipeType<*>> = mutableSetOf()
+    val allTypes: Set<HTRecipeType<*>> field: MutableSet<HTRecipeType<*>> = ObjectLinkedOpenHashSet()
 
     @JvmStatic
-    private fun <T : Recipe<*>> create(name: String): HTRecipeType<T> = HTRecipeType<T>(RagiumAPI.id(name)).also(allTypes::add)
+    private fun <T : Recipe<*>> create(name: String): HTRecipeType<T> =
+        HTRecipeType<T>(RagiumAPI.id(name)).also(allTypes::add)
 
     @SubscribeEvent
     fun onDatapackSync(event: OnDatapackSyncEvent) {

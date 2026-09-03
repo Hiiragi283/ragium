@@ -6,13 +6,14 @@ import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
+import net.minecraft.resources.Identifier
+import net.minecraft.world.item.crafting.Recipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import net.minecraft.resources.Identifier
-import net.minecraft.world.item.crafting.Recipe
 
-class HTItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) : HTProgressRecipeBuilder<RECIPE>(prefix) {
+class HTItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
+    HTProgressRecipeBuilder<RECIPE>(prefix) {
     override fun getPrimalId(): Identifier = result.getId()
 
     override fun createRecipe(): RECIPE = factory.create(ingredient, result, progressData)

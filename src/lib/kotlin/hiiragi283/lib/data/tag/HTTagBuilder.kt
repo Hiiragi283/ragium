@@ -2,11 +2,11 @@ package hiiragi283.lib.data.tag
 
 import hiiragi283.lib.resource.HTSimpleKeyOrValue
 import hiiragi283.lib.util.HTBuilderMarker
-import java.util.function.Consumer
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
+import java.util.function.Consumer
 
 /**
  * [HTTagsProvider]で使用されるタグのビルダークラスです。
@@ -21,7 +21,8 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
      * @param key 要素のキー
      * @param type このエントリの依存関係
      */
-    fun add(key: ResourceKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = add(key.identifier(), type)
+    fun add(key: ResourceKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> =
+        add(key.identifier(), type)
 
     /**
      * 指定した要素をタグに追加します。
@@ -29,7 +30,8 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
      * @param type このエントリの依存関係
      * @since 26.1.0
      */
-    fun add(like: HTSimpleKeyOrValue<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = add(like.keyOrThrow, type)
+    fun add(like: HTSimpleKeyOrValue<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> =
+        add(like.keyOrThrow, type)
 
     /**
      * 指定した要素をタグに追加します。
@@ -48,7 +50,8 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
      * @param child 子タグ
      * @param type このエントリの依存関係
      */
-    fun addTag(child: TagKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = addTag(child.location, type)
+    fun addTag(child: TagKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> =
+        addTag(child.location, type)
 
     /**
      * 指定した子タグをタグに追加します。

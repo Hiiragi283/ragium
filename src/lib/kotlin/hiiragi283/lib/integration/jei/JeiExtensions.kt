@@ -18,7 +18,8 @@ import net.neoforged.neoforge.fluids.FluidStack
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <T : IIngredientAcceptor<T>> T.add(stack: FluidStack): T = this.add(stack.fluid, stack.amount.toLong(), stack.componentsPatch)
+fun <T : IIngredientAcceptor<T>> T.add(stack: FluidStack): T =
+    this.add(stack.fluid, stack.amount.toLong(), stack.componentsPatch)
 
 /**
  * 液体を登録します。
@@ -27,7 +28,8 @@ fun <T : IIngredientAcceptor<T>> T.add(stack: FluidStack): T = this.add(stack.fl
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <T : IIngredientAcceptor<T>> T.addFluidStacks(stacks: Iterable<FluidStack>): T = this.addIngredients(NeoForgeTypes.FLUID_STACK, stacks.toList())
+fun <T : IIngredientAcceptor<T>> T.addFluidStacks(stacks: Iterable<FluidStack>): T =
+    this.addIngredients(NeoForgeTypes.FLUID_STACK, stacks.toList())
 
 /**
  * 液体を登録します。
@@ -37,7 +39,8 @@ fun <T : IIngredientAcceptor<T>> T.addFluidStacks(stacks: Iterable<FluidStack>):
  * @since 26.1.0
  */
 @JvmName("addFluids")
-fun <T : IIngredientAcceptor<T>> T.add(ingredient: HTStackPreview<FluidStack>): T = this.addFluidStacks(ingredient.getPreviewStacks(this.contextMap))
+fun <T : IIngredientAcceptor<T>> T.add(ingredient: HTStackPreview<FluidStack>): T =
+    this.addFluidStacks(ingredient.getPreviewStacks(this.contextMap))
 
 /**
  * 液体を登録します。
@@ -58,7 +61,8 @@ fun <T : IIngredientAcceptor<T>> T.add(result: HTFluidResult): T = this.add(resu
  * @since 26.1.0
  */
 @JvmName("addItems")
-fun <T : IIngredientAcceptor<T>> T.add(ingredient: HTStackPreview<ItemStack>): T = this.addItemStacks(ingredient.getPreviewStacks(this.contextMap))
+fun <T : IIngredientAcceptor<T>> T.add(ingredient: HTStackPreview<ItemStack>): T =
+    this.addItemStacks(ingredient.getPreviewStacks(this.contextMap))
 
 /**
  * アイテムを登録します。

@@ -27,7 +27,7 @@ class HTJeiRecipeType<T : Any>(
     private val id: Identifier,
     hasText: HTHasText,
     val icon: Either<Identifier, ItemStack>,
-    private val recipeClass: Class<out T>,
+    private val recipeClass: Class<out T>
 ) : IRecipeType<T>,
     HTHasText by hasText {
     override fun getUid(): Identifier = id
@@ -41,16 +41,26 @@ class HTJeiRecipeType<T : Any>(
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <reified T : Any> HTJeiRecipeType(id: Identifier, hasText: HTHasText, icon: Either<Identifier, ItemStack>): HTJeiRecipeType<T> = HTJeiRecipeType(id, hasText, icon, T::class.java)
+inline fun <reified T : Any> HTJeiRecipeType(
+    id: Identifier,
+    hasText: HTHasText,
+    icon: Either<Identifier, ItemStack>
+): HTJeiRecipeType<T> = HTJeiRecipeType(id, hasText, icon, T::class.java)
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <reified T : Any, U> HTJeiRecipeType(id: U, icon: ItemStack): HTJeiRecipeType<T> where U : HTIdOrValue<*>, U : HTHasText = HTJeiRecipeType(id.idOrThrow, id, Either.Right(icon))
+inline fun <reified T : Any, U> HTJeiRecipeType(
+    id: U,
+    icon: ItemStack
+): HTJeiRecipeType<T> where U : HTIdOrValue<*>, U : HTHasText = HTJeiRecipeType(id.idOrThrow, id, Either.Right(icon))
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <reified T : Any, U> HTJeiRecipeType(id: U, icon: HTItemInstanceLike): HTJeiRecipeType<T> where U : HTIdOrValue<*>, U : HTHasText = HTJeiRecipeType(id, icon.toStack())
+inline fun <reified T : Any, U> HTJeiRecipeType(
+    id: U,
+    icon: HTItemInstanceLike
+): HTJeiRecipeType<T> where U : HTIdOrValue<*>, U : HTHasText = HTJeiRecipeType(id, icon.toStack())

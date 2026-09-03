@@ -25,7 +25,13 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
     //    Container    //
 
     class Container(val slot: Slot, backgroundType: HTBackgroundType) : HTItemWidget(backgroundType) {
-        constructor(slot: HTBasicItemSlot, index: Int, x: Int, y: Int, backgroundType: HTBackgroundType) : this(HTContainerItemSlot.create(slot, index, x, y, backgroundType), backgroundType)
+        constructor(
+            slot: HTBasicItemSlot,
+            index: Int,
+            x: Int,
+            y: Int,
+            backgroundType: HTBackgroundType
+        ) : this(HTContainerItemSlot.create(slot, index, x, y, backgroundType), backgroundType)
 
         override fun getStack(): ItemStack = slot.item
 
@@ -40,14 +46,37 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
 
     //    Fake    //
 
-    class Fake(private val stackGetter: () -> ItemStack, private val stackSetter: ItemStackSetter?, override val bounds: HTBounds, backgroundType: HTBackgroundType, val isGhost: Boolean) :
-        HTItemWidget(backgroundType),
+    class Fake(
+        private val stackGetter: () -> ItemStack,
+        private val stackSetter: ItemStackSetter?,
+        override val bounds: HTBounds,
+        backgroundType: HTBackgroundType,
+        val isGhost: Boolean
+    ) : HTItemWidget(backgroundType),
         HTGhostWidget {
-        constructor(stackGetter: () -> ItemStack, stackSetter: ItemStackSetter?, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(stackGetter, stackSetter, HTBounds.createSlot(x - 1, y - 1), backgroundType, isGhost)
+        constructor(
+            stackGetter: () -> ItemStack,
+            stackSetter: ItemStackSetter?,
+            x: Int,
+            y: Int,
+            backgroundType: HTBackgroundType,
+            isGhost: Boolean
+        ) : this(stackGetter, stackSetter, HTBounds.createSlot(x - 1, y - 1), backgroundType, isGhost)
 
-        constructor(slot: HTBasicItemSlot, bounds: HTBounds, backgroundType: HTBackgroundType, isGhost: Boolean) : this(slot::getStackCopy, slot::setStack, bounds, backgroundType, isGhost)
+        constructor(slot: HTBasicItemSlot, bounds: HTBounds, backgroundType: HTBackgroundType, isGhost: Boolean) : this(
+            slot::getStackCopy,
+            slot::setStack,
+            bounds,
+            backgroundType,
+            isGhost
+        )
 
-        constructor(slot: HTBasicItemSlot, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(slot, HTBounds.createSlot(x - 1, y - 1), backgroundType, isGhost)
+        constructor(slot: HTBasicItemSlot, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(
+            slot,
+            HTBounds.createSlot(x - 1, y - 1),
+            backgroundType,
+            isGhost
+        )
 
         override fun getStack(): ItemStack = stackGetter()
 
@@ -63,6 +92,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
             }
         }
 
-        override fun toString(): String = "HTItemWidget.Fake(bounds=$bounds, stack=${getStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
+        override fun toString(): String =
+            "HTItemWidget.Fake(bounds=$bounds, stack=${getStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
     }
 }

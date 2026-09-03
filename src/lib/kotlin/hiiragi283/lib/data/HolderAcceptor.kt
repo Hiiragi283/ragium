@@ -3,6 +3,7 @@ package hiiragi283.lib.data
 import hiiragi283.lib.registry.HTDeferredBlockAndItem
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.world.item.Item
@@ -81,7 +82,7 @@ interface HolderAcceptor<T : Any> {
      * [HolderSet]を作成する[HolderAcceptor]の実装クラスです。
      */
     open class SetBuilder<T : Any> : HolderAcceptor<T> {
-        private var holders: MutableList<Holder<T>> = mutableListOf()
+        private var holders: MutableList<Holder<T>> = ObjectArrayList()
 
         override fun Holder<T>.unaryPlus() {
             check(this.delegate is Holder.Reference<T>) { "Cannot serialize given holder $this" }

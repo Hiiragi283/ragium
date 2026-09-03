@@ -10,8 +10,15 @@ import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.world.item.ItemStack
 
-class HTItemWidgetRenderer(gui: HTGuiAccess, widget: HTItemWidget) : HTAbstractWidgetRenderer<HTItemWidget>(gui, widget) {
-    override fun render(bounds: HTBounds, graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, partialTick: Float) {
+class HTItemWidgetRenderer(gui: HTGuiAccess, widget: HTItemWidget) :
+    HTAbstractWidgetRenderer<HTItemWidget>(gui, widget) {
+    override fun render(
+        bounds: HTBounds,
+        graphics: GuiGraphicsExtractor,
+        mouseX: Int,
+        mouseY: Int,
+        partialTick: Float
+    ) {
         // Render background
         HTSpriteRenderHelper.blit(graphics, widget.backgroundType.slotTexture, bounds)
         // Render stack

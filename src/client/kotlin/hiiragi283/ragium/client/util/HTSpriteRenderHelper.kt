@@ -25,7 +25,7 @@ object HTSpriteRenderHelper {
         uOffset: Float = 0f,
         vOffset: Float = 0f,
         textureWidth: Int = bounds.width,
-        textureHeight: Int = bounds.height,
+        textureHeight: Int = bounds.height
     ) {
         val (x: Int, y: Int, width: Int, height: Int) = bounds
         blit(
@@ -38,7 +38,7 @@ object HTSpriteRenderHelper {
             uOffset,
             vOffset,
             textureWidth,
-            textureHeight,
+            textureHeight
         )
     }
 
@@ -53,7 +53,7 @@ object HTSpriteRenderHelper {
         uOffset: Float = 0f,
         vOffset: Float = 0f,
         textureWidth: Int = width,
-        textureHeight: Int = height,
+        textureHeight: Int = height
     ) {
         graphics.enableScissor(x, y, x + width, y + height)
         graphics.blit(
@@ -66,7 +66,7 @@ object HTSpriteRenderHelper {
             width,
             height,
             textureWidth,
-            textureHeight,
+            textureHeight
         )
         graphics.disableScissor()
     }

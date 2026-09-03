@@ -5,15 +5,12 @@ import hiiragi283.lib.tag.createTagKey
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
-import hiiragi283.lib.util.Option
 import hiiragi283.lib.util.java
 import hiiragi283.lib.util.kotlin
 import io.netty.buffer.ByteBuf
-import java.util.UUID
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.UUIDUtil
-import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.network.codec.ByteBufCodecs
@@ -22,6 +19,8 @@ import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ByIdMap
+import java.util.Optional
+import java.util.UUID
 
 /**
  * Hiiragi Seriesで使用される[StreamCodec]をまとめたクラスです。
@@ -44,19 +43,17 @@ data object HTStreamCodecs {
      * @param valueCodec 値の[StreamCodec]
      */
     @JvmStatic
-    fun <B : ByteBuf, K : Any, V : Any> mapOf(keyCodec: StreamCodec<in B, K>, valueCodec: StreamCodec<in B, V>): StreamCodec<B, Map<K, V>> = ByteBufCodecs.map(::LinkedHashMap, keyCodec, valueCodec)
+    fun <B : ByteBuf, K : Any, V : Any> mapOf(
+        keyCodec: StreamCodec<in B, K>,
+        valueCodec: StreamCodec<in B, V>
+    ): StreamCodec<B, Map<K, V>> = ByteBufCodecs.map(::LinkedHashMap, keyCodec, valueCodec)
 
     /**
-     * [Option]でラップされた[StreamCodec]を作成します。
+     * [Optional]でラップされた[StreamCodec]を作成します。
      */
     @JvmStatic
-    fun <B : ByteBuf, V : Any> option(codec: StreamCodec<in B, V>): StreamCodec<B, Option<V>> = object : StreamCodec<B, Option<V>> {
-        override fun encode(output: B, value: Option<V>) {
-            FriendlyByteBuf.writeNullable(output, value.getOrNull(), codec)
-        }
-
-        override fun decode(input: B): Option<V> = Option.fromNullable(FriendlyByteBuf.readNullable(input, codec))
-    }
+    fun <B : ByteBuf, V : Any> optional(codec: StreamCodec<in B, V>): StreamCodec<B, Optional<V>> =
+        ByteBufCodecs.optional(codec)
 
     /**
      * [Pair]の[StreamCodec]を作成します。
@@ -67,12 +64,15 @@ data object HTStreamCodecs {
      * @param right 右側の値の[StreamCodec]
      */
     @JvmStatic
-    fun <BUF : ByteBuf, A : Any, B : Any> pair(left: StreamCodec<in BUF, A>, right: StreamCodec<in BUF, B>): StreamCodec<BUF, Pair<A, B>> = StreamCodec.composite(
+    fun <BUF : ByteBuf, A : Any, B : Any> pair(
+        left: StreamCodec<in BUF, A>,
+        right: StreamCodec<in BUF, B>
+    ): StreamCodec<BUF, Pair<A, B>> = StreamCodec.composite(
         left,
         Pair<A, B>::first,
         right,
         Pair<A, B>::second,
-        ::Pair,
+        ::Pair
     )
 
     /**
@@ -85,7 +85,10 @@ data object HTStreamCodecs {
      * @see ByteBufCodecs.either
      */
     @JvmStatic
-    fun <BUF : ByteBuf, A : Any, B : Any> either(left: StreamCodec<in BUF, A>, right: StreamCodec<in BUF, B>): StreamCodec<BUF, Either<A, B>> = ByteBufCodecs.either(left, right).map({ it.kotlin }, { it.java })
+    fun <BUF : ByteBuf, A : Any, B : Any> either(
+        left: StreamCodec<in BUF, A>,
+        right: StreamCodec<in BUF, B>
+    ): StreamCodec<BUF, Either<A, B>> = ByteBufCodecs.either(left, right).map({ it.kotlin }, { it.java })
 
     /**
      * [Ior]の[StreamCodec]を作成します。
@@ -96,12 +99,15 @@ data object HTStreamCodecs {
      * @param right 右側の値の[StreamCodec]
      */
     @JvmStatic
-    fun <BUF : ByteBuf, A : Any, B : Any> ior(left: StreamCodec<in BUF, A>, right: StreamCodec<in BUF, B>): StreamCodec<BUF, Ior<A, B>> = either(
+    fun <BUF : ByteBuf, A : Any, B : Any> ior(
+        left: StreamCodec<in BUF, A>,
+        right: StreamCodec<in BUF, B>
+    ): StreamCodec<BUF, Ior<A, B>> = either(
         either(left, right),
-        pair(left, right),
+        pair(left, right)
     ).map(
         { either: Either<Either<A, B>, Pair<A, B>> -> either.fold(Ior.Companion::fromEither, Ior.Companion::fromPair) },
-        Ior<A, B>::unwrap,
+        Ior<A, B>::unwrap
     )
 
     /**
@@ -109,9 +115,11 @@ data object HTStreamCodecs {
      * @param V [Enum]を継承したクラス
      */
     @JvmStatic
-    inline fun <reified V : Enum<V>> enum(strategy: ByIdMap.OutOfBoundsStrategy = ByIdMap.OutOfBoundsStrategy.WRAP): StreamCodec<ByteBuf, V> = ByteBufCodecs.idMapper(
+    inline fun <reified V : Enum<V>> enum(
+        strategy: ByIdMap.OutOfBoundsStrategy = ByIdMap.OutOfBoundsStrategy.WRAP
+    ): StreamCodec<ByteBuf, V> = ByteBufCodecs.idMapper(
         ByIdMap.continuous(Enum<V>::ordinal, V::class.java.enumConstants, strategy),
-        Enum<V>::ordinal,
+        Enum<V>::ordinal
     )
 
     //    Registry    //
@@ -121,26 +129,30 @@ data object HTStreamCodecs {
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> resourceKey(registryKey: RegistryKey<T>): StreamCodec<ByteBuf, ResourceKey<T>> = ResourceKey.streamCodec(registryKey)
+    fun <T : Any> resourceKey(registryKey: RegistryKey<T>): StreamCodec<ByteBuf, ResourceKey<T>> =
+        ResourceKey.streamCodec(registryKey)
 
     /**
      * [TagKey]の[StreamCodec]を作成します。
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> tagKey(registryKey: RegistryKey<T>): StreamCodec<ByteBuf, TagKey<T>> = Identifier.STREAM_CODEC.map(registryKey::createTagKey, TagKey<T>::location)
+    fun <T : Any> tagKey(registryKey: RegistryKey<T>): StreamCodec<ByteBuf, TagKey<T>> =
+        Identifier.STREAM_CODEC.map(registryKey::createTagKey, TagKey<T>::location)
 
     /**
      * 指定した[registryKey]から[Holder]の[StreamCodec]を返します。
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> holder(registryKey: RegistryKey<T>): StreamCodec<RegistryFriendlyByteBuf, Holder<T>> = ByteBufCodecs.holderRegistry(registryKey)
+    fun <T : Any> holder(registryKey: RegistryKey<T>): StreamCodec<RegistryFriendlyByteBuf, Holder<T>> =
+        ByteBufCodecs.holderRegistry(registryKey)
 
     /**
      * 指定した[registryKey]から[HolderSet]の[StreamCodec]を返します。
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> holderSet(registryKey: RegistryKey<T>): StreamCodec<RegistryFriendlyByteBuf, HolderSet<T>> = ByteBufCodecs.holderSet(registryKey)
+    fun <T : Any> holderSet(registryKey: RegistryKey<T>): StreamCodec<RegistryFriendlyByteBuf, HolderSet<T>> =
+        ByteBufCodecs.holderSet(registryKey)
 }

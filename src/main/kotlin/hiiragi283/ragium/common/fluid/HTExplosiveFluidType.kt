@@ -16,7 +16,7 @@ class HTExplosiveFluidType(private val power: Float, properties: Properties) : H
             pos.center,
             power,
             true,
-            Level.ExplosionInteraction.BLOCK,
+            Level.ExplosionInteraction.BLOCK
         )
     }
 }

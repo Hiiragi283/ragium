@@ -47,7 +47,8 @@ data object HTJeiRecipeHelper {
      * @param amount 必要な数量
      */
     @JvmStatic
-    fun fakeFluid(fluids: Iterable<FluidStack>, amount: Int): HTFluidIngredient = fakeFluid(fluids.map(::FluidStackSlotDisplay).let(::SlotDisplay), amount)
+    fun fakeFluid(fluids: Iterable<FluidStack>, amount: Int): HTFluidIngredient =
+        fakeFluid(fluids.map(::FluidStackSlotDisplay).let(::SlotDisplay), amount)
 
     /**
      * 動的レシピ向けに，偽のプレビューをもつ[HTFluidIngredient]を作成します。
@@ -55,7 +56,8 @@ data object HTJeiRecipeHelper {
      * @param amount 必要な数量
      */
     @JvmStatic
-    fun fakeFluid(display: SlotDisplay, amount: Int): HTFluidIngredient = HTFluidIngredient(CustomDisplayFluidIngredient.of(FAKE_FLUID_INGREDIENT, display), amount)
+    fun fakeFluid(display: SlotDisplay, amount: Int): HTFluidIngredient =
+        HTFluidIngredient(CustomDisplayFluidIngredient.of(FAKE_FLUID_INGREDIENT, display), amount)
 
     //    Item    //
 
@@ -68,7 +70,8 @@ data object HTJeiRecipeHelper {
      * @param count 必要な個数
      */
     @JvmStatic
-    fun fakeItem(stack: ItemStack, count: Int = 1): HTItemIngredient = fakeItem(stack.toTemplateOrNull()?.let(SlotDisplay::ItemStackSlotDisplay) ?: SlotDisplay.Empty.INSTANCE, count)
+    fun fakeItem(stack: ItemStack, count: Int = 1): HTItemIngredient =
+        fakeItem(stack.toTemplateOrNull()?.let(SlotDisplay::ItemStackSlotDisplay) ?: SlotDisplay.Empty.INSTANCE, count)
 
     /**
      * 動的レシピ向けに，偽のプレビューをもつ[HTItemIngredient]を作成します。
@@ -76,7 +79,8 @@ data object HTJeiRecipeHelper {
      * @param count 必要な個数
      */
     @JvmStatic
-    fun fakeItem(template: ItemStackTemplate, count: Int = 1): HTItemIngredient = fakeItem(SlotDisplay.ItemStackSlotDisplay(template), count)
+    fun fakeItem(template: ItemStackTemplate, count: Int = 1): HTItemIngredient =
+        fakeItem(SlotDisplay.ItemStackSlotDisplay(template), count)
 
     /**
      * 動的レシピ向けに，偽のプレビューをもつ[HTItemIngredient]を作成します。
@@ -85,7 +89,8 @@ data object HTJeiRecipeHelper {
      */
     @JvmName("fakeItemStacks")
     @JvmStatic
-    fun fakeItem(items: Iterable<ItemStack>, count: Int = 1): HTItemIngredient = fakeItem(items.mapNotNull { it.toTemplateOrNull() }, count)
+    fun fakeItem(items: Iterable<ItemStack>, count: Int = 1): HTItemIngredient =
+        fakeItem(items.mapNotNull { it.toTemplateOrNull() }, count)
 
     /**
      * 動的レシピ向けに，偽のプレビューをもつ[HTItemIngredient]を作成します。
@@ -94,7 +99,8 @@ data object HTJeiRecipeHelper {
      */
     @JvmName("fakeItemTemplates")
     @JvmStatic
-    fun fakeItem(items: Iterable<ItemStackTemplate>, count: Int = 1): HTItemIngredient = fakeItem(items.map(SlotDisplay::ItemStackSlotDisplay).let(::SlotDisplay), count)
+    fun fakeItem(items: Iterable<ItemStackTemplate>, count: Int = 1): HTItemIngredient =
+        fakeItem(items.map(SlotDisplay::ItemStackSlotDisplay).let(::SlotDisplay), count)
 
     /**
      * 動的レシピ向けに，偽のプレビューをもつ[HTItemIngredient]を作成します。
@@ -102,7 +108,8 @@ data object HTJeiRecipeHelper {
      * @param count 必要な個数
      */
     @JvmStatic
-    fun fakeItem(display: SlotDisplay, count: Int = 1): HTItemIngredient = HTItemIngredient(CustomDisplayIngredient.of(FAKE_INGREDIENT, display), count)
+    fun fakeItem(display: SlotDisplay, count: Int = 1): HTItemIngredient =
+        HTItemIngredient(CustomDisplayIngredient.of(FAKE_INGREDIENT, display), count)
 
     //    Recipes    //
 
@@ -115,7 +122,11 @@ data object HTJeiRecipeHelper {
      * @param lookup レシピの提供元
      */
     @JvmStatic
-    inline fun <RECIPE_A : Any, reified RECIPE_B : RECIPE_A> addRecipes(registration: IRecipeRegistration, recipeType: IRecipeType<HTRecipeHolder<RECIPE_B>>, lookup: HTRecipeLookup<RECIPE_A>) {
+    inline fun <RECIPE_A : Any, reified RECIPE_B : RECIPE_A> addRecipes(
+        registration: IRecipeRegistration,
+        recipeType: IRecipeType<HTRecipeHolder<RECIPE_B>>,
+        lookup: HTRecipeLookup<RECIPE_A>
+    ) {
         val recipes: List<HTRecipeHolder<RECIPE_B>> = getRecipes(lookup)
         if (recipes.isEmpty()) return
         registration.addRecipes(recipeType, recipes)
@@ -129,13 +140,13 @@ data object HTJeiRecipeHelper {
      * @return [RECIPE_B]に対する[HTRecipeHolder]の一覧
      */
     @JvmStatic
-    inline fun <RECIPE_A : Any, reified RECIPE_B : RECIPE_A> getRecipes(lookup: HTRecipeLookup<RECIPE_A>): List<HTRecipeHolder<RECIPE_B>> {
-        val recipes: MutableList<HTRecipeHolder<RECIPE_B>> = mutableListOf()
-        for ((key: RecipeKey, recipe: RECIPE_A) in lookup.getAllRecipes(HTPhysicalSideHelper.createLookupContext())) {
-            if (recipe is RECIPE_B) {
-                recipes += HTRecipeHolder(key, recipe)
+    inline fun <RECIPE_A : Any, reified RECIPE_B : RECIPE_A> getRecipes(
+        lookup: HTRecipeLookup<RECIPE_A>
+    ): List<HTRecipeHolder<RECIPE_B>> = lookup.getAllRecipesN(HTPhysicalSideHelper.createLookupContext())
+        .mapNotNull { (key: RecipeKey, recipe: RECIPE_A) ->
+            when (recipe) {
+                is RECIPE_B -> HTRecipeHolder(key, recipe)
+                else -> null
             }
-        }
-        return recipes
-    }
+        }.toList()
 }

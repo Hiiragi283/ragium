@@ -3,7 +3,6 @@ package hiiragi283.lib.recipe.lookup
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.HTRecipePredicate
-import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.id
 import hiiragi283.lib.recipe.recipe
 import net.minecraft.server.level.ServerLevel
@@ -15,7 +14,9 @@ import net.minecraft.world.item.crafting.RecipeInput
  * @param RECIPE 提供するレシピのクラス
  * @param lookup レシピの提供元
  */
-class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(private val lookup: HTRecipeLookup<RECIPE>) {
+class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(
+    private val lookup: HTRecipeLookup<RECIPE>
+) {
     private var lastRecipe: HTRecipeHolder<RECIPE>? = null
 
     /**
@@ -32,7 +33,8 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(priv
      * @param level レシピ取得時のレベル
      * @return [input]に一致する最初のレシピ
      */
-    fun findFirstRecipe(input: INPUT, level: ServerLevel): RECIPE? = findFirstRecipe(input, HTRecipeLookup.Context(level))
+    fun findFirstRecipe(input: INPUT, level: ServerLevel): RECIPE? =
+        findFirstRecipe(input, HTRecipeLookup.Context(level))
 
     /**
      * レシピを取得します。
@@ -40,7 +42,8 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(priv
      * @param context レシピ取得時のコンテキスト
      * @return [input]に一致する最初のレシピ
      */
-    fun findFirstRecipe(input: INPUT, context: HTRecipeLookup.Context): RECIPE? = findFirstHolder(input, context)?.recipe
+    fun findFirstRecipe(input: INPUT, context: HTRecipeLookup.Context): RECIPE? =
+        findFirstHolder(input, context)?.recipe
 
     /**
      * [HTRecipeHolder]を取得します。
@@ -53,12 +56,9 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(priv
         if (lastRecipe != null && lastRecipe!!.recipe.matches(input)) {
             return lastRecipe
         }
-        for ((id: RecipeKey, recipe: RECIPE) in lookup.getAllRecipes(context)) {
-            if (recipe.matches(input)) {
-                lastRecipe = id to recipe
-                break
-            }
-        }
+        lookup.getAllRecipesN(context)
+            .firstOrNull { (_, recipe) -> recipe.matches(input) }
+            ?.let(::lastRecipe::set)
         return lastRecipe
     }
 

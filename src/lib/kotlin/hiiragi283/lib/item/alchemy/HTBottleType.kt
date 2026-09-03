@@ -29,7 +29,7 @@ enum class HTBottleType :
     HTItemInstanceLike {
     DEFAULT,
     SPLASH,
-    LINGERING,
+    LINGERING
     ;
 
     companion object {
@@ -43,7 +43,8 @@ enum class HTBottleType :
         val STREAM_CODEC: StreamCodec<ByteBuf, HTBottleType> = HTStreamCodecs.enum()
 
         @JvmStatic
-        fun getBottleType(instance: TypedInstance<Item>): HTBottleType? = entries.firstOrNull { instance.`is`(it.asItem()) }
+        fun getBottleType(instance: TypedInstance<Item>): HTBottleType? =
+            entries.firstOrNull { instance.`is`(it.asItem()) }
     }
 
     override fun asItem(): Item = when (this) {
@@ -52,7 +53,8 @@ enum class HTBottleType :
         LINGERING -> Items.LINGERING_POTION
     }
 
-    override fun toTemplate(count: Int, patch: DataComponentPatch): ItemStackTemplate = ItemStackTemplate(asItem(), count, patch)
+    override fun toTemplate(count: Int, patch: DataComponentPatch): ItemStackTemplate =
+        ItemStackTemplate(asItem(), count, patch)
 
     override fun toStack(count: Int, patch: DataComponentPatch): ItemStack = ItemStack(this, count, patch)
 

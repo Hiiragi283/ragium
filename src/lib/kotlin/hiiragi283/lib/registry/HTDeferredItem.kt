@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.level.ItemLike
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * シンプルな[HTDeferredItem]のエイリアスです。
@@ -42,7 +43,9 @@ class HTDeferredItem<out ITEM : Item> :
 
     override fun asItem(): ITEM = get()
 
-    override fun toTemplate(count: Int, patch: DataComponentPatch): ItemStackTemplate? = asOption().map { ItemStackTemplate(it, count, patch) }.getOrNull()
+    override fun toTemplate(count: Int, patch: DataComponentPatch): ItemStackTemplate? = asOptional().map {
+        ItemStackTemplate(it, count, patch)
+    }.getOrNull()
 
     override fun toStack(count: Int, patch: DataComponentPatch): ItemStack = when {
         this.isBound -> ItemStack(this, count, patch)

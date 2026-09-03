@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
-import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
@@ -21,9 +20,11 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
+import java.util.concurrent.CompletableFuture
 
-class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun buildRecipes() {
+class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
+    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+    override fun exportValues() {
         assembling()
         compressing()
         crushing()
@@ -82,7 +83,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // XX Ingot + XX Nugget -> XX Chain
         setOf(
             RagiumMaterial.Metal.COPPER to Items.COPPER_CHAIN.unaffected(),
-            RagiumMaterial.Metal.IRON to Items.IRON_CHAIN,
+            RagiumMaterial.Metal.IRON to Items.IRON_CHAIN
         ).forEach { (metal: RagiumMaterial.Metal, chain: Item) ->
             RagiumRecipeBuilders.assembling {
                 primary { +holderSet(CommonTagPrefixes.INGOT, metal) }
@@ -99,7 +100,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // XX Ingot + Torch -> XX Lantern
         setOf(
             RagiumMaterial.Metal.COPPER to Items.COPPER_LANTERN.unaffected(),
-            RagiumMaterial.Metal.IRON to Items.LANTERN,
+            RagiumMaterial.Metal.IRON to Items.LANTERN
         ).forEach { (metal: RagiumMaterial.Metal, lantern: Item) ->
             RagiumRecipeBuilders.assembling {
                 primary { +holderSet(CommonTagPrefixes.INGOT, metal) }
@@ -260,7 +261,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         // XX Dust -> XX
         for (fuel in RagiumMaterial.Fuel.entries) {
-            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel) ?: continue
+            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
             RagiumRecipeBuilders.compressing {
                 ingredient { +holderSet(CommonTagPrefixes.DUST, fuel) }
                 result { +baseItem }
@@ -280,7 +281,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     private fun crushing() {
         // XX Dust
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
-            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel) ?: continue
+            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
             RagiumRecipeBuilders.crushing {
                 ingredient { items { +baseItem } }
                 primary { +RagiumItems.getOrThrow(HTItemPart.DUST, fuel) }
@@ -296,9 +297,10 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
 
         for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS.get(HTItemPart.DUST, metal) ?: continue
             RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(CommonTagPrefixes.INGOT, metal) }
-                primary { +RagiumItems.getOrThrow(HTItemPart.DUST, metal) }
+                primary { +dust }
                 recipeId suffix "_from_ingot"
             }.save(exporter)
         }

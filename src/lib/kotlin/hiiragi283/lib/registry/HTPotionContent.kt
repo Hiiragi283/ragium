@@ -17,7 +17,7 @@ import net.minecraft.world.level.ItemLike
 data class HTPotionContent(
     val baseHolder: HTSimpleDeferredHolder<Potion>,
     val longHolder: HTSimpleDeferredHolder<Potion>,
-    val strongHolder: HTSimpleDeferredHolder<Potion>?,
+    val strongHolder: HTSimpleDeferredHolder<Potion>?
 ) : HTSimpleKeyOrValue<Potion> by baseHolder {
 
     /**

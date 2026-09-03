@@ -28,8 +28,10 @@ interface HTEnergyHandler {
 
         override fun getCapacityAsInt(): Int = this@HTEnergyHandler.capacity
 
-        override fun insert(amount: Int, transaction: TransactionContext): Int = this@HTEnergyHandler.insert(amount, transaction, HTTransferAccess.EXTERNAL)
+        override fun insert(amount: Int, transaction: TransactionContext): Int =
+            this@HTEnergyHandler.insert(amount, transaction, HTTransferAccess.EXTERNAL)
 
-        override fun extract(amount: Int, transaction: TransactionContext): Int = this@HTEnergyHandler.extract(amount, transaction, HTTransferAccess.EXTERNAL)
+        override fun extract(amount: Int, transaction: TransactionContext): Int =
+            this@HTEnergyHandler.extract(amount, transaction, HTTransferAccess.EXTERNAL)
     }
 }

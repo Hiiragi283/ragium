@@ -50,10 +50,10 @@ data object RagiumConfig {
                         RagiumAPI.MOD_ID,
                         HTConstants.MINECRAFT,
                         "alltheores",
-                        "mekanism",
+                        "mekanism"
                     ),
                     { "" },
-                    { obj: Any -> obj is String },
+                    { obj: Any -> obj is String }
                 )
 
         @JvmField
@@ -94,7 +94,10 @@ data object RagiumConfig {
             val chemicalBath: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CHEMICAL_BATH)
 
             @JvmField
-            val chemicalReactor: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CHEMICAL_REACTOR)
+            val chemicalReactor: HTEnergyConfig = HTEnergyConfig.createMachine(
+                builder,
+                RagiumConstants.CHEMICAL_REACTOR
+            )
 
             @JvmField
             val electrolyzer: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.ELECTROLYZER)
@@ -118,10 +121,18 @@ data object RagiumConfig {
 
             // Arcane
             @JvmField
-            val fluidDuplicator: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.FLUID_DUPLICATOR, 1024)
+            val fluidDuplicator: HTEnergyConfig = HTEnergyConfig.createMachine(
+                builder,
+                RagiumConstants.FLUID_DUPLICATOR,
+                1024
+            )
 
             @JvmField
-            val massFabricator: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.MASS_FABRICATOR, 1024)
+            val massFabricator: HTEnergyConfig = HTEnergyConfig.createMachine(
+                builder,
+                RagiumConstants.MASS_FABRICATOR,
+                1024
+            )
         }
 
         init {

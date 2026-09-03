@@ -26,7 +26,8 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 
-abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTBaseMachineBlockEntity(type, pos, state) {
+abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
+    HTBaseMachineBlockEntity(type, pos, state) {
     protected lateinit var recipeHandler: HTRecipeHandler<*, *, *>
 
     final override fun createFluidHandler(listener: Runnable): HTResourceSlotHolder<HTFluidTank>? {
@@ -71,13 +72,15 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
     //    Ticking    //
 
-    fun modifyTime(time: Int): Int = time // modifyValue(HTUpgradeKeys.SPEED) { time / (it * getBaseMultiplier()) } TODO
+    fun modifyTime(time: Int): Int = time
 
-    final override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = recipeHandler.tick(level)
+    final override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean =
+        recipeHandler.tick(level)
 
     //    Energized    //
 
-    abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
+    abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
+        HTProcessorBlockEntity(type, pos, state) {
         lateinit var handler: HTMachineEnergyHandler.Processor
             private set
 
@@ -112,8 +115,13 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
         //    EnergizedHandler    //
 
-        abstract inner class EnergizedHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE> : HTRecipeHandler<INPUT, OUTPUT, RECIPE>() where RECIPE : HTRecipeFactory<INPUT, OUTPUT>, RECIPE : HTProgressRecipe<INPUT> {
-            final override fun getMaxProgress(recipe: RECIPE, input: INPUT): Int = recipe.getProgressData(input).getProcessTime(handler.currentEnergyPerTick).let(::updateAndGetProgress)
+        abstract inner class EnergizedHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE> :
+            HTRecipeHandler<INPUT, OUTPUT, RECIPE>()
+            where RECIPE : HTRecipeFactory<INPUT, OUTPUT>,
+                  RECIPE : HTProgressRecipe<INPUT> {
+            final override fun getMaxProgress(recipe: RECIPE, input: INPUT): Int = recipe.getProgressData(input)
+                .getProcessTime(handler.currentEnergyPerTick)
+                .let(::updateAndGetProgress)
 
             final override fun getProgress(): Int = handler.consume()
         }

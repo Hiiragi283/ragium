@@ -35,9 +35,11 @@ data object HTEnergyCapabilities : HTMultiCapability<EnergyHandler> {
             override val amount: Int get() = handler.amountAsInt
             override val capacity: Int get() = handler.capacityAsInt
 
-            override fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = handler.insert(amount, transaction)
+            override fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int =
+                handler.insert(amount, transaction)
 
-            override fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = handler.extract(amount, transaction)
+            override fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int =
+                handler.extract(amount, transaction)
         }
     }
 
@@ -47,7 +49,8 @@ data object HTEnergyCapabilities : HTMultiCapability<EnergyHandler> {
      * 指定した引数から[HTEnergyHandler]を返します。
      * @return [HTEnergyHandler]が見つからない場合は`null`
      */
-    fun getHandler(level: Level, pos: BlockPos, side: Direction?): HTEnergyHandler? = getCapability(level, pos, side)?.let(::unwrap)
+    fun getHandler(level: Level, pos: BlockPos, side: Direction?): HTEnergyHandler? =
+        getCapability(level, pos, side)?.let(::unwrap)
 
     //    Entity    //
 

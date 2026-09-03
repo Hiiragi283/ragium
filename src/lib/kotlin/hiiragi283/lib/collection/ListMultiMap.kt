@@ -1,5 +1,7 @@
 package hiiragi283.lib.collection
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
+
 /**
  * [List]に基づいた[MultiMap]の実装クラスです。
  * @param K キーのクラス
@@ -32,7 +34,7 @@ class ListMultiMap<K, out V> private constructor(map: Map<K, List<V>>) : Abstrac
 
         constructor(other: MultiMap<K, V>) : super(other)
 
-        override fun emptyCollection(): MutableList<V> = mutableListOf()
+        override fun emptyCollection(): MutableList<V> = ObjectArrayList()
 
         override fun build(): ListMultiMap<K, V> = ListMultiMap(map)
     }

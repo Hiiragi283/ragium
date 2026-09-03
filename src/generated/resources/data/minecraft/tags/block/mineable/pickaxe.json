@@ -1,5 +1,6 @@
 {
   "values": [
+    "ragium:black_steel_block",
     "ragium:brewery",
     "ragium:charcoal_block",
     "ragium:coal_coke_block",
@@ -8,6 +9,6 @@
     "ragium:echo_block",
     "ragium:freezer",
     "ragium:melter",
-    "ragium:steel_block"
+    "ragium:sooty_iron_block"
   ]
 }

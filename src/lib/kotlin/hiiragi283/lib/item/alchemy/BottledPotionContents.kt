@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.text.Text
-import kotlin.jvm.optionals.getOrNull
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -21,6 +20,7 @@ import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * ポーションの中身と瓶の形状を束ねたクラスです。
@@ -28,19 +28,26 @@ import net.neoforged.neoforge.fluids.FluidType
  * @since 26.1.0
  */
 @JvmRecord
-data class BottledPotionContents @JvmOverloads constructor(val contents: PotionContents, val bottleType: HTBottleType = HTBottleType.DEFAULT) : HTHasText {
+data class BottledPotionContents @JvmOverloads constructor(
+    val contents: PotionContents,
+    val bottleType: HTBottleType = HTBottleType.DEFAULT
+) : HTHasText {
     companion object {
         @JvmField
         val MAP_CODEC: MapCodec<BottledPotionContents> = HTCodecs.recordMap { instance ->
             instance
                 .group(
                     PotionContents.CODEC.fieldOf("contents").forGetter(BottledPotionContents::contents),
-                    HTBottleType.FIELD_CODEC.forGetter(BottledPotionContents::bottleType),
+                    HTBottleType.FIELD_CODEC.forGetter(BottledPotionContents::bottleType)
                 ).apply(instance, ::BottledPotionContents)
         }
 
         @JvmField
-        val CODEC: Codec<BottledPotionContents> = Codec.withAlternative(MAP_CODEC.codec(), HTCodecs.holder(Registries.POTION), ::BottledPotionContents)
+        val CODEC: Codec<BottledPotionContents> = Codec.withAlternative(
+            MAP_CODEC.codec(),
+            HTCodecs.holder(Registries.POTION),
+            ::BottledPotionContents
+        )
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, BottledPotionContents> = StreamCodec.composite(
@@ -48,12 +55,15 @@ data class BottledPotionContents @JvmOverloads constructor(val contents: PotionC
             BottledPotionContents::contents,
             HTBottleType.STREAM_CODEC,
             BottledPotionContents::bottleType,
-            ::BottledPotionContents,
+            ::BottledPotionContents
         )
     }
 
     @JvmOverloads
-    constructor(potion: Holder<Potion>, bottleType: HTBottleType = HTBottleType.DEFAULT) : this(PotionContents(potion), bottleType)
+    constructor(
+        potion: Holder<Potion>,
+        bottleType: HTBottleType = HTBottleType.DEFAULT
+    ) : this(PotionContents(potion), bottleType)
 
     /**
      * ポーションの値
@@ -95,7 +105,10 @@ data class BottledPotionContents @JvmOverloads constructor(val contents: PotionC
 
         false -> HTPotionFluidAccess.INSTANCE.fluidContent.toTemplate(
             amount,
-            HTPotionHelper.createFluidPatch(HTPotionFluidAccess.INSTANCE.fluidContent.getOrThrow(), this@BottledPotionContents),
+            HTPotionHelper.createFluidPatch(
+                HTPotionFluidAccess.INSTANCE.fluidContent.getOrThrow(),
+                this@BottledPotionContents
+            )
         )
     }!!
 
@@ -112,7 +125,10 @@ data class BottledPotionContents @JvmOverloads constructor(val contents: PotionC
      */
     fun toBucketTemplate(): ItemStackTemplate = when (this.isWater) {
         true -> ItemStackTemplate(Items.WATER_BUCKET)
-        false -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.toTemplate(patch = HTPotionHelper.createItemPatch(this@BottledPotionContents))
+
+        false -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.toTemplate(
+            patch = HTPotionHelper.createItemPatch(this@BottledPotionContents)
+        )
     }!!
 
     /**

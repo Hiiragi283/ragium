@@ -55,7 +55,12 @@ interface MultiMap<K, out V> {
     /**
      * 値ごとに分割した組の一覧
      */
-    val flatEntries: Set<Pair<K, V>> get() = entries.flatMapTo(mutableSetOf()) { (key: K, values: Collection<V>) -> values.map { key to it } }
+    val flatEntries: Set<Pair<K, V>> get() = entries.flatMapTo(mutableSetOf()) { (key: K, values: Collection<V>) ->
+        values.map {
+            key to
+                it
+        }
+    }
 
     /**
      * [Map]に変換します。

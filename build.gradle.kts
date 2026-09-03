@@ -18,34 +18,38 @@ plugins {
 
 val modId = "ragium"
 
-val generateModMetadata: TaskProvider<ProcessResources> = tasks.register<ProcessResources>("generateModMetadata") {
-    description = "Generate mod metadata"
-    val mcVersion: String = libs.versions.minecraft.get()
-    val neoVersion: String = libs.versions.neo.version
-        .get()
-    val kffVersion: String = libs.versions.kff.version
-        .get()
+val generateModMetadata: TaskProvider<ProcessResources> =
+    tasks.register<ProcessResources>("generateModMetadata") {
+        description = "Generate mod metadata"
+        val mcVersion: String = libs.versions.minecraft.get()
+        val neoVersion: String =
+            libs.versions.neo.version
+                .get()
+        val kffVersion: String =
+            libs.versions.kff.version
+                .get()
 
-    val replaceProperties: Map<String, String> = mapOf(
-        "minecraft_version" to mcVersion,
-        "minecraft_version_range" to "[$mcVersion]",
-        "neo_version" to neoVersion,
-        "neo_version_range" to "[$neoVersion,)",
-        "kff_version" to kffVersion,
-        "kff_version_range" to "[$kffVersion,)",
-        "loader_version_range" to "[1,)",
-        "mod_id" to modId,
-        "mod_name" to "Ragium",
-        "mod_license" to "MPL-2.0",
-        "mod_version" to version.toString(),
-        "mod_authors" to "Hiiragi283",
-        "mod_description" to "A simple tech mod for vanilla expansion and automation",
-    )
-    inputs.properties(replaceProperties)
-    expand(replaceProperties)
-    from("src/main/templates")
-    into("build/generated/sources/modMetadata")
-}
+        val replaceProperties: Map<String, String> =
+            mapOf(
+                "minecraft_version" to mcVersion,
+                "minecraft_version_range" to "[$mcVersion]",
+                "neo_version" to neoVersion,
+                "neo_version_range" to "[$neoVersion,)",
+                "kff_version" to kffVersion,
+                "kff_version_range" to "[$kffVersion,)",
+                "loader_version_range" to "[1,)",
+                "mod_id" to modId,
+                "mod_name" to "Ragium",
+                "mod_license" to "MPL-2.0",
+                "mod_version" to version.toString(),
+                "mod_authors" to "Hiiragi283",
+                "mod_description" to "A simple tech mod for vanilla expansion and automation"
+            )
+        inputs.properties(replaceProperties)
+        expand(replaceProperties)
+        from("src/main/templates")
+        into("build/generated/sources/modMetadata")
+    }
 
 scmVersion {
     useHighestVersion = true
@@ -70,23 +74,29 @@ base {
 }
 
 val libModule: SourceSet = sourceSets.register("lib").get()
-val mainModule: SourceSet = sourceSets.named("main") {
-    compileClasspath += libModule.output
-    runtimeClasspath += libModule.output
+val mainModule: SourceSet =
+    sourceSets
+        .named("main") {
+            compileClasspath += libModule.output
+            runtimeClasspath += libModule.output
 
-    resources {
-        srcDirs("src/generated/resources", generateModMetadata.get().outputs.files)
-        exclude("**/.cache/**")
-    }
-}.get()
-val clientModule: SourceSet = sourceSets.register("client") {
-    compileClasspath += mainModule.output + mainModule.compileClasspath
-    runtimeClasspath += mainModule.output + mainModule.runtimeClasspath
-}.get()
-val dataModule: SourceSet = sourceSets.register("data") {
-    compileClasspath += clientModule.output + clientModule.compileClasspath
-    runtimeClasspath += clientModule.output + clientModule.runtimeClasspath
-}.get()
+            resources {
+                srcDirs("src/generated/resources", generateModMetadata.get().outputs.files)
+                exclude("**/.cache/**")
+            }
+        }.get()
+val clientModule: SourceSet =
+    sourceSets
+        .register("client") {
+            compileClasspath += mainModule.output + mainModule.compileClasspath
+            runtimeClasspath += mainModule.output + mainModule.runtimeClasspath
+        }.get()
+val dataModule: SourceSet =
+    sourceSets
+        .register("data") {
+            compileClasspath += clientModule.output + clientModule.compileClasspath
+            runtimeClasspath += clientModule.output + clientModule.runtimeClasspath
+        }.get()
 
 repositories {
     mavenLocal()
@@ -130,13 +140,16 @@ repositories {
 
 neoForge {
     // Specify the version of NeoForge to use.
-    version = libs.versions.neo.version.get()
+    version =
+        libs.versions.neo.version
+            .get()
 
     // This line is optional. Access Transformers are automatically detected
     // accessTransformers = project.files("src/main/resources/META-INF/accesstransformer.cfg")
 
     interfaceInjectionData {
-        rootProject.fileTree("src")
+        rootProject
+            .fileTree("src")
             .matching { include("*/resources/META-INF/interfaceinjection.json") }
             .forEach { atFile ->
                 println("adding interface injection file: $atFile")
@@ -177,7 +190,7 @@ neoForge {
                 "--output",
                 file("src/generated/resources/").absolutePath,
                 "--existing",
-                file("src/main/resources").absolutePath,
+                file("src/main/resources").absolutePath
             )
         }
 
@@ -325,7 +338,7 @@ dokka {
             sourceRoots.from(
                 listOf(libModule, clientModule)
                     .map { it.kotlin }
-                    .map { it.srcDirs.filter { "lib" in it.path } },
+                    .map { it.srcDirs.filter { "lib" in it.path } }
             )
         }
     }

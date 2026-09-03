@@ -75,7 +75,7 @@ class HTMaterialAccessImpl : HTMaterialAccess {
                 accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Metal.GOLD, Blocks.GOLD_BLOCK)
                 // Alloy
                 accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Metal.NETHERITE, Blocks.NETHERITE_BLOCK)
-            },
+            }
         ) { part: HTBlockPart, material: RagiumMaterial -> "Unknown $part block for $material" }
 
         @JvmField
@@ -115,7 +115,7 @@ class HTMaterialAccessImpl : HTMaterialAccess {
                 accept(HTItemPart.NUGGET, RagiumMaterial.Metal.GOLD, Items.GOLD_NUGGET)
                 // Alloy
                 accept(HTItemPart.INGOT, RagiumMaterial.Metal.NETHERITE, Items.NETHERITE_INGOT)
-            },
+            }
         ) { part: HTItemPart, material: RagiumMaterial -> "Unknown $part item for $material" }
     }
 
@@ -123,11 +123,15 @@ class HTMaterialAccessImpl : HTMaterialAccess {
     override val registered: HTMaterialContents.Provider by lazy {
         HTMaterialContents.Provider(
             HTMaterialContentsImpl(
-                RagiumBlocks.MATERIAL_BLOCKS.mapValue { (_, _, block: HTSimpleDeferredBlockAndItem) -> HTMaterialContents.BlockEntry(block, false) },
+                RagiumBlocks.MATERIAL_BLOCKS.mapValue { (_, _, block: HTSimpleDeferredBlockAndItem) ->
+                    HTMaterialContents.BlockEntry(block, false)
+                }
             ) { part: HTBlockPart, material: RagiumMaterial -> "Unregistered $part block for $material" },
             HTMaterialContentsImpl(
-                RagiumItems.MATERIAL_ITEMS.mapValue { (_, _, item: HTSimpleDeferredItem) -> HTMaterialContents.ItemEntry(item, false) },
-            ) { part: HTItemPart, material: RagiumMaterial -> "Unregistered $part item for $material" },
+                RagiumItems.MATERIAL_ITEMS.mapValue { (_, _, item: HTSimpleDeferredItem) ->
+                    HTMaterialContents.ItemEntry(item, false)
+                }
+            ) { part: HTItemPart, material: RagiumMaterial -> "Unregistered $part item for $material" }
         )
     }
 }

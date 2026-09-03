@@ -33,7 +33,7 @@ open class HTMachineBlock(type: HTDeferredBlockEntityType<*>, properties: Proper
         level: Level,
         pos: BlockPos,
         player: Player,
-        hitResult: BlockHitResult,
+        hitResult: BlockHitResult
     ): InteractionResult {
         if (player is ServerPlayer) {
             HTBlockWidgetHolderContext.openMenu(player, pos)

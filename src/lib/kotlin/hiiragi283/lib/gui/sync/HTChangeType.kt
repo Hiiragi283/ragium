@@ -9,5 +9,5 @@ package hiiragi283.lib.gui.sync
  */
 enum class HTChangeType {
     PARTIAL,
-    FULL,
+    FULL
 }

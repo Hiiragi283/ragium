@@ -8,5 +8,5 @@ package hiiragi283.lib.gui.sync
 enum class HTSyncType(val allowS2C: Boolean, val allowC2S: Boolean) {
     BOTH(true, true),
     S2C(true, false),
-    C2S(false, true),
+    C2S(false, true)
 }

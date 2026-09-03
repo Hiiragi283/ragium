@@ -8,6 +8,8 @@ import hiiragi283.lib.tag.createTagKey
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.Identity
 import hiiragi283.lib.util.identity
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
@@ -62,14 +64,14 @@ class HTFluidContentRegister(modId: String) {
     /**
      * 登録された[HTFluidContent]の一覧
      */
-    val entries: Set<HTFluidContent> field: MutableSet<HTFluidContent> = mutableSetOf()
+    val entries: Set<HTFluidContent> field: MutableSet<HTFluidContent> = ObjectLinkedOpenHashSet()
 
     /**
      * 登録された[HTFluidContent]の一覧を取得します。
      */
     fun asSequence(): Sequence<HTFluidContent> = entries.asSequence()
 
-    private val contentsCache: MutableMap<ResourceKey<Fluid>, HTFluidContent> = mutableMapOf()
+    private val contentsCache: MutableMap<ResourceKey<Fluid>, HTFluidContent> = Object2ObjectLinkedOpenHashMap()
 
     /**
      * [HTFluidContent]を取得します。
@@ -113,7 +115,8 @@ class HTFluidContentRegister(modId: String) {
      * @param builderAction [VirtualBuilder]を初期化するブロック
      * @return 新しい[HTFluidContent]のインスタンス
      */
-    inline fun registerVirtual(name: String, builderAction: VirtualBuilder.() -> Unit): HTFluidContent.Virtual = VirtualBuilder(name).apply(builderAction).build()
+    inline fun registerVirtual(name: String, builderAction: VirtualBuilder.() -> Unit): HTFluidContent.Virtual =
+        VirtualBuilder(name).apply(builderAction).build()
 
     /**
      * 液体流をもつの新しい液体を登録します。
@@ -121,7 +124,8 @@ class HTFluidContentRegister(modId: String) {
      * @param builderAction [FlowingBuilder]を初期化するブロック
      * @return 新しい[HTFluidContent]のインスタンス
      */
-    inline fun registerFlowing(name: String, builderAction: FlowingBuilder.() -> Unit): HTFluidContent.Flowing = FlowingBuilder(name).apply(builderAction).build()
+    inline fun registerFlowing(name: String, builderAction: FlowingBuilder.() -> Unit): HTFluidContent.Flowing =
+        FlowingBuilder(name).apply(builderAction).build()
 
     //    Builder    //
 
@@ -168,14 +172,18 @@ class HTFluidContentRegister(modId: String) {
 
         fun build(): CONTENT {
             // Fluid Type
-            val typeHolder: HTDeferredFluidType<FluidType> = typeRegister.registerType(name, properties.descriptionId("block.${typeRegister.namespace}.$name").isWaterLike(true), typeFactory)
+            val typeHolder: HTDeferredFluidType<FluidType> = typeRegister.registerType(
+                name,
+                properties.descriptionId("block.${typeRegister.namespace}.$name").isWaterLike(true),
+                typeFactory
+            )
             // Fluid Holder
             val sourceHolder: HTDeferredHolder<Fluid, FLUID> = HTDeferredHolder(fluidRegister.createKey(name))
             // Bucket Item
             val bucketHolder: HTSimpleDeferredItem = itemRegister.registerItem(
                 "${name}_bucket",
                 { bucketFactory(sourceHolder.get(), it) },
-                { bucketProperties(it).stacksTo(1).craftRemainder(Items.BUCKET) },
+                { bucketProperties(it).stacksTo(1).craftRemainder(Items.BUCKET) }
             )
             val content: CONTENT = createContent(typeHolder, sourceHolder, bucketHolder)
             entries += content
@@ -189,7 +197,7 @@ class HTFluidContentRegister(modId: String) {
         protected abstract fun createContent(
             typeHolder: HTDeferredFluidType<FluidType>,
             sourceHolder: HTDeferredHolder<Fluid, FLUID>,
-            bucketHolder: HTSimpleDeferredItem,
+            bucketHolder: HTSimpleDeferredItem
         ): CONTENT
     }
 
@@ -202,7 +210,7 @@ class HTFluidContentRegister(modId: String) {
         override fun createContent(
             typeHolder: HTDeferredFluidType<FluidType>,
             sourceHolder: HTDeferredHolder<Fluid, HTVirtualFluid>,
-            bucketHolder: HTSimpleDeferredItem,
+            bucketHolder: HTSimpleDeferredItem
         ): HTFluidContent.Virtual {
             // Content
             fluidRegister.register(name) { _ -> HTVirtualFluid(typeHolder, bucketHolder) }
@@ -211,7 +219,7 @@ class HTFluidContentRegister(modId: String) {
                 sourceHolder,
                 bucketHolder,
                 Registries.FLUID.createTagKey(fluidTag),
-                Registries.ITEM.createTagKey(bucketTag),
+                Registries.ITEM.createTagKey(bucketTag)
             )
         }
     }
@@ -247,7 +255,7 @@ class HTFluidContentRegister(modId: String) {
         override fun createContent(
             typeHolder: HTDeferredFluidType<FluidType>,
             sourceHolder: HTDeferredHolder<Fluid, BaseFlowingFluid>,
-            bucketHolder: HTSimpleDeferredItem,
+            bucketHolder: HTSimpleDeferredItem
         ): HTFluidContent.Flowing {
             // Liquid Block
             val blockHolder: HTKeyOrValue<Block, LiquidBlock>?
@@ -264,11 +272,12 @@ class HTFluidContentRegister(modId: String) {
                         .noLootTable()
                         .replaceable()
                         .pushReaction(PushReaction.DESTROY)
-                        .liquid(),
+                        .liquid()
                 ) { prop: BlockBehaviour.Properties -> blockFactory!!(sourceHolder.get(), prop) }
             }
             // Fluid
-            val flowingHolder: HTDeferredHolder<Fluid, Flowing> = HTDeferredHolder(fluidRegister.createKey("flowing_$name"))
+            val flowingHolder: HTDeferredHolder<Fluid, Flowing> =
+                HTDeferredHolder(fluidRegister.createKey("flowing_$name"))
             val fluidProperties: BaseFlowingFluid.Properties = BaseFlowingFluid
                 .Properties(typeHolder, sourceHolder, flowingHolder)
                 .bucket(bucketHolder)
@@ -283,7 +292,7 @@ class HTFluidContentRegister(modId: String) {
                 Registries.FLUID.createTagKey(fluidTag),
                 Registries.ITEM.createTagKey(bucketTag),
                 flowingHolder,
-                blockHolder,
+                blockHolder
             )
         }
     }

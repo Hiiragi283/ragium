@@ -33,6 +33,8 @@ data object RagiumBlocks {
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
+        REGISTER.addAlias("steel_block", "sooty_iron_block")
+
         REGISTER.register(eventBus)
     }
 
@@ -40,7 +42,8 @@ data object RagiumBlocks {
     private fun copyOf(block: Block): BlockBehaviour.Properties = BlockBehaviour.Properties.ofFullCopy(block)
 
     @JvmStatic
-    private fun properties(hardness: Float, resistance: Float = hardness): BlockBehaviour.Properties = BlockBehaviour.Properties.of().strength(hardness, resistance)
+    private fun properties(hardness: Float, resistance: Float = hardness): BlockBehaviour.Properties =
+        BlockBehaviour.Properties.of().strength(hardness, resistance)
 
     @JvmStatic
     fun machine(): BlockBehaviour.Properties = properties(3.5f, 16f)
@@ -49,28 +52,58 @@ data object RagiumBlocks {
         .sound(SoundType.COPPER)
 
     @JvmStatic
-    private fun registerMachine(type: HTDeferredBlockEntityType<*>, properties: BlockBehaviour.Properties = machine()): HTBasicDeferredBlockAndItem<HTMachineBlock> = REGISTER.registerSimple(
+    private fun registerMachine(
+        type: HTDeferredBlockEntityType<*>,
+        properties: BlockBehaviour.Properties = machine()
+    ): HTBasicDeferredBlockAndItem<HTMachineBlock> = REGISTER.registerSimple(
         type.idOrThrow.path,
         properties,
-        { prop: BlockBehaviour.Properties -> HTMachineBlock(type, prop) },
+        { prop: BlockBehaviour.Properties -> HTMachineBlock(type, prop) }
     )
 
     //    Ingredient    //
 
     @JvmField
     val MATERIAL_BLOCKS: Table<HTBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildTable {
-        fun register(part: HTBlockPart, material: RagiumMaterial, blockProp: BlockBehaviour.Properties, itemProp: Identity<Item.Properties> = identity()) {
+        fun register(
+            part: HTBlockPart,
+            material: RagiumMaterial,
+            blockProp: BlockBehaviour.Properties,
+            itemProp: Identity<Item.Properties> = identity()
+        ) {
             this[part, material] = REGISTER.registerSimple(part.createName(material), blockProp, itemProp)
         }
 
-        register(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Fuel.CHARCOAL, copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF))
-        register(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL_COKE, copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY))
-        register(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Gem.ECHO, copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN))
-        register(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Metal.STEEL, copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_LIGHT_GRAY))
+        register(
+            HTBlockPart.STORAGE_BLOCK,
+            RagiumMaterial.Fuel.CHARCOAL,
+            copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF)
+        )
+        register(
+            HTBlockPart.STORAGE_BLOCK,
+            RagiumMaterial.Fuel.COAL_COKE,
+            copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY)
+        )
+        register(
+            HTBlockPart.STORAGE_BLOCK,
+            RagiumMaterial.Gem.ECHO,
+            copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN)
+        )
+        register(
+            HTBlockPart.STORAGE_BLOCK,
+            RagiumMaterial.Metal.SOOTY_IRON,
+            copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY)
+        )
+        register(
+            HTBlockPart.STORAGE_BLOCK,
+            RagiumMaterial.Metal.BLACK_STEEL,
+            copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK)
+        )
     }
 
     @JvmStatic
-    fun getOrThrow(part: HTBlockPart, material: RagiumMaterial): HTSimpleDeferredBlockAndItem = MATERIAL_BLOCKS[part, material] ?: error("Unregistered block: ${part.createName(material)}")
+    fun getOrThrow(part: HTBlockPart, material: RagiumMaterial): HTSimpleDeferredBlockAndItem =
+        MATERIAL_BLOCKS[part, material] ?: error("Unregistered block: ${part.createName(material)}")
 
     //    Machine    //
 
@@ -79,7 +112,8 @@ data object RagiumBlocks {
     val CRUSHER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CRUSHER)
 
     @JvmField
-    val CUTTING_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE)
+    val CUTTING_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE)
 
     // Heat
     @JvmField
@@ -97,13 +131,14 @@ data object RagiumBlocks {
     // Arcane
 
     @JvmField
-    val MACHINES: ListMultiMap<HTMachineType, HTBasicDeferredBlockAndItem<HTMachineBlock>> = buildListMultiMap(sortedMapOf()) {
-        put(HTMachineType.MECHANICAL, CRUSHER)
-        put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
+    val MACHINES: ListMultiMap<HTMachineType, HTBasicDeferredBlockAndItem<HTMachineBlock>> =
+        buildListMultiMap(sortedMapOf()) {
+            put(HTMachineType.MECHANICAL, CRUSHER)
+            put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
 
-        put(HTMachineType.HEAT, FREEZER)
-        put(HTMachineType.HEAT, MELTER)
+            put(HTMachineType.HEAT, FREEZER)
+            put(HTMachineType.HEAT, MELTER)
 
-        put(HTMachineType.BIO, BREWERY)
-    }
+            put(HTMachineType.BIO, BREWERY)
+        }
 }

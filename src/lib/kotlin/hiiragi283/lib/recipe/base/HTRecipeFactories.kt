@@ -5,12 +5,12 @@ import hiiragi283.lib.recipe.HTRecipeFactory
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.lib.recipe.input.getItemOrEmpty
-import java.util.function.BiFunction
-import java.util.function.Function
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.fluids.FluidInstance
+import java.util.function.BiFunction
+import java.util.function.Function
 
 /**
  * Hiiragi Seriesで使用される[HTRecipeFactory]をまとめたクラスです。
@@ -86,6 +86,7 @@ data object HTRecipeFactories {
      * 3種類のアイテムから完成品を作る[TripleInput]の拡張インターフェースです。
      */
     interface TripleItem<OUTPUT : Any> : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance, OUTPUT> {
-        override fun produce(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
+        override fun produce(input: RecipeInput): OUTPUT =
+            apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
     }
 }

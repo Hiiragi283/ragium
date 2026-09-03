@@ -4,13 +4,15 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.ragium.api.RagiumAPI
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
 
 data object RagiumWidgetTypes {
     @JvmStatic
-    val allTypes: Set<HTWidgetType<*>> field: MutableSet<HTWidgetType<*>> = mutableSetOf()
+    val allTypes: Set<HTWidgetType<*>> field: MutableSet<HTWidgetType<*>> = ObjectLinkedOpenHashSet()
 
     @JvmStatic
-    private fun <T : HTWidget> create(name: String): HTWidgetType<T> = HTWidgetType<T>(RagiumAPI.id(name)).also(allTypes::add)
+    private fun <T : HTWidget> create(name: String): HTWidgetType<T> =
+        HTWidgetType<T>(RagiumAPI.id(name)).also(allTypes::add)
 
     @JvmField
     val ENERGY: HTWidgetType<HTEnergySlotWidget> = create(HTConstants.ENERGY)

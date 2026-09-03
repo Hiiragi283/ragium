@@ -10,8 +10,21 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class HTItemToDoubleItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic>) : HTHolderRecipeCategory<HTItemToDoubleItemRecipe.Basic>(guiHelper, recipeType, 18 * 6, 18 * 1, HTItemToDoubleItemRecipe.Basic.SIMPLE_CODEC) {
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemToDoubleItemRecipe.Basic, focuses: IFocusGroup) {
+class HTItemToDoubleItemRecipeCategory(
+    guiHelper: IGuiHelper,
+    recipeType: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic>
+) : HTHolderRecipeCategory<HTItemToDoubleItemRecipe.Basic>(
+    guiHelper,
+    recipeType,
+    18 * 6,
+    18 * 1,
+    HTItemToDoubleItemRecipe.Basic.SIMPLE_CODEC
+) {
+    override fun setupRecipe(
+        builder: IRecipeLayoutBuilder,
+        recipe: HTItemToDoubleItemRecipe.Basic,
+        focuses: IFocusGroup
+    ) {
         // input
         builder
             .addInputSlot(getPosition(0), getPosition(0))
@@ -26,10 +39,14 @@ class HTItemToDoubleItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHold
         val slot: IRecipeSlotBuilder = builder
             .addOutputSlot(getPosition(5), getPosition(0))
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
-        recipe.secondary.onSome(slot::add)
+        recipe.secondary.ifPresent(slot::add)
     }
 
-    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemToDoubleItemRecipe.Basic, focuses: IFocusGroup) {
+    override fun setupRecipeExtras(
+        builder: IRecipeExtrasBuilder,
+        recipe: HTItemToDoubleItemRecipe.Basic,
+        focuses: IFocusGroup
+    ) {
         builder.addRecipeArrow(recipe).setPosition(getPosition(1.25), getPosition(0))
         builder.addRecipePlus(getPosition(4))
     }

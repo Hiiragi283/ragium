@@ -29,26 +29,35 @@ data object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    private fun <BE : HTBlockEntity> registerTick(name: String, factory: BlockEntityType.BlockEntitySupplier<BE>): HTDeferredBlockEntityType<BE> = REGISTER.registerType(name, factory, HTBlockEntity::tickServer, HTBlockEntity::tickClient)
+    private fun <BE : HTBlockEntity> registerTick(
+        name: String,
+        factory: BlockEntityType.BlockEntitySupplier<BE>
+    ): HTDeferredBlockEntityType<BE> =
+        REGISTER.registerType(name, factory, HTBlockEntity::tickServer, HTBlockEntity::tickClient)
 
     // Mechanical
     @JvmField
-    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick(RagiumConstants.CRUSHER, ::HTCrusherBlockEntity)
+    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
+        registerTick(RagiumConstants.CRUSHER, ::HTCrusherBlockEntity)
 
     @JvmField
-    val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> = registerTick(RagiumConstants.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
+    val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> =
+        registerTick(RagiumConstants.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
 
     // Heat
     @JvmField
-    val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> = registerTick(RagiumConstants.FREEZER, ::HTFreezerBlockEntity)
+    val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
+        registerTick(RagiumConstants.FREEZER, ::HTFreezerBlockEntity)
 
     @JvmField
-    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick(RagiumConstants.MELTER, ::HTMelterBlockEntity)
+    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> =
+        registerTick(RagiumConstants.MELTER, ::HTMelterBlockEntity)
 
     // Chemical
     // Bio
     @JvmField
-    val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> = registerTick(RagiumConstants.BREWERY, ::HTBreweryBlockEntity)
+    val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> =
+        registerTick(RagiumConstants.BREWERY, ::HTBreweryBlockEntity)
 
     // Electronics
     // Arcane

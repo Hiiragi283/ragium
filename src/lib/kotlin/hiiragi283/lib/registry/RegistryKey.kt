@@ -12,7 +12,8 @@ import net.minecraft.resources.ResourceKey
  */
 typealias RegistryKey<T> = ResourceKey<out Registry<T>>
 
-fun <T : Any> RegistryKey<T>.createKey(namespace: String, path: String): ResourceKey<T> = this.createKey(namespace.toId(path))
+fun <T : Any> RegistryKey<T>.createKey(namespace: String, path: String): ResourceKey<T> =
+    this.createKey(namespace.toId(path))
 
 /**
  * この[レジストリキー][this]に基づいて[ID][id]を[ResourceKey]に変換します。

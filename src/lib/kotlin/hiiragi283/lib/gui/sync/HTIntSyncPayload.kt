@@ -8,7 +8,10 @@ import net.minecraft.network.codec.StreamCodec
 data class HTIntSyncPayload(val value: Int) : HTSyncablePayload {
     companion object {
         @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTIntSyncPayload> = ByteBufCodecs.VAR_INT.map(::HTIntSyncPayload, HTIntSyncPayload::value).cast()
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTIntSyncPayload> = ByteBufCodecs.VAR_INT.map(
+            ::HTIntSyncPayload,
+            HTIntSyncPayload::value
+        ).cast()
 
         @JvmField
         val TYPE: HTSyncablePayload.Type<HTIntSyncPayload> = HTSyncablePayload.Type(STREAM_CODEC)

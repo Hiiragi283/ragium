@@ -8,7 +8,6 @@ import hiiragi283.lib.recipe.widget.HTGhostWidget
 import hiiragi283.lib.recipe.widget.HTIngredientWidget
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.widget.HTGuiWidget
-import java.util.Optional
 import mezz.jei.api.gui.builder.IClickableIngredientFactory
 import mezz.jei.api.gui.handlers.IGhostIngredientHandler
 import mezz.jei.api.gui.handlers.IGuiContainerHandler
@@ -18,8 +17,11 @@ import mezz.jei.api.runtime.IClickableIngredient
 import net.minecraft.client.renderer.Rect2i
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
+import java.util.Optional
 
-data object HTWidgetContainerJeiHandler : IGuiContainerHandler<HTWidgetContainerScreen>, IGhostIngredientHandler<HTWidgetContainerScreen> {
+data object HTWidgetContainerJeiHandler :
+    IGuiContainerHandler<HTWidgetContainerScreen>,
+    IGhostIngredientHandler<HTWidgetContainerScreen> {
     @JvmStatic
     private fun getWidgets(screen: HTWidgetContainerScreen): Sequence<Pair<HTBounds, HTWidget>> = screen
         .children()
@@ -31,7 +33,7 @@ data object HTWidgetContainerJeiHandler : IGuiContainerHandler<HTWidgetContainer
         builder: IClickableIngredientFactory,
         containerScreen: HTWidgetContainerScreen,
         mouseX: Double,
-        mouseY: Double,
+        mouseY: Double
     ): Optional<out IClickableIngredient<*>> = getWidgets(containerScreen)
         .filter { (bounds: HTBounds, _) -> bounds.contains(mouseX.toInt(), mouseY.toInt()) }
         .mapNotNull { (bounds: HTBounds, widget: HTWidget) ->
@@ -85,10 +87,12 @@ data object HTWidgetContainerJeiHandler : IGuiContainerHandler<HTWidgetContainer
     override fun <I : Any> getTargetsTyped(
         gui: HTWidgetContainerScreen,
         ingredient: ITypedIngredient<I>,
-        doStart: Boolean,
+        doStart: Boolean
     ): List<IGhostIngredientHandler.Target<I>> = getWidgets(gui)
         .mapNotNull { (bounds: HTBounds, widget: HTWidget) ->
-            val consumer: HTGhostWidget.GhostIngredientConsumer = (widget as? HTGhostWidget)?.getGhostConsumer() ?: return@mapNotNull null
+            val consumer: HTGhostWidget.GhostIngredientConsumer = (widget as? HTGhostWidget)
+                ?.getGhostConsumer()
+                ?: return@mapNotNull null
             bounds to consumer
         }.filter { (_, consumer: HTGhostWidget.GhostIngredientConsumer) ->
             consumer.supportedTarget(ingredient.ingredient)?.let(ingredient.type::getCastIngredient) != null

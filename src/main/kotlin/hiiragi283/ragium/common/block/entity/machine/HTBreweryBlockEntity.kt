@@ -22,45 +22,66 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
-class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.BREWERY.get(), pos, state) {
+class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
+    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.BREWERY.get(), pos, state) {
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<HTItemAndFluidRecipeInput, FluidStack, HTItemAndFluidToFluidRecipe>() {
-            private val cache: HTRecipeCache<HTItemAndFluidRecipeInput, HTItemAndFluidToFluidRecipe> = HTRecipeCache(RagiumRecipeLookups.BREWING)
-            private val inputSlot: HTInputSlot.SingleItem by lazy { HTInputSlot.SingleItem(this@HTBreweryBlockEntity.inputSlot) }
-            private val inputTank: HTInputSlot.SingleFluid by lazy { HTInputSlot.SingleFluid(this@HTBreweryBlockEntity.inputTank) }
-            private val outputTank: HTOutputSlot<FluidStack> by lazy { HTOutputSlot.SingleFluid(this@HTBreweryBlockEntity.outputTank) }
+        recipeHandler =
+            object : EnergizedHandler<HTItemAndFluidRecipeInput, FluidStack, HTItemAndFluidToFluidRecipe>() {
+                private val cache: HTRecipeCache<HTItemAndFluidRecipeInput, HTItemAndFluidToFluidRecipe> =
+                    HTRecipeCache(RagiumRecipeLookups.BREWING)
+                private val inputSlot: HTInputSlot.SingleItem by lazy {
+                    HTInputSlot.SingleItem(this@HTBreweryBlockEntity.inputSlot)
+                }
+                private val inputTank: HTInputSlot.SingleFluid by lazy {
+                    HTInputSlot.SingleFluid(this@HTBreweryBlockEntity.inputTank)
+                }
+                private val outputTank: HTOutputSlot<FluidStack> by lazy {
+                    HTOutputSlot.SingleFluid(this@HTBreweryBlockEntity.outputTank)
+                }
 
-            override fun createInput(): HTItemAndFluidRecipeInput = HTItemAndFluidRecipeInput(inputSlot.getStack(), inputTank.getStack())
+                override fun createInput(): HTItemAndFluidRecipeInput =
+                    HTItemAndFluidRecipeInput(inputSlot.getStack(), inputTank.getStack())
 
-            override fun findRecipe(level: ServerLevel, input: HTItemAndFluidRecipeInput): HTItemAndFluidToFluidRecipe? = cache.findFirstRecipe(input, level)
+                override fun findRecipe(
+                    level: ServerLevel,
+                    input: HTItemAndFluidRecipeInput
+                ): HTItemAndFluidToFluidRecipe? = cache.findFirstRecipe(input, level)
 
-            override fun canComplete(recipe: HTItemAndFluidToFluidRecipe, input: HTItemAndFluidRecipeInput, output: FluidStack): Boolean {
-                val (inputCount: Int, inputAmount: Int) = recipe.getRequiredAmount(input.item, input.fluid)
-                return useTransaction { transaction: Transaction ->
-                    when {
-                        inputCount > 0 && !inputSlot.canExtract(inputCount, transaction) -> false
-                        inputAmount > 0 && !inputTank.canExtract(inputAmount, transaction) -> false
-                        else -> outputTank.canInsert(output, transaction)
+                override fun canComplete(
+                    recipe: HTItemAndFluidToFluidRecipe,
+                    input: HTItemAndFluidRecipeInput,
+                    output: FluidStack
+                ): Boolean {
+                    val (inputCount: Int, inputAmount: Int) = recipe.getRequiredAmount(input.item, input.fluid)
+                    return useTransaction { transaction: Transaction ->
+                        when {
+                            inputCount > 0 && !inputSlot.canExtract(inputCount, transaction) -> false
+                            inputAmount > 0 && !inputTank.canExtract(inputAmount, transaction) -> false
+                            else -> outputTank.canInsert(output, transaction)
+                        }
                     }
                 }
-            }
 
-            override fun onComplete(recipe: HTItemAndFluidToFluidRecipe, input: HTItemAndFluidRecipeInput, output: FluidStack) {
-                val (inputCount: Int, inputAmount: Int) = recipe.getRequiredAmount(input.item, input.fluid)
-                useTransaction { transaction: Transaction ->
-                    if (inputCount > 0) {
-                        inputSlot.extract(inputCount, transaction)
+                override fun onComplete(
+                    recipe: HTItemAndFluidToFluidRecipe,
+                    input: HTItemAndFluidRecipeInput,
+                    output: FluidStack
+                ) {
+                    val (inputCount: Int, inputAmount: Int) = recipe.getRequiredAmount(input.item, input.fluid)
+                    useTransaction { transaction: Transaction ->
+                        if (inputCount > 0) {
+                            inputSlot.extract(inputCount, transaction)
+                        }
+                        if (inputAmount > 0) {
+                            inputTank.extract(inputAmount, transaction)
+                        }
+                        outputTank.insert(output, transaction)
+                        transaction.commit()
                     }
-                    if (inputAmount > 0) {
-                        inputTank.extract(inputAmount, transaction)
-                    }
-                    outputTank.insert(output, transaction)
-                    transaction.commit()
+                    playSound(SoundEvents.BREWING_STAND_BREW)
                 }
-                playSound(SoundEvents.BREWING_STAND_BREW)
             }
-        }
     }
 
     private lateinit var inputTank: HTBasicFluidTank

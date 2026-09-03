@@ -10,7 +10,8 @@ import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.resources.Identifier
 import net.minecraft.world.entity.player.Inventory
 
-class HTWidgetContainerScreen(menu: HTWidgetContainerMenu, inventory: Inventory, title: Text) : HTContainerScreen<HTWidgetContainerMenu>(menu, inventory, title, 176, 144 + menu.widgetHolder.rows * 18) {
+class HTWidgetContainerScreen(menu: HTWidgetContainerMenu, inventory: Inventory, title: Text) :
+    HTContainerScreen<HTWidgetContainerMenu>(menu, inventory, title, 176, 144 + menu.widgetHolder.rows * 18) {
     companion object {
         @JvmField
         val BACKGROUND: Identifier = RagiumAPI.id(HTConstants.TEXTURES, HTConstants.GUI, "background.png")
@@ -31,7 +32,29 @@ class HTWidgetContainerScreen(menu: HTWidgetContainerMenu, inventory: Inventory,
     override fun extractBackground(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, a: Float) {
         super.extractBackground(graphics, mouseX, mouseY, a)
         val slotHeight: Int = 18 * rows + 17
-        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, startX, startY, 0f, 0f, imageWidth, slotHeight, 256, 256)
-        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, startX, startY + slotHeight, 0f, 126f, imageWidth, 96, 256, 256)
+        graphics.blit(
+            RenderPipelines.GUI_TEXTURED,
+            BACKGROUND,
+            startX,
+            startY,
+            0f,
+            0f,
+            imageWidth,
+            slotHeight,
+            256,
+            256
+        )
+        graphics.blit(
+            RenderPipelines.GUI_TEXTURED,
+            BACKGROUND,
+            startX,
+            startY + slotHeight,
+            0f,
+            126f,
+            imageWidth,
+            96,
+            256,
+            256
+        )
     }
 }

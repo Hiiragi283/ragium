@@ -1,9 +1,9 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.recipe.base.HTProgressData
+import net.minecraft.world.item.crafting.Recipe
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
-import net.minecraft.world.item.crafting.Recipe
 
 /**
  * [HTProgressData]を使用するレシピ向けの，[HTRecipeBuilder]の拡張クラスです。

@@ -6,11 +6,11 @@ import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
+import net.minecraft.resources.Identifier
+import net.minecraft.world.item.crafting.Recipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import net.minecraft.resources.Identifier
-import net.minecraft.world.item.crafting.Recipe
 
 /**
  * 2種類のアイテムから1種類のアイテムを作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
@@ -18,7 +18,8 @@ import net.minecraft.world.item.crafting.Recipe
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTDoubleItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) : HTProgressRecipeBuilder<RECIPE>(prefix) {
+class HTDoubleItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
+    HTProgressRecipeBuilder<RECIPE>(prefix) {
     override fun getPrimalId(): Identifier = result.getId()
 
     override fun createRecipe(): RECIPE = factory.create(primary, secondary, result, progressData)
@@ -64,6 +65,11 @@ class HTDoubleItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
      * @since 26.1.0
      */
     fun interface Factory<out RECIPE : Any> {
-        fun create(primary: HTItemIngredient, secondary: HTItemIngredient, result: HTItemResult, progressData: HTProgressData): RECIPE
+        fun create(
+            primary: HTItemIngredient,
+            secondary: HTItemIngredient,
+            result: HTItemResult,
+            progressData: HTProgressData
+        ): RECIPE
     }
 }

@@ -9,7 +9,14 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class HTItemToFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic>) : HTHolderRecipeCategory<HTItemToFluidRecipe.Basic>(guiHelper, recipeType, 18 * 4, 18 * 1, HTItemToFluidRecipe.Basic.SIMPLE_CODEC) {
+class HTItemToFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic>) :
+    HTHolderRecipeCategory<HTItemToFluidRecipe.Basic>(
+        guiHelper,
+        recipeType,
+        18 * 4,
+        18 * 1,
+        HTItemToFluidRecipe.Basic.SIMPLE_CODEC
+    ) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemToFluidRecipe.Basic, focuses: IFocusGroup) {
         // input
         builder
@@ -25,7 +32,11 @@ class HTItemToFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJei
         }
     }
 
-    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemToFluidRecipe.Basic, focuses: IFocusGroup) {
+    override fun setupRecipeExtras(
+        builder: IRecipeExtrasBuilder,
+        recipe: HTItemToFluidRecipe.Basic,
+        focuses: IFocusGroup
+    ) {
         builder.addRecipeArrow(recipe).setPosition(getPosition(1.25), getPosition(0))
     }
 }

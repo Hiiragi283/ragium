@@ -6,15 +6,15 @@ import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.core.HolderSet
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.crafting.CompoundIngredient
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * [Ingredient]および[HTItemIngredient]を作成するビルダークラスです。

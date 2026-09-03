@@ -8,9 +8,6 @@ import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.lib.util.Identity
 import hiiragi283.lib.util.identity
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
@@ -19,6 +16,9 @@ import net.minecraft.world.item.crafting.CookingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.item.crafting.SmokingRecipe
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * 精錬レシピ向けの[HTRecipeBuilder]の実装クラスです。
@@ -30,7 +30,7 @@ import net.minecraft.world.item.crafting.SmokingRecipe
 class HTCookingRecipeBuilder(
     private val factory: AbstractCookingRecipe.Factory<*>,
     private val timeOperator: Identity<Int>,
-    prefix: String,
+    prefix: String
 ) : HTRecipeBuilder<AbstractCookingRecipe>(prefix) {
     companion object {
         /**
@@ -70,18 +70,22 @@ class HTCookingRecipeBuilder(
          * かまどレシピと溶鉱炉レシピを生成します。後者の処理時間は前者の半分で登録されます。
          */
         @JvmStatic
-        inline fun smeltingAndBlasting(builderAction: HTCookingRecipeBuilder.() -> Unit): Sequence<HTCookingRecipeBuilder> = sequenceOf(
+        inline fun smeltingAndBlasting(
+            builderAction: HTCookingRecipeBuilder.() -> Unit
+        ): Sequence<HTCookingRecipeBuilder> = sequenceOf(
             smelting(builderAction),
-            HTCookingRecipeBuilder(::BlastingRecipe, { it / 2 }, HTConstants.BLASTING).apply(builderAction),
+            HTCookingRecipeBuilder(::BlastingRecipe, { it / 2 }, HTConstants.BLASTING).apply(builderAction)
         )
 
         /**
          * かまどレシピと燻製器レシピを生成します。後者の処理時間は前者の半分で登録されます。
          */
         @JvmStatic
-        inline fun smeltingAndSmoking(builderAction: HTCookingRecipeBuilder.() -> Unit): Sequence<HTCookingRecipeBuilder> = sequenceOf(
+        inline fun smeltingAndSmoking(
+            builderAction: HTCookingRecipeBuilder.() -> Unit
+        ): Sequence<HTCookingRecipeBuilder> = sequenceOf(
             smelting(builderAction),
-            HTCookingRecipeBuilder(::SmokingRecipe, { it / 2 }, HTConstants.SMOKING).apply(builderAction),
+            HTCookingRecipeBuilder(::SmokingRecipe, { it / 2 }, HTConstants.SMOKING).apply(builderAction)
         )
     }
 
@@ -143,6 +147,6 @@ class HTCookingRecipeBuilder(
         ingredient,
         result,
         exp,
-        timeOperator(time),
+        timeOperator(time)
     )
 }

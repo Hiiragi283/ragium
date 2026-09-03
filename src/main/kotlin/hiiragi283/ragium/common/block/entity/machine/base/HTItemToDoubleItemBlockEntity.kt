@@ -23,43 +23,69 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
-abstract class HTItemToDoubleItemBlockEntity(type: BlockEntityType<*>, private val cache: HTRecipeCache<SingleRecipeInput, HTItemToDoubleItemRecipe>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(type, pos, state) {
-    constructor(type: BlockEntityType<*>, lookup: HTRecipeLookup<HTItemToDoubleItemRecipe>, pos: BlockPos, state: BlockState) : this(type, HTRecipeCache(lookup), pos, state)
+abstract class HTItemToDoubleItemBlockEntity(
+    type: BlockEntityType<*>,
+    private val cache: HTRecipeCache<SingleRecipeInput, HTItemToDoubleItemRecipe>,
+    pos: BlockPos,
+    state: BlockState
+) : HTProcessorBlockEntity.Energized(type, pos, state) {
+    constructor(
+        type: BlockEntityType<*>,
+        lookup: HTRecipeLookup<HTItemToDoubleItemRecipe>,
+        pos: BlockPos,
+        state: BlockState
+    ) : this(type, HTRecipeCache(lookup), pos, state)
 
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<SingleRecipeInput, Pair<ItemStack, ItemStack>, HTItemToDoubleItemRecipe>() {
-            private val inputSlot: HTInputSlot.SingleItem by lazy { HTInputSlot.SingleItem(this@HTItemToDoubleItemBlockEntity.inputSlot) }
-            private val primarySlot: HTOutputSlot<ItemStack> by lazy { HTOutputSlot.SingleItem(this@HTItemToDoubleItemBlockEntity.primarySlot) }
-            private val secondarySlot: HTOutputSlot<ItemStack> by lazy { HTOutputSlot.SingleItem(this@HTItemToDoubleItemBlockEntity.secondarySlot) }
-
-            override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
-
-            override fun findRecipe(level: ServerLevel, input: SingleRecipeInput): HTItemToDoubleItemRecipe? = cache.findFirstRecipe(input, level)
-
-            override fun canComplete(recipe: HTItemToDoubleItemRecipe, input: SingleRecipeInput, output: Pair<ItemStack, ItemStack>): Boolean {
-                val inputCount: Int = recipe.getRequiredAmount(input.item())
-                return inputCount != 0 &&
-                    useTransaction { transaction: Transaction ->
-                        when {
-                            !inputSlot.canExtract(inputCount, transaction) -> false
-                            !primarySlot.canInsert(output.first, transaction) -> false
-                            else -> secondarySlot.canInsert(output.second, transaction)
-                        }
-                    }
-            }
-
-            override fun onComplete(recipe: HTItemToDoubleItemRecipe, input: SingleRecipeInput, output: Pair<ItemStack, ItemStack>) {
-                val inputCount: Int = recipe.getRequiredAmount(input.item())
-                useTransaction { transaction: Transaction ->
-                    inputSlot.extract(inputCount, transaction)
-                    primarySlot.insert(output.first, transaction)
-                    secondarySlot.insert(output.second, transaction)
-                    transaction.commit()
+        recipeHandler =
+            object : EnergizedHandler<SingleRecipeInput, Pair<ItemStack, ItemStack>, HTItemToDoubleItemRecipe>() {
+                private val inputSlot: HTInputSlot.SingleItem by lazy {
+                    HTInputSlot.SingleItem(this@HTItemToDoubleItemBlockEntity.inputSlot)
                 }
-                playSound(getCompletedSound())
+                private val primarySlot: HTOutputSlot<ItemStack> by lazy {
+                    HTOutputSlot.SingleItem(this@HTItemToDoubleItemBlockEntity.primarySlot)
+                }
+                private val secondarySlot: HTOutputSlot<ItemStack> by lazy {
+                    HTOutputSlot.SingleItem(this@HTItemToDoubleItemBlockEntity.secondarySlot)
+                }
+
+                override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
+
+                override fun findRecipe(level: ServerLevel, input: SingleRecipeInput): HTItemToDoubleItemRecipe? =
+                    cache.findFirstRecipe(input, level)
+
+                override fun canComplete(
+                    recipe: HTItemToDoubleItemRecipe,
+                    input: SingleRecipeInput,
+                    output: Pair<ItemStack, ItemStack>
+                ): Boolean {
+                    val inputCount: Int = recipe.getRequiredAmount(input.item())
+                    return inputCount != 0 &&
+                        useTransaction { transaction: Transaction ->
+                            when {
+                                !inputSlot.canExtract(inputCount, transaction) -> false
+                                !primarySlot.canInsert(output.first, transaction) -> false
+                                else -> secondarySlot.canInsert(output.second, transaction)
+                            }
+                        }
+                }
+
+                override fun onComplete(
+                    recipe: HTItemToDoubleItemRecipe,
+                    input: SingleRecipeInput,
+                    output: Pair<ItemStack, ItemStack>
+                ) {
+                    val inputCount: Int = recipe.getRequiredAmount(input.item())
+                    useTransaction { transaction: Transaction ->
+                        inputSlot.extract(inputCount, transaction)
+                        primarySlot.insert(output.first, transaction)
+                        secondarySlot.insert(output.second, transaction)
+                        transaction.commit()
+                    }
+                    playSound(getCompletedSound())
+                }
             }
-        }
     }
 
     protected abstract fun getCompletedSound(): HTSoundInstance
@@ -85,7 +111,7 @@ abstract class HTItemToDoubleItemBlockEntity(type: BlockEntityType<*>, private v
             0,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(0.5),
-            HTBackgroundType.INPUT,
+            HTBackgroundType.INPUT
         )
         widgetHolder.track(inputSlot)
         // outputs
@@ -94,7 +120,7 @@ abstract class HTItemToDoubleItemBlockEntity(type: BlockEntityType<*>, private v
             1,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT,
+            HTBackgroundType.OUTPUT
         )
         widgetHolder.track(primarySlot)
         widgetHolder += HTItemWidget.Container(
@@ -102,7 +128,7 @@ abstract class HTItemToDoubleItemBlockEntity(type: BlockEntityType<*>, private v
             2,
             HTSlotHelper.getSlotPosX(7),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.EXTRA_OUTPUT,
+            HTBackgroundType.EXTRA_OUTPUT
         )
         widgetHolder.track(secondarySlot)
     }

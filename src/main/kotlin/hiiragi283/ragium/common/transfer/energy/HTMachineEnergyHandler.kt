@@ -18,11 +18,12 @@ sealed class HTMachineEnergyHandler<BE : HTBaseMachineBlockEntity>(
     val blockEntity: BE,
     canExtract: Predicate<HTTransferAccess>,
     canInsert: Predicate<HTTransferAccess>,
-    listener: Runnable?,
+    listener: Runnable?
 ) : HTBasicEnergyHandler(capacity, canExtract, canInsert, listener) {
     companion object {
         @JvmStatic
-        fun input(listener: Runnable?, blockEntity: HTProcessorBlockEntity.Energized): Processor = Processor(blockEntity.getConfig(), listener, blockEntity)
+        fun input(listener: Runnable?, blockEntity: HTProcessorBlockEntity.Energized): Processor =
+            Processor(blockEntity.getConfig(), listener, blockEntity)
 
         /*fun <BE : HTGeneratorBlockEntity> output(listener: Runnable?, blockEntity: BE): Generator {
             val attribute: HTEnergyBlockAttribute = validateAttribute(blockEntity)
@@ -41,7 +42,7 @@ sealed class HTMachineEnergyHandler<BE : HTBaseMachineBlockEntity>(
             blockEntity,
             HTTransferAccess.NOT_EXTERNAL,
             HTTransferPredicates.alwaysTrue(),
-            listener,
+            listener
         ) {
         fun consume(): Int = useTransaction {
             val extracted: Int = this.extract(currentEnergyPerTick, it, HTTransferAccess.INTERNAL)

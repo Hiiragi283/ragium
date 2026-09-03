@@ -6,15 +6,14 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.item.ItemInstanceBuilder
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.util.HTDelegates
-import hiiragi283.lib.util.Option
-import hiiragi283.lib.util.java
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmithingTransformRecipe
+import java.util.Optional
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * 鍛冶台レシピ向けの[HTRecipeBuilder]の実装クラスです。
@@ -34,11 +33,11 @@ class HTSmithingRecipeBuilder : HTRecipeBuilder<SmithingTransformRecipe>(HTConst
         }
     }
 
-    @PublishedApi internal var template: Option<Ingredient> by HTDelegates.onceInitialize { Option.none() }
+    @PublishedApi internal var template: Optional<Ingredient> by HTDelegates.onceInitialize { Optional.empty() }
 
     @PublishedApi internal var base: Ingredient by HTDelegates.onceInitialize()
 
-    @PublishedApi internal var addition: Option<Ingredient> by HTDelegates.onceInitialize { Option.none() }
+    @PublishedApi internal var addition: Optional<Ingredient> by HTDelegates.onceInitialize { Optional.empty() }
 
     @PublishedApi internal var result: ItemStackTemplate by HTDelegates.onceInitialize()
 
@@ -50,7 +49,7 @@ class HTSmithingRecipeBuilder : HTRecipeBuilder<SmithingTransformRecipe>(HTConst
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        template = Option.some(IngredientBuilder().apply(builderAction).build())
+        template = Optional.of(IngredientBuilder().apply(builderAction).build())
     }
 
     inline fun base(builderAction: IngredientBuilder.() -> Unit) {
@@ -64,7 +63,7 @@ class HTSmithingRecipeBuilder : HTRecipeBuilder<SmithingTransformRecipe>(HTConst
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        addition = Option.some(IngredientBuilder().apply(builderAction).build())
+        addition = Optional.of(IngredientBuilder().apply(builderAction).build())
     }
 
     inline fun result(builderAction: ItemInstanceBuilder.() -> Unit) {
@@ -78,9 +77,9 @@ class HTSmithingRecipeBuilder : HTRecipeBuilder<SmithingTransformRecipe>(HTConst
 
     override fun createRecipe(): SmithingTransformRecipe = SmithingTransformRecipe(
         commonInfo(true),
-        template.java,
+        template,
         base,
-        addition.java,
-        result,
+        addition,
+        result
     )
 }

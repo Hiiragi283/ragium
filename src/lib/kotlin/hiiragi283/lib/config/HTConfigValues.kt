@@ -7,13 +7,15 @@ import net.neoforged.neoforge.common.ModConfigSpec
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun ModConfigSpec.Builder.translation(hasKey: HTHasTranslationKey): ModConfigSpec.Builder = this.translation(hasKey.translationKey)
+fun ModConfigSpec.Builder.translation(hasKey: HTHasTranslationKey): ModConfigSpec.Builder =
+    this.translation(hasKey.translationKey)
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun ModConfigSpec.Builder.definePositiveInt(path: String, defaultValue: Int, min: Int = 1): ModConfigSpec.IntValue = defineInRange(path, defaultValue, min, Int.MAX_VALUE)
+fun ModConfigSpec.Builder.definePositiveInt(path: String, defaultValue: Int, min: Int = 1): ModConfigSpec.IntValue =
+    defineInRange(path, defaultValue, min, Int.MAX_VALUE)
 
 /**
  * @author Hiiragi Tsubasa
@@ -23,5 +25,5 @@ fun ModConfigSpec.Builder.definePositiveDouble(
     path: String,
     defaultValue: Double,
     min: Number,
-    max: Number,
+    max: Number
 ): ModConfigSpec.DoubleValue = defineInRange(path, defaultValue, min.toDouble(), max.toDouble())

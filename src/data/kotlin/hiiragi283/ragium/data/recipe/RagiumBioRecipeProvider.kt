@@ -7,7 +7,6 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.RagiumMaterial
-import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey
@@ -20,9 +19,11 @@ import net.minecraft.world.item.component.Consumable
 import net.minecraft.world.item.component.Consumables
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect
 import net.neoforged.neoforge.common.Tags
+import java.util.concurrent.CompletableFuture
 
-class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun buildRecipes() {
+class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
+    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+    override fun exportValues() {
         brewing()
         planting()
     }
@@ -55,7 +56,12 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.ROTTEN_FLESH } }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
-            result { +PotionContents(customEffects = listOf(MobEffectInstance(MobEffects.HUNGER, 900)), customName = "hunger") }
+            result {
+                +PotionContents(
+                    customEffects = listOf(MobEffectInstance(MobEffects.HUNGER, 900)),
+                    customName = "hunger"
+                )
+            }
             recipeId replace "potion/hunger"
         }.save(exporter)
         // Wither
@@ -70,7 +76,12 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         RagiumRecipeBuilders.brewing {
             itemIngredient { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.ECHO) }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
-            result { +PotionContents(customEffects = listOf(MobEffectInstance(MobEffects.DARKNESS, 900)), customName = "darkness") }
+            result {
+                +PotionContents(
+                    customEffects = listOf(MobEffectInstance(MobEffects.DARKNESS, 900)),
+                    customName = "darkness"
+                )
+            }
             recipeId replace "potion/darkness"
         }.save(exporter)
 
@@ -82,7 +93,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                 +PotionContents(
                     customColor = 0xff9900,
                     customEffects = extractEffects(Consumables.GOLDEN_APPLE),
-                    customName = "golden_apple",
+                    customName = "golden_apple"
                 )
             }
             recipeId replace "potion/golden_apple"
@@ -94,7 +105,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                 +PotionContents(
                     customColor = 0xff9900,
                     customEffects = extractEffects(Consumables.ENCHANTED_GOLDEN_APPLE),
-                    customName = "enchanted_golden_apple",
+                    customName = "enchanted_golden_apple"
                 )
             }
             recipeId replace "potion/enchanted_golden_apple"
@@ -114,7 +125,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
             Triple(Tags.Items.SEEDS_PITCHER_PLANT, Items.PITCHER_PLANT, Items.PITCHER_POD),
             Triple(Tags.Items.SEEDS_PUMPKIN, Items.PUMPKIN, Items.PUMPKIN_SEEDS),
             Triple(Tags.Items.SEEDS_TORCHFLOWER, Items.TORCHFLOWER, Items.TORCHFLOWER_SEEDS),
-            Triple(Tags.Items.SEEDS_WHEAT, Items.WHEAT, Items.WHEAT_SEEDS),
+            Triple(Tags.Items.SEEDS_WHEAT, Items.WHEAT, Items.WHEAT_SEEDS)
         ).forEach { (seedIn: TagKey<Item>, crop: Item, seedOut: Item) ->
             RagiumRecipeBuilders.planting {
                 ingredient {
@@ -132,7 +143,17 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
             }.save(exporter)
         }
         // Plant without seed
-        val crops: Set<Item> = setOf(Items.CARROT, Items.POTATO, Items.SWEET_BERRIES, Items.GLOW_BERRIES, Items.APPLE, Items.COCOA_BEANS, Items.NETHER_WART, Items.BROWN_MUSHROOM, Items.RED_MUSHROOM)
+        val crops: Set<Item> = setOf(
+            Items.CARROT,
+            Items.POTATO,
+            Items.SWEET_BERRIES,
+            Items.GLOW_BERRIES,
+            Items.APPLE,
+            Items.COCOA_BEANS,
+            Items.NETHER_WART,
+            Items.BROWN_MUSHROOM,
+            Items.RED_MUSHROOM
+        )
         for (crop: Item in crops) {
             RagiumRecipeBuilders.planting {
                 ingredient {
@@ -171,7 +192,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
             Items.PALE_OAK_SAPLING to Items.PALE_OAK_LOG,
             Items.CRIMSON_FUNGUS to Items.CRIMSON_STEM,
             Items.WARPED_FUNGUS to Items.WARPED_STEM,
-            Items.CHORUS_FLOWER to Items.CHORUS_FRUIT,
+            Items.CHORUS_FLOWER to Items.CHORUS_FRUIT
         ).forEach { (sapling: Item, log: Item) ->
             RagiumRecipeBuilders.planting {
                 ingredient {

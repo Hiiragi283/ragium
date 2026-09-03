@@ -1,20 +1,24 @@
 package hiiragi283.lib.data.tag
 
 import hiiragi283.lib.registry.HTFluidContent
-import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import java.util.concurrent.CompletableFuture
 
 /**
  * [Fluid]向けの[HTTagBuilder]の拡張クラスです。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTFluidTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, modId: String) : HTTagsProvider<Fluid>(output, Registries.FLUID, lookupProvider, modId) {
+abstract class HTFluidTagsProvider(
+    output: PackOutput,
+    lookupProvider: CompletableFuture<HolderLookup.Provider>,
+    modId: String
+) : HTTagsProvider<Fluid>(output, Registries.FLUID, lookupProvider, modId) {
     //    Extensions    //
 
     /**
@@ -47,5 +51,6 @@ abstract class HTFluidTagsProvider(output: PackOutput, lookupProvider: Completab
      * [HTFluidContent.fluidTag]に基づいて子タグをタグに追加します。
      * @param content 子タグの提供元
      */
-    protected fun HTTagBuilder<Fluid>.addContentTag(content: HTFluidContent): HTTagBuilder<Fluid> = this.addTag(content.fluidTag)
+    protected fun HTTagBuilder<Fluid>.addContentTag(content: HTFluidContent): HTTagBuilder<Fluid> =
+        this.addTag(content.fluidTag)
 }

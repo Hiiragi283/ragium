@@ -26,7 +26,7 @@ enum class HTDefaultColor(
     val dyeColor: DyeColor,
     val textColor: TextColor,
     enName: String,
-    jaName: String,
+    jaName: String
 ) : StringRepresentable,
     HTLangName by HTLangName(enName, jaName) {
     WHITE(ChatFormatting.WHITE, DyeColor.WHITE, "White", "白色"),
@@ -44,7 +44,7 @@ enum class HTDefaultColor(
     BROWN(intArrayOf(161, 118, 73), DyeColor.BROWN, "Brown", "茶色"),
     GREEN(intArrayOf(89, 193, 95), DyeColor.GREEN, "Green", "緑色"),
     RED(ChatFormatting.RED, DyeColor.RED, "Red", "赤色"),
-    BLACK(ChatFormatting.BLACK, DyeColor.BLACK, "Black", "黒色"),
+    BLACK(ChatFormatting.BLACK, DyeColor.BLACK, "Black", "黒色")
     ;
 
     constructor(color: ChatFormatting, dyeColor: DyeColor, enName: String, jaName: String) : this(
@@ -52,7 +52,7 @@ enum class HTDefaultColor(
         dyeColor,
         TextColor.fromLegacyFormat(color) ?: error("$color is not color format"),
         enName,
-        jaName,
+        jaName
     )
 
     constructor(color: Int, dyeColor: DyeColor, enName: String, jaName: String) : this(
@@ -60,14 +60,14 @@ enum class HTDefaultColor(
         dyeColor,
         TextColor.fromRgb(color),
         enName,
-        jaName,
+        jaName
     )
 
     constructor(color: IntArray, dyeColor: DyeColor, enName: String, jaName: String) : this(
         ARGB.color(color[0], color[1], color[2]),
         dyeColor,
         enName,
-        jaName,
+        jaName
     )
 
     companion object {

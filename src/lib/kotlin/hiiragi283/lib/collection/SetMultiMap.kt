@@ -1,5 +1,6 @@
 package hiiragi283.lib.collection
 
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
 import java.util.TreeSet
 
 /**
@@ -34,7 +35,7 @@ class SetMultiMap<K, out V> private constructor(map: Map<K, Set<V>>) : AbstractM
 
         constructor(other: MultiMap<K, V>) : super(other)
 
-        override fun emptyCollection(): MutableSet<V> = mutableSetOf()
+        override fun emptyCollection(): MutableSet<V> = ObjectLinkedOpenHashSet()
 
         override fun build(): SetMultiMap<K, V> = SetMultiMap(map)
     }

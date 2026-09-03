@@ -8,11 +8,11 @@ import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.common.block.HTMachineBlock
-import java.util.function.IntSupplier
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import java.util.function.IntSupplier
 
 abstract class HTBaseMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(type, pos, state),

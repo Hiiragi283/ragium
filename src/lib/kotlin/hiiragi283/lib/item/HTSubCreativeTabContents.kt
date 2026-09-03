@@ -17,7 +17,11 @@ fun interface HTSubCreativeTabContents {
      * @param parameters 登録時のコンテキスト
      * @param output [ItemStack]の登録先
      */
-    fun addItems(baseItem: Holder<Item>, parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output)
+    fun addItems(
+        baseItem: Holder<Item>,
+        parameters: CreativeModeTab.ItemDisplayParameters,
+        output: CreativeModeTab.Output
+    )
 
     /**
      * デフォルトの[ItemStack]を追加するか判定します。

@@ -36,13 +36,13 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
     private val title: Text,
     private val icon: IDrawable,
     private val width: Int,
-    private val height: Int,
+    private val height: Int
 ) : IRecipeCategory<RECIPE> {
     companion object {
         @JvmStatic
         protected fun createIcon(guiHelper: IGuiHelper, icon: Either<Identifier, ItemStack>): IDrawable = icon.fold(
             { id: Identifier -> guiHelper.drawableBuilder(id, 0, 0, 18, 18).setTextureSize(18, 18).build() },
-            { stack: ItemStack -> guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, stack) },
+            { stack: ItemStack -> guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, stack) }
         )
     }
 
@@ -52,7 +52,7 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
         recipeType.getText(),
         createIcon(guiHelper, recipeType.icon),
         width,
-        height,
+        height
     )
 
     //    IRecipeCategory    //
@@ -91,7 +91,8 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
     fun getPosition(index: Double): Int = (index * 18).toInt()
 
     // IRecipeSlotBuilder
-    protected fun IRecipeSlotBuilder.setSlotBackground(type: HTBackgroundType): IRecipeSlotBuilder = this.setBackground(HTJeiDrawables.getSlot(type, guiHelper), -1, -1).setSlotName(type.name)
+    protected fun IRecipeSlotBuilder.setSlotBackground(type: HTBackgroundType): IRecipeSlotBuilder =
+        this.setBackground(HTJeiDrawables.getSlot(type, guiHelper), -1, -1).setSlotName(type.name)
 
     protected fun IRecipeSlotBuilder.setSlotBackground(type: HTBackgroundType, capacity: Int): IRecipeSlotBuilder = this
         .setBackground(HTJeiDrawables.getSlot(type, guiHelper), -1, -1)
@@ -106,12 +107,15 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
     private fun fixCapacity(capacity: Int): Long = maxOf(capacity, 1).toLong()
 
     // IRecipeExtrasBuilder
-    protected fun IRecipeExtrasBuilder.addRecipePlus(x: Int, y: Int = getPosition(0)): IPlaceable<*> = this.addRecipePlusSign().setPosition(x + 2, y + 2)
+    protected fun IRecipeExtrasBuilder.addRecipePlus(x: Int, y: Int = getPosition(0)): IPlaceable<*> =
+        this.addRecipePlusSign().setPosition(x + 2, y + 2)
 
-    protected fun IRecipeExtrasBuilder.addRecipeArrow(progressData: HTProgressData): IPlaceable<*> = when (progressData) {
-        is HTProgressData.Energy -> this.addRecipeArrow()
-        is HTProgressData.Time -> this.addAnimatedRecipeArrow(progressData.value)
-    }
+    protected fun IRecipeExtrasBuilder.addRecipeArrow(progressData: HTProgressData): IPlaceable<*> =
+        when (progressData) {
+            is HTProgressData.Energy -> this.addRecipeArrow()
+            is HTProgressData.Time -> this.addAnimatedRecipeArrow(progressData.value)
+        }
 
-    protected fun IRecipeExtrasBuilder.addRecipeArrow(recipe: HTProgressRecipe.Simple<*>): IPlaceable<*> = this.addRecipeArrow(recipe.progressData)
+    protected fun IRecipeExtrasBuilder.addRecipeArrow(recipe: HTProgressRecipe.Simple<*>): IPlaceable<*> =
+        this.addRecipeArrow(recipe.progressData)
 }

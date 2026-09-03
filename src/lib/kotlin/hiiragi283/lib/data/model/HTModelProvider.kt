@@ -7,7 +7,6 @@ import hiiragi283.lib.resource.blockId
 import hiiragi283.lib.resource.itemId
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.resource.vanillaId
-import java.util.Optional
 import net.minecraft.client.data.models.BlockModelGenerators
 import net.minecraft.client.data.models.ItemModelGenerators
 import net.minecraft.client.data.models.ModelProvider
@@ -25,6 +24,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel
+import java.util.Optional
 
 /**
  * Hiiragi Seriesで使用される[ModelProvider]の拡張クラスです。。
@@ -66,16 +66,29 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
     /**
      * ハーフブロックのブロックJSONを生成します。
      */
-    fun BlockModelGenerators.createSlab(block: HTIdOrValue<SlabBlock>, fullModel: Identifier, texture: Material = Material(block.idOrThrow.blockId)) {
+    fun BlockModelGenerators.createSlab(
+        block: HTIdOrValue<SlabBlock>,
+        fullModel: Identifier,
+        texture: Material = Material(block.idOrThrow.blockId)
+    ) {
         this.createSlab(block, fullModel, texture, texture, texture)
     }
 
     /**
      * ハーフブロックのブロックJSONを生成します。
      */
-    fun BlockModelGenerators.createSlab(block: HTIdOrValue<SlabBlock>, fullModel: Identifier, top: Material, side: Material, bottom: Material) {
+    fun BlockModelGenerators.createSlab(
+        block: HTIdOrValue<SlabBlock>,
+        fullModel: Identifier,
+        top: Material,
+        side: Material,
+        bottom: Material
+    ) {
         val slab: SlabBlock = block.getOrThrow()
-        val mapping: TextureMapping = TextureMapping().put(TextureSlot.TOP, top).put(TextureSlot.BOTTOM, bottom).put(TextureSlot.SIDE, side)
+        val mapping: TextureMapping = TextureMapping().put(
+            TextureSlot.TOP,
+            top
+        ).put(TextureSlot.BOTTOM, bottom).put(TextureSlot.SIDE, side)
         val modelId: Identifier = ModelTemplates.SLAB_BOTTOM.createBlock(block, mapping, modelOutput)
 
         blockStateOutput.accept(
@@ -83,8 +96,8 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
                 slab,
                 BlockModelGenerators.plainVariant(modelId),
                 BlockModelGenerators.plainVariant(ModelTemplates.SLAB_TOP.createBlock(block, mapping, modelOutput)),
-                BlockModelGenerators.plainVariant(fullModel),
-            ),
+                BlockModelGenerators.plainVariant(fullModel)
+            )
         )
         registerSimpleItemModel(slab, modelId)
     }
@@ -92,16 +105,27 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
     /**
      * 階段ブロックのブロックJSONを生成します。
      */
-    fun BlockModelGenerators.createStairs(block: HTIdOrValue<StairBlock>, texture: Material = Material(block.idOrThrow.blockId)) {
+    fun BlockModelGenerators.createStairs(
+        block: HTIdOrValue<StairBlock>,
+        texture: Material = Material(block.idOrThrow.blockId)
+    ) {
         this.createStairs(block, texture, texture, texture)
     }
 
     /**
      * 階段ブロックのブロックJSONを生成します。
      */
-    fun BlockModelGenerators.createStairs(block: HTIdOrValue<StairBlock>, top: Material, side: Material, bottom: Material) {
+    fun BlockModelGenerators.createStairs(
+        block: HTIdOrValue<StairBlock>,
+        top: Material,
+        side: Material,
+        bottom: Material
+    ) {
         val stairs: StairBlock = block.getOrThrow()
-        val mapping: TextureMapping = TextureMapping().put(TextureSlot.TOP, top).put(TextureSlot.BOTTOM, bottom).put(TextureSlot.SIDE, side)
+        val mapping: TextureMapping = TextureMapping().put(
+            TextureSlot.TOP,
+            top
+        ).put(TextureSlot.BOTTOM, bottom).put(TextureSlot.SIDE, side)
         val modelId: Identifier = ModelTemplates.STAIRS_STRAIGHT.createBlock(block, mapping, modelOutput)
 
         blockStateOutput.accept(
@@ -109,8 +133,8 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
                 stairs,
                 BlockModelGenerators.plainVariant(ModelTemplates.STAIRS_INNER.createBlock(block, mapping, modelOutput)),
                 BlockModelGenerators.plainVariant(modelId),
-                BlockModelGenerators.plainVariant(ModelTemplates.STAIRS_OUTER.createBlock(block, mapping, modelOutput)),
-            ),
+                BlockModelGenerators.plainVariant(ModelTemplates.STAIRS_OUTER.createBlock(block, mapping, modelOutput))
+            )
         )
         registerSimpleItemModel(stairs, modelId)
     }
@@ -125,8 +149,8 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
             HTModelTemplates.FLUID_BLOCK.createBlock(
                 fluidBlock,
                 TextureMapping.particle(Material(vanillaId(HTConstants.BLOCK, "water_still"))),
-                this.modelOutput,
-            ),
+                this.modelOutput
+            )
         )
     }
 
@@ -138,8 +162,15 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @param layer モデルのテクスチャのパス
      * @param template 使用するモデルのテンプレート
      */
-    fun ItemModelGenerators.generateFlatItem(item: HTIdOrValue<Item>, layer: Identifier = item.idOrThrow.itemId, template: ModelTemplate = ModelTemplates.FLAT_ITEM) {
-        this.itemModelOutput.accept(item.getOrThrow(), ItemModelUtils.plainModel(this.createFlatItemModel(item, layer, template)))
+    fun ItemModelGenerators.generateFlatItem(
+        item: HTIdOrValue<Item>,
+        layer: Identifier = item.idOrThrow.itemId,
+        template: ModelTemplate = ModelTemplates.FLAT_ITEM
+    ) {
+        this.itemModelOutput.accept(
+            item.getOrThrow(),
+            ItemModelUtils.plainModel(this.createFlatItemModel(item, layer, template))
+        )
     }
 
     /**
@@ -151,11 +182,18 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
     fun ItemModelGenerators.generateLayeredItem(item: HTIdOrValue<Item>, vararg layers: Identifier) {
         val (mapping: TextureMapping, template: ModelTemplate) = when (layers.size) {
             1 -> TextureMapping.layer0(Material(layers[0])) to ModelTemplates.FLAT_ITEM
+
             2 -> TextureMapping.layered(Material(layers[0]), Material(layers[1])) to ModelTemplates.TWO_LAYERED_ITEM
-            3 -> TextureMapping.layered(Material(layers[0]), Material(layers[1]), Material(layers[2])) to ModelTemplates.THREE_LAYERED_ITEM
+
+            3 -> TextureMapping.layered(Material(layers[0]), Material(layers[1]), Material(layers[2])) to
+                ModelTemplates.THREE_LAYERED_ITEM
+
             else -> error("Cannot create item model with ${layers.size} layers")
         }
-        this.itemModelOutput.accept(item.getOrThrow(), ItemModelUtils.plainModel(template.createItem(item, mapping, this.modelOutput)))
+        this.itemModelOutput.accept(
+            item.getOrThrow(),
+            ItemModelUtils.plainModel(template.createItem(item, mapping, this.modelOutput))
+        )
     }
 
     /**
@@ -168,7 +206,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
     fun ItemModelGenerators.createFlatItemModel(
         item: HTIdOrValue<*>,
         layer: Identifier = item.idOrThrow.itemId,
-        template: ModelTemplate = ModelTemplates.FLAT_ITEM,
+        template: ModelTemplate = ModelTemplates.FLAT_ITEM
     ): Identifier = template.createItem(item, TextureMapping.layer0(Material(layer)), this.modelOutput)
 
     /**
@@ -177,7 +215,8 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @param isDrip `true`の場合，溶岩バケツのようなテクスチャを割り当てる
      */
     fun ItemModelGenerators.generateBucketItem(content: HTFluidContent, isDrip: Boolean) {
-        fun material(namespace: String, path: String): Optional<Material> = Optional.of(namespace.toId(HTConstants.ITEM, path).let(::Material))
+        fun material(namespace: String, path: String): Optional<Material> =
+            Optional.of(namespace.toId(HTConstants.ITEM, path).let(::Material))
 
         val suffix: String = when (isDrip) {
             true -> "_drip"
@@ -191,13 +230,13 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
                     material(HTConstants.MINECRAFT, "bucket"),
                     material(HTConstants.MINECRAFT, "bucket"),
                     material(HTConstants.NEOFORGE, "mask/bucket_fluid$suffix"),
-                    Optional.empty(), // material(HTConstants.NEOFORGE, "mask/bucket_fluid_cover$suffix"),
+                    Optional.empty() // material(HTConstants.NEOFORGE, "mask/bucket_fluid_cover$suffix"),
                 ),
                 content.getOrThrow(),
                 content.getFluidType().isLighterThanAir,
                 true,
-                false,
-            ),
+                false
+            )
         )
     }
 }

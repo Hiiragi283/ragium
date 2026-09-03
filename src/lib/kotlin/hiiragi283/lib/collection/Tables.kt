@@ -49,7 +49,10 @@ private data object EmptyTable : Table<Nothing, Nothing, Nothing> {
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <R, C, V> buildTable(initialCapacity: Int = 10, builderAction: Table.Builder<R, C, V>.() -> Unit): Table<R, C, V> {
+inline fun <R, C, V> buildTable(
+    initialCapacity: Int = 10,
+    builderAction: Table.Builder<R, C, V>.() -> Unit
+): Table<R, C, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -64,7 +67,10 @@ inline fun <R, C, V> buildTable(initialCapacity: Int = 10, builderAction: Table.
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <R, C, V> buildTable(map: MutableMap<Pair<R, C>, V>, builderAction: Table.Builder<R, C, V>.() -> Unit): Table<R, C, V> {
+inline fun <R, C, V> buildTable(
+    map: MutableMap<Pair<R, C>, V>,
+    builderAction: Table.Builder<R, C, V>.() -> Unit
+): Table<R, C, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -97,13 +103,17 @@ fun <R, C, V> Table<R, C, V>.asSequence(): Sequence<Triple<R, C, V>> = this.entr
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun <R, C, V1, V2> Table<R, C, V1>.mapValue(transform: (Triple<R, C, V1>) -> V2): Table<R, C, V2> = this.mapValueTo(PairMapTable.Builder(), transform)
+fun <R, C, V1, V2> Table<R, C, V1>.mapValue(transform: (Triple<R, C, V1>) -> V2): Table<R, C, V2> =
+    this.mapValueTo(PairMapTable.Builder(), transform)
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun <R, C, V1, V2, T : Table.Builder<R, C, V2>> Table<R, C, V1>.mapValueTo(destination: T, transform: (Triple<R, C, V1>) -> V2): Table<R, C, V2> {
+fun <R, C, V1, V2, T : Table.Builder<R, C, V2>> Table<R, C, V1>.mapValueTo(
+    destination: T,
+    transform: (Triple<R, C, V1>) -> V2
+): Table<R, C, V2> {
     this.forEach { triple: Triple<R, C, V1> -> destination.put(triple.first, triple.second, transform(triple)) }
     return destination.build()
 }

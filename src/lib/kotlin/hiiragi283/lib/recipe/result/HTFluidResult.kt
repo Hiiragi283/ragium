@@ -33,12 +33,13 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
         val MAP_CODEC: MapCodec<HTFluidResult> = HTCodecs.recordMap { instance ->
             instance.group(
                 Entry.MAP_CODEC.forGetter(HTFluidResult::entry),
-                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.AMOUNT).forGetter(HTFluidResult::amount),
+                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.AMOUNT).forGetter(HTFluidResult::amount)
             ).apply(instance, ::HTFluidResult)
         }
 
         @JvmField
-        val CODEC: Codec<HTFluidResult> = Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) { it.toResult() }
+        val CODEC: Codec<HTFluidResult> =
+            Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) { it.toResult() }
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTFluidResult> = StreamCodec.composite(
@@ -46,7 +47,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
             HTFluidResult::entry,
             ByteBufCodecs.VAR_INT,
             HTFluidResult::amount,
-            ::HTFluidResult,
+            ::HTFluidResult
         )
     }
 
@@ -73,7 +74,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
                 RagiumRegistries.FLUID_RESULT_TYPE.byNameCodec(),
                 Entry::type,
                 HTFluidResultType<*>::codec,
-                SimpleEntry.CODEC,
+                SimpleEntry.CODEC
             ).xmap(
                 { DFUEither.unwrap(it) },
                 { entry: Entry ->
@@ -81,11 +82,13 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
                         is SimpleEntry -> DFUEither.right(entry)
                         else -> DFUEither.left(entry)
                     }
-                },
+                }
             )
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> = ByteBufCodecs.registry(RagiumRegistries.Keys.FLUID_RESULT_TYPE).dispatch(Entry::type, HTFluidResultType<*>::streamCodec)
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> =
+                ByteBufCodecs.registry(RagiumRegistries.Keys.FLUID_RESULT_TYPE)
+                    .dispatch(Entry::type, HTFluidResultType<*>::streamCodec)
         }
 
         fun type(): HTFluidResultType<*>
@@ -98,13 +101,18 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
     }
 
     @JvmRecord
-    data class SimpleEntry @JvmOverloads constructor(val fluid: Holder<Fluid>, val components: DataComponentPatch = DataComponentPatch.EMPTY) : Entry {
+    data class SimpleEntry @JvmOverloads constructor(
+        val fluid: Holder<Fluid>,
+        val components: DataComponentPatch = DataComponentPatch.EMPTY
+    ) : Entry {
         companion object {
             @JvmField
             val CODEC: MapCodec<SimpleEntry> = HTCodecs.recordMap { instance ->
                 instance.group(
                     FluidStack.FLUID_HOLDER_CODEC.fieldOf(HTConstants.ID).forGetter(SimpleEntry::fluid),
-                    DataComponentPatch.CODEC.optionalFieldOf(HTConstants.COMPONENTS, DataComponentPatch.EMPTY).forGetter(SimpleEntry::components),
+                    DataComponentPatch.CODEC
+                        .optionalFieldOf(HTConstants.COMPONENTS, DataComponentPatch.EMPTY)
+                        .forGetter(SimpleEntry::components)
                 ).apply(instance, ::SimpleEntry)
             }
 
@@ -114,7 +122,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
                 SimpleEntry::fluid,
                 DataComponentPatch.STREAM_CODEC,
                 SimpleEntry::components,
-                ::SimpleEntry,
+                ::SimpleEntry
             )
 
             @JvmField
@@ -136,10 +144,12 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
     data class PotionEntry(val contents: BottledPotionContents) : Entry {
         companion object {
             @JvmField
-            val CODEC: MapCodec<PotionEntry> = BottledPotionContents.MAP_CODEC.xmap(::PotionEntry, PotionEntry::contents)
+            val CODEC: MapCodec<PotionEntry> =
+                BottledPotionContents.MAP_CODEC.xmap(::PotionEntry, PotionEntry::contents)
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, PotionEntry> = BottledPotionContents.STREAM_CODEC.map(::PotionEntry, PotionEntry::contents)
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, PotionEntry> =
+                BottledPotionContents.STREAM_CODEC.map(::PotionEntry, PotionEntry::contents)
 
             @JvmField
             val TYPE: HTFluidResultType<PotionEntry> = HTFluidResultType(CODEC, STREAM_CODEC)
@@ -149,6 +159,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
 
         override fun create(amount: Int): FluidStack = contents.toFluidStack(amount)
 
-        override fun getId(): Identifier = contents.potion?.getKeyOrThrow()?.identifier() ?: RagiumAPI.id(HTConstants.POTION)
+        override fun getId(): Identifier =
+            contents.potion?.getKeyOrThrow()?.identifier() ?: RagiumAPI.id(HTConstants.POTION)
     }
 }

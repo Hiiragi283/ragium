@@ -14,5 +14,5 @@ enum class HTTagDependType {
     /**
      * 選択的
      */
-    OPTIONAL,
+    OPTIONAL
 }

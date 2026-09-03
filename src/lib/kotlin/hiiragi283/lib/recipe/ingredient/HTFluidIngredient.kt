@@ -3,7 +3,7 @@ package hiiragi283.lib.recipe.ingredient
 import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.util.Option
+import hiiragi283.lib.util.fold
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -15,6 +15,7 @@ import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.display.ForFluidStacks
+import java.util.Optional
 
 /**
  * [Fluid]向けの[HTIngredient]の実装クラスです。
@@ -31,8 +32,12 @@ data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
         @JvmField
         val CODEC: Codec<HTFluidIngredient> = HTCodecs.record { instance ->
             instance.group(
-                NeoForgeExtraCodecs.aliasedFieldOf(FluidIngredient.CODEC, HTConstants.FLUIDS, HTConstants.INGREDIENT).forGetter(HTFluidIngredient::unsized),
-                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.AMOUNT).forGetter(HTFluidIngredient::amount),
+                NeoForgeExtraCodecs.aliasedFieldOf(
+                    FluidIngredient.CODEC,
+                    HTConstants.FLUIDS,
+                    HTConstants.INGREDIENT
+                ).forGetter(HTFluidIngredient::unsized),
+                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.AMOUNT).forGetter(HTFluidIngredient::amount)
             ).apply(instance, ::HTFluidIngredient)
         }
 
@@ -42,7 +47,7 @@ data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
             HTFluidIngredient::unsized,
             ByteBufCodecs.VAR_INT,
             HTFluidIngredient::amount,
-            ::HTFluidIngredient,
+            ::HTFluidIngredient
         )
     }
 
@@ -71,4 +76,5 @@ data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun Option<HTFluidIngredient>.test(instance: FluidInstance): Boolean = this.fold({ HTIngredientHelper.isEmpty(instance) }, { it.test(instance) })
+fun Optional<HTFluidIngredient>.test(instance: FluidInstance): Boolean =
+    this.fold({ HTIngredientHelper.isEmpty(instance) }, { it.test(instance) })

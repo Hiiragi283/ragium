@@ -23,7 +23,7 @@ enum class HTTransferAccess {
     /**
      * GUIを介したアクセス
      */
-    MANUAL,
+    MANUAL
     ;
 
     companion object {

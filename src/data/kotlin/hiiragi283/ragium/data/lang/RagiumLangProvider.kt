@@ -20,24 +20,26 @@ interface RagiumLangProvider {
         val langType: HTLangType = provider.langType
         // Block
         val waxedCopper = HTLangPatternProvider("Waxed %s", "錆止めされた%s")
-        RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: RagiumMaterial, block: HTHasTranslationKey) ->
-            provider.add(block, part, material)
-        }
+        RagiumBlocks.MATERIAL_BLOCKS
+            .forEach { (part: HTBlockPart, material: RagiumMaterial, block: HTHasTranslationKey) ->
+                provider.add(block, part, material)
+            }
         // Fluid
         val dyePattern = HTLangPatternProvider("%s Dye", "%sの染料")
         for ((color: HTLangName, content: HTFluidContent) in RagiumFluids.DYES.asSequenceWithColor()) {
             provider.addFluid(content, dyePattern.translate(langType, color))
         }
         // Item
-        RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemPart, material: RagiumMaterial, item: HTHasTranslationKey) ->
-            var patternProvider: HTLangPatternProvider = part
-            if (part == HTItemPart.DUST) {
-                if (material is RagiumMaterial.Other && material.isPulp) {
-                    patternProvider = HTLangPatternProvider("%s Pulp", "%sパルプ")
+        RagiumItems.MATERIAL_ITEMS
+            .forEach { (part: HTItemPart, material: RagiumMaterial, item: HTHasTranslationKey) ->
+                var patternProvider: HTLangPatternProvider = part
+                if (part == HTItemPart.DUST) {
+                    if (material is RagiumMaterial.Other && material.isPulp) {
+                        patternProvider = HTLangPatternProvider("%s Pulp", "%sパルプ")
+                    }
                 }
+                provider.add(item, patternProvider, material)
             }
-            provider.add(item, patternProvider, material)
-        }
         provider.add(RagiumItems.COAL_COKE, RagiumMaterial.Fuel.COAL_COKE)
         // Text
         // API - Constants

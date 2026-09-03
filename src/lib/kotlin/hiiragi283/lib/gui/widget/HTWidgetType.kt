@@ -13,8 +13,10 @@ import net.minecraft.resources.ResourceKey
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTWidgetType<WIDGET : HTWidget>(private val id: Identifier) : HTKeyOrValue<HTWidgetType<*>, HTWidgetType<WIDGET>> {
-    override fun unwrapWithKey(): Ior<ResourceKey<HTWidgetType<*>>, HTWidgetType<WIDGET>> = Ior.Both(RagiumRegistries.Keys.WIDGET_TYPE.createKey(id), this)
+class HTWidgetType<WIDGET : HTWidget>(private val id: Identifier) :
+    HTKeyOrValue<HTWidgetType<*>, HTWidgetType<WIDGET>> {
+    override fun unwrapWithKey(): Ior<ResourceKey<HTWidgetType<*>>, HTWidgetType<WIDGET>> =
+        Ior.Both(RagiumRegistries.Keys.WIDGET_TYPE.createKey(id), this)
 
     override fun toString(): String = "HTWidgetType(id=$id)"
 }

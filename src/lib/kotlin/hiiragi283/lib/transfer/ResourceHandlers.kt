@@ -2,12 +2,12 @@
 
 package hiiragi283.lib.transfer
 
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.neoforged.neoforge.transfer.ResourceHandler
 import net.neoforged.neoforge.transfer.transaction.Transaction
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * この[ResourceHandler][this]の有効なインデックスの範囲を返します。

@@ -15,7 +15,7 @@ import net.minecraft.core.Direction
 open class HTCapabilityManagerImpl<HOLDER : HTCapabilityHolder, SLOT : Any, HANDLER : Any>(
     protected val holder: HOLDER,
     private val proxyCreator: ProxyCreator<HOLDER, HANDLER>,
-    private val containerGetter: (HOLDER, Direction?) -> List<SLOT>,
+    private val containerGetter: (HOLDER, Direction?) -> List<SLOT>
 ) : HTCapabilityManager<SLOT> {
     private val handlers: MutableMap<Direction, HANDLER> = mutableEnumMapOf()
     private var readOnlyHandler: HANDLER? = null

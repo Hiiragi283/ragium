@@ -21,4 +21,5 @@ fun <T : Any> RegistryKey<T>.createTagKey(id: Identifier): TagKey<T> = TagKey.cr
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun TagKey<*>.getName(): MutableText = Component.translatableWithFallback(Tags.getTagTranslationKey(this), "#${this.location}")
+fun TagKey<*>.getName(): MutableText =
+    Component.translatableWithFallback(Tags.getTagTranslationKey(this), "#${this.location}")

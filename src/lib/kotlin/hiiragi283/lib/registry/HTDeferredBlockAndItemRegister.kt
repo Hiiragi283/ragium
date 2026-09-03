@@ -2,6 +2,7 @@ package hiiragi283.lib.registry
 
 import hiiragi283.lib.util.Identity
 import hiiragi283.lib.util.identity
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -13,10 +14,32 @@ import net.neoforged.bus.api.IEventBus
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTDeferredBlockAndItemRegister(private val blockRegister: HTDeferredBlockRegister, private val itemRegister: HTDeferredItemRegister) {
+class HTDeferredBlockAndItemRegister(
+    private val blockRegister: HTDeferredBlockRegister,
+    private val itemRegister: HTDeferredItemRegister
+) {
     constructor(namespace: String) : this(HTDeferredBlockRegister(namespace))
 
-    constructor(blockRegister: HTDeferredBlockRegister) : this(blockRegister, HTDeferredItemRegister(blockRegister.namespace))
+    constructor(blockRegister: HTDeferredBlockRegister) : this(
+        blockRegister,
+        HTDeferredItemRegister(blockRegister.namespace)
+    )
+
+    /**
+     * @since 26.1.3
+     */
+    fun addAlias(from: String, to: String) {
+        blockRegister.addAlias(from, to)
+        itemRegister.addAlias(from, to)
+    }
+
+    /**
+     * @since 26.1.3
+     */
+    fun addAlias(from: Identifier, to: Identifier) {
+        blockRegister.addAlias(from, to)
+        itemRegister.addAlias(from, to)
+    }
 
     /**
      * 新しいブロックとアイテムをまとめて登録します。
@@ -28,7 +51,7 @@ class HTDeferredBlockAndItemRegister(private val blockRegister: HTDeferredBlockR
     fun registerSimple(
         name: String,
         blockProp: BlockBehaviour.Properties,
-        itemProp: Identity<Item.Properties> = identity(),
+        itemProp: Identity<Item.Properties> = identity()
     ): HTSimpleDeferredBlockAndItem = registerSimple(name, blockProp, ::Block, itemProp)
 
     /**
@@ -44,7 +67,7 @@ class HTDeferredBlockAndItemRegister(private val blockRegister: HTDeferredBlockR
         name: String,
         blockProp: BlockBehaviour.Properties,
         blockFactory: BlockFactory<BLOCK>,
-        itemProp: Identity<Item.Properties> = identity(),
+        itemProp: Identity<Item.Properties> = identity()
     ): HTBasicDeferredBlockAndItem<BLOCK> = register(name, blockProp, blockFactory, ::BlockItem, itemProp)
 
     /**
@@ -63,13 +86,13 @@ class HTDeferredBlockAndItemRegister(private val blockRegister: HTDeferredBlockR
         blockProp: BlockBehaviour.Properties,
         blockFactory: BlockFactory<BLOCK>,
         itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
-        itemProp: Identity<Item.Properties> = identity(),
+        itemProp: Identity<Item.Properties> = identity()
     ): HTDeferredBlockAndItem<BLOCK, ITEM> {
         val blockHolder: HTDeferredBlock<BLOCK> = blockRegister.registerBlock(name, blockProp, blockFactory)
         val itemHolder: HTDeferredItem<ITEM> = itemRegister.registerItem(
             name,
             { prop: Item.Properties -> itemFactory(blockHolder.get(), prop.useBlockDescriptionPrefix()) },
-            itemProp,
+            itemProp
         )
         return HTDeferredBlockAndItem(blockHolder, itemHolder)
     }

@@ -2,8 +2,7 @@ package hiiragi283.lib.registry
 
 import hiiragi283.lib.resource.HTKeyOrValue
 import hiiragi283.lib.util.Ior
-import hiiragi283.lib.util.Option
-import hiiragi283.lib.util.kotlin
+import hiiragi283.lib.util.fold
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -29,7 +28,7 @@ open class HTDeferredHolder<R : Any, out T : R> :
 
     constructor(key: RegistryKey<R>, id: Identifier) : super(key.createKey(id))
 
-    fun asOption(): Option<T> = asOptional().kotlin
-
-    final override fun unwrapWithKey(): Ior<ResourceKey<R>, T> = asOption().fold({ Ior.Left(this.key) }, { Ior.Both(this.key, it) })
+    final override fun unwrapWithKey(): Ior<ResourceKey<R>, T> = asOptional().fold({
+        Ior.Left(this.key)
+    }, { Ior.Both(this.key, it) })
 }

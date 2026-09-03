@@ -1,5 +1,7 @@
 package hiiragi283.lib.registry
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -21,14 +23,14 @@ class HTPotionContentRegister(modId: String) {
     /**
      * 登録された[HTPotionContent]の一覧
      */
-    val entries: Set<HTPotionContent> field: MutableSet<HTPotionContent> = mutableSetOf()
+    val entries: Set<HTPotionContent> field: MutableSet<HTPotionContent> = ObjectLinkedOpenHashSet()
 
     /**
      * 登録された[HTPotionContent]の一覧を取得します。
      */
     fun asSequence(): Sequence<HTPotionContent> = entries.asSequence()
 
-    private val contentsCache: MutableMap<ResourceKey<Potion>, HTPotionContent> = mutableMapOf()
+    private val contentsCache: MutableMap<ResourceKey<Potion>, HTPotionContent> = Object2ObjectLinkedOpenHashMap()
 
     /**
      * [HTPotionContent]を取得します。
@@ -58,10 +60,19 @@ class HTPotionContentRegister(modId: String) {
      * @param strongEffects 強化されたポーション効果を提供するブロック
      * @return 新しい[HTPotionContent]のインスタンス
      */
-    fun registerPotion(name: String, baseEffects: PotionEffectProvider, longEffects: PotionEffectProvider, strongEffects: PotionEffectProvider? = null): HTPotionContent {
+    fun registerPotion(
+        name: String,
+        baseEffects: PotionEffectProvider,
+        longEffects: PotionEffectProvider,
+        strongEffects: PotionEffectProvider? = null
+    ): HTPotionContent {
         val baseHolder: HTSimpleDeferredHolder<Potion> = register.register(name) { _ -> Potion(name, *baseEffects()) }
-        val longHolder: HTSimpleDeferredHolder<Potion> = register.register("long_$name") { _ -> Potion(name, *longEffects()) }
-        val strongHolder: HTSimpleDeferredHolder<Potion>? = strongEffects?.let { register.register("strong_$name") { _ -> Potion(name, *it()) } }
+        val longHolder: HTSimpleDeferredHolder<Potion> = register.register("long_$name") { _ ->
+            Potion(name, *longEffects())
+        }
+        val strongHolder: HTSimpleDeferredHolder<Potion>? = strongEffects?.let {
+            register.register("strong_$name") { _ -> Potion(name, *it()) }
+        }
         val content = HTPotionContent(baseHolder, longHolder, strongHolder)
         entries += content
         contentsCache[baseHolder.key] = content
@@ -80,7 +91,7 @@ class HTPotionContentRegister(modId: String) {
         name,
         { arrayOf(MobEffectInstance(effect, 3600)) },
         { arrayOf(MobEffectInstance(effect, 9600)) },
-        { arrayOf(MobEffectInstance(effect, 1800, 1)) },
+        { arrayOf(MobEffectInstance(effect, 1800, 1)) }
     )
 
     /**
@@ -93,6 +104,6 @@ class HTPotionContentRegister(modId: String) {
         name,
         { arrayOf(MobEffectInstance(effect, 900)) },
         { arrayOf(MobEffectInstance(effect, 1800)) },
-        { arrayOf(MobEffectInstance(effect, 432, 1)) },
+        { arrayOf(MobEffectInstance(effect, 432, 1)) }
     )
 }

@@ -2,12 +2,12 @@ package hiiragi283.lib.data.tag
 
 import hiiragi283.lib.collection.SetMultiMap
 import hiiragi283.lib.registry.RegistryKey
-import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
+import java.util.concurrent.CompletableFuture
 
 /**
  * Hiiragi Seriesで使用される[TagsProvider]の拡張クラスです。
@@ -27,9 +27,20 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
             .thenComparing(TagEntry::getId)
     }
 
-    constructor(output: PackOutput, registryKey: RegistryKey<T>, lookupProvider: CompletableFuture<HolderLookup.Provider>, parentProvider: CompletableFuture<TagLookup<T>>, modId: String) : super(output, registryKey, lookupProvider, parentProvider, modId)
+    constructor(
+        output: PackOutput,
+        registryKey: RegistryKey<T>,
+        lookupProvider: CompletableFuture<HolderLookup.Provider>,
+        parentProvider: CompletableFuture<TagLookup<T>>,
+        modId: String
+    ) : super(output, registryKey, lookupProvider, parentProvider, modId)
 
-    constructor(output: PackOutput, registryKey: RegistryKey<T>, lookupProvider: CompletableFuture<HolderLookup.Provider>, modId: String) : super(output, registryKey, lookupProvider, modId)
+    constructor(
+        output: PackOutput,
+        registryKey: RegistryKey<T>,
+        lookupProvider: CompletableFuture<HolderLookup.Provider>,
+        modId: String
+    ) : super(output, registryKey, lookupProvider, modId)
 
     private val entryCache = SetMultiMap.SortedBuilder<TagKey<T>, TagEntry>(COMPARATOR)
 
@@ -52,7 +63,8 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
      * 新しい[HTTagBuilder]のインスタンスを作成します。
      * @param tagKey 生成対象のタグ
      */
-    protected fun builder(tagKey: TagKey<T>): HTTagBuilder<T> = HTTagBuilder { entry: TagEntry -> entryCache.put(tagKey, entry) }
+    protected fun builder(tagKey: TagKey<T>): HTTagBuilder<T> =
+        HTTagBuilder { entry: TagEntry -> entryCache.put(tagKey, entry) }
 
     /**
      * 新しい[HTTagBuilder]のインスタンスを作成します。
@@ -60,10 +72,11 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
      * @param children [tagKey]からチェインして生成するタグ
      * @return [children]の最後の値に対する[HTTagBuilder]
      */
-    protected fun builders(tagKey: TagKey<T>, vararg children: TagKey<T>): HTTagBuilder<T> = children.fold(builder(tagKey)) { builder: HTTagBuilder<T>, tagKeyIn: TagKey<T> ->
-        builder.addTag(tagKeyIn)
-        builder(tagKeyIn)
-    }
+    protected fun builders(tagKey: TagKey<T>, vararg children: TagKey<T>): HTTagBuilder<T> =
+        children.fold(builder(tagKey)) { builder: HTTagBuilder<T>, tagKeyIn: TagKey<T> ->
+            builder.addTag(tagKeyIn)
+            builder(tagKeyIn)
+        }
 
     protected fun createEmptyTag(tagKey: TagKey<T>) {
         getOrCreateRawBuilder(tagKey)

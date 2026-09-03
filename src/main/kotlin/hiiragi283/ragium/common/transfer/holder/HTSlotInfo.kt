@@ -5,13 +5,14 @@ import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.util.StringRepresentable
 
-enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: HTDefaultColor) : StringRepresentable {
+enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: HTDefaultColor) :
+    StringRepresentable {
     BOTH(true, true, HTDefaultColor.PURPLE),
     INPUT(true, false, HTDefaultColor.RED),
     OUTPUT(false, true, HTDefaultColor.LIGHT_BLUE),
     EXTRA_INPUT(true, false, HTDefaultColor.YELLOW),
     EXTRA_OUTPUT(false, true, HTDefaultColor.GREEN),
-    NONE(false, false, HTDefaultColor.GRAY),
+    NONE(false, false, HTDefaultColor.GRAY)
     ;
 
     companion object {

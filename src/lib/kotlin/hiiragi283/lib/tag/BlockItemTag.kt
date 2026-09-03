@@ -14,7 +14,9 @@ import net.minecraft.world.level.block.Block
  */
 @JvmRecord
 data class BlockItemTag(val block: TagKey<Block>, val item: TagKey<Item>) {
-    constructor(location: Identifier) : this(Registries.BLOCK.createTagKey(location), Registries.ITEM.createTagKey(location))
+    constructor(
+        location: Identifier
+    ) : this(Registries.BLOCK.createTagKey(location), Registries.ITEM.createTagKey(location))
 
     constructor(namespace: String, path: String) : this(namespace.toId(path))
 

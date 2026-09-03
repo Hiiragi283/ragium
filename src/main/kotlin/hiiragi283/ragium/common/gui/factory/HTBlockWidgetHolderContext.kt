@@ -26,7 +26,8 @@ data class HTBlockWidgetHolderContext(val factory: Factory, val player: Player, 
     MenuProvider {
     companion object {
         @JvmField
-        val MENU_TYPE: HTDeferredHolder<MenuType<*>, MenuType<HTWidgetContainerMenu>> = HTDeferredHolder(Registries.MENU, RagiumAPI.id(HTConstants.BLOCK))
+        val MENU_TYPE: HTDeferredHolder<MenuType<*>, MenuType<HTWidgetContainerMenu>> =
+            HTDeferredHolder(Registries.MENU, RagiumAPI.id(HTConstants.BLOCK))
 
         @JvmStatic
         fun openMenu(player: Player, pos: BlockPos): Boolean {
@@ -64,7 +65,8 @@ data class HTBlockWidgetHolderContext(val factory: Factory, val player: Player, 
 
     override fun getDisplayName(): Text = factory.getDisplayName(this)
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTWidgetContainerMenu = HTWidgetContainerMenu(MENU_TYPE.get(), containerId, playerInventory, this)
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): HTWidgetContainerMenu =
+        HTWidgetContainerMenu(MENU_TYPE.get(), containerId, playerInventory, this)
 
     override fun writeClientSideData(menu: AbstractContainerMenu, buffer: RegistryFriendlyByteBuf) {
         buffer.writeBlockPos(pos)
@@ -75,7 +77,8 @@ data class HTBlockWidgetHolderContext(val factory: Factory, val player: Player, 
     fun interface Factory {
         fun setup(context: HTBlockWidgetHolderContext, widgetHolder: HTWidgetHolder)
 
-        fun createContext(player: Player, pos: BlockPos): HTBlockWidgetHolderContext = HTBlockWidgetHolderContext(this, player, pos)
+        fun createContext(player: Player, pos: BlockPos): HTBlockWidgetHolderContext =
+            HTBlockWidgetHolderContext(this, player, pos)
 
         fun stillValid(context: HTBlockWidgetHolderContext): Boolean {
             if (!context.level.isInWorldBounds(context.pos)) return false
@@ -83,6 +86,7 @@ data class HTBlockWidgetHolderContext(val factory: Factory, val player: Player, 
             return !blockEntity.isRemoved
         }
 
-        fun getDisplayName(context: HTBlockWidgetHolderContext): Text = (context.blockEntity as? Nameable)?.displayName ?: context.state.block.name
+        fun getDisplayName(context: HTBlockWidgetHolderContext): Text =
+            (context.blockEntity as? Nameable)?.displayName ?: context.state.block.name
     }
 }

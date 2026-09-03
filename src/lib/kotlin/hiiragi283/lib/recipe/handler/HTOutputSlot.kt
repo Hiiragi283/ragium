@@ -49,7 +49,8 @@ interface HTOutputSlot<STACK : Any> {
             return slot.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)
         }
 
-        override fun canInsert(stack: ItemStack, transaction: TransactionContext): Boolean = insert(stack, transaction) == stack.count()
+        override fun canInsert(stack: ItemStack, transaction: TransactionContext): Boolean =
+            insert(stack, transaction) == stack.count()
     }
 
     /**
@@ -65,6 +66,7 @@ interface HTOutputSlot<STACK : Any> {
             return tank.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)
         }
 
-        override fun canInsert(stack: FluidStack, transaction: TransactionContext): Boolean = insert(stack, transaction) == stack.amount()
+        override fun canInsert(stack: FluidStack, transaction: TransactionContext): Boolean =
+            insert(stack, transaction) == stack.amount()
     }
 }

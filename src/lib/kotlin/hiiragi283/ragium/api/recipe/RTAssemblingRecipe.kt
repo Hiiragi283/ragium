@@ -9,12 +9,17 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 
-class RTAssemblingRecipe(primary: HTItemIngredient, secondary: HTItemIngredient, result: HTItemResult, progressData: HTProgressData) :
-    HTDoubleItemToItemRecipe.Basic(primary, secondary, result, progressData),
+class RTAssemblingRecipe(
+    primary: HTItemIngredient,
+    secondary: HTItemIngredient,
+    result: HTItemResult,
+    progressData: HTProgressData
+) : HTDoubleItemToItemRecipe.Basic(primary, secondary, result, progressData),
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField
-        val SERIALIZER: RecipeSerializer<RTAssemblingRecipe> = RecipeSerializer(codec(::RTAssemblingRecipe), streamCodec(::RTAssemblingRecipe))
+        val SERIALIZER: RecipeSerializer<RTAssemblingRecipe> =
+            RecipeSerializer(codec(::RTAssemblingRecipe), streamCodec(::RTAssemblingRecipe))
     }
 
     override fun getSerializer(): RecipeSerializer<RTAssemblingRecipe> = RagiumRecipeSerializers.ASSEMBLING

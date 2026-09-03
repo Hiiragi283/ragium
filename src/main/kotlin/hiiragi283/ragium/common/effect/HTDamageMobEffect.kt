@@ -11,7 +11,7 @@ class HTDamageMobEffect(
     category: MobEffectCategory,
     color: Int,
     private val damageProvider: (DamageSources) -> DamageSource,
-    private val interval: Int = 40,
+    private val interval: Int = 40
 ) : MobEffect(category, color) {
     override fun applyEffectTick(serverLevel: ServerLevel, mob: LivingEntity, amplification: Int): Boolean {
         mob.hurtServer(serverLevel, mob.damageSources().let(damageProvider), 1f)

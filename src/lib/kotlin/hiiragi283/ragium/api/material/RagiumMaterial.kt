@@ -28,7 +28,7 @@ sealed interface RagiumMaterial :
         CHARCOAL("Charcoal", "木炭"),
 
         // Common
-        COAL_COKE("Coal Coke", "石炭コークス"),
+        COAL_COKE("Coal Coke", "石炭コークス")
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -54,7 +54,7 @@ sealed interface RagiumMaterial :
         BORAX("Borax", "ホウ砂"),
 
         // Ragium
-        RAGINITE("Raginite", "ラギナイト"),
+        RAGINITE("Raginite", "ラギナイト")
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -74,7 +74,7 @@ sealed interface RagiumMaterial :
         DIAMOND("Diamond", "ダイヤモンド"),
         EMERALD("Emerald", "エメラルド"),
         ECHO("Echo", "残響"),
-        PRISMARINE("Prismarine", "プリズマリン"),
+        PRISMARINE("Prismarine", "プリズマリン")
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -82,20 +82,37 @@ sealed interface RagiumMaterial :
         override val materialName: String = name.lowercase()
     }
 
-    enum class Metal(val isElement: Boolean, langName: HTLangName) :
+    enum class Metal(langName: HTLangName) :
         RagiumMaterial,
         HTLangName by langName {
         // Minecraft
-        COPPER(true, "Copper", "銅"),
-        IRON(true, "Iron", "鉄"),
-        GOLD(true, "Gold", "金"),
-        NETHERITE(false, "Netherite", "ネザライト"),
+        COPPER("Copper", "銅"),
+        IRON("Iron", "鉄"),
+        GOLD("Gold", "金"),
+        NETHERITE("Netherite", "ネザライト") {
+            override val isElement: Boolean = false
+        },
 
-        // Common
-        STEEL(false, "Steel", "鋼鉄"),
+        // Ragium
+
+        /**
+         * @since 26.1.3
+         */
+        SOOTY_IRON("Sooty Iron", "煤鉄") {
+            override val isElement: Boolean = false
+        },
+
+        /**
+         * @since 26.1.3
+         */
+        BLACK_STEEL("Black Steel", "黒鋼") {
+            override val isElement: Boolean = false
+        }
         ;
 
-        constructor(isElement: Boolean, enName: String, jaName: String) : this(isElement, HTLangName(enName, jaName))
+        constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
+
+        open val isElement: Boolean = true
 
         override val materialName: String = name.lowercase()
     }
@@ -110,7 +127,7 @@ sealed interface RagiumMaterial :
         PAPER(true, "Paper", "紙"),
 
         // Common
-        SILICON(false, "Silicon", "シリコン"),
+        SILICON(false, "Silicon", "シリコン")
         ;
 
         constructor(isPulp: Boolean, enName: String, jaName: String) : this(isPulp, HTLangName(enName, jaName))

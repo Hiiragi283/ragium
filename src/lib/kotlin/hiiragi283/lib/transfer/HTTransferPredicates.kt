@@ -25,13 +25,22 @@ data object HTTransferPredicates {
     private val ALWAYS_FALSE_BI: BiPredicate<Any, Any> = BiPredicate { _, _ -> false }
 
     @JvmStatic
-    private val INTERNAL_ONLY: BiPredicate<Any, HTTransferAccess> = BiPredicate { _, access -> access == HTTransferAccess.INTERNAL }
+    private val INTERNAL_ONLY: BiPredicate<Any, HTTransferAccess> = BiPredicate { _, access ->
+        access ==
+            HTTransferAccess.INTERNAL
+    }
 
     @JvmStatic
-    private val NOT_EXTERNAL: BiPredicate<Any, HTTransferAccess> = BiPredicate { _, access -> access != HTTransferAccess.EXTERNAL }
+    private val NOT_EXTERNAL: BiPredicate<Any, HTTransferAccess> = BiPredicate { _, access ->
+        access !=
+            HTTransferAccess.EXTERNAL
+    }
 
     @JvmStatic
-    private val MANUAL_ONLY: BiPredicate<Any, HTTransferAccess> = BiPredicate { _, access -> access == HTTransferAccess.MANUAL }
+    private val MANUAL_ONLY: BiPredicate<Any, HTTransferAccess> = BiPredicate { _, access ->
+        access ==
+            HTTransferAccess.MANUAL
+    }
 
     @JvmStatic
     fun <T> alwaysTrue(): Predicate<T> = ALWAYS_TRUE as Predicate<T>

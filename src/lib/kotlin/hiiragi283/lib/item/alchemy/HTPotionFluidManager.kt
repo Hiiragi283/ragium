@@ -1,6 +1,7 @@
 package hiiragi283.lib.item.alchemy
 
 import hiiragi283.lib.data.DataComponentSetter
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
 import net.minecraft.core.component.DataComponentGetter
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.level.material.Fluid
@@ -15,7 +16,7 @@ data object HTPotionFluidManager {
      * 登録されている[液体][Fluid]の一覧
      */
     @JvmStatic
-    val handlers: Map<Fluid, Handler> field: MutableMap<Fluid, Handler> = mutableMapOf()
+    val handlers: Map<Fluid, Handler> field: MutableMap<Fluid, Handler> = Object2ObjectLinkedOpenHashMap()
 
     /**
      * 新しい液体ポーションを登録します。
@@ -47,7 +48,8 @@ data object HTPotionFluidManager {
         companion object {
             @JvmField
             val DEFAULT: Handler = object : Handler {
-                override fun get(getter: DataComponentGetter): HTBottleType? = getter.get(HTPotionFluidAccess.INSTANCE.bottleType)
+                override fun get(getter: DataComponentGetter): HTBottleType? =
+                    getter.get(HTPotionFluidAccess.INSTANCE.bottleType)
 
                 override fun set(setter: DataComponentSetter, bottleType: HTBottleType) {
                     setter[HTPotionFluidAccess.INSTANCE.bottleType] = bottleType

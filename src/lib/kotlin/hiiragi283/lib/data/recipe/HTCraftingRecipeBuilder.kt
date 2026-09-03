@@ -5,13 +5,13 @@ package hiiragi283.lib.data.recipe
 import hiiragi283.lib.item.ItemInstanceBuilder
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.util.HTDelegates
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.CraftingRecipe
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * クラフトレシピ向けの[HTRecipeBuilder]の実装クラスです。

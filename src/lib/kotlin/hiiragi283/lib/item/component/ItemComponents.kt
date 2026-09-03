@@ -2,10 +2,7 @@
 
 package hiiragi283.lib.item.component
 
-import java.util.Optional
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
+import hiiragi283.lib.util.toOptional
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
@@ -17,19 +14,30 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.component.Consumable
 import net.minecraft.world.item.component.ItemAttributeModifiers
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <T : Any, U, V : Any> Item.Properties.delayedComponent(type: DataComponentType<V>, key: ResourceKey<T>, value: U, factory: (Holder<T>, U) -> V): Item.Properties = this.delayedComponent(type) { provider: HolderLookup.Provider -> factory(provider.getOrThrow(key), value) }
+fun <T : Any, U, V : Any> Item.Properties.delayedComponent(
+    type: DataComponentType<V>,
+    key: ResourceKey<T>,
+    value: U,
+    factory: (Holder<T>, U) -> V
+): Item.Properties = this.delayedComponent(type) { provider: HolderLookup.Provider ->
+    factory(provider.getOrThrow(key), value)
+}
 
 /**
  * [Consumable]を追加します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun Item.Properties.consumables(consumable: Consumable): Item.Properties = this.component(DataComponents.CONSUMABLE, consumable)
+fun Item.Properties.consumables(consumable: Consumable): Item.Properties =
+    this.component(DataComponents.CONSUMABLE, consumable)
 
 //    ItemAttributeModifiers    //
 
@@ -37,7 +45,9 @@ fun Item.Properties.consumables(consumable: Consumable): Item.Properties = this.
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun buildItemAttributeModifiers(builderAction: ItemAttributeModifiers.Builder.() -> Unit): ItemAttributeModifiers {
+inline fun buildItemAttributeModifiers(
+    builderAction: ItemAttributeModifiers.Builder.() -> Unit
+): ItemAttributeModifiers {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -55,12 +65,14 @@ fun PotionContents(
     potion: Holder<Potion>? = null,
     customColor: Int? = null,
     customEffects: List<MobEffectInstance> = listOf(),
-    customName: String? = null,
+    customName: String? = null
 ): PotionContents = if (potion == null && customColor == null && customEffects.isEmpty() && customName == null) {
     PotionContents.EMPTY
-} else PotionContents(
-    Optional.ofNullable(potion),
-    Optional.ofNullable(customColor),
-    customEffects,
-    Optional.ofNullable(customName),
-)
+} else {
+    PotionContents(
+        potion.toOptional(),
+        customColor.toOptional(),
+        customEffects,
+        customName.toOptional()
+    )
+}

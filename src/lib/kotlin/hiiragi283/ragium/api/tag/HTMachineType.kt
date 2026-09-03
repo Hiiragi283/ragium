@@ -14,7 +14,7 @@ enum class HTMachineType : HTMaterialLike {
     CHEMICAL,
     BIO,
     ELECTRONICS,
-    ARCANE,
+    ARCANE
     ;
 
     companion object {

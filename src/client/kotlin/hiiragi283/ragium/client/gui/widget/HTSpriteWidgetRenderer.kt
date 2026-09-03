@@ -5,7 +5,6 @@ import hiiragi283.lib.gui.HTGuiAccess
 import hiiragi283.lib.gui.widget.HTAbstractWidgetRenderer
 import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.text.Text
-import java.util.function.Consumer
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphicsExtractor
@@ -17,11 +16,19 @@ import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.neoforge.client.ClientTooltipFlag
+import java.util.function.Consumer
 
-abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widget: WIDGET) : HTAbstractWidgetRenderer<WIDGET>(gui, widget) {
+abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widget: WIDGET) :
+    HTAbstractWidgetRenderer<WIDGET>(gui, widget) {
     protected val font: Font = Minecraft.getInstance().font
 
-    override fun render(bounds: HTBounds, graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, partialTick: Float) {
+    override fun render(
+        bounds: HTBounds,
+        graphics: GuiGraphicsExtractor,
+        mouseX: Int,
+        mouseY: Int,
+        partialTick: Float
+    ) {
         // Render background
         renderBackground(bounds, graphics)
         // Render sprite
@@ -30,9 +37,13 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
         if (bounds.contains(mouseX, mouseY)) {
             graphics.setTooltipForNextFrame(
                 font,
-                buildList { collectTooltips({ text: Text -> this.add(text.visualOrderText) }, Item.TooltipContext.EMPTY, getTooltipFlag()) },
+                buildList {
+                    collectTooltips({ text: Text ->
+                        this.add(text.visualOrderText)
+                    }, Item.TooltipContext.EMPTY, getTooltipFlag())
+                },
                 mouseX,
-                mouseY,
+                mouseY
             )
         }
     }
@@ -64,7 +75,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
             tileScaling.height,
             tileScaling.width,
             tileScaling.height,
-            color,
+            color
         ) // TODO
     }
 
@@ -72,7 +83,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
         when (Minecraft.getInstance().options.advancedItemTooltips) {
             true -> TooltipFlag.ADVANCED
             false -> TooltipFlag.NORMAL
-        },
+        }
     )
 
     protected abstract fun renderBackground(bounds: HTBounds, graphics: GuiGraphicsExtractor)

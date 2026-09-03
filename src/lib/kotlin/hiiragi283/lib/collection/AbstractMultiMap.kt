@@ -1,6 +1,7 @@
 package hiiragi283.lib.collection
 
 import hiiragi283.lib.util.HTBuilderMarker
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
 
 /**
  * [Map]に基づいた[MultiMap]の抽象クラスです。
@@ -41,8 +42,9 @@ abstract class AbstractMultiMap<K, out V, out C : Collection<V>>(protected val m
      * @since 26.1.0
      */
     @HTBuilderMarker
-    abstract class Builder<K, V, out C : MutableCollection<V>>(protected val map: MutableMap<K, @UnsafeVariance C>) : MultiMap.Builder<K, V> {
-        constructor(initialCapacity: Int = 10) : this(LinkedHashMap(initialCapacity))
+    abstract class Builder<K, V, out C : MutableCollection<V>>(protected val map: MutableMap<K, @UnsafeVariance C>) :
+        MultiMap.Builder<K, V> {
+        constructor(initialCapacity: Int = 10) : this(Object2ObjectLinkedOpenHashMap(initialCapacity))
 
         constructor(other: MultiMap<K, V>) : this() {
             other.asMap().forEach(this::putAll)

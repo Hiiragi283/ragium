@@ -1,7 +1,5 @@
 package hiiragi283.lib.fluid
 
-import java.util.Optional
-import java.util.function.Supplier
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.sounds.SoundEvent
@@ -17,13 +15,16 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import net.neoforged.neoforge.common.SoundActions
 import net.neoforged.neoforge.fluids.FluidType
+import java.util.Optional
+import java.util.function.Supplier
 
 /**
  * 設置不可能な液体を表す[Fluid]の拡張クラスです。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTVirtualFluid(private val typeGetter: Supplier<out FluidType>, private val bucketGetter: Supplier<out Item>) : Fluid() {
+class HTVirtualFluid(private val typeGetter: Supplier<out FluidType>, private val bucketGetter: Supplier<out Item>) :
+    Fluid() {
     override fun getBucket(): Item = bucketGetter.get()
 
     override fun canBeReplacedWith(
@@ -31,7 +32,7 @@ class HTVirtualFluid(private val typeGetter: Supplier<out FluidType>, private va
         level: BlockGetter,
         pos: BlockPos,
         fluid: Fluid,
-        direction: Direction,
+        direction: Direction
     ): Boolean = true
 
     override fun getFlow(blockReader: BlockGetter, pos: BlockPos, fluidState: FluidState): Vec3 = Vec3.ZERO
@@ -56,5 +57,6 @@ class HTVirtualFluid(private val typeGetter: Supplier<out FluidType>, private va
 
     override fun getFluidType(): FluidType = typeGetter.get()
 
-    override fun getPickupSound(): Optional<SoundEvent> = Optional.ofNullable(fluidType.getSound(SoundActions.BUCKET_FILL))
+    override fun getPickupSound(): Optional<SoundEvent> =
+        Optional.ofNullable(fluidType.getSound(SoundActions.BUCKET_FILL))
 }

@@ -29,12 +29,7 @@ interface HTWidget {
     /**
      * このウィジェットをクリックした時に呼び出されます。
      */
-    fun mouseClicked(
-        access: Access,
-        mouseX: Double,
-        mouseY: Double,
-        button: Int,
-    ) {}
+    fun mouseClicked(access: Access, mouseX: Double, mouseY: Double, button: Int) {}
 
     /**
      * このウィジェットの上でクリックを解放した時に呼び出されます。
@@ -44,22 +39,12 @@ interface HTWidget {
     /**
      * このウィジェットをドラッグしている間に呼び出されます。
      */
-    fun mouseDragged(
-        mouseX: Double,
-        mouseY: Double,
-        dragX: Double,
-        dragY: Double,
-    ) {}
+    fun mouseDragged(mouseX: Double, mouseY: Double, dragX: Double, dragY: Double) {}
 
     /**
      * このウィジェットをスクロールしている間に呼び出されます。
      */
-    fun mouseScrolled(
-        mouseX: Double,
-        mouseY: Double,
-        scrollX: Double,
-        scrollY: Double,
-    ): Boolean = false
+    fun mouseScrolled(mouseX: Double, mouseY: Double, scrollX: Double, scrollY: Double): Boolean = false
 
     /**
      * このウィジェットの上でキーを押すと呼び出されます。

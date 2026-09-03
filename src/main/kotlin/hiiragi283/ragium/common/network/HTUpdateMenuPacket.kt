@@ -4,7 +4,6 @@ import hiiragi283.lib.gui.sync.HTSyncablePayload
 import hiiragi283.lib.network.HTCustomPayload
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.gui.menu.HTContainerMenu
-import kotlin.collections.iterator
 import net.minecraft.client.Minecraft
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -13,6 +12,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Player
+import kotlin.collections.iterator
 
 class HTUpdateMenuPacket private constructor(val containerId: Int, val map: Map<Int, HTSyncablePayload>) :
     HTCustomPayload.S2C,
@@ -27,7 +27,7 @@ class HTUpdateMenuPacket private constructor(val containerId: Int, val map: Map<
             HTUpdateMenuPacket::containerId,
             ByteBufCodecs.map(::HashMap, ByteBufCodecs.VAR_INT, HTSyncablePayload.STREAM_CODEC),
             HTUpdateMenuPacket::map,
-            ::HTUpdateMenuPacket,
+            ::HTUpdateMenuPacket
         )
 
         @JvmStatic
@@ -37,7 +37,10 @@ class HTUpdateMenuPacket private constructor(val containerId: Int, val map: Map<
         }
 
         @JvmStatic
-        inline fun create(containerId: Int, builderAction: MutableMap<Int, HTSyncablePayload>.() -> Unit): HTUpdateMenuPacket? = create(containerId, buildMap(builderAction))
+        inline fun create(
+            containerId: Int,
+            builderAction: MutableMap<Int, HTSyncablePayload>.() -> Unit
+        ): HTUpdateMenuPacket? = create(containerId, buildMap(builderAction))
     }
 
     override fun type(): CustomPacketPayload.Type<HTUpdateMenuPacket> = TYPE

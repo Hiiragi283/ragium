@@ -8,7 +8,10 @@ import net.minecraft.world.item.ItemStack
 data class HTItemSyncPayload(val value: ItemStack) : HTSyncablePayload {
     companion object {
         @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemSyncPayload> = ItemStack.OPTIONAL_STREAM_CODEC.map(::HTItemSyncPayload, HTItemSyncPayload::value)
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemSyncPayload> = ItemStack.OPTIONAL_STREAM_CODEC.map(
+            ::HTItemSyncPayload,
+            HTItemSyncPayload::value
+        )
 
         @JvmField
         val TYPE: HTSyncablePayload.Type<HTItemSyncPayload> = HTSyncablePayload.Type(STREAM_CODEC)

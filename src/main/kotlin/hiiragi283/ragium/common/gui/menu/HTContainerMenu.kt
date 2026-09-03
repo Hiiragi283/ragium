@@ -10,6 +10,8 @@ import hiiragi283.lib.gui.sync.HTSyncableSlot
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.gui.HTContainerItemSlot
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
+import it.unimi.dsi.fastutil.ints.IntArrayList
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Inventory
@@ -28,12 +30,8 @@ import net.neoforged.neoforge.world.inventory.StackCopySlot
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTContainerMenu<C>(
-    menuType: MenuType<*>,
-    containerId: Int,
-    val inventory: Inventory,
-    val context: C,
-) : AbstractContainerMenu(menuType, containerId),
+abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val inventory: Inventory, val context: C) :
+    AbstractContainerMenu(menuType, containerId),
     HTSyncableMenu {
     final override fun quickMoveStack(player: Player, index: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY
@@ -86,10 +84,10 @@ abstract class HTContainerMenu<C>(
     //    Extensions    //
 
     private var slotCount: Int = 0
-    private val widgetSlots: MutableList<Int> = mutableListOf()
-    private val inputSlots: MutableList<Int> = mutableListOf()
-    private val hotBarSlots: MutableList<Int> = mutableListOf()
-    private val inventorySlots: MutableList<Int> = mutableListOf()
+    private val widgetSlots: MutableList<Int> = IntArrayList()
+    private val inputSlots: MutableList<Int> = IntArrayList()
+    private val hotBarSlots: MutableList<Int> = IntArrayList()
+    private val inventorySlots: MutableList<Int> = IntArrayList()
 
     override fun addSlot(slot: Slot): Slot {
         if (slot is HTContainerItemSlot) {
@@ -120,8 +118,8 @@ abstract class HTContainerMenu<C>(
                     inventory,
                     index + 9,
                     HTSlotHelper.getSlotPosX(index % 9),
-                    103 + (index / 9) * 18 + yOffset,
-                ),
+                    103 + (index / 9) * 18 + yOffset
+                )
             )
         }
     }
@@ -196,7 +194,8 @@ abstract class HTContainerMenu<C>(
 
     //    Slot Sync    //
 
-    val trackedSlots: List<Pair<HTSyncableSlot, HTSyncType>> field: MutableList<Pair<HTSyncableSlot, HTSyncType>> = mutableListOf()
+    val trackedSlots: List<Pair<HTSyncableSlot, HTSyncType>>
+        field: MutableList<Pair<HTSyncableSlot, HTSyncType>> = ObjectArrayList()
 
     fun addTrackedSlot(slot: HTSyncableSlot, type: HTSyncType) {
         trackedSlots += slot to type

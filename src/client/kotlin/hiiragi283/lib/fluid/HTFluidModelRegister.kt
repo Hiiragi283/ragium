@@ -3,11 +3,11 @@
 package hiiragi283.lib.fluid
 
 import hiiragi283.lib.registry.HTFluidContent
+import net.minecraft.client.renderer.block.FluidModel
+import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import net.minecraft.client.renderer.block.FluidModel
-import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent
 
 /**
  * Hiiragi Seriesで使用される[RegisterFluidModelsEvent]の補助クラスです。
