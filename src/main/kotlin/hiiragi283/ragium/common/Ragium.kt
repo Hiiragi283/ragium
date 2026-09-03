@@ -16,7 +16,6 @@ import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.RecipeKey
-import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.display.HTPotionSlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.fromRecipeType
@@ -32,7 +31,6 @@ import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
-import hiiragi283.ragium.api.recipe.RTBathingRecipe
 import hiiragi283.ragium.api.recipe.RTBrewingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
@@ -52,7 +50,6 @@ import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.common.recipe.RTLingeringBrewingRecipe
 import hiiragi283.ragium.common.recipe.RTSplashBrewingRecipe
-import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.BuiltInRegistries
@@ -130,7 +127,7 @@ data object Ragium : HTCommonMod() {
         }
         event.register(Registries.MENU) { helper ->
             helper.register(
-                HTBlockWidgetHolderContext.MENU_TYPE.getId(),
+                HTBlockWidgetHolderContext.MENU_TYPE.id,
                 IMenuTypeExtension.create(HTBlockWidgetHolderContext::create)
             )
             // helper.register(HTItemWidgetHolderContext.MENU_TYPE.getId(), IMenuTypeExtension.create(HTItemWidgetHolderContext::create)) TODO
@@ -193,36 +190,43 @@ data object Ragium : HTCommonMod() {
         RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
             val oxygen: HolderSet.Named<Fluid> =
-                registries.getOrNull(RagiumFluids.OXYGEN.fluidTag) ?: return@addSubLookup mapOf()
+                registries.getOrNull(RagiumFluids.OXYGEN.fluidTag) ?: return@addSubLookup sequenceOf()
+            BuiltInRegistries.BLOCK
+                .getDataMap(NeoForgeDataMaps.OXIDIZABLES)
+                .asSequence()
+                .map { (key: ResourceKey<Block>, value: Oxidizable) ->
+                    val base: Item = BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem()
+                    val oxidized: Item = value.nextOxidationStage().asItem()
+                    RagiumRecipeBuilders.bathing {
+                        itemIngredient { items { +base } }
+                        fluidIngredient {
+                            +oxygen
+                            amount = 250
+                        }
+                        result { +oxidized }
+                        recipeId prefix "oxidization/"
+                    }.build()
+                }
+        }
+        RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
             val hydrogen: HolderSet.Named<Fluid> =
-                registries.getOrNull(RagiumFluids.HYDROGEN.fluidTag) ?: return@addSubLookup mapOf()
-
-            val recipeMap: MutableMap<RecipeKey, RTBathingRecipe> = Object2ObjectLinkedOpenHashMap()
-            for ((key: ResourceKey<Block>, value: Oxidizable) in BuiltInRegistries.BLOCK.getDataMap(
-                NeoForgeDataMaps.OXIDIZABLES
-            )) {
-                val base: Item = BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem()
-                val oxidized: Item = value.nextOxidationStage().asItem()
-                RagiumRecipeBuilders.bathing {
-                    itemIngredient { items { +base } }
-                    fluidIngredient {
-                        +oxygen
-                        amount = 250
-                    }
-                    result { +oxidized }
-                    recipeId prefix "oxidization/"
-                }.save(recipeMap::put)
-                RagiumRecipeBuilders.bathing {
-                    itemIngredient { items { +oxidized } }
-                    fluidIngredient {
-                        +hydrogen
-                        amount = 250
-                    }
-                    result { +base }
-                    recipeId prefix "reduction/"
-                }.save(recipeMap::put)
-            }
-            recipeMap
+                registries.getOrNull(RagiumFluids.HYDROGEN.fluidTag) ?: return@addSubLookup sequenceOf()
+            BuiltInRegistries.BLOCK
+                .getDataMap(NeoForgeDataMaps.OXIDIZABLES)
+                .asSequence()
+                .map { (key: ResourceKey<Block>, value: Oxidizable) ->
+                    val base: Item = BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem()
+                    val oxidized: Item = value.nextOxidationStage().asItem()
+                    RagiumRecipeBuilders.bathing {
+                        itemIngredient { items { +oxidized } }
+                        fluidIngredient {
+                            +hydrogen
+                            amount = 250
+                        }
+                        result { +base }
+                        recipeId prefix "reduction/"
+                    }.build()
+                }
         }
 
         RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
@@ -243,16 +247,16 @@ data object Ragium : HTCommonMod() {
                         put(id, recipe)
                     }
             }
-            if (multiMap.isEmpty) return@addSubLookup mapOf()
-            val recipeMap: MutableMap<RecipeKey, HTItemAndFluidToFluidRecipe> = Object2ObjectLinkedOpenHashMap()
-            for ((potionTo: Identifier, recipes: Collection<RTBrewingRecipe>) in multiMap.entries) {
-                recipes.forEachIndexed { index: Int, recipe: RTBrewingRecipe ->
-                    recipeMap[RecipeKey(potionTo.withSuffix("_$index"))] = recipe
+            sequence {
+                for ((potionTo: Identifier, recipes: Collection<RTBrewingRecipe>) in multiMap.entries) {
+                    recipes.forEachIndexed { index: Int, recipe: RTBrewingRecipe ->
+                        yield(RecipeKey(potionTo.withSuffix("_$index")) to recipe)
+                    }
                 }
+                // Custom
+                yield(RecipeKey(vanillaId("/${RagiumConstants.BREWING}/splash_potion")) to RTSplashBrewingRecipe)
+                yield(RecipeKey(vanillaId("/${RagiumConstants.BREWING}/lingering_potion")) to RTLingeringBrewingRecipe)
             }
-            recipeMap[RecipeKey(vanillaId("/${RagiumConstants.BREWING}/splash_potion"))] = RTSplashBrewingRecipe
-            recipeMap[RecipeKey(vanillaId("/${RagiumConstants.BREWING}/lingering_potion"))] = RTLingeringBrewingRecipe
-            recipeMap
         }
         RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
     }
