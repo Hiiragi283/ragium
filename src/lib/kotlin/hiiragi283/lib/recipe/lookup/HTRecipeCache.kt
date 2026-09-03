@@ -3,7 +3,6 @@ package hiiragi283.lib.recipe.lookup
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.HTRecipePredicate
-import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.id
 import hiiragi283.lib.recipe.recipe
 import net.minecraft.server.level.ServerLevel
@@ -57,12 +56,9 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(
         if (lastRecipe != null && lastRecipe!!.recipe.matches(input)) {
             return lastRecipe
         }
-        for ((id: RecipeKey, recipe: RECIPE) in lookup.getAllRecipes(context)) {
-            if (recipe.matches(input)) {
-                lastRecipe = id to recipe
-                break
-            }
-        }
+        lookup.getAllRecipesN(context)
+            .firstOrNull { (_, recipe) -> recipe.matches(input) }
+            ?.let(::lastRecipe::set)
         return lastRecipe
     }
 

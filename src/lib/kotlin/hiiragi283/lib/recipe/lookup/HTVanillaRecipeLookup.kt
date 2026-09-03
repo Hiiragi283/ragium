@@ -1,7 +1,6 @@
 package hiiragi283.lib.recipe.lookup
 
 import hiiragi283.lib.recipe.HTRecipeHolder
-import hiiragi283.lib.recipe.RecipeKey
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
@@ -19,6 +18,6 @@ class HTVanillaRecipeLookup<INPUT : RecipeInput, out RECIPE : Recipe<INPUT>>(
 ) : HTRecipeLookup<RECIPE> {
     constructor(recipeType: RecipeType<RECIPE>) : this(Supplier { recipeType })
 
-    override fun getAllRecipes(context: HTRecipeLookup.Context): Map<RecipeKey, RECIPE> =
-        context.recipeMap.byType(recipeType.get()).associate(::HTRecipeHolder)
+    override fun getAllRecipesN(context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> =
+        context.byType(recipeType.get())
 }

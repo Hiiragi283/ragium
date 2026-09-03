@@ -1,9 +1,12 @@
 package hiiragi283.lib.recipe.lookup
 
-import hiiragi283.lib.recipe.RecipeKey
+import hiiragi283.lib.recipe.HTRecipeHolder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeMap
+import net.minecraft.world.item.crafting.RecipeType
 
 /**
  * レシピの一覧を提供するインターフェースです。
@@ -17,7 +20,7 @@ fun interface HTRecipeLookup<out RECIPE> {
     /**
      * レシピの一覧を取得します。
      */
-    fun getAllRecipes(context: Context): Map<RecipeKey, RECIPE>
+    fun getAllRecipesN(context: Context): Sequence<HTRecipeHolder<RECIPE>>
 
     /**
      * @param recipeMap レシピの一覧
@@ -33,5 +36,12 @@ fun interface HTRecipeLookup<out RECIPE> {
         }
 
         constructor(level: ServerLevel) : this(level.recipeAccess().recipeMap(), level.registryAccess())
+
+        /**
+         * @since 26.1.3
+         */
+        fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> byType(
+            recipeType: RecipeType<RECIPE>
+        ): Sequence<HTRecipeHolder<RECIPE>> = this.recipeMap.byType(recipeType).asSequence().map(::HTRecipeHolder)
     }
 }
