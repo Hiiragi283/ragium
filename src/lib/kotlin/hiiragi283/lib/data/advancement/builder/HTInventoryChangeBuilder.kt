@@ -3,6 +3,7 @@
 package hiiragi283.lib.data.advancement.builder
 
 import hiiragi283.lib.util.HTDelegates
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.advancements.criterion.InventoryChangeTrigger
 import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.advancements.criterion.MinMaxBounds
@@ -16,7 +17,7 @@ import kotlin.contracts.contract
  * @since 26.1.3
  */
 class HTInventoryChangeBuilder {
-    @PublishedApi internal val predicates: MutableList<ItemPredicate> = mutableListOf()
+    @PublishedApi internal val predicates: MutableList<ItemPredicate> = ObjectArrayList()
 
     @PublishedApi internal var slots: InventoryChangeTrigger.TriggerInstance.Slots by HTDelegates.onceInitialize(
         InventoryChangeTrigger.TriggerInstance.Slots::ANY

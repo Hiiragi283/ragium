@@ -8,6 +8,8 @@ import hiiragi283.lib.tag.createTagKey
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.Identity
 import hiiragi283.lib.util.identity
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
@@ -62,14 +64,14 @@ class HTFluidContentRegister(modId: String) {
     /**
      * 登録された[HTFluidContent]の一覧
      */
-    val entries: Set<HTFluidContent> field: MutableSet<HTFluidContent> = mutableSetOf()
+    val entries: Set<HTFluidContent> field: MutableSet<HTFluidContent> = ObjectLinkedOpenHashSet()
 
     /**
      * 登録された[HTFluidContent]の一覧を取得します。
      */
     fun asSequence(): Sequence<HTFluidContent> = entries.asSequence()
 
-    private val contentsCache: MutableMap<ResourceKey<Fluid>, HTFluidContent> = mutableMapOf()
+    private val contentsCache: MutableMap<ResourceKey<Fluid>, HTFluidContent> = Object2ObjectLinkedOpenHashMap()
 
     /**
      * [HTFluidContent]を取得します。

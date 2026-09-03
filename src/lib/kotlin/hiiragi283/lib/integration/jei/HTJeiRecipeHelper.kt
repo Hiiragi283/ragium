@@ -8,6 +8,7 @@ import hiiragi283.lib.recipe.display.SlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.world.item.ItemStack
@@ -143,7 +144,7 @@ data object HTJeiRecipeHelper {
     inline fun <RECIPE_A : Any, reified RECIPE_B : RECIPE_A> getRecipes(
         lookup: HTRecipeLookup<RECIPE_A>
     ): List<HTRecipeHolder<RECIPE_B>> {
-        val recipes: MutableList<HTRecipeHolder<RECIPE_B>> = mutableListOf()
+        val recipes: MutableList<HTRecipeHolder<RECIPE_B>> = ObjectArrayList()
         for ((key: RecipeKey, recipe: RECIPE_A) in lookup.getAllRecipes(HTPhysicalSideHelper.createLookupContext())) {
             if (recipe is RECIPE_B) {
                 recipes += HTRecipeHolder(key, recipe)

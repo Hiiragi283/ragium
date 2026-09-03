@@ -3,6 +3,8 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.HTConstants
+import it.unimi.dsi.fastutil.chars.Char2ObjectLinkedOpenHashMap
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.ShapedRecipe
 import net.minecraft.world.item.crafting.ShapedRecipePattern
@@ -28,9 +30,9 @@ class HTShapedRecipeBuilder : HTCraftingRecipeBuilder<ShapedRecipe>(HTConstants.
         }
     }
 
-    @PublishedApi internal val patterns: MutableList<String> = mutableListOf()
+    @PublishedApi internal val patterns: MutableList<String> = ObjectArrayList()
 
-    @PublishedApi internal val keys: MutableMap<Char, Ingredient> = mutableMapOf()
+    @PublishedApi internal val keys: MutableMap<Char, Ingredient> = Char2ObjectLinkedOpenHashMap()
 
     operator fun String.unaryPlus() {
         patterns.firstOrNull()?.let {

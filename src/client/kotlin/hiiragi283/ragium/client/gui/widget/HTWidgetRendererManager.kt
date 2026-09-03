@@ -6,6 +6,7 @@ import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetRendererFactory
 import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.ragium.api.RagiumAPI
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.MenuScreens
 import net.neoforged.fml.ModLoader
@@ -19,7 +20,7 @@ internal object HTWidgetRendererManager {
 
     @JvmStatic
     fun init() {
-        val map: MutableMap<HTWidgetType<*>, HTWidgetRendererFactory<*, *>> = hashMapOf()
+        val map: MutableMap<HTWidgetType<*>, HTWidgetRendererFactory<*, *>> = Object2ObjectOpenHashMap()
         HTRegisterWidgetRendererEvent(map::put).let(ModLoader::postEvent)
         this.factories = map
         RagiumAPI.LOGGER.info("Initialized Widget Renderer Manager")

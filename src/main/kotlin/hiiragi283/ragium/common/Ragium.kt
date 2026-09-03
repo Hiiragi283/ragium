@@ -52,6 +52,7 @@ import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.common.recipe.RTLingeringBrewingRecipe
 import hiiragi283.ragium.common.recipe.RTSplashBrewingRecipe
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.BuiltInRegistries
@@ -196,7 +197,7 @@ data object Ragium : HTCommonMod() {
             val hydrogen: HolderSet.Named<Fluid> =
                 registries.getOrNull(RagiumFluids.HYDROGEN.fluidTag) ?: return@addSubLookup mapOf()
 
-            val recipeMap: MutableMap<RecipeKey, RTBathingRecipe> = mutableMapOf()
+            val recipeMap: MutableMap<RecipeKey, RTBathingRecipe> = Object2ObjectLinkedOpenHashMap()
             for ((key: ResourceKey<Block>, value: Oxidizable) in BuiltInRegistries.BLOCK.getDataMap(
                 NeoForgeDataMaps.OXIDIZABLES
             )) {
@@ -243,7 +244,7 @@ data object Ragium : HTCommonMod() {
                     }
             }
             if (multiMap.isEmpty) return@addSubLookup mapOf()
-            val recipeMap: MutableMap<RecipeKey, HTItemAndFluidToFluidRecipe> = mutableMapOf()
+            val recipeMap: MutableMap<RecipeKey, HTItemAndFluidToFluidRecipe> = Object2ObjectLinkedOpenHashMap()
             for ((potionTo: Identifier, recipes: Collection<RTBrewingRecipe>) in multiMap.entries) {
                 recipes.forEachIndexed { index: Int, recipe: RTBrewingRecipe ->
                     recipeMap[RecipeKey(potionTo.withSuffix("_$index"))] = recipe

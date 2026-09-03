@@ -1,6 +1,8 @@
 package hiiragi283.lib.recipe.lookup
 
 import hiiragi283.lib.recipe.RecipeKey
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -16,7 +18,7 @@ import net.minecraft.world.item.crafting.RecipeType
 class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Identifier) : HTRecipeLookup<RECIPE> {
     companion object {
         @JvmStatic
-        private val instances: MutableMap<Identifier, HTCompoundRecipeLookup<*>> = hashMapOf()
+        private val instances: MutableMap<Identifier, HTCompoundRecipeLookup<*>> = Object2ObjectLinkedOpenHashMap()
 
         /**
          * 新しい[HTCompoundRecipeLookup]のインスタンスを作成します。
@@ -42,7 +44,7 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
         }*/
     }
 
-    private val lookups: MutableList<HTRecipeLookup<RECIPE>> = mutableListOf()
+    private val lookups: MutableList<HTRecipeLookup<RECIPE>> = ObjectArrayList()
     /*private var cachedRecipes: Map<RecipeKey, RECIPE> = mapOf()
 
     private fun clearCache() {
@@ -65,7 +67,7 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
     }
 
     override fun getAllRecipes(context: HTRecipeLookup.Context): Map<RecipeKey, RECIPE> {
-        val recipes: MutableMap<RecipeKey, RECIPE> = mutableMapOf()
+        val recipes: MutableMap<RecipeKey, RECIPE> = Object2ObjectLinkedOpenHashMap()
         for (lookup: HTRecipeLookup<RECIPE> in lookups) {
             recipes += lookup.getAllRecipes(context)
         }
@@ -92,7 +94,7 @@ fun <INPUT : RecipeInput, RECIPE : Any, VANILLA_RECIPE : Recipe<INPUT>> HTCompou
     transform: (VANILLA_RECIPE) -> RECIPE?
 ) {
     this.addSubLookup { context: HTRecipeLookup.Context ->
-        val map: MutableMap<RecipeKey, RECIPE> = mutableMapOf()
+        val map: MutableMap<RecipeKey, RECIPE> = Object2ObjectLinkedOpenHashMap()
         for (holder: RecipeHolder<VANILLA_RECIPE> in context.recipeMap.byType(recipeType)) {
             val recipe: VANILLA_RECIPE = holder.value()
             val recipe1: RECIPE = transform(recipe) ?: continue

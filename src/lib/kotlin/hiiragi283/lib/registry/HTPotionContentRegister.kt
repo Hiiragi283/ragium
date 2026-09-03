@@ -1,5 +1,7 @@
 package hiiragi283.lib.registry
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -21,14 +23,14 @@ class HTPotionContentRegister(modId: String) {
     /**
      * 登録された[HTPotionContent]の一覧
      */
-    val entries: Set<HTPotionContent> field: MutableSet<HTPotionContent> = mutableSetOf()
+    val entries: Set<HTPotionContent> field: MutableSet<HTPotionContent> = ObjectLinkedOpenHashSet()
 
     /**
      * 登録された[HTPotionContent]の一覧を取得します。
      */
     fun asSequence(): Sequence<HTPotionContent> = entries.asSequence()
 
-    private val contentsCache: MutableMap<ResourceKey<Potion>, HTPotionContent> = mutableMapOf()
+    private val contentsCache: MutableMap<ResourceKey<Potion>, HTPotionContent> = Object2ObjectLinkedOpenHashMap()
 
     /**
      * [HTPotionContent]を取得します。

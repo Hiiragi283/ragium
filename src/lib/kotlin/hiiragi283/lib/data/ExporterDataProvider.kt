@@ -9,6 +9,7 @@ import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.resource.HTIdOrValue
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.data.CachedOutput
@@ -53,7 +54,7 @@ abstract class ExporterDataProvider<R : Any>(
         private set
 
     final override fun run(cache: CachedOutput): CompletableFuture<*> = future.thenCompose { registries ->
-        val map: MutableMap<ResourceKey<R>, WithConditions<R>> = hashMapOf()
+        val map: MutableMap<ResourceKey<R>, WithConditions<R>> = Object2ObjectOpenHashMap()
         this.registries = registries
         this.exporter = createExporter(map)
         exportValues()

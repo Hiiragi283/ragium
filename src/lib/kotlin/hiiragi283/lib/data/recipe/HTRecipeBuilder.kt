@@ -6,6 +6,7 @@ import hiiragi283.lib.data.ConditionBuilder
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.util.HTBuilderMarker
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.resources.Identifier
@@ -37,7 +38,7 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
      * [ICondition]を保持するインスタンス
      */
     @PublishedApi
-    internal val conditions: MutableList<ICondition> = mutableListOf()
+    internal val conditions: MutableList<ICondition> = ObjectArrayList()
 
     /**
      * @since 26.1.0

@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
@@ -18,7 +19,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 data object RagiumRecipeSerializers {
     @JvmStatic
     val allSerializers: Map<Identifier, RecipeSerializer<*>>
-        field: MutableMap<Identifier, RecipeSerializer<*>> = mutableMapOf()
+        field: MutableMap<Identifier, RecipeSerializer<*>> = Object2ObjectLinkedOpenHashMap()
 
     @JvmStatic
     private fun <RECIPE : Recipe<*>> register(

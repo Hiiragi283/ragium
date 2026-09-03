@@ -10,6 +10,8 @@ import hiiragi283.lib.gui.sync.HTSyncableSlot
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.gui.HTContainerItemSlot
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
+import it.unimi.dsi.fastutil.ints.IntArrayList
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Inventory
@@ -82,10 +84,10 @@ abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val i
     //    Extensions    //
 
     private var slotCount: Int = 0
-    private val widgetSlots: MutableList<Int> = mutableListOf()
-    private val inputSlots: MutableList<Int> = mutableListOf()
-    private val hotBarSlots: MutableList<Int> = mutableListOf()
-    private val inventorySlots: MutableList<Int> = mutableListOf()
+    private val widgetSlots: MutableList<Int> = IntArrayList()
+    private val inputSlots: MutableList<Int> = IntArrayList()
+    private val hotBarSlots: MutableList<Int> = IntArrayList()
+    private val inventorySlots: MutableList<Int> = IntArrayList()
 
     override fun addSlot(slot: Slot): Slot {
         if (slot is HTContainerItemSlot) {
@@ -193,7 +195,7 @@ abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val i
     //    Slot Sync    //
 
     val trackedSlots: List<Pair<HTSyncableSlot, HTSyncType>>
-        field: MutableList<Pair<HTSyncableSlot, HTSyncType>> = mutableListOf()
+        field: MutableList<Pair<HTSyncableSlot, HTSyncType>> = ObjectArrayList()
 
     fun addTrackedSlot(slot: HTSyncableSlot, type: HTSyncType) {
         trackedSlots += slot to type

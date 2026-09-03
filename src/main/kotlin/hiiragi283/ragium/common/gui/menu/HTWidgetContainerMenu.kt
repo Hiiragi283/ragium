@@ -7,6 +7,7 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.gui.factory.HTWidgetHolderContext
 import hiiragi283.ragium.common.gui.widget.HTItemWidget
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.MenuType
@@ -21,7 +22,7 @@ class HTWidgetContainerMenu(
     inventory: Inventory,
     context: HTWidgetHolderContext
 ) : HTContainerMenu<HTWidgetHolderContext>(menuType, containerId, inventory, context) {
-    private val widgets: MutableList<HTWidget> = mutableListOf()
+    private val widgets: MutableList<HTWidget> = ObjectArrayList()
     val widgetHolder: HTWidgetHolder = WidgetHolderImpl()
 
     init {

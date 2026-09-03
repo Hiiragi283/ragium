@@ -40,14 +40,15 @@ fun <T : Any, R : Any> Optional<T>.fold(empty: () -> R, some: (T) -> R): R = thi
  * @author Hiiragi Tsubasa
  * @since 26.1.3
  */
-fun <T : Any, R : Any> Optional<T>.flatMapNullable(transform: (T) -> R?): Optional<R> =
+fun <T : Any, R : Any> Optional<T>.mapNotNull(transform: (T) -> R?): Optional<R> =
     this.flatMap { transform(it).toOptional() }
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.3
  */
-fun <R : Any, L> Optional<R>.toEither(empty: () -> L): Either<L, R> = this.fold({ empty().left() }, { it.right() })
+fun <R : Any, L> Optional<R>.toEither(empty: () -> L): Either<L, R> =
+    this.fold({ Either.Left(empty()) }, { Either.Right(it) })
 
 /**
  * @author Hiiragi Tsubasa

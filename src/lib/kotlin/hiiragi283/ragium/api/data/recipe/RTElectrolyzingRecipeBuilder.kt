@@ -12,6 +12,7 @@ import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.resources.Identifier
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
@@ -54,7 +55,7 @@ class RTElectrolyzingRecipeBuilder : HTProgressRecipeBuilder<RTElectrolyzingReci
     }
 
     // Result
-    @PublishedApi internal var results: MutableList<HTFluidResult> = mutableListOf()
+    @PublishedApi internal var results: MutableList<HTFluidResult> = ObjectArrayList()
 
     operator fun HTFluidResult.unaryPlus() {
         results += this

@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.transfer.holder
 
 import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.transfer.holder.HTCapabilityHolder
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Direction
 
 /**
@@ -24,13 +25,11 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
         private val factory: (HTSlotInfoProvider?, List<SLOT>, Map<HTSlotInfo, List<SLOT>>) -> HOLDER
     ) {
         private var hasBuilt = false
-        private val slots: MutableList<SLOT> = mutableListOf()
+        private val slots: MutableList<SLOT> = ObjectArrayList()
         private val slotMap: MutableMap<HTSlotInfo, MutableList<SLOT>> = mutableEnumMapOf()
 
         private fun putSlot(info: HTSlotInfo, slot: SLOT) {
-            val list: MutableList<SLOT> = slotMap[info] ?: mutableListOf()
-            list += slot
-            slotMap[info] = list
+            slotMap.getOrPut(info, ::ObjectArrayList) += slot
         }
 
         fun <T : SLOT> addSlot(info: HTSlotInfo, slot: T): T {

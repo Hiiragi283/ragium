@@ -1,5 +1,8 @@
 package hiiragi283.lib.collection
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
+import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
+
 /**
  * 行と列を[Pair]で束ねて管理する[Table]の実装クラスです。
  * @param R 行のクラス
@@ -31,11 +34,11 @@ value class PairMapTable<R, C, out V> private constructor(private val map: Map<P
         columnIn == column
     }.mapKeys { (key: Pair<R, C>, _) -> key.first }
 
-    override val rowKeys: Set<R> get() = map.keys.mapTo(mutableSetOf()) { it.first }
-    override val columnKeys: Set<C> get() = map.keys.mapTo(mutableSetOf()) { it.second }
+    override val rowKeys: Set<R> get() = map.keys.mapTo(ObjectLinkedOpenHashSet()) { it.first }
+    override val columnKeys: Set<C> get() = map.keys.mapTo(ObjectLinkedOpenHashSet()) { it.second }
     override val values: Collection<V> get() = map.values
     override val entries: Set<Triple<R, C, V>> get() = map.entries.mapTo(
-        mutableSetOf()
+        ObjectLinkedOpenHashSet()
     ) { (key: Pair<R, C>, value: V) ->
         Triple(key.first, key.second, value)
     }
@@ -49,7 +52,7 @@ value class PairMapTable<R, C, out V> private constructor(private val map: Map<P
      * @since 26.1.0
      */
     class Builder<R, C, V>(private val map: MutableMap<Pair<R, C>, V>) : Table.Builder<R, C, V> {
-        constructor(initialCapacity: Int = 10) : this(LinkedHashMap(initialCapacity))
+        constructor(initialCapacity: Int = 10) : this(Object2ObjectLinkedOpenHashMap(initialCapacity))
 
         constructor(other: Table<R, C, V>) : this() {
             other.forEach(this::put)

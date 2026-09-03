@@ -4,6 +4,7 @@ import hiiragi283.lib.registry.asKeyOrValue
 import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -23,7 +24,7 @@ import java.util.concurrent.CompletableFuture
  */
 abstract class HTItemTagsProvider : HTTagsProvider<Item> {
     private val blockTags: CompletableFuture<TagLookup<Block>>
-    private val tagsToCopy: MutableMap<TagKey<Block>, TagKey<Item>> = mutableMapOf()
+    private val tagsToCopy: MutableMap<TagKey<Block>, TagKey<Item>> = Object2ObjectLinkedOpenHashMap()
 
     constructor(
         output: PackOutput,

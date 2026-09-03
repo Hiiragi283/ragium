@@ -7,6 +7,8 @@ import hiiragi283.lib.data.advancement.AdvancementKey
 import hiiragi283.lib.data.advancement.HTAdvancementExporter
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
@@ -57,7 +59,7 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
     /**
      * [ICondition]を保持するインスタンス
      */
-    @PublishedApi internal val conditions: MutableList<ICondition> = mutableListOf()
+    @PublishedApi internal val conditions: MutableList<ICondition> = ObjectArrayList()
 
     inline fun condition(builderAction: ConditionBuilder.() -> Unit) {
         contract {
@@ -68,7 +70,7 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
 
     //    Criterion    //
 
-    @PublishedApi internal val criterions: MutableMap<String, Criterion<*>> = mutableMapOf()
+    @PublishedApi internal val criterions: MutableMap<String, Criterion<*>> = Object2ObjectLinkedOpenHashMap()
 
     infix fun String.criterion(criterion: Criterion<*>) {
         check(this !in criterions) { "Duplicated criterion: $this" }
