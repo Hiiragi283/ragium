@@ -22,7 +22,25 @@ import kotlin.contracts.contract
  * @since 26.1.0
  */
 @HTBuilderMarker
-class IngredientBuilder {
+class IngredientBuilder @PublishedApi internal constructor() {
+    companion object {
+        @JvmStatic
+        inline fun build(builderAction: IngredientBuilder.() -> Unit): Ingredient {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return IngredientBuilder().apply(builderAction).build()
+        }
+
+        @JvmStatic
+        inline fun buildSized(builderAction: IngredientBuilder.() -> Unit): HTItemIngredient {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return IngredientBuilder().apply(builderAction).buildSized()
+        }
+    }
+
     private var ingredient: Ingredient by HTDelegates.onceInitialize()
     var count: Int = 1
 

@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalContracts::class)
+
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -12,6 +14,9 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * [HTItemResult]を作成するビルダークラスです。
@@ -19,7 +24,17 @@ import net.minecraft.world.item.ItemStackTemplate
  * @since 26.1.0
  */
 @HTBuilderMarker
-class HTItemResultBuilder {
+class HTItemResultBuilder @PublishedApi internal constructor() {
+    companion object {
+        @JvmStatic
+        inline fun build(builderAction: HTItemResultBuilder.() -> Unit): HTItemResult {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return HTItemResultBuilder().apply(builderAction).build()
+        }
+    }
+
     @PublishedApi internal var entry: HTItemResult.Entry by HTDelegates.onceInitialize()
     var count: Int by HTDelegates.onceInitialize { 1 }
 

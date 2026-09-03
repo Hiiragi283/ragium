@@ -36,7 +36,7 @@ class HTItemToItemAndFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, 
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder().apply(builderAction).buildSized()
+        +IngredientBuilder.buildSized(builderAction)
     }
 
     // Result
@@ -56,14 +56,14 @@ class HTItemToItemAndFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, 
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HTItemResultBuilder().apply(builderAction).build()
+        +HTItemResultBuilder.build(builderAction)
     }
 
     inline fun fluidResult(builderAction: HTFluidResultBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HTFluidResultBuilder().apply(builderAction).build()
+        +HTFluidResultBuilder.build(builderAction)
     }
 
     //    Factory    //

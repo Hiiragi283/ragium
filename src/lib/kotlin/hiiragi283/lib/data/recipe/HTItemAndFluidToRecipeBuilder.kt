@@ -52,21 +52,21 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder().apply(builderAction).build()
+        +IngredientBuilder.buildSized(builderAction)
     }
 
     inline fun itemIngredient(builderAction: IngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder().apply(builderAction).buildSized()
+        +IngredientBuilder.buildSized(builderAction)
     }
 
     inline fun fluidIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +FluidIngredientBuilder().apply(builderAction).buildSized()
+        +FluidIngredientBuilder.buildSized(builderAction)
     }
 
     // Result
@@ -90,7 +90,7 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
             }
-            +HTFluidResultBuilder().apply(builderAction).build()
+            +HTFluidResultBuilder.build(builderAction)
         }
     }
 
@@ -108,7 +108,7 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
             }
-            +HTItemResultBuilder().apply(builderAction).build()
+            +HTItemResultBuilder.build(builderAction)
         }
     }
 

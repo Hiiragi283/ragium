@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalContracts::class)
+
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.item.alchemy.BottledPotionContents
@@ -19,6 +21,9 @@ import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * [HTFluidResult]を作成するビルダークラスです。
@@ -26,7 +31,17 @@ import net.neoforged.neoforge.fluids.FluidType
  * @since 26.1.0
  */
 @HTBuilderMarker
-class HTFluidResultBuilder {
+class HTFluidResultBuilder @PublishedApi internal constructor() {
+    companion object {
+        @JvmStatic
+        inline fun build(builderAction: HTFluidResultBuilder.() -> Unit): HTFluidResult {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return HTFluidResultBuilder().apply(builderAction).build()
+        }
+    }
+
     @PublishedApi internal var entry: HTFluidResult.Entry by HTDelegates.onceInitialize()
     var amount: Int by HTDelegates.onceInitialize { FluidType.BUCKET_VOLUME }
 
