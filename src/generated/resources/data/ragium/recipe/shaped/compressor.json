@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:nuggets/sooty_iron",
+    "B": "ragium:mechanical_machine_casing",
+    "C": "#c:gears/copper",
+    "D": "#minecraft:anvil"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ADA"
+  ],
+  "result": {
+    "id": "ragium:compressor"
+  }
+}

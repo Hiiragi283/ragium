@@ -27,6 +27,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "粉砕機を手に入れる")
         // Block
         add(RagiumBlocks.CRUSHER, "破砕機")
+        add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CUTTING_MACHINE, "裁断機")
 
         add(RagiumBlocks.FREEZER, "冷凍機")
