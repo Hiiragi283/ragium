@@ -74,6 +74,17 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             result { +Items.GLASS_PANE }
         }.save(exporter)
+
+        // Molten Steel + Obsidian Dust -> Black Steel
+        RagiumRecipeBuilders.freezing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.MOLTEN_STEEL)
+                amount = 90
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
+            recipeId suffix "_from_steel"
+        }.save(exporter)
     }
 
     private fun melting() {
@@ -227,6 +238,16 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount = 90
             }
             recipeId suffix "_from_powder"
+        }.save(exporter)
+
+        // Sooty Iron -> Molten Steel
+        RagiumRecipeBuilders.melting {
+            ingredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            result {
+                +RagiumFluids.MOLTEN_STEEL
+                amount = 90
+            }
+            recipeId suffix "_from_sooty_iron"
         }.save(exporter)
     }
 

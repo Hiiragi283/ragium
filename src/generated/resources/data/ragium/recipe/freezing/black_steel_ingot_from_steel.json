@@ -1,0 +1,16 @@
+{
+  "type": "ragium:freezing",
+  "fluid_ingredient": {
+    "amount": 90,
+    "fluids": "#c:molten_steel"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": "#c:dusts/obsidian"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:black_steel_ingot"
+  },
+  "time": 200
+}

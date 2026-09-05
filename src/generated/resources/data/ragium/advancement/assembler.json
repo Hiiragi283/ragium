@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:mechanical_machine_casing",
+  "criteria": {
+    "has_assembler": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:assembler"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.assembler.desc"
+    },
+    "icon": {
+      "id": "ragium:assembler"
+    },
+    "title": {
+      "translate": "advancement.ragium.assembler.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_assembler"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

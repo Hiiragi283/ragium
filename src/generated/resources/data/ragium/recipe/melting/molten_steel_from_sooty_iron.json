@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:ingots/sooty_iron"
+  },
+  "result": {
+    "amount": 90,
+    "id": "ragium:molten_steel"
+  },
+  "time": 200
+}

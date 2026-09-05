@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:freezer",
+  "criteria": {
+    "has_black_steel_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/black_steel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.black_steel.desc"
+    },
+    "icon": {
+      "id": "ragium:black_steel_ingot"
+    },
+    "title": {
+      "translate": "advancement.ragium.black_steel.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_black_steel_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

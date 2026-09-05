@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:heat_machine_casing",
+  "criteria": {
+    "has_freezer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:freezer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.freezer.desc"
+    },
+    "icon": {
+      "id": "ragium:freezer"
+    },
+    "title": {
+      "translate": "advancement.ragium.freezer.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_freezer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

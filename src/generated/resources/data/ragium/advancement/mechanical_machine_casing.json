@@ -16,6 +16,7 @@
     "description": {
       "translate": "advancement.ragium.mechanical_machine_casing.desc"
     },
+    "frame": "goal",
     "icon": {
       "id": "ragium:mechanical_machine_casing"
     },
