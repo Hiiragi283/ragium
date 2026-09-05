@@ -18,7 +18,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import thedarkcolour.kotlinforforge.neoforge.forge.runForDist
-import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * 物理サイドに関する処理を扱うクラスです。
@@ -47,11 +47,11 @@ data object HTPhysicalSideHelper {
      * @return クライアント側でワールドを読み込んでいない，またはサーバーのインスタンスが作成されていない場合は`null`
      */
     @JvmStatic
-    fun getRegistryAccess(): RegistryAccess =
-        runForSide(Level::registryAccess, MinecraftServer::registryAccess) ?: RegistryAccess.EMPTY
+    fun getRegistryAccess(): RegistryAccess? = runForSide(Level::registryAccess, MinecraftServer::registryAccess)
 
     @JvmStatic
-    fun <T : Any> registry(registryKey: RegistryKey<T>): Optional<Registry<T>> = getRegistryAccess().lookup(registryKey)
+    fun <T : Any> registry(registryKey: RegistryKey<T>): Registry<T>? =
+        getRegistryAccess()?.lookup(registryKey)?.getOrNull()
 
     //    Feature Flag    //
 
@@ -64,8 +64,8 @@ data object HTPhysicalSideHelper {
         runForSide(Level::enabledFeatures) { it.worldData.enabledFeatures() } ?: FeatureFlags.DEFAULT_FLAGS
 
     @JvmStatic
-    fun <T : FeatureElement> filteredLookup(registryKey: RegistryKey<T>): Optional<HolderLookup.RegistryLookup<T>> =
-        registry(registryKey).map { it.filterFeatures(getFeatureFlags()) }
+    fun <T : FeatureElement> filteredLookup(registryKey: RegistryKey<T>): HolderLookup.RegistryLookup<T>? =
+        registry(registryKey)?.filterFeatures(getFeatureFlags())
 
     @JvmStatic
     fun <T : FeatureElement> filteredLookup(registry: Registry<T>): HolderLookup.RegistryLookup<T> =

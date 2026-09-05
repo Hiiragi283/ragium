@@ -37,12 +37,12 @@ data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val 
             HTUpdateBlockEntityPacket::updateTag,
             ::HTUpdateBlockEntityPacket
         )
-    }
 
-    constructor(blockEntity: HTExtendedBlockEntity) : this(
-        blockEntity.blockPos,
-        blockEntity.createReducedUpdateTag(blockEntity.getRegistryAccess())
-    )
+        @JvmStatic
+        fun create(blockEntity: HTExtendedBlockEntity): HTUpdateBlockEntityPacket? = blockEntity.getRegistryAccess()
+            ?.let(blockEntity::createReducedUpdateTag)
+            ?.let { HTUpdateBlockEntityPacket(blockEntity.blockPos, it) }
+    }
 
     override fun type(): CustomPacketPayload.Type<HTUpdateBlockEntityPacket> = TYPE
 

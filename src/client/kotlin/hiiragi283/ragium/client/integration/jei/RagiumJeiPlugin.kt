@@ -60,10 +60,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.registerSubtypeInterpreter(
             platformFluidHelper.fluidIngredientType,
             RagiumFluids.POTION.getOrThrow()
-        ) {
-                stack: T,
-                _
-            ->
+        ) { stack: T, _ ->
             (stack as? FluidStack)?.let(HTPotionHelper::getContents)
         }
     }
