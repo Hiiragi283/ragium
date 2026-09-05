@@ -192,7 +192,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private inline fun electronics(result: HTSimpleDeferredBlockAndItem, ingredient: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.ELECTRONICS,
-            RagiumMaterial.Metal.BLACK_STEEL, // TODO
+            RagiumMaterial.Metal.VOID_METAL,
             RagiumMaterial.Gem.DIAMOND,
             result,
             ingredient
@@ -202,7 +202,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private inline fun arcane(result: HTSimpleDeferredBlockAndItem, ingredient: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.ARCANE,
-            RagiumMaterial.Metal.BLACK_STEEL, // TODO
+            RagiumMaterial.Metal.VOID_METAL,
             RagiumMaterial.Metal.NETHERITE,
             result,
             ingredient
@@ -232,10 +232,12 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         baseToBlock(RagiumMaterial.Gem.ECHO, CommonTagPrefixes.GEM, Items.ECHO_SHARD, size = StorageBlockSize.FOUR)
         baseToBlock(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT)
         baseToBlock(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT)
+        baseToBlock(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT)
         // Ingot <-> Nugget
         ingotToNugget(RagiumMaterial.Metal.NETHERITE, ingot = Items.NETHERITE_INGOT)
         ingotToNugget(RagiumMaterial.Metal.SOOTY_IRON)
         ingotToNugget(RagiumMaterial.Metal.BLACK_STEEL)
+        ingotToNugget(RagiumMaterial.Metal.VOID_METAL)
 
         // Gear
         HTShapedRecipeBuilder.create {
