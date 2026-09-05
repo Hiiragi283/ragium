@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.advancement
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.data.advancement.AdvancementKey
+import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.lib.data.advancement.HTAdvancementProvider
 import hiiragi283.lib.data.advancement.builder.HTAdvancementBuilder
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.material.HTMaterialAccess
 import hiiragi283.ragium.api.material.HTMaterialContents
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
+import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.advancements.AdvancementType

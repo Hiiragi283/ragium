@@ -2,9 +2,9 @@
 
 package hiiragi283.lib.data.advancement.builder
 
-import hiiragi283.lib.data.advancement.AdvancementKey
-import hiiragi283.lib.data.advancement.descKey
-import hiiragi283.lib.data.advancement.titleKey
+import hiiragi283.lib.advancment.AdvancementKey
+import hiiragi283.lib.advancment.descKey
+import hiiragi283.lib.advancment.titleKey
 import hiiragi283.lib.item.HTItemInstanceLike
 import hiiragi283.lib.item.ItemInstanceBuilder
 import hiiragi283.lib.text.Text

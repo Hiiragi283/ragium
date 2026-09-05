@@ -1,8 +1,8 @@
 package hiiragi283.lib.data.lang
 
-import hiiragi283.lib.data.advancement.AdvancementKey
-import hiiragi283.lib.data.advancement.descKey
-import hiiragi283.lib.data.advancement.titleKey
+import hiiragi283.lib.advancment.AdvancementKey
+import hiiragi283.lib.advancment.descKey
+import hiiragi283.lib.advancment.titleKey
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTPotionContent
 import hiiragi283.lib.resource.toLanguageKey

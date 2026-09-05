@@ -1,6 +1,6 @@
-package hiiragi283.ragium.data.advancement
+package hiiragi283.ragium.common.advancment
 
-import hiiragi283.lib.data.advancement.AdvancementKey
+import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 

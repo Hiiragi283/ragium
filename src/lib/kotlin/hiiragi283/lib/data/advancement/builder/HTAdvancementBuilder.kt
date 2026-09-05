@@ -2,8 +2,8 @@
 
 package hiiragi283.lib.data.advancement.builder
 
+import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.lib.data.ConditionBuilder
-import hiiragi283.lib.data.advancement.AdvancementKey
 import hiiragi283.lib.data.advancement.HTAdvancementExporter
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
