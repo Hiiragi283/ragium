@@ -117,10 +117,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Heat
         RagiumRecipeBuilders.assembling {
             primary { items { +RagiumItems.getCasing(HTMachineType.MECHANICAL) } }
-            secondary {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.COPPER)
-                count = 3
-            }
+            secondary { items { +Items.MAGMA_BLOCK } }
             result { +RagiumItems.getCasing(HTMachineType.HEAT) }
         }.save(exporter)
 

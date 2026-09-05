@@ -169,6 +169,10 @@ data object RagiumClient : HTClientMod() {
             setDull()
             colorTint(Color(0x336699))
         }
+        register.register(RagiumFluids.MOLTEN_STEEL) {
+            setMolten()
+            colorTint(Color(0x999999))
+        }
     }
 
     override fun registerScreens(event: RegisterMenuScreensEvent) {

@@ -86,9 +86,8 @@ data object RagiumFluids {
     }
 
     @JvmField
-    val OMINOUS_FLUX: HTFluidContent.Flowing = REGISTER.registerFlowing("ominous_flux") {
+    val OMINOUS_FLUX: HTFluidContent.Virtual = REGISTER.registerVirtual("ominous_flux") {
         properties = molten()
-        fluidProperties = STICK_PROPERTY
     }
 
     @JvmField
@@ -199,5 +198,10 @@ data object RagiumFluids {
     @JvmField
     val CAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("calcium_hydroxide_solution") {
         properties = liquid()
+    }
+
+    @JvmField
+    val MOLTEN_STEEL: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_steel") {
+        properties = molten()
     }
 }

@@ -9,8 +9,8 @@
     "id": "ragium:heat_machine_casing"
   },
   "secondary_ingredient": {
-    "count": 3,
-    "items": "#c:ingots/copper"
+    "count": 1,
+    "items": "minecraft:magma_block"
   },
   "time": 200
 }

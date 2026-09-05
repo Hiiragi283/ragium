@@ -30,7 +30,6 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     override fun registerModels(blockModels: BlockModelGenerators, itemModels: ItemModelGenerators) {
         // Fluids
         val dripFluids: List<HTFluidContent> = buildList {
-            // Vanilla
             addAll(RagiumFluids.DYES)
             add(RagiumFluids.HONEY)
             add(RagiumFluids.OMINOUS_FLUX)
@@ -43,6 +42,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             add(RagiumFluids.CREOSOTE)
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.SULFURIC_ACID)
+            add(RagiumFluids.MOLTEN_STEEL)
         }
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             // Item

@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
+import net.minecraft.advancements.AdvancementType
 import net.minecraft.core.ClientAsset
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -23,10 +24,18 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTAdvancementProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    private fun createSimple(key: AdvancementKey, parentKey: AdvancementKey, item: HTSimpleDeferredItem) {
+    private fun createSimple(
+        key: AdvancementKey,
+        parentKey: AdvancementKey,
+        item: HTSimpleDeferredItem,
+        type: AdvancementType = AdvancementType.GOAL
+    ) {
         HTAdvancementBuilder.create(key) {
             +parentKey
-            display { +item }
+            display {
+                +item
+                this.type = type
+            }
             inventory(getHasName(item)) { predicate { items { +item } } }
         }.save(exporter)
     }
@@ -77,12 +86,41 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         createSimple(
             RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING,
             RagiumAdvancementKeys.SOOTY_IRON,
-            RagiumItems.getCasing(HTMachineType.MECHANICAL)
+            RagiumItems.getCasing(HTMachineType.MECHANICAL),
+            AdvancementType.GOAL
+        )
+        createSimple(
+            RagiumAdvancementKeys.ASSEMBLER,
+            RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING,
+            RagiumBlocks.ASSEMBLER
         )
         createSimple(
             RagiumAdvancementKeys.CRUSHER,
             RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING,
             RagiumBlocks.CRUSHER
+        )
+        // Heat
+        createSimple(
+            RagiumAdvancementKeys.HEAT_MACHINE_CASING,
+            RagiumAdvancementKeys.ASSEMBLER,
+            RagiumItems.getCasing(HTMachineType.HEAT),
+            AdvancementType.GOAL
+        )
+        createSimple(
+            RagiumAdvancementKeys.FREEZER,
+            RagiumAdvancementKeys.HEAT_MACHINE_CASING,
+            RagiumBlocks.FREEZER
+        )
+        createSimple(
+            RagiumAdvancementKeys.BLACK_STEEL,
+            RagiumAdvancementKeys.FREEZER,
+            HTItemPart.INGOT,
+            RagiumMaterial.Metal.BLACK_STEEL
+        )
+        createSimple(
+            RagiumAdvancementKeys.MELTER,
+            RagiumAdvancementKeys.HEAT_MACHINE_CASING,
+            RagiumBlocks.MELTER
         )
     }
 

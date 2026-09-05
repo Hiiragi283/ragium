@@ -29,7 +29,13 @@ class RagiumEnglishLangProvider(output: PackOutput) :
             "Mechanical Machines",
             "Craft a Machine Casing (Mechanical)"
         )
+        add(RagiumAdvancementKeys.ASSEMBLER, "Rava(n)gers, assemble!", "Acquire Assembler")
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
+
+        add(RagiumAdvancementKeys.HEAT_MACHINE_CASING, "Heat And Cool", "Craft a Machine Casing (Heat)")
+        add(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
+        add(RagiumAdvancementKeys.BLACK_STEEL, "Black Roaring", "Craft a Black Steel Ingot")
+        add(RagiumAdvancementKeys.MELTER, "(S)melter(y)", "Acquire Melter")
         // Block
         add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.CRUSHER, "Crusher")
@@ -68,6 +74,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "Hydrogen Chloride")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
         addFluid(RagiumFluids.CAOH_SOLUTION, "Calcium Hydroxide Solution")
+        addFluid(RagiumFluids.MOLTEN_STEEL, "Molten Steel")
 
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
