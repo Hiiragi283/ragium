@@ -13,6 +13,7 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -114,8 +115,20 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         mechanical(RagiumBlocks.COMPRESSOR) { +holderSet(ItemTags.ANVIL) }
         mechanical(RagiumBlocks.CUTTING_MACHINE) { items { +Items.STONECUTTER } }
         // Heat
+        RagiumRecipeBuilders.assembling {
+            primary { items { +RagiumItems.getCasing(HTMachineType.MECHANICAL) } }
+            secondary {
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.COPPER)
+                count = 3
+            }
+            result { +RagiumItems.getCasing(HTMachineType.HEAT) }
+        }.save(exporter)
+
+        heat(RagiumBlocks.FREEZER) { +holderSet(Tags.Items.BUCKETS_WATER) }
+        heat(RagiumBlocks.MELTER) { +holderSet(Tags.Items.BUCKETS_LAVA) }
         // Chemical
         // Bio
+        bio(RagiumBlocks.BREWERY) { items { +Items.BREWING_STAND } }
         // Electronics
         // Arcane
     }
@@ -144,6 +157,56 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             HTMachineType.MECHANICAL,
             RagiumMaterial.Metal.SOOTY_IRON,
             RagiumMaterial.Metal.COPPER,
+            result,
+            ingredient
+        )
+    }
+
+    private inline fun heat(result: HTSimpleDeferredBlockAndItem, ingredient: IngredientBuilder.() -> Unit) {
+        machine(
+            HTMachineType.HEAT,
+            RagiumMaterial.Metal.SOOTY_IRON,
+            RagiumMaterial.Metal.IRON,
+            result,
+            ingredient
+        )
+    }
+
+    private inline fun chemical(result: HTSimpleDeferredBlockAndItem, ingredient: IngredientBuilder.() -> Unit) {
+        machine(
+            HTMachineType.CHEMICAL,
+            RagiumMaterial.Metal.BLACK_STEEL,
+            RagiumMaterial.Metal.GOLD,
+            result,
+            ingredient
+        )
+    }
+
+    private inline fun bio(result: HTSimpleDeferredBlockAndItem, ingredient: IngredientBuilder.() -> Unit) {
+        machine(
+            HTMachineType.BIO,
+            RagiumMaterial.Metal.BLACK_STEEL,
+            RagiumMaterial.Gem.EMERALD,
+            result,
+            ingredient
+        )
+    }
+
+    private inline fun electronics(result: HTSimpleDeferredBlockAndItem, ingredient: IngredientBuilder.() -> Unit) {
+        machine(
+            HTMachineType.ELECTRONICS,
+            RagiumMaterial.Metal.BLACK_STEEL, // TODO
+            RagiumMaterial.Gem.DIAMOND,
+            result,
+            ingredient
+        )
+    }
+
+    private inline fun arcane(result: HTSimpleDeferredBlockAndItem, ingredient: IngredientBuilder.() -> Unit) {
+        machine(
+            HTMachineType.ARCANE,
+            RagiumMaterial.Metal.BLACK_STEEL, // TODO
+            RagiumMaterial.Metal.NETHERITE,
             result,
             ingredient
         )

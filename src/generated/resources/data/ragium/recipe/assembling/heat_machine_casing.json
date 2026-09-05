@@ -1,0 +1,16 @@
+{
+  "type": "ragium:assembling",
+  "primary_ingredient": {
+    "count": 1,
+    "items": "ragium:mechanical_machine_casing"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:heat_machine_casing"
+  },
+  "secondary_ingredient": {
+    "count": 3,
+    "items": "#c:ingots/copper"
+  },
+  "time": 200
+}
