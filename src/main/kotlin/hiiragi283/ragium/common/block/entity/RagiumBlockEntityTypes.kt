@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
@@ -64,6 +65,10 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.MELTER, ::HTMelterBlockEntity)
 
     // Chemical
+    @JvmField
+    val CHEMICAL_BATH: HTDeferredBlockEntityType<HTChemicalBathBlockEntity> =
+        registerTick(RagiumConstants.CHEMICAL_BATH, ::HTChemicalBathBlockEntity)
+
     // Bio
     @JvmField
     val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> =

@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:chemical_machine_casing",
+  "criteria": {
+    "has_chemical_bath": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:chemical_bath"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.chemical_bath.desc"
+    },
+    "icon": {
+      "id": "ragium:chemical_bath"
+    },
+    "title": {
+      "translate": "advancement.ragium.chemical_bath.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_chemical_bath"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

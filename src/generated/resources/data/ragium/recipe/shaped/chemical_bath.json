@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:nuggets/black_steel",
+    "B": "ragium:chemical_machine_casing",
+    "C": "#c:gears/gold",
+    "D": "minecraft:cauldron"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ADA"
+  ],
+  "result": {
+    "id": "ragium:chemical_bath"
+  }
+}

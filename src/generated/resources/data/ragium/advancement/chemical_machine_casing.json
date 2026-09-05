@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:freezer",
+  "criteria": {
+    "has_chemical_machine_casing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:chemical_machine_casing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.chemical_machine_casing.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "id": "ragium:chemical_machine_casing"
+    },
+    "title": {
+      "translate": "advancement.ragium.chemical_machine_casing.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_chemical_machine_casing"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

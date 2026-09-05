@@ -135,6 +135,10 @@ data object RagiumBlocks {
     val MELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.MELTER)
 
     // Chemical
+    @JvmField
+    val CHEMICAL_BATH: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.CHEMICAL_BATH)
+
     // Bio
     @JvmField
     val BREWERY: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.BREWERY)
@@ -152,6 +156,8 @@ data object RagiumBlocks {
 
             put(HTMachineType.HEAT, FREEZER)
             put(HTMachineType.HEAT, MELTER)
+
+            put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
 
             put(HTMachineType.BIO, BREWERY)
         }
