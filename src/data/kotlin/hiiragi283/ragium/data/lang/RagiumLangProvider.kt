@@ -41,6 +41,11 @@ interface RagiumLangProvider {
                 provider.add(item, patternProvider, material)
             }
         provider.add(RagiumItems.COAL_COKE, RagiumMaterial.Fuel.COAL_COKE)
+
+        val casingPattern = HTLangPatternProvider("Machine Casing (%s)", "マシンケーシング (%s)")
+        for ((machineType: HTLangName, casing: HTHasTranslationKey) in RagiumItems.MACHINE_CASINGS) {
+            provider.add(casing, casingPattern, machineType)
+        }
         // Text
         // API - Constants
         provider.add(HTCommonTranslation.TRUE, "True")

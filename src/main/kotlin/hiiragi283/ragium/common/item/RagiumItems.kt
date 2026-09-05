@@ -3,11 +3,13 @@ package hiiragi283.ragium.common.item
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildSortedSetMultiMap
 import hiiragi283.lib.collection.flatMapTable
+import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.registry.HTDeferredItemRegister
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.HTMachineType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 import net.neoforged.bus.api.IEventBus
@@ -119,6 +121,15 @@ data object RagiumItems {
     val WITHER_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_star") { it.rarity(Rarity.UNCOMMON) }
 
     //    Parts    //
+
+    @JvmField
+    val MACHINE_CASINGS: Map<HTMachineType, HTSimpleDeferredItem> = HTMachineType.entries
+        .associateWithTo(mutableEnumMapOf()) { machineType: HTMachineType ->
+            REGISTER.registerSimpleItem("${machineType.materialName}_machine_casing")
+        }
+
+    @JvmStatic
+    fun getCasing(machineType: HTMachineType): HTSimpleDeferredItem = MACHINE_CASINGS[machineType]!!
 
     // Mechanical
 

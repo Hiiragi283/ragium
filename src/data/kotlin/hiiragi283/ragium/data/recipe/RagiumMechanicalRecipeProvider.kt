@@ -260,7 +260,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
 
         // XX Dust -> XX
-        for (fuel in RagiumMaterial.Fuel.entries) {
+        for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
             val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
             RagiumRecipeBuilders.compressing {
                 ingredient { +holderSet(CommonTagPrefixes.DUST, fuel) }

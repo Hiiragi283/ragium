@@ -4,6 +4,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.data.model.createBlock
 import hiiragi283.lib.registry.HTFluidContent
+import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.HTIdOrValue
 import hiiragi283.lib.resource.blockId
 import hiiragi283.ragium.api.RagiumAPI
@@ -115,11 +116,20 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             remove(RagiumItems.BAMBOO_CHARCOAL)
             remove(RagiumItems.WITHER_DOLL)
             remove(RagiumItems.MEMORY_DISC)
+
+            removeAll(RagiumItems.MACHINE_CASINGS.values)
         }.forEach { generators.generateFlatItem(it) }
 
         generators.generateFlatItem(RagiumItems.BAMBOO_CHARCOAL, template = ModelTemplates.FLAT_HANDHELD_ITEM)
         generators.generateFlatItem(RagiumItems.WITHER_DOLL, template = ModelTemplates.FLAT_HANDHELD_ITEM)
 
         generators.generateFlatItem(RagiumItems.MEMORY_DISC, template = ModelTemplates.MUSIC_DISC)
+
+        for ((machineType: HTMachineType, casing: HTSimpleDeferredItem) in RagiumItems.MACHINE_CASINGS) {
+            generators.generateFlatItem(
+                casing,
+                layer = RagiumAPI.id(HTConstants.ITEM, "casing", machineType.materialName)
+            )
+        }
     }
 }

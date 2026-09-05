@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:sooty_iron",
+  "criteria": {
+    "has_mechanical_machine_casing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:mechanical_machine_casing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.mechanical_machine_casing.desc"
+    },
+    "icon": {
+      "id": "ragium:mechanical_machine_casing"
+    },
+    "title": {
+      "translate": "advancement.ragium.mechanical_machine_casing.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_mechanical_machine_casing"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
