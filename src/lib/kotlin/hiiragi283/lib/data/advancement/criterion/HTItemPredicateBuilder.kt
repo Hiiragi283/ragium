@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.lib.data.advancement.builder
+package hiiragi283.lib.data.advancement.criterion
 
 import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.util.HTBuilderMarker

@@ -2,8 +2,8 @@ package hiiragi283.ragium.data.advancement
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.advancment.AdvancementKey
+import hiiragi283.lib.data.advancement.HTAdvancementBuilder
 import hiiragi283.lib.data.advancement.HTAdvancementProvider
-import hiiragi283.lib.data.advancement.builder.HTAdvancementBuilder
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.vanillaId

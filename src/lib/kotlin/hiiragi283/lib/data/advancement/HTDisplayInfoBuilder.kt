@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.lib.data.advancement.builder
+package hiiragi283.lib.data.advancement
 
 import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.lib.advancment.descKey

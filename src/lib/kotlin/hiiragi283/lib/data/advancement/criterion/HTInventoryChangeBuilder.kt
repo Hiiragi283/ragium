@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.lib.data.advancement.builder
+package hiiragi283.lib.data.advancement.criterion
 
 import hiiragi283.lib.util.HTDelegates
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
@@ -16,7 +16,20 @@ import kotlin.contracts.contract
  * @author Hiiragi Tsubasa
  * @since 26.1.3
  */
-class HTInventoryChangeBuilder {
+class HTInventoryChangeBuilder @PublishedApi internal constructor() {
+    companion object {
+        /**
+         * @since 26.1.4
+         */
+        @JvmStatic
+        inline fun build(builderAction: HTInventoryChangeBuilder.() -> Unit): InventoryChangeTrigger.TriggerInstance {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return HTInventoryChangeBuilder().apply(builderAction).build()
+        }
+    }
+
     @PublishedApi internal val predicates: MutableList<ItemPredicate> = ObjectArrayList()
 
     @PublishedApi internal var slots: InventoryChangeTrigger.TriggerInstance.Slots by HTDelegates.onceInitialize(
