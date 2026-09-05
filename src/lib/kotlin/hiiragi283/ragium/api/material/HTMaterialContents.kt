@@ -2,12 +2,13 @@ package hiiragi283.ragium.api.material
 
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.item.HTItemInstanceLike
+import hiiragi283.lib.registry.HTSimpleDeferredBlock
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.resource.HTSimpleBlockItemWithKey
 import hiiragi283.lib.resource.HTSimpleKeyOrValue
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Block
 
 /**
  * 素材に紐づいたコンテンツを管理するインターフェースです。
@@ -51,11 +52,12 @@ interface HTMaterialContents<R : HTPart, out V : Any> : Table<R, RagiumMaterial,
      * @author Hiiragi Tsubasa
      * @since 26.1.2
      */
-    data class BlockEntry(val block: HTSimpleDeferredBlockAndItem, val isBuiltIn: Boolean) :
-        HTSimpleKeyOrValue<Block> by block,
-        ItemLike by block,
-        HTItemInstanceLike by block {
-        val item: HTSimpleDeferredItem = block.item
+    data class BlockEntry(val blockItem: HTSimpleDeferredBlockAndItem, val isBuiltIn: Boolean) :
+        HTSimpleBlockItemWithKey,
+        ItemLike by blockItem.item,
+        HTItemInstanceLike by blockItem.item {
+        override val block: HTSimpleDeferredBlock = blockItem.block
+        override val item: HTSimpleDeferredItem = blockItem.item
 
         fun asItemEntry(): ItemEntry = ItemEntry(item, isBuiltIn)
     }

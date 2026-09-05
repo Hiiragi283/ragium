@@ -190,7 +190,7 @@ data object Ragium : HTCommonMod() {
                     ) { state: FluidState ->
                         when (state.isSource) {
                             true -> Blocks.OBSIDIAN.defaultBlockState()
-                            false -> VanillaColoredCollections.CONCRETE[color].getOrThrow().defaultBlockState()
+                            false -> VanillaColoredCollections.CONCRETE[color].block.getOrThrow().defaultBlockState()
                         }
                     }
                 )

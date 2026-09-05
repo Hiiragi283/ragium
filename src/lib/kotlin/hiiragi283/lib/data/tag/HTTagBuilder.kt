@@ -26,12 +26,11 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
 
     /**
      * 指定した要素をタグに追加します。
-     * @param like 要素のキーを提供する[HTSimpleKeyOrValue]
+     * @param value 要素のキーを提供する[HTSimpleKeyOrValue]
      * @param type このエントリの依存関係
-     * @since 26.1.0
      */
-    fun add(like: HTSimpleKeyOrValue<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> =
-        add(like.keyOrThrow, type)
+    fun add(value: HTSimpleKeyOrValue<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> =
+        add(value.keyOrThrow, type)
 
     /**
      * 指定した要素をタグに追加します。

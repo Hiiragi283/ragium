@@ -45,8 +45,9 @@ data object RagiumDataGen {
 
         event.createProvider(::RagiumRecipePriorityProvider)
 
+        event.createProvider(::RagiumBlockTagsProvider)
         event.createProvider(::RagiumFluidTagsProvider)
-        event.createBlockAndItemTags(::RagiumBlockTagsProvider, ::RagiumItemTagsProvider)
+        event.createProvider(::RagiumItemTagsProvider)
         // Client
         event.createProvider(::RagiumSpriteSourceProvider)
 

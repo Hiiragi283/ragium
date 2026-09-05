@@ -45,7 +45,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         HTAdvancementBuilder.create(key) {
             +parentKey
             display { +item }
-            inventory(getHasName(item)) { predicate { items { +item } } }
+            inventory(getHasName(item.block)) { predicate { items { +item } } }
         }.save(exporter)
     }
 
