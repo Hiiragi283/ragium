@@ -20,7 +20,7 @@ data object RagiumJeiRecipeTypes {
     // Mechanical
     @JvmField
     val ASSEMBLING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, ItemStack(Items.CRAFTER))
+        HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER)
 
     @JvmField
     val COMPRESSING: HTHolderJeiRecipeType<HTItemToItemRecipe.Basic> =

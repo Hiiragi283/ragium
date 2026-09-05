@@ -17,28 +17,28 @@ import kotlin.contracts.contract
 @Suppress("UNCHECKED_CAST")
 fun <R, C, V> emptyTableOf(): Table<R, C, V> = EmptyTable as Table<R, C, V>
 
-private data object EmptyTable : Table<Nothing, Nothing, Nothing> {
+private data object EmptyTable : Table<Any?, Any?, Nothing> {
     override val size: Int = 0
     override val isEmpty: Boolean = true
 
-    override fun contains(row: Nothing, column: Nothing): Boolean = false
+    override fun contains(row: Any?, column: Any?): Boolean = false
 
-    override fun containsRow(row: Nothing): Boolean = false
+    override fun containsRow(row: Any?): Boolean = false
 
-    override fun containsColumn(column: Nothing): Boolean = false
+    override fun containsColumn(column: Any?): Boolean = false
 
     override fun containsValue(value: Nothing): Boolean = false
 
-    override fun get(row: Nothing, column: Nothing): Nothing? = null
+    override fun get(row: Any?, column: Any?): Nothing? = null
 
-    override fun row(row: Nothing): Map<Nothing, Nothing> = emptyMap()
+    override fun row(row: Any?): Map<Any?, Nothing> = emptyMap()
 
-    override fun column(column: Nothing): Map<Nothing, Nothing> = emptyMap()
+    override fun column(column: Any?): Map<Any?, Nothing> = emptyMap()
 
-    override val rowKeys: Set<Nothing> = emptySet()
-    override val columnKeys: Set<Nothing> = emptySet()
+    override val rowKeys: Set<Any?> = emptySet()
+    override val columnKeys: Set<Any?> = emptySet()
     override val values: Collection<Nothing> = emptySet()
-    override val entries: Set<Triple<Nothing, Nothing, Nothing>> = emptySet()
+    override val entries: Set<Triple<Any?, Any?, Nothing>> = emptySet()
 }
 
 /**

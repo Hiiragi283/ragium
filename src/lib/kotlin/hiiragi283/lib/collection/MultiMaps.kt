@@ -18,23 +18,22 @@ import kotlin.contracts.contract
 @Suppress("UNCHECKED_CAST")
 fun <K, V> emptyMultiMapOf(): MultiMap<K, V> = EmptyMultiMap as MultiMap<K, V>
 
-private data object EmptyMultiMap : MultiMap<Nothing, Nothing> {
+private data object EmptyMultiMap : MultiMap<Any?, Nothing> {
     override val size: Int = 0
 
     override val isEmpty: Boolean = true
 
-    override fun containsKey(key: Nothing): Boolean = false
+    override fun containsKey(key: Any?): Boolean = false
 
     override fun containsValue(value: Nothing): Boolean = false
 
-    override fun get(key: Nothing): Collection<Nothing> = setOf()
+    override fun get(key: Any?): Collection<Nothing> = setOf()
 
-    override val keys: Set<Nothing> = setOf()
+    override val keys: Set<Any?> = setOf()
     override val values: Collection<Nothing> = setOf()
-    override val entries: Set<Map.Entry<Nothing, Collection<Nothing>>> = setOf()
-    override val flatEntries: Set<Pair<Nothing, Nothing>> = setOf()
+    override val entries: Set<Map.Entry<Any?, Collection<Nothing>>> = setOf()
 
-    override fun asMap(): Map<Nothing, Collection<Nothing>> = mapOf()
+    override fun asMap(): Map<Any?, Collection<Nothing>> = mapOf()
 }
 
 /**

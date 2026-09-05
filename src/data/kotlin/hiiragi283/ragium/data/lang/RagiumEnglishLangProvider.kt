@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.lang
 
 import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
+import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -30,6 +31,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         )
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
         // Block
+        add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
@@ -116,7 +118,31 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.BREWING, "Brewing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
 
-        // Text
+        // Text - Lib
+        add(HTCommonTranslation.ERROR, "Error")
+        add(HTCommonTranslation.INFINITE, "Infinite")
+        add(HTCommonTranslation.NONE, "None")
+        add(HTCommonTranslation.EMPTY, "Empty")
+
+        add(HTCommonTranslation.DOWN, "Down")
+        add(HTCommonTranslation.UP, "Up")
+        add(HTCommonTranslation.NORTH, "North")
+        add(HTCommonTranslation.SOUTH, "South")
+        add(HTCommonTranslation.WEST, "West")
+        add(HTCommonTranslation.EAST, "East")
+
+        add(HTCommonTranslation.INVALID_PACKET_S2C, $$"Invalid packet received from server side: %1$s")
+        add(HTCommonTranslation.INVALID_PACKET_C2S, $$"Invalid packet received from client side: %1$s")
+
+        add(HTCommonTranslation.PROGRESS, $$"Progress: %1$s %%")
+        add(HTCommonTranslation.SECONDS, $$"%1$s sec (%2$s ticks)")
+
+        add(HTCommonTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
+        add(HTCommonTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")
+        add(HTCommonTranslation.TOOLTIP_SHOW_DETAILS, "Press Ctrl to show details")
+
+        add(HTCommonTranslation.DATAPACK_WIP, "Enables work in progress contents")
+        // Text - Ragium
         add(RagiumTranslation.RAGIUM, "Ragium")
 
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")

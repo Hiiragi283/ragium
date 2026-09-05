@@ -303,6 +303,7 @@ data object Ragium : HTCommonMod() {
         }
 
         // Machine
+        registerProcessor(RagiumBlockEntityTypes.ASSEMBLER.get())
         registerProcessor(RagiumBlockEntityTypes.CRUSHER.get())
         registerProcessor(RagiumBlockEntityTypes.COMPRESSOR.get())
         registerProcessor(RagiumBlockEntityTypes.CUTTING_MACHINE.get())

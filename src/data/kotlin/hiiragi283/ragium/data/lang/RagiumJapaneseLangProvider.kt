@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.lang
 
 import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
+import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -26,6 +27,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING, "機械・加工・機械", "マシンケーシング（機械加工）を作る")
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "粉砕機を手に入れる")
         // Block
+        add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.CRUSHER, "破砕機")
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CUTTING_MACHINE, "裁断機")
@@ -112,7 +114,31 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.BREWING, "醸造")
         add(RagiumRecipeTypes.PLANTING, "栽培")
 
-        // Text
+        // Text - Lib
+        add(HTCommonTranslation.ERROR, "エラー")
+        add(HTCommonTranslation.INFINITE, "無限")
+        add(HTCommonTranslation.NONE, "なし")
+        add(HTCommonTranslation.EMPTY, "空")
+
+        add(HTCommonTranslation.DOWN, "下")
+        add(HTCommonTranslation.UP, "上")
+        add(HTCommonTranslation.NORTH, "北")
+        add(HTCommonTranslation.SOUTH, "南")
+        add(HTCommonTranslation.WEST, "西")
+        add(HTCommonTranslation.EAST, "東")
+
+        add(HTCommonTranslation.INVALID_PACKET_S2C, $$"サーバー側からの不正なパケットを受信しました: %1$s")
+        add(HTCommonTranslation.INVALID_PACKET_C2S, $$"クライアント側からの不正なパケットを受信しました: %1$s")
+
+        add(HTCommonTranslation.PROGRESS, $$"進捗率: %1$s %%")
+        add(HTCommonTranslation.SECONDS, $$"%1$s 秒 (%2$s ticks)")
+
+        add(HTCommonTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
+        add(HTCommonTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")
+        add(HTCommonTranslation.TOOLTIP_SHOW_DETAILS, "シフトキーを押して詳細を表示")
+
+        add(HTCommonTranslation.DATAPACK_WIP, "開発中の要素を有効にします")
+        // Text - Ragium
         add(RagiumTranslation.RAGIUM, "ラギウム")
 
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")

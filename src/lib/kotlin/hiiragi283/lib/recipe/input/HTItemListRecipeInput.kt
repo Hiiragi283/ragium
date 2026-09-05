@@ -10,6 +10,11 @@ import net.minecraft.world.item.crafting.RecipeInput
  */
 @JvmRecord
 data class HTItemListRecipeInput(val items: List<ItemStack>) : RecipeInput {
+    /**
+     * @since 26.1.4
+     */
+    constructor(vararg items: ItemStack) : this(items.toList())
+
     override fun getItem(index: Int): ItemStack = items[index]
 
     override fun size(): Int = items.size
