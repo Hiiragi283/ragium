@@ -1,10 +1,11 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.lib.data.advancement.builder
+package hiiragi283.lib.data.advancement
 
 import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.lib.data.ConditionBuilder
-import hiiragi283.lib.data.advancement.HTAdvancementExporter
+import hiiragi283.lib.data.advancement.criterion.HTConsumeItemBuilder
+import hiiragi283.lib.data.advancement.criterion.HTInventoryChangeBuilder
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
@@ -81,8 +82,13 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
         key criterion trigger.createCriterion(instance)
     }
 
+    // Extension
     inline fun inventory(key: String, builderAction: HTInventoryChangeBuilder.() -> Unit) {
-        define(key, CriteriaTriggers.INVENTORY_CHANGED, HTInventoryChangeBuilder().apply(builderAction).build())
+        define(key, CriteriaTriggers.INVENTORY_CHANGED, HTInventoryChangeBuilder.build(builderAction))
+    }
+
+    inline fun consumeItem(key: String, builderAction: HTConsumeItemBuilder.() -> Unit) {
+        define(key, CriteriaTriggers.CONSUME_ITEM, HTConsumeItemBuilder.build(builderAction))
     }
 
     //    Save    //
