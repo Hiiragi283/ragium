@@ -57,6 +57,7 @@ data object RagiumItems {
             putAll(RagiumMaterial.Metal.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
             putAll(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
             putAll(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
+            putAll(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT, HTItemPart.NUGGET)
             // Other
             putAll(RagiumMaterial.Other.WOOD, HTItemPart.DUST, HTItemPart.GEAR)
             putAll(RagiumMaterial.Other.GLASS, HTItemPart.DUST)
@@ -64,14 +65,22 @@ data object RagiumItems {
             putAll(RagiumMaterial.Other.PAPER, HTItemPart.DUST)
         }.flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
             parts.map { part: HTItemPart ->
-                val item: HTSimpleDeferredItem = if (material == RagiumMaterial.Metal.NETHERITE) {
+                Triple(
+                    part,
+                    material,
                     REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties ->
-                        properties.fireResistant()
+                        when (material) {
+                            RagiumMaterial.Mineral.RAGINITE -> Rarity.EPIC
+                            RagiumMaterial.Metal.BLACK_STEEL -> Rarity.UNCOMMON
+                            RagiumMaterial.Metal.VOID_METAL -> Rarity.RARE
+                            else -> null
+                        }?.let(properties::rarity)
+                        if (material == RagiumMaterial.Metal.NETHERITE) {
+                            properties.fireResistant()
+                        }
+                        properties
                     }
-                } else {
-                    REGISTER.registerSimpleItem(part.createName(material))
-                }
-                Triple(part, material, item)
+                )
             }
         }
 

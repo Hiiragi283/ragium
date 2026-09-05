@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SoundType
@@ -98,7 +99,12 @@ data object RagiumBlocks {
             HTBlockPart.STORAGE_BLOCK,
             RagiumMaterial.Metal.BLACK_STEEL,
             copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK)
-        )
+        ) { it.rarity(Rarity.UNCOMMON) }
+        register(
+            HTBlockPart.STORAGE_BLOCK,
+            RagiumMaterial.Metal.VOID_METAL,
+            copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
+        ) { it.rarity(Rarity.RARE) }
     }
 
     @JvmStatic

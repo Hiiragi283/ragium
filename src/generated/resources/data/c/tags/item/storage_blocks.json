@@ -7,6 +7,7 @@
     "#c:storage_blocks/echo",
     "#c:storage_blocks/glowstone",
     "#c:storage_blocks/quartz",
-    "#c:storage_blocks/sooty_iron"
+    "#c:storage_blocks/sooty_iron",
+    "#c:storage_blocks/void_metal"
   ]
 }

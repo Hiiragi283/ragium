@@ -11,6 +11,7 @@
     "ragium:echo_block",
     "ragium:freezer",
     "ragium:melter",
-    "ragium:sooty_iron_block"
+    "ragium:sooty_iron_block",
+    "ragium:void_metal_block"
   ]
 }
