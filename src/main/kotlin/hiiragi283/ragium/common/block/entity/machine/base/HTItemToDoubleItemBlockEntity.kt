@@ -61,14 +61,13 @@ abstract class HTItemToDoubleItemBlockEntity(
                     output: Pair<ItemStack, ItemStack>
                 ): Boolean {
                     val inputCount: Int = recipe.getRequiredAmount(input.item())
-                    return inputCount != 0 &&
-                        useTransaction { transaction: Transaction ->
-                            when {
-                                !inputSlot.canExtract(inputCount, transaction) -> false
-                                !primarySlot.canInsert(output.first, transaction) -> false
-                                else -> secondarySlot.canInsert(output.second, transaction)
-                            }
+                    return inputCount != 0 && useTransaction { transaction: Transaction ->
+                        when {
+                            !inputSlot.canExtract(inputCount, transaction) -> false
+                            !primarySlot.canInsert(output.first, transaction) -> false
+                            else -> secondarySlot.canInsert(output.second, transaction)
                         }
+                    }
                 }
 
                 override fun onComplete(
@@ -78,7 +77,9 @@ abstract class HTItemToDoubleItemBlockEntity(
                 ) {
                     val inputCount: Int = recipe.getRequiredAmount(input.item())
                     useTransaction { transaction: Transaction ->
-                        inputSlot.extract(inputCount, transaction)
+                        if (inputCount > 0) {
+                            inputSlot.extract(inputCount, transaction)
+                        }
                         primarySlot.insert(output.first, transaction)
                         secondarySlot.insert(output.second, transaction)
                         transaction.commit()

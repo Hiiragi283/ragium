@@ -31,6 +31,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
         // Block
         add(RagiumBlocks.CRUSHER, "Crusher")
+        add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
 
         add(RagiumBlocks.FREEZER, "Freezer")

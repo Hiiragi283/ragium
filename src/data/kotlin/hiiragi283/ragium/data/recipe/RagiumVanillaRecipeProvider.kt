@@ -6,8 +6,11 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.lib.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.lib.data.recipe.HTStonecuttingRecipeBuilder
+import hiiragi283.lib.data.recipe.IngredientBuilder
+import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
+import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTBlockPart
@@ -106,21 +109,43 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }
         }.save(exporter)
 
-        HTShapedRecipeBuilder.create {
-            +"ABA"
-            +"BCB"
-            +"ADA"
-            define('A') { +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SOOTY_IRON) }
-            define('B') { items { +RagiumItems.getCasing(HTMachineType.MECHANICAL) } }
-            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.COPPER) }
-            define('D') { items { +Items.GRINDSTONE } }
-            result { +RagiumBlocks.CRUSHER }
-        }.save(exporter)
+        mechanical(RagiumBlocks.CRUSHER) { items { +Items.GRINDSTONE } }
+        mechanical(RagiumBlocks.COMPRESSOR) { +holderSet(ItemTags.ANVIL) }
+        mechanical(RagiumBlocks.CUTTING_MACHINE) { items { +Items.STONECUTTER } }
         // Heat
         // Chemical
         // Bio
         // Electronics
         // Arcane
+    }
+
+    private inline fun machine(
+        machineType: HTMachineType,
+        material: HTMaterialLike,
+        gear: HTMaterialLike,
+        result: HTSimpleDeferredBlockAndItem,
+        ingredient: IngredientBuilder.() -> Unit
+    ) {
+        HTShapedRecipeBuilder.create {
+            +"ABA"
+            +"BCB"
+            +"ADA"
+            define('A') { +holderSet(CommonTagPrefixes.NUGGET, material) }
+            define('B') { items { +RagiumItems.getCasing(machineType) } }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, gear) }
+            define('D', ingredient)
+            result { +result }
+        }.save(exporter)
+    }
+
+    private inline fun mechanical(result: HTSimpleDeferredBlockAndItem, ingredient: IngredientBuilder.() -> Unit) {
+        machine(
+            HTMachineType.MECHANICAL,
+            RagiumMaterial.Metal.SOOTY_IRON,
+            RagiumMaterial.Metal.COPPER,
+            result,
+            ingredient
+        )
     }
 
     //    Material    //

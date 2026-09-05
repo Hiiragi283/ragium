@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
@@ -39,6 +40,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
         registerTick(RagiumConstants.CRUSHER, ::HTCrusherBlockEntity)
+
+    @JvmField
+    val COMPRESSOR: HTDeferredBlockEntityType<HTCompressorBlockEntity> =
+        registerTick(RagiumConstants.COMPRESSOR, ::HTCompressorBlockEntity)
 
     @JvmField
     val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> =

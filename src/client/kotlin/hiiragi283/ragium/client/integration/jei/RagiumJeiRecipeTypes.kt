@@ -24,7 +24,7 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val COMPRESSING: HTHolderJeiRecipeType<HTItemToItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.COMPRESSING, ItemStack(Items.ANVIL))
+        HTJeiRecipeType(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
     val CRUSHING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> =
