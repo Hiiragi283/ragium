@@ -109,6 +109,9 @@ data object RagiumBlocks {
 
     // Mechanical
     @JvmField
+    val ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ASSEMBLER)
+
+    @JvmField
     val CRUSHER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CRUSHER)
 
     @JvmField
@@ -136,6 +139,7 @@ data object RagiumBlocks {
     @JvmField
     val MACHINES: ListMultiMap<HTMachineType, HTBasicDeferredBlockAndItem<HTMachineBlock>> =
         buildListMultiMap(sortedMapOf()) {
+            put(HTMachineType.MECHANICAL, ASSEMBLER)
             put(HTMachineType.MECHANICAL, CRUSHER)
             put(HTMachineType.MECHANICAL, COMPRESSOR)
             put(HTMachineType.MECHANICAL, CUTTING_MACHINE)

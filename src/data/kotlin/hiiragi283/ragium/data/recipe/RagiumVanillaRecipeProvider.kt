@@ -109,6 +109,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }
         }.save(exporter)
 
+        mechanical(RagiumBlocks.ASSEMBLER) { items { +Items.CRAFTER } }
         mechanical(RagiumBlocks.CRUSHER) { items { +Items.GRINDSTONE } }
         mechanical(RagiumBlocks.COMPRESSOR) { +holderSet(ItemTags.ANVIL) }
         mechanical(RagiumBlocks.CUTTING_MACHINE) { items { +Items.STONECUTTER } }
