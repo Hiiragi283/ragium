@@ -6,6 +6,8 @@ import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.buildListMultiMap
+import hiiragi283.lib.color.HTDefaultColor
+import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.gui.sync.HTFluidSyncPayload
 import hiiragi283.lib.gui.sync.HTIntSyncPayload
 import hiiragi283.lib.gui.sync.HTItemSyncPayload
@@ -62,14 +64,18 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.FluidState
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
+import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension
+import net.neoforged.neoforge.fluids.FluidInteractionRegistry
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
@@ -98,10 +104,10 @@ data object Ragium : HTCommonMod() {
         event.register(Registries.CREATIVE_MODE_TAB) { helper ->
             helper.register(
                 RagiumAPI.id("common"),
-                HTCreativeModeTabHelper.createSimpleTab(RagiumTranslation.RAGIUM, Items.RED_DYE) {
-                        parameters: CreativeModeTab.ItemDisplayParameters,
-                        output: CreativeModeTab.Output
-                    ->
+                HTCreativeModeTabHelper.createSimpleTab(
+                    RagiumTranslation.RAGIUM,
+                    Items.RED_DYE
+                ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     // Items
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumItems.REGISTER.asSequence())
                     // Blocks
@@ -172,6 +178,23 @@ data object Ragium : HTCommonMod() {
         event.enqueueWork(::initRecipeLookups)
         event.enqueueWork {
             HTPotionFluidManager.register(RagiumFluids.POTION.getOrThrow(), HTPotionFluidManager.Handler.DEFAULT)
+        }
+        event.enqueueWork {
+            // Convert lava source/flow into concrete by dye liquid
+            // FlowingFluid#isRandomlyTicking を true に
+            for (color: HTDefaultColor in HTDefaultColor.entries) {
+                FluidInteractionRegistry.addInteraction(
+                    NeoForgeMod.LAVA_TYPE.value(),
+                    FluidInteractionRegistry.InteractionInformation(
+                        RagiumFluids.DYES[color].getFluidType()
+                    ) { state: FluidState ->
+                        when (state.isSource) {
+                            true -> Blocks.OBSIDIAN.defaultBlockState()
+                            false -> VanillaColoredCollections.CONCRETE[color].getOrThrow().defaultBlockState()
+                        }
+                    }
+                )
+            }
         }
     }
 
