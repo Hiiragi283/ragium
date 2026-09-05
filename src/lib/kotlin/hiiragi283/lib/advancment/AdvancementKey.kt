@@ -1,4 +1,4 @@
-package hiiragi283.lib.data.advancement
+package hiiragi283.lib.advancment
 
 import hiiragi283.lib.registry.createKey
 import hiiragi283.lib.resource.toLanguageKey

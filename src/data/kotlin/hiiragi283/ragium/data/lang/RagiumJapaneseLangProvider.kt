@@ -6,12 +6,12 @@ import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
-import hiiragi283.ragium.data.advancement.RagiumAdvancementKeys
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseLangProvider(output: PackOutput) :

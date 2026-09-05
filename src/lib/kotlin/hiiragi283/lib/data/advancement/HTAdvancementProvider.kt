@@ -1,5 +1,6 @@
 package hiiragi283.lib.data.advancement
 
+import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.data.ExporterDataProvider
 import net.minecraft.advancements.Advancement
