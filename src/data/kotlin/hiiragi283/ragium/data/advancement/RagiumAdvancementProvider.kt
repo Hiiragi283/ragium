@@ -122,6 +122,18 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             RagiumAdvancementKeys.HEAT_MACHINE_CASING,
             RagiumBlocks.MELTER
         )
+        // Chemical
+        createSimple(
+            RagiumAdvancementKeys.CHEMICAL_MACHINE_CASING,
+            RagiumAdvancementKeys.FREEZER,
+            RagiumItems.getCasing(HTMachineType.CHEMICAL),
+            AdvancementType.GOAL
+        )
+        createSimple(
+            RagiumAdvancementKeys.CHEMICAL_BATH,
+            RagiumAdvancementKeys.CHEMICAL_MACHINE_CASING,
+            RagiumBlocks.CHEMICAL_BATH
+        )
     }
 
     override fun getName(): String = "Ragium Advancements"

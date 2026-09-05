@@ -45,6 +45,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.FREEZER, "Freezer")
         add(RagiumBlocks.MELTER, "Melter")
 
+        add(RagiumBlocks.CHEMICAL_BATH, "Chemical Bath")
+
         add(RagiumBlocks.BREWERY, "Brewery")
 
         // Fluid

@@ -39,4 +39,11 @@ data object RagiumAdvancementKeys {
 
     @JvmField
     val MELTER: AdvancementKey = create(RagiumConstants.MELTER)
+
+    // Chemical
+    @JvmField
+    val CHEMICAL_MACHINE_CASING: AdvancementKey = create("chemical_machine_casing")
+
+    @JvmField
+    val CHEMICAL_BATH: AdvancementKey = create(RagiumConstants.CHEMICAL_BATH)
 }

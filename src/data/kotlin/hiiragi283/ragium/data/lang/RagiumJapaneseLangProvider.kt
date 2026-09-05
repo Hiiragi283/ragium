@@ -41,6 +41,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.FREEZER, "冷凍機")
         add(RagiumBlocks.MELTER, "溶融炉")
 
+        add(RagiumBlocks.CHEMICAL_BATH, "化学槽")
+
         add(RagiumBlocks.BREWERY, "醸造機")
 
         // Fluid

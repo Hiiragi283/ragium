@@ -6,6 +6,7 @@ import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.IngredientBuilder
 import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
@@ -271,13 +272,18 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
 
-        RagiumRecipeBuilders.compressing {
-            ingredient {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD)
-                count = 2
-            }
-            result { +RagiumItems.PARTICLE_BOARD }
-        }.save(exporter)
+        setOf(
+            RagiumMaterial.Other.WOOD to RagiumItems.PARTICLE_BOARD,
+            RagiumMaterial.Other.PAPER to HTSimpleDeferredItem(vanillaId("paper"))
+        ).forEach { (material: RagiumMaterial, item: HTSimpleDeferredItem) ->
+            RagiumRecipeBuilders.compressing {
+                ingredient {
+                    +holderSet(CommonTagPrefixes.DUST, material)
+                    count = 2
+                }
+                result { +item }
+            }.save(exporter)
+        }
     }
 
     private fun crushing() {
