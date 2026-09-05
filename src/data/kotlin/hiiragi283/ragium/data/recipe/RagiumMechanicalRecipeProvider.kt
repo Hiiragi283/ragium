@@ -1,8 +1,10 @@
 package hiiragi283.ragium.data.recipe
 
+import hiiragi283.lib.color.HTColoredCollection
 import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.IngredientBuilder
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
@@ -279,6 +281,8 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     }
 
     private fun crushing() {
+        dyes()
+
         // XX Dust
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
             val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
@@ -445,6 +449,110 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 3
             }
             recipeId suffix "_from_book"
+        }.save(exporter)
+    }
+
+    private fun dyes() {
+        // Single
+        val single = HTColoredCollection<(IngredientBuilder.() -> Unit)?>(
+            white = {
+                items {
+                    +Items.BONE_MEAL
+                    +Items.LILY_OF_THE_VALLEY
+                }
+            },
+            orange = {
+                items {
+                    +Items.ORANGE_TULIP
+                    +Items.TORCHFLOWER
+                    +Items.OPEN_EYEBLOSSOM
+                }
+            },
+            magenta = { items { +Items.ALLIUM } },
+            lightBlue = { items { +Items.BLUE_ORCHID } },
+            yellow = {
+                items {
+                    +Items.DANDELION
+                    +Items.GOLDEN_DANDELION
+                    +Items.WILDFLOWERS
+                }
+            },
+            lime = { items { +Items.SEA_PICKLE } },
+            pink = {
+                items {
+                    +Items.CACTUS_FLOWER
+                    +Items.PINK_PETALS
+                    +Items.PINK_TULIP
+                }
+            },
+            gray = { items { +Items.CLOSED_EYEBLOSSOM } },
+            lightGray = {
+                items {
+                    +Items.AZURE_BLUET
+                    +Items.OXEYE_DAISY
+                    +Items.WHITE_TULIP
+                }
+            },
+            cyan = null,
+            purple = null,
+            blue = { items { +Items.CORNFLOWER } },
+            brown = { items { +Items.COCOA_BEANS } },
+            green = { items { +Items.CACTUS } },
+            red = {
+                items {
+                    +Items.POPPY
+                    +Items.BEETROOT
+                }
+            },
+            black = {
+                items {
+                    +Items.INK_SAC
+                    +Items.WITHER_ROSE
+                }
+            }
+        )
+        for (color: HTDefaultColor in HTDefaultColor.entries) {
+            val builder: IngredientBuilder.() -> Unit = single[color] ?: continue
+            RagiumRecipeBuilders.crushing {
+                ingredient(builder)
+                primary {
+                    +VanillaColoredCollections.DYE[color]
+                    count = 2
+                }
+            }.save(exporter)
+        }
+        // Double
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.ROSE_BUSH } }
+            primary {
+                +Items.RED_DYE
+                count = 4
+            }
+            recipeId prefix "double_"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.SUNFLOWER } }
+            primary {
+                +Items.YELLOW_DYE
+                count = 4
+            }
+            recipeId prefix "double_"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.PITCHER_PLANT } }
+            primary {
+                +Items.CYAN_DYE
+                count = 4
+            }
+            recipeId prefix "double_"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.LILAC } }
+            primary {
+                +Items.PINK_DYE
+                count = 4
+            }
+            recipeId prefix "double_"
         }.save(exporter)
     }
 

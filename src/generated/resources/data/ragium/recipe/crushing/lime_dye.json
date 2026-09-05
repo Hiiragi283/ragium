@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:sea_pickle"
+  },
+  "primary_result": {
+    "count": 2,
+    "id": "minecraft:lime_dye"
+  },
+  "time": 200
+}
