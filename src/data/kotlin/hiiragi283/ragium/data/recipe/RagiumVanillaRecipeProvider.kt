@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -95,6 +96,26 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
     private fun machine() {
         // Mechanical
+        HTShapedRecipeBuilder.create {
+            layered()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            result {
+                +RagiumItems.getCasing(HTMachineType.MECHANICAL)
+                count = 3
+            }
+        }.save(exporter)
+
+        HTShapedRecipeBuilder.create {
+            +"ABA"
+            +"BCB"
+            +"ADA"
+            define('A') { +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SOOTY_IRON) }
+            define('B') { items { +RagiumItems.getCasing(HTMachineType.MECHANICAL) } }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.COPPER) }
+            define('D') { items { +Items.GRINDSTONE } }
+            result { +RagiumBlocks.CRUSHER }
+        }.save(exporter)
         // Heat
         // Chemical
         // Bio

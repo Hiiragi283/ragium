@@ -12,4 +12,14 @@ data object RagiumAdvancementKeys {
 
     @JvmField
     val ROOT: AdvancementKey = create("root")
+
+    @JvmField
+    val SOOTY_IRON: AdvancementKey = create("sooty_iron")
+
+    // Mechanical
+    @JvmField
+    val MECHANICAL_MACHINE_CASING: AdvancementKey = create("mechanical_machine_casing")
+
+    @JvmField
+    val CRUSHER: AdvancementKey = create("crusher")
 }

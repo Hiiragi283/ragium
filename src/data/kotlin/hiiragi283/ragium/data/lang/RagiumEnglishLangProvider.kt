@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
+import hiiragi283.ragium.data.advancement.RagiumAdvancementKeys
 import net.minecraft.data.PackOutput
 
 class RagiumEnglishLangProvider(output: PackOutput) :
@@ -18,6 +19,16 @@ class RagiumEnglishLangProvider(output: PackOutput) :
     override fun addTranslations() {
         addPatternTranslations(this)
 
+        // Advancement
+        add(RagiumAdvancementKeys.ROOT, "Ragium", "Welcome to Ragium!")
+        add(RagiumAdvancementKeys.SOOTY_IRON, "Acquire Blackware", "Craft a Sooty Iron Ingot")
+
+        add(
+            RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING,
+            "Mechanical Machines",
+            "Craft a Machine Casing (Mechanical)"
+        )
+        add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
         // Block
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")

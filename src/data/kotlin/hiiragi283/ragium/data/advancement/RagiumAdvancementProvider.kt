@@ -4,16 +4,21 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.advancement.AdvancementKey
 import hiiragi283.lib.data.advancement.HTAdvancementProvider
 import hiiragi283.lib.data.advancement.builder.HTAdvancementBuilder
+import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.vanillaId
-import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.HTMaterialAccess
+import hiiragi283.ragium.api.material.HTMaterialContents
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.HTMachineType
+import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.ClientAsset
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
 class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
@@ -26,19 +31,59 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         }.save(exporter)
     }
 
+    private fun createSimple(key: AdvancementKey, parentKey: AdvancementKey, item: HTSimpleDeferredBlockAndItem) {
+        HTAdvancementBuilder.create(key) {
+            +parentKey
+            display { +item }
+            inventory(getHasName(item)) { predicate { items { +item } } }
+        }.save(exporter)
+    }
+
+    private fun createSimple(
+        key: AdvancementKey,
+        parentKey: AdvancementKey,
+        part: HTItemPart,
+        material: RagiumMaterial
+    ) {
+        val item: HTMaterialContents.ItemEntry =
+            HTMaterialAccess.INSTANCE.getMaterialBlockOrItem(part, material) ?: return
+        HTAdvancementBuilder.create(key) {
+            +parentKey
+            display { +item }
+            inventory(getHasName(item)) { predicate { +holderSet(part.tagPrefix, material) } }
+        }.save(exporter)
+    }
+
     override fun exportValues() {
         // Root
         HTAdvancementBuilder.create(RagiumAdvancementKeys.ROOT) {
             display {
-                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.RAGINITE)
                 +ClientAsset.ResourceTexture(vanillaId(HTConstants.BLOCK, "smooth_stone"))
                 showToast = false
                 showChat = false
             }
-            inventory(getHasName(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON)) {
-                predicate { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            inventory(getHasName(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES)) {
+                predicate { +holderSet(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES) }
             }
         }.save(exporter)
+        createSimple(
+            RagiumAdvancementKeys.SOOTY_IRON,
+            RagiumAdvancementKeys.ROOT,
+            HTItemPart.INGOT,
+            RagiumMaterial.Metal.SOOTY_IRON
+        )
+        // Mechanical
+        createSimple(
+            RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING,
+            RagiumAdvancementKeys.SOOTY_IRON,
+            RagiumItems.getCasing(HTMachineType.MECHANICAL)
+        )
+        createSimple(
+            RagiumAdvancementKeys.CRUSHER,
+            RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING,
+            RagiumBlocks.CRUSHER
+        )
     }
 
     override fun getName(): String = "Ragium Advancements"

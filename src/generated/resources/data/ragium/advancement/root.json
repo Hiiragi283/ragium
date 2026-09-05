@@ -1,10 +1,10 @@
 {
   "criteria": {
-    "has_ingots_sooty_iron": {
+    "has_player_workstations_crafting_tables": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/sooty_iron"
+            "items": "#c:player_workstations/crafting_tables"
           }
         ]
       },
@@ -18,7 +18,7 @@
       "translate": "advancement.ragium.root.desc"
     },
     "icon": {
-      "id": "ragium:sooty_iron_ingot"
+      "id": "ragium:raginite_dust"
     },
     "show_toast": false,
     "title": {
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_ingots_sooty_iron"
+      "has_player_workstations_crafting_tables"
     ]
   ],
   "sends_telemetry_event": true

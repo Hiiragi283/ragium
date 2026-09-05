@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
+import hiiragi283.ragium.data.advancement.RagiumAdvancementKeys
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseLangProvider(output: PackOutput) :
@@ -18,6 +19,12 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
     override fun addTranslations() {
         addPatternTranslations(this)
 
+        // Advancement
+        add(RagiumAdvancementKeys.ROOT, "ラギウム", "ラギウムへようこそ!")
+        add(RagiumAdvancementKeys.SOOTY_IRON, "黒鉄（くろがね）を手に入れる", "煤鉄をつくる")
+
+        add(RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING, "機械・加工・機械", "マシンケーシング（機械加工）を作る")
+        add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "粉砕機を手に入れる")
         // Block
         add(RagiumBlocks.CRUSHER, "破砕機")
         add(RagiumBlocks.CUTTING_MACHINE, "裁断機")

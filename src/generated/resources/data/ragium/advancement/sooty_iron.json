@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:root",
+  "criteria": {
+    "has_sooty_iron_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/sooty_iron"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.sooty_iron.desc"
+    },
+    "icon": {
+      "id": "ragium:sooty_iron_ingot"
+    },
+    "title": {
+      "translate": "advancement.ragium.sooty_iron.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_sooty_iron_ingot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
