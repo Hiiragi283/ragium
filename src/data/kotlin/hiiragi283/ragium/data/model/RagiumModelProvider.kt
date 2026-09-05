@@ -6,6 +6,7 @@ import hiiragi283.lib.data.model.createBlock
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.HTIdOrValue
+import hiiragi283.lib.resource.HTSimpleBlockItemWithKey
 import hiiragi283.lib.resource.blockId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTMachineType
@@ -60,10 +61,11 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun registerBlockModels(generators: BlockModelGenerators) {
-        RagiumBlocks.MATERIAL_BLOCKS.values.forEach { generators.createTrivialCube(it.getOrThrow()) }
+        RagiumBlocks.MATERIAL_BLOCKS.values.forEach { generators.createTrivialCube(it.block.getOrThrow()) }
 
         // Machine
-        for ((machineType: HTMachineType, block: HTIdOrValue<Block>) in RagiumBlocks.MACHINES.flatEntries) {
+        for ((machineType: HTMachineType, blockItem: HTSimpleBlockItemWithKey) in RagiumBlocks.MACHINES.flatEntries) {
+            val block: HTIdOrValue<Block> = blockItem.block
             val inactiveModel: MultiVariant = BlockModelGenerators.plainVariant(
                 machineModel(generators, machineType, block, false)
             )

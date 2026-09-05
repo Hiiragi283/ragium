@@ -19,13 +19,6 @@ typealias AdvancementKey = ResourceKey<Advancement>
  * @author Hiiragi Tsubasa
  * @since 26.1.3
  */
-fun AdvancementKey(namespace: String, path: String): AdvancementKey = Registries.ADVANCEMENT.createKey(namespace, path)
-
-/**
- * 新しい[AdvancementKey]のインスタンスを作成します。
- * @author Hiiragi Tsubasa
- * @since 26.1.3
- */
 fun AdvancementKey(id: Identifier): AdvancementKey = Registries.ADVANCEMENT.createKey(id)
 
 /**

@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.material.HTMaterialContents
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
@@ -26,6 +27,7 @@ class HTMaterialAccessImpl : HTMaterialAccess {
                 fun accept(part: HTBlockPart, material: RagiumMaterial, block: Block) {
                     this[part, material] = block.builtInRegistryHolder()
                         .getKeyOrThrow()
+                        .let(ResourceKey<Block>::identifier)
                         .let(::HTSimpleDeferredBlockAndItem)
                         .let { HTMaterialContents.BlockEntry(it, true) }
                 }
