@@ -74,5 +74,6 @@ class HTDeferredBlockRegister(namespace: String) : HTDeferredRegister<Block>(Reg
     override fun <I : Block> register(name: String, func: Function<Identifier, out I>): HTDeferredBlock<I> =
         super.register(name, func) as HTDeferredBlock<I>
 
-    override fun asSequence(): Sequence<HTDeferredBlock<*>> = super.asSequence().filterIsInstance<HTDeferredBlock<*>>()
+    override fun asSequence(): Sequence<HTSimpleDeferredBlock> =
+        super.asSequence().filterIsInstance<HTSimpleDeferredBlock>()
 }

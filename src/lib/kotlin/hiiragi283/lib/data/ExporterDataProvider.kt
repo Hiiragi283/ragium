@@ -7,6 +7,7 @@ import hiiragi283.lib.HTComparators
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.resource.HTIdOrValue
+import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
@@ -15,6 +16,7 @@ import net.minecraft.core.HolderSet
 import net.minecraft.data.CachedOutput
 import net.minecraft.data.DataProvider
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.Identifier
 import net.minecraft.resources.RegistryOps
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
@@ -80,6 +82,18 @@ abstract class ExporterDataProvider<R : Any>(
 
     //    Extensions    //
 
+    /**
+     * 指定した[パス][path]から[ID][Identifier]を作成します。
+     * @return [modId]を[名前空間][Identifier.getNamespace]とする[ID][Identifier]
+     */
+    protected fun id(path: String): Identifier = modId.toId(path)
+
+    /**
+     * 指定した[パス][path]から[ID][Identifier]を作成します。
+     * @return [modId]を[名前空間][Identifier.getNamespace]とする[ID][Identifier]
+     */
+    protected fun id(vararg path: String): Identifier = modId.toId(*path)
+
     protected fun getHasName(id: HTIdOrValue<*>): String = "has_${id.idOrThrow.path}"
 
     protected fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().path.replace("/", "_")}"
@@ -98,7 +112,7 @@ abstract class ExporterDataProvider<R : Any>(
     protected fun <T : Any> holderSet(tagKeys: Iterable<TagKey<T>>): HolderSet<T> = when (tagKeys.count()) {
         0 -> HolderSet.empty()
         1 -> holderSet(tagKeys.first())
-        else -> tagKeys.sortedWith(HTComparators.TAG_KEY).map(::holderSet).let(::OrHolderSet)
+        else -> HTComparators.sortTagKeys(tagKeys).map(::holderSet).let(::OrHolderSet)
     }
 
     protected fun <T : Any> holderSet(vararg tagKeys: TagKey<T>): HolderSet<T> = holderSet(tagKeys.toSet())

@@ -20,17 +20,16 @@ data object HTComparators {
      * [ResourceKey]の[Comparator]
      */
     @JvmField
-    val KEY: Comparator<ResourceKey<*>> = compareBy(
-        ID,
-        ResourceKey<*>::registry
-    ).thenComparing(compareBy(ID, ResourceKey<*>::identifier))
+    val KEY: Comparator<ResourceKey<*>> =
+        compareBy(ID, ResourceKey<*>::registry).thenComparing(compareBy(ID, ResourceKey<*>::identifier))
 
     /**
      * [TagKey]の[Comparator]
      */
     @JvmField
-    val TAG_KEY: Comparator<TagKey<*>> = compareBy(
-        KEY,
-        TagKey<*>::registry
-    ).thenComparing(compareBy(ID, TagKey<*>::location))
+    val TAG_KEY: Comparator<TagKey<*>> =
+        compareBy(KEY, TagKey<*>::registry).thenComparing(compareBy(ID, TagKey<*>::location))
+
+    @JvmStatic
+    fun <T : Any> sortTagKeys(tagKeys: Iterable<TagKey<T>>): Set<TagKey<T>> = tagKeys.toSortedSet(TAG_KEY)
 }

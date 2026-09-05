@@ -51,18 +51,6 @@ abstract class HTRecipeProvider(
 
     //    Extensions    //
 
-    /**
-     * 指定した[パス][path]から[ID][Identifier]を作成します。
-     * @return [modId]を[名前空間][Identifier.getNamespace]とする[ID][Identifier]
-     */
-    protected fun id(path: String): Identifier = modId.toId(path)
-
-    /**
-     * 指定した[パス][path]から[ID][Identifier]を作成します。
-     * @return [modId]を[名前空間][Identifier.getNamespace]とする[ID][Identifier]
-     */
-    protected fun id(vararg path: String): Identifier = modId.toId(*path)
-
     // Recipe Builder
     protected inline fun netheriteUpgrade(builderAction: HTSmithingRecipeBuilder.() -> Unit): HTSmithingRecipeBuilder =
         HTSmithingRecipeBuilder.create {

@@ -52,7 +52,7 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder.buildSized(builderAction)
+        +IngredientBuilder.build(builderAction)
     }
 
     inline fun itemIngredient(builderAction: IngredientBuilder.() -> Unit) {

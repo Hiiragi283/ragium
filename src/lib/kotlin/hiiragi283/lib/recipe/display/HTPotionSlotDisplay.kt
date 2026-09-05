@@ -27,6 +27,7 @@ import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.display.ForFluidStacks
+import java.util.function.Consumer
 import java.util.stream.Stream
 
 /**
@@ -75,9 +76,8 @@ data class HTPotionSlotDisplay(val potions: HolderSet<Potion>, val bottleType: H
                 HTPotionFluidManager.handlers
                     .entries
                     .stream()
-                    .flatMap { (fluid: Fluid, handler: HTPotionFluidManager.Handler) ->
+                    .mapMulti { (fluid: Fluid, handler: HTPotionFluidManager.Handler), consumer: Consumer<FluidStack> ->
                         potions
-                            .stream()
                             .filter { it.value().isEnabled(HTPhysicalSideHelper.getFeatureFlags()) }
                             .map { potion: Holder<Potion> ->
                                 when (potion) {
@@ -92,6 +92,7 @@ data class HTPotionSlotDisplay(val potions: HolderSet<Potion>, val bottleType: H
                                     }
                                 }
                             }
+                            .forEach(consumer)
                     }.map(builder::forStack)
 
             else -> Stream.empty()

@@ -19,7 +19,7 @@ class HTDeferredFluidTypeRegister(namespace: String) :
      * @param properties [FluidType]のプロパティ
      * @return 新しい[HTDeferredFluidType]のインスタンス
      */
-    fun registerSimpleType(name: String, properties: FluidType.Properties): HTDeferredFluidType<FluidType> =
+    fun registerSimpleType(name: String, properties: FluidType.Properties): HTSimpleDeferredFluidType =
         registerType(name, properties, ::FluidType)
 
     /**
@@ -49,6 +49,6 @@ class HTDeferredFluidTypeRegister(namespace: String) :
     override fun <I : FluidType> register(name: String, func: Function<Identifier, out I>): HTDeferredFluidType<I> =
         super.register(name, func) as HTDeferredFluidType<I>
 
-    override fun asSequence(): Sequence<HTDeferredFluidType<*>> =
-        super.asSequence().filterIsInstance<HTDeferredFluidType<*>>()
+    override fun asSequence(): Sequence<HTSimpleDeferredFluidType> =
+        super.asSequence().filterIsInstance<HTSimpleDeferredFluidType>()
 }

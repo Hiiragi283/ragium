@@ -23,7 +23,7 @@ import net.neoforged.neoforge.fluids.FluidType
  * @since 26.1.0
  */
 sealed class HTFluidContent(
-    val typeHolder: HTDeferredFluidType<FluidType>,
+    val typeHolder: HTSimpleDeferredFluidType,
     val sourceHolder: HTDeferredHolder<Fluid, *>,
     val bucketHolder: HTSimpleDeferredItem,
     val fluidTag: TagKey<Fluid>,
@@ -55,7 +55,7 @@ sealed class HTFluidContent(
      * @since 26.1.0
      */
     class Virtual(
-        typeHolder: HTDeferredFluidType<FluidType>,
+        typeHolder: HTSimpleDeferredFluidType,
         sourceHolder: HTDeferredHolder<Fluid, *>,
         bucketHolder: HTSimpleDeferredItem,
         fluidTag: TagKey<Fluid>,
@@ -70,7 +70,7 @@ sealed class HTFluidContent(
      * @since 26.1.0
      */
     class Flowing(
-        typeHolder: HTDeferredFluidType<FluidType>,
+        typeHolder: HTSimpleDeferredFluidType,
         sourceHolder: HTDeferredHolder<Fluid, FlowingFluid>,
         bucketHolder: HTSimpleDeferredItem,
         fluidTag: TagKey<Fluid>,

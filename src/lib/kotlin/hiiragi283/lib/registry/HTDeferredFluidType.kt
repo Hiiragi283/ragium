@@ -9,12 +9,19 @@ import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 
 /**
+ * シンプルな[HTDeferredFluidType]のエイリアスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.4
+ */
+typealias HTSimpleDeferredFluidType = HTDeferredFluidType<FluidType>
+
+/**
  * [FluidType]向けの[HTDeferredHolder]の拡張クラスです。
  * @param TYPE [FluidType]のクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTDeferredFluidType<TYPE : FluidType> :
+class HTDeferredFluidType<out TYPE : FluidType> :
     HTDeferredHolder<FluidType, TYPE>,
     HTHasTranslationKey,
     HTHasText {
