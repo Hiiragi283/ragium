@@ -1,7 +1,6 @@
 package hiiragi283.lib.data.tag
 
 import hiiragi283.lib.resource.BlockItemKey
-import hiiragi283.lib.resource.HTBlockItemWithKey
 import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
@@ -24,9 +23,6 @@ abstract class HTBlockItemTagsProvider(private val factory: (BlockItemTag) -> HT
             override fun add(key: BlockItemKey, type: HTTagDependType): HTBlockItemTagBuilder =
                 apply { builder.add(key.block, type) }
 
-            override fun add(value: HTBlockItemWithKey<*, *>, type: HTTagDependType): HTBlockItemTagBuilder =
-                apply { builder.add(value.block, type) }
-
             override fun addTag(child: BlockItemTag, type: HTTagDependType): HTBlockItemTagBuilder =
                 apply { builder.addTag(child.block, type) }
         }
@@ -38,9 +34,6 @@ abstract class HTBlockItemTagsProvider(private val factory: (BlockItemTag) -> HT
         fun forItem(builder: HTTagBuilder<Item>): HTBlockItemTagBuilder = object : HTBlockItemTagBuilder {
             override fun add(key: BlockItemKey, type: HTTagDependType): HTBlockItemTagBuilder =
                 apply { builder.add(key.item, type) }
-
-            override fun add(value: HTBlockItemWithKey<*, *>, type: HTTagDependType): HTBlockItemTagBuilder =
-                apply { builder.add(value.item, type) }
 
             override fun addTag(child: BlockItemTag, type: HTTagDependType): HTBlockItemTagBuilder =
                 apply { builder.addTag(child.item, type) }

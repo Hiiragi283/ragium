@@ -52,12 +52,17 @@ interface HTMaterialContents<R : HTPart, out V : Any> : Table<R, RagiumMaterial,
      * @author Hiiragi Tsubasa
      * @since 26.1.2
      */
-    data class BlockEntry(val blockItem: HTSimpleDeferredBlockAndItem, val isBuiltIn: Boolean) :
-        HTSimpleBlockItemWithKey,
-        ItemLike by blockItem.item,
-        HTItemInstanceLike by blockItem.item {
-        override val block: HTSimpleDeferredBlock = blockItem.block
-        override val item: HTSimpleDeferredItem = blockItem.item
+    data class BlockEntry(
+        override val block: HTSimpleDeferredBlock,
+        override val item: HTSimpleDeferredItem,
+        val isBuiltIn: Boolean
+    ) : HTSimpleBlockItemWithKey,
+        ItemLike by item,
+        HTItemInstanceLike by item {
+        constructor(
+            blockItem: HTSimpleDeferredBlockAndItem,
+            isBuiltIn: Boolean
+        ) : this(blockItem.block, blockItem.item, isBuiltIn)
 
         fun asItemEntry(): ItemEntry = ItemEntry(item, isBuiltIn)
     }
