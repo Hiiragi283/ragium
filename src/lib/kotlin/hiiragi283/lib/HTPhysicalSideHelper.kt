@@ -79,7 +79,7 @@ data object HTPhysicalSideHelper {
 
     /**
      * 現在の[HTRecipeLookup.Context]を作成します。
-     * @since 21.1.1
+     * @since 26.1.1
      */
     @JvmStatic
     fun createLookupContext(): HTRecipeLookup.Context = runForSide(
@@ -98,7 +98,7 @@ data object HTPhysicalSideHelper {
 
     /**
      * 現在の[PotionBrewing]を取得します。
-     * @since 21.1.1
+     * @since 26.1.1
      */
     @JvmStatic
     fun getPotionBrewing(): PotionBrewing? = runForSide(Level::potionBrewing, MinecraftServer::potionBrewing)
