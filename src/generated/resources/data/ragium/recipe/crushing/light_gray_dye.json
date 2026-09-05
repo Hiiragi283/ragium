@@ -1,0 +1,16 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": [
+      "minecraft:azure_bluet",
+      "minecraft:oxeye_daisy",
+      "minecraft:white_tulip"
+    ]
+  },
+  "primary_result": {
+    "count": 2,
+    "id": "minecraft:light_gray_dye"
+  },
+  "time": 200
+}

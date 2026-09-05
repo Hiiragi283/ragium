@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:lilac"
+  },
+  "primary_result": {
+    "count": 4,
+    "id": "minecraft:pink_dye"
+  },
+  "time": 200
+}

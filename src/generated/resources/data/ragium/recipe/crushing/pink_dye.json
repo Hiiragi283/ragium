@@ -1,0 +1,16 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": [
+      "minecraft:cactus_flower",
+      "minecraft:pink_petals",
+      "minecraft:pink_tulip"
+    ]
+  },
+  "primary_result": {
+    "count": 2,
+    "id": "minecraft:pink_dye"
+  },
+  "time": 200
+}

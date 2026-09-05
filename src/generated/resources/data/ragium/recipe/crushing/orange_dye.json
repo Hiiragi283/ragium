@@ -1,0 +1,16 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": [
+      "minecraft:orange_tulip",
+      "minecraft:torchflower",
+      "minecraft:open_eyeblossom"
+    ]
+  },
+  "primary_result": {
+    "count": 2,
+    "id": "minecraft:orange_dye"
+  },
+  "time": 200
+}
