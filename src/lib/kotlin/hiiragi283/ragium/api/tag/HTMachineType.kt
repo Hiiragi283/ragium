@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.tag
 import hiiragi283.lib.data.lang.HTLangName
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import hiiragi283.ragium.api.RagiumAPI
 
 /**
  * Ragiumで追加される機械のカテゴリを表すクラスです。
@@ -24,7 +25,7 @@ enum class HTMachineType(langName: HTLangName) :
 
     companion object {
         @JvmField
-        val PREFIX = HTTagPrefix("machines", "machines/%s")
+        val PREFIX = HTTagPrefix(RagiumAPI.id("machines"), "machines/%s", RagiumAPI.MOD_ID)
     }
 
     override val materialName: String get() = name.lowercase()

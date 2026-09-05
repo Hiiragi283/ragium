@@ -1,0 +1,8 @@
+{
+  "values": [
+    "#ragium:machines/bio",
+    "#ragium:machines/chemical",
+    "#ragium:machines/heat",
+    "#ragium:machines/mechanical"
+  ]
+}
