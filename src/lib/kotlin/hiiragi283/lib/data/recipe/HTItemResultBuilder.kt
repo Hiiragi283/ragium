@@ -26,6 +26,9 @@ import kotlin.contracts.contract
 @HTBuilderMarker
 class HTItemResultBuilder @PublishedApi internal constructor() {
     companion object {
+        /**
+         * @since 26.1.4
+         */
         @JvmStatic
         inline fun build(builderAction: HTItemResultBuilder.() -> Unit): HTItemResult {
             contract {

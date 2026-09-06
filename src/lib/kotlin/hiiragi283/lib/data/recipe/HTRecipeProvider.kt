@@ -57,6 +57,10 @@ abstract class HTRecipeProvider(
     //    Extensions    //
 
     // Recipe Builder
+
+    /**
+     * @since 26.1.4
+     */
     protected fun registerTools(tools: HTToolCollection<Holder<Item>>, material: ToolMaterial) {
         fun registerTool(toolType: HTToolType, patterns: Iterable<String>) {
             HTShapedRecipeBuilder.create {
