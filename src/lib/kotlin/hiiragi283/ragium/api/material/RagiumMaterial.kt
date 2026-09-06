@@ -107,6 +107,13 @@ sealed interface RagiumMaterial :
          */
         BLACK_STEEL("Black Steel", "黒鋼") {
             override val isElement: Boolean = false
+        },
+
+        /**
+         * @since 26.1.4
+         */
+        VOID_METAL("Void Metal", "虚金") {
+            override val isElement: Boolean = false
         }
         ;
 

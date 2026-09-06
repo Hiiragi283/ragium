@@ -7,7 +7,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
@@ -37,8 +40,16 @@ data object RagiumBlockEntityTypes {
 
     // Mechanical
     @JvmField
+    val ASSEMBLER: HTDeferredBlockEntityType<HTAssemblerBlockEntity> =
+        registerTick(RagiumConstants.ASSEMBLER, ::HTAssemblerBlockEntity)
+
+    @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
         registerTick(RagiumConstants.CRUSHER, ::HTCrusherBlockEntity)
+
+    @JvmField
+    val COMPRESSOR: HTDeferredBlockEntityType<HTCompressorBlockEntity> =
+        registerTick(RagiumConstants.COMPRESSOR, ::HTCompressorBlockEntity)
 
     @JvmField
     val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> =
@@ -54,6 +65,10 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.MELTER, ::HTMelterBlockEntity)
 
     // Chemical
+    @JvmField
+    val CHEMICAL_BATH: HTDeferredBlockEntityType<HTChemicalBathBlockEntity> =
+        registerTick(RagiumConstants.CHEMICAL_BATH, ::HTChemicalBathBlockEntity)
+
     // Bio
     @JvmField
     val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> =

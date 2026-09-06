@@ -45,14 +45,14 @@ class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(Ragium
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder().apply(builderAction).buildSized()
+        +IngredientBuilder.buildSized(builderAction)
     }
 
     inline fun fluidIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +FluidIngredientBuilder().apply(builderAction).buildSized()
+        +FluidIngredientBuilder.buildSized(builderAction)
     }
 
     // Result
@@ -72,13 +72,13 @@ class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(Ragium
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HTItemResultBuilder().apply(builderAction).build()
+        +HTItemResultBuilder.build(builderAction)
     }
 
     inline fun fluidResult(builderAction: HTFluidResultBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HTFluidResultBuilder().apply(builderAction).build()
+        +HTFluidResultBuilder.build(builderAction)
     }
 }

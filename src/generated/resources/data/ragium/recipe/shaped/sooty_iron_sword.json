@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#ragium:sooty_iron_tool_materials",
+    "B": "#c:rods/wooden"
+  },
+  "pattern": [
+    "B",
+    "A",
+    "A"
+  ],
+  "result": {
+    "id": "ragium:sooty_iron_sword"
+  }
+}

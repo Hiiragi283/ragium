@@ -1,5 +1,6 @@
 package hiiragi283.lib.data.advancement
 
+import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.data.ExporterDataProvider
 import net.minecraft.advancements.Advancement
@@ -33,11 +34,7 @@ abstract class HTAdvancementProvider(
     Advancement.CONDITIONAL_CODEC
 ) {
     override fun createExporter(map: MutableMap<AdvancementKey, WithConditions<Advancement>>): HTAdvancementExporter =
-        HTAdvancementExporter {
-                id: AdvancementKey,
-                advancement: Advancement,
-                conditions: List<ICondition>
-            ->
+        HTAdvancementExporter { id: AdvancementKey, advancement: Advancement, conditions: List<ICondition> ->
             check(map.put(id, WithConditions(conditions, advancement)) == null) { "Duplicate advancement $id" }
         }
 }

@@ -4,7 +4,9 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.data.model.createBlock
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.resource.HTIdOrValue
+import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.resource.HTSimpleBlockItemWithKey
+import hiiragi283.lib.resource.HTValueWithId
 import hiiragi283.lib.resource.blockId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTMachineType
@@ -29,7 +31,6 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     override fun registerModels(blockModels: BlockModelGenerators, itemModels: ItemModelGenerators) {
         // Fluids
         val dripFluids: List<HTFluidContent> = buildList {
-            // Vanilla
             addAll(RagiumFluids.DYES)
             add(RagiumFluids.HONEY)
             add(RagiumFluids.OMINOUS_FLUX)
@@ -42,6 +43,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             add(RagiumFluids.CREOSOTE)
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.SULFURIC_ACID)
+            add(RagiumFluids.MOLTEN_STEEL)
         }
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             // Item
@@ -59,10 +61,11 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun registerBlockModels(generators: BlockModelGenerators) {
-        RagiumBlocks.MATERIAL_BLOCKS.values.forEach { generators.createTrivialCube(it.getOrThrow()) }
+        RagiumBlocks.MATERIAL_BLOCKS.values.forEach { generators.createTrivialCube(it.block.getOrThrow()) }
 
         // Machine
-        for ((machineType: HTMachineType, block: HTIdOrValue<Block>) in RagiumBlocks.MACHINES.flatEntries) {
+        for ((machineType: HTMachineType, blockItem: HTSimpleBlockItemWithKey) in RagiumBlocks.MACHINES.flatEntries) {
+            val block: HTValueWithId<Block> = blockItem.block
             val inactiveModel: MultiVariant = BlockModelGenerators.plainVariant(
                 machineModel(generators, machineType, block, false)
             )
@@ -83,7 +86,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     private fun machineModel(
         generators: BlockModelGenerators,
         machineType: HTMachineType,
-        block: HTIdOrValue<Block>,
+        block: HTValueWithId<Block>,
         isActive: Boolean
     ): Identifier {
         val blockId: Identifier = block.idOrThrow.blockId
@@ -109,17 +112,29 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun registerItemModels(generators: ItemModelGenerators) {
+        val handheld: Set<HTSimpleDeferredItem> = buildSet {
+            add(RagiumItems.BAMBOO_CHARCOAL)
+            add(RagiumItems.WITHER_DOLL)
+
+            addAll(RagiumItems.SOOTY_IRON_TOOLS)
+        }.onEach { generators.generateFlatItem(it, template = ModelTemplates.FLAT_HANDHELD_ITEM) }
+
         buildSet {
             addAll(RagiumItems.REGISTER.asSequence())
 
-            remove(RagiumItems.BAMBOO_CHARCOAL)
-            remove(RagiumItems.WITHER_DOLL)
             remove(RagiumItems.MEMORY_DISC)
+
+            removeAll(RagiumItems.MACHINE_CASINGS.values)
+            removeAll(handheld)
         }.forEach { generators.generateFlatItem(it) }
 
-        generators.generateFlatItem(RagiumItems.BAMBOO_CHARCOAL, template = ModelTemplates.FLAT_HANDHELD_ITEM)
-        generators.generateFlatItem(RagiumItems.WITHER_DOLL, template = ModelTemplates.FLAT_HANDHELD_ITEM)
-
         generators.generateFlatItem(RagiumItems.MEMORY_DISC, template = ModelTemplates.MUSIC_DISC)
+
+        for ((machineType: HTMachineType, casing: HTSimpleDeferredItem) in RagiumItems.MACHINE_CASINGS) {
+            generators.generateFlatItem(
+                casing,
+                layer = RagiumAPI.id(HTConstants.ITEM, "casing", machineType.materialName)
+            )
+        }
     }
 }

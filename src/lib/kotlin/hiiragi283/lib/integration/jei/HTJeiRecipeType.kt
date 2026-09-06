@@ -2,7 +2,7 @@ package hiiragi283.lib.integration.jei
 
 import hiiragi283.lib.item.HTItemInstanceLike
 import hiiragi283.lib.recipe.HTRecipeHolder
-import hiiragi283.lib.resource.HTIdOrValue
+import hiiragi283.lib.resource.HTValueWithId
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.util.Either
 import mezz.jei.api.recipe.types.IRecipeType
@@ -54,7 +54,7 @@ inline fun <reified T : Any> HTJeiRecipeType(
 inline fun <reified T : Any, U> HTJeiRecipeType(
     id: U,
     icon: ItemStack
-): HTJeiRecipeType<T> where U : HTIdOrValue<*>, U : HTHasText = HTJeiRecipeType(id.idOrThrow, id, Either.Right(icon))
+): HTJeiRecipeType<T> where U : HTValueWithId<*>, U : HTHasText = HTJeiRecipeType(id.idOrThrow, id, Either.Right(icon))
 
 /**
  * @author Hiiragi Tsubasa
@@ -63,4 +63,4 @@ inline fun <reified T : Any, U> HTJeiRecipeType(
 inline fun <reified T : Any, U> HTJeiRecipeType(
     id: U,
     icon: HTItemInstanceLike
-): HTJeiRecipeType<T> where U : HTIdOrValue<*>, U : HTHasText = HTJeiRecipeType(id, icon.toStack())
+): HTJeiRecipeType<T> where U : HTValueWithId<*>, U : HTHasText = HTJeiRecipeType(id, icon.toStack())

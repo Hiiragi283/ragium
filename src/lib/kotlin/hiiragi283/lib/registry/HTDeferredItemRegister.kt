@@ -68,5 +68,6 @@ class HTDeferredItemRegister(namespace: String) : HTDeferredRegister<Item>(Regis
     override fun <I : Item> register(name: String, func: Function<Identifier, out I>): HTDeferredItem<I> =
         super.register(name, func) as HTDeferredItem<I>
 
-    override fun asSequence(): Sequence<HTDeferredItem<*>> = super.asSequence().filterIsInstance<HTDeferredItem<*>>()
+    override fun asSequence(): Sequence<HTSimpleDeferredItem> =
+        super.asSequence().filterIsInstance<HTSimpleDeferredItem>()
 }

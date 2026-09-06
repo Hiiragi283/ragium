@@ -1,6 +1,6 @@
 package hiiragi283.lib.registry
 
-import hiiragi283.lib.resource.HTKeyOrValue
+import hiiragi283.lib.resource.HTValueWithKey
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.fold
 import net.minecraft.resources.Identifier
@@ -23,7 +23,7 @@ typealias HTSimpleDeferredHolder<R> = HTDeferredHolder<R, R>
  */
 open class HTDeferredHolder<R : Any, out T : R> :
     DeferredHolder<R, @UnsafeVariance T>,
-    HTKeyOrValue<R, T> {
+    HTValueWithKey<R, T> {
     constructor(key: ResourceKey<R>) : super(key)
 
     constructor(key: RegistryKey<R>, id: Identifier) : super(key.createKey(id))

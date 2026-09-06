@@ -2,7 +2,6 @@ package hiiragi283.lib.registry
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.fluid.HTVirtualFluid
-import hiiragi283.lib.resource.HTKeyOrValue
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.createTagKey
 import hiiragi283.lib.util.HTBuilderMarker
@@ -13,15 +12,15 @@ import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.BucketItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.DispenserBlock
 import net.minecraft.world.level.block.LiquidBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.PushReaction
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
@@ -49,17 +48,17 @@ class HTFluidContentRegister(modId: String) {
     /**
      * 登録された[FluidType]の一覧を取得します。
      */
-    fun asTypeSequence(): Sequence<HTDeferredFluidType<*>> = typeRegister.asSequence()
+    fun asTypeSequence(): Sequence<HTSimpleDeferredFluidType> = typeRegister.asSequence()
 
     /**
      * 登録された液体ブロックの一覧を取得します。
      */
-    fun asBlockSequence(): Sequence<HTDeferredBlock<*>> = blockRegister.asSequence()
+    fun asBlockSequence(): Sequence<HTSimpleDeferredBlock> = blockRegister.asSequence()
 
     /**
      * 登録された液体入りバケツの一覧を取得します。
      */
-    fun asItemSequence(): Sequence<HTDeferredItem<*>> = itemRegister.asSequence()
+    fun asItemSequence(): Sequence<HTSimpleDeferredItem> = itemRegister.asSequence()
 
     /**
      * 登録された[HTFluidContent]の一覧
@@ -102,7 +101,7 @@ class HTFluidContentRegister(modId: String) {
 
         eventBus.addListener { event: FMLCommonSetupEvent ->
             event.enqueueWork {
-                for (item: HTDeferredItem<*> in asItemSequence()) {
+                for (item: HTSimpleDeferredItem in asItemSequence()) {
                     DispenserBlock.registerBehavior(item, DispenseFluidContainer.getInstance())
                 }
             }
@@ -172,7 +171,7 @@ class HTFluidContentRegister(modId: String) {
 
         fun build(): CONTENT {
             // Fluid Type
-            val typeHolder: HTDeferredFluidType<FluidType> = typeRegister.registerType(
+            val typeHolder: HTSimpleDeferredFluidType = typeRegister.registerType(
                 name,
                 properties.descriptionId("block.${typeRegister.namespace}.$name").isWaterLike(true),
                 typeFactory
@@ -185,7 +184,13 @@ class HTFluidContentRegister(modId: String) {
                 { bucketFactory(sourceHolder.get(), it) },
                 { bucketProperties(it).stacksTo(1).craftRemainder(Items.BUCKET) }
             )
-            val content: CONTENT = createContent(typeHolder, sourceHolder, bucketHolder)
+            val content: CONTENT = createContent(
+                typeHolder,
+                sourceHolder,
+                bucketHolder,
+                Registries.FLUID.createTagKey(fluidTag),
+                Registries.ITEM.createTagKey(bucketTag)
+            )
             entries += content
             contentsCache[sourceHolder.key] = content
             if (content is HTFluidContent.Flowing) {
@@ -195,9 +200,11 @@ class HTFluidContentRegister(modId: String) {
         }
 
         protected abstract fun createContent(
-            typeHolder: HTDeferredFluidType<FluidType>,
+            typeHolder: HTSimpleDeferredFluidType,
             sourceHolder: HTDeferredHolder<Fluid, FLUID>,
-            bucketHolder: HTSimpleDeferredItem
+            bucketHolder: HTSimpleDeferredItem,
+            fluidTag: TagKey<Fluid>,
+            bucketTag: TagKey<Item>
         ): CONTENT
     }
 
@@ -208,9 +215,11 @@ class HTFluidContentRegister(modId: String) {
      */
     inner class VirtualBuilder(name: String) : Builder<HTVirtualFluid, HTFluidContent.Virtual>(name) {
         override fun createContent(
-            typeHolder: HTDeferredFluidType<FluidType>,
+            typeHolder: HTSimpleDeferredFluidType,
             sourceHolder: HTDeferredHolder<Fluid, HTVirtualFluid>,
-            bucketHolder: HTSimpleDeferredItem
+            bucketHolder: HTSimpleDeferredItem,
+            fluidTag: TagKey<Fluid>,
+            bucketTag: TagKey<Item>
         ): HTFluidContent.Virtual {
             // Content
             fluidRegister.register(name) { _ -> HTVirtualFluid(typeHolder, bucketHolder) }
@@ -218,8 +227,8 @@ class HTFluidContentRegister(modId: String) {
                 typeHolder,
                 sourceHolder,
                 bucketHolder,
-                Registries.FLUID.createTagKey(fluidTag),
-                Registries.ITEM.createTagKey(bucketTag)
+                fluidTag,
+                bucketTag
             )
         }
     }
@@ -230,6 +239,11 @@ class HTFluidContentRegister(modId: String) {
      * @since 26.1.0
      */
     inner class FlowingBuilder(name: String) : Builder<BaseFlowingFluid, HTFluidContent.Flowing>(name) {
+        /**
+         * 液体のプロパティ
+         */
+        var fluidProperties: Identity<BaseFlowingFluid.Properties> = identity()
+
         /**
          * 液体源を作るブロック
          */
@@ -247,32 +261,18 @@ class HTFluidContentRegister(modId: String) {
          */
         var blockFactory: ((BaseFlowingFluid, BlockBehaviour.Properties) -> LiquidBlock)? = ::LiquidBlock
 
-        /**
-         * 液体ブロックのプロパティを初期化するブロック
-         */
-        var blockProperties: Identity<BlockBehaviour.Properties> = identity()
-
         override fun createContent(
-            typeHolder: HTDeferredFluidType<FluidType>,
+            typeHolder: HTSimpleDeferredFluidType,
             sourceHolder: HTDeferredHolder<Fluid, BaseFlowingFluid>,
-            bucketHolder: HTSimpleDeferredItem
+            bucketHolder: HTSimpleDeferredItem,
+            fluidTag: TagKey<Fluid>,
+            bucketTag: TagKey<Item>
         ): HTFluidContent.Flowing {
             // Liquid Block
-            val blockHolder: HTKeyOrValue<Block, LiquidBlock>?
-            if (blockFactory == null) {
-                blockHolder = null
-            } else {
-                blockHolder = blockRegister.registerBlock(
+            val blockHolder: HTDeferredBlock<LiquidBlock>? = blockFactory?.let {
+                blockRegister.registerBlock(
                     name,
-                    BlockBehaviour.Properties
-                        .of()
-                        .let(blockProperties)
-                        .noCollision()
-                        .strength(100f)
-                        .noLootTable()
-                        .replaceable()
-                        .pushReaction(PushReaction.DESTROY)
-                        .liquid()
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
                 ) { prop: BlockBehaviour.Properties -> blockFactory!!(sourceHolder.get(), prop) }
             }
             // Fluid
@@ -280,6 +280,7 @@ class HTFluidContentRegister(modId: String) {
                 HTDeferredHolder(fluidRegister.createKey("flowing_$name"))
             val fluidProperties: BaseFlowingFluid.Properties = BaseFlowingFluid
                 .Properties(typeHolder, sourceHolder, flowingHolder)
+                .let(fluidProperties)
                 .bucket(bucketHolder)
             blockHolder?.let(fluidProperties::block)
             fluidRegister.register(name) { _ -> sourceFactory(fluidProperties) }
@@ -289,8 +290,8 @@ class HTFluidContentRegister(modId: String) {
                 typeHolder,
                 sourceHolder,
                 bucketHolder,
-                Registries.FLUID.createTagKey(fluidTag),
-                Registries.ITEM.createTagKey(bucketTag),
+                fluidTag,
+                bucketTag,
                 flowingHolder,
                 blockHolder
             )

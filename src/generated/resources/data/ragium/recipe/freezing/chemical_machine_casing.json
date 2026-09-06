@@ -1,0 +1,16 @@
+{
+  "type": "ragium:freezing",
+  "fluid_ingredient": {
+    "amount": 240,
+    "fluids": "#c:molten_steel"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": "#c:ingots/gold"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:chemical_machine_casing"
+  },
+  "time": 200
+}

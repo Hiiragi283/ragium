@@ -1,6 +1,6 @@
 package hiiragi283.lib.data.model
 
-import hiiragi283.lib.resource.HTIdOrValue
+import hiiragi283.lib.resource.HTValueWithId
 import hiiragi283.lib.resource.blockId
 import hiiragi283.lib.resource.itemId
 import net.minecraft.client.data.models.model.ModelInstance
@@ -16,10 +16,10 @@ import kotlin.jvm.optionals.getOrElse
  * @since 26.1.0
  */
 fun ModelTemplate.createBlock(
-    like: HTIdOrValue<*>,
+    block: HTValueWithId<*>,
     textures: TextureMapping,
     output: BiConsumer<Identifier, ModelInstance>
-): Identifier = this.create(like.idOrThrow.blockId.withSuffix(this.suffix.getOrElse { "" }), textures, output)
+): Identifier = this.create(block.idOrThrow.blockId.withSuffix(this.suffix.getOrElse { "" }), textures, output)
 
 /**
  * `models/item`配下のモデルJSONを生成します。
@@ -27,7 +27,7 @@ fun ModelTemplate.createBlock(
  * @since 26.1.0
  */
 fun ModelTemplate.createItem(
-    like: HTIdOrValue<*>,
+    item: HTValueWithId<*>,
     textures: TextureMapping,
     output: BiConsumer<Identifier, ModelInstance>
-): Identifier = this.create(like.idOrThrow.itemId.withSuffix(this.suffix.getOrElse { "" }), textures, output)
+): Identifier = this.create(item.idOrThrow.itemId.withSuffix(this.suffix.getOrElse { "" }), textures, output)

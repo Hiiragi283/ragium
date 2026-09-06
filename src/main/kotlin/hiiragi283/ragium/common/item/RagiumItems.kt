@@ -3,11 +3,16 @@ package hiiragi283.ragium.common.item
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildSortedSetMultiMap
 import hiiragi283.lib.collection.flatMapTable
+import hiiragi283.lib.collection.mutableEnumMapOf
+import hiiragi283.lib.item.component.HTToolCollection
+import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.registry.HTDeferredItemRegister
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.HTMachineType
+import hiiragi283.ragium.common.item.component.RagiumToolMaterials
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 import net.neoforged.bus.api.IEventBus
@@ -55,6 +60,7 @@ data object RagiumItems {
             putAll(RagiumMaterial.Metal.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
             putAll(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
             putAll(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
+            putAll(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT, HTItemPart.NUGGET)
             // Other
             putAll(RagiumMaterial.Other.WOOD, HTItemPart.DUST, HTItemPart.GEAR)
             putAll(RagiumMaterial.Other.GLASS, HTItemPart.DUST)
@@ -62,14 +68,22 @@ data object RagiumItems {
             putAll(RagiumMaterial.Other.PAPER, HTItemPart.DUST)
         }.flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
             parts.map { part: HTItemPart ->
-                val item: HTSimpleDeferredItem = if (material == RagiumMaterial.Metal.NETHERITE) {
+                Triple(
+                    part,
+                    material,
                     REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties ->
-                        properties.fireResistant()
+                        when (material) {
+                            RagiumMaterial.Mineral.RAGINITE -> Rarity.EPIC
+                            RagiumMaterial.Metal.BLACK_STEEL -> Rarity.UNCOMMON
+                            RagiumMaterial.Metal.VOID_METAL -> Rarity.RARE
+                            else -> null
+                        }?.let(properties::rarity)
+                        if (material == RagiumMaterial.Metal.NETHERITE) {
+                            properties.fireResistant()
+                        }
+                        properties
                     }
-                } else {
-                    REGISTER.registerSimpleItem(part.createName(material))
-                }
-                Triple(part, material, item)
+                )
             }
         }
 
@@ -120,6 +134,15 @@ data object RagiumItems {
 
     //    Parts    //
 
+    @JvmField
+    val MACHINE_CASINGS: Map<HTMachineType, HTSimpleDeferredItem> = HTMachineType.entries
+        .associateWithTo(mutableEnumMapOf()) { machineType: HTMachineType ->
+            REGISTER.registerSimpleItem("${machineType.materialName}_machine_casing")
+        }
+
+    @JvmStatic
+    fun getCasing(machineType: HTMachineType): HTSimpleDeferredItem = MACHINE_CASINGS[machineType]!!
+
     // Mechanical
 
     // Heat
@@ -159,4 +182,12 @@ data object RagiumItems {
         INGOT_SHAPE_PATTERN,
         BALL_SHAPE_PATTERN
     )
+
+    @JvmField
+    val SOOTY_IRON_TOOLS: HTToolCollection<HTSimpleDeferredItem> = HTToolCollection { toolType: HTToolType ->
+        REGISTER.registerItem(
+            toolType.createPath(RagiumMaterial.Metal.SOOTY_IRON),
+            { prop: Item.Properties -> toolType.createItem(prop, RagiumToolMaterials.SOOTY_IRON, 6f, -3.1f, -2f, -1f) }
+        )
+    }
 }

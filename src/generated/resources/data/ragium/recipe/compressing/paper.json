@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 2,
+    "items": "#c:dusts/paper"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:paper"
+  },
+  "time": 200
+}

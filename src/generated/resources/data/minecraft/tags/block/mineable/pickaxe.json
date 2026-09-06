@@ -1,14 +1,18 @@
 {
   "values": [
+    "ragium:assembler",
     "ragium:black_steel_block",
     "ragium:brewery",
     "ragium:charcoal_block",
+    "ragium:chemical_bath",
     "ragium:coal_coke_block",
+    "ragium:compressor",
     "ragium:crusher",
     "ragium:cutting_machine",
     "ragium:echo_block",
     "ragium:freezer",
     "ragium:melter",
-    "ragium:sooty_iron_block"
+    "ragium:sooty_iron_block",
+    "ragium:void_metal_block"
   ]
 }

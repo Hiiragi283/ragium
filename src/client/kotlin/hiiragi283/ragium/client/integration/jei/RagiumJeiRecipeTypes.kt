@@ -20,11 +20,11 @@ data object RagiumJeiRecipeTypes {
     // Mechanical
     @JvmField
     val ASSEMBLING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, ItemStack(Items.CRAFTER))
+        HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER)
 
     @JvmField
     val COMPRESSING: HTHolderJeiRecipeType<HTItemToItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.COMPRESSING, ItemStack(Items.ANVIL))
+        HTJeiRecipeType(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
     val CRUSHING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> =
@@ -61,7 +61,7 @@ data object RagiumJeiRecipeTypes {
     // Chemical
     @JvmField
     val BATHING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> =
-        HTJeiRecipeType(RagiumRecipeTypes.BATHING, ItemStack(Items.GLASS_BOTTLE))
+        HTJeiRecipeType(RagiumRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
 
     @JvmField
     val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =

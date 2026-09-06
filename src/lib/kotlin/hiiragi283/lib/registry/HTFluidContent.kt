@@ -1,7 +1,7 @@
 package hiiragi283.lib.registry
 
 import hiiragi283.lib.fluid.HTFluidInstanceLike
-import hiiragi283.lib.resource.HTSimpleKeyOrValue
+import hiiragi283.lib.resource.HTSimpleValueWithKey
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -23,13 +23,13 @@ import net.neoforged.neoforge.fluids.FluidType
  * @since 26.1.0
  */
 sealed class HTFluidContent(
-    val typeHolder: HTDeferredFluidType<FluidType>,
+    val typeHolder: HTSimpleDeferredFluidType,
     val sourceHolder: HTDeferredHolder<Fluid, *>,
     val bucketHolder: HTSimpleDeferredItem,
     val fluidTag: TagKey<Fluid>,
     val bucketTag: TagKey<Item>
 ) : HTFluidInstanceLike,
-    HTSimpleKeyOrValue<Fluid> by sourceHolder {
+    HTSimpleValueWithKey<Fluid> by sourceHolder {
     /**
      * 液体の種類を取得します。
      */
@@ -55,7 +55,7 @@ sealed class HTFluidContent(
      * @since 26.1.0
      */
     class Virtual(
-        typeHolder: HTDeferredFluidType<FluidType>,
+        typeHolder: HTSimpleDeferredFluidType,
         sourceHolder: HTDeferredHolder<Fluid, *>,
         bucketHolder: HTSimpleDeferredItem,
         fluidTag: TagKey<Fluid>,
@@ -70,7 +70,7 @@ sealed class HTFluidContent(
      * @since 26.1.0
      */
     class Flowing(
-        typeHolder: HTDeferredFluidType<FluidType>,
+        typeHolder: HTSimpleDeferredFluidType,
         sourceHolder: HTDeferredHolder<Fluid, FlowingFluid>,
         bucketHolder: HTSimpleDeferredItem,
         fluidTag: TagKey<Fluid>,

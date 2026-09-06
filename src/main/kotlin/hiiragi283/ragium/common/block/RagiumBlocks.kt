@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SoundType
@@ -98,7 +99,12 @@ data object RagiumBlocks {
             HTBlockPart.STORAGE_BLOCK,
             RagiumMaterial.Metal.BLACK_STEEL,
             copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK)
-        )
+        ) { it.rarity(Rarity.UNCOMMON) }
+        register(
+            HTBlockPart.STORAGE_BLOCK,
+            RagiumMaterial.Metal.VOID_METAL,
+            copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
+        ) { it.rarity(Rarity.RARE) }
     }
 
     @JvmStatic
@@ -109,7 +115,13 @@ data object RagiumBlocks {
 
     // Mechanical
     @JvmField
+    val ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ASSEMBLER)
+
+    @JvmField
     val CRUSHER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CRUSHER)
+
+    @JvmField
+    val COMPRESSOR: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.COMPRESSOR)
 
     @JvmField
     val CUTTING_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> =
@@ -123,6 +135,10 @@ data object RagiumBlocks {
     val MELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.MELTER)
 
     // Chemical
+    @JvmField
+    val CHEMICAL_BATH: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.CHEMICAL_BATH)
+
     // Bio
     @JvmField
     val BREWERY: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.BREWERY)
@@ -133,11 +149,15 @@ data object RagiumBlocks {
     @JvmField
     val MACHINES: ListMultiMap<HTMachineType, HTBasicDeferredBlockAndItem<HTMachineBlock>> =
         buildListMultiMap(sortedMapOf()) {
+            put(HTMachineType.MECHANICAL, ASSEMBLER)
             put(HTMachineType.MECHANICAL, CRUSHER)
+            put(HTMachineType.MECHANICAL, COMPRESSOR)
             put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
 
             put(HTMachineType.HEAT, FREEZER)
             put(HTMachineType.HEAT, MELTER)
+
+            put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
 
             put(HTMachineType.BIO, BREWERY)
         }

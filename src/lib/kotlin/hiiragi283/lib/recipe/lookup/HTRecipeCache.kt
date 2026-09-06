@@ -23,7 +23,7 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(
      * レシピを取得します。
      * @param input レシピの入力
      * @return [input]に一致する最初のレシピ
-     * @since 21.1.1
+     * @since 26.1.1
      */
     fun findFirstRecipe(input: INPUT): RECIPE? = findFirstRecipe(input, HTPhysicalSideHelper.createLookupContext())
 

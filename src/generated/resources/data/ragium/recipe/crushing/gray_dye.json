@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:closed_eyeblossom"
+  },
+  "primary_result": {
+    "count": 2,
+    "id": "minecraft:gray_dye"
+  },
+  "time": 200
+}

@@ -80,11 +80,8 @@ abstract class HTExtendedBlockEntity(type: BlockEntityType<*>, pos: BlockPos, bl
      */
     fun sendUpdatePacket(level: ServerLevel) {
         if (isRemoved) return
-        PacketDistributor.sendToPlayersTrackingChunk(
-            level,
-            ChunkPos.containing(blockPos),
-            HTUpdateBlockEntityPacket(this)
-        )
+        val packet: HTUpdateBlockEntityPacket = HTUpdateBlockEntityPacket.create(this) ?: return
+        PacketDistributor.sendToPlayersTrackingChunk(level, ChunkPos.containing(blockPos), packet)
     }
 
     /**

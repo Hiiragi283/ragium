@@ -107,6 +107,15 @@ class HTShapedRecipeBuilder : HTCraftingRecipeBuilder<ShapedRecipe>(HTConstants.
         +"ABA"
     }
 
+    /**
+     * @since 26.1.4
+     */
+    fun layered() {
+        +"AAA"
+        +"BBB"
+        +"AAA"
+    }
+
     fun crossLayered() {
         +"ABA"
         +"CDC"

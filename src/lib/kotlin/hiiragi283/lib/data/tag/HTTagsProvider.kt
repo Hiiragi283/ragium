@@ -77,8 +77,4 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
             builder.addTag(tagKeyIn)
             builder(tagKeyIn)
         }
-
-    protected fun createEmptyTag(tagKey: TagKey<T>) {
-        getOrCreateRawBuilder(tagKey)
-    }
 }

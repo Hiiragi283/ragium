@@ -14,7 +14,7 @@ import net.minecraft.world.effect.MobEffect
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTDeferredMobEffect<EFFECT : MobEffect> :
+class HTDeferredMobEffect<out EFFECT : MobEffect> :
     HTDeferredHolder<MobEffect, EFFECT>,
     HTHasTranslationKey,
     HTHasText {

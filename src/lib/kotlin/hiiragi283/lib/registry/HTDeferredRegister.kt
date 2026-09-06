@@ -25,7 +25,7 @@ open class HTDeferredRegister<R : Any>(registryKey: RegistryKey<R>, namespace: S
     /**
      * [名前空間][namespace]に基づいて，[パス][path]から[キー][ResourceKey]を作成します。
      */
-    fun createKey(path: String): ResourceKey<R> = this.registryKey.createKey(namespace, path)
+    fun createKey(path: String): ResourceKey<R> = this.registryKey.createKey(namespace.toId(path))
 
     /**
      * [ID][id]から[キー][ResourceKey]を作成します。

@@ -22,7 +22,31 @@ import kotlin.contracts.contract
  * @since 26.1.0
  */
 @HTBuilderMarker
-class FluidIngredientBuilder {
+class FluidIngredientBuilder @PublishedApi internal constructor() {
+    companion object {
+        /**
+         * @since 26.1.4
+         */
+        @JvmStatic
+        inline fun build(builderAction: FluidIngredientBuilder.() -> Unit): FluidIngredient {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return FluidIngredientBuilder().apply(builderAction).build()
+        }
+
+        /**
+         * @since 26.1.4
+         */
+        @JvmStatic
+        inline fun buildSized(builderAction: FluidIngredientBuilder.() -> Unit): HTFluidIngredient {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return FluidIngredientBuilder().apply(builderAction).buildSized()
+        }
+    }
+
     private var ingredient: FluidIngredient by HTDelegates.onceInitialize()
     var amount: Int = FluidType.BUCKET_VOLUME
 

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:assembling",
+  "primary_ingredient": {
+    "count": 2,
+    "items": "#c:ingots/black_steel"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:chemical_machine_casing"
+  },
+  "secondary_ingredient": {
+    "count": 1,
+    "items": "#c:ingots/gold"
+  },
+  "time": 200
+}
