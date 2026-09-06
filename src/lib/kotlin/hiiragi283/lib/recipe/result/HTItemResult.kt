@@ -1,12 +1,11 @@
 package hiiragi283.lib.recipe.result
 
+import com.google.common.collect.Comparators
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.registry.asKeyOrValue
 import hiiragi283.lib.registry.getKeyOrThrow
-import hiiragi283.lib.resource.HTSimpleKeyOrValue
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.DFUEither
@@ -20,6 +19,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
@@ -171,17 +171,21 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
             @JvmField
             val TYPE: HTItemResultType<TagEntry> = HTItemResultType(CODEC, STREAM_CODEC)
+
+            @JvmField
+            val HOLDER_COMPARATOR: Comparator<Holder<Item>> = run {
+                compareBy(RagiumConfig.SERVER.modIdComparator, ResourceKey<Item>::identifier)
+                    .let(Comparators::emptiesLast)
+                    .let { compareBy(it, Holder<Item>::unwrapKey) }
+            }
         }
 
         override fun type(): HTItemResultType<*> = TYPE
 
         override fun create(): ItemStack = tag
             .asSequence()
-            .map(Holder<Item>::asKeyOrValue)
-            .filter { it.keyOrNull != null }
-            .sortedWith(compareBy(RagiumConfig.SERVER.modIdComparator, HTSimpleKeyOrValue<Item>::idOrThrow))
+            .sortedWith(HOLDER_COMPARATOR)
             .firstOrNull()
-            ?.getOrNull()
             ?.let(::ItemStack)
             ?: ItemStack.EMPTY
 

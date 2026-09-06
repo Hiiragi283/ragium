@@ -6,7 +6,7 @@ import com.mojang.serialization.JsonOps
 import hiiragi283.lib.HTComparators
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.RegistryKey
-import hiiragi283.lib.resource.HTIdOrValue
+import hiiragi283.lib.resource.HTValueWithId
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
@@ -94,9 +94,11 @@ abstract class ExporterDataProvider<R : Any>(
      */
     protected fun id(vararg path: String): Identifier = modId.toId(*path)
 
-    protected fun getHasName(id: HTIdOrValue<*>): String = "has_${id.idOrThrow.path}"
+    protected fun getHasName(id: Identifier): String = "has_${id.path}"
 
-    protected fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().path.replace("/", "_")}"
+    protected fun getHasName(value: HTValueWithId<*>): String = getHasName(value.idOrThrow)
+
+    protected fun getHasName(tagKey: TagKey<*>): String = getHasName(tagKey.location())
 
     protected fun getHasName(prefix: HTTagPrefix, material: HTMaterialLike): String =
         getHasName(prefix.itemTagKey(material))

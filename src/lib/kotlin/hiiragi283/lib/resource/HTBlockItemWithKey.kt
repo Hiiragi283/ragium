@@ -16,9 +16,9 @@ typealias HTSimpleBlockItemWithKey = HTBlockItemWithKey<Block, Item>
  * @since 26.1.4
  */
 interface HTBlockItemWithKey<out BLOCK : Block, out ITEM : Item> {
-    val block: HTKeyOrValue<Block, BLOCK>
+    val block: HTValueWithKey<Block, BLOCK>
 
-    val item: HTKeyOrValue<Item, ITEM>
+    val item: HTValueWithKey<Item, ITEM>
 
     val keyOrNull: BlockItemKey? get() = block.keyOrNull?.let { blockKey: ResourceKey<Block> ->
         item.keyOrNull?.let { itemKey: ResourceKey<Item> -> BlockItemKey(blockKey, itemKey) }

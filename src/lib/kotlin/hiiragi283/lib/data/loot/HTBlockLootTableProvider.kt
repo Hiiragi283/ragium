@@ -1,6 +1,6 @@
 package hiiragi283.lib.data.loot
 
-import hiiragi283.lib.resource.HTIdOrValue
+import hiiragi283.lib.resource.HTValueWithId
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.loot.BlockLootSubProvider
@@ -19,11 +19,11 @@ import net.minecraft.world.level.storage.loot.LootTable
 abstract class HTBlockLootTableProvider(
     registries: HolderLookup.Provider,
     protected val modId: String,
-    private val rawBlocks: Sequence<HTIdOrValue<Block>>
+    private val rawBlocks: Sequence<HTValueWithId<Block>>
 ) : BlockLootSubProvider(emptySet(), FeatureFlags.REGISTRY.allFlags(), registries) {
     final override fun getKnownBlocks(): Iterable<Block> = rawBlocks
-        .filter { holder: HTIdOrValue<Block> -> holder.idOrNull?.namespace == modId }
-        .mapNotNull(HTIdOrValue<Block>::getOrNull)
+        .filter { block: HTValueWithId<Block> -> block.idOrNull?.namespace == modId }
+        .mapNotNull(HTValueWithId<Block>::getOrNull)
         .filter { block: Block -> block.lootTable.isPresent }
         .toList()
 
@@ -34,15 +34,15 @@ abstract class HTBlockLootTableProvider(
      */
     val fortune: Holder<Enchantment> by lazy { registries.holderOrThrow(Enchantments.FORTUNE) }
 
-    protected fun dropSelf(like: HTIdOrValue<Block>) {
+    protected fun dropSelf(like: HTValueWithId<Block>) {
         dropSelf(like.getOrThrow())
     }
 
-    protected fun add(like: HTIdOrValue<Block>, table: LootTable.Builder) {
+    protected fun add(like: HTValueWithId<Block>, table: LootTable.Builder) {
         add(like.getOrThrow(), table)
     }
 
-    protected inline fun <BLOCK : Block> add(like: HTIdOrValue<BLOCK>, factory: (BLOCK) -> LootTable.Builder) {
+    protected inline fun <BLOCK : Block> add(like: HTValueWithId<BLOCK>, factory: (BLOCK) -> LootTable.Builder) {
         val block: BLOCK = like.getOrThrow()
         add(block, factory(block))
     }

@@ -6,7 +6,7 @@ import hiiragi283.lib.registry.HTSimpleDeferredBlock
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.HTSimpleBlockItemWithKey
-import hiiragi283.lib.resource.HTSimpleKeyOrValue
+import hiiragi283.lib.resource.HTSimpleValueWithKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 
@@ -74,7 +74,7 @@ interface HTMaterialContents<R : HTPart, out V : Any> : Table<R, RagiumMaterial,
      * @since 26.1.2
      */
     data class ItemEntry(val item: HTSimpleDeferredItem, val isBuiltIn: Boolean) :
-        HTSimpleKeyOrValue<Item> by item,
+        HTSimpleValueWithKey<Item> by item,
         ItemLike by item,
         HTItemInstanceLike by item
 }

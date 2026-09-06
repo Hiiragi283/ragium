@@ -9,7 +9,7 @@ import net.minecraft.resources.Identifier
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun interface HTIdOrValue<out T : Any> {
+fun interface HTValueWithId<out T : Any> {
     /**
      * 保持している値を[Ior]に変換します。
      */

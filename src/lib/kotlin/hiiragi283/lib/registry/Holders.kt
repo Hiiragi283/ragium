@@ -1,14 +1,11 @@
 package hiiragi283.lib.registry
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.resource.HTSimpleKeyOrValue
-import hiiragi283.lib.util.Ior
 import net.minecraft.core.Holder
 import net.minecraft.core.TypedInstance
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.registries.DeferredHolder
 
 /**
  * この[Holder][this]から[ResourceKey]を取得します。
@@ -18,39 +15,6 @@ import net.neoforged.neoforge.registries.DeferredHolder
  * @since 26.1.0
  */
 fun <R : Any> Holder<R>.getKeyOrThrow(): ResourceKey<R> = this.key ?: error("Unregistered holder: $this")
-
-/**
- * この[Holder][this]を[HTSimpleKeyOrValue]に変換します。
- * @param R 保持する値のクラス
- * @throws IllegalStateException この[Holder][this]が[HTDeferredHolder]または[Holder.Reference]でない場合
- * @author Hiiragi Tsubasa
- * @since 26.1.2
- */
-@Suppress("UNCHECKED_CAST")
-fun <R : Any> Holder<R>.asKeyOrValue(): HTSimpleKeyOrValue<R> = when (this) {
-    is HTDeferredHolder<R, *> -> this
-
-    is DeferredHolder<R, *> -> HTDeferredHolder(this.key)
-
-    is Holder.Reference<R> -> this as HTSimpleKeyOrValue<R>
-
-    else -> HTSimpleKeyOrValue {
-        this.runCatching(Holder<R>::value).fold(
-            { value: R -> this.key?.let { Ior.Both(it, value) } ?: Ior.Right(value) },
-            { it -> this.key?.let { Ior.Left(it) } ?: throw it }
-        )
-    }
-}
-
-/**
- * この[DeferredHolder][this]を[HTDeferredHolder]に変換します。
- * @author Hiiragi Tsubasa
- * @since 26.1.2
- */
-fun <R : Any, T : R> DeferredHolder<R, T>.asKeyOrValue(): HTDeferredHolder<R, T> = when (this) {
-    is HTDeferredHolder<R, T> -> this
-    else -> HTDeferredHolder(this.key)
-}
 
 /**
  * この[TypedInstance][this]から[ResourceKey]を取得します。

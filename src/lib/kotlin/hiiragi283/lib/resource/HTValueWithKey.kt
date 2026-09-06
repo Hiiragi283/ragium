@@ -5,21 +5,21 @@ import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 
 /**
- * シンプルな[HTKeyOrValue]のエイリアスです。
+ * シンプルな[HTValueWithKey]のエイリアスです。
  * @param R レジストリの値のクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-typealias HTSimpleKeyOrValue<R> = HTKeyOrValue<R, R>
+typealias HTSimpleValueWithKey<R> = HTValueWithKey<R, R>
 
 /**
- * [ID][ResourceKey]または値を提供する[HTIdOrValue]の拡張インターフェースです。
+ * [ID][ResourceKey]または値を提供する[HTValueWithId]の拡張インターフェースです。
  * @param R レジストリの値のクラス
  * @param T 提供する値のクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun interface HTKeyOrValue<R : Any, out T : R> : HTIdOrValue<T> {
+fun interface HTValueWithKey<R : Any, out T : R> : HTValueWithId<T> {
     /**
      * 保持している値を[Ior]に変換します。
      */
