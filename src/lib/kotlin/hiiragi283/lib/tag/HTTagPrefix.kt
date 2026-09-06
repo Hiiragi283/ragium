@@ -16,6 +16,9 @@ class HTTagPrefix(
     private val tagPattern: String,
     private val childNamespace: String = HTConstants.COMMON
 ) {
+    /**
+     * @since 26.1.4
+     */
     constructor(
         commonTagId: Identifier,
         tagPattern: String,

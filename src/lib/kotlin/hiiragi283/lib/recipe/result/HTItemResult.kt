@@ -172,6 +172,9 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
             @JvmField
             val TYPE: HTItemResultType<TagEntry> = HTItemResultType(CODEC, STREAM_CODEC)
 
+            /**
+             * @since 26.1.4
+             */
             @JvmField
             val HOLDER_COMPARATOR: Comparator<Holder<Item>> = run {
                 compareBy(RagiumConfig.SERVER.modIdComparator, ResourceKey<Item>::identifier)

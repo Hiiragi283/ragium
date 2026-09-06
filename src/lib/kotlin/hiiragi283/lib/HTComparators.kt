@@ -30,6 +30,9 @@ data object HTComparators {
     val TAG_KEY: Comparator<TagKey<*>> =
         compareBy(KEY, TagKey<*>::registry).thenComparing(compareBy(ID, TagKey<*>::location))
 
+    /**
+     * @since 26.1.4
+     */
     @JvmStatic
     fun <T : Any> sortTagKeys(tagKeys: Iterable<TagKey<T>>): Set<TagKey<T>> = tagKeys.toSortedSet(TAG_KEY)
 }

@@ -24,6 +24,9 @@ import kotlin.contracts.contract
 @HTBuilderMarker
 class IngredientBuilder @PublishedApi internal constructor() {
     companion object {
+        /**
+         * @since 26.1.4
+         */
         @JvmStatic
         inline fun build(builderAction: IngredientBuilder.() -> Unit): Ingredient {
             contract {
@@ -32,6 +35,9 @@ class IngredientBuilder @PublishedApi internal constructor() {
             return IngredientBuilder().apply(builderAction).build()
         }
 
+        /**
+         * @since 26.1.4
+         */
         @JvmStatic
         inline fun buildSized(builderAction: IngredientBuilder.() -> Unit): HTItemIngredient {
             contract {

@@ -33,6 +33,9 @@ import kotlin.contracts.contract
 @HTBuilderMarker
 class HTFluidResultBuilder @PublishedApi internal constructor() {
     companion object {
+        /**
+         * @since 26.1.4
+         */
         @JvmStatic
         inline fun build(builderAction: HTFluidResultBuilder.() -> Unit): HTFluidResult {
             contract {
