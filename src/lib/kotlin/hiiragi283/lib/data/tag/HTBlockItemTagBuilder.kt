@@ -3,6 +3,8 @@ package hiiragi283.lib.data.tag
 import hiiragi283.lib.resource.BlockItemKey
 import hiiragi283.lib.resource.HTSimpleBlockItemWithKey
 import hiiragi283.lib.tag.BlockItemTag
+import hiiragi283.lib.tag.HTMaterialLike
+import hiiragi283.lib.tag.HTTagPrefix
 
 /**
  * [HTBlockItemTagsProvider]で使用されるタグのビルダークラスです。
@@ -31,4 +33,16 @@ interface HTBlockItemTagBuilder {
      * @param type このエントリの依存関係
      */
     fun addTag(child: BlockItemTag, type: HTTagDependType = HTTagDependType.REQUIRED): HTBlockItemTagBuilder
+
+    /**
+     * 指定した子タグをタグに追加します。
+     * @param prefix タグのプレフィックス
+     * @param material タグの素材
+     * @param type このエントリの依存関係
+     */
+    fun addTag(
+        prefix: HTTagPrefix,
+        material: HTMaterialLike,
+        type: HTTagDependType = HTTagDependType.REQUIRED
+    ): HTBlockItemTagBuilder = this.addTag(prefix.materialTag(material), type)
 }

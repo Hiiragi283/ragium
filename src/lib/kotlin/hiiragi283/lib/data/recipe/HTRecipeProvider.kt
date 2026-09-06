@@ -3,13 +3,18 @@ package hiiragi283.lib.data.recipe
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.data.ExporterDataProvider
+import hiiragi283.lib.item.component.HTToolCollection
+import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.resource.toId
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.ToolMaterial
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
@@ -52,6 +57,23 @@ abstract class HTRecipeProvider(
     //    Extensions    //
 
     // Recipe Builder
+    protected fun registerTools(tools: HTToolCollection<Holder<Item>>, material: ToolMaterial) {
+        fun registerTool(toolType: HTToolType, patterns: Iterable<String>) {
+            HTShapedRecipeBuilder.create {
+                pattern(patterns)
+                define('A') { +holderSet(material.repairItems) }
+                define('B') { +holderSet(Tags.Items.RODS_WOODEN) }
+                result { +tools[toolType] }
+            }.save(exporter)
+        }
+
+        registerTool(HTToolType.SWORD, listOf("B", "A", "A"))
+        registerTool(HTToolType.SHOVEL, listOf("B", "B", "A"))
+        registerTool(HTToolType.PICKAXE, listOf(" B ", " B ", "AAA"))
+        registerTool(HTToolType.AXE, listOf("B ", "BA", "AA"))
+        registerTool(HTToolType.HOE, listOf("B ", "B ", "AA"))
+    }
+
     protected inline fun netheriteUpgrade(builderAction: HTSmithingRecipeBuilder.() -> Unit): HTSmithingRecipeBuilder =
         HTSmithingRecipeBuilder.create {
             template { items { +Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE } }

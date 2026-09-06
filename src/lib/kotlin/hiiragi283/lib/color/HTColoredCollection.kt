@@ -65,11 +65,6 @@ data class HTColoredCollection<out T>(
         HTDefaultColor.BLACK -> black
     }
 
-    fun asSequenceWithColor(): Sequence<Pair<HTDefaultColor, T>> = HTDefaultColor.entries.asSequence().map {
-        it to
-            get(it)
-    }
-
     fun asSequence(): Sequence<T> = HTDefaultColor.entries.asSequence().map(::get)
 
     override val size: Int = 16
@@ -118,5 +113,9 @@ data class HTColoredCollection<out T>(
         )
 }
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 inline fun <T> HTColoredCollection(init: (color: HTDefaultColor) -> T): HTColoredCollection<T> =
     HTColoredCollection.VALUES.map(init)

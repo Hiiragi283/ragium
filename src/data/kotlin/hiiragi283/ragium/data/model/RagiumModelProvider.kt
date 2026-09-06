@@ -112,18 +112,21 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun registerItemModels(generators: ItemModelGenerators) {
+        val handheld: Set<HTSimpleDeferredItem> = buildSet {
+            add(RagiumItems.BAMBOO_CHARCOAL)
+            add(RagiumItems.WITHER_DOLL)
+
+            addAll(RagiumItems.SOOTY_IRON_TOOLS)
+        }.onEach { generators.generateFlatItem(it, template = ModelTemplates.FLAT_HANDHELD_ITEM) }
+
         buildSet {
             addAll(RagiumItems.REGISTER.asSequence())
 
-            remove(RagiumItems.BAMBOO_CHARCOAL)
-            remove(RagiumItems.WITHER_DOLL)
             remove(RagiumItems.MEMORY_DISC)
 
             removeAll(RagiumItems.MACHINE_CASINGS.values)
+            removeAll(handheld)
         }.forEach { generators.generateFlatItem(it) }
-
-        generators.generateFlatItem(RagiumItems.BAMBOO_CHARCOAL, template = ModelTemplates.FLAT_HANDHELD_ITEM)
-        generators.generateFlatItem(RagiumItems.WITHER_DOLL, template = ModelTemplates.FLAT_HANDHELD_ITEM)
 
         generators.generateFlatItem(RagiumItems.MEMORY_DISC, template = ModelTemplates.MUSIC_DISC)
 

@@ -10,6 +10,7 @@ import hiiragi283.lib.data.recipe.IngredientBuilder
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
+import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
@@ -22,6 +23,7 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
+import hiiragi283.ragium.common.item.component.RagiumToolMaterials
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
@@ -61,7 +63,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         HTShapedRecipeBuilder.create {
             hollow8()
             define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD) }
-            define('B') { +holderSet(RagiumTags.Items.STICKY_BALLS) }
+            define('B') { +holderSet(HTCommonTags.Items.STICKY_BALLS) }
             result {
                 +RagiumItems.PARTICLE_BOARD
                 count = 4
@@ -74,7 +76,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumItems.SYNTHETIC_LEATHER
         )) {
             HTStonecuttingRecipeBuilder.create {
-                ingredient { +holderSet(RagiumTags.Items.PLASTICS) }
+                ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
                 result { +item }
             }.save(exporter)
         }
@@ -85,6 +87,8 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 result { +item }
             }.save(exporter)
         }
+        // XX Tools
+        registerTools(RagiumItems.SOOTY_IRON_TOOLS, RagiumToolMaterials.SOOTY_IRON)
 
         // XX Dye Bucket
         for (color: HTDefaultColor in HTDefaultColor.entries) {
