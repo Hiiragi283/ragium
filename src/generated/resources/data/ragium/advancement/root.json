@@ -1,6 +1,6 @@
 {
   "criteria": {
-    "has_player_workstations_crafting_tables": {
+    "has_player_workstations/crafting_tables": {
       "conditions": {
         "items": [
           {
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_player_workstations_crafting_tables"
+      "has_player_workstations/crafting_tables"
     ]
   ],
   "sends_telemetry_event": true

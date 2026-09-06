@@ -5,8 +5,8 @@ import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.data.model.createBlock
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredItem
-import hiiragi283.lib.resource.HTIdOrValue
 import hiiragi283.lib.resource.HTSimpleBlockItemWithKey
+import hiiragi283.lib.resource.HTValueWithId
 import hiiragi283.lib.resource.blockId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTMachineType
@@ -65,7 +65,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
         // Machine
         for ((machineType: HTMachineType, blockItem: HTSimpleBlockItemWithKey) in RagiumBlocks.MACHINES.flatEntries) {
-            val block: HTIdOrValue<Block> = blockItem.block
+            val block: HTValueWithId<Block> = blockItem.block
             val inactiveModel: MultiVariant = BlockModelGenerators.plainVariant(
                 machineModel(generators, machineType, block, false)
             )
@@ -86,7 +86,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     private fun machineModel(
         generators: BlockModelGenerators,
         machineType: HTMachineType,
-        block: HTIdOrValue<Block>,
+        block: HTValueWithId<Block>,
         isActive: Boolean
     ): Identifier {
         val blockId: Identifier = block.idOrThrow.blockId
