@@ -5,9 +5,8 @@ import hiiragi283.lib.integration.jei.HTJeiRecipeType
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
-import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
-import hiiragi283.lib.recipe.base.HTItemToItemRecipe
+import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -23,7 +22,7 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER)
 
     @JvmField
-    val COMPRESSING: HTHolderJeiRecipeType<HTItemToItemRecipe.Basic> =
+    val COMPRESSING: HTHolderJeiRecipeType<HTItemToRecipe.BasicItem> =
         HTJeiRecipeType(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
@@ -48,7 +47,7 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
 
     @JvmField
-    val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> =
+    val MELTING: HTHolderJeiRecipeType<HTItemToRecipe.BasicFluid> =
         HTJeiRecipeType(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField

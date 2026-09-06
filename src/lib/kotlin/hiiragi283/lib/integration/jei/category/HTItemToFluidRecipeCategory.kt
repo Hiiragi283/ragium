@@ -3,21 +3,21 @@ package hiiragi283.lib.integration.jei.category
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.add
-import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
+import hiiragi283.lib.recipe.base.HTItemToRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class HTItemToFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic>) :
-    HTHolderRecipeCategory<HTItemToFluidRecipe.Basic>(
+class HTItemToFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemToRecipe.BasicFluid>) :
+    HTHolderRecipeCategory<HTItemToRecipe.BasicFluid>(
         guiHelper,
         recipeType,
         18 * 4,
         18 * 1,
-        HTItemToFluidRecipe.Basic.SIMPLE_CODEC
+        HTItemToRecipe.BasicFluid.SIMPLE_CODEC
     ) {
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemToFluidRecipe.Basic, focuses: IFocusGroup) {
+    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemToRecipe.BasicFluid, focuses: IFocusGroup) {
         // input
         builder
             .addInputSlot(getPosition(0), getPosition(0))
@@ -34,7 +34,7 @@ class HTItemToFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJei
 
     override fun setupRecipeExtras(
         builder: IRecipeExtrasBuilder,
-        recipe: HTItemToFluidRecipe.Basic,
+        recipe: HTItemToRecipe.BasicFluid,
         focuses: IFocusGroup
     ) {
         builder.addRecipeArrow(recipe).setPosition(getPosition(1.25), getPosition(0))

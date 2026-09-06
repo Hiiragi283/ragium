@@ -6,9 +6,8 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.HTDoubleItemToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToDoubleItemRecipeBuilder
-import hiiragi283.lib.data.recipe.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToItemAndFluidRecipeBuilder
-import hiiragi283.lib.data.recipe.HTItemToItemRecipeBuilder
+import hiiragi283.lib.data.recipe.HTItemToRecipeBuilder
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
@@ -46,12 +45,12 @@ data object RagiumRecipeBuilders {
 
     @JvmStatic
     inline fun compressing(
-        builderAction: HTItemToItemRecipeBuilder<RTCompressingRecipe>.() -> Unit
-    ): HTItemToItemRecipeBuilder<RTCompressingRecipe> {
+        builderAction: HTItemToRecipeBuilder.ToItem<RTCompressingRecipe>.() -> Unit
+    ): HTItemToRecipeBuilder.ToItem<RTCompressingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToItemRecipeBuilder(RagiumConstants.COMPRESSING, ::RTCompressingRecipe).apply(builderAction)
+        return HTItemToRecipeBuilder.ToItem(RagiumConstants.COMPRESSING, ::RTCompressingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -107,22 +106,22 @@ data object RagiumRecipeBuilders {
 
     @JvmStatic
     inline fun melting(
-        builderAction: HTItemToFluidRecipeBuilder<RTMeltingRecipe>.() -> Unit
-    ): HTItemToFluidRecipeBuilder<RTMeltingRecipe> {
+        builderAction: HTItemToRecipeBuilder.ToFluid<RTMeltingRecipe>.() -> Unit
+    ): HTItemToRecipeBuilder.ToFluid<RTMeltingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToFluidRecipeBuilder(RagiumConstants.MELTING, ::RTMeltingRecipe).apply(builderAction)
+        return HTItemToRecipeBuilder.ToFluid(RagiumConstants.MELTING, ::RTMeltingRecipe).apply(builderAction)
     }
 
     @JvmStatic
     inline fun smelting(
-        builderAction: HTItemToItemRecipeBuilder<RTSmeltingRecipe>.() -> Unit
-    ): HTItemToItemRecipeBuilder<RTSmeltingRecipe> {
+        builderAction: HTItemToRecipeBuilder.ToItem<RTSmeltingRecipe>.() -> Unit
+    ): HTItemToRecipeBuilder.ToItem<RTSmeltingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToItemRecipeBuilder(HTConstants.SMELTING, ::RTSmeltingRecipe).apply(builderAction)
+        return HTItemToRecipeBuilder.ToItem(HTConstants.SMELTING, ::RTSmeltingRecipe).apply(builderAction)
     }
 
     @JvmStatic
