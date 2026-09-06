@@ -6,10 +6,7 @@ import hiiragi283.lib.data.ExporterDataProvider
 import net.minecraft.advancements.Advancement
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.CachedOutput
-import net.minecraft.data.DataProvider
 import net.minecraft.data.PackOutput
-import net.minecraft.resources.RegistryOps
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.WithConditions
 import java.util.concurrent.CompletableFuture
@@ -37,11 +34,7 @@ abstract class HTAdvancementProvider(
     Advancement.CONDITIONAL_CODEC
 ) {
     override fun createExporter(map: MutableMap<AdvancementKey, WithConditions<Advancement>>): HTAdvancementExporter =
-        HTAdvancementExporter {
-                id: AdvancementKey,
-                advancement: Advancement,
-                conditions: List<ICondition>
-            ->
+        HTAdvancementExporter { id: AdvancementKey, advancement: Advancement, conditions: List<ICondition> ->
             check(map.put(id, WithConditions(conditions, advancement)) == null) { "Duplicate advancement $id" }
         }
 }
