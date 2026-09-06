@@ -33,11 +33,11 @@ class HTSmithingRecipeBuilder : HTRecipeBuilder<SmithingTransformRecipe>(HTConst
         }
     }
 
-    @PublishedApi internal var template: Optional<Ingredient> by HTDelegates.onceInitialize { Optional.empty() }
+    @PublishedApi internal var template: Optional<Ingredient> by HTDelegates.optionalInitialize()
 
     @PublishedApi internal var base: Ingredient by HTDelegates.onceInitialize()
 
-    @PublishedApi internal var addition: Optional<Ingredient> by HTDelegates.onceInitialize { Optional.empty() }
+    @PublishedApi internal var addition: Optional<Ingredient> by HTDelegates.optionalInitialize()
 
     @PublishedApi internal var result: ItemStackTemplate by HTDelegates.onceInitialize()
 

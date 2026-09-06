@@ -92,6 +92,14 @@ data object RagiumRecipeSerializers {
     val ELECTROLYZING: RecipeSerializer<RTElectrolyzingRecipe> =
         register(RagiumConstants.ELECTROLYZING, RTElectrolyzingRecipe.SERIALIZER)
 
+    @JvmField
+    val MIXING: RecipeSerializer<RTMixingRecipe> =
+        register(RagiumConstants.MIXING, RTMixingRecipe.SERIALIZER)
+
+    @JvmField
+    val REACTING: RecipeSerializer<RTReactingRecipe> =
+        register(RagiumConstants.REACTING, RTReactingRecipe.SERIALIZER)
+
     // Bio
     @JvmField
     val BREWING: RecipeSerializer<RTBrewingRecipe> =

@@ -251,6 +251,7 @@ data object Ragium : HTCommonMod() {
                     }.build()
                 }
         }
+        RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING, identity())
 
         RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
         RagiumRecipeLookups.BREWING.addSubLookup {

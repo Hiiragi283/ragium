@@ -6,51 +6,41 @@ import hiiragi283.lib.data.recipe.FluidIngredientBuilder
 import hiiragi283.lib.data.recipe.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.HTItemResultBuilder
 import hiiragi283.lib.data.recipe.HTProgressRecipeBuilder
-import hiiragi283.lib.data.recipe.IngredientBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.ragium.api.RagiumConstants
-import hiiragi283.ragium.api.recipe.RTRefiningRecipe
+import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import net.minecraft.resources.Identifier
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(RagiumConstants.REFINING) {
+class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe>(RagiumConstants.REACTING) {
     override fun getPrimalId(): Identifier = fluidResult.getId()
 
-    override fun createRecipe(): RTRefiningRecipe =
-        RTRefiningRecipe(itemIngredient, fluidIngredient, itemResult, fluidResult, progressData)
+    override fun createRecipe(): RTReactingRecipe =
+        RTReactingRecipe(primaryIngredient, secondaryIngredient, itemResult, fluidResult, progressData)
 
     // Ingredient
-    @PublishedApi internal var itemIngredient: Optional<HTItemIngredient> by HTDelegates.optionalInitialize()
+    @PublishedApi internal var primaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
-    @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
+    @PublishedApi internal var secondaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
-    operator fun HTItemIngredient.unaryPlus() {
-        itemIngredient = Optional.of(this)
-    }
-
-    operator fun HTFluidIngredient.unaryPlus() {
-        fluidIngredient = this
-    }
-
-    inline fun itemIngredient(builderAction: IngredientBuilder.() -> Unit) {
+    inline fun primaryIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder.buildSized(builderAction)
+        primaryIngredient = FluidIngredientBuilder.buildSized(builderAction)
     }
 
-    inline fun fluidIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
+    inline fun secondaryIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +FluidIngredientBuilder.buildSized(builderAction)
+        secondaryIngredient = FluidIngredientBuilder.buildSized(builderAction)
     }
 
     // Result

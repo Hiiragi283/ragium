@@ -18,6 +18,8 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     override fun exportValues() {
         bathing()
         electrolyzing()
+        mixing()
+        reacting()
     }
 
     private fun bathing() {
@@ -68,6 +70,52 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             result { +RagiumFluids.NAOH_SOLUTION }
             recipeId suffix "_from_salt_water"
+        }.save(exporter)
+    }
+
+    private fun mixing() {
+        // S + O2 -> SO2
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
+            fluidIngredient { +holderSet(RagiumFluids.OXYGEN) }
+            result { +RagiumFluids.SULFUR_DIOXIDE }
+        }.save(exporter)
+        // Blaze Powder + O2 -> SO3
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { items { +Items.BLAZE_POWDER } }
+            fluidIngredient { +holderSet(RagiumFluids.OXYGEN) }
+            result { +RagiumFluids.SULFUR_TRIOXIDE }
+        }.save(exporter)
+    }
+
+    private fun reacting() {
+        // SO2 + 1/2 O2 -> SO3
+        RagiumRecipeBuilders.reacting {
+            primaryIngredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
+            secondaryIngredient {
+                +holderSet(RagiumFluids.OXYGEN)
+                amount /= 2
+            }
+            fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
+        }.save(exporter)
+        // SO3 + H2O -> H2SO4
+        RagiumRecipeBuilders.reacting {
+            primaryIngredient { +holderSet(RagiumFluids.SULFUR_TRIOXIDE) }
+            secondaryIngredient { +waterSet() }
+            fluidResult { +RagiumFluids.SULFURIC_ACID }
+        }.save(exporter)
+
+        // H2 + Cl2 -> 2 HCl
+        RagiumRecipeBuilders.reacting {
+            primaryIngredient { +holderSet(RagiumFluids.HYDROGEN) }
+            secondaryIngredient { +holderSet(RagiumFluids.CHLORINE) }
+            fluidResult { +RagiumFluids.HYDROGEN_CHLORIDE }
+        }.save(exporter)
+        // HCl + H2O -> Hcl(aq)
+        RagiumRecipeBuilders.reacting {
+            primaryIngredient { +holderSet(RagiumFluids.HYDROGEN_CHLORIDE) }
+            secondaryIngredient { +waterSet() }
+            fluidResult { +RagiumFluids.HYDROCHLORIC_ACID }
         }.save(exporter)
     }
 

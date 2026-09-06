@@ -71,6 +71,12 @@ data object RagiumRecipeTypes {
     @JvmField
     val ELECTROLYZING: HTRecipeType<RTElectrolyzingRecipe> = create(RagiumConstants.ELECTROLYZING)
 
+    @JvmField
+    val MIXING: HTRecipeType<RTMixingRecipe> = create(RagiumConstants.MIXING)
+
+    @JvmField
+    val REACTING: HTRecipeType<RTReactingRecipe> = create(RagiumConstants.REACTING)
+
     // Bio
     @JvmField
     val BREWING: HTRecipeType<RTBrewingRecipe> = create(RagiumConstants.BREWING)

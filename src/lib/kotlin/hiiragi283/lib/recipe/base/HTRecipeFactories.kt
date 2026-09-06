@@ -2,6 +2,7 @@ package hiiragi283.lib.recipe.base
 
 import com.mojang.datafixers.util.Function3
 import hiiragi283.lib.recipe.HTRecipeFactory
+import hiiragi283.lib.recipe.input.HTFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.lib.recipe.input.getItemOrEmpty
@@ -70,6 +71,15 @@ data object HTRecipeFactories {
      */
     interface DoubleItem<OUTPUT : Any> : DoubleInput<RecipeInput, ItemInstance, ItemInstance, OUTPUT> {
         override fun produce(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
+    }
+
+    /**
+     * 2種類の液体から完成品を作る[DoubleInput]の拡張インターフェースです。
+     * @since 26.1.5
+     */
+    interface DoubleFluid<OUTPUT : Any> : DoubleInput<HTFluidRecipeInput, FluidInstance, FluidInstance, OUTPUT> {
+        override fun produce(input: HTFluidRecipeInput): OUTPUT =
+            apply(input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
     }
 
     //    Triple Input    //

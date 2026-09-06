@@ -42,7 +42,7 @@ class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
     // Result
     @PublishedApi internal var primary: HTItemResult by HTDelegates.onceInitialize()
 
-    @PublishedApi internal var secondary: Optional<HTItemResult> by HTDelegates.onceInitialize { Optional.empty() }
+    @PublishedApi internal var secondary: Optional<HTItemResult> by HTDelegates.optionalInitialize()
 
     inline fun primary(builderAction: HTItemResultBuilder.() -> Unit) {
         contract {

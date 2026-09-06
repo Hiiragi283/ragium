@@ -119,6 +119,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumRecipeTypes.BATHING, "化学洗浄")
         add(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
+        add(RagiumRecipeTypes.MIXING, "混合")
+        add(RagiumRecipeTypes.REACTING, "化学反応")
 
         add(RagiumRecipeTypes.BREWING, "醸造")
         add(RagiumRecipeTypes.PLANTING, "栽培")

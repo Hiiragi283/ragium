@@ -35,6 +35,16 @@ interface HTFluidRecipeInput : RecipeInput {
     fun getFluid(index: Int): FluidStack
 
     /**
+     * @since 26.1.5
+     */
+    fun getFluidOrNull(index: Int): FluidStack? = if (index in fluidIndices) getFluid(index) else null
+
+    /**
+     * @since 26.1.5
+     */
+    fun getFluidOrEmpty(index: Int): FluidStack = this.getFluidOrNull(index) ?: FluidStack.EMPTY
+
+    /**
      * 液体の[List]に変換します。
      * @since 26.1.0
      */

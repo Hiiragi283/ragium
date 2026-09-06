@@ -26,9 +26,7 @@ class RTElectrolyzingRecipeBuilder : HTProgressRecipeBuilder<RTElectrolyzingReci
         RTElectrolyzingRecipe(itemIngredient, fluidIngredient, results, progressData)
 
     // Ingredient
-    @PublishedApi internal var itemIngredient: Optional<HTItemIngredient> by HTDelegates.onceInitialize {
-        Optional.empty()
-    }
+    @PublishedApi internal var itemIngredient: Optional<HTItemIngredient> by HTDelegates.optionalInitialize()
 
     @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
