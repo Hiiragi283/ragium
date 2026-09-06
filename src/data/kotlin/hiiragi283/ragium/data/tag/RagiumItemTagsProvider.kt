@@ -3,9 +3,11 @@ package hiiragi283.ragium.data.tag
 import hiiragi283.lib.collection.forEach
 import hiiragi283.lib.data.tag.HTBlockItemTagsProvider
 import hiiragi283.lib.data.tag.HTItemTagsProvider
+import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.HTSimpleValueWithKey
 import hiiragi283.lib.tag.CommonTagPrefixes
+import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -40,7 +42,13 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             builders(Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)
         }
+        // Tools
+        for (toolType: HTToolType in HTToolType.entries) {
+            builder(toolType.toolTag).add(RagiumItems.SOOTY_IRON_TOOLS[toolType])
+        }
 
+        builder(RagiumTags.Items.SOOTY_IRON_TOOL_MATERIALS)
+            .addTag(CommonTagPrefixes.INGOT.itemTagKey(RagiumMaterial.Metal.SOOTY_IRON))
         // Other
         builder(ItemTags.PLANKS).add(RagiumItems.PARTICLE_BOARD)
 
@@ -48,9 +56,9 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(Tags.Items.LEATHERS).add(RagiumItems.SYNTHETIC_LEATHER)
         builder(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
 
-        builder(RagiumTags.Items.PAPER).addItem(Items.PAPER)
-        builder(RagiumTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
-        builder(RagiumTags.Items.STICKY_BALLS).addTag(Tags.Items.SLIME_BALLS)
+        builder(HTCommonTags.Items.PAPER).addItem(Items.PAPER)
+        builder(HTCommonTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
+        builder(HTCommonTags.Items.STICKY_BALLS).addTag(Tags.Items.SLIME_BALLS)
         RagiumItems.SHAPE_PATTERNS.forEach(builder(RagiumTags.Items.SHAPE_PATTERNS)::add)
     }
 }

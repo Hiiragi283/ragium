@@ -8,7 +8,6 @@ import hiiragi283.lib.fluid.HTFluidModelRegister
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.mod.HTClientMod
 import hiiragi283.lib.network.HTPayloadHandlers
-import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
@@ -63,8 +62,8 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerFluidModels(register: HTFluidModelRegister) {
-        for ((color: HTDefaultColor, content: HTFluidContent) in RagiumFluids.DYES.asSequenceWithColor()) {
-            register.register(content) {
+        for (color: HTDefaultColor in HTDefaultColor.entries) {
+            register.register(RagiumFluids.DYES[color]) {
                 setDull()
                 color.color.let(::colorTint)
             }

@@ -5,9 +5,10 @@ package hiiragi283.lib.item.component
 import hiiragi283.lib.util.toOptional
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
-import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.TagKey
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.alchemy.Potion
@@ -20,16 +21,12 @@ import kotlin.contracts.contract
 
 /**
  * @author Hiiragi Tsubasa
- * @since 26.1.0
+ * @since 26.1.4
  */
-fun <T : Any, U, V : Any> Item.Properties.delayedComponent(
-    type: DataComponentType<V>,
-    key: ResourceKey<T>,
-    value: U,
-    factory: (Holder<T>, U) -> V
-): Item.Properties = this.delayedComponent(type) { provider: HolderLookup.Provider ->
-    factory(provider.getOrThrow(key), value)
-}
+fun <T : Any> Item.Properties.delayedHolderSetComponent(
+    type: DataComponentType<HolderSet<T>>,
+    key: TagKey<T>
+): Item.Properties = this.delayedComponent(type) { provider: HolderLookup.Provider -> provider.getOrThrow(key) }
 
 /**
  * [Consumable]を追加します。
