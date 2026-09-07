@@ -325,13 +325,10 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             recipeId replace "crude_oil_from_soul_soil"
         }.save(exporter)
-        // Tar -> Aromatic Compound + Tiny Coal Coke
+        // Tar -> Aromatic Compound + Petrolatum
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { items { +RagiumItems.TAR } }
-            itemResult {
-                +RagiumItems.getOrThrow(HTItemPart.TINY, RagiumMaterial.Fuel.COAL_COKE)
-                count = 3
-            }
+            itemResult { +RagiumItems.PETROLATUM }
             fluidResult {
                 +RagiumFluids.AROMATIC_COMPOUND
                 amount = 250
@@ -390,6 +387,15 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount = 500
             }
             recipeId suffix "_from_crude_oil"
+        }.save(exporter)
+        // Creosote -> Aromatic Compound
+        RagiumRecipeBuilders.refining {
+            fluidIngredient { +holderSet(RagiumFluids.CREOSOTE) }
+            fluidResult {
+                +RagiumFluids.AROMATIC_COMPOUND
+                amount = 250
+            }
+            recipeId replace "_from_creosote"
         }.save(exporter)
     }
 

@@ -41,6 +41,7 @@ import net.neoforged.neoforge.common.crafting.CompoundIngredient
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import net.neoforged.neoforge.registries.datamaps.builtin.Oxidizable
+import net.neoforged.neoforge.registries.datamaps.builtin.Waxable
 
 internal data object RagiumCommon {
     fun initialize(event: FMLCommonSetupEvent) {
@@ -116,6 +117,24 @@ internal data object RagiumCommon {
                         }
                         result { +BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem() }
                         recipeId prefix "reduction/"
+                    }.build()
+                }
+        }
+        RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
+            val antiRustOil: HolderSet.Named<Fluid> =
+                registries.getOrNull(RagiumFluids.ANTI_RUST_OIL.fluidTag) ?: return@addSubLookup sequenceOf()
+            BuiltInRegistries.BLOCK
+                .getDataMap(NeoForgeDataMaps.WAXABLES)
+                .asSequence()
+                .map { (key: ResourceKey<Block>, value: Waxable) ->
+                    RagiumRecipeBuilders.bathing {
+                        itemIngredient { items { +BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem() } }
+                        fluidIngredient {
+                            +antiRustOil
+                            amount = 125
+                        }
+                        result { +value.waxed().asItem() }
+                        recipeId prefix "rustproof/"
                     }.build()
                 }
         }

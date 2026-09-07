@@ -102,6 +102,9 @@ data object RagiumItems {
     @JvmField
     val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
 
+    @JvmField
+    val PETROLATUM: HTSimpleDeferredItem = REGISTER.registerSimpleItem("petrolatum")
+
     // Chemical
     @JvmField
     val PARTICLE_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("particle_board")

@@ -69,6 +69,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
         addFluid(RagiumFluids.FUEL, "Fuel")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "Aromatic Compound")
+        addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
         addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
@@ -81,6 +82,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.TAR, "Tar")
+        add(RagiumItems.PETROLATUM, "Petrolatum")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")

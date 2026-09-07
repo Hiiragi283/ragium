@@ -86,6 +86,13 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             fluidIngredient { +holderSet(RagiumFluids.OXYGEN) }
             result { +RagiumFluids.SULFUR_TRIOXIDE }
         }.save(exporter)
+
+        // Naphtha + Petrolatum -> Anti-rust Oil
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { items { +RagiumItems.PETROLATUM } }
+            fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
+            result { +RagiumFluids.ANTI_RUST_OIL }
+        }.save(exporter)
     }
 
     private fun reacting() {

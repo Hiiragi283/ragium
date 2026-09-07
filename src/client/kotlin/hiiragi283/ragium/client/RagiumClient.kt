@@ -140,6 +140,10 @@ data object RagiumClient : HTClientMod() {
             setClear()
             colorTint(Color(0xcccc66))
         }
+        register.register(RagiumFluids.ANTI_RUST_OIL) {
+            setDull()
+            colorTint(Color(0xff9933))
+        }
         register.register(RagiumFluids.NAOH_SOLUTION) {
             setDull()
             colorTint(Color(0x003366))

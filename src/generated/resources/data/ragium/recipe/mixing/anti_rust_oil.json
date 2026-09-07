@@ -1,0 +1,16 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:naphtha"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": "ragium:petrolatum"
+  },
+  "result": {
+    "amount": 1000,
+    "id": "ragium:anti_rust_oil"
+  },
+  "time": 200
+}
