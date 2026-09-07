@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Items
+import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
 class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
@@ -43,6 +44,20 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             result { +Items.PAPER }
             recipeId suffix "_from_pulp"
         }.save(exporter)
+
+        // Sand + Liquid Explosive -> TNT
+        RagiumRecipeBuilders.bathing {
+            itemIngredient {
+                +holderSet(Tags.Items.SANDS)
+                count = 8
+            }
+            fluidIngredient { +holderSet(RagiumFluids.LIQUID_EXPLOSIVE) }
+            result {
+                +Items.TNT
+                count = 8
+            }
+        }.save(exporter)
+        // Clay + Liquid Explosive -> Plastic Explosive?
     }
 
     private fun electrolyzing() {
@@ -74,6 +89,24 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     }
 
     private fun mixing() {
+        // Naphtha + Petrolatum -> Anti-rust Oil
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { items { +RagiumItems.PETROLATUM } }
+            fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
+            result { +RagiumFluids.ANTI_RUST_OIL }
+        }.save(exporter)
+
+        // 1/2 H2SO4 + KNO3 -> HNO3
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.SULFURIC_ACID)
+                amount /= 2
+            }
+            result { +RagiumFluids.NITRIC_ACID }
+            recipeId suffix "_from_niter"
+        }.save(exporter)
+
         // S + O2 -> SO2
         RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
@@ -86,16 +119,16 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             fluidIngredient { +holderSet(RagiumFluids.OXYGEN) }
             result { +RagiumFluids.SULFUR_TRIOXIDE }
         }.save(exporter)
-
-        // Naphtha + Petrolatum -> Anti-rust Oil
-        RagiumRecipeBuilders.mixing {
-            itemIngredient { items { +RagiumItems.PETROLATUM } }
-            fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
-            result { +RagiumFluids.ANTI_RUST_OIL }
-        }.save(exporter)
     }
 
     private fun reacting() {
+        // Aromatic Compound + HNO3 -> Liquid Explosive
+        RagiumRecipeBuilders.reacting {
+            primaryIngredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
+            secondaryIngredient { +holderSet(RagiumFluids.NITRIC_ACID) }
+            fluidResult { +RagiumFluids.LIQUID_EXPLOSIVE }
+        }.save(exporter)
+
         // SO2 + 1/2 O2 -> SO3
         RagiumRecipeBuilders.reacting {
             primaryIngredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }

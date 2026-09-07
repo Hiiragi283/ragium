@@ -169,6 +169,15 @@ data object RagiumFluids {
     @JvmField
     val ANTI_RUST_OIL: HTFluidContent.Virtual = REGISTER.registerVirtual("anti_rust_oil") { properties = liquid() }
 
+    @JvmField
+    val NITRIC_ACID: HTFluidContent.Flowing = REGISTER.registerFlowing("nitric_acid") { properties = liquid() }
+
+    @JvmField
+    val LIQUID_EXPLOSIVE: HTFluidContent.Flowing = REGISTER.registerFlowing("liquid_explosive") {
+        properties = liquid()
+        typeFactory = { HTExplosiveFluidType(6f, it) }
+    }
+
     // 4th
     @JvmField
     val NAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("sodium_hydroxide_solution") {

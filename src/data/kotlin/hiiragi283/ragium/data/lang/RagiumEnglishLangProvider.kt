@@ -70,6 +70,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.FUEL, "Fuel")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "Aromatic Compound")
         addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
+        addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
+        addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "Liquid Explosive")
         addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")

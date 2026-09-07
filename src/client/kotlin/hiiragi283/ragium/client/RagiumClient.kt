@@ -144,6 +144,14 @@ data object RagiumClient : HTClientMod() {
             setDull()
             colorTint(Color(0xff9933))
         }
+        register.register(RagiumFluids.NITRIC_ACID) {
+            setDull()
+            colorTint(Color(0x9999cc))
+        }
+        register.register(RagiumFluids.LIQUID_EXPLOSIVE) {
+            setDull()
+            colorTint(Color(0xcc3333))
+        }
         register.register(RagiumFluids.NAOH_SOLUTION) {
             setDull()
             colorTint(Color(0x003366))
