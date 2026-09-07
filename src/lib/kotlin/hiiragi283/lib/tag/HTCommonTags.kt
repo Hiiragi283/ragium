@@ -22,9 +22,6 @@ data object HTCommonTags {
     }
 
     data object Fluids {
-        @JvmField
-        val ALKALI_SOLUTION: TagKey<Fluid> = create("alkali_solution")
-
         @JvmStatic
         private fun create(vararg path: String): TagKey<Fluid> = FluidTags.create(HTConstants.COMMON.toId(*path))
     }

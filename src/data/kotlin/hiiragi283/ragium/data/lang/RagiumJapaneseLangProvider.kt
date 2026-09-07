@@ -74,7 +74,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
-        addFluid(RagiumFluids.CAOH_SOLUTION, "水酸化カルシウム水溶液")
         addFluid(RagiumFluids.MOLTEN_STEEL, "溶融した鋼鉄")
 
         // Item
