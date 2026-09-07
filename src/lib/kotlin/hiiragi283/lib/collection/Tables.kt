@@ -117,3 +117,33 @@ fun <R, C, V1, V2, T : Table.Builder<R, C, V2>> Table<R, C, V1>.mapValueTo(
     this.forEach { triple: Triple<R, C, V1> -> destination.put(triple.first, triple.second, transform(triple)) }
     return destination.build()
 }
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.5
+ */
+inline fun <R, C, V> Table.Builder<R, C, V>.getOrPut(row: R, column: C, mapping: () -> V): V {
+    val oldValue: V? = this.get(row, column)
+    if (oldValue == null) {
+        val newValue: V = mapping()
+        this.put(row, column, newValue)
+        return newValue
+    } else {
+        return oldValue
+    }
+}
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.5
+ */
+inline fun <R, C, V> Table.Builder<R, C, V>.computeIfAbsent(row: R, column: C, mapping: (R, C) -> V): V {
+    val oldValue: V? = this.get(row, column)
+    if (oldValue == null) {
+        val newValue: V = mapping(row, column)
+        this.put(row, column, newValue)
+        return newValue
+    } else {
+        return oldValue
+    }
+}

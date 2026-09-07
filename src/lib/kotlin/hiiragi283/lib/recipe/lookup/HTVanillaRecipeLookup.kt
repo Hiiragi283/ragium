@@ -18,6 +18,6 @@ class HTVanillaRecipeLookup<INPUT : RecipeInput, out RECIPE : Recipe<INPUT>>(
 ) : HTRecipeLookup<RECIPE> {
     constructor(recipeType: RecipeType<RECIPE>) : this(Supplier { recipeType })
 
-    override fun getAllRecipesN(context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> =
+    override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> =
         context.byType(recipeType.get())
 }

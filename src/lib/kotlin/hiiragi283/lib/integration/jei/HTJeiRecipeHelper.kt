@@ -142,7 +142,7 @@ data object HTJeiRecipeHelper {
     @JvmStatic
     inline fun <RECIPE_A : Any, reified RECIPE_B : RECIPE_A> getRecipes(
         lookup: HTRecipeLookup<RECIPE_A>
-    ): List<HTRecipeHolder<RECIPE_B>> = lookup.getAllRecipesN(HTPhysicalSideHelper.createLookupContext())
+    ): List<HTRecipeHolder<RECIPE_B>> = lookup.getAllRecipes(HTPhysicalSideHelper.createLookupContext())
         .mapNotNull { (key: RecipeKey, recipe: RECIPE_A) ->
             when (recipe) {
                 is RECIPE_B -> HTRecipeHolder(key, recipe)

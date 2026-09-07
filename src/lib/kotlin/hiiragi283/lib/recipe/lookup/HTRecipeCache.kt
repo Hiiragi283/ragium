@@ -56,7 +56,7 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(
         if (lastRecipe != null && lastRecipe!!.recipe.matches(input)) {
             return lastRecipe
         }
-        lookup.getAllRecipesN(context)
+        lookup.getAllRecipes(context)
             .firstOrNull { (_, recipe) -> recipe.matches(input) }
             ?.let(::lastRecipe::set)
         return lastRecipe
