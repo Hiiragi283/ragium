@@ -45,6 +45,10 @@ data object RagiumJeiRecipeTypes {
 
     // Heat
     @JvmField
+    val ALLOYING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.ALLOYING, ItemStack(Items.FURNACE))
+
+    @JvmField
     val FREEZING: HTHolderJeiRecipeType<HTFluidToRecipe.BasicItem> =
         HTJeiRecipeType(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
 

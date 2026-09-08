@@ -136,7 +136,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         heat(RagiumBlocks.FREEZER) { +holderSet(Tags.Items.BUCKETS_WATER) }
         heat(RagiumBlocks.MELTER) { +holderSet(Tags.Items.BUCKETS_LAVA) }
         // Chemical
-        RagiumRecipeBuilders.assembling {
+        RagiumRecipeBuilders.alloying {
             primary {
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
                 count = 2

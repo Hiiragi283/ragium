@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:alloy_smelter",
+  "parent": "ragium:heat_machine_casing",
   "criteria": {
-    "has_black_steel_ingot": {
+    "has_freezer": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/black_steel"
+            "items": "ragium:freezer"
           }
         ]
       },
@@ -14,18 +14,18 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.black_steel.desc"
+      "translate": "advancement.ragium.alloy_smelter.desc"
     },
     "icon": {
-      "id": "ragium:black_steel_ingot"
+      "id": "ragium:freezer"
     },
     "title": {
-      "translate": "advancement.ragium.black_steel.title"
+      "translate": "advancement.ragium.alloy_smelter.title"
     }
   },
   "requirements": [
     [
-      "has_black_steel_ingot"
+      "has_freezer"
     ]
   ],
   "sends_telemetry_event": true

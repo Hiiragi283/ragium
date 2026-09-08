@@ -33,8 +33,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
 
         add(RagiumAdvancementKeys.HEAT_MACHINE_CASING, "Heat And Cool", "Craft a Machine Casing (Heat)")
-        add(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
         add(RagiumAdvancementKeys.BLACK_STEEL, "Black Roaring", "Craft a Black Steel Ingot")
+        add(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
         add(RagiumAdvancementKeys.MELTER, "(S)melter(y)", "Acquire Melter")
         // Block
         add(RagiumBlocks.ASSEMBLER, "Assembler")
@@ -113,6 +113,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.DRAINING, "Draining")
         add(RagiumRecipeTypes.FILLING, "Filling")
 
+        add(RagiumRecipeTypes.ALLOYING, "Alloying")
         add(RagiumRecipeTypes.FREEZING, "Freezing")
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")

@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:freezer",
+  "parent": "ragium:black_steel",
   "criteria": {
     "has_chemical_machine_casing": {
       "conditions": {

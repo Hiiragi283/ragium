@@ -38,15 +38,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     }
 
     private fun assembling() {
-        // Blackstone + Gold -> Gilded Blackstone
-        RagiumRecipeBuilders.assembling {
-            primary { items { +Items.BLACKSTONE } }
-            secondary {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.GOLD)
-                count = 8
-            }
-            result { +Items.GILDED_BLACKSTONE }
-        }.save(exporter)
         // Dirt + Leaves -> Podzol
         RagiumRecipeBuilders.assembling {
             primary { items { +Items.DIRT } }

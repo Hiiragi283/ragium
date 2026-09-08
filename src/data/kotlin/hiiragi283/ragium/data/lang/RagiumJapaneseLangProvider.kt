@@ -29,8 +29,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "粉砕機を手に入れる")
 
         add(RagiumAdvancementKeys.HEAT_MACHINE_CASING, "Heat And Cool", "マシンケーシング（熱）を作る")
-        add(RagiumAdvancementKeys.FREEZER, "私の消費電力は53万です", "冷凍機を手に入れる")
         add(RagiumAdvancementKeys.BLACK_STEEL, "黒い咆哮", "黒鋼をつくる")
+        add(RagiumAdvancementKeys.FREEZER, "私の消費電力は53万です", "冷凍機を手に入れる")
         add(RagiumAdvancementKeys.MELTER, "融けてしまいそう", "溶融炉を手に入れる")
         // Block
         add(RagiumBlocks.ASSEMBLER, "組立機")
@@ -109,6 +109,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.DRAINING, "排出")
         add(RagiumRecipeTypes.FILLING, "封入")
 
+        add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.FREEZING, "冷凍")
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")

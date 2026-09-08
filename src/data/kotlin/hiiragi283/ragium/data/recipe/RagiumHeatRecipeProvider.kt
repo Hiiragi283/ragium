@@ -23,10 +23,55 @@ import java.util.concurrent.CompletableFuture
 class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
+        alloying()
         freezing()
         melting()
         pyrolyzing()
         refining()
+    }
+
+    private fun alloying() {
+        // Blackstone + Gold -> Gilded Blackstone
+        RagiumRecipeBuilders.alloying {
+            primary { items { +Items.BLACKSTONE } }
+            secondary {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.GOLD)
+                count = 8
+            }
+            result { +Items.GILDED_BLACKSTONE }
+        }.save(exporter)
+        // Gold + Netherite Scrap -> Netherite
+        RagiumRecipeBuilders.alloying {
+            primary {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.GOLD)
+                count = 2
+            }
+            secondary {
+                items { +Items.NETHERITE_SCRAP }
+                count = 2
+            }
+            result { +Items.NETHERITE_INGOT }
+        }.save(exporter)
+        // Gold Block + Apple -> Enchanted Golden Apple
+        RagiumRecipeBuilders.alloying {
+            primary { items { +Items.APPLE } }
+            secondary {
+                +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Metal.GOLD)
+                count = 8
+            }
+            result { +Items.ENCHANTED_GOLDEN_APPLE }
+            time *= 8
+        }.save(exporter)
+
+        // Sooty Iron + Obsidian Dust -> Black Steel
+        RagiumRecipeBuilders.alloying {
+            primary { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            secondary {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN)
+                count = 2
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
+        }.save(exporter)
     }
 
     private fun freezing() {
