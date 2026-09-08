@@ -41,6 +41,15 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         machine()
         material()
 
+        // Prismarine Bricks -> 9x Prismarine Shard
+        HTShapelessRecipeBuilder.create {
+            ingredient { items { +Items.PRISMARINE_BRICKS } }
+            result {
+                +Items.PRISMARINE_SHARD
+                count = 9
+            }
+            recipeId suffix "_from_bricks"
+        }.save(exporter)
         // Gunpowder
         HTShapelessRecipeBuilder.create {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL) }
@@ -234,22 +243,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     //    Material    //
 
     private fun material() {
-        // XX Block -> XX
-        setOf(
-            RagiumMaterial.Mineral.GLOWSTONE to Items.GLOWSTONE_DUST,
-            RagiumMaterial.Gem.QUARTZ to Items.QUARTZ,
-            RagiumMaterial.Gem.AMETHYST to Items.AMETHYST_SHARD
-        ).forEach { (material: RagiumMaterial, item: Item) ->
-            HTShapelessRecipeBuilder.create {
-                ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, material) }
-                result {
-                    +item
-                    count = 4
-                }
-                recipeId suffix "_from_block"
-            }.save(exporter)
-        }
-
         // XX <-> Storage Block
         baseToBlock(RagiumMaterial.Gem.ECHO, CommonTagPrefixes.GEM, Items.ECHO_SHARD, size = StorageBlockSize.FOUR)
         baseToBlock(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT)

@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
@@ -301,9 +302,11 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         // XX Block -> XX
         setOf(
+            Items.AMETHYST_BLOCK to Items.AMETHYST_SHARD,
             Items.BRICKS to Items.BRICK,
             Items.CLAY to Items.CLAY_BALL,
             Items.DRIPSTONE_BLOCK to Items.POINTED_DRIPSTONE,
+            Items.GLOWSTONE to Items.GLOWSTONE_DUST,
             Items.HONEYCOMB_BLOCK to Items.HONEYCOMB,
             Items.MAGMA_BLOCK to Items.MAGMA_CREAM,
             Items.NETHER_BRICKS to Items.NETHER_BRICK,
@@ -321,7 +324,8 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
         setOf(
             Tags.Items.SANDSTONE_UNCOLORED_BLOCKS to Items.SAND,
-            Tags.Items.SANDSTONE_RED_BLOCKS to Items.RED_SAND
+            Tags.Items.SANDSTONE_RED_BLOCKS to Items.RED_SAND,
+            RagiumTags.BlockItem.QUARTZ_BLOCKS.item to Items.QUARTZ
         ).forEach { (block: TagKey<Item>, base: Item) ->
             RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(block) }
@@ -331,14 +335,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 }
             }.save(exporter)
         }
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.PRISMARINE_BRICKS } }
-            primary {
-                +Items.PRISMARINE_SHARD
-                count = 9
-            }
-            recipeId suffix "_from_bricks"
-        }.save(exporter)
 
         // Book -> 3x Paper Pulp
         RagiumRecipeBuilders.crushing {
