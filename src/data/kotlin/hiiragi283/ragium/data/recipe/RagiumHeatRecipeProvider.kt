@@ -30,60 +30,25 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
     }
 
     private fun freezing() {
-        // Water -> Snowball
+        // Water -> Snow Block
         RagiumRecipeBuilders.freezing {
-            catalyst { items { +RagiumItems.BALL_SHAPE_PATTERN } }
-            fluidIngredient { +waterSet() }
-            result {
-                +Items.SNOWBALL
-                count = 4
-            }
+            ingredient { +waterSet() }
+            result { +Items.SNOW_BLOCK }
         }.save(exporter)
-        // Water -> Ice
-        RagiumRecipeBuilders.freezing {
-            catalyst { items { +RagiumItems.BLOCK_SHAPE_PATTERN } }
-            fluidIngredient { +waterSet() }
-            result { +Items.ICE }
-        }.save(exporter)
-
         // Lava -> Obsidian
         RagiumRecipeBuilders.freezing {
-            catalyst { items { +RagiumItems.BLOCK_SHAPE_PATTERN } }
-            fluidIngredient { +lavaSet() }
+            ingredient { +lavaSet() }
             result { +Items.OBSIDIAN }
         }.save(exporter)
-
         // Honey
         RagiumRecipeBuilders.freezing {
-            catalyst { items { +RagiumItems.BLOCK_SHAPE_PATTERN } }
-            fluidIngredient { +holderSet(RagiumFluids.HONEY) }
+            ingredient { +holderSet(RagiumFluids.HONEY) }
             result { +Items.HONEY_BLOCK }
         }.save(exporter)
-
         // Glass
         RagiumRecipeBuilders.freezing {
-            catalyst { items { +RagiumItems.BLOCK_SHAPE_PATTERN } }
-            fluidIngredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
+            ingredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
             result { +Items.GLASS }
-        }.save(exporter)
-        RagiumRecipeBuilders.freezing {
-            catalyst { +holderSet(ItemTags.BARS) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.MOLTEN_GLASS)
-                amount = 375
-            }
-            result { +Items.GLASS_PANE }
-        }.save(exporter)
-
-        // Molten Steel + Obsidian Dust -> Black Steel
-        RagiumRecipeBuilders.freezing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.MOLTEN_STEEL)
-                amount = 90
-            }
-            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
-            recipeId suffix "_from_steel"
         }.save(exporter)
     }
 

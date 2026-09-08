@@ -4,8 +4,8 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.HTItemAndFluidToRecipeBuilder
-import hiiragi283.lib.recipe.ingredient.HTCatalystOrIngredient
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -47,7 +47,7 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
      * @since 26.1.0
      */
     abstract class Basic<OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>>(
-        val itemIngredient: HTCatalystOrIngredient,
+        val itemIngredient: HTItemIngredient,
         val fluidIngredient: HTFluidIngredient,
         val result: RESULT,
         override val progressData: HTProgressData
@@ -60,10 +60,12 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
                 factory: HTItemAndFluidToRecipeBuilder.Factory<RESULT, RECIPE>
             ): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
                 instance.group(
-                    HTCatalystOrIngredient.MAP_CODEC.forGetter(Basic<OUTPUT, RESULT>::itemIngredient),
-                    HTFluidIngredient.CODEC.fieldOf(
-                        HTConstants.FLUID_INGREDIENT
-                    ).forGetter(Basic<OUTPUT, RESULT>::fluidIngredient),
+                    HTItemIngredient.CODEC
+                        .fieldOf(HTConstants.ITEM_INGREDIENT)
+                        .forGetter(Basic<OUTPUT, RESULT>::itemIngredient),
+                    HTFluidIngredient.CODEC
+                        .fieldOf(HTConstants.FLUID_INGREDIENT)
+                        .forGetter(Basic<OUTPUT, RESULT>::fluidIngredient),
                     resultCodec.fieldOf(HTConstants.RESULT).forGetter(Basic<OUTPUT, RESULT>::result),
                     HTProgressData.CODEC.forGetter(Basic<OUTPUT, RESULT>::progressData)
                 ).apply(instance, factory::create)
@@ -74,7 +76,7 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
                 resultCodec: StreamCodec<in RegistryFriendlyByteBuf, RESULT>,
                 factory: HTItemAndFluidToRecipeBuilder.Factory<RESULT, RECIPE>
             ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
-                HTCatalystOrIngredient.STREAM_CODEC,
+                HTItemIngredient.STREAM_CODEC,
                 Basic<OUTPUT, RESULT>::itemIngredient,
                 HTFluidIngredient.STREAM_CODEC,
                 Basic<OUTPUT, RESULT>::fluidIngredient,
@@ -100,7 +102,7 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
      * @since 26.1.0
      */
     open class BasicItem(
-        itemIngredient: HTCatalystOrIngredient,
+        itemIngredient: HTItemIngredient,
         fluidIngredient: HTFluidIngredient,
         result: HTItemResult,
         progressData: HTProgressData
@@ -126,7 +128,7 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
      * @since 26.1.0
      */
     open class BasicFluid(
-        itemIngredient: HTCatalystOrIngredient,
+        itemIngredient: HTItemIngredient,
         fluidIngredient: HTFluidIngredient,
         result: HTFluidResult,
         progressData: HTProgressData

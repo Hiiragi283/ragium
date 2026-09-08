@@ -4,6 +4,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.HTDoubleItemToItemRecipeBuilder
+import hiiragi283.lib.data.recipe.HTFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToItemAndFluidRecipeBuilder
@@ -97,12 +98,12 @@ data object RagiumRecipeBuilders {
     // Heat
     @JvmStatic
     inline fun freezing(
-        builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTFreezingRecipe>.() -> Unit
-    ): HTItemAndFluidToRecipeBuilder.ToItem<RTFreezingRecipe> {
+        builderAction: HTFluidToRecipeBuilder.ToItem<RTFreezingRecipe>.() -> Unit
+    ): HTFluidToRecipeBuilder.ToItem<RTFreezingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemAndFluidToRecipeBuilder.ToItem(RagiumConstants.FREEZING, ::RTFreezingRecipe).apply(builderAction)
+        return HTFluidToRecipeBuilder.ToItem(RagiumConstants.FREEZING, ::RTFreezingRecipe).apply(builderAction)
     }
 
     @JvmStatic

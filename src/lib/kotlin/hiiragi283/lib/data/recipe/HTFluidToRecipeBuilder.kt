@@ -4,7 +4,6 @@ package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
@@ -15,41 +14,22 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-/**
- * 1種類のアイテムと液体から1種類の完成品を作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
- * @param RECIPE 生成するレシピのクラス
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
+abstract class HTFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
     prefix: String,
     private val factory: Factory<RESULT, RECIPE>
 ) : HTProgressRecipeBuilder<RECIPE>(prefix) {
-    final override fun getPrimalId(): Identifier = result.getId()
+    override fun getPrimalId(): Identifier = result.getId()
 
-    final override fun createRecipe(): RECIPE = factory.create(itemIngredient, fluidIngredient, result, progressData)
+    override fun createRecipe(): RECIPE = factory.create(ingredient, result, progressData)
 
     // Ingredient
-    @PublishedApi internal var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()
-
-    @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
-
-    operator fun HTItemIngredient.unaryPlus() {
-        itemIngredient = this
-    }
+    @PublishedApi internal var ingredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
     operator fun HTFluidIngredient.unaryPlus() {
-        fluidIngredient = this
+        ingredient = this
     }
 
-    inline fun itemIngredient(builderAction: IngredientBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        +IngredientBuilder.buildSized(builderAction)
-    }
-
-    inline fun fluidIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
+    inline fun ingredient(builderAction: FluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -69,10 +49,10 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
      * 1種類のアイテムと液体から1種類の液体を作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
      * @param RECIPE 生成するレシピのクラス
      * @author Hiiragi Tsubasa
-     * @since 26.1.0
+     * @since 26.1.5
      */
     class ToFluid<out RECIPE : Recipe<*>>(prefix: String, factory: Factory<HTFluidResult, RECIPE>) :
-        HTItemAndFluidToRecipeBuilder<HTFluidResult, RECIPE>(prefix, factory) {
+        HTFluidToRecipeBuilder<HTFluidResult, RECIPE>(prefix, factory) {
         inline fun result(builderAction: HTFluidResultBuilder.() -> Unit) {
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
@@ -87,10 +67,10 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
      * 1種類のアイテムと液体から1種類のアイテムを作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
      * @param RECIPE 生成するレシピのクラス
      * @author Hiiragi Tsubasa
-     * @since 26.1.0
+     * @since 26.1.5
      */
     class ToItem<out RECIPE : Recipe<*>>(prefix: String, factory: Factory<HTItemResult, RECIPE>) :
-        HTItemAndFluidToRecipeBuilder<HTItemResult, RECIPE>(prefix, factory) {
+        HTFluidToRecipeBuilder<HTItemResult, RECIPE>(prefix, factory) {
         inline fun result(builderAction: HTItemResultBuilder.() -> Unit) {
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
@@ -102,17 +82,11 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
     //    Factory    //
 
     /**
-     * @param RESULT レシピの完成品となるクラス
      * @param RECIPE 生成するレシピのクラス
      * @author Hiiragi Tsubasa
-     * @since 26.1.0
+     * @since 26.1.5
      */
     fun interface Factory<RESULT : HTRecipeResult<*>, out RECIPE : Any> {
-        fun create(
-            itemIngredient: HTItemIngredient,
-            fluidIngredient: HTFluidIngredient,
-            result: RESULT,
-            progressData: HTProgressData
-        ): RECIPE
+        fun create(ingredient: HTFluidIngredient, result: RESULT, progressData: HTProgressData): RECIPE
     }
 }

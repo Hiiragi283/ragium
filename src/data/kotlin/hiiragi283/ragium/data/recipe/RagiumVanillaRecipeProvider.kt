@@ -128,14 +128,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         heat(RagiumBlocks.FREEZER) { +holderSet(Tags.Items.BUCKETS_WATER) }
         heat(RagiumBlocks.MELTER) { +holderSet(Tags.Items.BUCKETS_LAVA) }
         // Chemical
-        RagiumRecipeBuilders.freezing {
-            itemIngredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.MOLTEN_STEEL)
-                amount = 240
-            }
-            result { +RagiumItems.getCasing(HTMachineType.CHEMICAL) }
-        }.save(exporter)
         RagiumRecipeBuilders.assembling {
             primary {
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
