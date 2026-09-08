@@ -95,11 +95,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumItems.MEMORY_DISC, "Memory Disc")
 
-        add(RagiumItems.BLANK_SHAPE_PATTERN, "Shape Pattern (Blank)")
-        add(RagiumItems.BLOCK_SHAPE_PATTERN, "Shape Pattern (Block)")
-        add(RagiumItems.INGOT_SHAPE_PATTERN, "Shape Pattern (Ingot)")
-        add(RagiumItems.BALL_SHAPE_PATTERN, "Shape Pattern (Ball)")
-
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "Frostbite")
 

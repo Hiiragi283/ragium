@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluids
@@ -287,8 +288,64 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     }
 
     private fun crushing() {
+        crushIntoDust()
+        crushOres()
         dyes()
 
+        // XX Block -> XX
+        setOf(
+            Items.BRICKS to Items.BRICK,
+            Items.CLAY to Items.CLAY_BALL,
+            Items.DRIPSTONE_BLOCK to Items.POINTED_DRIPSTONE,
+            Items.HONEYCOMB_BLOCK to Items.HONEYCOMB,
+            Items.MAGMA_BLOCK to Items.MAGMA_CREAM,
+            Items.NETHER_BRICKS to Items.NETHER_BRICK,
+            Items.PRISMARINE to Items.PRISMARINE_SHARD,
+            Items.PURPUR_BLOCK to Items.POPPED_CHORUS_FRUIT,
+            Items.SNOW_BLOCK to Items.SNOWBALL
+        ).forEach { (block: Item, base: Item) ->
+            RagiumRecipeBuilders.crushing {
+                ingredient { items { +block } }
+                primary {
+                    +base
+                    count = 4
+                }
+            }.save(exporter)
+        }
+        setOf(
+            Tags.Items.SANDSTONE_UNCOLORED_BLOCKS to Items.SAND,
+            Tags.Items.SANDSTONE_RED_BLOCKS to Items.RED_SAND
+        ).forEach { (block: TagKey<Item>, base: Item) ->
+            RagiumRecipeBuilders.crushing {
+                ingredient { +holderSet(block) }
+                primary {
+                    +base
+                    count = 4
+                }
+            }.save(exporter)
+        }
+
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.PRISMARINE_BRICKS } }
+            primary {
+                +Items.PRISMARINE_SHARD
+                count = 9
+            }
+            recipeId suffix "_from_bricks"
+        }.save(exporter)
+
+        // Book -> 3x Paper Pulp
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.BOOK } }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.PAPER)
+                count = 3
+            }
+            recipeId suffix "_from_book"
+        }.save(exporter)
+    }
+
+    private fun crushIntoDust() {
         // XX Dust
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
             val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
@@ -340,7 +397,9 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
             primary { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN) }
         }.save(exporter)
+    }
 
+    private fun crushOres() {
         // XX Ore -> XX Dust
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Fuel.COAL) }
@@ -446,16 +505,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 recipeId suffix "_from_raw"
             }.save(exporter)
         }
-
-        // Book -> 3x Paper Pulp
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.BOOK } }
-            primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.PAPER)
-                count = 3
-            }
-            recipeId suffix "_from_book"
-        }.save(exporter)
     }
 
     private fun dyes() {
@@ -578,6 +627,14 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             secondary { +Items.LEATHER }
             recipeId suffix "_from_book"
+        }.save(exporter)
+        // Melon -> Sliced Melon
+        RagiumRecipeBuilders.cutting {
+            ingredient { items { +Items.MELON } }
+            primary {
+                +Items.MELON_SLICE
+                count = 9
+            }
         }.save(exporter)
     }
 

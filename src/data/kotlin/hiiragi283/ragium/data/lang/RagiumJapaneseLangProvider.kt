@@ -91,11 +91,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumItems.MEMORY_DISC, "メモリーディスク")
 
-        add(RagiumItems.BLANK_SHAPE_PATTERN, "形状パターン（なし）")
-        add(RagiumItems.BLOCK_SHAPE_PATTERN, "形状パターン（ブロック）")
-        add(RagiumItems.INGOT_SHAPE_PATTERN, "形状パターン（インゴット）")
-        add(RagiumItems.BALL_SHAPE_PATTERN, "形状パターン（ボール）")
-
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "凍傷")
 

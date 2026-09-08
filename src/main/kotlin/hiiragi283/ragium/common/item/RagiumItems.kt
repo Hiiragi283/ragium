@@ -162,30 +162,6 @@ data object RagiumItems {
 
     //    Tool    //
 
-    @JvmStatic
-    private fun registerShapePattern(name: String): HTSimpleDeferredItem =
-        REGISTER.registerSimpleItem("${name}_shape_pattern") { it.stacksTo(1) }
-
-    @JvmField
-    val BLANK_SHAPE_PATTERN: HTSimpleDeferredItem = registerShapePattern("blank")
-
-    @JvmField
-    val BLOCK_SHAPE_PATTERN: HTSimpleDeferredItem = registerShapePattern("block")
-
-    @JvmField
-    val INGOT_SHAPE_PATTERN: HTSimpleDeferredItem = registerShapePattern("ingot")
-
-    @JvmField
-    val BALL_SHAPE_PATTERN: HTSimpleDeferredItem = registerShapePattern("ball")
-
-    @JvmField
-    val SHAPE_PATTERNS: Set<HTSimpleDeferredItem> = setOf(
-        BLANK_SHAPE_PATTERN,
-        BLOCK_SHAPE_PATTERN,
-        INGOT_SHAPE_PATTERN,
-        BALL_SHAPE_PATTERN
-    )
-
     @JvmField
     val SOOTY_IRON_TOOLS: HTToolCollection<HTSimpleDeferredItem> = HTToolCollection { toolType: HTToolType ->
         REGISTER.registerItem(

@@ -17,9 +17,6 @@ data object RagiumTags {
      */
     data object Items {
         @JvmField
-        val SHAPE_PATTERNS: TagKey<Item> = create("shape_patterns")
-
-        @JvmField
         val SOOTY_IRON_TOOL_MATERIALS: TagKey<Item> = create("sooty_iron_tool_materials")
 
         @JvmStatic

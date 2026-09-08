@@ -19,7 +19,6 @@ import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
-import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
@@ -77,13 +76,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         )) {
             HTStonecuttingRecipeBuilder.create {
                 ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
-                result { +item }
-            }.save(exporter)
-        }
-        // XX Shape Pattern
-        for (item: HTSimpleDeferredItem in RagiumItems.SHAPE_PATTERNS) {
-            HTStonecuttingRecipeBuilder.create {
-                ingredient { +holderSet(RagiumTags.Items.SHAPE_PATTERNS) }
                 result { +item }
             }.save(exporter)
         }

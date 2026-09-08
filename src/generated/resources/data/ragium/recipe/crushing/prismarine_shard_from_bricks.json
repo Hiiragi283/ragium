@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:prismarine_bricks"
+  },
+  "primary_result": {
+    "count": 9,
+    "id": "minecraft:prismarine_shard"
+  },
+  "time": 200
+}
