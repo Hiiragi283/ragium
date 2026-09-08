@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 6,
+    "items": "minecraft:wind_charge"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:breeze_rod"
+  },
+  "time": 200
+}

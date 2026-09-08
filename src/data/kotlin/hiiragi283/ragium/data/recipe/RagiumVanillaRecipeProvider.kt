@@ -51,6 +51,22 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 count = 3
             }
         }.save(exporter)
+        // Blaze Rod
+        HTShapedRecipeBuilder.create {
+            layered()
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            define('B') { items { +Items.MAGMA_BLOCK } }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
+            result { +Items.BLAZE_ROD }
+        }.save(exporter)
+        // Breeze Rod
+        HTShapedRecipeBuilder.create {
+            layered()
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            define('B') { items { +Items.ICE } }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
+            result { +Items.BREEZE_ROD }
+        }.save(exporter)
 
         // Bamboo Charcoal
         HTCookingRecipeBuilder.smelting {
@@ -97,7 +113,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private fun machine() {
         // Mechanical
         HTShapedRecipeBuilder.create {
-            layered()
+            layered2()
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
             define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
             result {

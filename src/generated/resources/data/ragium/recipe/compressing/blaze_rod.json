@@ -1,12 +1,12 @@
 {
-  "type": "ragium:melting",
+  "type": "ragium:compressing",
   "ingredient": {
-    "count": 1,
+    "count": 4,
     "items": "minecraft:blaze_powder"
   },
   "result": {
-    "amount": 90,
-    "id": "ragium:molten_blaze"
+    "count": 1,
+    "id": "minecraft:blaze_rod"
   },
   "time": 200
 }

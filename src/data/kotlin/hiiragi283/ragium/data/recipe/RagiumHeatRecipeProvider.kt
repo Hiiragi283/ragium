@@ -187,23 +187,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount = 90
             }
         }.save(exporter)
-        // Molten Blaze
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.RODS_BLAZE) }
-            result {
-                +RagiumFluids.MOLTEN_BLAZE
-                amount = 180
-            }
-            recipeId suffix "_from_rod"
-        }.save(exporter)
-        RagiumRecipeBuilders.melting {
-            ingredient { items { +Items.BLAZE_POWDER } }
-            result {
-                +RagiumFluids.MOLTEN_BLAZE
-                amount = 90
-            }
-            recipeId suffix "_from_powder"
-        }.save(exporter)
 
         // Sooty Iron -> Molten Steel
         RagiumRecipeBuilders.melting {
@@ -360,7 +343,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +RagiumFluids.AROMATIC_COMPOUND
                 amount = 250
             }
-            recipeId replace "_from_creosote"
+            recipeId suffix "_from_creosote"
         }.save(exporter)
     }
 

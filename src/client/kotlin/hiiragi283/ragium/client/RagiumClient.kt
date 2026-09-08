@@ -102,10 +102,6 @@ data object RagiumClient : HTClientMod() {
             setMolten()
             colorTint(Color(0x006666))
         }
-        register.register(RagiumFluids.MOLTEN_BLAZE) {
-            setMolten()
-            colorTint(Color(0xff9900))
-        }
 
         register.register(RagiumFluids.HYDROGEN) {
             setClear()

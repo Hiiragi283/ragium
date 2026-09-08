@@ -6,6 +6,7 @@ import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTFluidContentRegister
 import hiiragi283.lib.resource.toId
+import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.Identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTPotionBucketItem
@@ -27,6 +28,7 @@ data object RagiumFluids {
     @JvmStatic
     fun register(eventBus: IEventBus) {
         REGISTER.addAlias("calcium_hydroxide_solution", "sodium_hydroxide_solution")
+        REGISTER.addAlias(RagiumAPI.id("molten_blaze"), vanillaId("lava"))
 
         REGISTER.register(eventBus)
     }
@@ -109,11 +111,6 @@ data object RagiumFluids {
 
     @JvmField
     val MOLTEN_ENDER: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_ender") {
-        properties = molten()
-    }
-
-    @JvmField
-    val MOLTEN_BLAZE: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_blaze") {
         properties = molten()
     }
 

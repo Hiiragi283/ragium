@@ -38,7 +38,6 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             add(RagiumFluids.MOLTEN_REDSTONE)
             add(RagiumFluids.MOLTEN_GLOWSTONE)
             add(RagiumFluids.MOLTEN_ENDER)
-            add(RagiumFluids.MOLTEN_BLAZE)
 
             add(RagiumFluids.CREOSOTE)
             add(RagiumFluids.CRUDE_OIL)

@@ -58,7 +58,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_REDSTONE, "Destabilized Redstone")
         addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "Energized Glowstone")
         addFluid(RagiumFluids.MOLTEN_ENDER, "Resonant Ender")
-        addFluid(RagiumFluids.MOLTEN_BLAZE, "Blaze Blood")
 
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
         addFluid(RagiumFluids.OXYGEN, "Oxygen")

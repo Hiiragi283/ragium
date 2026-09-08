@@ -272,7 +272,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 recipeId suffix "_from_dust"
             }.save(exporter)
         }
-
         setOf(
             RagiumMaterial.Other.WOOD to RagiumItems.PARTICLE_BOARD,
             RagiumMaterial.Other.PAPER to HTSimpleDeferredItem(vanillaId("paper"))
@@ -285,6 +284,23 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 result { +item }
             }.save(exporter)
         }
+
+        // 4x Blaze Powder -> Blaze Rod
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +Items.BLAZE_POWDER }
+                count = 4
+            }
+            result { +Items.BLAZE_ROD }
+        }.save(exporter)
+        // 6x Wind Charge -> Breeze Rod
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +Items.WIND_CHARGE }
+                count = 6
+            }
+            result { +Items.BREEZE_ROD }
+        }.save(exporter)
     }
 
     private fun crushing() {
@@ -324,7 +340,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 }
             }.save(exporter)
         }
-
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.PRISMARINE_BRICKS } }
             primary {
@@ -342,6 +357,22 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 3
             }
             recipeId suffix "_from_book"
+        }.save(exporter)
+        // Blaze Rod -> 4x Blaze Powder
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(Tags.Items.RODS_BLAZE) }
+            primary {
+                +Items.BLAZE_POWDER
+                count = 4
+            }
+        }.save(exporter)
+        // Breeze Rod -> 6x Wind Charge
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(Tags.Items.RODS_BREEZE) }
+            primary {
+                +Items.WIND_CHARGE
+                count = 6
+            }
         }.save(exporter)
     }
 

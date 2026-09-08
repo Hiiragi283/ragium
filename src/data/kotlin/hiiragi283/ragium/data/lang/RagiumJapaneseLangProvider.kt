@@ -54,7 +54,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_REDSTONE, "励起レッドストーン")
         addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "活性グロウストーン")
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
-        addFluid(RagiumFluids.MOLTEN_BLAZE, "ブレイズの血液")
 
         addFluid(RagiumFluids.HYDROGEN, "水素")
         addFluid(RagiumFluids.OXYGEN, "酸素")
