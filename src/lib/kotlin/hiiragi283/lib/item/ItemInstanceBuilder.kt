@@ -26,7 +26,7 @@ class ItemInstanceBuilder : HolderAcceptor.ItemAcceptor {
     companion object {
         /**
          * [ItemStackTemplate]を作成します。
-         * @throws IllegalStateException アイテムが空の場合，または量個数0`以下の場合
+         * @throws IllegalStateException アイテムが空の場合，または個数が`0`以下の場合
          */
         @JvmStatic
         inline fun buildTemplate(builderAction: ItemInstanceBuilder.() -> Unit): ItemStackTemplate {
@@ -39,7 +39,6 @@ class ItemInstanceBuilder : HolderAcceptor.ItemAcceptor {
         /**
          * [ItemStackTemplate]を作成します。
          */
-        @Suppress("DEPRECATION")
         @JvmStatic
         inline fun buildSafeTemplate(builderAction: ItemInstanceBuilder.() -> Unit): ItemStackTemplate? {
             contract {
@@ -69,7 +68,7 @@ class ItemInstanceBuilder : HolderAcceptor.ItemAcceptor {
     @PublishedApi internal var item: Holder<Item> by HTDelegates.onceInitialize()
     var count: Int = 1
 
-    @PublishedApi internal var patch: DataComponentPatch = DataComponentPatch.EMPTY
+    @PublishedApi internal var patch: DataComponentPatch by HTDelegates.onceInitialize { DataComponentPatch.EMPTY }
 
     override operator fun Holder<Item>.unaryPlus() {
         item = this

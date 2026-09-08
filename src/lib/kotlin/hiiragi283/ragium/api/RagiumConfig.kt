@@ -105,9 +105,6 @@ data object RagiumConfig {
             @JvmField
             val mixer: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.MIXER)
 
-            @JvmField
-            val washer: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.WASHER)
-
             // Bio
             @JvmField
             val brewery: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.BREWERY)
