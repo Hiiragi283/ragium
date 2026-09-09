@@ -318,59 +318,48 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             recipeId replace "crude_oil_from_soul_soil"
         }.save(exporter)
-        // Tar -> Aromatic Compound + Petrolatum
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { items { +RagiumItems.TAR } }
-            itemResult { +RagiumItems.PETROLATUM }
-            fluidResult {
-                +RagiumFluids.AROMATIC_COMPOUND
-                amount = 250
-            }
-            recipeId replace "aromatic_compound_from_tar"
-        }.save(exporter)
     }
 
     private fun refining() {
-        // Crude Oil -> Naphtha
+        // Crude Oil -> Naphtha + Residue Oil
         RagiumRecipeBuilders.refining {
             ingredient { +holderSet(RagiumFluids.CRUDE_OIL) }
-            itemResult {
-                +RagiumItems.TAR
-                count = 2
-            }
-            primaryResult {
-                +RagiumFluids.NAPHTHA
-                amount = 500
-            }
-        }.save(exporter)
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.CRUDE_OIL) }
-            itemResult { +RagiumItems.TAR }
             primaryResult {
                 +RagiumFluids.NAPHTHA
                 amount = 750
             }
-        }
-        // Naphtha -> Fuel
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.NAPHTHA) }
-            itemResult {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR)
-                count = 2
-            }
-            primaryResult {
-                +RagiumFluids.FUEL
-                amount = 500
+            secondaryResult {
+                +RagiumFluids.RESIDUE_OIL
+                amount = 250
             }
         }.save(exporter)
+        // Naphtha -> Fuel + Sulfur
         RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.NAPHTHA) }
+            ingredient {
+                +holderSet(RagiumFluids.NAPHTHA)
+                amount = 750
+            }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR) }
             primaryResult {
                 +RagiumFluids.FUEL
-                amount = 750
+                amount = 500
             }
-        }
+            recipeId suffix "_from_naphtha"
+        }.save(exporter)
+        // Residue Oil -> Fuel + Pitch Coke
+        RagiumRecipeBuilders.refining {
+            ingredient {
+                +holderSet(RagiumFluids.RESIDUE_OIL)
+                amount = 500
+            }
+            itemResult { +RagiumItems.PITCH_COKE }
+            primaryResult {
+                +RagiumFluids.FUEL
+                amount = 250
+            }
+            recipeId suffix "_from_residue_oil"
+        }.save(exporter)
+
         // Wood Tar -> Aromatic Compound
         RagiumRecipeBuilders.refining {
             ingredient { +holderSet(RagiumFluids.WOOD_TAR) }
@@ -387,10 +376,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +RagiumFluids.AROMATIC_COMPOUND
                 amount = 250
             }
-            itemResult {
-                +RagiumItems.getOrThrow(HTItemPart.TINY, RagiumMaterial.Fuel.COAL_COKE)
-                count = 3
-            }
+            itemResult { +RagiumItems.PITCH_COKE }
             recipeId suffix "_frol_coal_tar"
         }.save(exporter)
     }

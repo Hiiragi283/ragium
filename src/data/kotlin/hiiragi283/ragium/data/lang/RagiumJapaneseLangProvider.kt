@@ -64,6 +64,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "芳香族化合物")
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
+        addFluid(RagiumFluids.RESIDUE_OIL, "残渣油")
         addFluid(RagiumFluids.FUEL, "燃料油")
         addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
@@ -78,7 +79,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
-        add(RagiumItems.TAR, "タール")
+        add(RagiumItems.PITCH_COKE, "ピッチコークス")
         add(RagiumItems.PETROLATUM, "ペトロラタム")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")

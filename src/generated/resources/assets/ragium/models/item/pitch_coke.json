@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/tar"
+    "layer0": "ragium:item/pitch_coke"
   }
 }

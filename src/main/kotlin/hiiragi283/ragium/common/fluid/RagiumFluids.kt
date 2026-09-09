@@ -166,6 +166,9 @@ data object RagiumFluids {
     }
 
     @JvmField
+    val RESIDUE_OIL: HTFluidContent.Virtual = REGISTER.registerVirtual("residue_oil") { properties = liquid() }
+
+    @JvmField
     val FUEL: HTFluidContent.Flowing = REGISTER.registerFlowing("fuel") {
         properties = liquid()
         typeFactory = { HTExplosiveFluidType(4f, it) }

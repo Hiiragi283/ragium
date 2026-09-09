@@ -1,16 +1,16 @@
 {
   "type": "ragium:refining",
   "ingredient": {
-    "amount": 1000,
-    "fluids": "#c:coal_tar"
+    "amount": 750,
+    "fluids": "#c:naphtha"
   },
   "item_result": {
     "count": 1,
-    "id": "ragium:pitch_coke"
+    "id": "ragium:sulfur_dust"
   },
   "primary_result": {
-    "amount": 250,
-    "id": "ragium:aromatic_compound"
+    "amount": 500,
+    "id": "ragium:fuel"
   },
   "time": 200
 }
