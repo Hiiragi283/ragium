@@ -3,6 +3,7 @@ package hiiragi283.lib.recipe.result
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.fluid.HTFlowingFluidHelper
 import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -111,7 +112,9 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
             @JvmField
             val CODEC: MapCodec<SimpleEntry> = HTCodecs.recordMap { instance ->
                 instance.group(
-                    FluidStack.FLUID_HOLDER_CODEC.fieldOf(HTConstants.ID).forGetter(SimpleEntry::fluid),
+                    HTFlowingFluidHelper.SOURCE_FLUID_HOLDER_CODEC
+                        .fieldOf(HTConstants.ID)
+                        .forGetter(SimpleEntry::fluid),
                     DataComponentPatch.CODEC
                         .optionalFieldOf(HTConstants.COMPONENTS, DataComponentPatch.EMPTY)
                         .forGetter(SimpleEntry::components)

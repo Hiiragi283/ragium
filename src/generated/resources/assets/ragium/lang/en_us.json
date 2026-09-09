@@ -333,6 +333,7 @@
   "tag.item.c.buckets.sulfur_trioxide": "Sulfur Trioxide Bucket",
   "tag.item.c.buckets.sulfuric_acid": "Sulfuric Acid Bucket",
   "tag.item.c.buckets.wood_tar": "Wood Tar Bucket",
+  "tooltip.ragium.hydrogen_cracked": "Hydrogen Cracked",
   "tooltip.ragium.intrinsic_enchantment": "Always has at least %1$s",
   "tooltip.ragium.memory_disc_data": "Scanned Item: %1$s",
   "tooltip.ragium.show_description": "Press Shift to show description",

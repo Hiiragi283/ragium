@@ -15,11 +15,13 @@ import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.resource.modifyPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.identity
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.recipe.RTHydrogenCrackingRecipe
 import hiiragi283.ragium.common.recipe.RTLingeringBrewingRecipe
 import hiiragi283.ragium.common.recipe.RTSplashBrewingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
@@ -72,6 +74,7 @@ internal data object RagiumCommon {
     }
 
     private fun initRecipeLookups() {
+        // from recipe types
         RagiumRecipeLookups.ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING, identity())
         RagiumRecipeLookups.COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING, identity())
         RagiumRecipeLookups.CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING, identity())
@@ -85,6 +88,12 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING, identity())
 
         RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
+        RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING, identity())
+        RagiumRecipeLookups.REACTING.fromRecipeType(RagiumRecipeTypes.REACTING, identity())
+
+        RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
+        RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
+        // runtime recipes
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
             val oxygen: HolderSet.Named<Fluid> =
                 registries.getOrNull(RagiumFluids.OXYGEN.fluidTag) ?: return@addSubLookup sequenceOf()
@@ -100,7 +109,7 @@ internal data object RagiumCommon {
                         }
                         result { +value.nextOxidationStage().asItem() }
                         recipeId prefix "oxidization/"
-                    }.build()
+                    }.buildSynthetic()
                 }
         }
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
@@ -118,7 +127,7 @@ internal data object RagiumCommon {
                         }
                         result { +BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem() }
                         recipeId prefix "reduction/"
-                    }.build()
+                    }.buildSynthetic()
                 }
         }
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
@@ -136,12 +145,16 @@ internal data object RagiumCommon {
                         }
                         result { +value.waxed().asItem() }
                         recipeId prefix "rustproof/"
-                    }.build()
+                    }.buildSynthetic()
                 }
         }
-        RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING, identity())
+        RagiumRecipeLookups.REACTING.addRecipes(
+            Pair(
+                RecipeKey(RagiumAPI.id("/${RagiumConstants.REACTING}/hydrogen_cracking")),
+                RTHydrogenCrackingRecipe
+            )
+        )
 
-        RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
         RagiumRecipeLookups.BREWING.addSubLookup { _ ->
             val mixes: List<PotionBrewing.Mix<Potion>> = HTPhysicalSideHelper.getPotionBrewing()
                 ?.let(PotionBrewing::potionMixes)
@@ -172,6 +185,5 @@ internal data object RagiumCommon {
             RecipeKey(vanillaId("/${RagiumConstants.BREWING}/splash_potion")) to RTSplashBrewingRecipe,
             RecipeKey(vanillaId("/${RagiumConstants.BREWING}/lingering_potion")) to RTLingeringBrewingRecipe
         )
-        RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
     }
 }

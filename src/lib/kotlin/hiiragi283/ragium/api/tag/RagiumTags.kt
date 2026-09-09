@@ -2,9 +2,11 @@ package hiiragi283.ragium.api.tag
 
 import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.ragium.api.RagiumAPI
+import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.material.Fluid
 
 /**
  * Ragiumで使用される[TagKey]をまとめたクラスです。
@@ -22,6 +24,18 @@ data object RagiumTags {
 
         @JvmStatic
         private fun create(vararg path: String): BlockItemTag = BlockItemTag(RagiumAPI.id(*path))
+    }
+
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.5
+     */
+    data object Fluids {
+        @JvmField
+        val HYDROGEN_CRACKING: TagKey<Fluid> = create("hydrogen_cracking")
+
+        @JvmStatic
+        private fun create(vararg path: String): TagKey<Fluid> = FluidTags.create(RagiumAPI.id(*path))
     }
 
     /**

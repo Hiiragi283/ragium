@@ -1,6 +1,8 @@
 package hiiragi283.ragium.client.integration.jei
 
 import hiiragi283.lib.HTPhysicalSideHelper
+import hiiragi283.lib.fluid.FluidStack
+import hiiragi283.lib.fluid.HTFlowingFluidHelper
 import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
 import hiiragi283.lib.integration.jei.category.HTDoubleItemToItemRecipeCategory
@@ -14,14 +16,19 @@ import hiiragi283.lib.integration.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.item.alchemy.HTPotionHelper
+import hiiragi283.lib.registry.getKeyOrThrow
+import hiiragi283.lib.registry.getOrNull
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.integration.jei.category.RTElectrolyzingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTReactingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTRefiningRecipeCategory
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.recipe.RTHydrogenCrackingRecipe
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.helpers.IPlatformFluidHelper
@@ -36,6 +43,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 
 @JeiPlugin
@@ -138,6 +146,29 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.PLANTING, RagiumRecipeLookups.PLANTING)
         // Electronics
         // Arcane
+
+        registerDynamicRecipes(registration)
+    }
+
+    private fun registerDynamicRecipes(registration: IRecipeRegistration) {
+        // Chemical
+        BuiltInRegistries.FLUID
+            .getOrNull(RagiumTags.Fluids.HYDROGEN_CRACKING)
+            ?.filter(HTFlowingFluidHelper::isSource)
+            ?.map { fluid: Holder<Fluid> ->
+                RagiumRecipeBuilders.reacting {
+                    primaryIngredient { fluids { +fluid } }
+                    secondaryIngredient {
+                        +BuiltInRegistries.FLUID.getOrThrow(RagiumFluids.HYDROGEN.fluidTag)
+                    }
+                    fluidResult {
+                        val stack = FluidStack(fluid)
+                        RTHydrogenCrackingRecipe.setCracked(stack)
+                        from(stack)
+                    }
+                    recipeId replace fluid.getKeyOrThrow().identifier().withPrefix("hydrogen_cracking/")
+                }.buildSynthetic()
+            }?.let { registration.addRecipes(RagiumJeiRecipeTypes.REACTING, it) }
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {

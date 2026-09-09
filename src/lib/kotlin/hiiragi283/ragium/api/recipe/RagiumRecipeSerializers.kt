@@ -101,8 +101,8 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.MIXING, RTMixingRecipe.SERIALIZER)
 
     @JvmField
-    val REACTING: RecipeSerializer<RTReactingRecipe> =
-        register(RagiumConstants.REACTING, RTReactingRecipe.SERIALIZER)
+    val REACTING: RecipeSerializer<RTReactingRecipe.Basic> =
+        register(RagiumConstants.REACTING, RTReactingRecipe.Basic.SERIALIZER)
 
     // Bio
     @JvmField

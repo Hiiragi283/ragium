@@ -78,7 +78,7 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.MIXING, ItemStack(Items.BREEZE_ROD))
 
     @JvmField
-    val REACTING: HTHolderJeiRecipeType<RTReactingRecipe> =
+    val REACTING: HTHolderJeiRecipeType<RTReactingRecipe.Basic> =
         HTJeiRecipeType(RagiumRecipeTypes.REACTING, ItemStack(Items.GOLDEN_APPLE))
 
     // Bio

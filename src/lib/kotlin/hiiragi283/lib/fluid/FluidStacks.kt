@@ -1,9 +1,12 @@
 package hiiragi283.lib.fluid
 
+import net.minecraft.core.Holder
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
+import net.neoforged.neoforge.fluids.FluidType
 
 //    FluidStackTemplate    //
 
@@ -25,6 +28,34 @@ fun FluidStackTemplate.transmuteCopy(newFluid: Fluid, newAmount: Int = this.amou
 }
 
 //    FluidStack    //
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.5
+ */
+fun FluidStack(
+    fluid: Fluid,
+    amount: Int = FluidType.BUCKET_VOLUME,
+    patch: DataComponentPatch = DataComponentPatch.EMPTY
+): FluidStack {
+    val stack = FluidStack(fluid, amount)
+    stack.applyComponents(patch)
+    return stack
+}
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.5
+ */
+fun FluidStack(
+    fluid: Holder<Fluid>,
+    amount: Int = FluidType.BUCKET_VOLUME,
+    patch: DataComponentPatch = DataComponentPatch.EMPTY
+): FluidStack {
+    val stack = FluidStack(fluid, amount)
+    stack.applyComponents(patch)
+    return stack
+}
 
 /**
  * [FluidStack]を[FluidStackTemplate]に変換します。

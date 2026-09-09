@@ -100,7 +100,12 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
         }
     }
 
-    fun build(): HTRecipeHolder<RECIPE> = HTRecipeHolder(RecipeKey(recipeId.id.withPrefix("$prefix/")), createRecipe())
+    fun build(): HTRecipeHolder<RECIPE> = build("$prefix/")
+
+    fun buildSynthetic(): HTRecipeHolder<RECIPE> = build("/$prefix/")
+
+    private fun build(prefix: String): HTRecipeHolder<RECIPE> =
+        HTRecipeHolder(RecipeKey(recipeId.id.withPrefix(prefix)), createRecipe())
 
     /**
      * レシピを生成します。

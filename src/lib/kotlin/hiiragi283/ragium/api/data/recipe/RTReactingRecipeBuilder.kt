@@ -18,11 +18,11 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe>(RagiumConstants.REACTING) {
+class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe.Basic>(RagiumConstants.REACTING) {
     override fun getPrimalId(): Identifier = fluidResult.getId()
 
-    override fun createRecipe(): RTReactingRecipe =
-        RTReactingRecipe(primaryIngredient, secondaryIngredient, itemResult, fluidResult, progressData)
+    override fun createRecipe(): RTReactingRecipe.Basic =
+        RTReactingRecipe.Basic(primaryIngredient, secondaryIngredient, itemResult, fluidResult, progressData)
 
     // Ingredient
     @PublishedApi internal var primaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()

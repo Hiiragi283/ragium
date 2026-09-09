@@ -66,16 +66,9 @@ class HTFluidResultBuilder @PublishedApi internal constructor() {
         +HTFluidResult.SimpleEntry(this)
     }
 
+    @Suppress("DEPRECATION")
     operator fun Fluid.unaryPlus() {
-        +FluidStackTemplate(this, FluidType.BUCKET_VOLUME)
-    }
-
-    operator fun FluidStackTemplate.unaryPlus() {
-        +HTFluidResult.SimpleEntry(this)
-    }
-
-    operator fun FluidStack.unaryPlus() {
-        +HTFluidResult.SimpleEntry(this)
+        +HTFluidResult.SimpleEntry(this.builtInRegistryHolder())
     }
 
     operator fun HTFluidContent.unaryPlus() {
@@ -92,6 +85,16 @@ class HTFluidResultBuilder @PublishedApi internal constructor() {
 
     fun milk() {
         +NeoForgeMod.MILK
+    }
+
+    fun from(template: FluidStackTemplate) {
+        +HTFluidResult.SimpleEntry(template)
+        amount = template.amount
+    }
+
+    fun from(stack: FluidStack) {
+        +HTFluidResult.SimpleEntry(stack)
+        amount = stack.amount
     }
 
     // Potion

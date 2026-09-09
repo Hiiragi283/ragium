@@ -12,14 +12,14 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class RTReactingRecipeCategory(guiHelper: IGuiHelper) :
-    HTHolderRecipeCategory<RTReactingRecipe>(
+    HTHolderRecipeCategory<RTReactingRecipe.Basic>(
         guiHelper,
         RagiumJeiRecipeTypes.REACTING,
         18 * 8,
         18 * 1,
-        RTReactingRecipe.CODEC
+        RTReactingRecipe.Basic.CODEC
     ) {
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTReactingRecipe, focuses: IFocusGroup) {
+    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTReactingRecipe.Basic, focuses: IFocusGroup) {
         // inputs
         recipe.primary.let {
             builder
@@ -47,7 +47,11 @@ class RTReactingRecipeCategory(guiHelper: IGuiHelper) :
         recipe.itemResult.ifPresent(itemOutput::add)
     }
 
-    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTReactingRecipe, focuses: IFocusGroup) {
+    override fun setupRecipeExtras(
+        builder: IRecipeExtrasBuilder,
+        recipe: RTReactingRecipe.Basic,
+        focuses: IFocusGroup
+    ) {
         builder.addRecipePlus(getPosition(1))
         builder.addRecipeArrow(recipe).setPosition(getPosition(3.25), getPosition(0))
         builder.addRecipePlus(getPosition(6))
