@@ -9,6 +9,7 @@ import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.DFUEither
+import hiiragi283.lib.util.fold
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
@@ -24,6 +25,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
+import java.util.Optional
 
 /**
  * アイテムの完成品を表すインターフェースです。
@@ -195,3 +197,17 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
         override fun getId(): Identifier = tag.unwrapKey().orElseThrow().location()
     }
 }
+
+//    Extensions    //
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.5
+ */
+fun HTItemResult?.createOrEmpty(): ItemStack = this?.create() ?: ItemStack.EMPTY
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.5
+ */
+fun Optional<HTItemResult>.createOrEmpty(): ItemStack = this.fold(ItemStack::EMPTY, HTItemResult::create)

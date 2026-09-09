@@ -1,10 +1,10 @@
 {
   "type": "ragium:refining",
-  "fluid_ingredient": {
+  "ingredient": {
     "amount": 1000,
     "fluids": "#c:wood_tar"
   },
-  "fluid_result": {
+  "primary_result": {
     "amount": 500,
     "id": "ragium:aromatic_compound"
   },

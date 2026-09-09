@@ -13,6 +13,7 @@ import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.ingredient.test
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
+import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.listOf
@@ -78,7 +79,7 @@ data class RTElectrolyzingRecipe(
     override fun apply(first: ItemInstance, second: FluidInstance): Triple<FluidStack, FluidStack, FluidStack> = Triple(
         results[0].create(),
         results[1].create(),
-        results.getOrNull(2)?.create() ?: FluidStack.EMPTY
+        results.getOrNull(2).createOrEmpty()
     )
 
     override fun getSerializer(): RecipeSerializer<RTElectrolyzingRecipe> = RagiumRecipeSerializers.ELECTROLYZING

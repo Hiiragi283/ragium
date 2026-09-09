@@ -13,14 +13,13 @@ import hiiragi283.lib.recipe.input.HTFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
+import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.util.fold
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.neoforged.neoforge.fluids.FluidInstance
-import net.neoforged.neoforge.fluids.FluidStack
 import java.util.Optional
 
 @JvmRecord
@@ -70,10 +69,8 @@ data class RTReactingRecipe(
     override fun test(first: FluidInstance, second: FluidInstance): Boolean =
         primary.test(first) && secondary.test(second)
 
-    override fun apply(first: FluidInstance, second: FluidInstance): HTItemAndFluidResult {
-        val fluidStack: FluidStack = fluidResult.create()
-        return itemResult.fold({ HTItemAndFluidResult(fluidStack) }, { HTItemAndFluidResult(it.create(), fluidStack) })
-    }
+    override fun apply(first: FluidInstance, second: FluidInstance): HTItemAndFluidResult =
+        HTItemAndFluidResult(itemResult.createOrEmpty(), fluidResult.create())
 
     override fun getRequiredAmount(first: FluidInstance, second: FluidInstance): Pair<Int, Int> =
         primary.getRequiredAmount(first) to secondary.getRequiredAmount(second)

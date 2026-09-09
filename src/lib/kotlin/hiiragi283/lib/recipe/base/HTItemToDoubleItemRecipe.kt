@@ -5,9 +5,9 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
+import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
-import hiiragi283.lib.util.fold
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
@@ -84,6 +84,6 @@ interface HTItemToDoubleItemRecipe :
         override fun getRequiredAmount(input: ItemInstance): Int = ingredient.getRequiredAmount(input)
 
         override fun apply(input: ItemInstance): Pair<ItemStack, ItemStack> =
-            primary.create() to secondary.fold(ItemStack::EMPTY, HTItemResult::create)
+            primary.create() to secondary.createOrEmpty()
     }
 }

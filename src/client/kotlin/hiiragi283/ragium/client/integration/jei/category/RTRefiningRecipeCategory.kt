@@ -21,24 +21,24 @@ class RTRefiningRecipeCategory(guiHelper: IGuiHelper) :
     ) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTRefiningRecipe, focuses: IFocusGroup) {
         // inputs
-        recipe.fluidIngredient.let {
+        recipe.ingredient.let {
             builder
                 .addInputSlot(getPosition(0), getPosition(0))
                 .add(it)
                 .setSlotBackground(HTBackgroundType.INPUT, it.amount)
         }
-        val itemInput: IRecipeSlotBuilder = builder.addInputSlot(
-            getPosition(2),
-            getPosition(0)
-        ).setSlotBackground(HTBackgroundType.INPUT)
-        recipe.itemIngredient.ifPresent(itemInput::add)
         // outputs
-        recipe.fluidResult.let {
+        recipe.primary.let {
             builder
-                .addOutputSlot(getPosition(5), getPosition(0))
+                .addOutputSlot(getPosition(3), getPosition(0))
                 .add(it)
                 .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
         }
+        val fluidOutput: IRecipeSlotBuilder = builder.addOutputSlot(
+            getPosition(5),
+            getPosition(0)
+        ).setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
+        recipe.secondary.ifPresent { fluidOutput.add(it).setSlotBackground(HTBackgroundType.EXTRA_OUTPUT, it.amount) }
         val itemOutput: IRecipeSlotBuilder = builder.addOutputSlot(
             getPosition(7),
             getPosition(0)
@@ -47,8 +47,8 @@ class RTRefiningRecipeCategory(guiHelper: IGuiHelper) :
     }
 
     override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTRefiningRecipe, focuses: IFocusGroup) {
-        builder.addRecipePlus(getPosition(1))
-        builder.addRecipeArrow(recipe).setPosition(getPosition(3.25), getPosition(0))
+        builder.addRecipeArrow(recipe).setPosition(getPosition(1.25), getPosition(0))
+        builder.addRecipePlus(getPosition(4))
         builder.addRecipePlus(getPosition(6))
     }
 }

@@ -6,9 +6,7 @@ import hiiragi283.lib.data.recipe.FluidIngredientBuilder
 import hiiragi283.lib.data.recipe.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.HTItemResultBuilder
 import hiiragi283.lib.data.recipe.HTProgressRecipeBuilder
-import hiiragi283.lib.data.recipe.IngredientBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
@@ -21,32 +19,19 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(RagiumConstants.REFINING) {
-    override fun getPrimalId(): Identifier = fluidResult.getId()
+    override fun getPrimalId(): Identifier = primaryResult.getId()
 
     override fun createRecipe(): RTRefiningRecipe =
-        RTRefiningRecipe(itemIngredient, fluidIngredient, itemResult, fluidResult, progressData)
+        RTRefiningRecipe(ingredient, itemResult, primaryResult, secondaryResult, progressData)
 
     // Ingredient
-    @PublishedApi internal var itemIngredient: Optional<HTItemIngredient> by HTDelegates.optionalInitialize()
-
-    @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
-
-    operator fun HTItemIngredient.unaryPlus() {
-        itemIngredient = Optional.of(this)
-    }
+    @PublishedApi internal var ingredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
     operator fun HTFluidIngredient.unaryPlus() {
-        fluidIngredient = this
+        ingredient = this
     }
 
-    inline fun itemIngredient(builderAction: IngredientBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        +IngredientBuilder.buildSized(builderAction)
-    }
-
-    inline fun fluidIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
+    inline fun ingredient(builderAction: FluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
@@ -56,14 +41,12 @@ class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(Ragium
     // Result
     @PublishedApi internal var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
 
-    @PublishedApi internal var fluidResult: HTFluidResult by HTDelegates.onceInitialize()
+    @PublishedApi internal var primaryResult: HTFluidResult by HTDelegates.onceInitialize()
+
+    @PublishedApi internal var secondaryResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
 
     operator fun HTItemResult.unaryPlus() {
         itemResult = Optional.of(this)
-    }
-
-    operator fun HTFluidResult.unaryPlus() {
-        fluidResult = this
     }
 
     inline fun itemResult(builderAction: HTItemResultBuilder.() -> Unit) {
@@ -73,10 +56,17 @@ class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(Ragium
         +HTItemResultBuilder.build(builderAction)
     }
 
-    inline fun fluidResult(builderAction: HTFluidResultBuilder.() -> Unit) {
+    inline fun primaryResult(builderAction: HTFluidResultBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HTFluidResultBuilder.build(builderAction)
+        primaryResult = HTFluidResultBuilder.build(builderAction)
+    }
+
+    inline fun secondaryResult(builderAction: HTFluidResultBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        secondaryResult = Optional.of(HTFluidResultBuilder.build(builderAction))
     }
 }
