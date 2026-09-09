@@ -26,7 +26,7 @@ class HTFluidModelBuilder {
     /**
      * 液体流のスプライト
      */
-    var flowing: Material by HTDelegates.onceInitialize()
+    var flowing: Material by HTDelegates.onceInitialize { still }
 
     /**
      * 液体のオーバーレイのスプライト
@@ -47,7 +47,7 @@ class HTFluidModelBuilder {
      * 半透明な液体のテクスチャを割り当てます。
      * @see net.minecraft.client.renderer.block.FluidStateModelSet.WATER_MODEL
      */
-    fun setClear() {
+    fun water() {
         still = Material(vanillaId(HTConstants.BLOCK, "water_still"))
         flowing = Material(vanillaId(HTConstants.BLOCK, "water_flow"))
         overlay = Material(vanillaId(HTConstants.BLOCK, "water_overlay"))
@@ -56,21 +56,20 @@ class HTFluidModelBuilder {
     /**
      * 不透明な液体のテクスチャを割り当てます。
      */
-    fun setDull() {
+    fun dull() {
         still = Material(HTConstants.NEOFORGE.toId(HTConstants.BLOCK, "milk_still"))
         flowing = Material(HTConstants.NEOFORGE.toId(HTConstants.BLOCK, "milk_flowing"))
     }
 
-    fun setMolten() {
-        still = Material(RagiumAPI.id(HTConstants.BLOCK, "molten_still"))
-        flowing = Material(RagiumAPI.id(HTConstants.BLOCK, "molten_flowing"))
+    fun molten() {
+        still = Material(RagiumAPI.id(HTConstants.BLOCK, HTConstants.FLUID, "molten"))
     }
 
     /**
-     * 液体源のスプライトを液体流にコピーします。
+     * @since 26.1.5
      */
-    fun copyStillToFlowing() {
-        flowing = still
+    fun sticky() {
+        still = Material(RagiumAPI.id(HTConstants.BLOCK, HTConstants.FLUID, "sticky"))
     }
 
     /**
