@@ -47,7 +47,7 @@ class HTFluidModelBuilder {
      * 半透明な液体のテクスチャを割り当てます。
      * @see net.minecraft.client.renderer.block.FluidStateModelSet.WATER_MODEL
      */
-    fun water() {
+    fun transparent() {
         still = Material(vanillaId(HTConstants.BLOCK, "water_still"))
         flowing = Material(vanillaId(HTConstants.BLOCK, "water_flow"))
         overlay = Material(vanillaId(HTConstants.BLOCK, "water_overlay"))

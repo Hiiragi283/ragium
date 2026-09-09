@@ -2,7 +2,7 @@
   "type": "ragium:pyrolyzing",
   "fluid_result": {
     "amount": 250,
-    "id": "ragium:creosote"
+    "id": "ragium:wood_tar"
   },
   "ingredient": {
     "count": 4,

@@ -29,6 +29,7 @@ data object RagiumFluids {
     fun register(eventBus: IEventBus) {
         REGISTER.addAlias("calcium_hydroxide_solution", "sodium_hydroxide_solution")
         REGISTER.addAlias(RagiumAPI.id("molten_blaze"), vanillaId("lava"))
+        REGISTER.addAlias("creosote", "coal_tar")
 
         REGISTER.register(eventBus)
     }
@@ -132,7 +133,18 @@ data object RagiumFluids {
 
     // 3rd
     @JvmField
-    val CREOSOTE: HTFluidContent.Flowing = REGISTER.registerFlowing("creosote") { properties = liquid() }
+    val WOOD_TAR: HTFluidContent.Virtual = REGISTER.registerVirtual("wood_tar") {
+        properties = liquid()
+    }
+
+    @JvmField
+    val COAL_TAR: HTFluidContent.Virtual = REGISTER.registerVirtual("coal_tar") { properties = liquid() }
+
+    @JvmField
+    val AROMATIC_COMPOUND: HTFluidContent.Flowing = REGISTER.registerFlowing("aromatic_compound") {
+        properties = liquid()
+        typeFactory = { HTExplosiveFluidType(3f, it) }
+    }
 
     @JvmField
     val CRUDE_OIL: HTFluidContent.Flowing = REGISTER.registerFlowing("crude_oil") {
@@ -157,12 +169,6 @@ data object RagiumFluids {
     val FUEL: HTFluidContent.Flowing = REGISTER.registerFlowing("fuel") {
         properties = liquid()
         typeFactory = { HTExplosiveFluidType(4f, it) }
-    }
-
-    @JvmField
-    val AROMATIC_COMPOUND: HTFluidContent.Flowing = REGISTER.registerFlowing("aromatic_compound") {
-        properties = liquid()
-        typeFactory = { HTExplosiveFluidType(3f, it) }
     }
 
     @JvmField

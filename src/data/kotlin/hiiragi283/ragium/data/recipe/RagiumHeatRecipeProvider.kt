@@ -245,12 +245,12 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
     }
 
     private fun pyrolyzing() {
-        // Log -> Charcoal + Creosote
+        // Log -> Charcoal + Wood Tar
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(ItemTags.LOGS_THAT_BURN) }
             itemResult { +Items.CHARCOAL }
             fluidResult {
-                +RagiumFluids.CREOSOTE
+                +RagiumFluids.WOOD_TAR
                 amount = 250
             }
             time /= 2
@@ -263,17 +263,17 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.CHARCOAL) }
             fluidResult {
-                +RagiumFluids.CREOSOTE
+                +RagiumFluids.WOOD_TAR
                 amount = 250
             }
             time /= 2
         }.save(exporter)
-        // Coal -> Coal Coke + Creosote
+        // Coal -> Coal Coke + Coal Tar
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { items { +Items.COAL } }
             itemResult { +RagiumItems.COAL_COKE }
             fluidResult {
-                +RagiumFluids.CREOSOTE
+                +RagiumFluids.COAL_TAR
                 amount = 500
             }
             time /= 2
@@ -282,7 +282,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL) }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.COAL_COKE) }
             fluidResult {
-                +RagiumFluids.CREOSOTE
+                +RagiumFluids.COAL_TAR
                 amount = 500
             }
             time /= 2
@@ -291,7 +291,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL) }
             itemResult { +RagiumBlocks.getOrThrow(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL_COKE) }
             fluidResult {
-                +RagiumFluids.CREOSOTE
+                +RagiumFluids.COAL_TAR
                 amount = 500 * 9
             }
             time /= 2
@@ -381,14 +381,28 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             recipeId suffix "_from_crude_oil"
         }.save(exporter)
-        // Creosote -> Aromatic Compound
+
+        // Wood Tar -> Aromatic Compound
         RagiumRecipeBuilders.refining {
-            fluidIngredient { +holderSet(RagiumFluids.CREOSOTE) }
+            fluidIngredient { +holderSet(RagiumFluids.WOOD_TAR) }
+            fluidResult {
+                +RagiumFluids.AROMATIC_COMPOUND
+                amount = 500
+            }
+            recipeId suffix "_frol_wood_tar"
+        }.save(exporter)
+        // Coal Tar -> Aromatic Compound + Pitch Coke
+        RagiumRecipeBuilders.refining {
+            fluidIngredient { +holderSet(RagiumFluids.COAL_TAR) }
             fluidResult {
                 +RagiumFluids.AROMATIC_COMPOUND
                 amount = 250
             }
-            recipeId suffix "_from_creosote"
+            itemResult {
+                +RagiumItems.getOrThrow(HTItemPart.TINY, RagiumMaterial.Fuel.COAL_COKE)
+                count = 3
+            }
+            recipeId suffix "_frol_coal_tar"
         }.save(exporter)
     }
 

@@ -2,7 +2,7 @@
   "model": {
     "type": "neoforge:fluid_container",
     "apply_fluid_luminosity": false,
-    "fluid": "ragium:creosote",
+    "fluid": "ragium:wood_tar",
     "textures": {
       "base": "minecraft:item/bucket",
       "fluid": "neoforge:item/mask/bucket_fluid_drip",

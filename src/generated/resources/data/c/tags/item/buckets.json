@@ -3,7 +3,7 @@
     "#c:buckets/anti_rust_oil",
     "#c:buckets/aromatic_compound",
     "#c:buckets/chloride",
-    "#c:buckets/creosote",
+    "#c:buckets/coal_tar",
     "#c:buckets/crude_oil",
     "#c:buckets/dye/black",
     "#c:buckets/dye/blue",
@@ -40,6 +40,7 @@
     "#c:buckets/sodium_hydroxide_solution",
     "#c:buckets/sulfur_dioxide",
     "#c:buckets/sulfur_trioxide",
-    "#c:buckets/sulfuric_acid"
+    "#c:buckets/sulfuric_acid",
+    "#c:buckets/wood_tar"
   ]
 }
