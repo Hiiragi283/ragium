@@ -1,7 +1,7 @@
 {
   "type": "ragium:refining",
   "ingredient": {
-    "amount": 750,
+    "amount": 1000,
     "fluids": "#c:naphtha"
   },
   "item_result": {

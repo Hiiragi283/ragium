@@ -1,16 +1,16 @@
 {
   "type": "ragium:refining",
   "ingredient": {
-    "amount": 500,
+    "amount": 1000,
     "fluids": "#c:residue_oil"
   },
   "item_result": {
     "count": 1,
-    "id": "ragium:pitch_coke"
+    "id": "ragium:petrolatum"
   },
   "primary_result": {
     "amount": 250,
-    "id": "ragium:fuel"
+    "id": "ragium:aromatic_compound"
   },
   "time": 200
 }

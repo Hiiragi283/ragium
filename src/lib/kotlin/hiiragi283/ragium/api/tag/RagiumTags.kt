@@ -31,9 +31,6 @@ data object RagiumTags {
      * @since 26.1.5
      */
     data object Fluids {
-        @JvmField
-        val HYDROGEN_CRACKING: TagKey<Fluid> = create("hydrogen_cracking")
-
         @JvmStatic
         private fun create(vararg path: String): TagKey<Fluid> = FluidTags.create(RagiumAPI.id(*path))
     }

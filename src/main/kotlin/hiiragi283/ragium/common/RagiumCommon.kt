@@ -15,13 +15,11 @@ import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.resource.modifyPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.identity
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
-import hiiragi283.ragium.common.recipe.RTHydrogenCrackingRecipe
 import hiiragi283.ragium.common.recipe.RTLingeringBrewingRecipe
 import hiiragi283.ragium.common.recipe.RTSplashBrewingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
@@ -148,12 +146,6 @@ internal data object RagiumCommon {
                     }.buildSynthetic()
                 }
         }
-        RagiumRecipeLookups.REACTING.addRecipes(
-            Pair(
-                RecipeKey(RagiumAPI.id("/${RagiumConstants.REACTING}/hydrogen_cracking")),
-                RTHydrogenCrackingRecipe
-            )
-        )
 
         RagiumRecipeLookups.BREWING.addSubLookup { _ ->
             val mixes: List<PotionBrewing.Mix<Potion>> = HTPhysicalSideHelper.getPotionBrewing()

@@ -335,10 +335,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Naphtha -> Fuel + Sulfur
         RagiumRecipeBuilders.refining {
-            ingredient {
-                +holderSet(RagiumFluids.NAPHTHA)
-                amount = 750
-            }
+            ingredient { +holderSet(RagiumFluids.NAPHTHA) }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR) }
             primaryResult {
                 +RagiumFluids.FUEL
@@ -346,15 +343,12 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             recipeId suffix "_from_naphtha"
         }.save(exporter)
-        // Residue Oil -> Fuel + Pitch Coke
+        // Residue Oil -> Aromatic Compound + Petrolatum
         RagiumRecipeBuilders.refining {
-            ingredient {
-                +holderSet(RagiumFluids.RESIDUE_OIL)
-                amount = 500
-            }
-            itemResult { +RagiumItems.PITCH_COKE }
+            ingredient { +holderSet(RagiumFluids.RESIDUE_OIL) }
+            itemResult { +RagiumItems.PETROLATUM }
             primaryResult {
-                +RagiumFluids.FUEL
+                +RagiumFluids.AROMATIC_COMPOUND
                 amount = 250
             }
             recipeId suffix "_from_residue_oil"
@@ -374,12 +368,48 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             ingredient { +holderSet(RagiumFluids.COAL_TAR) }
             primaryResult {
                 +RagiumFluids.AROMATIC_COMPOUND
-                amount = 250
+                amount = 500
             }
             itemResult { +RagiumItems.PITCH_COKE }
             recipeId suffix "_frol_coal_tar"
         }.save(exporter)
     }
+
+    /*private fun cracked() {
+        // Naphtha -> Fuel
+        RagiumRecipeBuilders.refining {
+            ingredient {
+                +DataComponentFluidIngredient.of(
+                    false,
+                    RagiumDataComponents.HYDROGEN_CRACKED,
+                    Unit.INSTANCE,
+                    RagiumFluids.NAPHTHA.getOrThrow()
+                )
+            }
+            primaryResult {
+                +RagiumFluids.FUEL
+                amount = 750
+            }
+            recipeId suffix "_from_cracked_naphtha"
+        }.save(exporter)
+        // Residue Oil -> Fuel + Pitch Coke
+        RagiumRecipeBuilders.refining {
+            ingredient {
+                +DataComponentFluidIngredient.of(
+                    false,
+                    RagiumDataComponents.HYDROGEN_CRACKED,
+                    Unit.INSTANCE,
+                    RagiumFluids.RESIDUE_OIL.getOrThrow(),
+                )
+            }
+            itemResult { +RagiumItems.PITCH_COKE }
+            primaryResult {
+                +RagiumFluids.FUEL
+                amount = 500
+            }
+            recipeId suffix "_from_cracked_residue_oil"
+        }.save(exporter)
+    }*/
 
     override fun getName(): String = "Heat Recipes"
 }

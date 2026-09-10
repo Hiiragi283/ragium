@@ -160,6 +160,5 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"Scanned Item: %1$s")
-        add(RagiumTranslation.TOOLTIPS_HYDROGEN_CRACKED, "Hydrogen Cracked")
     }
 }

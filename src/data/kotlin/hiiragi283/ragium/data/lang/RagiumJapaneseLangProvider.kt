@@ -156,6 +156,5 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"スキャン済み: %1$s")
-        add(RagiumTranslation.TOOLTIPS_HYDROGEN_CRACKED, "水素クラッキング済み")
     }
 }
