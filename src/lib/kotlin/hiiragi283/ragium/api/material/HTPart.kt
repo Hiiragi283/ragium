@@ -24,8 +24,7 @@ sealed interface HTBlockPart : HTPart {
         @JvmField
         val entries: Sequence<HTBlockPart> = sequence {
             yieldAll(HTOreBlockPart.entries)
-            yield(HTStorageBlockPart)
-            yield(HTRawStorageBlockPart)
+            yieldAll(HTStorageBlockPart.entries)
         }
     }
 }
@@ -57,24 +56,21 @@ enum class HTOreBlockPart(private val idPattern: String, provider: HTLangPattern
  * @author Hiiragi Tsubasa
  * @since 26.1.5
  */
-data object HTStorageBlockPart :
+enum class HTStorageBlockPart(private val idPattern: String, provider: HTLangPatternProvider) :
     HTBlockPart,
-    HTLangPatternProvider by HTLangPatternProvider("Block of %s", "%sブロック") {
+    HTLangPatternProvider by provider {
+    DEFAULT("%s_block", "Block of %s", "%sブロック"),
+    RAW("raw_%s_block", "Block of Raw %s", "%sの原石ブロック")
+    ;
+
+    constructor(idPattern: String, enPattern: String, jaPattern: String) : this(
+        idPattern,
+        HTLangPatternProvider(enPattern, jaPattern)
+    )
+
     override val tagPrefix: HTTagPrefix = CommonTagPrefixes.STORAGE_BLOCK
 
-    override fun createName(material: HTMaterialLike): String = "${material.materialName}_block"
-}
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.5
- */
-data object HTRawStorageBlockPart :
-    HTBlockPart,
-    HTLangPatternProvider by HTLangPatternProvider("Block of Raw %s", "%sの原石ブロック") {
-    override val tagPrefix: HTTagPrefix = CommonTagPrefixes.STORAGE_BLOCK
-
-    override fun createName(material: HTMaterialLike): String = "raw_${material.materialName}_block"
+    override fun createName(material: HTMaterialLike): String = idPattern.replace("%s", material.materialName)
 }
 
 /**

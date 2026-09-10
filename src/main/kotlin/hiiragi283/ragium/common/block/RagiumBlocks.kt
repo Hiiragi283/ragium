@@ -93,7 +93,7 @@ data object RagiumBlocks {
             RagiumMaterial.Metal.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
             RagiumMaterial.Metal.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
         ).forEach { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
-            val part: HTBlockPart = HTStorageBlockPart
+            val part: HTBlockPart = HTStorageBlockPart.DEFAULT
             this[part, material] = REGISTER.registerSimple(part.createName(material), properties)
         }
     }

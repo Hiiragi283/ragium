@@ -3,11 +3,9 @@ package hiiragi283.ragium.data.loot
 import hiiragi283.lib.data.loot.HTBlockLootTableProvider
 import hiiragi283.lib.registry.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.HTMaterialAccess
 import hiiragi283.ragium.api.material.HTOreBlockPart
-import hiiragi283.ragium.api.material.HTRawStorageBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -29,7 +27,7 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
         // Material
         registerOres(RagiumMaterial.Mineral.SULFUR, HTItemPart.DUST, UniformGenerator.between(2f, 5f))
 
-        for (part: HTBlockPart in setOf(HTStorageBlockPart, HTRawStorageBlockPart)) {
+        for (part: HTStorageBlockPart in HTStorageBlockPart.entries) {
             RagiumBlocks.MATERIAL_BLOCKS.row(part).values.forEach { dropSelf(it.block) }
         }
     }

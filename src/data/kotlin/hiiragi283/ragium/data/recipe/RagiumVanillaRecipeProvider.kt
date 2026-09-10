@@ -353,7 +353,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         material: RagiumMaterial,
         basePrefix: HTTagPrefix,
         base: ItemLike,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart, material],
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         baseToBlock(material, Ingredient.of(holderSet(basePrefix, material)), base, block, size)
@@ -362,7 +362,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private fun baseToBlock(
         material: RagiumMaterial,
         basePart: HTItemPart,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart, material],
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         val base: ItemLike = RagiumItems.MATERIAL_ITEMS[basePart, material] ?: return
@@ -373,7 +373,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         material: RagiumMaterial,
         baseInput: Ingredient,
         base: ItemLike,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart, material],
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         if (block == null) return

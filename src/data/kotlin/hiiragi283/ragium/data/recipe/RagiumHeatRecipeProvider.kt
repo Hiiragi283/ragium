@@ -289,7 +289,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL) }
-            itemResult { +RagiumBlocks.getOrThrow(HTStorageBlockPart, RagiumMaterial.Fuel.COAL_COKE) }
+            itemResult { +RagiumBlocks.getOrThrow(HTStorageBlockPart.DEFAULT, RagiumMaterial.Fuel.COAL_COKE) }
             fluidResult {
                 +RagiumFluids.COAL_TAR
                 amount = 500 * 9
