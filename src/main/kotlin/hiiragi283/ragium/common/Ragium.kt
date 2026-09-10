@@ -19,6 +19,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.RagiumDataComponents
+import hiiragi283.ragium.api.material.HTBlockPart
+import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -34,9 +36,13 @@ import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
+import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.Rarity
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -44,6 +50,7 @@ import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
@@ -53,6 +60,7 @@ import net.neoforged.neoforge.transfer.access.ItemAccess
 data object Ragium : HTCommonMod() {
     override fun initialize(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(::register)
+        eventBus.addListener(::modifyDefaultComponents)
 
         RagiumFluids.register(eventBus)
         RagiumBlocks.register(eventBus)
@@ -136,6 +144,21 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumRegistries.Keys.WIDGET_TYPE) { helper ->
             for (widgetType: HTWidgetType<*> in RagiumWidgetTypes.allTypes) {
                 helper.register(widgetType.keyOrThrow, widgetType)
+            }
+        }
+    }
+
+    private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
+        // Block
+        setOf(
+            RagiumMaterial.Metal.BLACK_STEEL to Rarity.UNCOMMON,
+            RagiumMaterial.Metal.VOID_METAL to Rarity.RARE
+        ).forEach { (material: RagiumMaterial, rarity: Rarity) ->
+            for (part: HTBlockPart in HTBlockPart.entries) {
+                val block: ItemLike = RagiumBlocks.MATERIAL_BLOCKS[part, material] ?: continue
+                event.modify(block) { builder: DataComponentMap.Builder, _, _ ->
+                    builder.set(DataComponents.RARITY, rarity)
+                }
             }
         }
     }

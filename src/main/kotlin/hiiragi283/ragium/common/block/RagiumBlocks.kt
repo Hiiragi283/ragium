@@ -3,21 +3,18 @@ package hiiragi283.ragium.common.block
 import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
+import hiiragi283.lib.collection.buildSetMultiMap
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItemRegister
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
-import hiiragi283.lib.util.Identity
-import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SoundType
@@ -66,45 +63,35 @@ data object RagiumBlocks {
 
     @JvmField
     val MATERIAL_BLOCKS: Table<HTBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildTable {
-        fun register(
-            part: HTBlockPart,
-            material: RagiumMaterial,
-            blockProp: BlockBehaviour.Properties,
-            itemProp: Identity<Item.Properties> = identity()
-        ) {
-            this[part, material] = REGISTER.registerSimple(part.createName(material), blockProp, itemProp)
+        fun register(part: HTBlockPart, material: RagiumMaterial, blockProp: BlockBehaviour.Properties) {
+            this[part, material] = REGISTER.registerSimple(part.createName(material), blockProp)
         }
 
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Fuel.CHARCOAL,
-            copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF)
-        )
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Fuel.COAL_COKE,
-            copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY)
-        )
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Gem.ECHO,
-            copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN)
-        )
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Metal.SOOTY_IRON,
-            copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY)
-        )
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Metal.BLACK_STEEL,
-            copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK)
-        ) { it.rarity(Rarity.UNCOMMON) }
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Metal.VOID_METAL,
-            copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
-        ) { it.rarity(Rarity.RARE) }
+        // Ore
+        buildSetMultiMap {
+            putAll(RagiumMaterial.Mineral.SULFUR, HTBlockPart.ORE, HTBlockPart.DEEPSLATE_ORE, HTBlockPart.NETHER_ORE)
+        }.flatEntries.forEach { (material: RagiumMaterial, part: HTBlockPart) ->
+            val properties: BlockBehaviour.Properties = when (part) {
+                HTBlockPart.ORE -> Blocks.COAL_ORE
+                HTBlockPart.DEEPSLATE_ORE -> Blocks.DEEPSLATE_COAL_ORE
+                HTBlockPart.NETHER_ORE -> Blocks.NETHER_QUARTZ_ORE
+                HTBlockPart.END_ORE -> Blocks.END_STONE
+                else -> return@forEach
+            }.let(::copyOf)
+            register(part, material, properties)
+        }
+
+        // Storage Block
+        setOf(
+            RagiumMaterial.Fuel.CHARCOAL to copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF),
+            RagiumMaterial.Fuel.COAL_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY),
+            RagiumMaterial.Gem.ECHO to copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN),
+            RagiumMaterial.Metal.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
+            RagiumMaterial.Metal.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
+            RagiumMaterial.Metal.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
+        ).forEach { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
+            register(HTBlockPart.STORAGE_BLOCK, material, properties)
+        }
     }
 
     @JvmStatic
