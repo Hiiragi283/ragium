@@ -9,6 +9,9 @@ import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.HTMaterialAccess
 import hiiragi283.ragium.api.material.HTMaterialContents
+import hiiragi283.ragium.api.material.HTOreBlockPart
+import hiiragi283.ragium.api.material.HTRawStorageBlockPart
+import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
@@ -33,50 +36,50 @@ class HTMaterialAccessImpl : HTMaterialAccess {
                 }
 
                 // Fuels
-                accept(HTBlockPart.ORE, RagiumMaterial.Fuel.COAL, Blocks.COAL_ORE)
-                accept(HTBlockPart.DEEPSLATE_ORE, RagiumMaterial.Fuel.COAL, Blocks.DEEPSLATE_COAL_ORE)
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL, Blocks.COAL_BLOCK)
+                accept(HTOreBlockPart.STONE, RagiumMaterial.Fuel.COAL, Blocks.COAL_ORE)
+                accept(HTOreBlockPart.DEEPSLATE, RagiumMaterial.Fuel.COAL, Blocks.DEEPSLATE_COAL_ORE)
+                accept(HTStorageBlockPart, RagiumMaterial.Fuel.COAL, Blocks.COAL_BLOCK)
                 // Mineral
-                accept(HTBlockPart.ORE, RagiumMaterial.Mineral.REDSTONE, Blocks.REDSTONE_ORE)
-                accept(HTBlockPart.DEEPSLATE_ORE, RagiumMaterial.Mineral.REDSTONE, Blocks.DEEPSLATE_REDSTONE_ORE)
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Mineral.REDSTONE, Blocks.REDSTONE_BLOCK)
+                accept(HTOreBlockPart.STONE, RagiumMaterial.Mineral.REDSTONE, Blocks.REDSTONE_ORE)
+                accept(HTOreBlockPart.DEEPSLATE, RagiumMaterial.Mineral.REDSTONE, Blocks.DEEPSLATE_REDSTONE_ORE)
+                accept(HTStorageBlockPart, RagiumMaterial.Mineral.REDSTONE, Blocks.REDSTONE_BLOCK)
 
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Mineral.GLOWSTONE, Blocks.GLOWSTONE)
+                accept(HTStorageBlockPart, RagiumMaterial.Mineral.GLOWSTONE, Blocks.GLOWSTONE)
                 // Gem
-                accept(HTBlockPart.ORE, RagiumMaterial.Gem.LAPIS, Blocks.LAPIS_ORE)
-                accept(HTBlockPart.DEEPSLATE_ORE, RagiumMaterial.Gem.LAPIS, Blocks.DEEPSLATE_LAPIS_ORE)
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Gem.LAPIS, Blocks.LAPIS_BLOCK)
+                accept(HTOreBlockPart.STONE, RagiumMaterial.Gem.LAPIS, Blocks.LAPIS_ORE)
+                accept(HTOreBlockPart.DEEPSLATE, RagiumMaterial.Gem.LAPIS, Blocks.DEEPSLATE_LAPIS_ORE)
+                accept(HTStorageBlockPart, RagiumMaterial.Gem.LAPIS, Blocks.LAPIS_BLOCK)
 
-                accept(HTBlockPart.NETHER_ORE, RagiumMaterial.Gem.QUARTZ, Blocks.NETHER_QUARTZ_ORE)
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Gem.QUARTZ, Blocks.QUARTZ_BLOCK)
+                accept(HTOreBlockPart.NETHER, RagiumMaterial.Gem.QUARTZ, Blocks.NETHER_QUARTZ_ORE)
+                accept(HTStorageBlockPart, RagiumMaterial.Gem.QUARTZ, Blocks.QUARTZ_BLOCK)
 
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Gem.AMETHYST, Blocks.AMETHYST_BLOCK)
+                accept(HTStorageBlockPart, RagiumMaterial.Gem.AMETHYST, Blocks.AMETHYST_BLOCK)
 
-                accept(HTBlockPart.ORE, RagiumMaterial.Gem.DIAMOND, Blocks.DIAMOND_ORE)
-                accept(HTBlockPart.DEEPSLATE_ORE, RagiumMaterial.Gem.DIAMOND, Blocks.DEEPSLATE_DIAMOND_ORE)
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Gem.DIAMOND, Blocks.DIAMOND_BLOCK)
+                accept(HTOreBlockPart.STONE, RagiumMaterial.Gem.DIAMOND, Blocks.DIAMOND_ORE)
+                accept(HTOreBlockPart.DEEPSLATE, RagiumMaterial.Gem.DIAMOND, Blocks.DEEPSLATE_DIAMOND_ORE)
+                accept(HTStorageBlockPart, RagiumMaterial.Gem.DIAMOND, Blocks.DIAMOND_BLOCK)
 
-                accept(HTBlockPart.ORE, RagiumMaterial.Gem.EMERALD, Blocks.EMERALD_ORE)
-                accept(HTBlockPart.DEEPSLATE_ORE, RagiumMaterial.Gem.EMERALD, Blocks.DEEPSLATE_EMERALD_ORE)
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Gem.EMERALD, Blocks.EMERALD_BLOCK)
+                accept(HTOreBlockPart.STONE, RagiumMaterial.Gem.EMERALD, Blocks.EMERALD_ORE)
+                accept(HTOreBlockPart.DEEPSLATE, RagiumMaterial.Gem.EMERALD, Blocks.DEEPSLATE_EMERALD_ORE)
+                accept(HTStorageBlockPart, RagiumMaterial.Gem.EMERALD, Blocks.EMERALD_BLOCK)
                 // Metal
-                accept(HTBlockPart.ORE, RagiumMaterial.Metal.COPPER, Blocks.COPPER_ORE)
-                accept(HTBlockPart.DEEPSLATE_ORE, RagiumMaterial.Metal.COPPER, Blocks.DEEPSLATE_COPPER_ORE)
-                accept(HTBlockPart.RAW_STORAGE_BLOCK, RagiumMaterial.Metal.COPPER, Blocks.RAW_COPPER_BLOCK)
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Metal.COPPER, Blocks.COPPER_BLOCK)
+                accept(HTOreBlockPart.STONE, RagiumMaterial.Metal.COPPER, Blocks.COPPER_ORE)
+                accept(HTOreBlockPart.DEEPSLATE, RagiumMaterial.Metal.COPPER, Blocks.DEEPSLATE_COPPER_ORE)
+                accept(HTRawStorageBlockPart, RagiumMaterial.Metal.COPPER, Blocks.RAW_COPPER_BLOCK)
+                accept(HTStorageBlockPart, RagiumMaterial.Metal.COPPER, Blocks.COPPER_BLOCK)
 
-                accept(HTBlockPart.ORE, RagiumMaterial.Metal.IRON, Blocks.IRON_ORE)
-                accept(HTBlockPart.DEEPSLATE_ORE, RagiumMaterial.Metal.IRON, Blocks.DEEPSLATE_IRON_ORE)
-                accept(HTBlockPart.RAW_STORAGE_BLOCK, RagiumMaterial.Metal.IRON, Blocks.RAW_IRON_BLOCK)
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Metal.IRON, Blocks.IRON_BLOCK)
+                accept(HTOreBlockPart.STONE, RagiumMaterial.Metal.IRON, Blocks.IRON_ORE)
+                accept(HTOreBlockPart.DEEPSLATE, RagiumMaterial.Metal.IRON, Blocks.DEEPSLATE_IRON_ORE)
+                accept(HTRawStorageBlockPart, RagiumMaterial.Metal.IRON, Blocks.RAW_IRON_BLOCK)
+                accept(HTStorageBlockPart, RagiumMaterial.Metal.IRON, Blocks.IRON_BLOCK)
 
-                accept(HTBlockPart.ORE, RagiumMaterial.Metal.GOLD, Blocks.GOLD_ORE)
-                accept(HTBlockPart.DEEPSLATE_ORE, RagiumMaterial.Metal.GOLD, Blocks.DEEPSLATE_GOLD_ORE)
-                accept(HTBlockPart.NETHER_ORE, RagiumMaterial.Metal.GOLD, Blocks.NETHER_GOLD_ORE)
-                accept(HTBlockPart.RAW_STORAGE_BLOCK, RagiumMaterial.Metal.GOLD, Blocks.RAW_GOLD_BLOCK)
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Metal.GOLD, Blocks.GOLD_BLOCK)
+                accept(HTOreBlockPart.STONE, RagiumMaterial.Metal.GOLD, Blocks.GOLD_ORE)
+                accept(HTOreBlockPart.DEEPSLATE, RagiumMaterial.Metal.GOLD, Blocks.DEEPSLATE_GOLD_ORE)
+                accept(HTOreBlockPart.NETHER, RagiumMaterial.Metal.GOLD, Blocks.NETHER_GOLD_ORE)
+                accept(HTRawStorageBlockPart, RagiumMaterial.Metal.GOLD, Blocks.RAW_GOLD_BLOCK)
+                accept(HTStorageBlockPart, RagiumMaterial.Metal.GOLD, Blocks.GOLD_BLOCK)
                 // Alloy
-                accept(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Metal.NETHERITE, Blocks.NETHERITE_BLOCK)
+                accept(HTStorageBlockPart, RagiumMaterial.Metal.NETHERITE, Blocks.NETHERITE_BLOCK)
             }
         ) { part: HTBlockPart, material: RagiumMaterial -> "Unknown $part block for $material" }
 

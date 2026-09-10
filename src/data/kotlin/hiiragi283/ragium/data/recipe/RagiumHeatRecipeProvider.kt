@@ -4,8 +4,8 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
-import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -289,7 +289,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL) }
-            itemResult { +RagiumBlocks.getOrThrow(HTBlockPart.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL_COKE) }
+            itemResult { +RagiumBlocks.getOrThrow(HTStorageBlockPart, RagiumMaterial.Fuel.COAL_COKE) }
             fluidResult {
                 +RagiumFluids.COAL_TAR
                 amount = 500 * 9

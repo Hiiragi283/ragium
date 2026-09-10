@@ -12,11 +12,15 @@ import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTBlockPart
+import hiiragi283.ragium.api.material.HTOreBlockPart
+import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.DropExperienceBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
@@ -63,22 +67,21 @@ data object RagiumBlocks {
 
     @JvmField
     val MATERIAL_BLOCKS: Table<HTBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildTable {
-        fun register(part: HTBlockPart, material: RagiumMaterial, blockProp: BlockBehaviour.Properties) {
-            this[part, material] = REGISTER.registerSimple(part.createName(material), blockProp)
-        }
-
         // Ore
         buildSetMultiMap {
-            putAll(RagiumMaterial.Mineral.SULFUR, HTBlockPart.ORE, HTBlockPart.DEEPSLATE_ORE, HTBlockPart.NETHER_ORE)
-        }.flatEntries.forEach { (material: RagiumMaterial, part: HTBlockPart) ->
+            putAll(RagiumMaterial.Mineral.SULFUR, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
+        }.flatEntries.forEach { (material: RagiumMaterial, part: HTOreBlockPart) ->
             val properties: BlockBehaviour.Properties = when (part) {
-                HTBlockPart.ORE -> Blocks.COAL_ORE
-                HTBlockPart.DEEPSLATE_ORE -> Blocks.DEEPSLATE_COAL_ORE
-                HTBlockPart.NETHER_ORE -> Blocks.NETHER_QUARTZ_ORE
-                HTBlockPart.END_ORE -> Blocks.END_STONE
-                else -> return@forEach
+                HTOreBlockPart.STONE -> Blocks.COAL_ORE
+                HTOreBlockPart.DEEPSLATE -> Blocks.DEEPSLATE_COAL_ORE
+                HTOreBlockPart.NETHER -> Blocks.NETHER_QUARTZ_ORE
+                HTOreBlockPart.END -> Blocks.END_STONE
             }.let(::copyOf)
-            register(part, material, properties)
+            this[part, material] = REGISTER.registerSimple(
+                part.createName(material),
+                properties,
+                blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), it) }
+            )
         }
 
         // Storage Block
@@ -90,7 +93,8 @@ data object RagiumBlocks {
             RagiumMaterial.Metal.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
             RagiumMaterial.Metal.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
         ).forEach { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
-            register(HTBlockPart.STORAGE_BLOCK, material, properties)
+            val part: HTBlockPart = HTStorageBlockPart
+            this[part, material] = REGISTER.registerSimple(part.createName(material), properties)
         }
     }
 

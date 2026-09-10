@@ -15,8 +15,8 @@ import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
-import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -353,7 +353,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         material: RagiumMaterial,
         basePrefix: HTTagPrefix,
         base: ItemLike,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         baseToBlock(material, Ingredient.of(holderSet(basePrefix, material)), base, block, size)
@@ -362,7 +362,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private fun baseToBlock(
         material: RagiumMaterial,
         basePart: HTItemPart,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         val base: ItemLike = RagiumItems.MATERIAL_ITEMS[basePart, material] ?: return
@@ -373,7 +373,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         material: RagiumMaterial,
         baseInput: Ingredient,
         base: ItemLike,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         if (block == null) return
