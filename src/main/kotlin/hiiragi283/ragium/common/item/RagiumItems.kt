@@ -26,7 +26,6 @@ data object RagiumItems {
         REGISTER.addAlias("steel_dust", "sooty_iron_dust")
         REGISTER.addAlias("steel_ingot", "sooty_iron_ingot")
         REGISTER.addAlias("steel_nugget", "sooty_iron_nugget")
-        REGISTER.addAlias("tar", "pitch_coke")
 
         REGISTER.register(eventBus)
     }
@@ -101,10 +100,10 @@ data object RagiumItems {
     val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.COAL_COKE.materialName)
 
     @JvmField
-    val PITCH_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("pitch_coke")
+    val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
 
     @JvmField
-    val PETROLATUM: HTSimpleDeferredItem = REGISTER.registerSimpleItem("petrolatum")
+    val PITCH_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("pitch_coke")
 
     // Chemical
     @JvmField

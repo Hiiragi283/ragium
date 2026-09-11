@@ -3,6 +3,8 @@ package hiiragi283.ragium.client.integration.jei.category
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.integration.jei.category.HTHolderRecipeCategory
+import hiiragi283.lib.recipe.result.HTFluidResult
+import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.client.integration.jei.RagiumJeiRecipeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -34,17 +36,15 @@ class RTReactingRecipeCategory(guiHelper: IGuiHelper) :
                 .setSlotBackground(HTBackgroundType.EXTRA_INPUT, it.amount)
         }
         // outputs
-        recipe.fluidResult.let {
-            builder
-                .addOutputSlot(getPosition(5), getPosition(0))
-                .add(it)
-                .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
-        }
-        val itemOutput: IRecipeSlotBuilder = builder.addOutputSlot(
-            getPosition(7),
-            getPosition(0)
-        ).setSlotBackground(HTBackgroundType.OUTPUT)
-        recipe.itemResult.ifPresent(itemOutput::add)
+        val (itemResult: HTItemResult?, fluidResult: HTFluidResult?) = recipe.results.toPair()
+        val fluidOutput: IRecipeSlotBuilder = builder
+            .addOutputSlot(getPosition(5), getPosition(0))
+            .setSlotBackground(HTBackgroundType.OUTPUT)
+        val itemOutput: IRecipeSlotBuilder = builder
+            .addOutputSlot(getPosition(7), getPosition(0))
+            .setSlotBackground(HTBackgroundType.OUTPUT)
+        fluidResult?.let { fluidOutput.add(it).setSlotBackground(HTBackgroundType.OUTPUT, it.amount) }
+        itemResult?.let(itemOutput::add)
     }
 
     override fun setupRecipeExtras(

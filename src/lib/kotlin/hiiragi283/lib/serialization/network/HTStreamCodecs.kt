@@ -102,13 +102,42 @@ data object HTStreamCodecs {
     fun <BUF : ByteBuf, A : Any, B : Any> ior(
         left: StreamCodec<in BUF, A>,
         right: StreamCodec<in BUF, B>
-    ): StreamCodec<BUF, Ior<A, B>> = either(
-        either(left, right),
-        pair(left, right)
-    ).map(
-        { either: Either<Either<A, B>, Pair<A, B>> -> either.fold(Ior.Companion::fromEither, Ior.Companion::fromPair) },
-        Ior<A, B>::unwrap
-    )
+    ): StreamCodec<BUF, Ior<A, B>> = HTIorStreamCodec(left, right)
+
+    private class HTIorStreamCodec<B : ByteBuf, L : Any, R : Any>(
+        private val left: StreamCodec<in B, L>,
+        private val right: StreamCodec<in B, R>
+    ) : StreamCodec<B, Ior<L, R>> {
+        override fun decode(buffer: B): Ior<L, R> = when (buffer.readInt()) {
+            1 -> Ior.Left(left.decode(buffer))
+
+            2 -> Ior.Right(right.decode(buffer))
+
+            else -> {
+                val leftIn: L = left.decode(buffer)
+                val rightIn: R = right.decode(buffer)
+                Ior.Both(leftIn, rightIn)
+            }
+        }
+
+        override fun encode(buffer: B, value: Ior<L, R>) {
+            value.fold(
+                {
+                    buffer.writeInt(1)
+                    left.encode(buffer, it)
+                },
+                {
+                    buffer.writeInt(2)
+                    right.encode(buffer, it)
+                },
+                { left: L, right: R ->
+                    buffer.writeInt(0)
+                    this.left.encode(buffer, left)
+                    this.right.encode(buffer, right)
+                }
+            )
+        }
+    }
 
     /**
      * [Enum]の[StreamCodec]を返します。

@@ -92,9 +92,9 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     }
 
     private fun mixing() {
-        // Naphtha + Petrolatum -> Anti-rust Oil
+        // Naphtha + Redstone -> Anti-rust Oil
         RagiumRecipeBuilders.mixing {
-            itemIngredient { items { +RagiumItems.PETROLATUM } }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
             fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
             result { +RagiumFluids.ANTI_RUST_OIL }
         }.save(exporter)

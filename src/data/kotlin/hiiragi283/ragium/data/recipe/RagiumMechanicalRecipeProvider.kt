@@ -523,6 +523,16 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 recipeId suffix "_from_raw"
             }.save(exporter)
         }
+
+        // Ragium
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Mineral.SULFUR) }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR)
+                count = 6
+            }
+            recipeId suffix "_from_ore"
+        }.save(exporter)
     }
 
     private fun dyes() {

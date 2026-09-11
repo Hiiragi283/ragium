@@ -1,12 +1,12 @@
 {
-  "type": "ragium:refining",
+  "type": "ragium:pyrolyzing",
   "fluid_result": {
-    "amount": 250,
+    "amount": 1000,
     "id": "ragium:aromatic_compound"
   },
   "ingredient": {
-    "amount": 1000,
-    "fluids": "#c:coal_tar"
+    "count": 1,
+    "items": "ragium:tar"
   },
   "item_result": {
     "count": 1,

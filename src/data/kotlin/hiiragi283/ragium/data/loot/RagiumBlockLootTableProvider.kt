@@ -37,9 +37,9 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
             val block: HTSimpleDeferredBlock = RagiumBlocks.MATERIAL_BLOCKS[part, material]?.block ?: continue
             val drop: ItemLike = HTMaterialAccess.INSTANCE.getMaterialItem(rawPart, material) ?: continue
             add(block) { block: Block ->
-                val builder: LootPoolSingletonContainer.Builder<*> =
-                    LootItem.lootTableItem(drop).apply(ApplyBonusCount.addOreBonusCount(fortune))
+                val builder: LootPoolSingletonContainer.Builder<*> = LootItem.lootTableItem(drop)
                 countProvider?.let(SetItemCountFunction::setCount)?.let(builder::apply)
+                builder.apply(ApplyBonusCount.addOreBonusCount(fortune))
                 this.createSilkTouchDispatchTable(block, this.applyExplosionDecay(block, builder))
             }
         }

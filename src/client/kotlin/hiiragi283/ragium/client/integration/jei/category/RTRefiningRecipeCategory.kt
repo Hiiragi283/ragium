@@ -15,7 +15,7 @@ class RTRefiningRecipeCategory(guiHelper: IGuiHelper) :
     HTHolderRecipeCategory<RTRefiningRecipe>(
         guiHelper,
         RagiumJeiRecipeTypes.REFINING,
-        18 * 8,
+        18 * 6,
         18 * 1,
         RTRefiningRecipe.CODEC
     ) {
@@ -28,27 +28,20 @@ class RTRefiningRecipeCategory(guiHelper: IGuiHelper) :
                 .setSlotBackground(HTBackgroundType.INPUT, it.amount)
         }
         // outputs
-        recipe.primary.let {
+        recipe.fluidResult.let {
             builder
                 .addOutputSlot(getPosition(3), getPosition(0))
                 .add(it)
                 .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
         }
-        val fluidOutput: IRecipeSlotBuilder = builder.addOutputSlot(
-            getPosition(5),
-            getPosition(0)
-        ).setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
-        recipe.secondary.ifPresent { fluidOutput.add(it).setSlotBackground(HTBackgroundType.EXTRA_OUTPUT, it.amount) }
-        val itemOutput: IRecipeSlotBuilder = builder.addOutputSlot(
-            getPosition(7),
-            getPosition(0)
-        ).setSlotBackground(HTBackgroundType.OUTPUT)
+        val itemOutput: IRecipeSlotBuilder = builder
+            .addOutputSlot(getPosition(5), getPosition(0))
+            .setSlotBackground(HTBackgroundType.OUTPUT)
         recipe.itemResult.ifPresent(itemOutput::add)
     }
 
     override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTRefiningRecipe, focuses: IFocusGroup) {
         builder.addRecipeArrow(recipe).setPosition(getPosition(1.25), getPosition(0))
         builder.addRecipePlus(getPosition(4))
-        builder.addRecipePlus(getPosition(6))
     }
 }

@@ -10,6 +10,7 @@ import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
+import hiiragi283.lib.util.Ior
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import net.minecraft.resources.Identifier
@@ -19,10 +20,10 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe.Basic>(RagiumConstants.REACTING) {
-    override fun getPrimalId(): Identifier = fluidResult.getId()
+    override fun getPrimalId(): Identifier = results.map(HTItemResult::getId, HTFluidResult::getId)
 
     override fun createRecipe(): RTReactingRecipe.Basic =
-        RTReactingRecipe.Basic(primaryIngredient, secondaryIngredient, itemResult, fluidResult, progressData)
+        RTReactingRecipe.Basic(primaryIngredient, secondaryIngredient, results, progressData)
 
     // Ingredient
     @PublishedApi internal var primaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
@@ -46,14 +47,18 @@ class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe.Basic>(
     // Result
     @PublishedApi internal var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
 
-    @PublishedApi internal var fluidResult: HTFluidResult by HTDelegates.onceInitialize()
+    @PublishedApi internal var fluidResult: Optional<HTFluidResult> by HTDelegates.onceInitialize()
+
+    private val results: Ior<HTItemResult, HTFluidResult> by lazy {
+        Ior.fromNullable(itemResult, fluidResult).orElseThrow { error("Either item or fluid result required") }
+    }
 
     operator fun HTItemResult.unaryPlus() {
         itemResult = Optional.of(this)
     }
 
     operator fun HTFluidResult.unaryPlus() {
-        fluidResult = this
+        fluidResult = Optional.of(this)
     }
 
     inline fun itemResult(builderAction: HTItemResultBuilder.() -> Unit) {

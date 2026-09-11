@@ -34,10 +34,9 @@ class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) :
         ).setSlotBackground(HTBackgroundType.INPUT)
         recipe.itemIngredient.ifPresent(itemInput::add)
         // outputs
-        val outputSlots: Array<IRecipeSlotBuilder> =
-            Array(3) { index: Int ->
-                builder.addOutputSlot(getPosition(5 + index), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT)
-            }
+        val outputSlots: Array<IRecipeSlotBuilder> = Array(3) { index: Int ->
+            builder.addOutputSlot(getPosition(5 + index), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT)
+        }
         for (index: Int in recipe.results.indices) {
             val result: HTFluidResult = recipe.results[index]
             outputSlots[index]

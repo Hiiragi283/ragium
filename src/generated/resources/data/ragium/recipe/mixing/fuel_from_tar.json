@@ -2,15 +2,15 @@
   "type": "ragium:mixing",
   "fluid_ingredient": {
     "amount": 1000,
-    "fluids": "#c:naphtha"
+    "fluids": "#c:hydrogen"
   },
   "item_ingredient": {
     "count": 1,
-    "items": "#c:dusts/redstone"
+    "items": "ragium:tar"
   },
   "result": {
-    "amount": 1000,
-    "id": "ragium:anti_rust_oil"
+    "amount": 500,
+    "id": "ragium:fuel"
   },
   "time": 200
 }

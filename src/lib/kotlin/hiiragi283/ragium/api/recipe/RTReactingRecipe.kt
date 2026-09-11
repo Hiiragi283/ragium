@@ -13,14 +13,13 @@ import hiiragi283.lib.recipe.input.HTFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
+import hiiragi283.lib.serialization.network.HTStreamCodecs
+import hiiragi283.lib.util.Ior
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.neoforged.neoforge.fluids.FluidInstance
-import java.util.Optional
 
 interface RTReactingRecipe :
     HTRecipePredicates.DoubleFluid,
@@ -31,8 +30,7 @@ interface RTReactingRecipe :
     data class Basic(
         val primary: HTFluidIngredient,
         val secondary: HTFluidIngredient,
-        val itemResult: Optional<HTItemResult>,
-        val fluidResult: HTFluidResult,
+        val results: Ior<HTItemResult, HTFluidResult>,
         override val progressData: HTProgressData
     ) : RTReactingRecipe,
         HTProgressRecipe.Simple<HTFluidRecipeInput>,
@@ -43,8 +41,10 @@ interface RTReactingRecipe :
                 instance.group(
                     HTFluidIngredient.CODEC.fieldOf(HTConstants.PRIMARY_INGREDIENT).forGetter(Basic::primary),
                     HTFluidIngredient.CODEC.fieldOf(HTConstants.SECONDARY_INGREDIENT).forGetter(Basic::secondary),
-                    HTItemResult.CODEC.optionalFieldOf(HTConstants.ITEM_RESULT).forGetter(Basic::itemResult),
-                    HTFluidResult.CODEC.fieldOf(HTConstants.FLUID_RESULT).forGetter(Basic::fluidResult),
+                    HTCodecs.ior(
+                        HTItemResult.CODEC.fieldOf(HTConstants.ITEM_RESULT),
+                        HTFluidResult.CODEC.fieldOf(HTConstants.FLUID_RESULT)
+                    ).forGetter(Basic::results),
                     HTProgressData.CODEC.forGetter(Basic::progressData)
                 ).apply(instance, ::Basic)
             }
@@ -55,10 +55,8 @@ interface RTReactingRecipe :
                 Basic::primary,
                 HTFluidIngredient.STREAM_CODEC,
                 Basic::secondary,
-                ByteBufCodecs.optional(HTItemResult.STREAM_CODEC),
-                Basic::itemResult,
-                HTFluidResult.STREAM_CODEC,
-                Basic::fluidResult,
+                HTStreamCodecs.ior(HTItemResult.STREAM_CODEC, HTFluidResult.STREAM_CODEC),
+                Basic::results,
                 HTProgressData.STREAM_CODEC,
                 Basic::progressData,
                 ::Basic
@@ -72,7 +70,7 @@ interface RTReactingRecipe :
             primary.test(first) && secondary.test(second)
 
         override fun apply(first: FluidInstance, second: FluidInstance): HTItemAndFluidResult =
-            HTItemAndFluidResult(itemResult.createOrEmpty(), fluidResult.create())
+            results.mapLeft(HTItemResult::create).mapRight(HTFluidResult::create).let(::HTItemAndFluidResult)
 
         override fun getRequiredAmount(first: FluidInstance, second: FluidInstance): Pair<Int, Int> =
             primary.getRequiredAmount(first) to secondary.getRequiredAmount(second)

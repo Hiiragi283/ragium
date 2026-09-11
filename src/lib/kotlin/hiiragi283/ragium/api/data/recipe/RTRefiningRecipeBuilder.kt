@@ -19,10 +19,9 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(RagiumConstants.REFINING) {
-    override fun getPrimalId(): Identifier = primaryResult.getId()
+    override fun getPrimalId(): Identifier = fluidResult.getId()
 
-    override fun createRecipe(): RTRefiningRecipe =
-        RTRefiningRecipe(ingredient, itemResult, primaryResult, secondaryResult, progressData)
+    override fun createRecipe(): RTRefiningRecipe = RTRefiningRecipe(ingredient, itemResult, fluidResult, progressData)
 
     // Ingredient
     @PublishedApi internal var ingredient: HTFluidIngredient by HTDelegates.onceInitialize()
@@ -41,12 +40,14 @@ class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(Ragium
     // Result
     @PublishedApi internal var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
 
-    @PublishedApi internal var primaryResult: HTFluidResult by HTDelegates.onceInitialize()
-
-    @PublishedApi internal var secondaryResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
+    @PublishedApi internal var fluidResult: HTFluidResult by HTDelegates.onceInitialize()
 
     operator fun HTItemResult.unaryPlus() {
         itemResult = Optional.of(this)
+    }
+
+    operator fun HTFluidResult.unaryPlus() {
+        fluidResult = this
     }
 
     inline fun itemResult(builderAction: HTItemResultBuilder.() -> Unit) {
@@ -56,17 +57,10 @@ class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(Ragium
         +HTItemResultBuilder.build(builderAction)
     }
 
-    inline fun primaryResult(builderAction: HTFluidResultBuilder.() -> Unit) {
+    inline fun fluidResult(builderAction: HTFluidResultBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        primaryResult = HTFluidResultBuilder.build(builderAction)
-    }
-
-    inline fun secondaryResult(builderAction: HTFluidResultBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        secondaryResult = Optional.of(HTFluidResultBuilder.build(builderAction))
+        +HTFluidResultBuilder.build(builderAction)
     }
 }
