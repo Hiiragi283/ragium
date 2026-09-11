@@ -18,6 +18,8 @@ import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProvider
 import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
+import hiiragi283.ragium.data.worldgen.RagiumWorldData
+import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -27,6 +29,8 @@ import net.neoforged.neoforge.data.event.GatherDataEvent
 data object RagiumDataGen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent.Client) {
+        event.createDatapackRegistryObjects(RegistrySetBuilder().apply(RagiumWorldData::bootstrap))
+
         // Server
         event.createProvider(::RagiumAdvancementProvider)
 

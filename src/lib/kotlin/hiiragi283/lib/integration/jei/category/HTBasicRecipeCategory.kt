@@ -12,7 +12,7 @@ import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.drawable.IDrawable
-import mezz.jei.api.gui.placement.IPlaceable
+import mezz.jei.api.gui.widgets.IDrawableWidget
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
@@ -107,15 +107,15 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
     private fun fixCapacity(capacity: Int): Long = maxOf(capacity, 1).toLong()
 
     // IRecipeExtrasBuilder
-    protected fun IRecipeExtrasBuilder.addRecipePlus(x: Int, y: Int = getPosition(0)): IPlaceable<*> =
-        this.addRecipePlusSign().setPosition(x + 2, y + 2)
+    protected fun IRecipeExtrasBuilder.addRecipePlus(x: Int, y: Int = getPosition(0)): IDrawableWidget =
+        this.addRecipePlusSignWidget().setPosition(x + 2, y + 2)
 
-    protected fun IRecipeExtrasBuilder.addRecipeArrow(progressData: HTProgressData): IPlaceable<*> =
+    protected fun IRecipeExtrasBuilder.addRecipeArrow(progressData: HTProgressData): IDrawableWidget =
         when (progressData) {
-            is HTProgressData.Energy -> this.addRecipeArrow()
-            is HTProgressData.Time -> this.addAnimatedRecipeArrow(progressData.value)
+            is HTProgressData.Energy -> this.addRecipeArrowWidget()
+            is HTProgressData.Time -> this.addAnimatedRecipeArrowWidget(progressData.value)
         }
 
-    protected fun IRecipeExtrasBuilder.addRecipeArrow(recipe: HTProgressRecipe.Simple<*>): IPlaceable<*> =
+    protected fun IRecipeExtrasBuilder.addRecipeArrow(recipe: HTProgressRecipe.Simple<*>): IDrawableWidget =
         this.addRecipeArrow(recipe.progressData)
 }
