@@ -1,5 +1,6 @@
 package hiiragi283.lib.util
 
+import java.util.Optional
 import java.util.function.Consumer
 import java.util.function.Supplier
 import kotlin.properties.ReadWriteProperty
@@ -47,6 +48,11 @@ data object HTDelegates {
             this.value = value
         }
     }
+
+    /**
+     * @since 26.1.5
+     */
+    fun <T : Any> optionalInitialize(): ReadWriteProperty<Any?, Optional<T>> = onceInitialize { Optional.empty() }
 
     @JvmRecord
     data class LazyDelegate<T : Any>(private val getter: Supplier<out T>, private val setter: Consumer<in T>) :

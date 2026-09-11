@@ -3,21 +3,21 @@ package hiiragi283.lib.integration.jei.category
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.add
-import hiiragi283.lib.recipe.base.HTItemToItemRecipe
+import hiiragi283.lib.recipe.base.HTItemToRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class HTItemToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemToItemRecipe.Basic>) :
-    HTHolderRecipeCategory<HTItemToItemRecipe.Basic>(
+class HTItemToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemToRecipe.BasicItem>) :
+    HTHolderRecipeCategory<HTItemToRecipe.BasicItem>(
         guiHelper,
         recipeType,
         18 * 4,
         18 * 1,
-        HTItemToItemRecipe.Basic.SIMPLE_CODEC
+        HTItemToRecipe.BasicItem.SIMPLE_CODEC
     ) {
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemToItemRecipe.Basic, focuses: IFocusGroup) {
+    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemToRecipe.BasicItem, focuses: IFocusGroup) {
         // input
         builder
             .addInputSlot(getPosition(0), getPosition(0))
@@ -32,7 +32,7 @@ class HTItemToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderJeiR
 
     override fun setupRecipeExtras(
         builder: IRecipeExtrasBuilder,
-        recipe: HTItemToItemRecipe.Basic,
+        recipe: HTItemToRecipe.BasicItem,
         focuses: IFocusGroup
     ) {
         builder.addRecipeArrow(recipe).setPosition(getPosition(1.25), getPosition(0))

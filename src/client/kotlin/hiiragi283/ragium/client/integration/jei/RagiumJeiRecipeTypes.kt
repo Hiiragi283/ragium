@@ -3,12 +3,13 @@ package hiiragi283.ragium.client.integration.jei
 import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.HTJeiRecipeType
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
+import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
-import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
-import hiiragi283.lib.recipe.base.HTItemToItemRecipe
+import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
+import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -23,7 +24,7 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER)
 
     @JvmField
-    val COMPRESSING: HTHolderJeiRecipeType<HTItemToItemRecipe.Basic> =
+    val COMPRESSING: HTHolderJeiRecipeType<HTItemToRecipe.BasicItem> =
         HTJeiRecipeType(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
@@ -44,11 +45,15 @@ data object RagiumJeiRecipeTypes {
 
     // Heat
     @JvmField
-    val FREEZING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> =
+    val ALLOYING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.ALLOYING, ItemStack(Items.FURNACE))
+
+    @JvmField
+    val FREEZING: HTHolderJeiRecipeType<HTFluidToRecipe.BasicItem> =
         HTJeiRecipeType(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
 
     @JvmField
-    val MELTING: HTHolderJeiRecipeType<HTItemToFluidRecipe.Basic> =
+    val MELTING: HTHolderJeiRecipeType<HTItemToRecipe.BasicFluid> =
         HTJeiRecipeType(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
@@ -56,7 +61,8 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumItems.COAL_COKE)
 
     @JvmField
-    val REFINING: HTHolderJeiRecipeType<RTRefiningRecipe> = HTJeiRecipeType(RagiumRecipeTypes.REFINING, RagiumItems.TAR)
+    val REFINING: HTHolderJeiRecipeType<RTRefiningRecipe> =
+        HTJeiRecipeType(RagiumRecipeTypes.REFINING, RagiumItems.COAL_COKE)
 
     // Chemical
     @JvmField
@@ -66,6 +72,14 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =
         HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, ItemStack(Items.LIGHTNING_ROD))
+
+    @JvmField
+    val MIXING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> =
+        HTJeiRecipeType(RagiumRecipeTypes.MIXING, ItemStack(Items.BREEZE_ROD))
+
+    @JvmField
+    val REACTING: HTHolderJeiRecipeType<RTReactingRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.REACTING, ItemStack(Items.GOLDEN_APPLE))
 
     // Bio
     @JvmField

@@ -25,7 +25,7 @@ class HTConsumeItemBuilder {
         }
     }
 
-    @PublishedApi internal var predicate: Optional<ItemPredicate> by HTDelegates.onceInitialize { Optional.empty() }
+    @PublishedApi internal var predicate: Optional<ItemPredicate> by HTDelegates.optionalInitialize()
 
     operator fun ItemPredicate.unaryPlus() {
         predicate = Optional.of(this)

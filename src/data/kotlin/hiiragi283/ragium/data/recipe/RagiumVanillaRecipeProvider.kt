@@ -15,11 +15,10 @@ import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
-import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
-import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
@@ -42,6 +41,15 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         machine()
         material()
 
+        // Prismarine Bricks -> 9x Prismarine Shard
+        HTShapelessRecipeBuilder.create {
+            ingredient { items { +Items.PRISMARINE_BRICKS } }
+            result {
+                +Items.PRISMARINE_SHARD
+                count = 9
+            }
+            recipeId suffix "_from_bricks"
+        }.save(exporter)
         // Gunpowder
         HTShapelessRecipeBuilder.create {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL) }
@@ -51,6 +59,22 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 +Items.GUNPOWDER
                 count = 3
             }
+        }.save(exporter)
+        // Blaze Rod
+        HTShapedRecipeBuilder.create {
+            layered()
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            define('B') { items { +Items.MAGMA_BLOCK } }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
+            result { +Items.BLAZE_ROD }
+        }.save(exporter)
+        // Breeze Rod
+        HTShapedRecipeBuilder.create {
+            layered()
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            define('B') { items { +Items.ICE } }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
+            result { +Items.BREEZE_ROD }
         }.save(exporter)
 
         // Bamboo Charcoal
@@ -80,13 +104,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 result { +item }
             }.save(exporter)
         }
-        // XX Shape Pattern
-        for (item: HTSimpleDeferredItem in RagiumItems.SHAPE_PATTERNS) {
-            HTStonecuttingRecipeBuilder.create {
-                ingredient { +holderSet(RagiumTags.Items.SHAPE_PATTERNS) }
-                result { +item }
-            }.save(exporter)
-        }
         // XX Tools
         registerTools(RagiumItems.SOOTY_IRON_TOOLS, RagiumToolMaterials.SOOTY_IRON)
 
@@ -105,7 +122,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private fun machine() {
         // Mechanical
         HTShapedRecipeBuilder.create {
-            layered()
+            layered2()
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
             define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
             result {
@@ -128,15 +145,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         heat(RagiumBlocks.FREEZER) { +holderSet(Tags.Items.BUCKETS_WATER) }
         heat(RagiumBlocks.MELTER) { +holderSet(Tags.Items.BUCKETS_LAVA) }
         // Chemical
-        RagiumRecipeBuilders.freezing {
-            itemIngredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.MOLTEN_STEEL)
-                amount = 240
-            }
-            result { +RagiumItems.getCasing(HTMachineType.CHEMICAL) }
-        }.save(exporter)
-        RagiumRecipeBuilders.assembling {
+        RagiumRecipeBuilders.alloying {
             primary {
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
                 count = 2
@@ -234,22 +243,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     //    Material    //
 
     private fun material() {
-        // XX Block -> XX
-        setOf(
-            RagiumMaterial.Mineral.GLOWSTONE to Items.GLOWSTONE_DUST,
-            RagiumMaterial.Gem.QUARTZ to Items.QUARTZ,
-            RagiumMaterial.Gem.AMETHYST to Items.AMETHYST_SHARD
-        ).forEach { (material: RagiumMaterial, item: Item) ->
-            HTShapelessRecipeBuilder.create {
-                ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, material) }
-                result {
-                    +item
-                    count = 4
-                }
-                recipeId suffix "_from_block"
-            }.save(exporter)
-        }
-
         // XX <-> Storage Block
         baseToBlock(RagiumMaterial.Gem.ECHO, CommonTagPrefixes.GEM, Items.ECHO_SHARD, size = StorageBlockSize.FOUR)
         baseToBlock(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT)
@@ -360,7 +353,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         material: RagiumMaterial,
         basePrefix: HTTagPrefix,
         base: ItemLike,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         baseToBlock(material, Ingredient.of(holderSet(basePrefix, material)), base, block, size)
@@ -369,7 +362,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private fun baseToBlock(
         material: RagiumMaterial,
         basePart: HTItemPart,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         val base: ItemLike = RagiumItems.MATERIAL_ITEMS[basePart, material] ?: return
@@ -380,7 +373,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         material: RagiumMaterial,
         baseInput: Ingredient,
         base: ItemLike,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, material],
+        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         if (block == null) return

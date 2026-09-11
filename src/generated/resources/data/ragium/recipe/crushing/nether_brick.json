@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:nether_bricks"
+  },
+  "primary_result": {
+    "count": 4,
+    "id": "minecraft:nether_brick"
+  },
+  "time": 200
+}

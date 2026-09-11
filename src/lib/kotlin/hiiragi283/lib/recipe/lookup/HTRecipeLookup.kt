@@ -20,7 +20,7 @@ fun interface HTRecipeLookup<out RECIPE> {
     /**
      * レシピの一覧を取得します。
      */
-    fun getAllRecipesN(context: Context): Sequence<HTRecipeHolder<RECIPE>>
+    fun getAllRecipes(context: Context): Sequence<HTRecipeHolder<RECIPE>>
 
     /**
      * @param recipeMap レシピの一覧

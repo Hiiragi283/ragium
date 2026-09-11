@@ -79,6 +79,20 @@ class HTFluidContentRegister(modId: String) {
      */
     operator fun get(key: ResourceKey<Fluid>): HTFluidContent? = contentsCache[key]
 
+    /**
+     * @since 26.1.5
+     */
+    fun addAlias(from: Identifier, to: Identifier) {
+        typeRegister.addAlias(from, to)
+
+        fluidRegister.addAlias(from, to)
+        fluidRegister.addAlias(from.withPrefix("flowing_"), to.withPrefix("flowing_"))
+
+        blockRegister.addAlias(from, to)
+
+        itemRegister.addAlias(from.withSuffix("_bucket"), to.withSuffix("_bucket"))
+    }
+
     fun addAlias(from: String, to: String) {
         typeRegister.addAlias(from, to)
 

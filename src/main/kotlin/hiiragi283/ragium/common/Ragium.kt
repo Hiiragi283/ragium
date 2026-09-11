@@ -1,40 +1,26 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
-import hiiragi283.lib.collection.ListMultiMap
-import hiiragi283.lib.collection.buildListMultiMap
-import hiiragi283.lib.color.HTDefaultColor
-import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.gui.sync.HTFluidSyncPayload
 import hiiragi283.lib.gui.sync.HTIntSyncPayload
 import hiiragi283.lib.gui.sync.HTItemSyncPayload
 import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.lib.item.HTCreativeModeTabHelper
-import hiiragi283.lib.item.alchemy.HTPotionFluidManager
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.recipe.HTRecipeType
-import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.display.HTPotionSlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
-import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.registry.getOrNull
-import hiiragi283.lib.resource.modifyPath
-import hiiragi283.lib.resource.vanillaId
-import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
-import hiiragi283.ragium.api.recipe.RTBrewingRecipe
-import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.api.material.HTBlockPart
+import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -50,43 +36,31 @@ import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
-import hiiragi283.ragium.common.recipe.RTLingeringBrewingRecipe
-import hiiragi283.ragium.common.recipe.RTSplashBrewingRecipe
-import net.minecraft.core.HolderSet
-import net.minecraft.core.RegistryAccess
-import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.Identifier
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.Potion
-import net.minecraft.world.item.alchemy.PotionBrewing
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.item.Rarity
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.entity.BlockEntityType
-import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.FluidState
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
-import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension
-import net.neoforged.neoforge.fluids.FluidInteractionRegistry
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
-import net.neoforged.neoforge.registries.datamaps.builtin.Oxidizable
 import net.neoforged.neoforge.transfer.access.ItemAccess
 
 @Mod(RagiumAPI.MOD_ID)
 data object Ragium : HTCommonMod() {
     override fun initialize(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(::register)
+        eventBus.addListener(::modifyDefaultComponents)
 
         RagiumFluids.register(eventBus)
         RagiumBlocks.register(eventBus)
@@ -174,114 +148,23 @@ data object Ragium : HTCommonMod() {
         }
     }
 
-    override fun commonSetup(event: FMLCommonSetupEvent) {
-        event.enqueueWork(::initRecipeLookups)
-        event.enqueueWork {
-            HTPotionFluidManager.register(RagiumFluids.POTION.getOrThrow(), HTPotionFluidManager.Handler.DEFAULT)
-        }
-        event.enqueueWork {
-            // Convert lava source/flow into concrete by dye liquid
-            // FlowingFluid#isRandomlyTicking を true に
-            for (color: HTDefaultColor in HTDefaultColor.entries) {
-                FluidInteractionRegistry.addInteraction(
-                    NeoForgeMod.LAVA_TYPE.value(),
-                    FluidInteractionRegistry.InteractionInformation(
-                        RagiumFluids.DYES[color].getFluidType()
-                    ) { state: FluidState ->
-                        when (state.isSource) {
-                            true -> Blocks.OBSIDIAN.defaultBlockState()
-                            false -> VanillaColoredCollections.CONCRETE[color].block.getOrThrow().defaultBlockState()
-                        }
-                    }
-                )
+    private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
+        // Block
+        setOf(
+            RagiumMaterial.Metal.BLACK_STEEL to Rarity.UNCOMMON,
+            RagiumMaterial.Metal.VOID_METAL to Rarity.RARE
+        ).forEach { (material: RagiumMaterial, rarity: Rarity) ->
+            for (part: HTBlockPart in HTBlockPart.entries) {
+                val block: ItemLike = RagiumBlocks.MATERIAL_BLOCKS[part, material] ?: continue
+                event.modify(block) { builder: DataComponentMap.Builder, _, _ ->
+                    builder.set(DataComponents.RARITY, rarity)
+                }
             }
         }
     }
 
-    private fun initRecipeLookups() {
-        RagiumRecipeLookups.ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING, identity())
-        RagiumRecipeLookups.COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING, identity())
-        RagiumRecipeLookups.CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING, identity())
-        RagiumRecipeLookups.CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING, identity())
-        RagiumRecipeLookups.DRAINING.fromRecipeType(RagiumRecipeTypes.DRAINING, identity())
-        RagiumRecipeLookups.FILLING.fromRecipeType(RagiumRecipeTypes.FILLING, identity())
-
-        RagiumRecipeLookups.FREEZING.fromRecipeType(RagiumRecipeTypes.FREEZING, identity())
-        RagiumRecipeLookups.MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())
-        RagiumRecipeLookups.PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING, identity())
-
-        RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
-        RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
-            val oxygen: HolderSet.Named<Fluid> =
-                registries.getOrNull(RagiumFluids.OXYGEN.fluidTag) ?: return@addSubLookup sequenceOf()
-            BuiltInRegistries.BLOCK
-                .getDataMap(NeoForgeDataMaps.OXIDIZABLES)
-                .asSequence()
-                .map { (key: ResourceKey<Block>, value: Oxidizable) ->
-                    val base: Item = BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem()
-                    val oxidized: Item = value.nextOxidationStage().asItem()
-                    RagiumRecipeBuilders.bathing {
-                        itemIngredient { items { +base } }
-                        fluidIngredient {
-                            +oxygen
-                            amount = 250
-                        }
-                        result { +oxidized }
-                        recipeId prefix "oxidization/"
-                    }.build()
-                }
-        }
-        RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
-            val hydrogen: HolderSet.Named<Fluid> =
-                registries.getOrNull(RagiumFluids.HYDROGEN.fluidTag) ?: return@addSubLookup sequenceOf()
-            BuiltInRegistries.BLOCK
-                .getDataMap(NeoForgeDataMaps.OXIDIZABLES)
-                .asSequence()
-                .map { (key: ResourceKey<Block>, value: Oxidizable) ->
-                    val base: Item = BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem()
-                    val oxidized: Item = value.nextOxidationStage().asItem()
-                    RagiumRecipeBuilders.bathing {
-                        itemIngredient { items { +oxidized } }
-                        fluidIngredient {
-                            +hydrogen
-                            amount = 250
-                        }
-                        result { +base }
-                        recipeId prefix "reduction/"
-                    }.build()
-                }
-        }
-
-        RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
-        RagiumRecipeLookups.BREWING.addSubLookup {
-            val multiMap: ListMultiMap<Identifier, RTBrewingRecipe> = buildListMultiMap {
-                HTPhysicalSideHelper.getPotionBrewing()
-                    ?.let(PotionBrewing::potionMixes)
-                    ?.asSequence()
-                    ?.forEach { mix: PotionBrewing.Mix<Potion> ->
-                        val (_, recipe: RTBrewingRecipe) = RagiumRecipeBuilders.brewing {
-                            itemIngredient { +mix.ingredient }
-                            fluidIngredient { +HTPotionFluidIngredient(mix.from()) }
-                            result { +mix.to() }
-                        }.build()
-                        val id: Identifier =
-                            mix.to().key?.identifier()?.modifyPath { "/${RagiumConstants.BREWING}/$it" }
-                                ?: return@forEach
-                        put(id, recipe)
-                    }
-            }
-            sequence {
-                for ((potionTo: Identifier, recipes: Collection<RTBrewingRecipe>) in multiMap.entries) {
-                    recipes.forEachIndexed { index: Int, recipe: RTBrewingRecipe ->
-                        yield(RecipeKey(potionTo.withSuffix("_$index")) to recipe)
-                    }
-                }
-                // Custom
-                yield(RecipeKey(vanillaId("/${RagiumConstants.BREWING}/splash_potion")) to RTSplashBrewingRecipe)
-                yield(RecipeKey(vanillaId("/${RagiumConstants.BREWING}/lingering_potion")) to RTLingeringBrewingRecipe)
-            }
-        }
-        RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
+    override fun commonSetup(event: FMLCommonSetupEvent) {
+        RagiumCommon.initialize(event)
     }
 
     override fun registerCapabilities(helper: CapabilityHelper) {

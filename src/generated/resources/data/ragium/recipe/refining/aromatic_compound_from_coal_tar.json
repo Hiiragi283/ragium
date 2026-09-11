@@ -1,0 +1,16 @@
+{
+  "type": "ragium:refining",
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:aromatic_compound"
+  },
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:coal_tar"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "ragium:pitch_coke"
+  },
+  "time": 200
+}

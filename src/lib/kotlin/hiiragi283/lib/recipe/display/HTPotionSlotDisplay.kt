@@ -3,7 +3,8 @@ package hiiragi283.lib.recipe.display
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.HTPhysicalSideHelper
-import hiiragi283.lib.fluid.FluidInstanceBuilder
+import hiiragi283.lib.data.buildDataPatch
+import hiiragi283.lib.fluid.FluidStack
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionFluidManager
 import hiiragi283.lib.item.alchemy.HTPotionHelper
@@ -25,7 +26,6 @@ import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.display.ForFluidStacks
 import java.util.function.Consumer
 import java.util.stream.Stream
@@ -81,15 +81,15 @@ data class HTPotionSlotDisplay(val potions: HolderSet<Potion>, val bottleType: H
                             .filter { it.value().isEnabled(HTPhysicalSideHelper.getFeatureFlags()) }
                             .map { potion: Holder<Potion> ->
                                 when (potion) {
-                                    Potions.WATER -> FluidStack(Fluids.WATER, FluidType.BUCKET_VOLUME)
+                                    Potions.WATER -> FluidStack(Fluids.WATER)
 
-                                    else -> FluidInstanceBuilder.buildStack {
-                                        +fluid
-                                        components {
+                                    else -> FluidStack(
+                                        fluid,
+                                        patch = buildDataPatch {
                                             set(DataComponents.POTION_CONTENTS, PotionContents(potion))
                                             handler[this] = bottleType
                                         }
-                                    }
+                                    )
                                 }
                             }
                             .forEach(consumer)

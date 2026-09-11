@@ -3,23 +3,24 @@ package hiiragi283.ragium.common.block
 import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
+import hiiragi283.lib.collection.buildSetMultiMap
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItemRegister
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
-import hiiragi283.lib.util.Identity
-import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTBlockPart
+import hiiragi283.ragium.api.material.HTOreBlockPart
+import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.Rarity
+import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.DropExperienceBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
@@ -66,45 +67,35 @@ data object RagiumBlocks {
 
     @JvmField
     val MATERIAL_BLOCKS: Table<HTBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildTable {
-        fun register(
-            part: HTBlockPart,
-            material: RagiumMaterial,
-            blockProp: BlockBehaviour.Properties,
-            itemProp: Identity<Item.Properties> = identity()
-        ) {
-            this[part, material] = REGISTER.registerSimple(part.createName(material), blockProp, itemProp)
+        // Ore
+        buildSetMultiMap {
+            putAll(RagiumMaterial.Mineral.SULFUR, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
+        }.flatEntries.forEach { (material: RagiumMaterial, part: HTOreBlockPart) ->
+            val properties: BlockBehaviour.Properties = when (part) {
+                HTOreBlockPart.STONE -> Blocks.COAL_ORE
+                HTOreBlockPart.DEEPSLATE -> Blocks.DEEPSLATE_COAL_ORE
+                HTOreBlockPart.NETHER -> Blocks.NETHER_QUARTZ_ORE
+                HTOreBlockPart.END -> Blocks.END_STONE
+            }.let(::copyOf)
+            this[part, material] = REGISTER.registerSimple(
+                part.createName(material),
+                properties,
+                blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), it) }
+            )
         }
 
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Fuel.CHARCOAL,
-            copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF)
-        )
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Fuel.COAL_COKE,
-            copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY)
-        )
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Gem.ECHO,
-            copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN)
-        )
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Metal.SOOTY_IRON,
-            copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY)
-        )
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Metal.BLACK_STEEL,
-            copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK)
-        ) { it.rarity(Rarity.UNCOMMON) }
-        register(
-            HTBlockPart.STORAGE_BLOCK,
-            RagiumMaterial.Metal.VOID_METAL,
-            copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
-        ) { it.rarity(Rarity.RARE) }
+        // Storage Block
+        setOf(
+            RagiumMaterial.Fuel.CHARCOAL to copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF),
+            RagiumMaterial.Fuel.COAL_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY),
+            RagiumMaterial.Gem.ECHO to copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN),
+            RagiumMaterial.Metal.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
+            RagiumMaterial.Metal.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
+            RagiumMaterial.Metal.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
+        ).forEach { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
+            val part: HTBlockPart = HTStorageBlockPart.DEFAULT
+            this[part, material] = REGISTER.registerSimple(part.createName(material), properties)
+        }
     }
 
     @JvmStatic

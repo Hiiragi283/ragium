@@ -1,0 +1,12 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:melon"
+  },
+  "primary_result": {
+    "count": 9,
+    "id": "minecraft:melon_slice"
+  },
+  "time": 200
+}

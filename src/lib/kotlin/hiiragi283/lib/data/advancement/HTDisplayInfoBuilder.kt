@@ -41,7 +41,7 @@ class HTDisplayInfoBuilder {
     @PublishedApi internal var icon: ItemStackTemplate by HTDelegates.onceInitialize()
     var titleText: Text by HTDelegates.onceInitialize()
     var descText: Text by HTDelegates.onceInitialize()
-    var backGround: Optional<ClientAsset.ResourceTexture> by HTDelegates.onceInitialize { Optional.empty() }
+    var backGround: Optional<ClientAsset.ResourceTexture> by HTDelegates.optionalInitialize()
     var type: AdvancementType by HTDelegates.onceInitialize { AdvancementType.TASK }
     var showToast: Boolean = true
     var showChat: Boolean = true

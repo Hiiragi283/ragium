@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:dusts/amethyst",
+    "B": "minecraft:ice",
+    "C": "#c:dusts/niter"
+  },
+  "pattern": [
+    "AAA",
+    "BBB",
+    "CCC"
+  ],
+  "result": {
+    "id": "minecraft:breeze_rod"
+  }
+}

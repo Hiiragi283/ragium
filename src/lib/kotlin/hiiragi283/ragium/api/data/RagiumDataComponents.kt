@@ -14,6 +14,7 @@ import net.neoforged.neoforge.fluids.SimpleFluidContent
  * @since 26.1.0
  */
 data object RagiumDataComponents {
+    // Item Stack
     @JvmField
     val BOTTLE_TYPE: DataComponentType<HTBottleType> = DataComponentType(HTBottleType.CODEC, HTBottleType.STREAM_CODEC)
 

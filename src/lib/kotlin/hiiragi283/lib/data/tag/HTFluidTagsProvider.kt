@@ -53,4 +53,9 @@ abstract class HTFluidTagsProvider(
      */
     protected fun HTTagBuilder<Fluid>.addContentTag(content: HTFluidContent): HTTagBuilder<Fluid> =
         this.addTag(content.fluidTag)
+
+    /**
+     * @since 26.1.5
+     */
+    protected fun builder(content: HTFluidContent): HTTagBuilder<Fluid> = this.builder(content.fluidTag)
 }

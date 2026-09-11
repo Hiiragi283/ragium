@@ -41,7 +41,6 @@ class FluidInstanceBuilder : HolderAcceptor.FluidAcceptor {
         /**
          * [FluidStackTemplate]を作成します。
          */
-        @Suppress("DEPRECATION")
         @JvmStatic
         inline fun buildSafeTemplate(builderAction: FluidInstanceBuilder.() -> Unit): FluidStackTemplate? {
             contract {
@@ -71,7 +70,7 @@ class FluidInstanceBuilder : HolderAcceptor.FluidAcceptor {
     @PublishedApi internal var fluid: Holder<Fluid> by HTDelegates.onceInitialize()
     var amount: Int = FluidType.BUCKET_VOLUME
 
-    @PublishedApi internal var patch: DataComponentPatch = DataComponentPatch.EMPTY
+    @PublishedApi internal var patch: DataComponentPatch by HTDelegates.onceInitialize { DataComponentPatch.EMPTY }
 
     override operator fun Holder<Fluid>.unaryPlus() {
         fluid = this

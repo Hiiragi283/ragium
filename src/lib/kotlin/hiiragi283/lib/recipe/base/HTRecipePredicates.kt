@@ -1,6 +1,7 @@
 package hiiragi283.lib.recipe.base
 
 import hiiragi283.lib.recipe.HTRecipePredicate
+import hiiragi283.lib.recipe.input.HTFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import net.minecraft.world.item.ItemInstance
@@ -74,6 +75,15 @@ data object HTRecipePredicates {
     fun interface DoubleItem : DoubleInput<RecipeInput, ItemInstance, ItemInstance> {
         override fun matches(input: RecipeInput): Boolean =
             input.size() >= 2 && test(input.getItem(0), input.getItem(1))
+    }
+
+    /**
+     * 2種類の液体を判定する[DoubleInput]の拡張インターフェースです。
+     * @since 26.1.5
+     */
+    fun interface DoubleFluid : DoubleInput<HTFluidRecipeInput, FluidInstance, FluidInstance> {
+        override fun matches(input: HTFluidRecipeInput): Boolean =
+            input.size() >= 2 && test(input.getFluid(0), input.getFluid(1))
     }
 
     //    Triple Input    //

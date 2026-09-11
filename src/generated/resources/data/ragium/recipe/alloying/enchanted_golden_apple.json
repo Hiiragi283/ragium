@@ -1,0 +1,16 @@
+{
+  "type": "ragium:alloying",
+  "primary_ingredient": {
+    "count": 1,
+    "items": "minecraft:apple"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:enchanted_golden_apple"
+  },
+  "secondary_ingredient": {
+    "count": 8,
+    "items": "#c:storage_blocks/gold"
+  },
+  "time": 1600
+}

@@ -86,6 +86,11 @@ interface Table<R, C, out V> {
      */
     interface Builder<R, C, V> {
         /**
+         * @since 26.1.5
+         */
+        fun get(row: R, column: C): V?
+
+        /**
          * 値を追加します。
          */
         fun put(row: R, column: C, value: V): V?

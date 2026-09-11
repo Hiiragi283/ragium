@@ -1,7 +1,6 @@
 {
   "type": "ragium:freezing",
-  "catalyst": "ragium:block_shape_pattern",
-  "fluid_ingredient": {
+  "ingredient": {
     "amount": 1000,
     "fluids": "#c:honey"
   },

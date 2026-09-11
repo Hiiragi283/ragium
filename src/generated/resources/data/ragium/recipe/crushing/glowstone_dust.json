@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:glowstone"
+  },
+  "primary_result": {
+    "count": 4,
+    "id": "minecraft:glowstone_dust"
+  },
+  "time": 200
+}

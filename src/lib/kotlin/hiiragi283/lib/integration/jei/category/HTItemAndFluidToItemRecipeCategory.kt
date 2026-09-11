@@ -4,12 +4,10 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
-import hiiragi283.lib.recipe.ingredient.HTCatalystOrIngredient
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.RecipeIngredientRole
 
 class HTItemAndFluidToItemRecipeCategory(
     guiHelper: IGuiHelper,
@@ -33,18 +31,10 @@ class HTItemAndFluidToItemRecipeCategory(
                 .add(it)
                 .setSlotBackground(HTBackgroundType.INPUT, it.amount)
         }
-        val ingredient: HTCatalystOrIngredient = recipe.itemIngredient
-        if (ingredient.isCatalyst) {
-            builder
-                .addSlot(RecipeIngredientRole.CRAFTING_STATION, getPosition(2), getPosition(0))
-                .add(ingredient)
-                .setSlotBackground(HTBackgroundType.NONE)
-        } else {
-            builder
-                .addInputSlot(getPosition(2), getPosition(0))
-                .add(ingredient)
-                .setSlotBackground(HTBackgroundType.INPUT)
-        }
+        builder
+            .addInputSlot(getPosition(2), getPosition(0))
+            .add(recipe.itemIngredient)
+            .setSlotBackground(HTBackgroundType.INPUT)
         // output
         builder
             .addOutputSlot(getPosition(5), getPosition(0))

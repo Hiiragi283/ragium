@@ -4,14 +4,14 @@ import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
-import hiiragi283.lib.recipe.ingredient.HTCatalystOrIngredient
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.world.item.crafting.RecipeSerializer
 
 class RTBathingRecipe(
-    itemIngredient: HTCatalystOrIngredient,
+    itemIngredient: HTItemIngredient,
     fluidIngredient: HTFluidIngredient,
     result: HTItemResult,
     progressData: HTProgressData

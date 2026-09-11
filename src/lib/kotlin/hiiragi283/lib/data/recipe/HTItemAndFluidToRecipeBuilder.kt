@@ -3,7 +3,6 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.recipe.base.HTProgressData
-import hiiragi283.lib.recipe.ingredient.HTCatalystOrIngredient
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
@@ -11,7 +10,6 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.resources.Identifier
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -32,27 +30,16 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
     final override fun createRecipe(): RECIPE = factory.create(itemIngredient, fluidIngredient, result, progressData)
 
     // Ingredient
-    @PublishedApi internal var itemIngredient: HTCatalystOrIngredient by HTDelegates.onceInitialize()
+    @PublishedApi internal var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()
 
     @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
-    operator fun Ingredient.unaryPlus() {
-        itemIngredient = HTCatalystOrIngredient(this)
-    }
-
     operator fun HTItemIngredient.unaryPlus() {
-        itemIngredient = HTCatalystOrIngredient(this)
+        itemIngredient = this
     }
 
     operator fun HTFluidIngredient.unaryPlus() {
         fluidIngredient = this
-    }
-
-    inline fun catalyst(builderAction: IngredientBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        +IngredientBuilder.build(builderAction)
     }
 
     inline fun itemIngredient(builderAction: IngredientBuilder.() -> Unit) {
@@ -122,7 +109,7 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
      */
     fun interface Factory<RESULT : HTRecipeResult<*>, out RECIPE : Any> {
         fun create(
-            itemIngredient: HTCatalystOrIngredient,
+            itemIngredient: HTItemIngredient,
             fluidIngredient: HTFluidIngredient,
             result: RESULT,
             progressData: HTProgressData

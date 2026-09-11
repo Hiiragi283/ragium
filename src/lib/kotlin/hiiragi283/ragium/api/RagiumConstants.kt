@@ -15,6 +15,7 @@ data object RagiumConstants {
     const val CUTTING_MACHINE = "cutting_machine"
 
     // Heat
+    const val ALLOY_SMELTER = "alloy_smelter"
     const val FREEZER = "freezer"
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
@@ -25,7 +26,6 @@ data object RagiumConstants {
     const val CHEMICAL_REACTOR = "chemical_reactor"
     const val ELECTROLYZER = "electrolyzer"
     const val MIXER = "mixer"
-    const val WASHER = "washer"
 
     // Bio
     const val BREWERY = "brewery"
@@ -49,6 +49,7 @@ data object RagiumConstants {
     const val FILLING = "filling"
 
     // Heat
+    const val ALLOYING = "alloying"
     const val FREEZING = "freezing"
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"
@@ -56,10 +57,9 @@ data object RagiumConstants {
 
     // Chemical
     const val BATHING = "bathing"
-    const val CHEMICAL_REACTING = "chemical_reacting"
     const val ELECTROLYZING = "electrolyzing"
     const val MIXING = "mixing"
-    const val WASHING = "washing"
+    const val REACTING = "reacting"
 
     // Bio
     const val BREWING = "brewing"

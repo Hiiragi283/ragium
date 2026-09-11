@@ -59,6 +59,13 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
     }
 
     /**
+     * レシピの一覧を追加します。
+     */
+    fun addRecipes(recipes: Map<RecipeKey, @UnsafeVariance RECIPE>) {
+        addSubLookup { recipes.asSequence().map { it.toPair() } }
+    }
+
+    /**
      * [HTRecipeLookup]を追加します。
      */
     fun addSubLookup(lookup: HTRecipeLookup<@UnsafeVariance RECIPE>) {
@@ -66,8 +73,8 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
         this.lookups += lookup
     }
 
-    override fun getAllRecipesN(context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> =
-        lookups.asSequence().flatMap { it.getAllRecipesN(context) }
+    override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> =
+        lookups.asSequence().flatMap { it.getAllRecipes(context) }
 
     override fun toString(): String = "HTCompoundRecipeLookup(id=$id)"
 }

@@ -18,6 +18,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     override fun exportValues() {
         bathing()
         electrolyzing()
+        mixing()
     }
 
     private fun bathing() {
@@ -40,6 +41,25 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             result { +Items.PAPER }
             recipeId suffix "_from_pulp"
+        }.save(exporter)
+
+        // Molten Steel + Obsidian Dust -> Black Steel
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.MOLTEN_STEEL)
+                amount = 90
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
+        }.save(exporter)
+        // Molten Glass + Amethyst -> Tinted Glass
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            fluidIngredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
+            result {
+                +Items.TINTED_GLASS
+                count = 2
+            }
         }.save(exporter)
     }
 
@@ -68,6 +88,15 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             result { +RagiumFluids.NAOH_SOLUTION }
             recipeId suffix "_from_salt_water"
+        }.save(exporter)
+    }
+
+    private fun mixing() {
+        // Naphtha + Redstone -> Anti-rust Oil
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
+            result { +RagiumFluids.ANTI_RUST_OIL }
         }.save(exporter)
     }
 

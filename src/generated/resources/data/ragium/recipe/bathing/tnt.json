@@ -1,0 +1,16 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:liquid_explosive"
+  },
+  "item_ingredient": {
+    "count": 8,
+    "items": "#c:sands"
+  },
+  "result": {
+    "count": 8,
+    "id": "minecraft:tnt"
+  },
+  "time": 200
+}

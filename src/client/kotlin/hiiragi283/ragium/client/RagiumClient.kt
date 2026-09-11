@@ -64,17 +64,16 @@ data object RagiumClient : HTClientMod() {
     override fun registerFluidModels(register: HTFluidModelRegister) {
         for (color: HTDefaultColor in HTDefaultColor.entries) {
             register.register(RagiumFluids.DYES[color]) {
-                setDull()
+                dull()
                 color.color.let(::colorTint)
             }
         }
 
         register.register(RagiumFluids.HONEY) {
             still = Material(vanillaId(HTConstants.BLOCK, "honey_block_top"), true)
-            copyStillToFlowing()
         }
         register.register(RagiumFluids.POTION) {
-            setDull()
+            dull()
             tintSource =
                 FluidStackTintSource { stack: FluidStack ->
                     "ff000000".hexToInt() or
@@ -82,94 +81,102 @@ data object RagiumClient : HTClientMod() {
                 }
         }
         register.register(RagiumFluids.OMINOUS_FLUX) {
-            setMolten()
+            molten()
             colorTint(Color(0x003366))
         }
 
         register.register(RagiumFluids.MOLTEN_GLASS) {
-            setMolten()
+            molten()
             colorTint(Color(0xffffff))
         }
         register.register(RagiumFluids.MOLTEN_REDSTONE) {
-            setMolten()
+            molten()
             colorTint(Color(0xcc0000))
         }
         register.register(RagiumFluids.MOLTEN_GLOWSTONE) {
-            setMolten()
+            molten()
             colorTint(Color(0xffcc66))
         }
         register.register(RagiumFluids.MOLTEN_ENDER) {
-            setMolten()
+            molten()
             colorTint(Color(0x006666))
-        }
-        register.register(RagiumFluids.MOLTEN_BLAZE) {
-            setMolten()
-            colorTint(Color(0xff9900))
         }
 
         register.register(RagiumFluids.HYDROGEN) {
-            setClear()
+            transparent()
             colorTint(Color(0x003399))
         }
         register.register(RagiumFluids.OXYGEN) {
-            setClear()
+            transparent()
             colorTint(Color(0x3399cc))
         }
         register.register(RagiumFluids.CHLORINE) {
-            setClear()
+            transparent()
             colorTint(Color(0x99cc33))
         }
 
-        register.register(RagiumFluids.CREOSOTE) {
-            setDull()
+        register.register(RagiumFluids.WOOD_TAR) {
+            dull()
             colorTint(Color(0x663333))
         }
+        register.register(RagiumFluids.COAL_TAR) {
+            dull()
+            colorTint(Color(0x333366))
+        }
+        register.register(RagiumFluids.AROMATIC_COMPOUND) {
+            transparent()
+            colorTint(Color(0xffcc99))
+        }
         register.register(RagiumFluids.CRUDE_OIL) {
-            setDull()
+            sticky()
             colorTint(Color(0x333333))
         }
         register.register(RagiumFluids.NAPHTHA) {
-            setClear()
+            transparent()
             colorTint(Color(0xff6600))
         }
         register.register(RagiumFluids.FUEL) {
-            setClear()
+            transparent()
             colorTint(Color(0xff9900))
         }
-        register.register(RagiumFluids.AROMATIC_COMPOUND) {
-            setClear()
-            colorTint(Color(0xcccc66))
+        register.register(RagiumFluids.ANTI_RUST_OIL) {
+            dull()
+            colorTint(Color(0xff9933))
+        }
+        register.register(RagiumFluids.NITRIC_ACID) {
+            dull()
+            colorTint(Color(0x9999cc))
+        }
+        register.register(RagiumFluids.LIQUID_EXPLOSIVE) {
+            dull()
+            colorTint(Color(0xcc3333))
         }
         register.register(RagiumFluids.NAOH_SOLUTION) {
-            setDull()
+            dull()
             colorTint(Color(0x003366))
         }
         register.register(RagiumFluids.SULFUR_DIOXIDE) {
-            setClear()
+            transparent()
             colorTint(Color(0x996600))
         }
         register.register(RagiumFluids.SULFUR_TRIOXIDE) {
-            setClear()
+            transparent()
             colorTint(Color(0xcc9900))
         }
         register.register(RagiumFluids.SULFURIC_ACID) {
-            setDull()
+            sticky()
             colorTint(Color(0xcc9900))
         }
         register.register(RagiumFluids.HYDROGEN_CHLORIDE) {
-            setClear()
+            transparent()
             colorTint(Color(0x66cc33))
         }
         register.register(RagiumFluids.HYDROCHLORIC_ACID) {
-            setDull()
+            dull()
             colorTint(Color(0x66cc33))
         }
-        register.register(RagiumFluids.CAOH_SOLUTION) {
-            setDull()
-            colorTint(Color(0x336699))
-        }
         register.register(RagiumFluids.MOLTEN_STEEL) {
-            setMolten()
+            molten()
             colorTint(Color(0x999999))
         }
     }

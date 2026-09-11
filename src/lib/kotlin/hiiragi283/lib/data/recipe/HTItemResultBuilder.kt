@@ -58,20 +58,23 @@ class HTItemResultBuilder @PublishedApi internal constructor() {
         +HTItemResult.SimpleEntry(this)
     }
 
-    operator fun Item.unaryPlus() {
-        +ItemStackTemplate(this)
-    }
-
-    operator fun ItemStackTemplate.unaryPlus() {
-        +HTItemResult.SimpleEntry(this)
-    }
-
-    operator fun ItemStack.unaryPlus() {
-        +HTItemResult.SimpleEntry(this)
-    }
-
     operator fun HTDeferredBlockAndItem<*, *>.unaryPlus() {
         +this.item
+    }
+
+    @Suppress("DEPRECATION")
+    operator fun Item.unaryPlus() {
+        +HTItemResult.SimpleEntry(this.builtInRegistryHolder())
+    }
+
+    fun from(template: ItemStackTemplate) {
+        +HTItemResult.SimpleEntry(template)
+        count = template.count
+    }
+
+    fun from(stack: ItemStack) {
+        +HTItemResult.SimpleEntry(stack)
+        count = stack.count
     }
 
     // Tag

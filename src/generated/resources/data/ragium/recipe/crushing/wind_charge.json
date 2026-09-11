@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:rods/breeze"
+  },
+  "primary_result": {
+    "count": 6,
+    "id": "minecraft:wind_charge"
+  },
+  "time": 200
+}

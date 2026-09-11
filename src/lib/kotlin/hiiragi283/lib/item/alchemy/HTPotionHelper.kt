@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import kotlin.jvm.optionals.getOrNull
@@ -69,30 +68,6 @@ data object HTPotionHelper {
         +contents.bottleType.asItem()
         components { set(DataComponents.POTION_CONTENTS, contents.contents) }
     }
-
-    /**
-     * 指定した引数からポーションの[ItemStack]を作成します。
-     * @param item アイテムの種類
-     * @param potion ポーションの中身
-     * @param count [ItemStack]の個数
-     */
-    @JvmStatic
-    fun createPotion(item: ItemLike, potion: Holder<Potion>, count: Int = 1): ItemStackTemplate? =
-        createPotion(item, PotionContents(potion), count)
-
-    /**
-     * 指定した引数からポーションの[ItemStack]を作成します。
-     * @param item アイテムの種類
-     * @param contents ポーションの中身
-     * @param count [ItemStack]の個数
-     */
-    @JvmStatic
-    fun createPotion(item: ItemLike, contents: PotionContents, count: Int = 1): ItemStackTemplate? =
-        ItemInstanceBuilder.buildSafeTemplate {
-            +item.asItem()
-            this.count = count
-            components { set(DataComponents.POTION_CONTENTS, contents) }
-        }
 
     /**
      * 指定した[instance]から[BottledPotionContents]を取得します。

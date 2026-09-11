@@ -4,6 +4,7 @@ import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
 import hiiragi283.lib.integration.jei.category.HTDoubleItemToItemRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTFluidToItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
@@ -17,6 +18,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.integration.jei.category.RTElectrolyzingRecipeCategory
+import hiiragi283.ragium.client.integration.jei.category.RTReactingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTRefiningRecipeCategory
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -90,13 +92,16 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemToItemAndFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.DRAINING),
             HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FILLING),
             // Heat
-            HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING),
+            HTDoubleItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.ALLOYING),
+            HTFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING),
             HTItemToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MELTING),
             HTItemToItemAndFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING),
             RTRefiningRecipeCategory(guiHelper),
             // Chemical
             HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.BATHING),
             RTElectrolyzingRecipeCategory(guiHelper),
+            HTItemAndFluidToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MIXING),
+            RTReactingRecipeCategory(guiHelper),
             // Bio
             HTItemAndFluidToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.BREWING),
             HTItemToDoubleItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PLANTING)
@@ -114,6 +119,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.DRAINING, RagiumRecipeLookups.DRAINING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.FILLING, RagiumRecipeLookups.FILLING)
         // Heat
+        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ALLOYING, RagiumRecipeLookups.ALLOYING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.FREEZING, RagiumRecipeLookups.FREEZING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.MELTING, RagiumRecipeLookups.MELTING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING)
@@ -125,11 +131,19 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.ELECTROLYZING,
             RagiumRecipeLookups.ELECTROLYZING
         )
+        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING)
+        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.REACTING, RagiumRecipeLookups.REACTING)
         // Bio
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.BREWING, RagiumRecipeLookups.BREWING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.PLANTING, RagiumRecipeLookups.PLANTING)
         // Electronics
         // Arcane
+
+        registerDynamicRecipes(registration)
+    }
+
+    private fun registerDynamicRecipes(registration: IRecipeRegistration) {
+        // Chemical
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {

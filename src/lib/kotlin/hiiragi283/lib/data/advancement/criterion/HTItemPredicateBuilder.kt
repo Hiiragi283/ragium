@@ -21,7 +21,7 @@ import kotlin.contracts.contract
  */
 @HTBuilderMarker
 class HTItemPredicateBuilder {
-    @PublishedApi internal var items: Optional<HolderSet<Item>> by HTDelegates.onceInitialize { Optional.empty() }
+    @PublishedApi internal var items: Optional<HolderSet<Item>> by HTDelegates.optionalInitialize()
 
     @PublishedApi internal var count: MinMaxBounds.Ints by HTDelegates.onceInitialize { MinMaxBounds.Ints.ANY }
 

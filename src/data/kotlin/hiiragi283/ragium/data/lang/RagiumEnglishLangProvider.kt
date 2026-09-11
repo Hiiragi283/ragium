@@ -33,8 +33,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
 
         add(RagiumAdvancementKeys.HEAT_MACHINE_CASING, "Heat And Cool", "Craft a Machine Casing (Heat)")
-        add(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
         add(RagiumAdvancementKeys.BLACK_STEEL, "Black Roaring", "Craft a Black Steel Ingot")
+        add(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
         add(RagiumAdvancementKeys.MELTER, "(S)melter(y)", "Acquire Melter")
         // Block
         add(RagiumBlocks.ASSEMBLER, "Assembler")
@@ -58,29 +58,32 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_REDSTONE, "Destabilized Redstone")
         addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "Energized Glowstone")
         addFluid(RagiumFluids.MOLTEN_ENDER, "Resonant Ender")
-        addFluid(RagiumFluids.MOLTEN_BLAZE, "Blaze Blood")
 
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
         addFluid(RagiumFluids.CHLORINE, "Chlorine")
 
-        addFluid(RagiumFluids.CREOSOTE, "Creosote")
+        addFluid(RagiumFluids.WOOD_TAR, "Wood Tar")
+        addFluid(RagiumFluids.COAL_TAR, "Coal Tar")
+        addFluid(RagiumFluids.AROMATIC_COMPOUND, "Aromatic Compound")
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
         addFluid(RagiumFluids.FUEL, "Fuel")
-        addFluid(RagiumFluids.AROMATIC_COMPOUND, "Aromatic Compound")
+        addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
+        addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
+        addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "Liquid Explosive")
         addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "Hydrogen Chloride")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
-        addFluid(RagiumFluids.CAOH_SOLUTION, "Calcium Hydroxide Solution")
         addFluid(RagiumFluids.MOLTEN_STEEL, "Molten Steel")
 
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.TAR, "Tar")
+        add(RagiumItems.PITCH_COKE, "Pitch Coke")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
@@ -91,11 +94,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_STAR, "Wither Star")
 
         add(RagiumItems.MEMORY_DISC, "Memory Disc")
-
-        add(RagiumItems.BLANK_SHAPE_PATTERN, "Shape Pattern (Blank)")
-        add(RagiumItems.BLOCK_SHAPE_PATTERN, "Shape Pattern (Block)")
-        add(RagiumItems.INGOT_SHAPE_PATTERN, "Shape Pattern (Ingot)")
-        add(RagiumItems.BALL_SHAPE_PATTERN, "Shape Pattern (Ball)")
 
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "Frostbite")
@@ -116,6 +114,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.DRAINING, "Draining")
         add(RagiumRecipeTypes.FILLING, "Filling")
 
+        add(RagiumRecipeTypes.ALLOYING, "Alloying")
         add(RagiumRecipeTypes.FREEZING, "Freezing")
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
@@ -123,6 +122,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumRecipeTypes.BATHING, "Chemical Bathing")
         add(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
+        add(RagiumRecipeTypes.MIXING, "Mixing")
+        add(RagiumRecipeTypes.REACTING, "Chemical Reacting")
 
         add(RagiumRecipeTypes.BREWING, "Brewing")
         add(RagiumRecipeTypes.PLANTING, "Planting")

@@ -108,15 +108,20 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             AdvancementType.GOAL
         )
         createSimple(
-            RagiumAdvancementKeys.FREEZER,
+            RagiumAdvancementKeys.ALLOY_SMELTER,
             RagiumAdvancementKeys.HEAT_MACHINE_CASING,
             RagiumBlocks.FREEZER
         )
         createSimple(
             RagiumAdvancementKeys.BLACK_STEEL,
-            RagiumAdvancementKeys.FREEZER,
+            RagiumAdvancementKeys.ALLOY_SMELTER,
             HTItemPart.INGOT,
             RagiumMaterial.Metal.BLACK_STEEL
+        )
+        createSimple(
+            RagiumAdvancementKeys.FREEZER,
+            RagiumAdvancementKeys.HEAT_MACHINE_CASING,
+            RagiumBlocks.FREEZER
         )
         createSimple(
             RagiumAdvancementKeys.MELTER,
@@ -126,7 +131,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         // Chemical
         createSimple(
             RagiumAdvancementKeys.CHEMICAL_MACHINE_CASING,
-            RagiumAdvancementKeys.FREEZER,
+            RagiumAdvancementKeys.BLACK_STEEL,
             RagiumItems.getCasing(HTMachineType.CHEMICAL),
             AdvancementType.GOAL
         )

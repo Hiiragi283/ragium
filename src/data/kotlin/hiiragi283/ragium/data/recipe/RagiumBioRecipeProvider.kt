@@ -30,23 +30,23 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
 
     private fun brewing() {
         // Poison + Spider Eye -> Fermented Spider Eye
-        RagiumRecipeBuilders.freezing {
+        RagiumRecipeBuilders.bathing {
             itemIngredient { items { +Items.SPIDER_EYE } }
             fluidIngredient {
                 +HTPotionFluidIngredient(Potions.POISON)
                 amount = 250
             }
             result { +Items.FERMENTED_SPIDER_EYE }
-        }
+        }.save(exporter)
         // Poison + Potato -> Poisonous Potato
-        RagiumRecipeBuilders.freezing {
+        RagiumRecipeBuilders.bathing {
             itemIngredient { +holderSet(Tags.Items.CROPS_POTATO) }
             fluidIngredient {
                 +HTPotionFluidIngredient(Potions.POISON)
                 amount = 250
             }
             result { +Items.POISONOUS_POTATO }
-        }
+        }.save(exporter)
 
         // Haste
         // Nausea

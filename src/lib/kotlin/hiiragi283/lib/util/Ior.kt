@@ -2,6 +2,7 @@
 
 package hiiragi283.lib.util
 
+import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -32,6 +33,16 @@ sealed class Ior<out A, out B> {
                 else -> null
             }
         }
+
+        /**
+         * 指定された[left]と[right]を[Ior]に変換します。
+         * @since 26.1.5
+         */
+        @JvmStatic
+        fun <A : Any, B : Any> fromNullable(left: Optional<A>, right: Optional<B>): Optional<Ior<A, B>> = left.fold(
+            { right.map { Right(it) } },
+            { leftValue: A -> Optional.of(right.fold({ Left(leftValue) }, { Both(leftValue, it) })) }
+        )
 
         /**
          * 指定された[pair]を[Ior]に変換します。

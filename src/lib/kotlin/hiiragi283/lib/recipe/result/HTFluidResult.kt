@@ -3,10 +3,12 @@ package hiiragi283.lib.recipe.result
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.fluid.HTFlowingFluidHelper
 import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.util.DFUEither
+import hiiragi283.lib.util.fold
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
@@ -20,6 +22,7 @@ import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
+import java.util.Optional
 
 /**
  * 液体の完成品を表すインターフェースです。
@@ -109,7 +112,9 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
             @JvmField
             val CODEC: MapCodec<SimpleEntry> = HTCodecs.recordMap { instance ->
                 instance.group(
-                    FluidStack.FLUID_HOLDER_CODEC.fieldOf(HTConstants.ID).forGetter(SimpleEntry::fluid),
+                    HTFlowingFluidHelper.SOURCE_FLUID_HOLDER_CODEC
+                        .fieldOf(HTConstants.ID)
+                        .forGetter(SimpleEntry::fluid),
                     DataComponentPatch.CODEC
                         .optionalFieldOf(HTConstants.COMPONENTS, DataComponentPatch.EMPTY)
                         .forGetter(SimpleEntry::components)
@@ -163,3 +168,17 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
             contents.potion?.getKeyOrThrow()?.identifier() ?: RagiumAPI.id(HTConstants.POTION)
     }
 }
+
+//    Extensions    //
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.5
+ */
+fun HTFluidResult?.createOrEmpty(): FluidStack = this?.create() ?: FluidStack.EMPTY
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.5
+ */
+fun Optional<HTFluidResult>.createOrEmpty(): FluidStack = this.fold(FluidStack::EMPTY, HTFluidResult::create)

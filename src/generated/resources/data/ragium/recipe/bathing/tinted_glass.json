@@ -1,0 +1,16 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:molten_glass"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": "#c:dusts/amethyst"
+  },
+  "result": {
+    "count": 2,
+    "id": "minecraft:tinted_glass"
+  },
+  "time": 200
+}

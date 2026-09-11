@@ -5,7 +5,10 @@ package hiiragi283.lib.serialization.codec
 import com.mojang.datafixers.kinds.App
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
+import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.MapCodec
+import com.mojang.serialization.MapLike
+import com.mojang.serialization.RecordBuilder
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.text.Text
@@ -24,6 +27,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
 import java.util.Optional
 import java.util.UUID
+import java.util.stream.Stream
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -112,55 +116,52 @@ data object HTCodecs {
      * @param right 右側の値の[MapCodec]
      */
     @JvmStatic
-    fun <A : Any, B : Any> ior(left: MapCodec<A>, right: MapCodec<B>): MapCodec<Ior<A, B>> = mapEither(
-        mapEither(left, right),
-        mapPair(left, right)
-    ).xmap(
-        { either: Either<Either<A, B>, Pair<A, B>> -> either.fold(Ior.Companion::fromEither, Ior.Companion::fromPair) },
-        Ior<A, B>::unwrap
-    )
+    fun <A : Any, B : Any> ior(left: MapCodec<A>, right: MapCodec<B>): MapCodec<Ior<A, B>> = HTIorMapCodec(left, right)
 
-    /*private data class HTIorMapCodec<A, B>(val left: MapCodec<A>, val right: MapCodec<B>) : MapCodec<Ior<A, B>>() {
+    private data class HTIorMapCodec<A, B>(val left: MapCodec<A>, val right: MapCodec<B>) : MapCodec<Ior<A, B>>() {
         override fun <T : Any> keys(ops: DynamicOps<T>): Stream<T> = Stream.concat(left.keys(ops), right.keys(ops))
 
         override fun <T : Any> decode(ops: DynamicOps<T>, input: MapLike<T>): DataResult<Ior<A, B>> {
             val leftResult: DataResult<A> = left.decode(ops, input)
             val rightResult: DataResult<B> = right.decode(ops, input)
 
-            val bothResult: DataResult<Ior<A, B>> = leftResult.flatMap { leftIn: A ->
-                rightResult.map { rightIn: B -> Ior.Both(leftIn, rightIn) }
-            }
+            val bothResult: DataResult<Ior<A, B>> =
+                leftResult.flatMap { leftIn: A -> rightResult.map { rightIn: B -> Ior.Both(leftIn, rightIn) } }
             if (bothResult.isSuccess) return bothResult
             if (leftResult.isSuccess) {
                 return when {
-                    rightResult.isSuccess ->
-                        leftResult.flatMap { leftIn: A ->
-                            rightResult.map { rightIn: B -> Ior.Both(leftIn, rightIn) }
-                        }
+                    rightResult.isSuccess -> leftResult.flatMap { leftIn: A ->
+                        rightResult.map { rightIn: B -> Ior.Both(leftIn, rightIn) }
+                    }
+
                     else -> leftResult.map { Ior.Left(it) }
                 }
             } else {
                 return when {
                     rightResult.isSuccess -> rightResult.map { Ior.Right(it) }
-                    else ->
-                        DataResult.error {
-                            val leftError: String = leftResult.error().orElseThrow().message()
-                            val rightError: String = rightResult.error().orElseThrow().message()
-                            "Failed to parse ior. Left: $leftError; Right: $rightError;"
-                        }
+
+                    else -> DataResult.error {
+                        val leftError: String = leftResult.error().orElseThrow().message()
+                        val rightError: String = rightResult.error().orElseThrow().message()
+                        "Failed to parse ior. Left: $leftError; Right: $rightError;"
+                    }
                 }
             }
         }
 
-        override fun <T : Any> encode(input: Ior<A, B>, ops: DynamicOps<T>, prefix: RecordBuilder<T>): RecordBuilder<T> = input.fold(
+        override fun <T : Any> encode(
+            input: Ior<A, B>,
+            ops: DynamicOps<T>,
+            prefix: RecordBuilder<T>
+        ): RecordBuilder<T> = input.fold(
             { left.encode(it, ops, prefix) },
             { right.encode(it, ops, prefix) },
             { left: A, right: B ->
                 this.left.encode(left, ops, prefix)
                 this.right.encode(right, ops, prefix)
-            },
+            }
         )
-    }*/
+    }
 
     /**
      * [Enum]の[Codec]を返します。

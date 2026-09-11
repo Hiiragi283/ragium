@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "#ragium:shape_patterns",
-  "result": {
-    "id": "ragium:blank_shape_pattern"
-  }
-}

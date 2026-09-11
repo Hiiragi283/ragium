@@ -52,6 +52,9 @@ data object RagiumRecipeLookups {
 
     // Heat
     @JvmField
+    val ALLOYING: HTCompoundRecipeLookup<HTDoubleItemToItemRecipe> = create(RagiumConstants.ALLOYING)
+
+    @JvmField
     val FREEZING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.FREEZING)
 
     @JvmField
@@ -69,6 +72,12 @@ data object RagiumRecipeLookups {
 
     @JvmField
     val ELECTROLYZING: HTRecipeLookup<RTElectrolyzingRecipe> = create(RagiumRecipeTypes.ELECTROLYZING)
+
+    @JvmField
+    val MIXING: HTCompoundRecipeLookup<HTItemAndFluidToFluidRecipe> = create(RagiumConstants.MIXING)
+
+    @JvmField
+    val REACTING: HTCompoundRecipeLookup<RTReactingRecipe> = create(RagiumConstants.REACTING)
 
     // Bio
     @JvmField

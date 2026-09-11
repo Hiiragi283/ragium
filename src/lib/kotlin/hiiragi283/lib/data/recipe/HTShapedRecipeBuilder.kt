@@ -113,6 +113,15 @@ class HTShapedRecipeBuilder : HTCraftingRecipeBuilder<ShapedRecipe>(HTConstants.
     fun layered() {
         +"AAA"
         +"BBB"
+        +"CCC"
+    }
+
+    /**
+     * @since 26.1.5
+     */
+    fun layered2() {
+        +"AAA"
+        +"BBB"
         +"AAA"
     }
 

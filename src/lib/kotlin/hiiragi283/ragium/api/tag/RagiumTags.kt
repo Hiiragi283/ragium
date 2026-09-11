@@ -1,9 +1,12 @@
 package hiiragi283.ragium.api.tag
 
+import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.ragium.api.RagiumAPI
+import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.material.Fluid
 
 /**
  * Ragiumで使用される[TagKey]をまとめたクラスです。
@@ -13,12 +16,30 @@ import net.minecraft.world.item.Item
 data object RagiumTags {
     /**
      * @author Hiiragi Tsubasa
+     * @since 26.1.5
+     */
+    data object BlockItem {
+        @JvmField
+        val QUARTZ_BLOCKS: BlockItemTag = create("quartz_blocks")
+
+        @JvmStatic
+        private fun create(vararg path: String): BlockItemTag = BlockItemTag(RagiumAPI.id(*path))
+    }
+
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.5
+     */
+    data object Fluids {
+        @JvmStatic
+        private fun create(vararg path: String): TagKey<Fluid> = FluidTags.create(RagiumAPI.id(*path))
+    }
+
+    /**
+     * @author Hiiragi Tsubasa
      * @since 26.1.0
      */
     data object Items {
-        @JvmField
-        val SHAPE_PATTERNS: TagKey<Item> = create("shape_patterns")
-
         @JvmField
         val SOOTY_IRON_TOOL_MATERIALS: TagKey<Item> = create("sooty_iron_tool_materials")
 

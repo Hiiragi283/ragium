@@ -13,12 +13,14 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluids
@@ -37,15 +39,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     }
 
     private fun assembling() {
-        // Blackstone + Gold -> Gilded Blackstone
-        RagiumRecipeBuilders.assembling {
-            primary { items { +Items.BLACKSTONE } }
-            secondary {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.GOLD)
-                count = 8
-            }
-            result { +Items.GILDED_BLACKSTONE }
-        }.save(exporter)
         // Dirt + Leaves -> Podzol
         RagiumRecipeBuilders.assembling {
             primary { items { +Items.DIRT } }
@@ -271,7 +264,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 recipeId suffix "_from_dust"
             }.save(exporter)
         }
-
         setOf(
             RagiumMaterial.Other.WOOD to RagiumItems.PARTICLE_BOARD,
             RagiumMaterial.Other.PAPER to HTSimpleDeferredItem(vanillaId("paper"))
@@ -284,11 +276,94 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 result { +item }
             }.save(exporter)
         }
+
+        // 4x Blaze Powder -> Blaze Rod
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +Items.BLAZE_POWDER }
+                count = 4
+            }
+            result { +Items.BLAZE_ROD }
+        }.save(exporter)
+        // 6x Wind Charge -> Breeze Rod
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +Items.WIND_CHARGE }
+                count = 6
+            }
+            result { +Items.BREEZE_ROD }
+        }.save(exporter)
     }
 
     private fun crushing() {
+        crushIntoDust()
+        crushOres()
         dyes()
 
+        // XX Block -> XX
+        setOf(
+            Items.AMETHYST_BLOCK to Items.AMETHYST_SHARD,
+            Items.BRICKS to Items.BRICK,
+            Items.CLAY to Items.CLAY_BALL,
+            Items.DRIPSTONE_BLOCK to Items.POINTED_DRIPSTONE,
+            Items.GLOWSTONE to Items.GLOWSTONE_DUST,
+            Items.HONEYCOMB_BLOCK to Items.HONEYCOMB,
+            Items.MAGMA_BLOCK to Items.MAGMA_CREAM,
+            Items.NETHER_BRICKS to Items.NETHER_BRICK,
+            Items.PRISMARINE to Items.PRISMARINE_SHARD,
+            Items.PURPUR_BLOCK to Items.POPPED_CHORUS_FRUIT,
+            Items.SNOW_BLOCK to Items.SNOWBALL
+        ).forEach { (block: Item, base: Item) ->
+            RagiumRecipeBuilders.crushing {
+                ingredient { items { +block } }
+                primary {
+                    +base
+                    count = 4
+                }
+            }.save(exporter)
+        }
+        setOf(
+            Tags.Items.SANDSTONE_UNCOLORED_BLOCKS to Items.SAND,
+            Tags.Items.SANDSTONE_RED_BLOCKS to Items.RED_SAND,
+            RagiumTags.BlockItem.QUARTZ_BLOCKS.item to Items.QUARTZ
+        ).forEach { (block: TagKey<Item>, base: Item) ->
+            RagiumRecipeBuilders.crushing {
+                ingredient { +holderSet(block) }
+                primary {
+                    +base
+                    count = 4
+                }
+            }.save(exporter)
+        }
+
+        // Book -> 3x Paper Pulp
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.BOOK } }
+            primary {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.PAPER)
+                count = 3
+            }
+            recipeId suffix "_from_book"
+        }.save(exporter)
+        // Blaze Rod -> 4x Blaze Powder
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(Tags.Items.RODS_BLAZE) }
+            primary {
+                +Items.BLAZE_POWDER
+                count = 4
+            }
+        }.save(exporter)
+        // Breeze Rod -> 6x Wind Charge
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(Tags.Items.RODS_BREEZE) }
+            primary {
+                +Items.WIND_CHARGE
+                count = 6
+            }
+        }.save(exporter)
+    }
+
+    private fun crushIntoDust() {
         // XX Dust
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
             val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
@@ -340,7 +415,9 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
             primary { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN) }
         }.save(exporter)
+    }
 
+    private fun crushOres() {
         // XX Ore -> XX Dust
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Fuel.COAL) }
@@ -447,14 +524,14 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
 
-        // Book -> 3x Paper Pulp
+        // Ragium
         RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.BOOK } }
+            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Mineral.SULFUR) }
             primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.PAPER)
-                count = 3
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR)
+                count = 6
             }
-            recipeId suffix "_from_book"
+            recipeId suffix "_from_ore"
         }.save(exporter)
     }
 
@@ -578,6 +655,14 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             secondary { +Items.LEATHER }
             recipeId suffix "_from_book"
+        }.save(exporter)
+        // Melon -> Sliced Melon
+        RagiumRecipeBuilders.cutting {
+            ingredient { items { +Items.MELON } }
+            primary {
+                +Items.MELON_SLICE
+                count = 9
+            }
         }.save(exporter)
     }
 

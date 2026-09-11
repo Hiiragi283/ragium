@@ -3,6 +3,7 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.data.ConditionBuilder
+import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.util.HTBuilderMarker
@@ -100,13 +101,18 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
         }
     }
 
-    fun build(): HTRecipeHolder<RECIPE> = HTRecipeHolder(RecipeKey(recipeId.id.withPrefix("$prefix/")), createRecipe())
+    fun build(): HTRecipeHolder<RECIPE> = build("$prefix/")
+
+    fun buildSynthetic(): HTRecipeHolder<RECIPE> = build("/$prefix/")
+
+    private fun build(prefix: String): HTRecipeHolder<RECIPE> =
+        HTRecipeHolder(RecipeKey(recipeId.id.withPrefix(prefix)), createRecipe())
 
     /**
      * レシピを生成します。
      * @param exporter 生成したレシピの出力先
      */
-    open fun save(exporter: HTRecipeExporter) {
+    open fun save(exporter: ConditionalExporter<Recipe<*>>) {
         this.save { id: RecipeKey, recipe: RECIPE -> exporter.accept(id, recipe, conditions) }
     }
 

@@ -59,6 +59,5 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(HTCommonTags.Items.PAPER).addItem(Items.PAPER)
         builder(HTCommonTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
         builder(HTCommonTags.Items.STICKY_BALLS).addTag(Tags.Items.SLIME_BALLS)
-        RagiumItems.SHAPE_PATTERNS.forEach(builder(RagiumTags.Items.SHAPE_PATTERNS)::add)
     }
 }

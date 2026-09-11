@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:amethyst_block"
+  },
+  "primary_result": {
+    "count": 4,
+    "id": "minecraft:amethyst_shard"
+  },
+  "time": 200
+}

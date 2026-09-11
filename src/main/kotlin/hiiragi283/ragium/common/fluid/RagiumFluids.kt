@@ -6,6 +6,7 @@ import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTFluidContentRegister
 import hiiragi283.lib.resource.toId
+import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.Identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTPotionBucketItem
@@ -26,6 +27,10 @@ data object RagiumFluids {
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
+        REGISTER.addAlias("calcium_hydroxide_solution", "sodium_hydroxide_solution")
+        REGISTER.addAlias(RagiumAPI.id("molten_blaze"), vanillaId("lava"))
+        REGISTER.addAlias("creosote", "coal_tar")
+
         REGISTER.register(eventBus)
     }
 
@@ -110,11 +115,6 @@ data object RagiumFluids {
         properties = molten()
     }
 
-    @JvmField
-    val MOLTEN_BLAZE: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_blaze") {
-        properties = molten()
-    }
-
     //    Element    //
 
     // 1st
@@ -133,7 +133,18 @@ data object RagiumFluids {
 
     // 3rd
     @JvmField
-    val CREOSOTE: HTFluidContent.Flowing = REGISTER.registerFlowing("creosote") { properties = liquid() }
+    val WOOD_TAR: HTFluidContent.Virtual = REGISTER.registerVirtual("wood_tar") {
+        properties = liquid()
+    }
+
+    @JvmField
+    val COAL_TAR: HTFluidContent.Virtual = REGISTER.registerVirtual("coal_tar") { properties = liquid() }
+
+    @JvmField
+    val AROMATIC_COMPOUND: HTFluidContent.Flowing = REGISTER.registerFlowing("aromatic_compound") {
+        properties = liquid()
+        typeFactory = { HTExplosiveFluidType(3f, it) }
+    }
 
     @JvmField
     val CRUDE_OIL: HTFluidContent.Flowing = REGISTER.registerFlowing("crude_oil") {
@@ -161,9 +172,15 @@ data object RagiumFluids {
     }
 
     @JvmField
-    val AROMATIC_COMPOUND: HTFluidContent.Flowing = REGISTER.registerFlowing("aromatic_compound") {
+    val ANTI_RUST_OIL: HTFluidContent.Virtual = REGISTER.registerVirtual("anti_rust_oil") { properties = liquid() }
+
+    @JvmField
+    val NITRIC_ACID: HTFluidContent.Flowing = REGISTER.registerFlowing("nitric_acid") { properties = liquid() }
+
+    @JvmField
+    val LIQUID_EXPLOSIVE: HTFluidContent.Flowing = REGISTER.registerFlowing("liquid_explosive") {
         properties = liquid()
-        typeFactory = { HTExplosiveFluidType(3f, it) }
+        typeFactory = { HTExplosiveFluidType(6f, it) }
     }
 
     // 4th
@@ -195,11 +212,6 @@ data object RagiumFluids {
     }
 
     // 5th
-    @JvmField
-    val CAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("calcium_hydroxide_solution") {
-        properties = liquid()
-    }
-
     @JvmField
     val MOLTEN_STEEL: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_steel") {
         properties = molten()

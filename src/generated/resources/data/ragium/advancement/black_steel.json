@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:freezer",
+  "parent": "ragium:alloy_smelter",
   "criteria": {
     "has_black_steel_ingot": {
       "conditions": {

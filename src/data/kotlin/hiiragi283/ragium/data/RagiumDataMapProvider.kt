@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
@@ -24,7 +24,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         val builder: Builder<FurnaceFuel, Item> = builder(NeoForgeDataMaps.FURNACE_FUELS)
         builder.add(RagiumItems.BAMBOO_CHARCOAL, FurnaceFuel(200 * 6), false)
         builder.add(RagiumItems.COAL_COKE, FurnaceFuel(200 * 16), false)
-        builder.add(RagiumItems.TAR, FurnaceFuel(200 * 4), false)
+        builder.add(RagiumItems.PITCH_COKE, FurnaceFuel(200 * 6), false)
 
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
             val time: Int = when (fuel) {
@@ -32,7 +32,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
                 RagiumMaterial.Fuel.CHARCOAL -> 1
                 RagiumMaterial.Fuel.COAL_COKE -> 2
             } * 200
-            RagiumBlocks.MATERIAL_BLOCKS[HTBlockPart.STORAGE_BLOCK, fuel]?.item?.let { storage: Holder<Item> ->
+            RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, fuel]?.item?.let { storage: Holder<Item> ->
                 builder.add(storage, FurnaceFuel(time * 80), false)
             }
             RagiumItems.MATERIAL_ITEMS[HTItemPart.TINY, fuel]?.let { tiny: Holder<Item> ->

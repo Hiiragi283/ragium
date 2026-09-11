@@ -29,8 +29,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "粉砕機を手に入れる")
 
         add(RagiumAdvancementKeys.HEAT_MACHINE_CASING, "Heat And Cool", "マシンケーシング（熱）を作る")
-        add(RagiumAdvancementKeys.FREEZER, "私の消費電力は53万です", "冷凍機を手に入れる")
         add(RagiumAdvancementKeys.BLACK_STEEL, "黒い咆哮", "黒鋼をつくる")
+        add(RagiumAdvancementKeys.FREEZER, "私の消費電力は53万です", "冷凍機を手に入れる")
         add(RagiumAdvancementKeys.MELTER, "融けてしまいそう", "溶融炉を手に入れる")
         // Block
         add(RagiumBlocks.ASSEMBLER, "組立機")
@@ -54,29 +54,32 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_REDSTONE, "励起レッドストーン")
         addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "活性グロウストーン")
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
-        addFluid(RagiumFluids.MOLTEN_BLAZE, "ブレイズの血液")
 
         addFluid(RagiumFluids.HYDROGEN, "水素")
         addFluid(RagiumFluids.OXYGEN, "酸素")
         addFluid(RagiumFluids.CHLORINE, "塩素")
 
-        addFluid(RagiumFluids.CREOSOTE, "クレオソート")
+        addFluid(RagiumFluids.WOOD_TAR, "木タール")
+        addFluid(RagiumFluids.COAL_TAR, "石炭タール")
+        addFluid(RagiumFluids.AROMATIC_COMPOUND, "芳香族化合物")
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
         addFluid(RagiumFluids.FUEL, "燃料油")
-        addFluid(RagiumFluids.AROMATIC_COMPOUND, "芳香族化合物")
+        addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
+        addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
+        addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "液体爆薬")
         addFluid(RagiumFluids.NAOH_SOLUTION, "水酸化ナトリウム水溶液")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "二酸化硫黄")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
-        addFluid(RagiumFluids.CAOH_SOLUTION, "水酸化カルシウム水溶液")
         addFluid(RagiumFluids.MOLTEN_STEEL, "溶融した鋼鉄")
 
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.TAR, "タール")
+        add(RagiumItems.PITCH_COKE, "ピッチコークス")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
@@ -87,11 +90,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_STAR, "ウィザースター")
 
         add(RagiumItems.MEMORY_DISC, "メモリーディスク")
-
-        add(RagiumItems.BLANK_SHAPE_PATTERN, "形状パターン（なし）")
-        add(RagiumItems.BLOCK_SHAPE_PATTERN, "形状パターン（ブロック）")
-        add(RagiumItems.INGOT_SHAPE_PATTERN, "形状パターン（インゴット）")
-        add(RagiumItems.BALL_SHAPE_PATTERN, "形状パターン（ボール）")
 
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "凍傷")
@@ -112,6 +110,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.DRAINING, "排出")
         add(RagiumRecipeTypes.FILLING, "封入")
 
+        add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.FREEZING, "冷凍")
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
@@ -119,6 +118,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumRecipeTypes.BATHING, "化学洗浄")
         add(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
+        add(RagiumRecipeTypes.MIXING, "混合")
+        add(RagiumRecipeTypes.REACTING, "化学反応")
 
         add(RagiumRecipeTypes.BREWING, "醸造")
         add(RagiumRecipeTypes.PLANTING, "栽培")

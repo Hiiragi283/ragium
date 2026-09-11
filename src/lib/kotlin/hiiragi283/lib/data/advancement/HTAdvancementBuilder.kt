@@ -4,6 +4,7 @@ package hiiragi283.lib.data.advancement
 
 import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.lib.data.ConditionBuilder
+import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.data.advancement.criterion.HTConsumeItemBuilder
 import hiiragi283.lib.data.advancement.criterion.HTInventoryChangeBuilder
 import hiiragi283.lib.util.HTBuilderMarker
@@ -40,13 +41,13 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
         }
     }
 
-    var parent: Optional<AdvancementKey> by HTDelegates.onceInitialize { Optional.empty() }
+    var parent: Optional<AdvancementKey> by HTDelegates.optionalInitialize()
 
     operator fun AdvancementKey.unaryPlus() {
         parent = Optional.of(this)
     }
 
-    @PublishedApi internal var display: Optional<DisplayInfo> by HTDelegates.onceInitialize { Optional.empty() }
+    @PublishedApi internal var display: Optional<DisplayInfo> by HTDelegates.optionalInitialize()
     var rewards: AdvancementRewards = AdvancementRewards.EMPTY
     var requirements: AdvancementRequirements? = null
     var strategy: AdvancementRequirements.Strategy = AdvancementRequirements.Strategy.AND
@@ -93,7 +94,7 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
 
     //    Save    //
 
-    fun save(exporter: HTAdvancementExporter) {
+    fun save(exporter: ConditionalExporter<Advancement>) {
         val adv = Advancement(
             parent.map(AdvancementKey::identifier),
             display,
