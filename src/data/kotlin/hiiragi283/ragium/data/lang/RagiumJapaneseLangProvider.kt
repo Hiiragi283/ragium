@@ -64,7 +64,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "芳香族化合物")
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
-        addFluid(RagiumFluids.RESIDUE_OIL, "残渣油")
+        addFluid(RagiumFluids.RESIDUAL_OIL, "残渣油")
         addFluid(RagiumFluids.FUEL, "燃料油")
         addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")

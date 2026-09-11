@@ -5,15 +5,12 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
-import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.PackOutput
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.OminousBottleAmplifier
 import net.neoforged.neoforge.common.Tags
@@ -26,8 +23,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         alloying()
         freezing()
         melting()
-        pyrolyzing()
-        refining()
     }
 
     private fun alloying() {
@@ -243,173 +238,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             recipeId suffix "_from_sooty_iron"
         }.save(exporter)
     }
-
-    private fun pyrolyzing() {
-        // Log -> Charcoal + Wood Tar
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { +holderSet(ItemTags.LOGS_THAT_BURN) }
-            itemResult { +Items.CHARCOAL }
-            fluidResult {
-                +RagiumFluids.WOOD_TAR
-                amount = 250
-            }
-            time /= 2
-            recipeId suffix "_from_logs"
-        }.save(exporter)
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD)
-                count = 4
-            }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.CHARCOAL) }
-            fluidResult {
-                +RagiumFluids.WOOD_TAR
-                amount = 250
-            }
-            time /= 2
-        }.save(exporter)
-        // Coal -> Coal Coke + Coal Tar
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { items { +Items.COAL } }
-            itemResult { +RagiumItems.COAL_COKE }
-            fluidResult {
-                +RagiumFluids.COAL_TAR
-                amount = 500
-            }
-            time /= 2
-        }.save(exporter)
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.COAL_COKE) }
-            fluidResult {
-                +RagiumFluids.COAL_TAR
-                amount = 500
-            }
-            time /= 2
-        }.save(exporter)
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL) }
-            itemResult { +RagiumBlocks.getOrThrow(HTStorageBlockPart.DEFAULT, RagiumMaterial.Fuel.COAL_COKE) }
-            fluidResult {
-                +RagiumFluids.COAL_TAR
-                amount = 500 * 9
-            }
-            time /= 2
-            time *= 9
-        }.save(exporter)
-
-        // Soul Sand -> Sand + Crude Oil
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { items { +Items.SOUL_SAND } }
-            itemResult { +Items.SAND }
-            fluidResult {
-                +RagiumFluids.CRUDE_OIL
-                amount = 250
-            }
-            recipeId replace "crude_oil_from_soul_sand"
-        }.save(exporter)
-        // Soul Soil -> Clay + Crude Oil
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { items { +Items.SOUL_SOIL } }
-            itemResult { +Items.CLAY }
-            fluidResult {
-                +RagiumFluids.CRUDE_OIL
-                amount = 250
-            }
-            recipeId replace "crude_oil_from_soul_soil"
-        }.save(exporter)
-    }
-
-    private fun refining() {
-        // Crude Oil -> Naphtha + Residue Oil
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.CRUDE_OIL) }
-            primaryResult {
-                +RagiumFluids.NAPHTHA
-                amount = 750
-            }
-            secondaryResult {
-                +RagiumFluids.RESIDUE_OIL
-                amount = 250
-            }
-        }.save(exporter)
-        // Naphtha -> Fuel + Sulfur
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.NAPHTHA) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR) }
-            primaryResult {
-                +RagiumFluids.FUEL
-                amount = 500
-            }
-            recipeId suffix "_from_naphtha"
-        }.save(exporter)
-        // Residue Oil -> Aromatic Compound + Petrolatum
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.RESIDUE_OIL) }
-            itemResult { +RagiumItems.PETROLATUM }
-            primaryResult {
-                +RagiumFluids.AROMATIC_COMPOUND
-                amount = 250
-            }
-            recipeId suffix "_from_residue_oil"
-        }.save(exporter)
-
-        // Wood Tar -> Aromatic Compound
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.WOOD_TAR) }
-            primaryResult {
-                +RagiumFluids.AROMATIC_COMPOUND
-                amount = 500
-            }
-            recipeId suffix "_frol_wood_tar"
-        }.save(exporter)
-        // Coal Tar -> Aromatic Compound + Pitch Coke
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.COAL_TAR) }
-            primaryResult {
-                +RagiumFluids.AROMATIC_COMPOUND
-                amount = 500
-            }
-            itemResult { +RagiumItems.PITCH_COKE }
-            recipeId suffix "_frol_coal_tar"
-        }.save(exporter)
-    }
-
-    /*private fun cracked() {
-        // Naphtha -> Fuel
-        RagiumRecipeBuilders.refining {
-            ingredient {
-                +DataComponentFluidIngredient.of(
-                    false,
-                    RagiumDataComponents.HYDROGEN_CRACKED,
-                    Unit.INSTANCE,
-                    RagiumFluids.NAPHTHA.getOrThrow()
-                )
-            }
-            primaryResult {
-                +RagiumFluids.FUEL
-                amount = 750
-            }
-            recipeId suffix "_from_cracked_naphtha"
-        }.save(exporter)
-        // Residue Oil -> Fuel + Pitch Coke
-        RagiumRecipeBuilders.refining {
-            ingredient {
-                +DataComponentFluidIngredient.of(
-                    false,
-                    RagiumDataComponents.HYDROGEN_CRACKED,
-                    Unit.INSTANCE,
-                    RagiumFluids.RESIDUE_OIL.getOrThrow(),
-                )
-            }
-            itemResult { +RagiumItems.PITCH_COKE }
-            primaryResult {
-                +RagiumFluids.FUEL
-                amount = 500
-            }
-            recipeId suffix "_from_cracked_residue_oil"
-        }.save(exporter)
-    }*/
 
     override fun getName(): String = "Heat Recipes"
 }

@@ -135,7 +135,7 @@ data object RagiumClient : HTClientMod() {
             transparent()
             colorTint(Color(0xff6600))
         }
-        register.register(RagiumFluids.RESIDUE_OIL) {
+        register.register(RagiumFluids.RESIDUAL_OIL) {
             dull()
             colorTint(Color(0x663366))
         }

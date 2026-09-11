@@ -1,0 +1,20 @@
+{
+  "type": "ragium:reacting",
+  "fluid_result": {
+    "amount": 500,
+    "id": "ragium:fuel"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "ragium:petrolatum"
+  },
+  "primary_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:residual_oil"
+  },
+  "secondary_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:hydrogen"
+  },
+  "time": 200
+}

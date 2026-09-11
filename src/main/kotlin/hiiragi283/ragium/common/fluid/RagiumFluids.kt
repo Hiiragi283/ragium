@@ -166,7 +166,7 @@ data object RagiumFluids {
     }
 
     @JvmField
-    val RESIDUE_OIL: HTFluidContent.Virtual = REGISTER.registerVirtual("residue_oil") { properties = liquid() }
+    val RESIDUAL_OIL: HTFluidContent.Virtual = REGISTER.registerVirtual("residual_oil") { properties = liquid() }
 
     @JvmField
     val FUEL: HTFluidContent.Flowing = REGISTER.registerFlowing("fuel") {
