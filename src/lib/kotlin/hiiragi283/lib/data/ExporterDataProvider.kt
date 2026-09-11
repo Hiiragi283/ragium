@@ -23,6 +23,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.WithConditions
 import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 import java.util.Optional
@@ -55,30 +56,40 @@ abstract class ExporterDataProvider<R : Any>(
     protected lateinit var registries: HolderLookup.Provider
         private set
 
-    final override fun run(cache: CachedOutput): CompletableFuture<*> = future.thenCompose { registries ->
-        val map: MutableMap<ResourceKey<R>, WithConditions<R>> = Object2ObjectOpenHashMap()
-        this.registries = registries
-        this.exporter = createExporter(map)
-        exportValues()
+    final override fun run(cache: CachedOutput): CompletableFuture<*> = future
+        .thenCompose { registries: HolderLookup.Provider ->
+            val map: MutableMap<ResourceKey<R>, WithConditions<R>> = Object2ObjectOpenHashMap()
+            this.registries = registries
+            this.exporter = ConditionalExporter { id: ResourceKey<R>, value: R, conditions: List<ICondition> ->
+                val fixedId: ResourceKey<R> = modifyId(id)
+                val oldValue: WithConditions<R>? = map.put(fixedId, WithConditions(conditions, value))
+                if (oldValue != null) {
+                    error("Duplicate registration for $fixedId, new=$value, old=$oldValue")
+                }
+            }
+            exportValues()
 
-        val dynamicOps: RegistryOps<JsonElement> = registries.createSerializationContext(JsonOps.INSTANCE)
-        DataProvider.saveAll(
-            cache,
-            { conditions: WithConditions<R> -> codec.encodeStart(dynamicOps, Optional.of(conditions)).orThrow },
-            pathProvider::json,
-            map
-        )
-    }
-
-    /**
-     * [ConditionalExporter]の新しいインスタンスを作成します。
-     */
-    protected abstract fun createExporter(map: MutableMap<ResourceKey<R>, WithConditions<R>>): ConditionalExporter<R>
+            val dynamicOps: RegistryOps<JsonElement> = registries.createSerializationContext(JsonOps.INSTANCE)
+            DataProvider.saveAll(
+                cache,
+                { conditions: WithConditions<R> -> codec.encodeStart(dynamicOps, Optional.of(conditions)).orThrow },
+                pathProvider::json,
+                map
+            )
+        }
 
     /**
      * 値を登録します。
      */
     protected abstract fun exportValues()
+
+    protected fun modifyId(key: ResourceKey<R>): ResourceKey<R> =
+        ResourceKey.create(key.registryKey(), key.identifier().let(::modifyId))
+
+    /**
+     * 受け取った[id]を[exporter]内で変換します。
+     */
+    protected open fun modifyId(id: Identifier): Identifier = modId.toId(id.path)
 
     //    Extensions    //
 

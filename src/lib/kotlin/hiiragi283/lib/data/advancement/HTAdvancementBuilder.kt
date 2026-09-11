@@ -4,6 +4,7 @@ package hiiragi283.lib.data.advancement
 
 import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.lib.data.ConditionBuilder
+import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.data.advancement.criterion.HTConsumeItemBuilder
 import hiiragi283.lib.data.advancement.criterion.HTInventoryChangeBuilder
 import hiiragi283.lib.util.HTBuilderMarker
@@ -93,7 +94,7 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
 
     //    Save    //
 
-    fun save(exporter: HTAdvancementExporter) {
+    fun save(exporter: ConditionalExporter<Advancement>) {
         val adv = Advancement(
             parent.map(AdvancementKey::identifier),
             display,

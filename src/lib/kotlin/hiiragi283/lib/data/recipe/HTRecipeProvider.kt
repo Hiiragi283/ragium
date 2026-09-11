@@ -1,12 +1,9 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.data.ExporterDataProvider
 import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
-import hiiragi283.lib.recipe.RecipeKey
-import hiiragi283.lib.resource.toId
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -17,16 +14,8 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.ToolMaterial
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
-import net.neoforged.neoforge.common.conditions.WithConditions
 import java.util.concurrent.CompletableFuture
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.3
- */
-typealias HTRecipeExporter = ConditionalExporter<Recipe<*>>
 
 /**
  * Hiiragi Seriesで使用される，レシピ向けの[ExporterDataProvider]の拡張クラスです。
@@ -39,21 +28,6 @@ abstract class HTRecipeProvider(
     future: CompletableFuture<HolderLookup.Provider>,
     modId: String
 ) : ExporterDataProvider<Recipe<*>>(packOutput, future, Registries.RECIPE, modId, Recipe.CONDITIONAL_CODEC) {
-    override fun createExporter(map: MutableMap<RecipeKey, WithConditions<Recipe<*>>>): HTRecipeExporter =
-        HTRecipeExporter { id: RecipeKey, recipe: Recipe<*>, conditions: List<ICondition> ->
-            val fixedId: RecipeKey = id.let(::modifyId)
-            check(map.put(fixedId, WithConditions(conditions, recipe)) == null) {
-                "Duplicate recipe ${fixedId.identifier()}"
-            }
-        }
-
-    protected fun modifyId(key: RecipeKey): RecipeKey = RecipeKey(key.identifier().let(::modifyId))
-
-    /**
-     * 受け取った[id]を[exporter]内で変換します。
-     */
-    protected open fun modifyId(id: Identifier): Identifier = modId.toId(id.path)
-
     //    Extensions    //
 
     // Recipe Builder
