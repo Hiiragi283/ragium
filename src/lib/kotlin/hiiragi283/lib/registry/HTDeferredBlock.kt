@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 
 /**
  * シンプルな[HTDeferredBlock]のエイリアスです。
@@ -28,6 +29,11 @@ class HTDeferredBlock<out BLOCK : Block> :
     constructor(key: ResourceKey<Block>) : super(key)
 
     constructor(id: Identifier) : super(Registries.BLOCK.createKey(id))
+
+    /**
+     * @since 26.1.5
+     */
+    val defaultState: BlockState get() = get().defaultBlockState()
 
     override val translationKey: String get() = get().descriptionId
 

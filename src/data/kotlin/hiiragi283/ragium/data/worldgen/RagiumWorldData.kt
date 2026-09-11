@@ -6,45 +6,69 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.fluid.RagiumFluids
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.tags.BiomeTags
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.LakeFeature
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.placement.BiomeFilter
 import net.minecraft.world.level.levelgen.placement.CountPlacement
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import net.minecraft.world.level.levelgen.placement.PlacementModifier
+import net.minecraft.world.level.levelgen.placement.RarityFilter
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.world.BiomeModifier
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 
 data object RagiumWorldData {
+    // Lake
+    @JvmField
+    val CRUDE_OIL_LAKE = HTWorldGenData(RagiumAPI.id("lake", "crude_oil"))
+
+    // Ore
     @JvmField
     val SULFUR_ORE = HTWorldGenData(RagiumAPI.id("ore", "sulfur"))
 
     @JvmField
     val NETHER_SULFUR_ORE = HTWorldGenData(SULFUR_ORE, RagiumAPI.id("nether_ore", "sulfur"))
 
+    @Suppress("DEPRECATION")
     @JvmStatic
     fun bootstrap(builder: RegistrySetBuilder) {
         builder
             .add(Registries.CONFIGURED_FEATURE) { context: BootstrapContext<ConfiguredFeature<*, *>> ->
+                // Lake
+                RagiumFluids.CRUDE_OIL.blockHolder?.get()?.let {
+                    HTWorldGenHelper.register(
+                        context,
+                        CRUDE_OIL_LAKE,
+                        Feature.LAKE,
+                        LakeFeature.Configuration(
+                            BlockStateProvider.simple(it),
+                            BlockStateProvider.simple(Blocks.MUD)
+                        )
+                    )
+                }
+                // Ore
                 fun oreConfiguration(material: RagiumMaterial, size: Int): OreConfiguration = HTOreBlockPart.entries
                     .mapNotNull { part: HTOreBlockPart ->
                         val state: BlockState = RagiumBlocks.MATERIAL_BLOCKS[part, material]
                             ?.block
-                            ?.get()
-                            ?.defaultBlockState()
+                            ?.defaultState
                             ?: return@mapNotNull null
                         when (part) {
                             HTOreBlockPart.STONE -> BlockTags.STONE_ORE_REPLACEABLES
@@ -62,6 +86,18 @@ data object RagiumWorldData {
                 )
             }
             .add(Registries.PLACED_FEATURE) { context: BootstrapContext<PlacedFeature> ->
+                // Lake
+                HTWorldGenHelper.register(
+                    context,
+                    CRUDE_OIL_LAKE,
+                    listOf(
+                        RarityFilter.onAverageOnceEvery(200),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                        BiomeFilter.biome()
+                    )
+                )
+                // Ore
                 fun commonOrePlacement(count: Int, range: PlacementModifier): List<PlacementModifier> = listOf(
                     CountPlacement.of(count),
                     InSquarePlacement.spread(),
@@ -87,6 +123,14 @@ data object RagiumWorldData {
                 )
             }
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS) { context: BootstrapContext<BiomeModifier> ->
+                // Lake
+                HTWorldGenHelper.register(
+                    context,
+                    CRUDE_OIL_LAKE,
+                    BiomeTags.IS_OVERWORLD,
+                    GenerationStep.Decoration.LAKES
+                )
+                // Ore
                 HTWorldGenHelper.register(
                     context,
                     SULFUR_ORE,

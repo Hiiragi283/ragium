@@ -64,7 +64,7 @@ internal data object RagiumCommon {
                 ) { state: FluidState ->
                     when (state.isSource) {
                         true -> Blocks.OBSIDIAN.defaultBlockState()
-                        false -> VanillaColoredCollections.CONCRETE[color].block.getOrThrow().defaultBlockState()
+                        false -> VanillaColoredCollections.CONCRETE[color].block.defaultState
                     }
                 }
             )
