@@ -29,18 +29,18 @@ class HTDoubleItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
 
     @PublishedApi internal var secondary: HTItemIngredient by HTDelegates.onceInitialize()
 
-    inline fun primary(builderAction: IngredientBuilder.() -> Unit) {
+    inline fun primary(builderAction: HTItemIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        primary = IngredientBuilder.buildSized(builderAction)
+        primary = HTItemIngredientBuilder.build(builderAction)
     }
 
-    inline fun secondary(builderAction: IngredientBuilder.() -> Unit) {
+    inline fun secondary(builderAction: HTItemIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        secondary = IngredientBuilder.buildSized(builderAction)
+        secondary = HTItemIngredientBuilder.build(builderAction)
     }
 
     // Result

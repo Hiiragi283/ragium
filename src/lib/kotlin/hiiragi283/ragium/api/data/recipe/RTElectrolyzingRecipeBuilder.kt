@@ -2,10 +2,10 @@
 
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.lib.data.recipe.FluidIngredientBuilder
+import hiiragi283.lib.data.recipe.HTFluidIngredientBuilder
 import hiiragi283.lib.data.recipe.HTFluidResultBuilder
+import hiiragi283.lib.data.recipe.HTItemIngredientBuilder
 import hiiragi283.lib.data.recipe.HTProgressRecipeBuilder
-import hiiragi283.lib.data.recipe.IngredientBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
@@ -38,18 +38,18 @@ class RTElectrolyzingRecipeBuilder : HTProgressRecipeBuilder<RTElectrolyzingReci
         fluidIngredient = this
     }
 
-    inline fun itemIngredient(builderAction: IngredientBuilder.() -> Unit) {
+    inline fun itemIngredient(builderAction: HTItemIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder.buildSized(builderAction)
+        +HTItemIngredientBuilder.build(builderAction)
     }
 
-    inline fun fluidIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
+    inline fun fluidIngredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +FluidIngredientBuilder.buildSized(builderAction)
+        +HTFluidIngredientBuilder.build(builderAction)
     }
 
     // Result

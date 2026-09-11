@@ -74,15 +74,6 @@ data object HTConstants {
 
     //    Recipes    //
 
-    // Vanilla
-    const val BLASTING = "blasting"
-    const val SHAPED = "shaped"
-    const val SHAPELESS = "shapeless"
-    const val SMELTING = "smelting"
-    const val SMITHING = "smithing"
-    const val SMOKING = "smoking"
-    const val TRANSMUTE = "transmute"
-
     // Serialization
     const val ENERGY = "energy"
     const val TIME = "time"

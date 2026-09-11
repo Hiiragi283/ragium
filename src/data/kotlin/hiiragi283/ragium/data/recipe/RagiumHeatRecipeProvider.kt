@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -58,6 +59,15 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             time *= 8
         }.save(exporter)
 
+        // Machine Casing
+        RagiumRecipeBuilders.alloying {
+            primary {
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
+                count = 2
+            }
+            secondary { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
+            result { +RagiumItems.getCasing(HTMachineType.CHEMICAL) }
+        }.save(exporter)
         // Sooty Iron + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {
             primary { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }

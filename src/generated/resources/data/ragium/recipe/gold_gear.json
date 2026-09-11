@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "gold_gear",
+  "key": {
+    "A": "#c:ingots/gold",
+    "B": "#c:gears/wood"
+  },
+  "pattern": [
+    " A ",
+    "ABA",
+    " A "
+  ],
+  "result": {
+    "id": "ragium:gold_gear"
+  }
+}

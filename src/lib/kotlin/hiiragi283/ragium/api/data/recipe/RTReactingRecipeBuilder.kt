@@ -2,7 +2,7 @@
 
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.lib.data.recipe.FluidIngredientBuilder
+import hiiragi283.lib.data.recipe.HTFluidIngredientBuilder
 import hiiragi283.lib.data.recipe.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.HTItemResultBuilder
 import hiiragi283.lib.data.recipe.HTProgressRecipeBuilder
@@ -30,18 +30,18 @@ class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe.Basic>(
 
     @PublishedApi internal var secondaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
-    inline fun primaryIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
+    inline fun primaryIngredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        primaryIngredient = FluidIngredientBuilder.buildSized(builderAction)
+        primaryIngredient = HTFluidIngredientBuilder.build(builderAction)
     }
 
-    inline fun secondaryIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
+    inline fun secondaryIngredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        secondaryIngredient = FluidIngredientBuilder.buildSized(builderAction)
+        secondaryIngredient = HTFluidIngredientBuilder.build(builderAction)
     }
 
     // Result

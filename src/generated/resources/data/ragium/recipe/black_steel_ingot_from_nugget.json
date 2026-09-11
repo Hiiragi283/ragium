@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "black_steel_ingot",
+  "key": {
+    "A": "#c:nuggets/black_steel",
+    "B": "ragium:black_steel_nugget"
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:black_steel_ingot"
+  }
+}

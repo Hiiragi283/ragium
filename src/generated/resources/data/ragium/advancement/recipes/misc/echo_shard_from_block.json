@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_storage_blocks/echo": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:storage_blocks/echo"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:echo_shard_from_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_storage_blocks/echo"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:echo_shard_from_block"
+    ]
+  }
+}

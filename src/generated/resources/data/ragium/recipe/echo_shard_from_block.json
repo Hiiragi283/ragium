@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "echo_shard",
+  "ingredients": [
+    "#c:storage_blocks/echo"
+  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:echo_shard"
+  }
+}

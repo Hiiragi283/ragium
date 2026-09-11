@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:sooty_iron_ingot_from_coke"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tiny/coal_coke": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:tiny/coal_coke"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tiny/coal_coke"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:sooty_iron_ingot_from_coke"
+    ]
+  }
+}

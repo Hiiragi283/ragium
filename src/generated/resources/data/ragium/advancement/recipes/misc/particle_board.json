@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_sticky_balls": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:sticky_balls"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:particle_board"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_sticky_balls"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:particle_board"
+    ]
+  }
+}

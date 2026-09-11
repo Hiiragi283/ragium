@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ingots/void_metal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/void_metal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:void_metal_nugget_from_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ingots/void_metal"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:void_metal_nugget_from_ingot"
+    ]
+  }
+}

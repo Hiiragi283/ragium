@@ -1,0 +1,74 @@
+@file:OptIn(ExperimentalContracts::class)
+
+package hiiragi283.lib.data.recipe
+
+import hiiragi283.lib.data.HolderAcceptor
+import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.util.HTBuilderMarker
+import hiiragi283.lib.util.HTDelegates
+import net.minecraft.core.HolderSet
+import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.fluids.crafting.CompoundFluidIngredient
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient
+import net.neoforged.neoforge.registries.holdersets.OrHolderSet
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+
+/**
+ * [FluidIngredient]および[HTFluidIngredient]を作成するビルダークラスです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
+@HTBuilderMarker
+class HTFluidIngredientBuilder @PublishedApi internal constructor() {
+    companion object {
+        /**
+         * @since 26.1.4
+         */
+        @JvmStatic
+        inline fun build(builderAction: HTFluidIngredientBuilder.() -> Unit): HTFluidIngredient {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return HTFluidIngredientBuilder().apply(builderAction).build()
+        }
+    }
+
+    private var ingredient: FluidIngredient by HTDelegates.onceInitialize()
+    var amount: Int = FluidType.BUCKET_VOLUME
+
+    operator fun FluidIngredient.unaryPlus() {
+        ingredient = this
+    }
+
+    /**
+     * @since 26.1.2
+     */
+    @JvmName("unaryPlusCompound")
+    operator fun List<FluidIngredient>.unaryPlus() {
+        +CompoundFluidIngredient(this)
+    }
+
+    operator fun HolderSet<Fluid>.unaryPlus() {
+        +FluidIngredient.of(this)
+    }
+
+    /**
+     * @since 26.1.2
+     */
+    @JvmName("unaryPlusOr")
+    operator fun List<HolderSet<Fluid>>.unaryPlus() {
+        +OrHolderSet(this)
+    }
+
+    inline fun fluids(builderAction: HolderAcceptor.FluidSetBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        +HolderAcceptor.FluidSetBuilder().apply(builderAction).build()
+    }
+
+    fun build(): HTFluidIngredient = HTFluidIngredient(ingredient, amount)
+}

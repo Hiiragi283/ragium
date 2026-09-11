@@ -2,7 +2,6 @@
 
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.HTDoubleItemToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.HTFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemAndFluidToRecipeBuilder
@@ -134,7 +133,7 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToRecipeBuilder.ToItem(HTConstants.SMELTING, ::RTSmeltingRecipe).apply(builderAction)
+        return HTItemToRecipeBuilder.ToItem(RagiumConstants.SMELTING, ::RTSmeltingRecipe).apply(builderAction)
     }
 
     @JvmStatic

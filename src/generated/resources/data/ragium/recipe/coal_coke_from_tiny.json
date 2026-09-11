@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "coal_coke",
+  "key": {
+    "A": "#c:tiny/coal_coke"
+  },
+  "pattern": [
+    "AAA",
+    "A A",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:coal_coke"
+  }
+}

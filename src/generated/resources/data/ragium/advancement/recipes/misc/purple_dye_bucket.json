@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dyes/purple": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dyes/purple"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:purple_dye_bucket"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dyes/purple"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:purple_dye_bucket"
+    ]
+  }
+}

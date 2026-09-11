@@ -29,11 +29,11 @@ abstract class HTFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : R
         ingredient = this
     }
 
-    inline fun ingredient(builderAction: FluidIngredientBuilder.() -> Unit) {
+    inline fun ingredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +FluidIngredientBuilder.buildSized(builderAction)
+        +HTFluidIngredientBuilder.build(builderAction)
     }
 
     // Result

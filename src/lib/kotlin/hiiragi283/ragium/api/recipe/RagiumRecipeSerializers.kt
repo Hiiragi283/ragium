@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.lib.HTConstants
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
@@ -77,7 +76,7 @@ data object RagiumRecipeSerializers {
 
     @JvmField
     val SMELTING: RecipeSerializer<RTSmeltingRecipe> =
-        register(HTConstants.SMELTING, RTSmeltingRecipe.SERIALIZER)
+        register(RagiumConstants.SMELTING, RTSmeltingRecipe.SERIALIZER)
 
     @JvmField
     val PYROLYZING: RecipeSerializer<RTPyrolyzingRecipe> =

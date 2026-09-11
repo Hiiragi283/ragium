@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ingots/sooty_iron": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/sooty_iron"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:mechanical_machine_casing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ingots/sooty_iron"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:mechanical_machine_casing"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:coal_coke_from_tiny"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tiny/coal_coke": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:tiny/coal_coke"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tiny/coal_coke"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:coal_coke_from_tiny"
+    ]
+  }
+}
