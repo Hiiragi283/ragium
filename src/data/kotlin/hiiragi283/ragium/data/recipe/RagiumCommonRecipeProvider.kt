@@ -59,7 +59,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             time /= 2
         }.save(exporter)
 
-        // Wood Tar -> Alcohol + Aromatic Compound
+        // Wood Tar -> Alcohol + Aromatic Compound TODO
     }
 
     private fun coal() {
@@ -146,7 +146,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             recipeId suffix "_from_naphtha"
         }.save(exporter)
-        // Naphtha + O2 -> Plastic
+        // Naphtha + O2 -> Plastic TODO
 
         // Tar -> Aromatic Compound + Pitch Coke
         RagiumRecipeBuilders.pyrolyzing {
@@ -254,6 +254,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 8
             }
         }.save(exporter)
-        // Clay + Liquid Explosive -> Plastic Explosive?
+        // Clay + Liquid Explosive -> Plastic Explosive TODO
     }
 }
