@@ -19,7 +19,7 @@ data object RagiumAdvancementKeys {
 
     // Mechanical
     @JvmField
-    val MECHANICAL_MACHINE_CASING: AdvancementKey = create("mechanical_machine_casing")
+    val MECHANICAL_MACHINE_PARTS: AdvancementKey = create("mechanical_machine_parts")
 
     @JvmField
     val ASSEMBLER: AdvancementKey = create(RagiumConstants.ASSEMBLER)
@@ -29,7 +29,7 @@ data object RagiumAdvancementKeys {
 
     // Heat
     @JvmField
-    val HEAT_MACHINE_CASING: AdvancementKey = create("heat_machine_casing")
+    val HEAT_MACHINE_PARTS: AdvancementKey = create("heat_machine_parts")
 
     @JvmField
     val BLACK_STEEL: AdvancementKey = create("black_steel")
@@ -42,7 +42,7 @@ data object RagiumAdvancementKeys {
 
     // Chemical
     @JvmField
-    val CHEMICAL_MACHINE_CASING: AdvancementKey = create("chemical_machine_casing")
+    val CHEMICAL_MACHINE_PARTS: AdvancementKey = create("chemical_machine_parts")
 
     @JvmField
     val CHEMICAL_BATH: AdvancementKey = create(RagiumConstants.CHEMICAL_BATH)

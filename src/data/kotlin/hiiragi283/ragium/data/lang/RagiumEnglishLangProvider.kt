@@ -26,14 +26,14 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumAdvancementKeys.SOOTY_IRON, "Acquire Blackware", "Craft a Sooty Iron Ingot")
 
         add(
-            RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING,
+            RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
             "Mechanical Machines",
             "Craft a Machine Casing (Mechanical)"
         )
         add(RagiumAdvancementKeys.ASSEMBLER, "Rava(n)gers, assemble!", "Acquire Assembler")
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
 
-        add(RagiumAdvancementKeys.HEAT_MACHINE_CASING, "Heat And Cool", "Craft a Machine Casing (Heat)")
+        add(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "Craft a Machine Casing (Heat)")
         add(RagiumAdvancementKeys.BLACK_STEEL, "Black Roaring", "Craft a Black Steel Ingot")
         add(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
         add(RagiumAdvancementKeys.MELTER, "(S)melter(y)", "Acquire Melter")

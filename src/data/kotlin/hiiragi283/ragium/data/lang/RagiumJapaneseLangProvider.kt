@@ -25,11 +25,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumAdvancementKeys.ROOT, "ラギウム", "ラギウムへようこそ!")
         add(RagiumAdvancementKeys.SOOTY_IRON, "黒鉄（くろがね）を手に入れる", "煤鉄をつくる")
 
-        add(RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING, "機械・加工・機械", "マシンケーシング（機械加工）を作る")
+        add(RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS, "機械・加工・機械", "マシンケーシング（機械加工）を作る")
         add(RagiumAdvancementKeys.ASSEMBLER, "ラヴェ（ン）ジャーズ，アッセンブル！", "組立機を手に入れる")
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "粉砕機を手に入れる")
 
-        add(RagiumAdvancementKeys.HEAT_MACHINE_CASING, "Heat And Cool", "マシンケーシング（熱）を作る")
+        add(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "マシンケーシング（熱）を作る")
         add(RagiumAdvancementKeys.BLACK_STEEL, "黒い咆哮", "黒鋼をつくる")
         add(RagiumAdvancementKeys.FREEZER, "私の消費電力は53万です", "冷凍機を手に入れる")
         add(RagiumAdvancementKeys.MELTER, "融けてしまいそう", "溶融炉を手に入れる")

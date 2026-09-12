@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:black_steel",
+  "parent": "ragium:assembler",
   "criteria": {
-    "has_chemical_machine_parts": {
+    "has_heat_machine_parts": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:chemical_machine_parts"
+            "items": "ragium:heat_machine_parts"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.chemical_machine_casing.desc"
+      "translate": "advancement.ragium.heat_machine_parts.desc"
     },
     "frame": "goal",
     "icon": {
-      "id": "ragium:chemical_machine_parts"
+      "id": "ragium:heat_machine_parts"
     },
     "title": {
-      "translate": "advancement.ragium.chemical_machine_casing.title"
+      "translate": "advancement.ragium.heat_machine_parts.title"
     }
   },
   "requirements": [
     [
-      "has_chemical_machine_parts"
+      "has_heat_machine_parts"
     ]
   ],
   "sends_telemetry_event": true

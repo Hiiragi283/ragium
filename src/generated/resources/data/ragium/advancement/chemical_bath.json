@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:chemical_machine_casing",
+  "parent": "ragium:chemical_machine_parts",
   "criteria": {
     "has_chemical_bath": {
       "conditions": {

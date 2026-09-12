@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:mechanical_machine_casing",
+  "parent": "ragium:mechanical_machine_parts",
   "criteria": {
     "has_assembler": {
       "conditions": {
