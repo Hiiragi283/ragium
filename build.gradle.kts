@@ -377,7 +377,7 @@ tasks {
 
     jar {
         from("LICENSE") {
-            rename { "${it}_hiiragi_core" }
+            rename { "${it}_ragium" }
         }
         from(libModule.output, clientModule.output)
     }
