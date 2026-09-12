@@ -12,6 +12,7 @@ import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
@@ -62,6 +63,16 @@ data object RagiumBlocks {
         type.idOrThrow.path,
         properties,
         { prop: BlockBehaviour.Properties -> HTMachineBlock(type, prop) }
+    )
+
+    @JvmStatic
+    private fun registerFakeMachine(
+        name: String,
+        properties: BlockBehaviour.Properties = machine()
+    ): HTBasicDeferredBlockAndItem<HTMachineBlock> = REGISTER.registerSimple(
+        name,
+        properties,
+        { prop: BlockBehaviour.Properties -> HTMachineBlock(RagiumBlockEntityTypes.CRUSHER, prop) } // TODO
     )
 
     //    Ingredient    //
@@ -128,13 +139,16 @@ data object RagiumBlocks {
 
     // Mechanical
     @JvmField
-    val ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ASSEMBLER)
+    val ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.ASSEMBLER)
 
     @JvmField
-    val CRUSHER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CRUSHER)
+    val CRUSHER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.CRUSHER)
 
     @JvmField
-    val COMPRESSOR: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.COMPRESSOR)
+    val COMPRESSOR: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.COMPRESSOR)
 
     @JvmField
     val CUTTING_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> =
@@ -142,21 +156,52 @@ data object RagiumBlocks {
 
     // Heat
     @JvmField
-    val FREEZER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.FREEZER)
+    val FREEZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.FREEZER)
 
     @JvmField
-    val MELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.MELTER)
+    val MELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.MELTER)
+
+    @JvmField
+    val PYROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.PYROLYZER)
+
+    @JvmField
+    val REFINERY: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.REFINERY)
 
     // Chemical
     @JvmField
     val CHEMICAL_BATH: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.CHEMICAL_BATH)
 
+    @JvmField
+    val CHEMICAL_REACTOR: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.CHEMICAL_REACTOR)
+
+    @JvmField
+    val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.ELECTROLYZER)
+
+    @JvmField
+    val MIXER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.MIXER)
+
     // Bio
     @JvmField
-    val BREWERY: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.BREWERY)
+    val BREWERY: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.BREWERY)
+
+    @JvmField
+    val PLANTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.PLANTER)
 
     // Electronics
+    @JvmField
+    val SCANNER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.SCANNER)
+
     // Arcane
 
     @JvmField
@@ -169,9 +214,17 @@ data object RagiumBlocks {
 
             put(HTMachineType.HEAT, FREEZER)
             put(HTMachineType.HEAT, MELTER)
+            put(HTMachineType.HEAT, PYROLYZER)
+            put(HTMachineType.HEAT, REFINERY)
 
             put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
+            put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
+            put(HTMachineType.CHEMICAL, ELECTROLYZER)
+            put(HTMachineType.CHEMICAL, MIXER)
 
             put(HTMachineType.BIO, BREWERY)
+            put(HTMachineType.BIO, PLANTER)
+
+            put(HTMachineType.ELECTRONICS, SCANNER)
         }
 }

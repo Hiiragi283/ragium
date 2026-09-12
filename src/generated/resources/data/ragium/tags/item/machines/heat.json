@@ -1,6 +1,8 @@
 {
   "values": [
     "ragium:freezer",
-    "ragium:melter"
+    "ragium:melter",
+    "ragium:pyrolyzer",
+    "ragium:refinery"
   ]
 }

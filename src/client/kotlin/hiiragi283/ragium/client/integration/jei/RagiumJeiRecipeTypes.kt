@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
-import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
@@ -54,11 +53,11 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val PYROLYZING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumItems.COAL_COKE)
+        HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
 
     @JvmField
     val REFINING: HTHolderJeiRecipeType<RTRefiningRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.REFINING, RagiumItems.COAL_COKE)
+        HTJeiRecipeType(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
     // Chemical
     @JvmField
@@ -67,15 +66,15 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, ItemStack(Items.LIGHTNING_ROD))
+        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
 
     @JvmField
     val MIXING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> =
-        HTJeiRecipeType(RagiumRecipeTypes.MIXING, ItemStack(Items.BREEZE_ROD))
+        HTJeiRecipeType(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField
     val REACTING: HTHolderJeiRecipeType<RTReactingRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.REACTING, ItemStack(Items.GOLDEN_APPLE))
+        HTJeiRecipeType(RagiumRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)
 
     // Bio
     @JvmField
@@ -84,7 +83,7 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val PLANTING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.PLANTING, ItemStack(Items.FLOWER_POT))
+        HTJeiRecipeType(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     // Electronics
 

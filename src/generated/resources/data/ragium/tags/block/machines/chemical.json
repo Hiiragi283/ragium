@@ -1,5 +1,8 @@
 {
   "values": [
-    "ragium:chemical_bath"
+    "ragium:chemical_bath",
+    "ragium:chemical_reactor",
+    "ragium:electrolyzer",
+    "ragium:mixer"
   ]
 }
