@@ -29,6 +29,7 @@ import hiiragi283.ragium.client.integration.jei.category.RTRefiningRecipeCategor
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import mezz.jei.api.JeiPlugin
+import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.helpers.IPlatformFluidHelper
 import mezz.jei.api.neoforge.NeoForgeTypes
@@ -207,6 +208,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RagiumJeiRecipeTypes.MELTING, RagiumBlocks.MELTER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.REFINING, RagiumBlocks.REFINERY)
+        registration.addCraftingStation(RecipeTypes.SMELTING, RagiumBlocks.SMELTER)
+        registration.addCraftingStation(RecipeTypes.BLASTING, RagiumBlocks.SMELTER)
+        registration.addCraftingStation(RecipeTypes.SMOKING, RagiumBlocks.SMELTER)
         // Chemical
         registration.addCraftingStation(RagiumJeiRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
         registration.addCraftingStation(RagiumJeiRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)

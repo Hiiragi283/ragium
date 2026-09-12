@@ -266,6 +266,11 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
             define('D', Tags.Items.BUCKETS_LAVA)
             unlockedBy(getHasName(Tags.Items.BUCKETS_LAVA), has(Tags.Items.BUCKETS_LAVA))
         }
+
+        heat(RagiumBlocks.SMELTER) {
+            define('D', Items.FURNACE)
+            unlockedBy(getHasName(Items.FURNACE), has(Items.FURNACE))
+        }
         // Chemical
         chemical(RagiumBlocks.CHEMICAL_BATH) {
             define('D', Items.CAULDRON)

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:nuggets/sooty_iron",
+    "B": "ragium:heat_machine_parts",
+    "C": "#c:gears/iron",
+    "D": "minecraft:furnace"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ADA"
+  ],
+  "result": {
+    "id": "ragium:smelter"
+  }
+}

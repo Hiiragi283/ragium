@@ -217,6 +217,7 @@ data object Ragium : HTCommonMod() {
 
         registerProcessor(RagiumBlockEntityTypes.FREEZER.get())
         registerProcessor(RagiumBlockEntityTypes.MELTER.get())
+        registerProcessor(RagiumBlockEntityTypes.SMELTER.get())
 
         registerProcessor(RagiumBlockEntityTypes.CHEMICAL_BATH.get())
 

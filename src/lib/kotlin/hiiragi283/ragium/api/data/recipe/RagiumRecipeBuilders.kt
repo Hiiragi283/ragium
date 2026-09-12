@@ -22,7 +22,6 @@ import hiiragi283.ragium.api.recipe.RTMeltingRecipe
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
-import hiiragi283.ragium.api.recipe.RTSmeltingRecipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -113,16 +112,6 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTItemToRecipeBuilder.ToFluid(RagiumConstants.MELTING, ::RTMeltingRecipe).apply(builderAction)
-    }
-
-    @JvmStatic
-    inline fun smelting(
-        builderAction: HTItemToRecipeBuilder.ToItem<RTSmeltingRecipe>.() -> Unit
-    ): HTItemToRecipeBuilder.ToItem<RTSmeltingRecipe> {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTItemToRecipeBuilder.ToItem(RagiumConstants.SMELTING, ::RTSmeltingRecipe).apply(builderAction)
     }
 
     @JvmStatic

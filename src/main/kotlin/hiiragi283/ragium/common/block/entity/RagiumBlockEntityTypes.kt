@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
@@ -63,6 +64,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> =
         registerTick(RagiumConstants.MELTER, ::HTMelterBlockEntity)
+
+    @JvmField
+    val SMELTER: HTDeferredBlockEntityType<HTSmelterBlockEntity> =
+        registerTick(RagiumConstants.SMELTER, ::HTSmelterBlockEntity)
 
     // Chemical
     @JvmField
