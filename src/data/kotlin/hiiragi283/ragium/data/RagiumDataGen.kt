@@ -1,6 +1,8 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.lib.data.createLootTables
+import hiiragi283.ragium.api.RagiumRegistries
+import hiiragi283.ragium.common.data.recipe.RagiumOreSlurryData
 import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
 import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider
@@ -29,7 +31,11 @@ import net.neoforged.neoforge.data.event.GatherDataEvent
 data object RagiumDataGen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent.Client) {
-        event.createDatapackRegistryObjects(RegistrySetBuilder().apply(RagiumWorldData::bootstrap))
+        event.createDatapackRegistryObjects(
+            RegistrySetBuilder()
+                .add(RagiumRegistries.Keys.ORE_SLURRY_DATA, RagiumOreSlurryData::bootstrap)
+                .apply(RagiumWorldData::bootstrap)
+        )
 
         // Server
         event.createProvider(::RagiumAdvancementProvider)

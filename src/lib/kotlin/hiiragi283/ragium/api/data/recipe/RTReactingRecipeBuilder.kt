@@ -26,9 +26,9 @@ class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe.Basic>(
         RTReactingRecipe.Basic(primaryIngredient, secondaryIngredient, results, progressData)
 
     // Ingredient
-    @PublishedApi internal var primaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
+    var primaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
-    @PublishedApi internal var secondaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
+    var secondaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
     inline fun primaryIngredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
         contract {
@@ -47,7 +47,7 @@ class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe.Basic>(
     // Result
     @PublishedApi internal var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
 
-    @PublishedApi internal var fluidResult: Optional<HTFluidResult> by HTDelegates.onceInitialize()
+    @PublishedApi internal var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
 
     private val results: Ior<HTItemResult, HTFluidResult> by lazy {
         Ior.fromNullable(itemResult, fluidResult).orElseThrow { error("Either item or fluid result required") }

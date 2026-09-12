@@ -19,6 +19,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.RagiumDataComponents
+import hiiragi283.ragium.api.data.recipe.HTOreSlurryData
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
@@ -27,10 +28,12 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
+import hiiragi283.ragium.common.data.recipe.RagiumOreSlurryData
 import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
+import hiiragi283.ragium.common.item.HTOreSlurryBucketItem
 import hiiragi283.ragium.common.item.HTPotionBucketItem
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
@@ -52,6 +55,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
+import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.transfer.access.ItemAccess
@@ -104,6 +108,7 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id(HTConstants.ENERGY), RagiumDataComponents.ENERGY)
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
             helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
+            helper.register(RagiumAPI.id("ore_slurry_data"), RagiumDataComponents.ORE_SLURRY_DATA)
         }
         event.register(Registries.MENU) { helper ->
             helper.register(
@@ -161,6 +166,20 @@ data object Ragium : HTCommonMod() {
                 }
             }
         }
+        // Item
+        event.modify(Items.RAW_COPPER) { builder, provider, _ ->
+            builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.COPPER))
+        }
+        event.modify(Items.RAW_IRON) { builder, provider, _ ->
+            builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.IRON))
+        }
+        event.modify(Items.RAW_GOLD) { builder, provider, _ ->
+            builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.GOLD))
+        }
+    }
+
+    override fun registerDynamicRegistries(event: DataPackRegistryEvent.NewRegistry) {
+        event.dataPackRegistry(RagiumRegistries.Keys.ORE_SLURRY_DATA, HTOreSlurryData.CODEC, HTOreSlurryData.CODEC)
     }
 
     override fun commonSetup(event: FMLCommonSetupEvent) {
@@ -174,6 +193,11 @@ data object Ragium : HTCommonMod() {
             HTFluidCapabilities.item,
             { _, access: ItemAccess -> HTPotionBucketItem.BucketHandler(access) },
             RagiumFluids.POTION.bucketHolder
+        )
+        helper.registerItem(
+            HTFluidCapabilities.item,
+            { _, access: ItemAccess -> HTOreSlurryBucketItem.BucketHandler(access) },
+            RagiumFluids.ORE_SLURRY.bucketHolder
         )
     }
 

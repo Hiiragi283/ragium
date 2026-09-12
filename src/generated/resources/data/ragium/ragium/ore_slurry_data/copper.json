@@ -1,0 +1,7 @@
+{
+  "fallback": "ragium:copper_dust",
+  "result": "#c:dusts/copper",
+  "title": {
+    "translate": "ore_slurry_data.ragium.copper"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "fallback": "ragium:gold_dust",
+  "result": "#c:dusts/gold",
+  "title": {
+    "translate": "ore_slurry_data.ragium.gold"
+  }
+}

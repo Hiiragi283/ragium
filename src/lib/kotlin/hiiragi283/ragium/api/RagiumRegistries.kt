@@ -5,6 +5,7 @@ import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.lib.recipe.result.HTFluidResultType
 import hiiragi283.lib.recipe.result.HTItemResultType
 import hiiragi283.lib.resource.toId
+import hiiragi283.ragium.api.data.recipe.HTOreSlurryData
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.neoforged.bus.api.SubscribeEvent
@@ -49,6 +50,7 @@ data object RagiumRegistries {
      * @since 26.1.0
      */
     data object Keys {
+        // Static
         @JvmField
         val FLUID_RESULT_TYPE: ResourceKey<Registry<HTFluidResultType<*>>> = createKey("fluid_result_type")
 
@@ -60,6 +62,14 @@ data object RagiumRegistries {
 
         @JvmField
         val WIDGET_TYPE: ResourceKey<Registry<HTWidgetType<*>>> = createKey("widget_type")
+
+        // Dynamic
+
+        /**
+         * @since 26.1.5
+         */
+        @JvmField
+        val ORE_SLURRY_DATA: ResourceKey<Registry<HTOreSlurryData>> = createKey("ore_slurry_data")
 
         @JvmStatic
         private fun <T : Any> createKey(path: String): ResourceKey<Registry<T>> =

@@ -53,19 +53,22 @@ data object HTPhysicalSideHelper {
     fun <T : Any> registry(registryKey: RegistryKey<T>): Registry<T>? =
         getRegistryAccess()?.lookup(registryKey)?.getOrNull()
 
+    /**
+     * @since 26.1.5
+     */
+    @JvmStatic
+    fun <T : Any> registryOrThrow(registryKey: RegistryKey<T>): Registry<T> =
+        (getRegistryAccess() ?: RegistryAccess.EMPTY).lookupOrThrow(registryKey)
+
     //    Feature Flag    //
 
     /**
      * 現在の[FeatureFlagSet]を取得します。
-     * @return クライアント側でワールドを読み込んでいない，またはサーバーのインスタンスが作成されていない場合は`null`
+     * @return クライアント側でワールドを読み込んでいない，またはサーバーのインスタンスが作成されていない場合は[FeatureFlags.DEFAULT_FLAGS]
      **/
     @JvmStatic
     fun getFeatureFlags(): FeatureFlagSet =
         runForSide(Level::enabledFeatures) { it.worldData.enabledFeatures() } ?: FeatureFlags.DEFAULT_FLAGS
-
-    @JvmStatic
-    fun <T : FeatureElement> filteredLookup(registryKey: RegistryKey<T>): HolderLookup.RegistryLookup<T>? =
-        registry(registryKey)?.filterFeatures(getFeatureFlags())
 
     @JvmStatic
     fun <T : FeatureElement> filteredLookup(registry: Registry<T>): HolderLookup.RegistryLookup<T> =
