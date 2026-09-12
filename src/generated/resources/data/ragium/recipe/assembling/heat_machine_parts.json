@@ -2,11 +2,11 @@
   "type": "ragium:assembling",
   "primary_ingredient": {
     "count": 1,
-    "items": "ragium:mechanical_machine_casing"
+    "items": "ragium:mechanical_machine_parts"
   },
   "result": {
     "count": 1,
-    "id": "ragium:heat_machine_casing"
+    "id": "ragium:heat_machine_parts"
   },
   "secondary_ingredient": {
     "count": 1,

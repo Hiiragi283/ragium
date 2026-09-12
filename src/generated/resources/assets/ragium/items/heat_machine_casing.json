@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "ragium:item/heat_machine_casing"
+    "model": "ragium:block/heat_machine_casing"
   }
 }

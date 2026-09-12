@@ -54,6 +54,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.SCANNER, "レーザースキャナ")
 
+        add(RagiumBlocks.MACHINE_CASING, "機械ケーシング")
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
         add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")

@@ -6,6 +6,7 @@ import hiiragi283.lib.collection.buildListMultiMap
 import hiiragi283.lib.collection.buildSortedSetMultiMap
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.flatMapTable
+import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItemRegister
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
@@ -227,4 +228,18 @@ data object RagiumBlocks {
 
             put(HTMachineType.ELECTRONICS, SCANNER)
         }
+
+    //    Decoration    //
+
+    @JvmField
+    val MACHINE_CASING: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple("machine_casing", machine())
+
+    @JvmField
+    val MACHINE_CASINGS: Map<HTMachineType, HTSimpleDeferredBlockAndItem> = HTMachineType.entries
+        .associateWithTo(mutableEnumMapOf()) { machineType: HTMachineType ->
+            REGISTER.registerSimple("${machineType.materialName}_machine_casing", machine())
+        }
+
+    @JvmStatic
+    fun getCasing(machineType: HTMachineType): HTSimpleDeferredBlockAndItem = MACHINE_CASINGS[machineType]!!
 }

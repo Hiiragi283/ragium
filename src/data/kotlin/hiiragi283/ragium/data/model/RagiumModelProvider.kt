@@ -62,7 +62,10 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun registerBlockModels(generators: BlockModelGenerators) {
-        RagiumBlocks.MATERIAL_BLOCKS.values.forEach { generators.createTrivialCube(it.block.getOrThrow()) }
+        sequence {
+            yieldAll(RagiumBlocks.MATERIAL_BLOCKS.values)
+            yield(RagiumBlocks.MACHINE_CASING)
+        }.forEach { generators.createTrivialCube(it.block.getOrThrow()) }
 
         // Machine
         for ((machineType: HTMachineType, blockItem: HTSimpleBlockItemWithKey) in RagiumBlocks.MACHINES.flatEntries) {
@@ -82,6 +85,17 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
                     ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
             )
         }
+        // Decoration
+        for ((machineType: HTMachineType, block: HTSimpleBlockItemWithKey) in RagiumBlocks.MACHINE_CASINGS) {
+            generators.createSimple(
+                block.block.getOrThrow(),
+                ModelTemplates.CUBE_TOP.createBlock(
+                    block.block,
+                    textureMapping(machineType),
+                    generators.modelOutput
+                )
+            )
+        }
     }
 
     private fun machineModel(
@@ -91,12 +105,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         isActive: Boolean
     ): Identifier {
         val blockId: Identifier = block.idOrThrow.blockId
-        val mapping: TextureMapping = TextureMapping()
-            .put(TextureSlot.TOP, Material(RagiumAPI.id(HTConstants.BLOCK, "machine_casing")))
-            .put(
-                TextureSlot.SIDE,
-                Material(RagiumAPI.id(HTConstants.BLOCK, "machine_casing", machineType.materialName))
-            )
+        val mapping: TextureMapping = textureMapping(machineType)
         return when (isActive) {
             true -> ModelTemplates.CUBE_ORIENTABLE.create(
                 blockId.withSuffix("_active"),
@@ -112,6 +121,13 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         }
     }
 
+    private fun textureMapping(machineType: HTMachineType): TextureMapping = TextureMapping()
+        .put(TextureSlot.TOP, Material(RagiumAPI.id(HTConstants.BLOCK, "machine_casing")))
+        .put(
+            TextureSlot.SIDE,
+            Material(RagiumAPI.id(HTConstants.BLOCK, "machine_casing", machineType.materialName))
+        )
+
     private fun registerItemModels(generators: ItemModelGenerators) {
         val handheld: Set<HTSimpleDeferredItem> = buildSet {
             add(RagiumItems.BAMBOO_CHARCOAL)
@@ -125,16 +141,16 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
             remove(RagiumItems.MEMORY_DISC)
 
-            removeAll(RagiumItems.MACHINE_CASINGS.values)
+            removeAll(RagiumItems.MACHINE_PARTS.values)
             removeAll(handheld)
         }.forEach { generators.generateFlatItem(it) }
 
         generators.generateFlatItem(RagiumItems.MEMORY_DISC, template = ModelTemplates.MUSIC_DISC)
 
-        for ((machineType: HTMachineType, casing: HTSimpleDeferredItem) in RagiumItems.MACHINE_CASINGS) {
+        for ((machineType: HTMachineType, parts: HTSimpleDeferredItem) in RagiumItems.MACHINE_PARTS) {
             generators.generateFlatItem(
-                casing,
-                layer = RagiumAPI.id(HTConstants.ITEM, "casing", machineType.materialName)
+                parts,
+                layer = RagiumAPI.id(HTConstants.ITEM, "parts", machineType.materialName)
             )
         }
     }

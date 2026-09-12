@@ -229,7 +229,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
 
     private fun machine() {
         // Mechanical
-        shaped(RecipeCategory.MISC, RagiumItems.getCasing(HTMachineType.MECHANICAL), 3)
+        shaped(RecipeCategory.MISC, RagiumItems.getParts(HTMachineType.MECHANICAL), 3)
             .pattern("AAA")
             .pattern("BBB")
             .pattern("AAA")
@@ -278,6 +278,29 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         }
         // Electronics
         // Arcane
+
+        // Decoration
+        shaped(RecipeCategory.DECORATIONS, RagiumBlocks.MACHINE_CASING, 4)
+            .pattern("ABA")
+            .pattern("B B")
+            .pattern("ABA")
+            .define('A', CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SOOTY_IRON)
+            .define('B', CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+            .unlockedBy(
+                getHasName(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON),
+                has(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+            )
+            .save(output)
+
+        for (block: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINE_CASINGS.values) {
+            SingleItemRecipeBuilder.stonecutting(
+                Ingredient.of(RagiumBlocks.MACHINE_CASING),
+                RecipeCategory.DECORATIONS,
+                block,
+                1
+            ).unlockedBy(getHasName(RagiumBlocks.MACHINE_CASING), has(RagiumBlocks.MACHINE_CASING))
+                .save(output)
+        }
     }
 
     private inline fun machine(
@@ -292,7 +315,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
             .pattern("BCB")
             .pattern("ADA")
             .define('A', CommonTagPrefixes.NUGGET, material)
-            .define('B', RagiumItems.getCasing(machineType))
+            .define('B', RagiumItems.getParts(machineType))
             .define('C', CommonTagPrefixes.GEAR, gear)
             .apply(builderAction)
             .save(output)

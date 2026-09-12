@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ingots/sooty_iron": {
+    "has_machine_casing": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/sooty_iron"
+            "items": "ragium:machine_casing"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:mechanical_machine_casing"
+        "recipe": "ragium:arcane_machine_casing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ingots/sooty_iron"
+      "has_machine_casing"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:mechanical_machine_casing"
+      "ragium:arcane_machine_casing"
     ]
   }
 }

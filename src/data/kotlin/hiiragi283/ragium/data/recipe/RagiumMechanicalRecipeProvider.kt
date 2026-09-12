@@ -211,12 +211,12 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 2
             }
             secondary { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
-            result { +RagiumItems.getCasing(HTMachineType.CHEMICAL) }
+            result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
-            primary { items { +RagiumItems.getCasing(HTMachineType.MECHANICAL) } }
+            primary { items { +RagiumItems.getParts(HTMachineType.MECHANICAL) } }
             secondary { items { +Items.MAGMA_BLOCK } }
-            result { +RagiumItems.getCasing(HTMachineType.HEAT) }
+            result { +RagiumItems.getParts(HTMachineType.HEAT) }
         }.save(exporter)
         // Sooty Iron + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.assembling {

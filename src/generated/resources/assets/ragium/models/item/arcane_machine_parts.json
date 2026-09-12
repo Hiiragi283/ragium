@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/casing/heat"
+    "layer0": "ragium:item/parts/arcane"
   }
 }

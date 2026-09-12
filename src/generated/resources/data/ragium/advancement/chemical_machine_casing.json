@@ -1,11 +1,11 @@
 {
   "parent": "ragium:black_steel",
   "criteria": {
-    "has_chemical_machine_casing": {
+    "has_chemical_machine_parts": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:chemical_machine_casing"
+            "items": "ragium:chemical_machine_parts"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "frame": "goal",
     "icon": {
-      "id": "ragium:chemical_machine_casing"
+      "id": "ragium:chemical_machine_parts"
     },
     "title": {
       "translate": "advancement.ragium.chemical_machine_casing.title"
@@ -26,7 +26,7 @@
   },
   "requirements": [
     [
-      "has_chemical_machine_casing"
+      "has_chemical_machine_parts"
     ]
   ],
   "sends_telemetry_event": true

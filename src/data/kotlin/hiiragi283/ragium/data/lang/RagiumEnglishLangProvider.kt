@@ -58,6 +58,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
+        add(RagiumBlocks.MACHINE_CASING, "Machine Casing")
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")
         add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")

@@ -1,11 +1,11 @@
 {
   "parent": "ragium:assembler",
   "criteria": {
-    "has_heat_machine_casing": {
+    "has_heat_machine_parts": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:heat_machine_casing"
+            "items": "ragium:heat_machine_parts"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "frame": "goal",
     "icon": {
-      "id": "ragium:heat_machine_casing"
+      "id": "ragium:heat_machine_parts"
     },
     "title": {
       "translate": "advancement.ragium.heat_machine_casing.title"
@@ -26,7 +26,7 @@
   },
   "requirements": [
     [
-      "has_heat_machine_casing"
+      "has_heat_machine_parts"
     ]
   ],
   "sends_telemetry_event": true

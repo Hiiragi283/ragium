@@ -25,6 +25,10 @@ interface RagiumLangProvider {
             .forEach { (part: HTBlockPart, material: RagiumMaterial, block: HTHasTranslationKey) ->
                 provider.add(block, part, material)
             }
+        val casingPattern = HTLangPatternProvider("Machine Casing (%s)", "機械筐体 (%s)")
+        for ((machineType: HTLangName, casing: HTHasTranslationKey) in RagiumBlocks.MACHINE_CASINGS) {
+            provider.add(casing, casingPattern, machineType)
+        }
         // Fluid
         val dyePattern = HTLangPatternProvider("%s Dye", "%sの染料")
         for (color: HTDefaultColor in HTDefaultColor.entries) {
@@ -43,9 +47,9 @@ interface RagiumLangProvider {
             }
         provider.add(RagiumItems.COAL_COKE, RagiumMaterial.Fuel.COAL_COKE)
 
-        val casingPattern = HTLangPatternProvider("Machine Casing (%s)", "マシンケーシング (%s)")
-        for ((machineType: HTLangName, casing: HTHasTranslationKey) in RagiumItems.MACHINE_CASINGS) {
-            provider.add(casing, casingPattern, machineType)
+        val partsPattern = HTLangPatternProvider("Machine Parts (%s)", "機械部品 (%s)")
+        for ((machineType: HTLangName, parts: HTHasTranslationKey) in RagiumItems.MACHINE_PARTS) {
+            provider.add(parts, partsPattern, machineType)
         }
         for (toolType: HTToolType in HTToolType.entries) {
             provider.add(RagiumItems.SOOTY_IRON_TOOLS[toolType], toolType, RagiumMaterial.Metal.SOOTY_IRON)

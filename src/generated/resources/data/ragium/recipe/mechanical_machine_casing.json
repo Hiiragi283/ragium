@@ -1,17 +1,7 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "A": "#c:ingots/sooty_iron",
-    "B": "#c:dusts/redstone"
-  },
-  "pattern": [
-    "AAA",
-    "BBB",
-    "AAA"
-  ],
+  "type": "minecraft:stonecutting",
+  "ingredient": "ragium:machine_casing",
   "result": {
-    "count": 3,
     "id": "ragium:mechanical_machine_casing"
   }
 }

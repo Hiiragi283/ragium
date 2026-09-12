@@ -1,11 +1,11 @@
 {
   "parent": "ragium:sooty_iron",
   "criteria": {
-    "has_mechanical_machine_casing": {
+    "has_mechanical_machine_parts": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:mechanical_machine_casing"
+            "items": "ragium:mechanical_machine_parts"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "frame": "goal",
     "icon": {
-      "id": "ragium:mechanical_machine_casing"
+      "id": "ragium:mechanical_machine_parts"
     },
     "title": {
       "translate": "advancement.ragium.mechanical_machine_casing.title"
@@ -26,7 +26,7 @@
   },
   "requirements": [
     [
-      "has_mechanical_machine_casing"
+      "has_mechanical_machine_parts"
     ]
   ],
   "sends_telemetry_event": true

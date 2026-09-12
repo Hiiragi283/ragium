@@ -87,7 +87,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         createSimple(
             RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING,
             RagiumAdvancementKeys.SOOTY_IRON,
-            RagiumItems.getCasing(HTMachineType.MECHANICAL),
+            RagiumItems.getParts(HTMachineType.MECHANICAL),
             AdvancementType.GOAL
         )
         createSimple(
@@ -104,7 +104,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         createSimple(
             RagiumAdvancementKeys.HEAT_MACHINE_CASING,
             RagiumAdvancementKeys.ASSEMBLER,
-            RagiumItems.getCasing(HTMachineType.HEAT),
+            RagiumItems.getParts(HTMachineType.HEAT),
             AdvancementType.GOAL
         )
         createSimple(
@@ -127,7 +127,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         createSimple(
             RagiumAdvancementKeys.CHEMICAL_MACHINE_CASING,
             RagiumAdvancementKeys.BLACK_STEEL,
-            RagiumItems.getCasing(HTMachineType.CHEMICAL),
+            RagiumItems.getParts(HTMachineType.CHEMICAL),
             AdvancementType.GOAL
         )
         createSimple(
