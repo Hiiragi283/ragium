@@ -59,7 +59,7 @@ abstract class HTHolderRecipeCategory<RECIPE : Any>(
 
     protected open fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RECIPE, focuses: IFocusGroup) {}
 
-    final override fun getIdentifier(recipe: HTRecipeHolder<RECIPE>): Identifier? = recipe.id
+    final override fun getIdentifier(recipe: HTRecipeHolder<RECIPE>): Identifier = recipe.id
 
     final override fun getCodec(
         codecHelper: ICodecHelper,

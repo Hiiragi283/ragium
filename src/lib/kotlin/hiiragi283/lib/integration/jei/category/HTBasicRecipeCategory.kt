@@ -94,15 +94,20 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
     protected fun IRecipeSlotBuilder.setSlotBackground(type: HTBackgroundType): IRecipeSlotBuilder =
         this.setBackground(HTJeiDrawables.getSlot(type, guiHelper), -1, -1).setSlotName(type.name)
 
+    /**
+     * @since 26.1.6
+     */
+    protected fun IRecipeSlotBuilder.setFluidSlot(capacity: Int): IRecipeSlotBuilder =
+        this.setFluidRenderer(fixCapacity(capacity), false, 16, 16)
+
     protected fun IRecipeSlotBuilder.setSlotBackground(type: HTBackgroundType, capacity: Int): IRecipeSlotBuilder = this
-        .setBackground(HTJeiDrawables.getSlot(type, guiHelper), -1, -1)
-        .setSlotName(type.name)
-        .setFluidRenderer(fixCapacity(capacity), false, 16, 16)
+        .setSlotBackground(type)
+        .setFluidSlot(capacity)
 
     protected fun IRecipeSlotBuilder.setTankBackground(type: HTBackgroundType, capacity: Int): IRecipeSlotBuilder = this
         .setBackground(HTJeiDrawables.getTank(type, guiHelper), -1, -1)
         .setSlotName(type.name)
-        .setFluidRenderer(fixCapacity(capacity), false, 16, 18 * 3 - 2)
+        .setFluidSlot(capacity)
 
     private fun fixCapacity(capacity: Int): Long = maxOf(capacity, 1).toLong()
 

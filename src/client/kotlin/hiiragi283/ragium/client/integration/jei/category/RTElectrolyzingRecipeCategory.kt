@@ -41,7 +41,7 @@ class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) :
             val result: HTFluidResult = recipe.results[index]
             outputSlots[index]
                 .add(result)
-                .setSlotBackground(HTBackgroundType.OUTPUT, result.amount)
+                .setFluidSlot(result.amount)
         }
     }
 

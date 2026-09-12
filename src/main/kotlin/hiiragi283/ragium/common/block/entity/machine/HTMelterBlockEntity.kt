@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
@@ -24,16 +25,29 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER.get(), pos, state) {
+    private val cache: HTRecipeCache<SingleRecipeInput, HTItemToFluidRecipe> =
+        HTRecipeCache(RagiumRecipeLookups.MELTING)
+
+    override fun writeValue(output: ValueOutput) {
+        super.writeValue(output)
+        output.putChild(HTConstants.LAST_RECIPE, cache)
+    }
+
+    override fun readValue(input: ValueInput) {
+        super.readValue(input)
+        input.readChild(HTConstants.LAST_RECIPE, cache)
+    }
+
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
         recipeHandler = object : EnergizedHandler<SingleRecipeInput, FluidStack, HTItemToFluidRecipe>() {
-            private val cache: HTRecipeCache<SingleRecipeInput, HTItemToFluidRecipe> =
-                HTRecipeCache(RagiumRecipeLookups.MELTING)
             private val inputSlot: HTInputSlot.SingleItem by lazy {
                 HTInputSlot.SingleItem(this@HTMelterBlockEntity.inputSlot)
             }
