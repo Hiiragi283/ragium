@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_storage_blocks/sooty_iron": {
+    "has_storage_blocks_sooty_iron": {
       "conditions": {
         "items": [
           {
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_storage_blocks/sooty_iron"
+      "has_storage_blocks_sooty_iron"
     ]
   ],
   "rewards": {

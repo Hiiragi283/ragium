@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_nuggets/void_metal": {
+    "has_nuggets_void_metal": {
       "conditions": {
         "items": [
           {
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_nuggets/void_metal"
+      "has_nuggets_void_metal"
     ]
   ],
   "rewards": {

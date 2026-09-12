@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_dyes/blue": {
+    "has_dyes_blue": {
       "conditions": {
         "items": [
           {
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_dyes/blue"
+      "has_dyes_blue"
     ]
   ],
   "rewards": {

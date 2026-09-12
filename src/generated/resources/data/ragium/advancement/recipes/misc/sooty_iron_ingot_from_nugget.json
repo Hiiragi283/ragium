@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_nuggets/sooty_iron": {
+    "has_nuggets_sooty_iron": {
       "conditions": {
         "items": [
           {
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_nuggets/sooty_iron"
+      "has_nuggets_sooty_iron"
     ]
   ],
   "rewards": {

@@ -7,6 +7,7 @@ import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
@@ -640,7 +641,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
 
     fun tag(prefix: HTTagPrefix, material: HTMaterialLike): Ingredient = tag(prefix.itemTagKey(material))
 
-    fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().path}"
+    fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().debugPath}"
 
     fun getHasName(prefix: HTTagPrefix, material: HTMaterialLike): String = getHasName(prefix.itemTagKey(material))
 

@@ -7,6 +7,7 @@ import hiiragi283.lib.HTComparators
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.resource.HTValueWithId
+import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
@@ -105,7 +106,7 @@ abstract class ExporterDataProvider<R : Any>(
      */
     protected fun id(vararg path: String): Identifier = modId.toId(*path)
 
-    protected fun getHasName(id: Identifier): String = "has_${id.path}"
+    protected fun getHasName(id: Identifier): String = "has_${id.debugPath}"
 
     protected fun getHasName(value: HTValueWithId<*>): String = getHasName(value.idOrThrow)
 

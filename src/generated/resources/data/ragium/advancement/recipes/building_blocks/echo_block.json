@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gems/echo": {
+    "has_gems_echo": {
       "conditions": {
         "items": [
           {
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_gems/echo"
+      "has_gems_echo"
     ]
   ],
   "rewards": {

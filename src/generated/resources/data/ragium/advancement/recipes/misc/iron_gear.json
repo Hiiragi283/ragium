@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ingots/iron": {
+    "has_ingots_iron": {
       "conditions": {
         "items": [
           {
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ingots/iron"
+      "has_ingots_iron"
     ]
   ],
   "rewards": {

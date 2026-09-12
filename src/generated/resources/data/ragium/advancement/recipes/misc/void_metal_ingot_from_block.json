@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_storage_blocks/void_metal": {
+    "has_storage_blocks_void_metal": {
       "conditions": {
         "items": [
           {
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_storage_blocks/void_metal"
+      "has_storage_blocks_void_metal"
     ]
   ],
   "rewards": {
