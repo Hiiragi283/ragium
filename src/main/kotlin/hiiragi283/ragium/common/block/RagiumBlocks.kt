@@ -61,11 +61,8 @@ data object RagiumBlocks {
         type: HTDeferredBlockEntityType<*>,
         factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> BLOCK,
         properties: BlockBehaviour.Properties = machine()
-    ): HTBasicDeferredBlockAndItem<BLOCK> = REGISTER.registerSimple(
-        type.idOrThrow.path,
-        properties,
-        { prop: BlockBehaviour.Properties -> factory(type, prop) }
-    )
+    ): HTBasicDeferredBlockAndItem<BLOCK> =
+        REGISTER.registerSimple(type.idOrThrow.path, { factory(type, properties.setId(it)) })
 
     @JvmStatic
     private fun registerMachine(
@@ -79,8 +76,7 @@ data object RagiumBlocks {
         properties: BlockBehaviour.Properties = machine()
     ): HTBasicDeferredBlockAndItem<HTMachineBlock> = REGISTER.registerSimple(
         name,
-        properties,
-        { prop: BlockBehaviour.Properties -> HTMachineBlock(RagiumBlockEntityTypes.CRUSHER, prop) } // TODO
+        { HTMachineBlock(RagiumBlockEntityTypes.CRUSHER, properties.setId(it)) } // TODO
     )
 
     //    Ingredient    //
@@ -102,8 +98,7 @@ data object RagiumBlocks {
                 material,
                 REGISTER.registerSimple(
                     part.createName(material),
-                    properties,
-                    blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), it) }
+                    blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), properties.setId(it)) }
                 )
             )
         }

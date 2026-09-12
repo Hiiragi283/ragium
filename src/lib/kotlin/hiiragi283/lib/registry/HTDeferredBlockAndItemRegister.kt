@@ -3,6 +3,7 @@ package hiiragi283.lib.registry
 import hiiragi283.lib.util.Identity
 import hiiragi283.lib.util.identity
 import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -76,7 +77,7 @@ class HTDeferredBlockAndItemRegister(
      * @param ITEM アイテムのクラス
      * @param name ブロックとアイテムのIDのパス
      * @param blockProp ブロックのプロパティ
-     * @param blockFactory [BlockBehaviour.Properties]からブロックを作るブロック
+     * @param blockFactory [BlockBehaviour.Properties]から[BLOCK]を作るブロック
      * @param itemFactory [Item.Properties]と[BLOCK]からアイテムを作るブロック
      * @param itemProp [Item.Properties]を初期化するブロック
      * @return 新しい[HTDeferredBlockAndItem]のインスタンス
@@ -89,6 +90,48 @@ class HTDeferredBlockAndItemRegister(
         itemProp: Identity<Item.Properties> = identity()
     ): HTDeferredBlockAndItem<BLOCK, ITEM> {
         val blockHolder: HTDeferredBlock<BLOCK> = blockRegister.registerBlock(name, blockProp, blockFactory)
+        val itemHolder: HTDeferredItem<ITEM> = itemRegister.registerItem(
+            name,
+            { prop: Item.Properties -> itemFactory(blockHolder.get(), prop.useBlockDescriptionPrefix()) },
+            itemProp
+        )
+        return HTDeferredBlockAndItem(blockHolder, itemHolder)
+    }
+
+    /**
+     * 新しいブロックとアイテムをまとめて登録します。
+     * @param BLOCK ブロックのクラス
+     * @param name ブロックとアイテムのIDのパス
+     * @param blockFactory [BLOCK]を作るブロック
+     * @param itemProp [Item.Properties]を初期化するブロック
+     * @return 新しい[HTBasicDeferredBlockAndItem]のインスタンス
+     * @since 26.1.6
+     */
+    fun <BLOCK : Block> registerSimple(
+        name: String,
+        blockFactory: (ResourceKey<Block>) -> BLOCK,
+        itemProp: Identity<Item.Properties> = identity()
+    ): HTBasicDeferredBlockAndItem<BLOCK> = register(name, blockFactory, ::BlockItem, itemProp)
+
+    /**
+     * 新しいブロックとアイテムをまとめて登録します。
+     * @param BLOCK ブロックのクラス
+     * @param ITEM アイテムのクラス
+     * @param name ブロックとアイテムのIDのパス
+     * @param blockFactory [BLOCK]を作るブロック
+     * @param itemFactory [Item.Properties]と[BLOCK]からアイテムを作るブロック
+     * @param itemProp [Item.Properties]を初期化するブロック
+     * @return 新しい[HTDeferredBlockAndItem]のインスタンス
+     * @since 26.1.6
+     */
+    fun <BLOCK : Block, ITEM : Item> register(
+        name: String,
+        blockFactory: (ResourceKey<Block>) -> BLOCK,
+        itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
+        itemProp: Identity<Item.Properties> = identity()
+    ): HTDeferredBlockAndItem<BLOCK, ITEM> {
+        val blockHolder: HTDeferredBlock<BLOCK> = 
+            blockRegister.register(name) { id: Identifier -> blockFactory(blockRegister.createKey(id)) }
         val itemHolder: HTDeferredItem<ITEM> = itemRegister.registerItem(
             name,
             { prop: Item.Properties -> itemFactory(blockHolder.get(), prop.useBlockDescriptionPrefix()) },
