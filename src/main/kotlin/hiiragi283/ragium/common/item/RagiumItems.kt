@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
+import net.minecraft.world.item.HoneycombItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 import net.neoforged.bus.api.IEventBus
@@ -122,6 +123,8 @@ data object RagiumItems {
     val SYNTHETIC_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("synthetic_fiber")
 
     // Bio
+    @JvmField
+    val BEESWAX: HTSimpleDeferredItem = REGISTER.registerItem("beeswax", ::HoneycombItem)
 
     // Electronics
 

@@ -739,6 +739,14 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             itemResult { +Items.SPONGE }
             fluidResult { +Fluids.WATER }
         }.save(exporter)
+
+        // Honeycomb -> Beeswax + Honey
+        RagiumRecipeBuilders.draining {
+            ingredient { items { +Items.HONEYCOMB } }
+            itemResult { +RagiumItems.BEESWAX }
+            fluidResult { +RagiumFluids.HONEY }
+            recipeId replace "honey_from_comb"
+        }.save(exporter)
     }
 
     private fun filling() {

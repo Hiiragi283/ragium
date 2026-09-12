@@ -148,6 +148,15 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
                 has(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER)
             )
             .save(output)
+        // Candle
+        shaped(RecipeCategory.DECORATIONS, Items.CANDLE)
+            .pattern("A")
+            .pattern("B")
+            .define('A', Tags.Items.STRINGS)
+            .define('B', RagiumItems.BEESWAX)
+            .unlockedBy(getHasName(Tags.Items.STRINGS), has(Tags.Items.STRINGS))
+            .unlockedBy(getHasName(RagiumItems.BEESWAX), has(RagiumItems.BEESWAX))
+            .save(output)
 
         // Bamboo Charcoal
         SimpleCookingRecipeBuilder.smelting(
