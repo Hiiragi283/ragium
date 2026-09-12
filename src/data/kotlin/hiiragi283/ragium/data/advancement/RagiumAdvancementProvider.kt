@@ -108,13 +108,8 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             AdvancementType.GOAL
         )
         createSimple(
-            RagiumAdvancementKeys.ALLOY_SMELTER,
-            RagiumAdvancementKeys.HEAT_MACHINE_CASING,
-            RagiumBlocks.FREEZER
-        )
-        createSimple(
             RagiumAdvancementKeys.BLACK_STEEL,
-            RagiumAdvancementKeys.ALLOY_SMELTER,
+            RagiumAdvancementKeys.ASSEMBLER,
             HTItemPart.INGOT,
             RagiumMaterial.Metal.BLACK_STEEL
         )

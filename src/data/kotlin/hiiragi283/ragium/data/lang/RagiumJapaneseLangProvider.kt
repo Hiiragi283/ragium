@@ -75,7 +75,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
-        addFluid(RagiumFluids.MOLTEN_STEEL, "溶融した鋼鉄")
 
         add(RagiumFluids.ORE_SLURRY.getFluidType().descriptionId, "無効な鉱石泥")
         add(RagiumFluids.ORE_SLURRY.bucketHolder, $$"%1$s入りバケツ")
@@ -118,7 +117,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.DRAINING, "排出")
         add(RagiumRecipeTypes.FILLING, "封入")
 
-        add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.FREEZING, "冷凍")
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")

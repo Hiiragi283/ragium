@@ -43,15 +43,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             recipeId suffix "_from_pulp"
         }.save(exporter)
 
-        // Molten Steel + Obsidian Dust -> Black Steel
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.MOLTEN_STEEL)
-                amount = 90
-            }
-            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
-        }.save(exporter)
         // Molten Glass + Amethyst -> Tinted Glass
         RagiumRecipeBuilders.bathing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }

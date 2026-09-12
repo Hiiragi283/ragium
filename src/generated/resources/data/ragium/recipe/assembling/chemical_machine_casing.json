@@ -1,5 +1,5 @@
 {
-  "type": "ragium:alloying",
+  "type": "ragium:assembling",
   "primary_ingredient": {
     "count": 2,
     "items": "#c:ingots/black_steel"

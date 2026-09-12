@@ -32,9 +32,6 @@ data object RagiumAdvancementKeys {
     val HEAT_MACHINE_CASING: AdvancementKey = create("heat_machine_casing")
 
     @JvmField
-    val ALLOY_SMELTER: AdvancementKey = create(RagiumConstants.ALLOY_SMELTER)
-
-    @JvmField
     val BLACK_STEEL: AdvancementKey = create("black_steel")
 
     @JvmField

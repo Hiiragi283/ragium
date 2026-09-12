@@ -79,7 +79,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "Hydrogen Chloride")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
-        addFluid(RagiumFluids.MOLTEN_STEEL, "Molten Steel")
 
         add(RagiumFluids.ORE_SLURRY.getFluidType().descriptionId, "Invalid Ore Slurry")
         add(RagiumFluids.ORE_SLURRY.bucketHolder, $$"%1$s Bucket")
@@ -122,7 +121,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.DRAINING, "Draining")
         add(RagiumRecipeTypes.FILLING, "Filling")
 
-        add(RagiumRecipeTypes.ALLOYING, "Alloying")
         add(RagiumRecipeTypes.FREEZING, "Freezing")
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")

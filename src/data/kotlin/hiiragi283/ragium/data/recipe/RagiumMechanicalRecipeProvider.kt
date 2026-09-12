@@ -40,6 +40,15 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     }
 
     private fun assembling() {
+        // Blackstone + Gold -> Gilded Blackstone
+        RagiumRecipeBuilders.assembling {
+            primary { items { +Items.BLACKSTONE } }
+            secondary {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.GOLD)
+                count = 8
+            }
+            result { +Items.GILDED_BLACKSTONE }
+        }.save(exporter)
         // Dirt + Leaves -> Podzol
         RagiumRecipeBuilders.assembling {
             primary { items { +Items.DIRT } }
@@ -172,11 +181,48 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             result { +Items.PIGLIN_HEAD }
         }.save(exporter)
 
+        // Gold + Netherite Scrap -> Netherite
+        RagiumRecipeBuilders.assembling {
+            primary {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.GOLD)
+                count = 2
+            }
+            secondary {
+                items { +Items.NETHERITE_SCRAP }
+                count = 2
+            }
+            result { +Items.NETHERITE_INGOT }
+        }.save(exporter)
+        // Gold Block + Apple -> Enchanted Golden Apple
+        RagiumRecipeBuilders.assembling {
+            primary { items { +Items.APPLE } }
+            secondary {
+                +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Metal.GOLD)
+                count = 8
+            }
+            result { +Items.ENCHANTED_GOLDEN_APPLE }
+            time *= 8
+        }.save(exporter)
+
         // Machine Casing
+        RagiumRecipeBuilders.assembling {
+            primary {
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
+                count = 2
+            }
+            secondary { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
+            result { +RagiumItems.getCasing(HTMachineType.CHEMICAL) }
+        }.save(exporter)
         RagiumRecipeBuilders.assembling {
             primary { items { +RagiumItems.getCasing(HTMachineType.MECHANICAL) } }
             secondary { items { +Items.MAGMA_BLOCK } }
             result { +RagiumItems.getCasing(HTMachineType.HEAT) }
+        }.save(exporter)
+        // Sooty Iron + Obsidian Dust -> Black Steel
+        RagiumRecipeBuilders.assembling {
+            primary { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            secondary { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN) }
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
         }.save(exporter)
     }
 

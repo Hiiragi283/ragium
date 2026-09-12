@@ -175,10 +175,6 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0x66cc33))
         }
-        register.register(RagiumFluids.MOLTEN_STEEL) {
-            molten()
-            colorTint(Color(0x999999))
-        }
 
         register.register(RagiumFluids.ORE_SLURRY) {
             dull()

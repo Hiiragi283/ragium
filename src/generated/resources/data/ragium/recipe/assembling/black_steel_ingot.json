@@ -1,5 +1,5 @@
 {
-  "type": "ragium:alloying",
+  "type": "ragium:assembling",
   "primary_ingredient": {
     "count": 1,
     "items": "#c:ingots/sooty_iron"
@@ -9,7 +9,7 @@
     "id": "ragium:black_steel_ingot"
   },
   "secondary_ingredient": {
-    "count": 2,
+    "count": 1,
     "items": "#c:dusts/obsidian"
   },
   "time": 200
