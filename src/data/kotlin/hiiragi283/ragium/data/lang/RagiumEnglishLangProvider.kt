@@ -59,6 +59,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
+        add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")
+
         add(RagiumBlocks.MACHINE_CASING, "Machine Casing")
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")

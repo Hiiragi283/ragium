@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
@@ -81,6 +82,12 @@ data object RagiumBlockEntityTypes {
 
     // Electronics
     // Arcane
+
+    //    Storage    //
+
+    @JvmField
+    val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
+        registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
 
     //    Event    //
 

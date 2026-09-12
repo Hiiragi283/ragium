@@ -59,6 +59,7 @@ import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.transfer.access.ItemAccess
+import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
 
 @Mod(RagiumAPI.MOD_ID)
 data object Ragium : HTCommonMod() {
@@ -166,6 +167,9 @@ data object Ragium : HTCommonMod() {
                 }
             }
         }
+        event.modify(RagiumBlocks.CREATIVE_BATTERY) { builder: DataComponentMap.Builder, _, _ ->
+            builder.set(DataComponents.RARITY, Rarity.EPIC)
+        }
         // Item
         event.modify(Items.RAW_COPPER) { builder, provider, _ ->
             builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.COPPER))
@@ -222,6 +226,11 @@ data object Ragium : HTCommonMod() {
         registerProcessor(RagiumBlockEntityTypes.CHEMICAL_BATH.get())
 
         registerProcessor(RagiumBlockEntityTypes.BREWERY.get())
+        // Storage
+        helper.registerBlockEntity(
+            HTEnergyCapabilities.block,
+            RagiumBlockEntityTypes.CREATIVE_BATTERY.get()
+        ) { _, _ -> InfiniteEnergyHandler.INSTANCE }
     }
 
     override fun registerPayload(registrar: PayloadRegistrar) {

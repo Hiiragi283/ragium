@@ -64,6 +64,9 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     private fun registerBlockModels(generators: BlockModelGenerators) {
         sequence {
             yieldAll(RagiumBlocks.MATERIAL_BLOCKS.values)
+
+            yield(RagiumBlocks.CREATIVE_BATTERY) // TODO
+
             yield(RagiumBlocks.MACHINE_CASING)
         }.forEach { generators.createTrivialCube(it.block.getOrThrow()) }
 

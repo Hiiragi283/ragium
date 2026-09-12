@@ -57,14 +57,21 @@ data object RagiumBlocks {
         .sound(SoundType.COPPER)
 
     @JvmStatic
+    private fun <BLOCK : Block> registerMachine(
+        type: HTDeferredBlockEntityType<*>,
+        factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> BLOCK,
+        properties: BlockBehaviour.Properties = machine()
+    ): HTBasicDeferredBlockAndItem<BLOCK> = REGISTER.registerSimple(
+        type.idOrThrow.path,
+        properties,
+        { prop: BlockBehaviour.Properties -> factory(type, prop) }
+    )
+
+    @JvmStatic
     private fun registerMachine(
         type: HTDeferredBlockEntityType<*>,
         properties: BlockBehaviour.Properties = machine()
-    ): HTBasicDeferredBlockAndItem<HTMachineBlock> = REGISTER.registerSimple(
-        type.idOrThrow.path,
-        properties,
-        { prop: BlockBehaviour.Properties -> HTMachineBlock(type, prop) }
-    )
+    ): HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(type, ::HTMachineBlock, properties)
 
     @JvmStatic
     private fun registerFakeMachine(
@@ -233,6 +240,12 @@ data object RagiumBlocks {
 
             put(HTMachineType.ELECTRONICS, SCANNER)
         }
+
+    //    Storage    //
+
+    @JvmField
+    val CREATIVE_BATTERY: HTBasicDeferredBlockAndItem<HTBasicEntityBlock> =
+        registerMachine(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBasicEntityBlock)
 
     //    Decoration    //
 
