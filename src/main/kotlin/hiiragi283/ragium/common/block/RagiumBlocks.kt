@@ -3,8 +3,9 @@ package hiiragi283.ragium.common.block
 import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
-import hiiragi283.lib.collection.buildSetMultiMap
+import hiiragi283.lib.collection.buildSortedSetMultiMap
 import hiiragi283.lib.collection.buildTable
+import hiiragi283.lib.collection.flatMapTable
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItemRegister
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
@@ -66,37 +67,58 @@ data object RagiumBlocks {
     //    Ingredient    //
 
     @JvmField
-    val MATERIAL_BLOCKS: Table<HTBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildTable {
-        // Ore
-        buildSetMultiMap {
-            putAll(RagiumMaterial.Mineral.SULFUR, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
-        }.flatEntries.forEach { (material: RagiumMaterial, part: HTOreBlockPart) ->
+    val MATERIAL_ORES: Table<HTOreBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildSortedSetMultiMap {
+        putAll(RagiumMaterial.Mineral.SULFUR, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
+        putAll(RagiumMaterial.Mineral.NITER, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
+    }.flatMapTable { (material: RagiumMaterial, parts: Collection<HTOreBlockPart>) ->
+        parts.map { part: HTOreBlockPart ->
             val properties: BlockBehaviour.Properties = when (part) {
                 HTOreBlockPart.STONE -> Blocks.COAL_ORE
                 HTOreBlockPart.DEEPSLATE -> Blocks.DEEPSLATE_COAL_ORE
                 HTOreBlockPart.NETHER -> Blocks.NETHER_QUARTZ_ORE
                 HTOreBlockPart.END -> Blocks.END_STONE
             }.let(::copyOf)
-            this[part, material] = REGISTER.registerSimple(
-                part.createName(material),
-                properties,
-                blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), it) }
+            Triple(
+                part,
+                material,
+                REGISTER.registerSimple(
+                    part.createName(material),
+                    properties,
+                    blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), it) }
+                )
             )
         }
+    }
 
-        // Storage Block
-        setOf(
-            RagiumMaterial.Fuel.CHARCOAL to copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF),
-            RagiumMaterial.Fuel.COAL_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY),
-            RagiumMaterial.Gem.ECHO to copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN),
-            RagiumMaterial.Metal.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
-            RagiumMaterial.Metal.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
-            RagiumMaterial.Metal.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
-        ).forEach { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
-            val part: HTBlockPart = HTStorageBlockPart.DEFAULT
-            this[part, material] = REGISTER.registerSimple(part.createName(material), properties)
+    @JvmField
+    val STORAGE_BLOCKS: Map<RagiumMaterial, HTSimpleDeferredBlockAndItem> = setOf(
+        RagiumMaterial.Fuel.CHARCOAL to copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF),
+        RagiumMaterial.Fuel.COAL_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY),
+        RagiumMaterial.Gem.ECHO to copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN),
+        RagiumMaterial.Metal.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
+        RagiumMaterial.Metal.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
+        RagiumMaterial.Metal.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
+    ).associateTo(
+        sortedMapOf(RagiumMaterial.COMPARATOR)
+    ) { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
+        material to REGISTER.registerSimple(HTStorageBlockPart.DEFAULT.createName(material), properties)
+    }
+
+    @JvmField
+    val MATERIAL_BLOCKS: Table<HTBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildTable {
+        putAll(MATERIAL_ORES)
+        STORAGE_BLOCKS.forEach { (material: RagiumMaterial, blockItem: HTSimpleDeferredBlockAndItem) ->
+            put(HTStorageBlockPart.DEFAULT, material, blockItem)
         }
     }
+
+    @JvmStatic
+    fun getOreOrThrow(part: HTOreBlockPart, material: RagiumMaterial): HTSimpleDeferredBlockAndItem =
+        MATERIAL_ORES[part, material] ?: error("Unregistered block: ${part.createName(material)}")
+
+    @JvmStatic
+    fun getStorageOrThrow(material: RagiumMaterial): HTSimpleDeferredBlockAndItem =
+        STORAGE_BLOCKS[material] ?: error("Unregistered block: ${HTStorageBlockPart.DEFAULT.createName(material)}")
 
     @JvmStatic
     fun getOrThrow(part: HTBlockPart, material: RagiumMaterial): HTSimpleDeferredBlockAndItem =

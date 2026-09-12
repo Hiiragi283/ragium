@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.material.HTItemPart
-import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
@@ -32,7 +31,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
                 RagiumMaterial.Fuel.CHARCOAL -> 1
                 RagiumMaterial.Fuel.COAL_COKE -> 2
             } * 200
-            RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, fuel]?.item?.let { storage: Holder<Item> ->
+            RagiumBlocks.STORAGE_BLOCKS[fuel]?.item?.let { storage: Holder<Item> ->
                 builder.add(storage, FurnaceFuel(time * 80), false)
             }
             RagiumItems.MATERIAL_ITEMS[HTItemPart.TINY, fuel]?.let { tiny: Holder<Item> ->

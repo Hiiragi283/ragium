@@ -23,7 +23,8 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
         val pickaxe: HTTagBuilder<Block> = builder(BlockTags.MINEABLE_WITH_PICKAXE)
         // Mineable
         sequence {
-            yieldAll(RagiumBlocks.MATERIAL_BLOCKS.values)
+            yieldAll(RagiumBlocks.MATERIAL_ORES.values)
+            yieldAll(RagiumBlocks.STORAGE_BLOCKS.values)
             yieldAll(RagiumBlocks.MACHINES.values)
         }.forEach { pickaxe.add(it.block) }
     }

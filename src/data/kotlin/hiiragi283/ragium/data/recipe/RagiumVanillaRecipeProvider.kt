@@ -14,7 +14,6 @@ import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTItemPart
-import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -512,7 +511,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         material: RagiumMaterial,
         basePrefix: HTTagPrefix,
         base: ItemLike,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
+        block: ItemLike? = RagiumBlocks.STORAGE_BLOCKS[material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         baseToBlock(
@@ -528,7 +527,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
     private fun baseToBlock(
         material: RagiumMaterial,
         basePart: HTItemPart,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
+        block: ItemLike? = RagiumBlocks.STORAGE_BLOCKS[material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         val base: ItemLike = RagiumItems.MATERIAL_ITEMS[basePart, material] ?: return
@@ -540,7 +539,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         baseInput: Ingredient,
         base: ItemLike,
         criterion: Pair<String, Criterion<*>>,
-        block: ItemLike? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
+        block: ItemLike? = RagiumBlocks.STORAGE_BLOCKS[material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         if (block == null) return

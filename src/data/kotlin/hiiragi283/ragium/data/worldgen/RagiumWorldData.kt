@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.worldgen
 
 import hiiragi283.lib.data.worldgen.HTWorldGenData
 import hiiragi283.lib.data.worldgen.HTWorldGenHelper
+import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -46,6 +47,12 @@ data object RagiumWorldData {
     @JvmField
     val NETHER_SULFUR_ORE = HTWorldGenData(SULFUR_ORE, RagiumAPI.id("nether_ore", "sulfur"))
 
+    @JvmField
+    val NITER_ORE = HTWorldGenData(RagiumAPI.id("ore", "niter"))
+
+    @JvmField
+    val NETHER_NITER_ORE = HTWorldGenData(NITER_ORE, RagiumAPI.id("nether_ore", "niter"))
+
     @Suppress("DEPRECATION")
     @JvmStatic
     fun bootstrap(builder: RegistrySetBuilder) {
@@ -64,12 +71,10 @@ data object RagiumWorldData {
                     )
                 }
                 // Ore
-                fun oreConfiguration(material: RagiumMaterial, size: Int): OreConfiguration = HTOreBlockPart.entries
-                    .mapNotNull { part: HTOreBlockPart ->
-                        val state: BlockState = RagiumBlocks.MATERIAL_BLOCKS[part, material]
-                            ?.block
-                            ?.defaultState
-                            ?: return@mapNotNull null
+                fun oreConfiguration(material: RagiumMaterial, size: Int): OreConfiguration = RagiumBlocks.MATERIAL_ORES
+                    .column(material)
+                    .map { (part: HTOreBlockPart, block: HTSimpleDeferredBlockAndItem) ->
+                        val state: BlockState = block.block.defaultState
                         when (part) {
                             HTOreBlockPart.STONE -> BlockTags.STONE_ORE_REPLACEABLES
                             HTOreBlockPart.DEEPSLATE -> BlockTags.DEEPSLATE_ORE_REPLACEABLES
@@ -83,6 +88,12 @@ data object RagiumWorldData {
                     SULFUR_ORE,
                     Feature.ORE,
                     oreConfiguration(RagiumMaterial.Mineral.SULFUR, 7)
+                )
+                HTWorldGenHelper.register(
+                    context,
+                    NITER_ORE,
+                    Feature.ORE,
+                    oreConfiguration(RagiumMaterial.Mineral.NITER, 7)
                 )
             }
             .add(Registries.PLACED_FEATURE) { context: BootstrapContext<PlacedFeature> ->
@@ -121,6 +132,22 @@ data object RagiumWorldData {
                         HeightRangePlacement.triangle(VerticalAnchor.bottom(), VerticalAnchor.top())
                     )
                 )
+                HTWorldGenHelper.register(
+                    context,
+                    NITER_ORE,
+                    commonOrePlacement(
+                        2,
+                        HeightRangePlacement.triangle(VerticalAnchor.bottom(), VerticalAnchor.absolute(32))
+                    )
+                )
+                HTWorldGenHelper.register(
+                    context,
+                    NETHER_NITER_ORE,
+                    commonOrePlacement(
+                        4,
+                        HeightRangePlacement.triangle(VerticalAnchor.bottom(), VerticalAnchor.top())
+                    )
+                )
             }
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS) { context: BootstrapContext<BiomeModifier> ->
                 // Lake
@@ -140,6 +167,18 @@ data object RagiumWorldData {
                 HTWorldGenHelper.register(
                     context,
                     NETHER_SULFUR_ORE,
+                    BiomeTags.IS_NETHER,
+                    GenerationStep.Decoration.UNDERGROUND_ORES
+                )
+                HTWorldGenHelper.register(
+                    context,
+                    NITER_ORE,
+                    BiomeTags.IS_OVERWORLD,
+                    GenerationStep.Decoration.UNDERGROUND_ORES
+                )
+                HTWorldGenHelper.register(
+                    context,
+                    NETHER_NITER_ORE,
                     BiomeTags.IS_NETHER,
                     GenerationStep.Decoration.UNDERGROUND_ORES
                 )
