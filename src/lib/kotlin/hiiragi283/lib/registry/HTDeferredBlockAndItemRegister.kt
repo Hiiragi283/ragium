@@ -130,7 +130,7 @@ class HTDeferredBlockAndItemRegister(
         itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
         itemProp: Identity<Item.Properties> = identity()
     ): HTDeferredBlockAndItem<BLOCK, ITEM> {
-        val blockHolder: HTDeferredBlock<BLOCK> = 
+        val blockHolder: HTDeferredBlock<BLOCK> =
             blockRegister.register(name) { id: Identifier -> blockFactory(blockRegister.createKey(id)) }
         val itemHolder: HTDeferredItem<ITEM> = itemRegister.registerItem(
             name,

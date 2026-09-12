@@ -87,6 +87,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
+        addFluid(RagiumFluids.BLEACH, "漂白剤")
 
         add(RagiumFluids.ORE_SLURRY.getFluidType().descriptionId, "無効な鉱石泥")
         add(RagiumFluids.ORE_SLURRY.bucketHolder, $$"%1$s入りバケツ")

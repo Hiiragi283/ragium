@@ -18,7 +18,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     override fun exportValues() {
         bathing()
         electrolyzing()
-        mixing()
     }
 
     private fun bathing() {
@@ -64,30 +63,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 amount /= 2
             }
             recipeId suffix "_from_water"
-        }.save(exporter)
-        // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
-        RagiumRecipeBuilders.electrolyzing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SALT) }
-            fluidIngredient { +waterSet() }
-            result {
-                +RagiumFluids.HYDROGEN
-                amount /= 2
-            }
-            result {
-                +RagiumFluids.CHLORINE
-                amount /= 2
-            }
-            result { +RagiumFluids.NAOH_SOLUTION }
-            recipeId suffix "_from_salt_water"
-        }.save(exporter)
-    }
-
-    private fun mixing() {
-        // Naphtha + Redstone -> Anti-rust Oil
-        RagiumRecipeBuilders.mixing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
-            fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
-            result { +RagiumFluids.ANTI_RUST_OIL }
         }.save(exporter)
     }
 

@@ -212,6 +212,9 @@ data object RagiumFluids {
         properties = liquid()
     }
 
+    @JvmField
+    val BLEACH: HTFluidContent.Virtual = REGISTER.registerVirtual("bleach") { properties = liquid() }
+
     // Other
     @JvmField
     val ORE_SLURRY: HTFluidContent.Virtual = REGISTER.registerVirtual("ore_slurry") {

@@ -1,0 +1,20 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 125,
+    "fluids": "#c:bleach"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": {
+      "neoforge:ingredient_type": "neoforge:difference",
+      "base": "#minecraft:beds",
+      "subtracted": "minecraft:white_bed"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:white_bed"
+  },
+  "time": 200
+}

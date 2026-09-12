@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#minecraft:signs"
+  },
+  "primary_result": {
+    "count": 2,
+    "id": "ragium:wood_dust"
+  },
+  "time": 200
+}

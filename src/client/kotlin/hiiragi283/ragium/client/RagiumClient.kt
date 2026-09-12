@@ -175,6 +175,10 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0x66cc33))
         }
+        register.register(RagiumFluids.BLEACH) {
+            dull()
+            colorTint(Color(0xccff99))
+        }
 
         register.register(RagiumFluids.ORE_SLURRY) {
             dull()

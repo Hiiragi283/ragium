@@ -12,8 +12,12 @@ import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.crafting.DifferenceIngredient
 import java.util.concurrent.CompletableFuture
 
 class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
@@ -146,6 +150,12 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             recipeId suffix "_from_naphtha"
         }.save(exporter)
         // Naphtha + O2 -> Plastic TODO
+        // Naphtha + Redstone -> Anti-rust Oil
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
+            result { +RagiumFluids.ANTI_RUST_OIL }
+        }.save(exporter)
 
         // Tar -> Aromatic Compound + Pitch Coke
         RagiumRecipeBuilders.pyrolyzing {
@@ -169,25 +179,66 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     //    Chemical    //
 
     private fun chemical() {
-        hydroChloricAcid()
+        chlorine()
         sulfuricAcid()
         nitricAcid()
         explosive()
     }
 
-    private fun hydroChloricAcid() {
+    private fun chlorine() {
+        // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
+        RagiumRecipeBuilders.electrolyzing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SALT) }
+            fluidIngredient { +waterSet() }
+            result {
+                +RagiumFluids.HYDROGEN
+                amount /= 2
+            }
+            result {
+                +RagiumFluids.CHLORINE
+                amount /= 2
+            }
+            result { +RagiumFluids.NAOH_SOLUTION }
+            recipeId suffix "_from_salt_water"
+        }.save(exporter)
+
         // H2 + Cl2 -> 2 HCl
         RagiumRecipeBuilders.reacting {
             primaryIngredient { +holderSet(RagiumFluids.HYDROGEN) }
             secondaryIngredient { +holderSet(RagiumFluids.CHLORINE) }
             fluidResult { +RagiumFluids.HYDROGEN_CHLORIDE }
         }.save(exporter)
-        // HCl + H2O -> Hcl(aq)
+        // HCl + H2O -> HCl(aq)
         RagiumRecipeBuilders.reacting {
             primaryIngredient { +holderSet(RagiumFluids.HYDROGEN_CHLORIDE) }
             secondaryIngredient { +waterSet() }
             fluidResult { +RagiumFluids.HYDROCHLORIC_ACID }
         }.save(exporter)
+
+        // Cl2 + 2x NaOH(aq) -> 2x NaClO(aq) + H2
+
+        bleaching()
+    }
+
+    private fun bleaching() {
+        setOf(
+            ItemTags.BANNERS to Items.WHITE_BANNER,
+            ItemTags.BEDS to Items.WHITE_BED,
+            ItemTags.HARNESSES to Items.WHITE_HARNESS,
+            ItemTags.SHULKER_BOXES to Items.WHITE_SHULKER_BOX,
+            ItemTags.WOOL to Items.WHITE_WOOL,
+            ItemTags.WOOL_CARPETS to Items.WHITE_CARPET
+        ).forEach { (input: TagKey<Item>, bleached: Item) ->
+            RagiumRecipeBuilders.bathing {
+                itemIngredient { +DifferenceIngredient.of(Ingredient.of(holderSet(input)), Ingredient.of(bleached)) }
+                fluidIngredient {
+                    +holderSet(RagiumFluids.BLEACH)
+                    amount /= 8
+                }
+                result { +bleached }
+                recipeId prefix "bleaching/"
+            }.save(exporter)
+        }
     }
 
     private fun sulfuricAcid() {
