@@ -35,19 +35,19 @@ data object RagiumOreSlurryData {
     fun bootstrap(context: BootstrapContext<HTOreSlurryData>) {
         val getter: HolderGetter<Item> = context.lookup(Registries.ITEM)
 
-        fun register(key: ResourceKey<HTOreSlurryData>, result: TagKey<Item>, fallback: Holder<Item>?) {
+        fun register(key: ResourceKey<HTOreSlurryData>, result: TagKey<Item>, fallback: Holder<Item>?, count: Int = 1) {
             context.register(
                 key,
-                HTOreSlurryData(translatableText(key.toLanguageKey()), getter.getOrThrow(result), fallback)
+                HTOreSlurryData(translatableText(key.toLanguageKey()), getter.getOrThrow(result), fallback, count)
             )
         }
 
-        fun register(key: ResourceKey<HTOreSlurryData>, part: HTItemPart, material: RagiumMaterial) {
-            register(key, part.tagPrefix.itemTagKey(material), RagiumItems.getOrThrow(part, material))
+        fun register(key: ResourceKey<HTOreSlurryData>, part: HTItemPart, material: RagiumMaterial, count: Int = 1) {
+            register(key, part.tagPrefix.itemTagKey(material), RagiumItems.getOrThrow(part, material), count)
         }
 
-        register(COPPER, HTItemPart.DUST, RagiumMaterial.Metal.COPPER)
-        register(IRON, HTItemPart.DUST, RagiumMaterial.Metal.IRON)
-        register(GOLD, HTItemPart.DUST, RagiumMaterial.Metal.GOLD)
+        register(COPPER, HTItemPart.DUST, RagiumMaterial.Metal.COPPER, 3)
+        register(IRON, HTItemPart.DUST, RagiumMaterial.Metal.IRON, 2)
+        register(GOLD, HTItemPart.DUST, RagiumMaterial.Metal.GOLD, 2)
     }
 }

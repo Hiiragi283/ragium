@@ -1,4 +1,5 @@
 {
+  "count": 3,
   "fallback": "ragium:copper_dust",
   "result": "#c:dusts/copper",
   "title": {

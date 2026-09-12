@@ -42,6 +42,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
@@ -186,11 +187,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 .listElements()
                 .asSequence()
                 .mapNotNull { holder: Holder<HTOreSlurryData> ->
-                    val result: Holder<Item> = holder.value().getFirstHolder() ?: return@mapNotNull null
+                    val template: ItemStackTemplate = holder.value().createTemplate() ?: return@mapNotNull null
                     RagiumRecipeBuilders.reacting {
                         primaryIngredient = HTJeiRecipeHelper.fakeFluid(HTOreSlurryDataHelper.createFluid(holder))
                         secondaryIngredient = HTJeiRecipeHelper.fakeFluid(FluidTagSlotDisplay(Tags.Fluids.WATER))
-                        itemResult { +result }
+                        itemResult { from(template) }
                         recipeId replace holder.getKeyOrThrow().identifier().withPrefix("ore_slurry/")
                     }.buildSynthetic()
                 }.toList()

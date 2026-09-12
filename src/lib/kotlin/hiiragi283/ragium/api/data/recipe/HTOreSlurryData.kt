@@ -10,6 +10,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStackTemplate
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
@@ -18,22 +19,29 @@ import kotlin.jvm.optionals.getOrNull
  * @since 26.1.5
  */
 @JvmRecord
-data class HTOreSlurryData(val title: Text, val result: HolderSet<Item>, val fallback: Optional<Holder<Item>>) {
+data class HTOreSlurryData @JvmOverloads constructor(
+    val title: Text,
+    val result: HolderSet<Item>,
+    val fallback: Optional<Holder<Item>>,
+    val count: Int = 1
+) {
     companion object {
         @JvmField
         val CODEC: Codec<HTOreSlurryData> = HTCodecs.record { instance ->
             instance.group(
                 HTCodecs.TEXT.fieldOf("title").forGetter(HTOreSlurryData::title),
                 HTCodecs.holderSet(Registries.ITEM).fieldOf(HTConstants.RESULT).forGetter(HTOreSlurryData::result),
-                HTCodecs.holder(Registries.ITEM).optionalFieldOf("fallback").forGetter(HTOreSlurryData::fallback)
+                Item.CODEC.optionalFieldOf("fallback").forGetter(HTOreSlurryData::fallback),
+                HTCodecs.POSITIVE_INT.optionalFieldOf(HTConstants.COUNT, 1).forGetter(HTOreSlurryData::count)
             ).apply(instance, ::HTOreSlurryData)
         }
     }
 
-    constructor(title: Text, result: HolderSet<Item>, fallback: Holder<Item>?) : this(
+    @JvmOverloads constructor(title: Text, result: HolderSet<Item>, fallback: Holder<Item>?, count: Int = 1) : this(
         title,
         result,
-        fallback.toOptional()
+        fallback.toOptional(),
+        count
     )
 
     fun getFirstHolder(): Holder<Item>? = result
@@ -41,4 +49,6 @@ data class HTOreSlurryData(val title: Text, val result: HolderSet<Item>, val fal
         .sortedWith(HTItemResult.TagEntry.HOLDER_COMPARATOR)
         .firstOrNull()
         ?: fallback.getOrNull()
+
+    fun createTemplate(): ItemStackTemplate? = getFirstHolder()?.let { ItemStackTemplate(it, count) }
 }
