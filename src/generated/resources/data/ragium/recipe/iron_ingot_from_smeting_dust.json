@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "group": "iron_ingot",
+  "ingredient": "ragium:iron_dust",
+  "result": {
+    "id": "minecraft:iron_ingot"
+  }
+}

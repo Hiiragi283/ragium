@@ -1,0 +1,8 @@
+{
+  "count": 2,
+  "fallback": "ragium:iron_dust",
+  "result": "#c:dusts/iron",
+  "title": {
+    "translate": "ore_slurry_data.ragium.iron"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:sooty_iron_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tiny/charcoal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:tiny/charcoal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_tiny/coal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:tiny/coal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_tiny/coal",
+      "has_tiny/charcoal"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:sooty_iron_ingot"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "sooty_iron_ingot",
+  "key": {
+    "A": "#c:nuggets/sooty_iron",
+    "B": "ragium:sooty_iron_nugget"
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:sooty_iron_ingot"
+  }
+}

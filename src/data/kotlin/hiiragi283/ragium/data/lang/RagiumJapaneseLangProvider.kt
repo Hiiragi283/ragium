@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.data.recipe.RagiumOreSlurryData
 import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
@@ -76,6 +77,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
         addFluid(RagiumFluids.MOLTEN_STEEL, "溶融した鋼鉄")
 
+        add(RagiumFluids.ORE_SLURRY.getFluidType().descriptionId, "無効な鉱石泥")
+        add(RagiumFluids.ORE_SLURRY.bucketHolder, $$"%1$s入りバケツ")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.TAR, "タール")
@@ -93,6 +96,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "凍傷")
+
+        // Ore Slurry
+        addOreSlurry(RagiumOreSlurryData.COPPER, "銅の鉱石泥")
+        addOreSlurry(RagiumOreSlurryData.IRON, "鉄の鉱石泥")
+        addOreSlurry(RagiumOreSlurryData.GOLD, "金の鉱石泥")
 
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "凍傷")

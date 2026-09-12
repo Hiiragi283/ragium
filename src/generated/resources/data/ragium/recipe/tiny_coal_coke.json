@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "tiny_coal_coke",
+  "ingredients": [
+    "ragium:coal_coke"
+  ],
+  "result": {
+    "count": 8,
+    "id": "ragium:tiny_coal_coke"
+  }
+}

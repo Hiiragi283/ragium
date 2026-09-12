@@ -14,7 +14,13 @@ import hiiragi283.lib.integration.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.item.alchemy.HTPotionHelper
+import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumRegistries
+import hiiragi283.ragium.api.data.RagiumDataComponents
+import hiiragi283.ragium.api.data.recipe.HTOreSlurryData
+import hiiragi283.ragium.api.data.recipe.HTOreSlurryDataHelper
+import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.integration.jei.category.RTElectrolyzingRecipeCategory
@@ -36,7 +42,12 @@ import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
+import net.minecraft.world.item.crafting.display.SlotDisplay
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.crafting.display.FluidTagSlotDisplay
+import kotlin.streams.asSequence
 
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
@@ -60,11 +71,13 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         platformFluidHelper: IPlatformFluidHelper<T>
     ) {
         registration.registerSubtypeInterpreter(
-            platformFluidHelper.fluidIngredientType,
+            NeoForgeTypes.FLUID_STACK,
             RagiumFluids.POTION.getOrThrow()
-        ) { stack: T, _ ->
-            (stack as? FluidStack)?.let(HTPotionHelper::getContents)
-        }
+        ) { stack: FluidStack, _ -> HTPotionHelper.getContents(stack) }
+        registration.registerSubtypeInterpreter(
+            NeoForgeTypes.FLUID_STACK,
+            RagiumFluids.ORE_SLURRY.getOrThrow()
+        ) { stack: FluidStack, _ -> HTOreSlurryDataHelper.getHolder(stack) }
     }
 
     override fun registerExtraIngredients(registration: IExtraIngredientRegistration) {
@@ -76,6 +89,13 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 .map(::BottledPotionContents)
                 .filter { !it.isWater }
                 .map(BottledPotionContents::toFluidStack)
+                .toList()
+        )
+        registration.addExtraIngredients(
+            NeoForgeTypes.FLUID_STACK,
+            HTPhysicalSideHelper.registryOrThrow(RagiumRegistries.Keys.ORE_SLURRY_DATA)
+                .listElements()
+                .map(HTOreSlurryDataHelper::createFluid)
                 .toList()
         )
     }
@@ -144,6 +164,38 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
     private fun registerDynamicRecipes(registration: IRecipeRegistration) {
         // Chemical
+        registration.addRecipes(
+            RagiumJeiRecipeTypes.MIXING,
+            HTPhysicalSideHelper.filteredLookup(BuiltInRegistries.ITEM)
+                .listElements()
+                .asSequence()
+                .mapNotNull { input: Holder<Item> ->
+                    val slurryData: Holder<HTOreSlurryData> =
+                        input.components().get(RagiumDataComponents.ORE_SLURRY_DATA) ?: return@mapNotNull null
+                    RagiumRecipeBuilders.mixing {
+                        itemIngredient = HTJeiRecipeHelper.fakeItem(SlotDisplay.ItemSlotDisplay(input))
+                        fluidIngredient = HTJeiRecipeHelper.fakeFluid(RagiumFluids.SULFURIC_ACID)
+                        result { from(HTOreSlurryDataHelper.createFluid(slurryData)) }
+                        recipeId replace input.getKeyOrThrow().identifier().withPrefix("solving/")
+                    }.buildSynthetic()
+                }.toList()
+        )
+
+        registration.addRecipes(
+            RagiumJeiRecipeTypes.REACTING,
+            HTPhysicalSideHelper.registryOrThrow(RagiumRegistries.Keys.ORE_SLURRY_DATA)
+                .listElements()
+                .asSequence()
+                .mapNotNull { holder: Holder<HTOreSlurryData> ->
+                    val template: ItemStackTemplate = holder.value().createTemplate() ?: return@mapNotNull null
+                    RagiumRecipeBuilders.reacting {
+                        primaryIngredient = HTJeiRecipeHelper.fakeFluid(HTOreSlurryDataHelper.createFluid(holder))
+                        secondaryIngredient = HTJeiRecipeHelper.fakeFluid(FluidTagSlotDisplay(Tags.Fluids.WATER))
+                        itemResult { from(template) }
+                        recipeId replace holder.getKeyOrThrow().identifier().withPrefix("ore_slurry/")
+                    }.buildSynthetic()
+                }.toList()
+        )
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {

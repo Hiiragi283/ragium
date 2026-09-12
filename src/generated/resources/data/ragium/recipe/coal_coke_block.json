@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "coal_coke_block",
+  "key": {
+    "A": "ragium:coal_coke",
+    "B": "ragium:coal_coke"
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:coal_coke_block"
+  }
+}

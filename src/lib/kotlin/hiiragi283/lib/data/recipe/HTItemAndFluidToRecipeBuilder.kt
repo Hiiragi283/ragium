@@ -30,9 +30,9 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
     final override fun createRecipe(): RECIPE = factory.create(itemIngredient, fluidIngredient, result, progressData)
 
     // Ingredient
-    @PublishedApi internal var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()
+    var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()
 
-    @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
+    var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
     operator fun HTItemIngredient.unaryPlus() {
         itemIngredient = this
@@ -42,18 +42,18 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
         fluidIngredient = this
     }
 
-    inline fun itemIngredient(builderAction: IngredientBuilder.() -> Unit) {
+    inline fun itemIngredient(builderAction: HTItemIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder.buildSized(builderAction)
+        +HTItemIngredientBuilder.build(builderAction)
     }
 
-    inline fun fluidIngredient(builderAction: FluidIngredientBuilder.() -> Unit) {
+    inline fun fluidIngredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +FluidIngredientBuilder.buildSized(builderAction)
+        +HTFluidIngredientBuilder.build(builderAction)
     }
 
     // Result

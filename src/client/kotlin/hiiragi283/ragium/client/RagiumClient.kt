@@ -179,6 +179,11 @@ data object RagiumClient : HTClientMod() {
             molten()
             colorTint(Color(0x999999))
         }
+
+        register.register(RagiumFluids.ORE_SLURRY) {
+            dull()
+            colorTint(Color(0x3399cc))
+        }
     }
 
     override fun registerScreens(event: RegisterMenuScreensEvent) {

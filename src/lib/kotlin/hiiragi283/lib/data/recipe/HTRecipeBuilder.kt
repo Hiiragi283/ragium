@@ -8,10 +8,7 @@ import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.util.HTBuilderMarker
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import net.minecraft.data.recipes.RecipeBuilder
-import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.resources.Identifier
-import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.conditions.ICondition
 import kotlin.contracts.ExperimentalContracts
@@ -27,12 +24,6 @@ import kotlin.contracts.contract
  */
 @HTBuilderMarker
 abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: String) {
-    fun commonInfo(showNotification: Boolean): Recipe.CommonInfo =
-        RecipeBuilder.createCraftingCommonInfo(showNotification)
-
-    fun bookInfo(category: RecipeCategory, group: String?): CraftingRecipe.CraftingBookInfo =
-        RecipeBuilder.createCraftingBookInfo(category, group)
-
     //    Conditions    //
 
     /**

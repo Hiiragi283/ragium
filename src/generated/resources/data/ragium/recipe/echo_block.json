@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "echo_block",
+  "key": {
+    "A": "#c:gems/echo",
+    "B": "minecraft:echo_shard"
+  },
+  "pattern": [
+    "AA",
+    "AB"
+  ],
+  "result": {
+    "id": "ragium:echo_block"
+  }
+}

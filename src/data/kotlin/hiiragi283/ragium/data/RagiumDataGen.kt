@@ -1,6 +1,8 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.lib.data.createLootTables
+import hiiragi283.ragium.api.RagiumRegistries
+import hiiragi283.ragium.common.data.recipe.RagiumOreSlurryData
 import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
 import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider
@@ -18,6 +20,8 @@ import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProvider
 import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
+import hiiragi283.ragium.data.worldgen.RagiumWorldData
+import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -27,6 +31,12 @@ import net.neoforged.neoforge.data.event.GatherDataEvent
 data object RagiumDataGen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent.Client) {
+        event.createDatapackRegistryObjects(
+            RegistrySetBuilder()
+                .add(RagiumRegistries.Keys.ORE_SLURRY_DATA, RagiumOreSlurryData::bootstrap)
+                .apply(RagiumWorldData::bootstrap)
+        )
+
         // Server
         event.createProvider(::RagiumAdvancementProvider)
 
@@ -38,7 +48,7 @@ data object RagiumDataGen {
         )
         event.createProvider(::RagiumGlobalLootModifierProvider)
 
-        event.createProvider(::RagiumVanillaRecipeProvider)
+        event.createProvider(RagiumVanillaRecipeProvider::Runner)
         event.createProvider(::RagiumCommonRecipeProvider)
 
         event.createProvider(::RagiumBioRecipeProvider)

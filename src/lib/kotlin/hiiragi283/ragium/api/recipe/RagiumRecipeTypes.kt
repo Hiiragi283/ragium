@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
@@ -59,7 +58,7 @@ data object RagiumRecipeTypes {
     val MELTING: HTRecipeType<RTMeltingRecipe> = create(RagiumConstants.MELTING)
 
     @JvmField
-    val SMELTING: HTRecipeType<RTSmeltingRecipe> = create(HTConstants.SMELTING)
+    val SMELTING: HTRecipeType<RTSmeltingRecipe> = create(RagiumConstants.SMELTING)
 
     @JvmField
     val PYROLYZING: HTRecipeType<RTPyrolyzingRecipe> = create(RagiumConstants.PYROLYZING)

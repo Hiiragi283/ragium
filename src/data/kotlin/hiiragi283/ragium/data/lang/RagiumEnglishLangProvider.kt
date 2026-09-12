@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.data.recipe.RagiumOreSlurryData
 import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
@@ -80,6 +81,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
         addFluid(RagiumFluids.MOLTEN_STEEL, "Molten Steel")
 
+        add(RagiumFluids.ORE_SLURRY.getFluidType().descriptionId, "Invalid Ore Slurry")
+        add(RagiumFluids.ORE_SLURRY.bucketHolder, $$"%1$s Bucket")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.TAR, "Tar")
@@ -97,6 +100,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "Frostbite")
+
+        // Ore Slurry
+        addOreSlurry(RagiumOreSlurryData.COPPER, "Copper Ore Slurry")
+        addOreSlurry(RagiumOreSlurryData.IRON, "Iron Ore Slurry")
+        addOreSlurry(RagiumOreSlurryData.GOLD, "Gold Ore Slurry")
 
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "Frostbite")

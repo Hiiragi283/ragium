@@ -3,8 +3,8 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.color.HTColoredCollection
 import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.color.VanillaColoredCollections
+import hiiragi283.lib.data.recipe.HTItemIngredientBuilder
 import hiiragi283.lib.data.recipe.HTRecipeProvider
-import hiiragi283.lib.data.recipe.IngredientBuilder
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
@@ -169,6 +170,13 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 8
             }
             result { +Items.PIGLIN_HEAD }
+        }.save(exporter)
+
+        // Machine Casing
+        RagiumRecipeBuilders.assembling {
+            primary { items { +RagiumItems.getCasing(HTMachineType.MECHANICAL) } }
+            secondary { items { +Items.MAGMA_BLOCK } }
+            result { +RagiumItems.getCasing(HTMachineType.HEAT) }
         }.save(exporter)
     }
 
@@ -525,19 +533,21 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
 
         // Ragium
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Mineral.SULFUR) }
-            primary {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR)
-                count = 6
-            }
-            recipeId suffix "_from_ore"
-        }.save(exporter)
+        for (mineral: RagiumMaterial.Mineral in setOf(RagiumMaterial.Mineral.SULFUR, RagiumMaterial.Mineral.NITER)) {
+            RagiumRecipeBuilders.crushing {
+                ingredient { +holderSet(CommonTagPrefixes.ORE, mineral) }
+                primary {
+                    +RagiumItems.getOrThrow(HTItemPart.DUST, mineral)
+                    count = 6
+                }
+                recipeId suffix "_from_ore"
+            }.save(exporter)
+        }
     }
 
     private fun dyes() {
         // Single
-        val single = HTColoredCollection<(IngredientBuilder.() -> Unit)?>(
+        val single = HTColoredCollection<(HTItemIngredientBuilder.() -> Unit)?>(
             white = {
                 items {
                     +Items.BONE_MEAL
@@ -595,7 +605,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
         )
         for (color: HTDefaultColor in HTDefaultColor.entries) {
-            val builder: IngredientBuilder.() -> Unit = single[color] ?: continue
+            val builder: HTItemIngredientBuilder.() -> Unit = single[color] ?: continue
             RagiumRecipeBuilders.crushing {
                 ingredient(builder)
                 primary {

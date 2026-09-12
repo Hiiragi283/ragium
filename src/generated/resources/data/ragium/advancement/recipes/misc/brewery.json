@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_brewing_stand": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:brewing_stand"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:brewery"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_brewing_stand"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:brewery"
+    ]
+  }
+}

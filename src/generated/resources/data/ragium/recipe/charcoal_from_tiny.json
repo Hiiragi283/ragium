@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "charcoal",
+  "key": {
+    "A": "#c:tiny/charcoal"
+  },
+  "pattern": [
+    "AAA",
+    "A A",
+    "AAA"
+  ],
+  "result": {
+    "id": "minecraft:charcoal"
+  }
+}

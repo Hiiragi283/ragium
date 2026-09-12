@@ -32,11 +32,11 @@ class HTItemToItemAndFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, 
         ingredient = this
     }
 
-    inline fun ingredient(builderAction: IngredientBuilder.() -> Unit) {
+    inline fun ingredient(builderAction: HTItemIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder.buildSized(builderAction)
+        +HTItemIngredientBuilder.build(builderAction)
     }
 
     // Result

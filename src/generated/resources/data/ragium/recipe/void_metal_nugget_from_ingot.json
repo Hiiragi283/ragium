@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "void_metal_nugget",
+  "ingredients": [
+    "#c:ingots/void_metal"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:void_metal_nugget"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dyes/lime": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dyes/lime"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:lime_dye_bucket"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dyes/lime"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:lime_dye_bucket"
+    ]
+  }
+}

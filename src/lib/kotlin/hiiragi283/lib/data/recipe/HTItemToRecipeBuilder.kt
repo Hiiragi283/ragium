@@ -29,11 +29,11 @@ abstract class HTItemToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Re
         ingredient = this
     }
 
-    inline fun ingredient(builderAction: IngredientBuilder.() -> Unit) {
+    inline fun ingredient(builderAction: HTItemIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +IngredientBuilder.buildSized(builderAction)
+        +HTItemIngredientBuilder.build(builderAction)
     }
 
     // Result

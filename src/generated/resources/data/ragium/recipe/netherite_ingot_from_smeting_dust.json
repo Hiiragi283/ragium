@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "group": "netherite_ingot",
+  "ingredient": "ragium:netherite_dust",
+  "result": {
+    "id": "minecraft:netherite_ingot"
+  }
+}

@@ -126,6 +126,14 @@ interface Table<R, C, out V> {
         }
 
         /**
+         * 値を追加します。
+         * @since 26.1.5
+         */
+        fun putAll(table: Table<out R, out C, V>) {
+            putAll(table.entries)
+        }
+
+        /**
          * [Table]を生成します。
          */
         fun build(): Table<R, C, V>
