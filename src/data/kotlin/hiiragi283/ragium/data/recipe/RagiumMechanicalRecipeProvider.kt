@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.color.HTColoredCollection
-import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.recipe.HTItemIngredientBuilder
 import hiiragi283.lib.data.recipe.HTRecipeProvider
@@ -23,6 +22,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -298,7 +298,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
 
         // XX Carpet -> XX Wool
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
+        for (color: DyeColor in DyeColor.entries) {
             RagiumRecipeBuilders.compressing {
                 ingredient {
                     items { +VanillaColoredCollections.CARPET[color] }
@@ -440,7 +440,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
 
         for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
-            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS.get(HTItemPart.DUST, metal) ?: continue
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
             RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(CommonTagPrefixes.INGOT, metal) }
                 primary { +dust }
@@ -699,7 +699,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 }
             }
         )
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
+        for (color: DyeColor in DyeColor.entries) {
             val builder: HTItemIngredientBuilder.() -> Unit = single[color] ?: continue
             RagiumRecipeBuilders.crushing {
                 ingredient(builder)
@@ -819,7 +819,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
 
         // XX Concrete Powder + Water -> XX Concrete
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
+        for (color: DyeColor in DyeColor.entries) {
             RagiumRecipeBuilders.filling {
                 itemIngredient { items { +VanillaColoredCollections.CONCRETE_POWDER[color] } }
                 fluidIngredient {

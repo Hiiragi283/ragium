@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.fluid
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.color.HTColoredCollection
-import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTFluidContentRegister
 import hiiragi283.lib.resource.toId
@@ -15,6 +14,7 @@ import hiiragi283.ragium.common.item.component.RagiumConsumables
 import net.minecraft.core.component.DataComponents
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.pathfinder.PathType
 import net.neoforged.bus.api.IEventBus
@@ -75,7 +75,7 @@ data object RagiumFluids {
     }
 
     @JvmField
-    val DYES: HTColoredCollection<HTFluidContent.Flowing> = HTColoredCollection { color: HTDefaultColor ->
+    val DYES: HTColoredCollection<HTFluidContent.Flowing> = HTColoredCollection { color: DyeColor ->
         val name: String = color.serializedName
         REGISTER.registerFlowing("${name}_dye") {
             properties = liquid()

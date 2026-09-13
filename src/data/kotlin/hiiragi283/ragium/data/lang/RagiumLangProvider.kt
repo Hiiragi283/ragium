@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.lang
 
 import hiiragi283.lib.collection.forEach
-import hiiragi283.lib.color.HTDefaultColor
+import hiiragi283.lib.color.HTColoredCollection
 import hiiragi283.lib.data.lang.HTLangName
 import hiiragi283.lib.data.lang.HTLangPatternProvider
 import hiiragi283.lib.data.lang.HTLangProvider
@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
+import net.minecraft.world.item.DyeColor
 
 interface RagiumLangProvider {
     fun addPatternTranslations(provider: HTLangProvider) {
@@ -31,8 +32,11 @@ interface RagiumLangProvider {
         }
         // Fluid
         val dyePattern = HTLangPatternProvider("%s Dye", "%sの染料")
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
-            provider.addFluid(RagiumFluids.DYES[color], dyePattern.translate(langType, color))
+        for (color: DyeColor in DyeColor.entries) {
+            provider.addFluid(
+                RagiumFluids.DYES[color],
+                dyePattern.translate(langType, HTColoredCollection.TRANSLATED_NAMES[color])
+            )
         }
         // Item
         RagiumItems.MATERIAL_ITEMS

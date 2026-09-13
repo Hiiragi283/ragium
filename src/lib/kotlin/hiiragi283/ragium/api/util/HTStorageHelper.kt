@@ -2,13 +2,11 @@ package hiiragi283.ragium.api.util
 
 import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
-import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.item.ItemStack
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.HTTextUtil
 import hiiragi283.lib.text.Text
-import hiiragi283.lib.text.withStyle
 import hiiragi283.lib.transfer.HTResourceView
 import hiiragi283.lib.transfer.energy.HTEnergyHandler
 import hiiragi283.lib.util.fixedFraction
@@ -186,7 +184,7 @@ data object HTStorageHelper {
             .identifier()
             .namespace
             .let(HTTextUtil::getModNameText)
-            .withStyle(HTDefaultColor.BLUE)
+            .withStyle(ChatFormatting.BLUE)
             .withStyle(ChatFormatting.ITALIC)
             .let(consumer::accept)
     }

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.event.HTRegisterWidgetRendererEvent
 import hiiragi283.lib.fluid.FluidStackTintSource
 import hiiragi283.lib.fluid.HTFluidModelRegister
@@ -24,6 +23,7 @@ import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import net.minecraft.client.resources.model.sprite.Material
+import net.minecraft.world.item.DyeColor
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -62,10 +62,10 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerFluidModels(register: HTFluidModelRegister) {
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
+        for (color: DyeColor in DyeColor.entries) {
             register.register(RagiumFluids.DYES[color]) {
                 dull()
-                color.color.let(::colorTint)
+                color.textureDiffuseColor.let(::colorTint)
             }
         }
 

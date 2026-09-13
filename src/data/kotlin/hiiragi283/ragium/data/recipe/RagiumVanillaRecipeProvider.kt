@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.HTComparators
-import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.recipe.RecipeKey
@@ -39,6 +38,7 @@ import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.data.recipes.SmithingTransformRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.ToolMaterial
 import net.minecraft.world.item.crafting.CookingBookCategory
@@ -197,14 +197,14 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         registerTools(RagiumItems.SOOTY_IRON_TOOLS, RagiumToolMaterials.SOOTY_IRON)
 
         // XX Dye Bucket
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
+        for (color: DyeColor in DyeColor.entries) {
             shapeless(RecipeCategory.MISC, RagiumFluids.DYES[color].bucketHolder)
                 .requires(Tags.Items.BUCKETS_WATER)
-                .requires(color.dyesTag)
-                .requires(color.dyesTag)
-                .requires(color.dyesTag)
-                .requires(color.dyesTag)
-                .unlockedBy(getHasName(color.dyesTag), has(color.dyesTag))
+                .requires(color.tag)
+                .requires(color.tag)
+                .requires(color.tag)
+                .requires(color.tag)
+                .unlockedBy(getHasName(color.tag), has(color.tag))
                 .save(output)
         }
     }

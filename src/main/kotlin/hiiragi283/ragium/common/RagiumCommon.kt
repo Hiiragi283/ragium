@@ -4,7 +4,6 @@ import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.collection.asSequence
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.getOrPut
-import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.item.alchemy.HTPotionFluidManager
 import hiiragi283.lib.recipe.RecipeKey
@@ -28,6 +27,7 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.item.crafting.Ingredient
@@ -56,7 +56,7 @@ internal data object RagiumCommon {
     private fun initFluidInteractions() {
         // Convert lava source/flow into concrete by dye liquid
         // FlowingFluid#isRandomlyTicking を true に
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
+        for (color: DyeColor in DyeColor.entries) {
             FluidInteractionRegistry.addInteraction(
                 NeoForgeMod.LAVA_TYPE.value(),
                 FluidInteractionRegistry.InteractionInformation(
