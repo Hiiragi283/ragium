@@ -468,6 +468,17 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
             primary { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN) }
         }.save(exporter)
+        // Gear -> Dust
+        for (material: RagiumMaterial in RagiumMaterial.entries) {
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, material] ?: continue
+            if (RagiumItems.MATERIAL_ITEMS.contains(HTItemPart.GEAR, material)) {
+                RagiumRecipeBuilders.crushing {
+                    ingredient { +holderSet(CommonTagPrefixes.GEAR, material) }
+                    primary { +dust }
+                    recipeId suffix "_from_gear"
+                }.save(exporter)
+            }
+        }
     }
 
     private fun crushWood() {

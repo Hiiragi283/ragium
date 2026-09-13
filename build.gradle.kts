@@ -167,7 +167,7 @@ neoForge {
             sourceSet = clientModule
 
             jvmArgument("-Dmixin.debug.export=true")
-            devLogin = false
+            devLogin = true
         }
 
         register("server") {
