@@ -43,7 +43,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Machine Casing
         RagiumRecipeBuilders.alloying {
             primary {
-                +dustOrIngot(RagiumMaterial.Metal.BLACK_STEEL)
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
                 count = 2
             }
             secondary { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
@@ -51,7 +51,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Sooty Iron + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {
-            primary { +dustOrIngot(RagiumMaterial.Metal.SOOTY_IRON) }
+            primary { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
             secondary {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN)
                 count = 2

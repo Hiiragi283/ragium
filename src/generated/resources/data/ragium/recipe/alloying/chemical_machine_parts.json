@@ -2,13 +2,7 @@
   "type": "ragium:alloying",
   "primary_ingredient": {
     "count": 2,
-    "items": {
-      "type": "neoforge:or",
-      "values": [
-        "#c:dusts/black_steel",
-        "#c:ingots/black_steel"
-      ]
-    }
+    "items": "#c:ingots/black_steel"
   },
   "result": {
     "count": 1,
