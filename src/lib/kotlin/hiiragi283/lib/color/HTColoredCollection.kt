@@ -9,6 +9,7 @@ import net.minecraft.world.item.DyeColor
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
+@JvmRecord
 data class HTColoredCollection<out T>(
     val white: T,
     val orange: T,
@@ -26,7 +27,7 @@ data class HTColoredCollection<out T>(
     val green: T,
     val red: T,
     val black: T
-) : AbstractCollection<T>() {
+) : Collection<T> {
     companion object {
         @JvmField
         val VALUES: HTColoredCollection<DyeColor> = HTColoredCollection(
@@ -88,14 +89,6 @@ data class HTColoredCollection<out T>(
         DyeColor.BLACK -> black
     }
 
-    fun asSequence(): Sequence<T> = DyeColor.entries.asSequence().map(::get)
-
-    override val size: Int = 16
-
-    override fun isEmpty(): Boolean = false
-
-    override fun iterator(): Iterator<T> = asSequence().iterator()
-
     inline fun <R> map(transform: (T) -> R): HTColoredCollection<R> = HTColoredCollection(
         transform(white),
         transform(orange),
@@ -134,6 +127,18 @@ data class HTColoredCollection<out T>(
             transform(red, other.red),
             transform(black, other.black)
         )
+
+    override val size: Int get() = 16
+
+    override fun isEmpty(): Boolean = false
+
+    override fun contains(element: @UnsafeVariance T): Boolean = this.any { it == element }
+
+    fun asSequence(): Sequence<T> = DyeColor.entries.asSequence().map(::get)
+
+    override fun iterator(): Iterator<T> = asSequence().iterator()
+
+    override fun containsAll(elements: Collection<@UnsafeVariance T>): Boolean = elements.all { contains(it) }
 }
 
 /**

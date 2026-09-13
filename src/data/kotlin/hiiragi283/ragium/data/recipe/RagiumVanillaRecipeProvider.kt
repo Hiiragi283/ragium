@@ -80,7 +80,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
                 }
             )
 
-        override fun getName(): String = "Vanilla Recipes 2"
+        override fun getName(): String = "Vanilla Recipes"
     }
 
     override fun buildRecipes() {
@@ -452,7 +452,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
                 200
             ).group(item.idOrThrow.path)
                 .unlockedBy(getHasName(dust), has(dust))
-                .saveSuffixed(output, "_from_smeting_dust")
+                .saveSuffixed(output, "_from_smelting_dust")
             SimpleCookingRecipeBuilder.blasting(
                 Ingredient.of(dust),
                 RecipeCategory.MISC,
