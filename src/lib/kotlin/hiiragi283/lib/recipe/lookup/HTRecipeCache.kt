@@ -21,6 +21,8 @@ import net.neoforged.neoforge.common.util.ValueIOSerializable
  * @param INPUT レシピの入力となるクラス
  * @param RECIPE 提供するレシピのクラス
  * @param lookup レシピの提供元
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
  */
 class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(
     private val lookup: HTRecipeLookup<RECIPE>

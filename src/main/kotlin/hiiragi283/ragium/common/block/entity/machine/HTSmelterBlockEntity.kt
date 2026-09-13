@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
@@ -8,6 +9,7 @@ import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.handler.HTInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
+import hiiragi283.lib.recipe.lookup.HTVanillaRecipeCache
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.api.RagiumConfig
@@ -26,11 +28,36 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.transaction.Transaction
-import kotlin.jvm.optionals.getOrNull
 
 class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.SMELTER.get(), pos, state) {
+    private val smeltingCache: HTVanillaRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> =
+        HTVanillaRecipeCache(RecipeType.SMELTING)
+    private val blastingCache: HTVanillaRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> =
+        HTVanillaRecipeCache(RecipeType.BLASTING)
+    private val smokingCache: HTVanillaRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> =
+        HTVanillaRecipeCache(RecipeType.SMOKING)
+
+    override fun writeValue(output: ValueOutput) {
+        super.writeValue(output)
+        val child: ValueOutput = output.child(HTConstants.LAST_RECIPE)
+        child.putChild("smelting", smeltingCache)
+        child.putChild("blasting", blastingCache)
+        child.putChild("smoking", smokingCache)
+    }
+
+    override fun readUpdateTag(input: ValueInput) {
+        super.readUpdateTag(input)
+        input.child(HTConstants.LAST_RECIPE).ifPresent { child: ValueInput ->
+            child.readChild("smelting", smeltingCache)
+            child.readChild("blasting", blastingCache)
+            child.readChild("smoking", smokingCache)
+        }
+    }
+
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
         recipeHandler = object : EnergizedHandler<SingleRecipeInput, ItemStack, HTItemToItemRecipe>() {
@@ -45,16 +72,12 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun findRecipe(level: ServerLevel, input: SingleRecipeInput): HTItemToItemRecipe? {
                 val stackIn: ItemStack = typeSlot.getStackCopy()
-                val recipeType = when {
-                    stackIn.`is`(Items.BLAST_FURNACE) -> RecipeType.BLASTING
-                    stackIn.`is`(Items.SMOKER) -> RecipeType.SMOKING
-                    else -> RecipeType.SMELTING
+                val cache: HTVanillaRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when {
+                    stackIn.`is`(Items.BLAST_FURNACE) -> blastingCache
+                    stackIn.`is`(Items.SMOKER) -> smokingCache
+                    else -> smeltingCache
                 }
-                return level.recipeAccess()
-                    .getRecipeFor(recipeType, input, level)
-                    .map { it.value() }
-                    .map(::wrapRecipe)
-                    .getOrNull()
+                return cache.findFirstHolder(input, level)?.value()?.let(::wrapRecipe)
             }
 
             private fun wrapRecipe(recipe: AbstractCookingRecipe): HTItemToItemRecipe = object : HTItemToItemRecipe {
