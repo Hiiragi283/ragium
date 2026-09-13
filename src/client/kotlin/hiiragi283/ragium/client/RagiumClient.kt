@@ -63,6 +63,7 @@ data object RagiumClient : HTClientMod() {
             { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
                 when {
                     tint != 0 -> -1
+
                     getter != null && pos != null -> {
                         val color: HTDefaultColor = getter
                             .getTypedBlockEntity<HTUniversalChestBlockEntity>(pos)
@@ -70,6 +71,7 @@ data object RagiumClient : HTClientMod() {
                             ?: HTDefaultColor.WHITE
                         color.dyeColor.textureDiffuseColor
                     }
+
                     else -> -1
                 }
             },

@@ -26,12 +26,14 @@ class HTTankBlockItem(block: HTTankBlock, properties: Properties) : HTStorageBlo
         val resource: HTFluidResourceType? = view.getResource()
         when {
             resource == null -> HTCommonTranslation.EMPTY.translateColored(HTDefaultColor.RED)
+
             isCreative -> HTCommonTranslation.STORED.translateColored(
                 HTDefaultColor.PURPLE,
                 resource,
                 HTDefaultColor.GRAY,
                 HTCommonTranslation.INFINITE,
             )
+
             else -> HTCommonTranslation.STORED_MB.translateColored(
                 HTDefaultColor.PURPLE,
                 resource,
@@ -46,6 +48,7 @@ class HTTankBlockItem(block: HTTankBlock, properties: Properties) : HTStorageBlo
                 HTDefaultColor.GRAY,
                 HTCommonTranslation.INFINITE,
             )
+
             false -> HTCommonTranslation.CAPACITY_MB.translateColored(
                 HTDefaultColor.BLUE,
                 HTDefaultColor.GRAY,

@@ -30,7 +30,9 @@ class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStor
                 HTDefaultColor.GRAY,
                 HTCommonTranslation.INFINITE,
             )
+
             amount <= 0 -> HTCommonTranslation.EMPTY.translateColored(HTDefaultColor.RED)
+
             else -> HTCommonTranslation.STORED_FE.translateColored(
                 HTDefaultColor.GRAY,
                 amount,
@@ -43,6 +45,7 @@ class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStor
                 HTDefaultColor.GRAY,
                 HTCommonTranslation.INFINITE,
             )
+
             false -> HTCommonTranslation.CAPACITY_FE.translateColored(
                 HTDefaultColor.BLUE,
                 HTDefaultColor.GRAY,
