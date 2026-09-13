@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_top",
+  "parent": "minecraft:block/orientable",
   "textures": {
+    "front": "ragium:block/machine/electronics_front",
     "side": "ragium:block/machine/electronics_side",
     "top": "ragium:block/machine_casing"
   }

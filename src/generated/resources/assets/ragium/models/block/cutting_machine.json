@@ -2,7 +2,7 @@
   "parent": "minecraft:block/orientable",
   "textures": {
     "front": "ragium:block/cutting_machine_front",
-    "side": "ragium:block/machine_casing/mechanical",
+    "side": "ragium:block/machine/mechanical_side",
     "top": "ragium:block/machine_casing"
   }
 }

@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,is_active=false": {
-      "model": "ragium:block/pyrolyzer",
+      "model": "ragium:block/machine/heat",
       "y": 90
     },
     "facing=east,is_active=true": {
-      "model": "ragium:block/pyrolyzer_active",
+      "model": "ragium:block/pyrolyzer",
       "y": 90
     },
     "facing=north,is_active=false": {
-      "model": "ragium:block/pyrolyzer"
+      "model": "ragium:block/machine/heat"
     },
     "facing=north,is_active=true": {
-      "model": "ragium:block/pyrolyzer_active"
+      "model": "ragium:block/pyrolyzer"
     },
     "facing=south,is_active=false": {
-      "model": "ragium:block/pyrolyzer",
+      "model": "ragium:block/machine/heat",
       "y": 180
     },
     "facing=south,is_active=true": {
-      "model": "ragium:block/pyrolyzer_active",
+      "model": "ragium:block/pyrolyzer",
       "y": 180
     },
     "facing=west,is_active=false": {
-      "model": "ragium:block/pyrolyzer",
+      "model": "ragium:block/machine/heat",
       "y": 270
     },
     "facing=west,is_active=true": {
-      "model": "ragium:block/pyrolyzer_active",
+      "model": "ragium:block/pyrolyzer",
       "y": 270
     }
   }

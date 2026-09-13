@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,is_active=false": {
-      "model": "ragium:block/brewery",
+      "model": "ragium:block/machine/bio",
       "y": 90
     },
     "facing=east,is_active=true": {
-      "model": "ragium:block/brewery_active",
+      "model": "ragium:block/brewery",
       "y": 90
     },
     "facing=north,is_active=false": {
-      "model": "ragium:block/brewery"
+      "model": "ragium:block/machine/bio"
     },
     "facing=north,is_active=true": {
-      "model": "ragium:block/brewery_active"
+      "model": "ragium:block/brewery"
     },
     "facing=south,is_active=false": {
-      "model": "ragium:block/brewery",
+      "model": "ragium:block/machine/bio",
       "y": 180
     },
     "facing=south,is_active=true": {
-      "model": "ragium:block/brewery_active",
+      "model": "ragium:block/brewery",
       "y": 180
     },
     "facing=west,is_active=false": {
-      "model": "ragium:block/brewery",
+      "model": "ragium:block/machine/bio",
       "y": 270
     },
     "facing=west,is_active=true": {
-      "model": "ragium:block/brewery_active",
+      "model": "ragium:block/brewery",
       "y": 270
     }
   }

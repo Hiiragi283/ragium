@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,is_active=false": {
-      "model": "ragium:block/scanner",
+      "model": "ragium:block/machine/electronics",
       "y": 90
     },
     "facing=east,is_active=true": {
-      "model": "ragium:block/scanner_active",
+      "model": "ragium:block/scanner",
       "y": 90
     },
     "facing=north,is_active=false": {
-      "model": "ragium:block/scanner"
+      "model": "ragium:block/machine/electronics"
     },
     "facing=north,is_active=true": {
-      "model": "ragium:block/scanner_active"
+      "model": "ragium:block/scanner"
     },
     "facing=south,is_active=false": {
-      "model": "ragium:block/scanner",
+      "model": "ragium:block/machine/electronics",
       "y": 180
     },
     "facing=south,is_active=true": {
-      "model": "ragium:block/scanner_active",
+      "model": "ragium:block/scanner",
       "y": 180
     },
     "facing=west,is_active=false": {
-      "model": "ragium:block/scanner",
+      "model": "ragium:block/machine/electronics",
       "y": 270
     },
     "facing=west,is_active=true": {
-      "model": "ragium:block/scanner_active",
+      "model": "ragium:block/scanner",
       "y": 270
     }
   }
