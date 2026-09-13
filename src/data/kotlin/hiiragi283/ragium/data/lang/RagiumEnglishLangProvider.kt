@@ -43,6 +43,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
 
+        add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         add(RagiumBlocks.FREEZER, "Freezer")
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
@@ -135,6 +136,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.DRAINING, "Draining")
         add(RagiumRecipeTypes.FILLING, "Filling")
 
+        add(RagiumRecipeTypes.ALLOYING, "Alloying")
         add(RagiumRecipeTypes.FREEZING, "Freezing")
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")

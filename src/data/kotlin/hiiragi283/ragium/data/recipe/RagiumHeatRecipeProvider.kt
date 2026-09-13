@@ -4,8 +4,11 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.PackOutput
@@ -18,8 +21,43 @@ import java.util.concurrent.CompletableFuture
 class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
+        alloying()
         freezing()
         melting()
+    }
+
+    private fun alloying() {
+        // Gold + Netherite Scrap -> Netherite
+        RagiumRecipeBuilders.alloying {
+            primary {
+                +dustOrIngot(RagiumMaterial.Metal.GOLD)
+                count = 2
+            }
+            secondary {
+                items { +Items.NETHERITE_SCRAP }
+                count = 2
+            }
+            result { +Items.NETHERITE_INGOT }
+        }.save(exporter)
+
+        // Machine Casing
+        RagiumRecipeBuilders.alloying {
+            primary {
+                +dustOrIngot(RagiumMaterial.Metal.BLACK_STEEL)
+                count = 2
+            }
+            secondary { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
+            result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
+        }.save(exporter)
+        // Sooty Iron + Obsidian Dust -> Black Steel
+        RagiumRecipeBuilders.alloying {
+            primary { +dustOrIngot(RagiumMaterial.Metal.SOOTY_IRON) }
+            secondary {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN)
+                count = 2
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
+        }.save(exporter)
     }
 
     private fun freezing() {

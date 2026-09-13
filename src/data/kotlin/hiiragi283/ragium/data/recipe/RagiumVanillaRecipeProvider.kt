@@ -259,6 +259,10 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
             unlockedBy(getHasName(Items.STONECUTTER), has(Items.STONECUTTER))
         }
         // Heat
+        heat(RagiumBlocks.ALLOY_SMELTER) {
+            define('D', Items.BLAST_FURNACE)
+            unlockedBy(getHasName(Items.BLAST_FURNACE), has(Items.BLAST_FURNACE))
+        }
         heat(RagiumBlocks.FREEZER) {
             define('D', Tags.Items.BUCKETS_WATER)
             unlockedBy(getHasName(Tags.Items.BUCKETS_WATER), has(Tags.Items.BUCKETS_WATER))

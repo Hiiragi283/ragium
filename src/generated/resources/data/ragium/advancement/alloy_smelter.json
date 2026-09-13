@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:alloy_smelter",
+  "parent": "ragium:heat_machine_parts",
   "criteria": {
-    "has_black_steel_ingot": {
+    "has_alloy_smelter": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/black_steel"
+            "items": "ragium:alloy_smelter"
           }
         ]
       },
@@ -14,18 +14,18 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.black_steel.desc"
+      "translate": "advancement.ragium.alloy_smelter.desc"
     },
     "icon": {
-      "id": "ragium:black_steel_ingot"
+      "id": "ragium:alloy_smelter"
     },
     "title": {
-      "translate": "advancement.ragium.black_steel.title"
+      "translate": "advancement.ragium.alloy_smelter.title"
     }
   },
   "requirements": [
     [
-      "has_black_steel_ingot"
+      "has_alloy_smelter"
     ]
   ],
   "sends_telemetry_event": true

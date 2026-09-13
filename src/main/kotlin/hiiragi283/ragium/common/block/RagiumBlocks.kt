@@ -159,6 +159,10 @@ data object RagiumBlocks {
 
     // Heat
     @JvmField
+    val ALLOY_SMELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER)
+
+    @JvmField
     val FREEZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.FREEZER)
 
@@ -219,6 +223,7 @@ data object RagiumBlocks {
             put(HTMachineType.MECHANICAL, COMPRESSOR)
             put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
 
+            put(HTMachineType.HEAT, ALLOY_SMELTER)
             put(HTMachineType.HEAT, FREEZER)
             put(HTMachineType.HEAT, MELTER)
             put(HTMachineType.HEAT, PYROLYZER)

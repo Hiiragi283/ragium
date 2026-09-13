@@ -184,18 +184,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             result { +Items.PIGLIN_HEAD }
         }.save(exporter)
 
-        // Gold + Netherite Scrap -> Netherite
-        RagiumRecipeBuilders.assembling {
-            primary {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.GOLD)
-                count = 2
-            }
-            secondary {
-                items { +Items.NETHERITE_SCRAP }
-                count = 2
-            }
-            result { +Items.NETHERITE_INGOT }
-        }.save(exporter)
         // Gold Block + Apple -> Enchanted Golden Apple
         RagiumRecipeBuilders.assembling {
             primary { items { +Items.APPLE } }
@@ -209,23 +197,9 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         // Machine Casing
         RagiumRecipeBuilders.assembling {
-            primary {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
-                count = 2
-            }
-            secondary { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
-            result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
-        }.save(exporter)
-        RagiumRecipeBuilders.assembling {
             primary { items { +RagiumItems.getParts(HTMachineType.MECHANICAL) } }
             secondary { items { +Items.MAGMA_BLOCK } }
             result { +RagiumItems.getParts(HTMachineType.HEAT) }
-        }.save(exporter)
-        // Sooty Iron + Obsidian Dust -> Black Steel
-        RagiumRecipeBuilders.assembling {
-            primary { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
-            secondary { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN) }
-            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
         }.save(exporter)
     }
 

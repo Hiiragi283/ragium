@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
@@ -58,6 +59,10 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
 
     // Heat
+    @JvmField
+    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> =
+        registerTick(RagiumConstants.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
+
     @JvmField
     val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
         registerTick(RagiumConstants.FREEZER, ::HTFreezerBlockEntity)

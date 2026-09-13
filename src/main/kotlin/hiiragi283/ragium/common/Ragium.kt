@@ -219,6 +219,7 @@ data object Ragium : HTCommonMod() {
         registerProcessor(RagiumBlockEntityTypes.COMPRESSOR.get())
         registerProcessor(RagiumBlockEntityTypes.CUTTING_MACHINE.get())
 
+        registerProcessor(RagiumBlockEntityTypes.ALLOY_SMELTER.get())
         registerProcessor(RagiumBlockEntityTypes.FREEZER.get())
         registerProcessor(RagiumBlockEntityTypes.MELTER.get())
         registerProcessor(RagiumBlockEntityTypes.SMELTER.get())

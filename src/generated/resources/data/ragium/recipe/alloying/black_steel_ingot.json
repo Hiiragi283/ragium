@@ -1,15 +1,21 @@
 {
-  "type": "ragium:assembling",
+  "type": "ragium:alloying",
   "primary_ingredient": {
     "count": 1,
-    "items": "#c:ingots/sooty_iron"
+    "items": {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/sooty_iron",
+        "#c:ingots/sooty_iron"
+      ]
+    }
   },
   "result": {
     "count": 1,
     "id": "ragium:black_steel_ingot"
   },
   "secondary_ingredient": {
-    "count": 1,
+    "count": 2,
     "items": "#c:dusts/obsidian"
   },
   "time": 200

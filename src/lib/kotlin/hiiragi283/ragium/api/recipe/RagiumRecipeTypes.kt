@@ -49,6 +49,9 @@ data object RagiumRecipeTypes {
 
     // Heat
     @JvmField
+    val ALLOYING: HTRecipeType<RTAlloyingRecipe> = create(RagiumConstants.ALLOYING)
+
+    @JvmField
     val FREEZING: HTRecipeType<RTFreezingRecipe> = create(RagiumConstants.FREEZING)
 
     @JvmField

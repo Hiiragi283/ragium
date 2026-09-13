@@ -82,6 +82,10 @@ data object RagiumConfig {
 
             // Heat
             @JvmField
+            val alloySmelter: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.ALLOY_SMELTER)
+
+            @JvmField
             val freezer: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.FREEZER)
 

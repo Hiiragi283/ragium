@@ -9,9 +9,7 @@ import hiiragi283.lib.util.HTDelegates
 import net.minecraft.core.HolderSet
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
-import net.neoforged.neoforge.common.crafting.CompoundIngredient
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
-import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -47,18 +45,8 @@ class HTItemIngredientBuilder @PublishedApi internal constructor() {
         ingredient = this.toVanilla()
     }
 
-    @JvmName("unaryPlusCompound")
-    operator fun List<Ingredient>.unaryPlus() {
-        +CompoundIngredient(this)
-    }
-
     operator fun HolderSet<Item>.unaryPlus() {
         ingredient = Ingredient.of(this)
-    }
-
-    @JvmName("unaryPlusOr")
-    operator fun List<HolderSet<Item>>.unaryPlus() {
-        +OrHolderSet(this)
     }
 
     inline fun items(builderAction: HolderAcceptor.ItemSetBuilder.() -> Unit) {

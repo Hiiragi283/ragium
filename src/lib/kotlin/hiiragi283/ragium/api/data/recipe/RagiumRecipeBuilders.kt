@@ -9,6 +9,7 @@ import hiiragi283.lib.data.recipe.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.HTItemToRecipeBuilder
 import hiiragi283.ragium.api.RagiumConstants
+import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
 import hiiragi283.ragium.api.recipe.RTBrewingRecipe
@@ -94,6 +95,16 @@ data object RagiumRecipeBuilders {
     }
 
     // Heat
+    @JvmStatic
+    inline fun alloying(
+        builderAction: HTDoubleItemToItemRecipeBuilder<RTAlloyingRecipe>.() -> Unit
+    ): HTDoubleItemToItemRecipeBuilder<RTAlloyingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTDoubleItemToItemRecipeBuilder(RagiumConstants.ALLOYING, ::RTAlloyingRecipe).apply(builderAction)
+    }
+
     @JvmStatic
     inline fun freezing(
         builderAction: HTFluidToRecipeBuilder.ToItem<RTFreezingRecipe>.() -> Unit

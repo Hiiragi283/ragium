@@ -39,6 +39,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CUTTING_MACHINE, "裁断機")
 
+        add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
         add(RagiumBlocks.FREEZER, "冷凍機")
         add(RagiumBlocks.MELTER, "溶融炉")
         add(RagiumBlocks.PYROLYZER, "熱分解炉")
@@ -131,6 +132,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.DRAINING, "排出")
         add(RagiumRecipeTypes.FILLING, "封入")
 
+        add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.FREEZING, "冷凍")
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
