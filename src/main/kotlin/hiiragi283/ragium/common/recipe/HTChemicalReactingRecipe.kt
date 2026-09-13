@@ -32,7 +32,7 @@ class HTChemicalReactingRecipe(
     val itemResult: Option<HTItemResult>,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.TripleInput<HTChemicalReactingRecipe.Input, ItemStack, FluidStack, FluidStack>,
-    HTRecipeFactories.ItemAndDoubleFluid<HTChemicalReactingRecipe.Input, HTChemicalResult>,
+    HTRecipeFactories.TripleInput<HTChemicalReactingRecipe.Input, ItemStack, FluidStack, FluidStack, HTChemicalResult>,
     HTProgressRecipe.Simple<HTChemicalReactingRecipe.Input>,
     HTSerializableRecipe<HTChemicalReactingRecipe.Input> {
     companion object {
@@ -72,6 +72,8 @@ class HTChemicalReactingRecipe(
     )
 
     override fun apply(first: ItemStack, second: FluidStack, third: FluidStack): HTChemicalResult = HTChemicalResult.create(fluidResults, itemResult)
+
+    override fun assemble(input: Input): HTChemicalResult = apply(input.catalyst, input.firstFluid, input.secondFluid)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CHEMICAL_REACTING
 
