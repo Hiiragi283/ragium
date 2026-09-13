@@ -13,8 +13,6 @@ import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 
 data object RagiumJeiRecipeTypes {
     // Mechanical
@@ -36,11 +34,11 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val DRAINING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.DRAINING, ItemStack(Items.GLASS_BOTTLE))
+        HTJeiRecipeType(RagiumRecipeTypes.DRAINING, RagiumBlocks.MACHINE_CASING)
 
     @JvmField
     val FILLING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> =
-        HTJeiRecipeType(RagiumRecipeTypes.FILLING, ItemStack(Items.GLASS_BOTTLE))
+        HTJeiRecipeType(RagiumRecipeTypes.FILLING, RagiumBlocks.MACHINE_CASING)
 
     // Heat
     @JvmField

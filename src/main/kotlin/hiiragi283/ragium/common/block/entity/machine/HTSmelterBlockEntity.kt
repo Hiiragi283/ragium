@@ -126,7 +126,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
-        typeSlot = builder.addSlot(HTSlotInfo.NONE, HTBasicItemSlot.input(listener))
+        typeSlot = builder.addSlot(HTSlotInfo.NONE, HTBasicItemSlot.input(listener, limit = 1))
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
