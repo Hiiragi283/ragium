@@ -30,7 +30,7 @@ class HTMixingRecipe(
     val result: Ior<HTItemResult, HTFluidResult>,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.TripleInput<HTMixingRecipe.Input, ItemStack, ItemStack, FluidStack>,
-    HTRecipeFactories.DoubleItemAndFluid<HTMixingRecipe.Input, Ior<ItemStack, FluidStack>>,
+    HTRecipeFactories.TripleInput<HTMixingRecipe.Input, ItemStack, ItemStack, FluidStack, Ior<ItemStack, FluidStack>>,
     HTProgressRecipe.Simple<HTMixingRecipe.Input>,
     HTSerializableRecipe<HTMixingRecipe.Input> {
     companion object {
@@ -78,6 +78,8 @@ class HTMixingRecipe(
     )
 
     override fun apply(first: ItemStack, second: ItemStack, third: FluidStack): Ior<ItemStack, FluidStack> = result.mapLeft { it.createOrEmpty() }.mapRight { it.create() }
+
+    override fun assemble(input: Input): Ior<ItemStack, FluidStack> = apply(input.firstItem, input.secondItem, input.fluid)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
 
