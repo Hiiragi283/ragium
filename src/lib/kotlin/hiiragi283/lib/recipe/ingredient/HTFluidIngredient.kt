@@ -63,8 +63,8 @@ data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
     override fun getPreviewStacks(contextMap: ContextMap): List<FluidStack> = unsized
         .display()
         .resolve(contextMap, ForFluidStacks { it.copyWithAmount(amount) })
-        .toList()
         .filter(HTFlowingFluidHelper::isSource)
+        .toList()
 }
 
 //    Extensions    //

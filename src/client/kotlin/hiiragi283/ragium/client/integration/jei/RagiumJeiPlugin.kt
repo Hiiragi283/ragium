@@ -4,20 +4,17 @@ import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
 import hiiragi283.lib.integration.jei.category.HTDoubleItemToItemRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTFluidToItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTItemToFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToItemAndFluidRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTItemToItemRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.recipe.HTOreSlurryData
 import hiiragi283.ragium.api.data.recipe.HTOreSlurryDataHelper
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
@@ -107,15 +104,15 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipeCategories(
             // Mechanical
             HTDoubleItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.ASSEMBLING),
-            HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.COMPRESSING),
+            HTSingleRecipeCategory.ItemToItem(guiHelper, RagiumJeiRecipeTypes.COMPRESSING),
             HTItemToDoubleItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CRUSHING),
             HTItemToDoubleItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CUTTING),
             HTItemToItemAndFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.DRAINING),
             HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FILLING),
             // Heat
             HTDoubleItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.ALLOYING),
-            HTFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING),
-            HTItemToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MELTING),
+            HTSingleRecipeCategory.FluidToItem(guiHelper, RagiumJeiRecipeTypes.FREEZING),
+            HTSingleRecipeCategory.ItemToFluid(guiHelper, RagiumJeiRecipeTypes.MELTING),
             HTItemToItemAndFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING),
             RTRefiningRecipeCategory(guiHelper),
             // Chemical
@@ -171,12 +168,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 .listElements()
                 .asSequence()
                 .mapNotNull { input: Holder<Item> ->
-                    val slurryData: Holder<HTOreSlurryData> =
-                        input.components().get(RagiumDataComponents.ORE_SLURRY_DATA) ?: return@mapNotNull null
+                    val result: FluidStack =
+                        HTOreSlurryDataHelper.createFluid(input.components()) ?: return@mapNotNull null
                     RagiumRecipeBuilders.mixing {
                         itemIngredient = HTJeiRecipeHelper.fakeItem(SlotDisplay.ItemSlotDisplay(input))
                         fluidIngredient = HTJeiRecipeHelper.fakeFluid(RagiumFluids.SULFURIC_ACID)
-                        result { from(HTOreSlurryDataHelper.createFluid(slurryData)) }
+                        result { from(result) }
                         recipeId replace input.getKeyOrThrow().identifier().withPrefix("solving/")
                     }.buildSynthetic()
                 }.toList()
