@@ -192,6 +192,24 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
             ).unlockedBy(getHasName(HTCommonTags.Items.PLASTICS), has(HTCommonTags.Items.PLASTICS))
                 .save(output)
         }
+        // Splash Bottle
+        shapeless(RecipeCategory.BREWING, RagiumItems.SPLASH_BOTTLE, 4)
+            .requires(Tags.Items.GUNPOWDERS)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .unlockedBy(getHasName(Tags.Items.GUNPOWDERS), has(Tags.Items.GUNPOWDERS))
+            .save(output)
+        // Lingering Bottle
+        shapeless(RecipeCategory.BREWING, RagiumItems.LINGERING_BOTTLE, 4)
+            .requires(Items.DRAGON_BREATH)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .unlockedBy(getHasName(Items.DRAGON_BREATH), has(Items.DRAGON_BREATH))
+            .save(output)
 
         // XX Tools
         registerTools(RagiumItems.SOOTY_IRON_TOOLS, RagiumToolMaterials.SOOTY_IRON)

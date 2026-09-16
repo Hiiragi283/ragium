@@ -14,16 +14,14 @@
   "result": {
     "type": "ragium:potion",
     "amount": 1000,
-    "contents": {
-      "custom_effects": [
-        {
-          "duration": 900,
-          "id": "minecraft:darkness",
-          "show_icon": true
-        }
-      ],
-      "custom_name": "darkness"
-    }
+    "custom_effects": [
+      {
+        "duration": 900,
+        "id": "minecraft:darkness",
+        "show_icon": true
+      }
+    ],
+    "custom_name": "darkness"
   },
   "time": 200
 }

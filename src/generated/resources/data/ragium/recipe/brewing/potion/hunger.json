@@ -14,16 +14,14 @@
   "result": {
     "type": "ragium:potion",
     "amount": 1000,
-    "contents": {
-      "custom_effects": [
-        {
-          "duration": 900,
-          "id": "minecraft:hunger",
-          "show_icon": true
-        }
-      ],
-      "custom_name": "hunger"
-    }
+    "custom_effects": [
+      {
+        "duration": 900,
+        "id": "minecraft:hunger",
+        "show_icon": true
+      }
+    ],
+    "custom_name": "hunger"
   },
   "time": 200
 }

@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.fluid.HTFlowingFluidHelper
-import hiiragi283.lib.item.alchemy.BottledPotionContents
+import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.util.DFUEither
@@ -17,6 +17,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import net.neoforged.neoforge.fluids.FluidStack
@@ -146,15 +147,15 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
     }
 
     @JvmRecord
-    data class PotionEntry(val contents: BottledPotionContents) : Entry {
+    data class PotionEntry(val contents: PotionContents) : Entry {
         companion object {
             @JvmField
             val CODEC: MapCodec<PotionEntry> =
-                BottledPotionContents.MAP_CODEC.xmap(::PotionEntry, PotionEntry::contents)
+                MapCodec.assumeMapUnsafe(PotionContents.CODEC).xmap(::PotionEntry, PotionEntry::contents)
 
             @JvmField
             val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, PotionEntry> =
-                BottledPotionContents.STREAM_CODEC.map(::PotionEntry, PotionEntry::contents)
+                PotionContents.STREAM_CODEC.map(::PotionEntry, PotionEntry::contents)
 
             @JvmField
             val TYPE: HTFluidResultType<PotionEntry> = HTFluidResultType(CODEC, STREAM_CODEC)
@@ -162,10 +163,10 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
 
         override fun type(): HTFluidResultType<*> = TYPE
 
-        override fun create(amount: Int): FluidStack = contents.toFluidStack(amount)
+        override fun create(amount: Int): FluidStack = HTPotionHelper.createFluid(contents, amount)
 
         override fun getId(): Identifier =
-            contents.potion?.getKeyOrThrow()?.identifier() ?: RagiumAPI.id(HTConstants.POTION)
+            HTPotionHelper.getPotionId(contents).orElseGet { RagiumAPI.id(HTConstants.POTION) }
     }
 }
 

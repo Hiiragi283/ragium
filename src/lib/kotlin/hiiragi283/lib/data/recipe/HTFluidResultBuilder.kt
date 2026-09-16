@@ -2,7 +2,6 @@
 
 package hiiragi283.lib.data.recipe
 
-import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.registry.HTDeferredHolder
 import hiiragi283.lib.registry.HTFluidContent
@@ -100,14 +99,10 @@ class HTFluidResultBuilder @PublishedApi internal constructor() {
     // Potion
     @JvmName("unaryPlusPotion")
     operator fun Holder<Potion>.unaryPlus() {
-        +BottledPotionContents(this)
+        +PotionContents(this)
     }
 
     operator fun PotionContents.unaryPlus() {
-        +BottledPotionContents(this)
-    }
-
-    operator fun BottledPotionContents.unaryPlus() {
         +HTFluidResult.PotionEntry(this)
     }
 

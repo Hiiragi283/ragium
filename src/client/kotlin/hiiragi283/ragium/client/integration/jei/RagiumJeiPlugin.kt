@@ -10,7 +10,6 @@ import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToItemAndFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
-import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.ragium.api.RagiumAPI
@@ -42,6 +41,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
+import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
@@ -85,9 +85,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTPhysicalSideHelper
                 .filteredLookup(BuiltInRegistries.POTION)
                 .listElements()
-                .map(::BottledPotionContents)
-                .filter { !it.isWater }
-                .map(BottledPotionContents::toFluidStack)
+                .filter { !it.`is`(Potions.WATER) }
+                .map(HTPotionHelper::createFluid)
                 .toList()
         )
         registration.addExtraIngredients(

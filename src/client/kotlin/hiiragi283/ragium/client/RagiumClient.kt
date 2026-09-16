@@ -77,7 +77,7 @@ data object RagiumClient : HTClientMod() {
             tintSource =
                 FluidStackTintSource { stack: FluidStack ->
                     "ff000000".hexToInt() or
-                        HTPotionHelper.getPotion(stack).color
+                        HTPotionHelper.getContents(stack).color
                 }
         }
         register.register(RagiumFluids.OMINOUS_FLUX) {

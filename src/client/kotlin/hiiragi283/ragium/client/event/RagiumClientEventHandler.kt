@@ -15,7 +15,7 @@ data object RagiumClientEventHandler {
     fun onFluidTooltip(event: FluidTooltipEvent) {
         val stack: FluidStack = event.fluidStack
         if (stack.`is`(RagiumFluids.POTION.getOrThrow())) {
-            HTPotionHelper.getPotion(stack).addToTooltip(event.context, event.toolTip::add, event.flags, stack)
+            HTPotionHelper.getContents(stack).addToTooltip(event.context, event.toolTip::add, event.flags, stack)
         }
     }
 }

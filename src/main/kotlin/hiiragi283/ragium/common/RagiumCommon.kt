@@ -5,22 +5,16 @@ import hiiragi283.lib.collection.asSequence
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.getOrPut
 import hiiragi283.lib.color.VanillaColoredCollections
-import hiiragi283.lib.item.alchemy.HTPotionFluidManager
-import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.resource.modifyPath
-import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.identity
-import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
-import hiiragi283.ragium.common.recipe.RTLingeringBrewingRecipe
-import hiiragi283.ragium.common.recipe.RTSplashBrewingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -47,10 +41,6 @@ internal data object RagiumCommon {
     fun initialize(event: FMLCommonSetupEvent) {
         event.enqueueWork(::initFluidInteractions)
         event.enqueueWork(::initRecipeLookups)
-
-        event.enqueueWork {
-            HTPotionFluidManager.register(RagiumFluids.POTION.getOrThrow(), HTPotionFluidManager.Handler.DEFAULT)
-        }
     }
 
     private fun initFluidInteractions() {
@@ -173,9 +163,5 @@ internal data object RagiumCommon {
                     }.build()
                 }
         }
-        RagiumRecipeLookups.BREWING.addRecipes(
-            RecipeKey(vanillaId("/${RagiumConstants.BREWING}/splash_potion")) to RTSplashBrewingRecipe,
-            RecipeKey(vanillaId("/${RagiumConstants.BREWING}/lingering_potion")) to RTLingeringBrewingRecipe
-        )
     }
 }

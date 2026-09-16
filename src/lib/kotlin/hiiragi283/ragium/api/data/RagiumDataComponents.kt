@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.lib.data.DataComponentType
-import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.ragium.api.RagiumRegistries
@@ -19,9 +18,6 @@ import net.neoforged.neoforge.fluids.SimpleFluidContent
  */
 data object RagiumDataComponents {
     // Item Stack
-    @JvmField
-    val BOTTLE_TYPE: DataComponentType<HTBottleType> = DataComponentType(HTBottleType.CODEC, HTBottleType.STREAM_CODEC)
-
     @JvmField
     val ENERGY: DataComponentType<Int> = DataComponentType(HTCodecs.NON_NEGATIVE_INT, ByteBufCodecs.VAR_INT)
 
