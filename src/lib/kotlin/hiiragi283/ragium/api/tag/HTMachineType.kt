@@ -25,7 +25,7 @@ enum class HTMachineType(langName: HTLangName) :
 
     companion object {
         @JvmField
-        val PREFIX = HTTagPrefix(RagiumAPI.id("machines"), "machines/%s", RagiumAPI.MOD_ID)
+        val PREFIX = HTTagPrefix("machines", "machines/%s", RagiumAPI.MOD_ID)
     }
 
     override val materialName: String get() = name.lowercase()

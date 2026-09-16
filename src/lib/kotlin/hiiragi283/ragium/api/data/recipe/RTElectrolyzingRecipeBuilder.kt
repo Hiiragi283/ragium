@@ -20,7 +20,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class RTElectrolyzingRecipeBuilder : HTProgressRecipeBuilder<RTElectrolyzingRecipe>(RagiumConstants.ELECTROLYZING) {
-    override fun getPrimalId(): Identifier = results.first().getId()
+    override fun getRecipeId(): Identifier = results.first().getId()
 
     override fun createRecipe(): RTElectrolyzingRecipe =
         RTElectrolyzingRecipe(itemIngredient, fluidIngredient, results, progressData)

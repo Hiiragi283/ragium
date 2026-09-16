@@ -21,7 +21,7 @@ import kotlin.contracts.contract
  */
 class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
     HTProgressRecipeBuilder<RECIPE>(prefix) {
-    override fun getPrimalId(): Identifier = primary.getId()
+    override fun getRecipeId(): Identifier = primary.getId()
 
     override fun createRecipe(): RECIPE = factory.create(ingredient, primary, secondary, progressData)
 

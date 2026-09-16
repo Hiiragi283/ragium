@@ -39,6 +39,7 @@ import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
@@ -171,13 +172,13 @@ data object Ragium : HTCommonMod() {
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
         // Item
-        event.modify(Items.RAW_COPPER) { builder, provider, _ ->
+        event.modify(Items.RAW_COPPER) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
             builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.COPPER))
         }
-        event.modify(Items.RAW_IRON) { builder, provider, _ ->
+        event.modify(Items.RAW_IRON) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
             builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.IRON))
         }
-        event.modify(Items.RAW_GOLD) { builder, provider, _ ->
+        event.modify(Items.RAW_GOLD) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
             builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.GOLD))
         }
     }

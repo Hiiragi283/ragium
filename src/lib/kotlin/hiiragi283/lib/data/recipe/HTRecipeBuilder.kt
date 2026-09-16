@@ -11,6 +11,8 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.conditions.ICondition
+import java.util.function.Function
+import java.util.function.UnaryOperator
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -24,6 +26,16 @@ import kotlin.contracts.contract
  */
 @HTBuilderMarker
 abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: String) {
+    /**
+     * デフォルトのIDを取得します。
+     */
+    protected abstract fun getRecipeId(): Identifier?
+
+    /**
+     * レシピを生成します。
+     */
+    protected abstract fun createRecipe(): RECIPE
+
     //    Conditions    //
 
     /**
@@ -32,9 +44,6 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
     @PublishedApi
     internal val conditions: MutableList<ICondition> = ObjectArrayList()
 
-    /**
-     * @since 26.1.0
-     */
     inline fun condition(builderAction: ConditionBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
@@ -42,39 +51,46 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
         ConditionBuilder(conditions).apply(builderAction)
     }
 
-    //    Save    //
+    //    Recipe Id    //
 
     /**
      * レシピ[ID][Identifier]を保持するインスタンス
      */
-    val recipeId: RecipeId by lazy(::RecipeId)
+    val recipeId: RecipeId = RecipeId()
 
-    inner class RecipeId {
+    class RecipeId {
         /**
          * 保持している[ID][Identifier]
          */
-        var id: Identifier = getPrimalId()
+        var modifier: Function<Identifier, Identifier> = UnaryOperator.identity()
             private set
+
+        /**
+         * @since 26.1.6
+         */
+        infix fun modify(operator: UnaryOperator<Identifier>) {
+            modifier = modifier.andThen(operator)
+        }
 
         /**
          * 現在の[ID][Identifier]にプレフィックスを追加します。
          */
         infix fun prefix(prefix: String) {
-            id = id.withPrefix(prefix)
+            modify { id: Identifier -> id.withPrefix(prefix) }
         }
 
         /**
          * 現在の[ID][Identifier]にサフィックスを追加します。
          */
         infix fun suffix(suffix: String) {
-            id = id.withSuffix(suffix)
+            modify { id: Identifier -> id.withSuffix(suffix) }
         }
 
         /**
          * 現在の[ID][Identifier]を[path]で置換します。
          */
         infix fun replace(path: String) {
-            id = id.withPath(path)
+            modify { id: Identifier -> id.withPath(path) }
         }
 
         /**
@@ -88,43 +104,30 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
          * 現在の[ID][Identifier]を[newId]で置換します。
          */
         infix fun replace(newId: Identifier) {
-            id = newId
+            modify { _ -> newId }
         }
     }
+
+    //    Exporter    //
 
     fun build(): HTRecipeHolder<RECIPE> = build("$prefix/")
 
     fun buildSynthetic(): HTRecipeHolder<RECIPE> = build("/$prefix/")
 
-    private fun build(prefix: String): HTRecipeHolder<RECIPE> =
-        HTRecipeHolder(RecipeKey(recipeId.id.withPrefix(prefix)), createRecipe())
+    private fun build(prefix: String): HTRecipeHolder<RECIPE> = HTRecipeHolder(
+        getRecipeId()
+            ?.let(recipeId.modifier::apply)
+            ?.withPrefix(prefix)
+            ?.let(::RecipeKey)
+            ?: error("Could not generate default recipe id"),
+        createRecipe()
+    )
 
     /**
      * レシピを生成します。
      * @param exporter 生成したレシピの出力先
      */
     open fun save(exporter: ConditionalExporter<Recipe<*>>) {
-        this.save { id: RecipeKey, recipe: RECIPE -> exporter.accept(id, recipe, conditions) }
+        build().let { (key: RecipeKey, recipe: RECIPE) -> exporter.accept(key, recipe, conditions) }
     }
-
-    /**
-     * 生成したレシピを処理します。
-     * @param consumer 生成されたレシピIDとレシピを処理するブロック
-     */
-    inline fun <R> save(consumer: (id: RecipeKey, recipe: RECIPE) -> R): R {
-        contract {
-            callsInPlace(consumer, InvocationKind.EXACTLY_ONCE)
-        }
-        return build().let { (id: RecipeKey, recipe: RECIPE) -> consumer(id, recipe) }
-    }
-
-    /**
-     * デフォルトのIDを取得します。
-     */
-    protected abstract fun getPrimalId(): Identifier
-
-    /**
-     * レシピを生成します。
-     */
-    protected abstract fun createRecipe(): RECIPE
 }

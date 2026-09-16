@@ -25,7 +25,7 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
     prefix: String,
     private val factory: Factory<RESULT, RECIPE>
 ) : HTProgressRecipeBuilder<RECIPE>(prefix) {
-    final override fun getPrimalId(): Identifier = result.getId()
+    final override fun getRecipeId(): Identifier = result.getId()
 
     final override fun createRecipe(): RECIPE = factory.create(itemIngredient, fluidIngredient, result, progressData)
 

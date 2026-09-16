@@ -20,7 +20,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe.Basic>(RagiumConstants.REACTING) {
-    override fun getPrimalId(): Identifier = results.map(HTItemResult::getId, HTFluidResult::getId)
+    override fun getRecipeId(): Identifier = results.map(HTItemResult::getId, HTFluidResult::getId)
 
     override fun createRecipe(): RTReactingRecipe.Basic =
         RTReactingRecipe.Basic(primaryIngredient, secondaryIngredient, results, progressData)

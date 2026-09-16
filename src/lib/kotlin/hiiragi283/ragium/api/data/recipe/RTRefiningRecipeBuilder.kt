@@ -19,7 +19,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(RagiumConstants.REFINING) {
-    override fun getPrimalId(): Identifier = fluidResult.getId()
+    override fun getRecipeId(): Identifier = fluidResult.getId()
 
     override fun createRecipe(): RTRefiningRecipe = RTRefiningRecipe(ingredient, itemResult, fluidResult, progressData)
 
