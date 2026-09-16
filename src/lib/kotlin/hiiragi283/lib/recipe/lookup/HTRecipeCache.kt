@@ -5,8 +5,6 @@ import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.HTRecipePredicate
 import hiiragi283.lib.recipe.RecipeKey
-import hiiragi283.lib.recipe.key
-import hiiragi283.lib.recipe.recipe
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.unwrap
 import net.minecraft.server.level.ServerLevel
