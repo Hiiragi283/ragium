@@ -448,7 +448,10 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             if (RagiumItems.MATERIAL_ITEMS.contains(HTItemPart.GEAR, material)) {
                 RagiumRecipeBuilders.crushing {
                     ingredient { +holderSet(CommonTagPrefixes.GEAR, material) }
-                    primary { +dust }
+                    primary {
+                        +dust
+                        count = 4
+                    }
                     recipeId suffix "_from_gear"
                 }.save(exporter)
             }
