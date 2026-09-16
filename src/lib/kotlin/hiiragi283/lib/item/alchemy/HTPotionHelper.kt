@@ -23,14 +23,7 @@ import java.util.Optional
  * @since 26.1.6
  */
 data object HTPotionHelper {
-    /**
-     * 指定した[contents]が空かどうか判定します。
-     * @return [contents]が[PotionContents.EMPTY]と同じ場合，またはポーションもカスタムエフェクトもない場合は`true`
-     * @since 26.1.6
-     */
-    @JvmStatic
-    fun isEmpty(contents: PotionContents): Boolean =
-        contents == PotionContents.EMPTY || (contents.potion().isEmpty && contents.customEffects.isEmpty())
+    const val BOTTLE_AMOUNT: Int = FluidType.BUCKET_VOLUME / 4
 
     //    Data Component    //
 
@@ -42,30 +35,37 @@ data object HTPotionHelper {
     fun getContents(getter: DataComponentGetter): PotionContents =
         getter.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
 
+    @JvmStatic
+    fun isEmpty(getter: DataComponentGetter): Boolean = getContents(getter).let(::isEmpty)
+
     /**
-     * @since 26.1.6
+     * 指定した[contents]が空かどうか判定します。
+     * @return [contents]が[PotionContents.EMPTY]と同じ場合，またはポーションもカスタムエフェクトもない場合は`true`
      */
+    @JvmStatic
+    fun isEmpty(contents: PotionContents): Boolean =
+        contents == PotionContents.EMPTY || (contents.potion().isEmpty && contents.customEffects.isEmpty())
+
+    @JvmStatic
+    fun hasAnyEffect(getter: DataComponentGetter): Boolean = !getContents(getter).let(::isEmpty)
+
+    // Patch
+    @JvmStatic
+    fun createPotionPatch(getter: DataComponentGetter): DataComponentPatch =
+        getContents(getter).let(::createPotionPatch)
+
     @JvmStatic
     fun createPotionPatch(potion: Holder<Potion>): DataComponentPatch = createPotionPatch(PotionContents(potion))
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun createPotionPatch(contents: PotionContents): DataComponentPatch =
         buildDataPatch { set(DataComponents.POTION_CONTENTS, contents) }
 
     // Potion Id
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun getPotionId(getter: DataComponentGetter): Optional<Identifier> = getContents(getter).let(::getPotionId)
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun getPotionId(contents: PotionContents): Optional<Identifier> = contents
         .potion()
@@ -74,16 +74,10 @@ data object HTPotionHelper {
 
     // Name
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun getPotionName(getter: DataComponentGetter, bottleType: HTBottleType): Text =
         getPotionName(getContents(getter), bottleType)
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun getPotionName(contents: PotionContents, bottleType: HTBottleType): Text =
         contents.getName("${bottleType.filledItem.descriptionId}.effect.")
@@ -92,45 +86,27 @@ data object HTPotionHelper {
 
     // Filled Bottle
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun createFilled(getter: DataComponentGetter, bottleType: HTBottleType): ItemStackTemplate =
         createFilled(getContents(getter), bottleType)
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun createFilled(potion: Holder<Potion>, bottleType: HTBottleType): ItemStackTemplate =
         createFilled(PotionContents(potion), bottleType)
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun createFilled(contents: PotionContents, bottleType: HTBottleType): ItemStackTemplate =
         ItemStackTemplate(bottleType.filledItem, 1, createPotionPatch(contents))
 
     // Bucket
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun createBuket(getter: DataComponentGetter): ItemStackTemplate = getContents(getter).let(::createBuket)
 
-    /**
-     * @since 26.1.6
-     */
     @Suppress("DEPRECATION")
     @JvmStatic
     fun createBuket(potion: Holder<Potion>): ItemStackTemplate = createBuket(PotionContents(potion))
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun createBuket(contents: PotionContents): ItemStackTemplate = when {
         contents.`is`(Potions.WATER) -> ItemStackTemplate(Items.WATER_BUCKET)
@@ -139,24 +115,15 @@ data object HTPotionHelper {
 
     //    FluidStack    //
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun createFluid(getter: DataComponentGetter, amount: Int = FluidType.BUCKET_VOLUME): FluidStack =
         createFluid(getContents(getter), amount)
 
-    /**
-     * @since 26.1.6
-     */
     @Suppress("DEPRECATION")
     @JvmStatic
     fun createFluid(potion: Holder<Potion>, amount: Int = FluidType.BUCKET_VOLUME): FluidStack =
         createFluid(PotionContents(potion), amount)
 
-    /**
-     * @since 26.1.6
-     */
     @JvmStatic
     fun createFluid(contents: PotionContents, amount: Int = FluidType.BUCKET_VOLUME): FluidStack = when {
         contents.`is`(Potions.WATER) -> FluidStack(Fluids.WATER, amount)

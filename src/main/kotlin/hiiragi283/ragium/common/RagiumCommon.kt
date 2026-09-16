@@ -5,16 +5,22 @@ import hiiragi283.lib.collection.asSequence
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.getOrPut
 import hiiragi283.lib.color.VanillaColoredCollections
+import hiiragi283.lib.item.alchemy.HTBottleType
+import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.resource.modifyPath
 import hiiragi283.lib.util.identity
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.recipe.RTPotionBottleDrainingRecipe
+import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -82,6 +88,23 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
         RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
         // runtime recipes
+        RagiumRecipeLookups.DRAINING.addRecipes(
+            HTBottleType.entries.associate { bottleType: HTBottleType ->
+                Pair(
+                    RecipeKey(RagiumAPI.id("/${RagiumConstants.DRAINING}/potion_bottle/${bottleType.serializedName}")),
+                    RTPotionBottleDrainingRecipe(bottleType)
+                )
+            }
+        )
+        RagiumRecipeLookups.FILLING.addRecipes(
+            HTBottleType.entries.associate { bottleType: HTBottleType ->
+                Pair(
+                    RecipeKey(RagiumAPI.id("/${RagiumConstants.FILLING}/potion_bottle/${bottleType.serializedName}")),
+                    RTPotionBottleFillingRecipe(bottleType)
+                )
+            }
+        )
+
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
             val oxygen: HolderSet.Named<Fluid> =
                 registries.getOrNull(RagiumFluids.OXYGEN.fluidTag) ?: return@addSubLookup sequenceOf()

@@ -10,7 +10,10 @@ import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToItemAndFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
+import hiiragi283.lib.item.ItemStack
+import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
+import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
@@ -41,6 +44,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
+import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.common.Tags
@@ -50,11 +54,23 @@ import kotlin.streams.asSequence
 
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
-    override fun registerItemSubtypes(registration: ISubtypeRegistration) {
-        // Potion-Based Item
-        HTPhysicalSideHelper
+    companion object {
+        @JvmStatic
+        private fun listItems(): Sequence<Holder.Reference<Item>> = HTPhysicalSideHelper
             .filteredLookup(BuiltInRegistries.ITEM)
             .listElements()
+            .asSequence()
+
+        @JvmStatic
+        private fun listPotions(): Sequence<Holder.Reference<Potion>> = HTPhysicalSideHelper
+            .filteredLookup(BuiltInRegistries.POTION)
+            .listElements()
+            .asSequence()
+    }
+
+    override fun registerItemSubtypes(registration: ISubtypeRegistration) {
+        // Potion-Based Item
+        listItems()
             .map(Holder<Item>::value)
             .forEach { item: Item ->
                 if (item is HTPotionBasedItem) {
@@ -82,9 +98,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     override fun registerExtraIngredients(registration: IExtraIngredientRegistration) {
         registration.addExtraIngredients(
             NeoForgeTypes.FLUID_STACK,
-            HTPhysicalSideHelper
-                .filteredLookup(BuiltInRegistries.POTION)
-                .listElements()
+            listPotions()
                 .filter { !it.`is`(Potions.WATER) }
                 .map(HTPotionHelper::createFluid)
                 .toList()
@@ -163,12 +177,50 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun registerDynamicRecipes(registration: IRecipeRegistration) {
+        // Mechanical
+        registration.addRecipes(
+            RagiumJeiRecipeTypes.DRAINING,
+            listPotions()
+                .flatMap { potion: Holder.Reference<Potion> ->
+                    HTBottleType.entries.map { bottleType: HTBottleType ->
+                        RagiumRecipeBuilders.draining {
+                            +HTJeiRecipeHelper.fakeItem(
+                                ItemStack(bottleType.filledItem, 1, HTPotionHelper.createPotionPatch(potion))
+                            )
+                            itemResult { +bottleType.emptyItem }
+                            fluidResult { from(HTPotionHelper.createFluid(potion, HTPotionHelper.BOTTLE_AMOUNT)) }
+                            recipeId replace potion.getKeyOrThrow()
+                                .identifier()
+                                .withPrefix("potion_bottle/${bottleType.serializedName}/")
+                        }.buildSynthetic()
+                    }
+                }.toList()
+        )
+        registration.addRecipes(
+            RagiumJeiRecipeTypes.FILLING,
+            listPotions()
+                .flatMap { potion: Holder.Reference<Potion> ->
+                    HTBottleType.entries.map { bottleType: HTBottleType ->
+                        RagiumRecipeBuilders.filling {
+                            itemIngredient { items { +bottleType.emptyItem } }
+                            fluidIngredient {
+                                +HTPotionFluidIngredient(potion)
+                                amount = HTPotionHelper.BOTTLE_AMOUNT
+                            }
+                            result {
+                                from(ItemStack(bottleType.filledItem, 1, HTPotionHelper.createPotionPatch(potion)))
+                            }
+                            recipeId replace potion.getKeyOrThrow()
+                                .identifier()
+                                .withPrefix("potion_bottle/${bottleType.serializedName}/")
+                        }.buildSynthetic()
+                    }
+                }.toList()
+        )
         // Chemical
         registration.addRecipes(
             RagiumJeiRecipeTypes.MIXING,
-            HTPhysicalSideHelper.filteredLookup(BuiltInRegistries.ITEM)
-                .listElements()
-                .asSequence()
+            listItems()
                 .mapNotNull { input: Holder<Item> ->
                     val result: FluidStack =
                         HTOreSlurryDataHelper.createFluid(input.components()) ?: return@mapNotNull null
