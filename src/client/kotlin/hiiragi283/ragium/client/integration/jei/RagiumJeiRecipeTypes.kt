@@ -9,6 +9,7 @@ import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
+import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -90,4 +91,7 @@ data object RagiumJeiRecipeTypes {
     // Electronics
 
     // Arcane
+    @JvmField
+    val ENCHANTING: HTHolderJeiRecipeType<RTEnchantingRecipe> =
+        HTJeiRecipeType(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.MACHINE_CASING)
 }

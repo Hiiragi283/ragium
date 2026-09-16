@@ -200,4 +200,13 @@ data object RagiumRecipeBuilders {
         }
         return HTItemToDoubleItemRecipeBuilder(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
     }
+
+    // Arcane
+    @JvmStatic
+    inline fun enchanting(builderAction: RTEnchantingRecipeBuilder.() -> Unit): RTEnchantingRecipeBuilder {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return RTEnchantingRecipeBuilder().apply(builderAction)
+    }
 }

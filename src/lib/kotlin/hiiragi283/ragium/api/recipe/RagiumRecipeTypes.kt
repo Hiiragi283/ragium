@@ -86,4 +86,6 @@ data object RagiumRecipeTypes {
     // Electronics
 
     // Arcane
+    @JvmField
+    val ENCHANTING: HTRecipeType<RTEnchantingRecipe> = create(RagiumConstants.ENCHANTING)
 }

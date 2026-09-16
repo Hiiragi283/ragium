@@ -111,4 +111,7 @@ data object RagiumRecipeSerializers {
     // Electronics
 
     // Arcane
+    @JvmField
+    val ENCHANTING: RecipeSerializer<RTEnchantingRecipe> =
+        register(RagiumConstants.ENCHANTING, RTEnchantingRecipe.SERIALIZER)
 }

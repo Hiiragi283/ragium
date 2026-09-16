@@ -7,12 +7,11 @@ import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.util.HTBuilderMarker
+import hiiragi283.lib.util.Identity
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.conditions.ICondition
-import java.util.function.Function
-import java.util.function.UnaryOperator
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -58,18 +57,19 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
      */
     val recipeId: RecipeId = RecipeId()
 
-    class RecipeId {
+    inner class RecipeId {
         /**
          * 保持している[ID][Identifier]
          */
-        var modifier: Function<Identifier, Identifier> = UnaryOperator.identity()
+        var defaultId: () -> Identifier = { getRecipeId() ?: error("Could not generate default recipe id") }
             private set
 
         /**
          * @since 26.1.6
          */
-        infix fun modify(operator: UnaryOperator<Identifier>) {
-            modifier = modifier.andThen(operator)
+        infix fun modify(operator: Identity<Identifier>) {
+            val defaultId1: () -> Identifier = defaultId
+            defaultId = { defaultId1().let(operator) }
         }
 
         /**
@@ -104,7 +104,7 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
          * 現在の[ID][Identifier]を[newId]で置換します。
          */
         infix fun replace(newId: Identifier) {
-            modify { _ -> newId }
+            defaultId = { newId }
         }
     }
 
@@ -115,11 +115,7 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
     fun buildSynthetic(): HTRecipeHolder<RECIPE> = build("/$prefix/")
 
     private fun build(prefix: String): HTRecipeHolder<RECIPE> = HTRecipeHolder(
-        getRecipeId()
-            ?.let(recipeId.modifier::apply)
-            ?.withPrefix(prefix)
-            ?.let(::RecipeKey)
-            ?: error("Could not generate default recipe id"),
+        recipeId.defaultId().withPrefix(prefix).let(::RecipeKey),
         createRecipe()
     )
 

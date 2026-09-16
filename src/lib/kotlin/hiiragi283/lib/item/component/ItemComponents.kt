@@ -15,6 +15,7 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.component.Consumable
 import net.minecraft.world.item.component.ItemAttributeModifiers
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -49,6 +50,22 @@ inline fun buildItemAttributeModifiers(
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
     return ItemAttributeModifiers.builder().apply(builderAction).build()
+}
+
+//    ItemEnchantments    //
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.6
+ */
+inline fun buildItemEnchantments(
+    parent: ItemEnchantments = ItemEnchantments.EMPTY,
+    builderAction: ItemEnchantments.Mutable.() -> Unit
+): ItemEnchantments {
+    contract {
+        callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+    }
+    return ItemEnchantments.Mutable(parent).apply(builderAction).toImmutable()
 }
 
 //    PotionContents    //

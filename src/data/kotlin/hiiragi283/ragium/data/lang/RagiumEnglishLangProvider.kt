@@ -150,6 +150,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.BREWING, "Brewing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
 
+        add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
+
         // Text - Lib
         add(HTCommonTranslation.ERROR, "Error")
         add(HTCommonTranslation.INFINITE, "Infinite")

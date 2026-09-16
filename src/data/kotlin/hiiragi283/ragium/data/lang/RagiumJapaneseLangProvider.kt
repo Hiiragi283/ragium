@@ -146,6 +146,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.BREWING, "醸造")
         add(RagiumRecipeTypes.PLANTING, "栽培")
 
+        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
+
         // Text - Lib
         add(HTCommonTranslation.ERROR, "エラー")
         add(HTCommonTranslation.INFINITE, "無限")

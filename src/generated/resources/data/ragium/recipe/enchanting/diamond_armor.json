@@ -1,0 +1,14 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 16,
+    "items": "#c:gems/diamond"
+  },
+  "result": {
+    "enchantments": {
+      "minecraft:protection": 4,
+      "minecraft:unbreaking": 3
+    }
+  },
+  "time": 200
+}
