@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.lib.item.alchemy.BottledPotionContents
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
@@ -19,11 +18,9 @@ data object RTLingeringBrewingRecipe : HTItemAndFluidToFluidRecipe {
         else -> second.amount() >= FluidType.BUCKET_VOLUME
     }
 
-    override fun apply(first: ItemInstance, second: FluidInstance): FluidStack {
-        val contents: BottledPotionContents = HTPotionHelper.getContents(second) ?: return FluidStack.EMPTY
-        if (!contents.isWater && contents.isEmpty) return FluidStack.EMPTY
-        return contents.copy(bottleType = HTBottleType.LINGERING).toFluidStack()
-    }
+    override fun apply(first: ItemInstance, second: FluidInstance): FluidStack =
+        HTPotionHelper.getContents(second)?.copy(bottleType = HTBottleType.LINGERING)?.toFluidStack()
+            ?: FluidStack.EMPTY
 
     override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> =
         when (test(first, second)) {

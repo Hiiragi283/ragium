@@ -7,10 +7,9 @@ import hiiragi283.lib.item.ItemStack
 import hiiragi283.lib.item.component.buildItemEnchantments
 import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
+import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
-import hiiragi283.lib.recipe.base.HTRecipeFactories
-import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
@@ -35,8 +34,7 @@ data class RTEnchantingRecipe(
     val ingredient: HTItemIngredient,
     val result: EnchantmentResult,
     override val progressData: HTProgressData
-) : HTRecipePredicates.DoubleItem,
-    HTRecipeFactories.DoubleItem<ItemStack>,
+) : HTDoubleItemToItemRecipe,
     HTProgressRecipe.Simple<RecipeInput>,
     HTSerializableRecipe<RecipeInput> {
     companion object {

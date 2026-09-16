@@ -1,13 +1,18 @@
 package hiiragi283.lib.item
 
 import hiiragi283.lib.item.alchemy.BottledPotionContents
+import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
+import hiiragi283.ragium.api.data.RagiumDataComponents
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.alchemy.Potions
 
 /**
  * ポーションに基づいた[Item]の拡張クラスです。
@@ -17,6 +22,13 @@ import net.minecraft.world.item.ItemStack
 open class HTPotionBasedItem(properties: Properties) :
     Item(properties),
     HTSubCreativeTabContents {
+
+    override fun getDefaultInstance(): ItemStack {
+        val stack: ItemStack = super.getDefaultInstance()
+        stack[DataComponents.POTION_CONTENTS] = PotionContents(Potions.WATER)
+        stack[RagiumDataComponents.BOTTLE_TYPE] = HTBottleType.DEFAULT
+        return stack
+    }
 
     override fun getCreatorModId(registries: HolderLookup.Provider, itemStack: ItemStack): String? =
         HTPotionHelper.getPotionModId(itemStack) ?: super.getCreatorModId(registries, itemStack)

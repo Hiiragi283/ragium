@@ -2,6 +2,8 @@ package hiiragi283.lib.item.alchemy
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
+import hiiragi283.lib.fluid.createOrEmpty
+import hiiragi283.lib.item.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.text.Text
@@ -88,7 +90,7 @@ data class BottledPotionContents @JvmOverloads constructor(
     /**
      * 保持しているエフェクトが空かどうか
      */
-    val isEmpty: Boolean get() = contents == PotionContents.EMPTY || allEffects.none()
+    val isEmpty: Boolean get() = HTPotionHelper.isEmpty(contents)
 
     /**
      * 保持しているエフェクトが水に一致するかどうか
@@ -100,42 +102,46 @@ data class BottledPotionContents @JvmOverloads constructor(
      * @param amount 液体量
      * @return [isWater]が`true`の場合は水，それ以外の場合は液体ポーション
      */
-    fun toFluidTemplate(amount: Int = FluidType.BUCKET_VOLUME): FluidStackTemplate = when (this.isWater) {
-        true -> FluidStackTemplate(Fluids.WATER, amount)
+    fun toFluidTemplate(amount: Int = FluidType.BUCKET_VOLUME): FluidStackTemplate? = when {
+        this.isEmpty -> null
 
-        false -> HTPotionFluidAccess.INSTANCE.fluidContent.toTemplate(
+        this.isWater -> FluidStackTemplate(Fluids.WATER, amount)
+
+        else -> HTPotionFluidAccess.INSTANCE.fluidContent.toTemplate(
             amount,
             HTPotionHelper.createFluidPatch(
                 HTPotionFluidAccess.INSTANCE.fluidContent.getOrThrow(),
                 this@BottledPotionContents
             )
         )
-    }!!
+    }
 
     /**
      * [FluidStack]に変換します。
      * @param amount 液体量
      * @return [isWater]が`true`の場合は水，それ以外の場合は液体ポーション
      */
-    fun toFluidStack(amount: Int = FluidType.BUCKET_VOLUME): FluidStack = toFluidTemplate(amount).create()
+    fun toFluidStack(amount: Int = FluidType.BUCKET_VOLUME): FluidStack = toFluidTemplate(amount).createOrEmpty()
 
     /**
      * [ItemStackTemplate]に変換します。
      * @return [isWater]が`true`の場合は水入りバケツ，それ以外の場合は液体ポーション入りバケツ
      */
-    fun toBucketTemplate(): ItemStackTemplate = when (this.isWater) {
-        true -> ItemStackTemplate(Items.WATER_BUCKET)
+    fun toBucketTemplate(): ItemStackTemplate? = when {
+        this.isEmpty -> null
 
-        false -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.toTemplate(
+        this.isWater -> ItemStackTemplate(Items.WATER_BUCKET)
+
+        else -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.toTemplate(
             patch = HTPotionHelper.createItemPatch(this@BottledPotionContents)
         )
-    }!!
+    }
 
     /**
      * [ItemStack]に変換します。
      * @return [isWater]が`true`の場合は水入りバケツ，それ以外の場合は液体ポーション入りバケツ
      */
-    fun toBucketStack(): ItemStack = toBucketTemplate().create()
+    fun toBucketStack(): ItemStack = toBucketTemplate().createOrEmpty()
 
     override fun getText(): Text = contents.getName("${bottleType.asItem().descriptionId}.effect.")
 }

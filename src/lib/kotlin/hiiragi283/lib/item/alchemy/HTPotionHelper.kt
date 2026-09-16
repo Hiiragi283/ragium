@@ -1,6 +1,5 @@
 package hiiragi283.lib.item.alchemy
 
-import hiiragi283.lib.data.DataComponentSetter
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.item.ItemInstanceBuilder
 import net.minecraft.core.Holder
@@ -25,6 +24,15 @@ import kotlin.jvm.optionals.getOrNull
  * @since 26.1.0
  */
 data object HTPotionHelper {
+    /**
+     * 指定した[contents]が空かどうか判定します。
+     * @return [contents]が[PotionContents.EMPTY]と同じ場合，またはポーションもカスタムエフェクトもない場合は`true`
+     * @since 26.1.6
+     */
+    @JvmStatic
+    fun isEmpty(contents: PotionContents): Boolean =
+        contents == PotionContents.EMPTY || (contents.potion().isEmpty && contents.customEffects.isEmpty())
+
     //    DataComponentGetter    //
 
     /**
@@ -34,11 +42,6 @@ data object HTPotionHelper {
     @JvmStatic
     fun getPotion(getter: DataComponentGetter): PotionContents =
         getter.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
-
-    @JvmStatic
-    fun setPotion(setter: DataComponentSetter, contents: PotionContents?) {
-        setter.setOrRemove(DataComponents.POTION_CONTENTS, contents)
-    }
 
     /**
      * 指定した[getter]からポーションのMod IDを取得します。

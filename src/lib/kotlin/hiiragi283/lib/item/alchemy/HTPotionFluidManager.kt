@@ -1,6 +1,5 @@
 package hiiragi283.lib.item.alchemy
 
-import hiiragi283.lib.data.DataComponentSetter
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
 import net.minecraft.core.component.DataComponentGetter
@@ -52,18 +51,14 @@ data object HTPotionFluidManager {
                 override fun get(getter: DataComponentGetter): HTBottleType? =
                     getter.get(RagiumDataComponents.BOTTLE_TYPE)
 
-                override fun set(setter: DataComponentSetter, bottleType: HTBottleType) {
-                    setter[RagiumDataComponents.BOTTLE_TYPE] = bottleType
+                override fun set(builder: DataComponentPatch.Builder, bottleType: HTBottleType) {
+                    builder[RagiumDataComponents.BOTTLE_TYPE] = bottleType
                 }
             }
         }
 
         operator fun get(getter: DataComponentGetter): HTBottleType?
 
-        operator fun set(setter: DataComponentSetter, bottleType: HTBottleType)
-
-        operator fun set(builder: DataComponentPatch.Builder, bottleType: HTBottleType) {
-            set(DataComponentSetter(builder), bottleType)
-        }
+        operator fun set(builder: DataComponentPatch.Builder, bottleType: HTBottleType)
     }
 }
