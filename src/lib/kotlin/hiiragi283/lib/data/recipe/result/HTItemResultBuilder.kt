@@ -2,6 +2,7 @@
 
 package hiiragi283.lib.data.recipe.result
 
+import hiiragi283.lib.item.component.buildItemEnchantments
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.registry.HTDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
@@ -14,6 +15,8 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -54,6 +57,7 @@ class HTItemResultBuilder @PublishedApi internal constructor() {
         +HTSimpleDeferredItem(this).delegate
     }
 
+    @JvmName("unaryPlusItem")
     operator fun Holder<Item>.unaryPlus() {
         +HTItemResult.SimpleEntry(this)
     }
@@ -62,9 +66,8 @@ class HTItemResultBuilder @PublishedApi internal constructor() {
         +this.item
     }
 
-    @Suppress("DEPRECATION")
     operator fun Item.unaryPlus() {
-        +HTItemResult.SimpleEntry(this.builtInRegistryHolder())
+        +HTItemResult.SimpleEntry(ItemStackTemplate(this))
     }
 
     fun from(template: ItemStackTemplate) {
@@ -80,6 +83,20 @@ class HTItemResultBuilder @PublishedApi internal constructor() {
     // Tag
     operator fun HolderSet<Item>.unaryPlus() {
         +HTItemResult.TagEntry(this)
+    }
+
+    // Enchanted Book
+    @JvmName("unaryPlusEnchantment")
+    operator fun Holder<Enchantment>.unaryPlus() {
+        +HTItemResult.EnchantedBookEntry(this)
+    }
+
+    operator fun ItemEnchantments.unaryPlus() {
+        +HTItemResult.EnchantedBookEntry(this)
+    }
+
+    inline fun enchantedBook(builderAction: ItemEnchantments.Mutable.() -> Unit) {
+        +buildItemEnchantments(builderAction = builderAction)
     }
 
     fun build(): HTItemResult = HTItemResult(entry, count)

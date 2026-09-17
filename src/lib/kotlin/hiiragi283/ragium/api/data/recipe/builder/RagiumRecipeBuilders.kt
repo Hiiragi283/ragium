@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
 import hiiragi283.ragium.api.recipe.RTDrainingRecipe
+import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTFillingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
@@ -203,10 +204,12 @@ data object RagiumRecipeBuilders {
 
     // Arcane
     @JvmStatic
-    inline fun enchanting(builderAction: RTEnchantingRecipeBuilder.() -> Unit): RTEnchantingRecipeBuilder {
+    inline fun enchanting(
+        builderAction: HTItemToRecipeBuilder.ToItem<RTEnchantingRecipe>.() -> Unit
+    ): HTItemToRecipeBuilder.ToItem<RTEnchantingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTEnchantingRecipeBuilder().apply(builderAction)
+        return HTItemToRecipeBuilder.ToItem(RagiumConstants.ENCHANTING, ::RTEnchantingRecipe).apply(builderAction)
     }
 }

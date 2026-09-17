@@ -5,16 +5,22 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.data.buildDataPatch
+import hiiragi283.lib.item.ItemStack
+import hiiragi283.lib.item.component.buildItemEnchantments
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.DFUEither
+import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.fold
+import hiiragi283.lib.util.unwrap
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -24,6 +30,9 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import java.util.Optional
 
@@ -167,9 +176,8 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
                 .xmap(::TagEntry, TagEntry::tag)
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, TagEntry> = HTStreamCodecs.holderSet(
-                Registries.ITEM
-            ).map(::TagEntry, TagEntry::tag)
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, TagEntry> =
+                HTStreamCodecs.holderSet(Registries.ITEM).map(::TagEntry, TagEntry::tag)
 
             @JvmField
             val TYPE: HTItemResultType<TagEntry> = HTItemResultType(CODEC, STREAM_CODEC)
@@ -195,6 +203,42 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
             ?: ItemStack.EMPTY
 
         override fun getId(): Identifier = tag.unwrapKey().orElseThrow().location()
+    }
+
+    /**
+     * @since 26.1.6
+     */
+    @JvmRecord
+    data class EnchantedBookEntry(val content: Either<Holder<Enchantment>, ItemEnchantments>) : Entry {
+        companion object {
+            @JvmField
+            val CODEC: MapCodec<EnchantedBookEntry> = HTCodecs.mapEither(
+                HTCodecs.holder(Registries.ENCHANTMENT).fieldOf(HTConstants.ID),
+                ItemEnchantments.CODEC.fieldOf("enchantments")
+            ).xmap(::EnchantedBookEntry, EnchantedBookEntry::content)
+
+            @JvmField
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchantedBookEntry> = HTStreamCodecs
+                .either(HTStreamCodecs.holder(Registries.ENCHANTMENT), ItemEnchantments.STREAM_CODEC)
+                .map(::EnchantedBookEntry, EnchantedBookEntry::content)
+
+            @JvmField
+            val TYPE: HTItemResultType<EnchantedBookEntry> = HTItemResultType(CODEC, STREAM_CODEC)
+        }
+
+        constructor(holder: Holder<Enchantment>) : this(Either.Left(holder))
+
+        constructor(enchantments: ItemEnchantments) : this(Either.Right(enchantments))
+
+        override fun type(): HTItemResultType<*> = TYPE
+
+        override fun create(): ItemStack = content
+            .mapLeft { holder: Holder<Enchantment> -> buildItemEnchantments { set(holder, holder.value().maxLevel) } }
+            .unwrap()
+            .let { buildDataPatch { set(DataComponents.STORED_ENCHANTMENTS, it) } }
+            .let { ItemStack(Items.ENCHANTED_BOOK, 1, it) }
+
+        override fun getId(): Identifier? = content.leftOrNull()?.key?.identifier()
     }
 }
 
