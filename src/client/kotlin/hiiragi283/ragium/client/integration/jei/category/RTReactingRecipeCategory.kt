@@ -43,7 +43,7 @@ class RTReactingRecipeCategory(guiHelper: IGuiHelper) :
         val itemOutput: IRecipeSlotBuilder = builder
             .addOutputSlot(getPosition(7), getPosition(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
-        fluidResult?.let { fluidOutput.add(it).setSlotBackground(HTBackgroundType.OUTPUT, it.amount) }
+        fluidResult?.let { fluidOutput.add(it).setFluidSlot(it.amount) }
         itemResult?.let(itemOutput::add)
     }
 

@@ -2,7 +2,13 @@
   "type": "ragium:alloying",
   "primary_ingredient": {
     "count": 2,
-    "items": "#c:dusts/gold"
+    "items": {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/gold",
+        "#c:ingots/gold"
+      ]
+    }
   },
   "result": {
     "count": 1,

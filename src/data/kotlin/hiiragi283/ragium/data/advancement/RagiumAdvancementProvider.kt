@@ -85,32 +85,32 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         )
         // Mechanical
         createSimple(
-            RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING,
+            RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
             RagiumAdvancementKeys.SOOTY_IRON,
-            RagiumItems.getCasing(HTMachineType.MECHANICAL),
+            RagiumItems.getParts(HTMachineType.MECHANICAL),
             AdvancementType.GOAL
         )
         createSimple(
             RagiumAdvancementKeys.ASSEMBLER,
-            RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING,
+            RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
             RagiumBlocks.ASSEMBLER
         )
         createSimple(
             RagiumAdvancementKeys.CRUSHER,
-            RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING,
+            RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
             RagiumBlocks.CRUSHER
         )
         // Heat
         createSimple(
-            RagiumAdvancementKeys.HEAT_MACHINE_CASING,
+            RagiumAdvancementKeys.HEAT_MACHINE_PARTS,
             RagiumAdvancementKeys.ASSEMBLER,
-            RagiumItems.getCasing(HTMachineType.HEAT),
+            RagiumItems.getParts(HTMachineType.HEAT),
             AdvancementType.GOAL
         )
         createSimple(
             RagiumAdvancementKeys.ALLOY_SMELTER,
-            RagiumAdvancementKeys.HEAT_MACHINE_CASING,
-            RagiumBlocks.FREEZER
+            RagiumAdvancementKeys.HEAT_MACHINE_PARTS,
+            RagiumBlocks.ALLOY_SMELTER
         )
         createSimple(
             RagiumAdvancementKeys.BLACK_STEEL,
@@ -120,24 +120,24 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         )
         createSimple(
             RagiumAdvancementKeys.FREEZER,
-            RagiumAdvancementKeys.HEAT_MACHINE_CASING,
+            RagiumAdvancementKeys.HEAT_MACHINE_PARTS,
             RagiumBlocks.FREEZER
         )
         createSimple(
             RagiumAdvancementKeys.MELTER,
-            RagiumAdvancementKeys.HEAT_MACHINE_CASING,
+            RagiumAdvancementKeys.HEAT_MACHINE_PARTS,
             RagiumBlocks.MELTER
         )
         // Chemical
         createSimple(
-            RagiumAdvancementKeys.CHEMICAL_MACHINE_CASING,
+            RagiumAdvancementKeys.CHEMICAL_MACHINE_PARTS,
             RagiumAdvancementKeys.BLACK_STEEL,
-            RagiumItems.getCasing(HTMachineType.CHEMICAL),
+            RagiumItems.getParts(HTMachineType.CHEMICAL),
             AdvancementType.GOAL
         )
         createSimple(
             RagiumAdvancementKeys.CHEMICAL_BATH,
-            RagiumAdvancementKeys.CHEMICAL_MACHINE_CASING,
+            RagiumAdvancementKeys.CHEMICAL_MACHINE_PARTS,
             RagiumBlocks.CHEMICAL_BATH
         )
     }

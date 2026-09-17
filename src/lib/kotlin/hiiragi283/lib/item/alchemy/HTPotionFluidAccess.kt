@@ -1,6 +1,7 @@
 package hiiragi283.lib.item.alchemy
 
 import hiiragi283.lib.registry.HTFluidContent
+import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 
 /**
@@ -17,4 +18,19 @@ interface HTPotionFluidAccess {
      * Ragiumで登録される液体ポーションのインスタンス
      */
     val fluidContent: HTFluidContent
+
+    /**
+     * @since 26.1.6
+     */
+    val glassBottle: HTSimpleDeferredItem
+
+    /**
+     * @since 26.1.6
+     */
+    val splashBottle: HTSimpleDeferredItem
+
+    /**
+     * @since 26.1.6
+     */
+    val lingeringBottle: HTSimpleDeferredItem
 }

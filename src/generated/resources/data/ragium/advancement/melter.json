@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:heat_machine_casing",
+  "parent": "ragium:heat_machine_parts",
   "criteria": {
     "has_melter": {
       "conditions": {

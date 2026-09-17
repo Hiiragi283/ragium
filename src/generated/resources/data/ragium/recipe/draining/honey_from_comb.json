@@ -1,0 +1,16 @@
+{
+  "type": "ragium:draining",
+  "fluid_result": {
+    "amount": 1000,
+    "id": "ragium:honey"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:honeycomb"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "ragium:beeswax"
+  },
+  "time": 200
+}

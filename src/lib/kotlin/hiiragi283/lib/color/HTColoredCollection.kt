@@ -1,11 +1,15 @@
 package hiiragi283.lib.color
 
+import hiiragi283.lib.data.lang.HTLangName
+import net.minecraft.world.item.DyeColor
+
 /**
  * 色のバリエーションを持つ要素をまとめるクラスです。
  * @param T 要素のクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
+@JvmRecord
 data class HTColoredCollection<out T>(
     val white: T,
     val orange: T,
@@ -23,55 +27,67 @@ data class HTColoredCollection<out T>(
     val green: T,
     val red: T,
     val black: T
-) : AbstractCollection<T>() {
+) : Collection<T> {
     companion object {
         @JvmField
-        val VALUES: HTColoredCollection<HTDefaultColor> = HTColoredCollection(
-            HTDefaultColor.WHITE,
-            HTDefaultColor.ORANGE,
-            HTDefaultColor.MAGENTA,
-            HTDefaultColor.LIGHT_BLUE,
-            HTDefaultColor.YELLOW,
-            HTDefaultColor.LIME,
-            HTDefaultColor.PINK,
-            HTDefaultColor.GRAY,
-            HTDefaultColor.LIGHT_GRAY,
-            HTDefaultColor.CYAN,
-            HTDefaultColor.PURPLE,
-            HTDefaultColor.BLUE,
-            HTDefaultColor.BROWN,
-            HTDefaultColor.GREEN,
-            HTDefaultColor.RED,
-            HTDefaultColor.BLACK
+        val VALUES: HTColoredCollection<DyeColor> = HTColoredCollection(
+            DyeColor.WHITE,
+            DyeColor.ORANGE,
+            DyeColor.MAGENTA,
+            DyeColor.LIGHT_BLUE,
+            DyeColor.YELLOW,
+            DyeColor.LIME,
+            DyeColor.PINK,
+            DyeColor.GRAY,
+            DyeColor.LIGHT_GRAY,
+            DyeColor.CYAN,
+            DyeColor.PURPLE,
+            DyeColor.BLUE,
+            DyeColor.BROWN,
+            DyeColor.GREEN,
+            DyeColor.RED,
+            DyeColor.BLACK
+        )
+
+        @JvmField
+        val TRANSLATED_NAMES: HTColoredCollection<HTLangName> = HTColoredCollection(
+            HTLangName("White", "白色"),
+            HTLangName("Orange", "橙色"),
+            HTLangName("Magenta", "赤紫色"),
+            HTLangName("Light Blue", "空色"),
+            HTLangName("Yellow", "黄色"),
+            HTLangName("Lime", "黄緑色"),
+            HTLangName("Pink", "桃色"),
+            HTLangName("Gray", "灰色"),
+            HTLangName("Light Gray", "薄灰色"),
+            HTLangName("Cyan", "青緑色"),
+            HTLangName("Purple", "紫色"),
+            HTLangName("Blue", "青色"),
+            HTLangName("Brown", "茶色"),
+            HTLangName("Green", "緑色"),
+            HTLangName("Red", "赤色"),
+            HTLangName("Black", "黒色")
         )
     }
 
-    operator fun get(color: HTDefaultColor): T = when (color) {
-        HTDefaultColor.WHITE -> white
-        HTDefaultColor.ORANGE -> orange
-        HTDefaultColor.MAGENTA -> magenta
-        HTDefaultColor.LIGHT_BLUE -> lightBlue
-        HTDefaultColor.YELLOW -> yellow
-        HTDefaultColor.LIME -> lime
-        HTDefaultColor.PINK -> pink
-        HTDefaultColor.GRAY -> gray
-        HTDefaultColor.LIGHT_GRAY -> lightGray
-        HTDefaultColor.CYAN -> cyan
-        HTDefaultColor.PURPLE -> purple
-        HTDefaultColor.BLUE -> blue
-        HTDefaultColor.BROWN -> brown
-        HTDefaultColor.GREEN -> green
-        HTDefaultColor.RED -> red
-        HTDefaultColor.BLACK -> black
+    operator fun get(color: DyeColor): T = when (color) {
+        DyeColor.WHITE -> white
+        DyeColor.ORANGE -> orange
+        DyeColor.MAGENTA -> magenta
+        DyeColor.LIGHT_BLUE -> lightBlue
+        DyeColor.YELLOW -> yellow
+        DyeColor.LIME -> lime
+        DyeColor.PINK -> pink
+        DyeColor.GRAY -> gray
+        DyeColor.LIGHT_GRAY -> lightGray
+        DyeColor.CYAN -> cyan
+        DyeColor.PURPLE -> purple
+        DyeColor.BLUE -> blue
+        DyeColor.BROWN -> brown
+        DyeColor.GREEN -> green
+        DyeColor.RED -> red
+        DyeColor.BLACK -> black
     }
-
-    fun asSequence(): Sequence<T> = HTDefaultColor.entries.asSequence().map(::get)
-
-    override val size: Int = 16
-
-    override fun isEmpty(): Boolean = false
-
-    override fun iterator(): Iterator<T> = asSequence().iterator()
 
     inline fun <R> map(transform: (T) -> R): HTColoredCollection<R> = HTColoredCollection(
         transform(white),
@@ -111,11 +127,23 @@ data class HTColoredCollection<out T>(
             transform(red, other.red),
             transform(black, other.black)
         )
+
+    override val size: Int get() = 16
+
+    override fun isEmpty(): Boolean = false
+
+    override fun contains(element: @UnsafeVariance T): Boolean = this.any { it == element }
+
+    fun asSequence(): Sequence<T> = DyeColor.entries.asSequence().map(::get)
+
+    override fun iterator(): Iterator<T> = asSequence().iterator()
+
+    override fun containsAll(elements: Collection<@UnsafeVariance T>): Boolean = elements.all { contains(it) }
 }
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <T> HTColoredCollection(init: (color: HTDefaultColor) -> T): HTColoredCollection<T> =
+inline fun <T> HTColoredCollection(init: (color: DyeColor) -> T): HTColoredCollection<T> =
     HTColoredCollection.VALUES.map(init)

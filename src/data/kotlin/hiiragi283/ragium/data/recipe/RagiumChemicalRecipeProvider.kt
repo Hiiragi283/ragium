@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -18,7 +18,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     override fun exportValues() {
         bathing()
         electrolyzing()
-        mixing()
     }
 
     private fun bathing() {
@@ -43,15 +42,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             recipeId suffix "_from_pulp"
         }.save(exporter)
 
-        // Molten Steel + Obsidian Dust -> Black Steel
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.MOLTEN_STEEL)
-                amount = 90
-            }
-            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
-        }.save(exporter)
         // Molten Glass + Amethyst -> Tinted Glass
         RagiumRecipeBuilders.bathing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
@@ -73,30 +63,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 amount /= 2
             }
             recipeId suffix "_from_water"
-        }.save(exporter)
-        // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
-        RagiumRecipeBuilders.electrolyzing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SALT) }
-            fluidIngredient { +waterSet() }
-            result {
-                +RagiumFluids.HYDROGEN
-                amount /= 2
-            }
-            result {
-                +RagiumFluids.CHLORINE
-                amount /= 2
-            }
-            result { +RagiumFluids.NAOH_SOLUTION }
-            recipeId suffix "_from_salt_water"
-        }.save(exporter)
-    }
-
-    private fun mixing() {
-        // Naphtha + Redstone -> Anti-rust Oil
-        RagiumRecipeBuilders.mixing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
-            fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
-            result { +RagiumFluids.ANTI_RUST_OIL }
         }.save(exporter)
     }
 

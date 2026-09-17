@@ -1,0 +1,22 @@
+{
+  "type": "ragium:alloying",
+  "primary_ingredient": {
+    "count": 2,
+    "items": "#c:ingots/black_steel"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:chemical_machine_parts"
+  },
+  "secondary_ingredient": {
+    "count": 1,
+    "items": {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/gold",
+        "#c:ingots/gold"
+      ]
+    }
+  },
+  "time": 200
+}

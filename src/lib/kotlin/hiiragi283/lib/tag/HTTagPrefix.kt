@@ -1,7 +1,6 @@
 package hiiragi283.lib.tag
 
 import hiiragi283.lib.HTConstants
-import net.minecraft.resources.Identifier
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -16,20 +15,11 @@ class HTTagPrefix(
     private val tagPattern: String,
     private val childNamespace: String = HTConstants.COMMON
 ) {
-    /**
-     * @since 26.1.4
-     */
-    constructor(
-        commonTagId: Identifier,
-        tagPattern: String,
-        childNamespace: String = HTConstants.COMMON
-    ) : this(BlockItemTag(commonTagId), tagPattern, childNamespace)
-
     constructor(
         commonTagId: String,
         tagPattern: String,
         childNamespace: String = HTConstants.COMMON
-    ) : this(BlockItemTag(HTConstants.COMMON, commonTagId), tagPattern, childNamespace)
+    ) : this(BlockItemTag(childNamespace, commonTagId), tagPattern, childNamespace)
 
     /**
      * 素材の共通タグを生成します。

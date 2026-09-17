@@ -24,10 +24,10 @@ data object HTDelegates {
         private var value: T? = null
 
         override fun getValue(thisRef: Any?, property: KProperty<*>): T =
-            value ?: error("Property ${property.name} has not initialized")
+            value ?: error("Property ${property.name} was not initialized")
 
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
-            check(this.value == null) { "Property ${property.name} has already initialized" }
+            check(this.value == null) { "Property ${property.name} has already been initialized" }
             this.value = value
         }
     }
@@ -44,7 +44,7 @@ data object HTDelegates {
         override fun getValue(thisRef: Any?, property: KProperty<*>): T = value ?: defaultValue()
 
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
-            check(this.value == null) { "Property ${property.name} has already initialized" }
+            check(this.value == null) { "Property ${property.name} has already been initialized" }
             this.value = value
         }
     }

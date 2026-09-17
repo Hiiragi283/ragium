@@ -10,9 +10,11 @@ import hiiragi283.ragium.data.loot.RagiumBlockLootTableProvider
 import hiiragi283.ragium.data.loot.RagiumGlobalLootModifierProvider
 import hiiragi283.ragium.data.loot.RagiumGlobalLootTableProvider
 import hiiragi283.ragium.data.model.RagiumModelProvider
+import hiiragi283.ragium.data.recipe.RagiumArcaneRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumBioRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumChemicalRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumCommonRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumElectronicsRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumHeatRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumMechanicalRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumRecipePriorityProvider
@@ -51,10 +53,12 @@ data object RagiumDataGen {
         event.createProvider(RagiumVanillaRecipeProvider::Runner)
         event.createProvider(::RagiumCommonRecipeProvider)
 
-        event.createProvider(::RagiumBioRecipeProvider)
-        event.createProvider(::RagiumChemicalRecipeProvider)
-        event.createProvider(::RagiumHeatRecipeProvider)
         event.createProvider(::RagiumMechanicalRecipeProvider)
+        event.createProvider(::RagiumHeatRecipeProvider)
+        event.createProvider(::RagiumChemicalRecipeProvider)
+        event.createProvider(::RagiumBioRecipeProvider)
+        event.createProvider(::RagiumElectronicsRecipeProvider)
+        event.createProvider(::RagiumArcaneRecipeProvider)
 
         event.createProvider(::RagiumRecipePriorityProvider)
 

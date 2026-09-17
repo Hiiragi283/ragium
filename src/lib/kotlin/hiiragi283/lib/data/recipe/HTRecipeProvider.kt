@@ -2,10 +2,14 @@ package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.ExporterDataProvider
+import hiiragi283.lib.tag.CommonTagPrefixes
+import hiiragi283.lib.tag.HTMaterialLike
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import java.util.concurrent.CompletableFuture
@@ -21,6 +25,14 @@ abstract class HTRecipeProvider(
     future: CompletableFuture<HolderLookup.Provider>,
     modId: String
 ) : ExporterDataProvider<Recipe<*>>(packOutput, future, Registries.RECIPE, modId, Recipe.CONDITIONAL_CODEC) {
+    //    Extension    //
+
+    fun dustOrGem(material: HTMaterialLike): HolderSet<Item> =
+        setOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM).map { it.itemTagKey(material) }.let(::holderSet)
+
+    fun dustOrIngot(material: HTMaterialLike): HolderSet<Item> =
+        setOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT).map { it.itemTagKey(material) }.let(::holderSet)
+
     //    Integration    //
 
     abstract class Integration(

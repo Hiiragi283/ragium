@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine.base
 
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
@@ -21,6 +22,8 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTItemToItemBlockEntity(
@@ -35,6 +38,16 @@ abstract class HTItemToItemBlockEntity(
         pos: BlockPos,
         state: BlockState
     ) : this(type, HTRecipeCache(lookup), pos, state)
+
+    override fun writeValue(output: ValueOutput) {
+        super.writeValue(output)
+        output.putChild(HTConstants.LAST_RECIPE, cache)
+    }
+
+    override fun readValue(input: ValueInput) {
+        super.readValue(input)
+        input.readChild(HTConstants.LAST_RECIPE, cache)
+    }
 
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)

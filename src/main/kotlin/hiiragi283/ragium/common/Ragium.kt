@@ -11,7 +11,6 @@ import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.recipe.HTRecipeType
-import hiiragi283.lib.recipe.display.HTPotionSlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -39,6 +38,7 @@ import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
@@ -59,6 +59,7 @@ import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
 import net.neoforged.neoforge.transfer.access.ItemAccess
+import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
 
 @Mod(RagiumAPI.MOD_ID)
 data object Ragium : HTCommonMod() {
@@ -104,7 +105,6 @@ data object Ragium : HTCommonMod() {
             )
         }
         event.register(Registries.DATA_COMPONENT_TYPE) { helper ->
-            helper.register(RagiumAPI.id(HTConstants.BOTTLE_TYPE), RagiumDataComponents.BOTTLE_TYPE)
             helper.register(RagiumAPI.id(HTConstants.ENERGY), RagiumDataComponents.ENERGY)
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
             helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
@@ -124,9 +124,6 @@ data object Ragium : HTCommonMod() {
             for (recipeType: HTRecipeType<*> in RagiumRecipeTypes.allTypes) {
                 helper.register(recipeType.keyOrThrow, recipeType)
             }
-        }
-        event.register(Registries.SLOT_DISPLAY) { helper ->
-            helper.register(RagiumAPI.id(HTConstants.POTION), HTPotionSlotDisplay.TYPE)
         }
 
         event.register(NeoForgeRegistries.Keys.FLUID_INGREDIENT_TYPES) { helper ->
@@ -166,14 +163,17 @@ data object Ragium : HTCommonMod() {
                 }
             }
         }
+        event.modify(RagiumBlocks.CREATIVE_BATTERY) { builder: DataComponentMap.Builder, _, _ ->
+            builder.set(DataComponents.RARITY, Rarity.EPIC)
+        }
         // Item
-        event.modify(Items.RAW_COPPER) { builder, provider, _ ->
+        event.modify(Items.RAW_COPPER) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
             builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.COPPER))
         }
-        event.modify(Items.RAW_IRON) { builder, provider, _ ->
+        event.modify(Items.RAW_IRON) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
             builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.IRON))
         }
-        event.modify(Items.RAW_GOLD) { builder, provider, _ ->
+        event.modify(Items.RAW_GOLD) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
             builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.GOLD))
         }
     }
@@ -215,12 +215,19 @@ data object Ragium : HTCommonMod() {
         registerProcessor(RagiumBlockEntityTypes.COMPRESSOR.get())
         registerProcessor(RagiumBlockEntityTypes.CUTTING_MACHINE.get())
 
+        registerProcessor(RagiumBlockEntityTypes.ALLOY_SMELTER.get())
         registerProcessor(RagiumBlockEntityTypes.FREEZER.get())
         registerProcessor(RagiumBlockEntityTypes.MELTER.get())
+        registerProcessor(RagiumBlockEntityTypes.SMELTER.get())
 
         registerProcessor(RagiumBlockEntityTypes.CHEMICAL_BATH.get())
 
         registerProcessor(RagiumBlockEntityTypes.BREWERY.get())
+        // Storage
+        helper.registerBlockEntity(
+            HTEnergyCapabilities.block,
+            RagiumBlockEntityTypes.CREATIVE_BATTERY.get()
+        ) { _, _ -> InfiniteEnergyHandler.INSTANCE }
     }
 
     override fun registerPayload(registrar: PayloadRegistrar) {

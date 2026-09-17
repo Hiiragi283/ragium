@@ -15,7 +15,8 @@ import net.minecraft.world.item.crafting.RecipeType
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Identifier) : HTRecipeLookup<RECIPE> {
+class HTCompoundRecipeLookup<out RECIPE : Any> private constructor(private val id: Identifier) :
+    HTRecipeLookup<RECIPE> {
     companion object {
         @JvmStatic
         private val instances: MutableMap<Identifier, HTCompoundRecipeLookup<*>> = Object2ObjectLinkedOpenHashMap()
@@ -55,14 +56,14 @@ class HTCompoundRecipeLookup<out RECIPE> private constructor(private val id: Ide
      * レシピの一覧を追加します。
      */
     fun addRecipes(vararg recipes: Pair<RecipeKey, @UnsafeVariance RECIPE>) {
-        addSubLookup { recipes.asSequence() }
+        addSubLookup { recipes.asSequence().map(::HTRecipeHolder) }
     }
 
     /**
      * レシピの一覧を追加します。
      */
     fun addRecipes(recipes: Map<RecipeKey, @UnsafeVariance RECIPE>) {
-        addSubLookup { recipes.asSequence().map { it.toPair() } }
+        addSubLookup { recipes.asSequence().map(::HTRecipeHolder) }
     }
 
     /**

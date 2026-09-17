@@ -1,16 +1,16 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.color.HTColoredCollection
-import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.color.VanillaColoredCollections
-import hiiragi283.lib.data.recipe.HTItemIngredientBuilder
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
 import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
@@ -22,10 +22,13 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.crafting.DifferenceIngredient
 import java.util.concurrent.CompletableFuture
 
 class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
@@ -40,6 +43,15 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     }
 
     private fun assembling() {
+        // Blackstone + Gold -> Gilded Blackstone
+        RagiumRecipeBuilders.assembling {
+            primary { items { +Items.BLACKSTONE } }
+            secondary {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.GOLD)
+                count = 8
+            }
+            result { +Items.GILDED_BLACKSTONE }
+        }.save(exporter)
         // Dirt + Leaves -> Podzol
         RagiumRecipeBuilders.assembling {
             primary { items { +Items.DIRT } }
@@ -172,11 +184,22 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             result { +Items.PIGLIN_HEAD }
         }.save(exporter)
 
+        // Gold Block + Apple -> Enchanted Golden Apple
+        RagiumRecipeBuilders.assembling {
+            primary { items { +Items.APPLE } }
+            secondary {
+                +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Metal.GOLD)
+                count = 8
+            }
+            result { +Items.ENCHANTED_GOLDEN_APPLE }
+            time *= 8
+        }.save(exporter)
+
         // Machine Casing
         RagiumRecipeBuilders.assembling {
-            primary { items { +RagiumItems.getCasing(HTMachineType.MECHANICAL) } }
+            primary { items { +RagiumItems.getParts(HTMachineType.MECHANICAL) } }
             secondary { items { +Items.MAGMA_BLOCK } }
-            result { +RagiumItems.getCasing(HTMachineType.HEAT) }
+            result { +RagiumItems.getParts(HTMachineType.HEAT) }
         }.save(exporter)
     }
 
@@ -249,7 +272,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
 
         // XX Carpet -> XX Wool
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
+        for (color: DyeColor in DyeColor.entries) {
             RagiumRecipeBuilders.compressing {
                 ingredient {
                     items { +VanillaColoredCollections.CARPET[color] }
@@ -304,8 +327,9 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     }
 
     private fun crushing() {
-        crushIntoDust()
-        crushOres()
+        crushMaterial()
+        crushWood()
+        crushOre()
         dyes()
 
         // XX Block -> XX
@@ -371,7 +395,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
     }
 
-    private fun crushIntoDust() {
+    private fun crushMaterial() {
         // XX Dust
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
             val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
@@ -390,7 +414,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
 
         for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
-            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS.get(HTItemPart.DUST, metal) ?: continue
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
             RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(CommonTagPrefixes.INGOT, metal) }
                 primary { +dust }
@@ -398,11 +422,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
 
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(ItemTags.PLANKS) }
-            primary { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.WOOD) }
-            recipeId suffix "_from_planks"
-        }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.GLASS_BLOCKS) }
             primary { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.GLASS) }
@@ -423,9 +442,73 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
             primary { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN) }
         }.save(exporter)
+        // Gear -> Dust
+        for (material: RagiumMaterial in RagiumMaterial.entries) {
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, material] ?: continue
+            if (RagiumItems.MATERIAL_ITEMS.contains(HTItemPart.GEAR, material)) {
+                RagiumRecipeBuilders.crushing {
+                    ingredient { +holderSet(CommonTagPrefixes.GEAR, material) }
+                    primary {
+                        +dust
+                        count = 4
+                    }
+                    recipeId suffix "_from_gear"
+                }.save(exporter)
+            }
+        }
     }
 
-    private fun crushOres() {
+    private fun crushWood() {
+        val woodPulp: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.WOOD)
+        setOf(
+            Triple(ItemTags.PLANKS, 1, 1),
+            Triple(ItemTags.WOODEN_BUTTONS, 1, 1),
+            Triple(ItemTags.WOODEN_DOORS, 1, 2),
+            Triple(ItemTags.WOODEN_STAIRS, 2, 3),
+            Triple(ItemTags.WOODEN_SLABS, 2, 1),
+            Triple(ItemTags.WOODEN_PRESSURE_PLATES, 1, 2),
+            Triple(ItemTags.WOODEN_SHELVES, 1, 6),
+            Triple(ItemTags.LOGS, 1, 6),
+            Triple(ItemTags.WOODEN_TRAPDOORS, 3, 1),
+            Triple(ItemTags.SIGNS, 1, 2),
+            Triple(ItemTags.HANGING_SIGNS, 1, 6),
+            Triple(ItemTags.CHEST_BOATS, 1, 13),
+            Triple(Tags.Items.BARRELS_WOODEN, 1, 7),
+            Triple(Tags.Items.CHESTS_WOODEN, 1, 8),
+            Triple(Tags.Items.FENCE_GATES_WOODEN, 1, 4),
+            Triple(Tags.Items.FENCES_WOODEN, 1, 1),
+            Triple(Tags.Items.RODS_WOODEN, 2, 1),
+            Triple(CommonTagPrefixes.GEAR.itemTagKey(RagiumMaterial.Other.WOOD), 4, 1)
+        ).forEach { (input: TagKey<Item>, inputCount: Int, outputCount: Int) ->
+            RagiumRecipeBuilders.crushing {
+                ingredient {
+                    +holderSet(input)
+                    count = inputCount
+                }
+                primary {
+                    +woodPulp
+                    count = outputCount
+                }
+                recipeId suffix "_from_${input.location().debugPath}"
+            }.save(exporter)
+        }
+
+        RagiumRecipeBuilders.crushing {
+            ingredient {
+                +DifferenceIngredient.of(
+                    Ingredient.of(holderSet(ItemTags.BOATS)),
+                    Ingredient.of(holderSet(ItemTags.CHEST_BOATS))
+                )
+            }
+            primary {
+                +woodPulp
+                count = 5
+            }
+            recipeId suffix "_from_boats"
+        }.save(exporter)
+    }
+
+    private fun crushOre() {
         // XX Ore -> XX Dust
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Fuel.COAL) }
@@ -604,7 +687,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 }
             }
         )
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
+        for (color: DyeColor in DyeColor.entries) {
             val builder: HTItemIngredientBuilder.() -> Unit = single[color] ?: continue
             RagiumRecipeBuilders.crushing {
                 ingredient(builder)
@@ -685,13 +768,21 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +RagiumFluids.HONEY
                 amount = 250
             }
-            recipeId replace "honey_from_bottle"
+            recipeId replace id("honey_from_bottle")
         }.save(exporter)
         // Wet Sponge -> Sponge + Water
         RagiumRecipeBuilders.draining {
             ingredient { items { +Items.WET_SPONGE } }
             itemResult { +Items.SPONGE }
             fluidResult { +Fluids.WATER }
+        }.save(exporter)
+
+        // Honeycomb -> Beeswax + Honey
+        RagiumRecipeBuilders.draining {
+            ingredient { items { +Items.HONEYCOMB } }
+            itemResult { +RagiumItems.BEESWAX }
+            fluidResult { +RagiumFluids.HONEY }
+            recipeId replace id("honey_from_comb")
         }.save(exporter)
     }
 
@@ -716,7 +807,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
 
         // XX Concrete Powder + Water -> XX Concrete
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
+        for (color: DyeColor in DyeColor.entries) {
             RagiumRecipeBuilders.filling {
                 itemIngredient { items { +VanillaColoredCollections.CONCRETE_POWDER[color] } }
                 fluidIngredient {

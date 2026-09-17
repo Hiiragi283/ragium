@@ -1,9 +1,9 @@
 package hiiragi283.ragium.client.render
 
-import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
+import net.minecraft.ChatFormatting
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack
 @JvmRecord
 data class HTMemoryDiscClientTooltipComponent private constructor(
     val data: ItemStack,
-    val text: Text = RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA.translateColored(HTDefaultColor.YELLOW, data)
+    val text: Text = RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA.translateColored(ChatFormatting.YELLOW, data)
 ) : ClientTooltipComponent {
     constructor(tooltip: HTMemoryDiscTooltipComponent) : this(tooltip.data.create())
 

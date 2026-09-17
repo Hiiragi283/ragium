@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:nuggets/sooty_iron",
+    "B": "#c:ingots/sooty_iron"
+  },
+  "pattern": [
+    "ABA",
+    "B B",
+    "ABA"
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:machine_casing"
+  }
+}

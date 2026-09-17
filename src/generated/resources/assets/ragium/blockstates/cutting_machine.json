@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,is_active=false": {
-      "model": "ragium:block/cutting_machine",
+      "model": "ragium:block/machine/mechanical",
       "y": 90
     },
     "facing=east,is_active=true": {
-      "model": "ragium:block/cutting_machine_active",
+      "model": "ragium:block/cutting_machine",
       "y": 90
     },
     "facing=north,is_active=false": {
-      "model": "ragium:block/cutting_machine"
+      "model": "ragium:block/machine/mechanical"
     },
     "facing=north,is_active=true": {
-      "model": "ragium:block/cutting_machine_active"
+      "model": "ragium:block/cutting_machine"
     },
     "facing=south,is_active=false": {
-      "model": "ragium:block/cutting_machine",
+      "model": "ragium:block/machine/mechanical",
       "y": 180
     },
     "facing=south,is_active=true": {
-      "model": "ragium:block/cutting_machine_active",
+      "model": "ragium:block/cutting_machine",
       "y": 180
     },
     "facing=west,is_active=false": {
-      "model": "ragium:block/cutting_machine",
+      "model": "ragium:block/machine/mechanical",
       "y": 270
     },
     "facing=west,is_active=true": {
-      "model": "ragium:block/cutting_machine_active",
+      "model": "ragium:block/cutting_machine",
       "y": 270
     }
   }

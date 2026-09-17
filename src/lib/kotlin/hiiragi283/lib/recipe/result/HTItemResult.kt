@@ -73,7 +73,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
      */
     override fun create(): ItemStack = entry.create().copyWithCount(count)
 
-    override fun getId(): Identifier = entry.getId()
+    override fun getId(): Identifier? = entry.getId()
 
     //    Entry    //
 
@@ -107,7 +107,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
         fun toResult(count: Int = 1): HTItemResult = HTItemResult(this, count)
 
-        fun getId(): Identifier
+        fun getId(): Identifier?
     }
 
     @JvmRecord

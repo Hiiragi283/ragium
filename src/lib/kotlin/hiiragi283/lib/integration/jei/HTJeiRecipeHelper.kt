@@ -3,7 +3,6 @@ package hiiragi283.lib.integration.jei
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.item.toTemplateOrNull
 import hiiragi283.lib.recipe.HTRecipeHolder
-import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.display.SlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
@@ -154,10 +153,5 @@ data object HTJeiRecipeHelper {
     inline fun <RECIPE_A : Any, reified RECIPE_B : RECIPE_A> getRecipes(
         lookup: HTRecipeLookup<RECIPE_A>
     ): List<HTRecipeHolder<RECIPE_B>> = lookup.getAllRecipes(HTPhysicalSideHelper.createLookupContext())
-        .mapNotNull { (key: RecipeKey, recipe: RECIPE_A) ->
-            when (recipe) {
-                is RECIPE_B -> HTRecipeHolder(key, recipe)
-                else -> null
-            }
-        }.toList()
+        .mapNotNull { holder: HTRecipeHolder<RECIPE_A> -> holder.castAs<RECIPE_B>() }.toList()
 }

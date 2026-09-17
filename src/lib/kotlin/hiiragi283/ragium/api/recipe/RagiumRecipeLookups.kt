@@ -89,4 +89,6 @@ data object RagiumRecipeLookups {
     // Electronics
 
     // Arcane
+    @JvmField
+    val ENCHANTING: HTRecipeLookup<RTEnchantingRecipe> = create(RagiumRecipeTypes.ENCHANTING)
 }

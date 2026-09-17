@@ -77,6 +77,7 @@ data object HTConstants {
     // Serialization
     const val ENERGY = "energy"
     const val TIME = "time"
+    const val LAST_RECIPE = "last_recipe"
 
     const val INGREDIENT = "ingredient"
     const val INGREDIENTS = "ingredients"

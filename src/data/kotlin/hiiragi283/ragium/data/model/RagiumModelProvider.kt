@@ -8,6 +8,7 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.HTSimpleBlockItemWithKey
 import hiiragi283.lib.resource.HTValueWithId
 import hiiragi283.lib.resource.blockId
+import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.HTMachineBlock
@@ -16,7 +17,6 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.client.data.models.BlockModelGenerators
 import net.minecraft.client.data.models.ItemModelGenerators
-import net.minecraft.client.data.models.MultiVariant
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator
 import net.minecraft.client.data.models.blockstates.PropertyDispatch
 import net.minecraft.client.data.models.model.ModelTemplates
@@ -43,7 +43,8 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             add(RagiumFluids.COAL_TAR)
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.SULFURIC_ACID)
-            add(RagiumFluids.MOLTEN_STEEL)
+
+            add(RagiumFluids.ORE_SLURRY)
         }
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             // Item
@@ -61,24 +62,47 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun registerBlockModels(generators: BlockModelGenerators) {
-        RagiumBlocks.MATERIAL_BLOCKS.values.forEach { generators.createTrivialCube(it.block.getOrThrow()) }
+        sequence {
+            yieldAll(RagiumBlocks.MATERIAL_BLOCKS.values)
+
+            yield(RagiumBlocks.CREATIVE_BATTERY) // TODO
+
+            yield(RagiumBlocks.MACHINE_CASING)
+        }.forEach { generators.createTrivialCube(it.block.getOrThrow()) }
 
         // Machine
+        val inactiveModels: Map<HTMachineType, Identifier> = HTMachineType.entries
+            .associateWith { machineType: HTMachineType ->
+                val blockId: Identifier = RagiumAPI.id(HTConstants.BLOCK, "machine", machineType.materialName)
+                ModelTemplates.CUBE_ORIENTABLE.create(
+                    blockId,
+                    textureMapping(machineType).put(TextureSlot.FRONT, Material(blockId.withSuffix("_front"))),
+                    generators.modelOutput
+                )
+            }
         for ((machineType: HTMachineType, blockItem: HTSimpleBlockItemWithKey) in RagiumBlocks.MACHINES.flatEntries) {
             val block: HTValueWithId<Block> = blockItem.block
-            val inactiveModel: MultiVariant = BlockModelGenerators.plainVariant(
-                machineModel(generators, machineType, block, false)
-            )
-            val activeModel: MultiVariant = BlockModelGenerators.plainVariant(
-                machineModel(generators, machineType, block, true)
-            )
             generators.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block.getOrThrow())
                     .with(
                         PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
-                            .select(false, inactiveModel)
-                            .select(true, activeModel)
+                            .select(false, BlockModelGenerators.plainVariant(inactiveModels[machineType]!!))
+                            .select(
+                                true,
+                                BlockModelGenerators.plainVariant(machineModel(generators, machineType, block))
+                            )
                     ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+            )
+        }
+        // Decoration
+        for ((machineType: HTMachineType, block: HTSimpleBlockItemWithKey) in RagiumBlocks.MACHINE_CASINGS) {
+            generators.createSimple(
+                block.block.getOrThrow(),
+                ModelTemplates.CUBE_TOP.createBlock(
+                    block.block,
+                    textureMapping(machineType),
+                    generators.modelOutput
+                )
             )
         }
     }
@@ -86,30 +110,22 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     private fun machineModel(
         generators: BlockModelGenerators,
         machineType: HTMachineType,
-        block: HTValueWithId<Block>,
-        isActive: Boolean
+        block: HTValueWithId<Block>
     ): Identifier {
         val blockId: Identifier = block.idOrThrow.blockId
-        val mapping: TextureMapping = TextureMapping()
-            .put(TextureSlot.TOP, Material(RagiumAPI.id(HTConstants.BLOCK, "machine_casing")))
-            .put(
-                TextureSlot.SIDE,
-                Material(RagiumAPI.id(HTConstants.BLOCK, "machine_casing", machineType.materialName))
-            )
-        return when (isActive) {
-            true -> ModelTemplates.CUBE_ORIENTABLE.create(
-                blockId.withSuffix("_active"),
-                mapping.put(TextureSlot.FRONT, Material(blockId.withSuffix("_front_active"))),
-                generators.modelOutput
-            )
-
-            false -> ModelTemplates.CUBE_ORIENTABLE.createBlock(
-                block,
-                mapping.put(TextureSlot.FRONT, Material(blockId.withSuffix("_front"))),
-                generators.modelOutput
-            )
-        }
+        return ModelTemplates.CUBE_ORIENTABLE.create(
+            blockId,
+            textureMapping(machineType).put(TextureSlot.FRONT, Material(blockId.withSuffix("_front"))),
+            generators.modelOutput
+        )
     }
+
+    private fun textureMapping(machineType: HTMachineType): TextureMapping = TextureMapping()
+        .put(TextureSlot.TOP, Material(RagiumBlocks.MACHINE_CASING.block.idOrThrow.blockId))
+        .put(
+            TextureSlot.SIDE,
+            Material(RagiumAPI.id(HTConstants.BLOCK, "machine", "${machineType.materialName}_side"))
+        )
 
     private fun registerItemModels(generators: ItemModelGenerators) {
         val handheld: Set<HTSimpleDeferredItem> = buildSet {
@@ -122,18 +138,29 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         buildSet {
             addAll(RagiumItems.REGISTER.asSequence())
 
+            remove(RagiumItems.SPLASH_BOTTLE)
+            remove(RagiumItems.LINGERING_BOTTLE)
+
             remove(RagiumItems.MEMORY_DISC)
 
-            removeAll(RagiumItems.MACHINE_CASINGS.values)
+            removeAll(RagiumItems.MACHINE_PARTS.values)
             removeAll(handheld)
         }.forEach { generators.generateFlatItem(it) }
 
+        generators.generateFlatItem(
+            RagiumItems.SPLASH_BOTTLE,
+            layer = vanillaId(HTConstants.ITEM, "splash_potion")
+        )
+        generators.generateFlatItem(
+            RagiumItems.LINGERING_BOTTLE,
+            layer = vanillaId(HTConstants.ITEM, "lingering_potion")
+        )
         generators.generateFlatItem(RagiumItems.MEMORY_DISC, template = ModelTemplates.MUSIC_DISC)
 
-        for ((machineType: HTMachineType, casing: HTSimpleDeferredItem) in RagiumItems.MACHINE_CASINGS) {
+        for ((machineType: HTMachineType, parts: HTSimpleDeferredItem) in RagiumItems.MACHINE_PARTS) {
             generators.generateFlatItem(
-                casing,
-                layer = RagiumAPI.id(HTConstants.ITEM, "casing", machineType.materialName)
+                parts,
+                layer = RagiumAPI.id(HTConstants.ITEM, "parts", machineType.materialName)
             )
         }
     }

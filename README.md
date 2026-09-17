@@ -1,4 +1,4 @@
-![NeoForged Logo](./src/main/resources/icon.png)
+![Ragium Logo](./src/main/resources/icon.png)
 
 Ragium
 =============

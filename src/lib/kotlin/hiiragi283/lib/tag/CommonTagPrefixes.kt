@@ -35,13 +35,7 @@ data object CommonTagPrefixes {
     val NUGGET = HTTagPrefix("nuggets", "nuggets/%s")
 
     @JvmField
-    val PLATE = HTTagPrefix("plates", "plates/%s")
-
-    @JvmField
     val RAW_MATERIALS = HTTagPrefix("raw_materials", "raw_materials/%s")
-
-    @JvmField
-    val ROD = HTTagPrefix("rods", "rods/%s")
 
     @JvmField
     val TINY = HTTagPrefix("tiny", "tiny/%s")

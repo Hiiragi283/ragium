@@ -1,18 +1,18 @@
 package hiiragi283.ragium.common.transfer.holder
 
 import com.mojang.serialization.Codec
-import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.serialization.codec.HTCodecs
+import net.minecraft.ChatFormatting
 import net.minecraft.util.StringRepresentable
 
-enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: HTDefaultColor) :
+enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: ChatFormatting) :
     StringRepresentable {
-    BOTH(true, true, HTDefaultColor.PURPLE),
-    INPUT(true, false, HTDefaultColor.RED),
-    OUTPUT(false, true, HTDefaultColor.LIGHT_BLUE),
-    EXTRA_INPUT(true, false, HTDefaultColor.YELLOW),
-    EXTRA_OUTPUT(false, true, HTDefaultColor.GREEN),
-    NONE(false, false, HTDefaultColor.GRAY)
+    BOTH(true, true, ChatFormatting.LIGHT_PURPLE),
+    INPUT(true, false, ChatFormatting.RED),
+    OUTPUT(false, true, ChatFormatting.BLUE),
+    EXTRA_INPUT(true, false, ChatFormatting.YELLOW),
+    EXTRA_OUTPUT(false, true, ChatFormatting.GREEN),
+    NONE(false, false, ChatFormatting.GRAY)
     ;
 
     companion object {

@@ -2,6 +2,7 @@
   "values": [
     "#c:buckets/anti_rust_oil",
     "#c:buckets/aromatic_compound",
+    "#c:buckets/bleach",
     "#c:buckets/chloride",
     "#c:buckets/coal_tar",
     "#c:buckets/crude_oil",
@@ -31,7 +32,6 @@
     "#c:buckets/molten_glass",
     "#c:buckets/molten_glowstone",
     "#c:buckets/molten_redstone",
-    "#c:buckets/molten_steel",
     "#c:buckets/naphtha",
     "#c:buckets/nitric_acid",
     "#c:buckets/ominous_flux",

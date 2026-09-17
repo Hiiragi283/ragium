@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:barrels/wooden"
+  },
+  "primary_result": {
+    "count": 7,
+    "id": "ragium:wood_dust"
+  },
+  "time": 200
+}

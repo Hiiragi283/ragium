@@ -58,9 +58,6 @@ data object RagiumRecipeTypes {
     val MELTING: HTRecipeType<RTMeltingRecipe> = create(RagiumConstants.MELTING)
 
     @JvmField
-    val SMELTING: HTRecipeType<RTSmeltingRecipe> = create(RagiumConstants.SMELTING)
-
-    @JvmField
     val PYROLYZING: HTRecipeType<RTPyrolyzingRecipe> = create(RagiumConstants.PYROLYZING)
 
     @JvmField
@@ -89,4 +86,6 @@ data object RagiumRecipeTypes {
     // Electronics
 
     // Arcane
+    @JvmField
+    val ENCHANTING: HTRecipeType<RTEnchantingRecipe> = create(RagiumConstants.ENCHANTING)
 }

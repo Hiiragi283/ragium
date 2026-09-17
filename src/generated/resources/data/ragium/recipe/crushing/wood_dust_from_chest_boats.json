@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#minecraft:chest_boats"
+  },
+  "primary_result": {
+    "count": 13,
+    "id": "ragium:wood_dust"
+  },
+  "time": 200
+}

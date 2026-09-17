@@ -3,32 +3,33 @@ package hiiragi283.ragium.client.integration.jei
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
-import hiiragi283.lib.integration.jei.category.HTDoubleItemToItemRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTFluidToItemRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTDoubleItemToRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTItemToFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToItemAndFluidRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTItemToItemRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
-import hiiragi283.lib.item.alchemy.BottledPotionContents
+import hiiragi283.lib.item.ItemStack
+import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
+import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.recipe.HTOreSlurryData
 import hiiragi283.ragium.api.data.recipe.HTOreSlurryDataHelper
-import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.integration.jei.category.RTElectrolyzingRecipeCategory
+import hiiragi283.ragium.client.integration.jei.category.RTEnchantingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTReactingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTRefiningRecipeCategory
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import mezz.jei.api.JeiPlugin
+import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.helpers.IPlatformFluidHelper
 import mezz.jei.api.neoforge.NeoForgeTypes
@@ -43,6 +44,8 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
+import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
@@ -51,11 +54,23 @@ import kotlin.streams.asSequence
 
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
-    override fun registerItemSubtypes(registration: ISubtypeRegistration) {
-        // Potion-Based Item
-        HTPhysicalSideHelper
+    companion object {
+        @JvmStatic
+        private fun listItems(): Sequence<Holder.Reference<Item>> = HTPhysicalSideHelper
             .filteredLookup(BuiltInRegistries.ITEM)
             .listElements()
+            .asSequence()
+
+        @JvmStatic
+        private fun listPotions(): Sequence<Holder.Reference<Potion>> = HTPhysicalSideHelper
+            .filteredLookup(BuiltInRegistries.POTION)
+            .listElements()
+            .asSequence()
+    }
+
+    override fun registerItemSubtypes(registration: ISubtypeRegistration) {
+        // Potion-Based Item
+        listItems()
             .map(Holder<Item>::value)
             .forEach { item: Item ->
                 if (item is HTPotionBasedItem) {
@@ -83,12 +98,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     override fun registerExtraIngredients(registration: IExtraIngredientRegistration) {
         registration.addExtraIngredients(
             NeoForgeTypes.FLUID_STACK,
-            HTPhysicalSideHelper
-                .filteredLookup(BuiltInRegistries.POTION)
-                .listElements()
-                .map(::BottledPotionContents)
-                .filter { !it.isWater }
-                .map(BottledPotionContents::toFluidStack)
+            listPotions()
+                .filter { !it.`is`(Potions.WATER) }
+                .map(HTPotionHelper::createFluid)
                 .toList()
         )
         registration.addExtraIngredients(
@@ -105,16 +117,16 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         registration.addRecipeCategories(
             // Mechanical
-            HTDoubleItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.ASSEMBLING),
-            HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.COMPRESSING),
+            HTDoubleItemToRecipeCategory.Basic(guiHelper, RagiumJeiRecipeTypes.ASSEMBLING),
+            HTSingleRecipeCategory.ItemToItem(guiHelper, RagiumJeiRecipeTypes.COMPRESSING),
             HTItemToDoubleItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CRUSHING),
             HTItemToDoubleItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CUTTING),
             HTItemToItemAndFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.DRAINING),
             HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FILLING),
             // Heat
-            HTDoubleItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.ALLOYING),
-            HTFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING),
-            HTItemToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MELTING),
+            HTDoubleItemToRecipeCategory.Basic(guiHelper, RagiumJeiRecipeTypes.ALLOYING),
+            HTSingleRecipeCategory.FluidToItem(guiHelper, RagiumJeiRecipeTypes.FREEZING),
+            HTSingleRecipeCategory.ItemToFluid(guiHelper, RagiumJeiRecipeTypes.MELTING),
             HTItemToItemAndFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING),
             RTRefiningRecipeCategory(guiHelper),
             // Chemical
@@ -124,9 +136,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RTReactingRecipeCategory(guiHelper),
             // Bio
             HTItemAndFluidToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.BREWING),
-            HTItemToDoubleItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PLANTING)
+            HTItemToDoubleItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PLANTING),
             // Electronics
             // Arcane
+            RTEnchantingRecipeCategory(guiHelper)
         )
     }
 
@@ -158,24 +171,63 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.PLANTING, RagiumRecipeLookups.PLANTING)
         // Electronics
         // Arcane
+        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ENCHANTING, RagiumRecipeLookups.ENCHANTING)
 
         registerDynamicRecipes(registration)
     }
 
     private fun registerDynamicRecipes(registration: IRecipeRegistration) {
+        // Mechanical
+        registration.addRecipes(
+            RagiumJeiRecipeTypes.DRAINING,
+            listPotions()
+                .flatMap { potion: Holder.Reference<Potion> ->
+                    HTBottleType.entries.map { bottleType: HTBottleType ->
+                        RagiumRecipeBuilders.draining {
+                            +HTJeiRecipeHelper.fakeItem(
+                                ItemStack(bottleType.filledItem, 1, HTPotionHelper.createPotionPatch(potion))
+                            )
+                            itemResult { +bottleType.emptyItem }
+                            fluidResult { from(HTPotionHelper.createFluid(potion, HTPotionHelper.BOTTLE_AMOUNT)) }
+                            recipeId replace potion.getKeyOrThrow()
+                                .identifier()
+                                .withPrefix("potion_bottle/${bottleType.serializedName}/")
+                        }.buildSynthetic()
+                    }
+                }.toList()
+        )
+        registration.addRecipes(
+            RagiumJeiRecipeTypes.FILLING,
+            listPotions()
+                .flatMap { potion: Holder.Reference<Potion> ->
+                    HTBottleType.entries.map { bottleType: HTBottleType ->
+                        RagiumRecipeBuilders.filling {
+                            itemIngredient { items { +bottleType.emptyItem } }
+                            fluidIngredient {
+                                +HTPotionFluidIngredient(potion)
+                                amount = HTPotionHelper.BOTTLE_AMOUNT
+                            }
+                            result {
+                                from(ItemStack(bottleType.filledItem, 1, HTPotionHelper.createPotionPatch(potion)))
+                            }
+                            recipeId replace potion.getKeyOrThrow()
+                                .identifier()
+                                .withPrefix("potion_bottle/${bottleType.serializedName}/")
+                        }.buildSynthetic()
+                    }
+                }.toList()
+        )
         // Chemical
         registration.addRecipes(
             RagiumJeiRecipeTypes.MIXING,
-            HTPhysicalSideHelper.filteredLookup(BuiltInRegistries.ITEM)
-                .listElements()
-                .asSequence()
+            listItems()
                 .mapNotNull { input: Holder<Item> ->
-                    val slurryData: Holder<HTOreSlurryData> =
-                        input.components().get(RagiumDataComponents.ORE_SLURRY_DATA) ?: return@mapNotNull null
+                    val result: FluidStack =
+                        HTOreSlurryDataHelper.createFluid(input.components()) ?: return@mapNotNull null
                     RagiumRecipeBuilders.mixing {
                         itemIngredient = HTJeiRecipeHelper.fakeItem(SlotDisplay.ItemSlotDisplay(input))
                         fluidIngredient = HTJeiRecipeHelper.fakeFluid(RagiumFluids.SULFURIC_ACID)
-                        result { from(HTOreSlurryDataHelper.createFluid(slurryData)) }
+                        result { from(result) }
                         recipeId replace input.getKeyOrThrow().identifier().withPrefix("solving/")
                     }.buildSynthetic()
                 }.toList()
@@ -205,12 +257,22 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RagiumJeiRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
         registration.addCraftingStation(RagiumJeiRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
         // Heat
+        registration.addCraftingStation(RagiumJeiRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.MELTING, RagiumBlocks.MELTER)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.REFINING, RagiumBlocks.REFINERY)
+        registration.addCraftingStation(RecipeTypes.SMELTING, RagiumBlocks.SMELTER)
+        registration.addCraftingStation(RecipeTypes.BLASTING, RagiumBlocks.SMELTER)
+        registration.addCraftingStation(RecipeTypes.SMOKING, RagiumBlocks.SMELTER)
         // Chemical
         registration.addCraftingStation(RagiumJeiRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.MIXING, RagiumBlocks.MIXER)
         // Bio
         registration.addCraftingStation(RagiumJeiRecipeTypes.BREWING, RagiumBlocks.BREWERY)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
         // Electronics
         // Arcane
     }

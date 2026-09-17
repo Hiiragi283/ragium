@@ -11,18 +11,18 @@ import net.neoforged.neoforge.common.conditions.ICondition
 fun interface ConditionalExporter<T : Any> {
     /**
      * 値を登録します。
-     * @param id 受け取ったID
+     * @param key 受け取ったID
      * @param value 受け取った値
      * @param conditions 値を読み込む条件の一覧
      */
-    fun accept(id: ResourceKey<T>, value: T, conditions: List<ICondition>)
+    fun accept(key: ResourceKey<T>, value: T, conditions: List<ICondition>)
 
     /**
      * 値を登録します。
-     * @param id 受け取ったID
+     * @param key 受け取ったID
      * @param value 受け取った値
      */
-    fun accept(id: ResourceKey<T>, value: T) {
-        accept(id, value, listOf())
+    fun accept(key: ResourceKey<T>, value: T) {
+        accept(key, value, listOf())
     }
 }

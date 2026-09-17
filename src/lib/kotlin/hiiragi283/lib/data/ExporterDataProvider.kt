@@ -7,6 +7,7 @@ import hiiragi283.lib.HTComparators
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.resource.HTValueWithId
+import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
@@ -60,11 +61,11 @@ abstract class ExporterDataProvider<R : Any>(
         .thenCompose { registries: HolderLookup.Provider ->
             val map: MutableMap<ResourceKey<R>, WithConditions<R>> = Object2ObjectOpenHashMap()
             this.registries = registries
-            this.exporter = ConditionalExporter { id: ResourceKey<R>, value: R, conditions: List<ICondition> ->
-                val fixedId: ResourceKey<R> = modifyId(id)
-                val oldValue: WithConditions<R>? = map.put(fixedId, WithConditions(conditions, value))
+            this.exporter = ConditionalExporter { key: ResourceKey<R>, value: R, conditions: List<ICondition> ->
+                val fixedKey: ResourceKey<R> = modifyId(key)
+                val oldValue: WithConditions<R>? = map.put(fixedKey, WithConditions(conditions, value))
                 if (oldValue != null) {
-                    error("Duplicate registration for $fixedId, new=$value, old=$oldValue")
+                    error("Duplicate registration for $fixedKey, new=$value, old=$oldValue")
                 }
             }
             exportValues()
@@ -105,7 +106,7 @@ abstract class ExporterDataProvider<R : Any>(
      */
     protected fun id(vararg path: String): Identifier = modId.toId(*path)
 
-    protected fun getHasName(id: Identifier): String = "has_${id.path}"
+    protected fun getHasName(id: Identifier): String = "has_${id.debugPath}"
 
     protected fun getHasName(value: HTValueWithId<*>): String = getHasName(value.idOrThrow)
 

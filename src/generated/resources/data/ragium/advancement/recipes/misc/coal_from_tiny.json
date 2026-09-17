@@ -7,7 +7,7 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_tiny/coal": {
+    "has_tiny_coal": {
       "conditions": {
         "items": [
           {
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_tiny/coal"
+      "has_tiny_coal"
     ]
   ],
   "rewards": {

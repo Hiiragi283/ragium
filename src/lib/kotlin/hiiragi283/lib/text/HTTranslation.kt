@@ -1,6 +1,6 @@
 package hiiragi283.lib.text
 
-import hiiragi283.lib.color.HTDefaultColor
+import net.minecraft.ChatFormatting
 
 /**
  * 翻訳を保持するインターフェースです。
@@ -24,11 +24,11 @@ interface HTTranslation : HTHasTranslationKey {
     /**
      * [color]で着色された[テキスト][Text]を返します。
      */
-    fun translateColored(color: HTDefaultColor): MutableText = translate().withStyle(color)
+    fun translateColored(color: ChatFormatting): MutableText = translate().withStyle(color)
 
     /**
      * [color]で着色された[テキスト][Text]を返します。
      * @param args テキストの引数
      */
-    fun translateColored(color: HTDefaultColor, vararg args: Any?): MutableText = translate(*args).withStyle(color)
+    fun translateColored(color: ChatFormatting, vararg args: Any?): MutableText = translate(*args).withStyle(color)
 }

@@ -1,12 +1,12 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.HTComparators
-import hiiragi283.lib.color.HTDefaultColor
 import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
@@ -38,6 +38,7 @@ import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.data.recipes.SmithingTransformRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.ToolMaterial
 import net.minecraft.world.item.crafting.CookingBookCategory
@@ -79,7 +80,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
                 }
             )
 
-        override fun getName(): String = "Vanilla Recipes 2"
+        override fun getName(): String = "Vanilla Recipes"
     }
 
     override fun buildRecipes() {
@@ -148,6 +149,15 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
                 has(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER)
             )
             .save(output)
+        // Candle
+        shaped(RecipeCategory.DECORATIONS, Items.CANDLE)
+            .pattern("A")
+            .pattern("B")
+            .define('A', Tags.Items.STRINGS)
+            .define('B', RagiumItems.BEESWAX)
+            .unlockedBy(getHasName(Tags.Items.STRINGS), has(Tags.Items.STRINGS))
+            .unlockedBy(getHasName(RagiumItems.BEESWAX), has(RagiumItems.BEESWAX))
+            .save(output)
 
         // Bamboo Charcoal
         SimpleCookingRecipeBuilder.smelting(
@@ -182,19 +192,37 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
             ).unlockedBy(getHasName(HTCommonTags.Items.PLASTICS), has(HTCommonTags.Items.PLASTICS))
                 .save(output)
         }
+        // Splash Bottle
+        shapeless(RecipeCategory.BREWING, RagiumItems.SPLASH_BOTTLE, 4)
+            .requires(Tags.Items.GUNPOWDERS)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .unlockedBy(getHasName(Tags.Items.GUNPOWDERS), has(Tags.Items.GUNPOWDERS))
+            .save(output)
+        // Lingering Bottle
+        shapeless(RecipeCategory.BREWING, RagiumItems.LINGERING_BOTTLE, 4)
+            .requires(Items.DRAGON_BREATH)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .requires(Items.GLASS_BOTTLE)
+            .unlockedBy(getHasName(Items.DRAGON_BREATH), has(Items.DRAGON_BREATH))
+            .save(output)
 
         // XX Tools
         registerTools(RagiumItems.SOOTY_IRON_TOOLS, RagiumToolMaterials.SOOTY_IRON)
 
         // XX Dye Bucket
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
+        for (color: DyeColor in DyeColor.entries) {
             shapeless(RecipeCategory.MISC, RagiumFluids.DYES[color].bucketHolder)
                 .requires(Tags.Items.BUCKETS_WATER)
-                .requires(color.dyesTag)
-                .requires(color.dyesTag)
-                .requires(color.dyesTag)
-                .requires(color.dyesTag)
-                .unlockedBy(getHasName(color.dyesTag), has(color.dyesTag))
+                .requires(color.tag)
+                .requires(color.tag)
+                .requires(color.tag)
+                .requires(color.tag)
+                .unlockedBy(getHasName(color.tag), has(color.tag))
                 .save(output)
         }
     }
@@ -220,7 +248,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
 
     private fun machine() {
         // Mechanical
-        shaped(RecipeCategory.MISC, RagiumItems.getCasing(HTMachineType.MECHANICAL), 3)
+        shaped(RecipeCategory.MISC, RagiumItems.getParts(HTMachineType.MECHANICAL), 3)
             .pattern("AAA")
             .pattern("BBB")
             .pattern("AAA")
@@ -249,6 +277,10 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
             unlockedBy(getHasName(Items.STONECUTTER), has(Items.STONECUTTER))
         }
         // Heat
+        heat(RagiumBlocks.ALLOY_SMELTER) {
+            define('D', Items.BLAST_FURNACE)
+            unlockedBy(getHasName(Items.BLAST_FURNACE), has(Items.BLAST_FURNACE))
+        }
         heat(RagiumBlocks.FREEZER) {
             define('D', Tags.Items.BUCKETS_WATER)
             unlockedBy(getHasName(Tags.Items.BUCKETS_WATER), has(Tags.Items.BUCKETS_WATER))
@@ -256,6 +288,11 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         heat(RagiumBlocks.MELTER) {
             define('D', Tags.Items.BUCKETS_LAVA)
             unlockedBy(getHasName(Tags.Items.BUCKETS_LAVA), has(Tags.Items.BUCKETS_LAVA))
+        }
+
+        heat(RagiumBlocks.SMELTER) {
+            define('D', Items.FURNACE)
+            unlockedBy(getHasName(Items.FURNACE), has(Items.FURNACE))
         }
         // Chemical
         chemical(RagiumBlocks.CHEMICAL_BATH) {
@@ -269,6 +306,29 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         }
         // Electronics
         // Arcane
+
+        // Decoration
+        shaped(RecipeCategory.DECORATIONS, RagiumBlocks.MACHINE_CASING, 4)
+            .pattern("ABA")
+            .pattern("B B")
+            .pattern("ABA")
+            .define('A', CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SOOTY_IRON)
+            .define('B', CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+            .unlockedBy(
+                getHasName(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON),
+                has(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+            )
+            .save(output)
+
+        for (block: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINE_CASINGS.values) {
+            SingleItemRecipeBuilder.stonecutting(
+                Ingredient.of(RagiumBlocks.MACHINE_CASING),
+                RecipeCategory.DECORATIONS,
+                block,
+                1
+            ).unlockedBy(getHasName(RagiumBlocks.MACHINE_CASING), has(RagiumBlocks.MACHINE_CASING))
+                .save(output)
+        }
     }
 
     private inline fun machine(
@@ -283,7 +343,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
             .pattern("BCB")
             .pattern("ADA")
             .define('A', CommonTagPrefixes.NUGGET, material)
-            .define('B', RagiumItems.getCasing(machineType))
+            .define('B', RagiumItems.getParts(machineType))
             .define('C', CommonTagPrefixes.GEAR, gear)
             .apply(builderAction)
             .save(output)
@@ -414,7 +474,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
                 200
             ).group(item.idOrThrow.path)
                 .unlockedBy(getHasName(dust), has(dust))
-                .saveSuffixed(output, "_from_smeting_dust")
+                .saveSuffixed(output, "_from_smelting_dust")
             SimpleCookingRecipeBuilder.blasting(
                 Ingredient.of(dust),
                 RecipeCategory.MISC,
@@ -603,7 +663,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
 
     fun tag(prefix: HTTagPrefix, material: HTMaterialLike): Ingredient = tag(prefix.itemTagKey(material))
 
-    fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().path}"
+    fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().debugPath}"
 
     fun getHasName(prefix: HTTagPrefix, material: HTMaterialLike): String = getHasName(prefix.itemTagKey(material))
 

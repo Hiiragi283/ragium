@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
@@ -27,19 +27,10 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
     }
 
     private fun alloying() {
-        // Blackstone + Gold -> Gilded Blackstone
-        RagiumRecipeBuilders.alloying {
-            primary { items { +Items.BLACKSTONE } }
-            secondary {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.GOLD)
-                count = 8
-            }
-            result { +Items.GILDED_BLACKSTONE }
-        }.save(exporter)
         // Gold + Netherite Scrap -> Netherite
         RagiumRecipeBuilders.alloying {
             primary {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.GOLD)
+                +dustOrIngot(RagiumMaterial.Metal.GOLD)
                 count = 2
             }
             secondary {
@@ -48,16 +39,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             result { +Items.NETHERITE_INGOT }
         }.save(exporter)
-        // Gold Block + Apple -> Enchanted Golden Apple
-        RagiumRecipeBuilders.alloying {
-            primary { items { +Items.APPLE } }
-            secondary {
-                +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Metal.GOLD)
-                count = 8
-            }
-            result { +Items.ENCHANTED_GOLDEN_APPLE }
-            time *= 8
-        }.save(exporter)
 
         // Machine Casing
         RagiumRecipeBuilders.alloying {
@@ -65,8 +46,8 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
                 count = 2
             }
-            secondary { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
-            result { +RagiumItems.getCasing(HTMachineType.CHEMICAL) }
+            secondary { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
+            result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
         }.save(exporter)
         // Sooty Iron + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {
@@ -236,16 +217,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +RagiumFluids.MOLTEN_ENDER
                 amount = 90
             }
-        }.save(exporter)
-
-        // Sooty Iron -> Molten Steel
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
-            result {
-                +RagiumFluids.MOLTEN_STEEL
-                amount = 90
-            }
-            recipeId suffix "_from_sooty_iron"
         }.save(exporter)
     }
 

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.lang
 
 import hiiragi283.lib.collection.forEach
-import hiiragi283.lib.color.HTDefaultColor
+import hiiragi283.lib.color.HTColoredCollection
 import hiiragi283.lib.data.lang.HTLangName
 import hiiragi283.lib.data.lang.HTLangPatternProvider
 import hiiragi283.lib.data.lang.HTLangProvider
@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
+import net.minecraft.world.item.DyeColor
 
 interface RagiumLangProvider {
     fun addPatternTranslations(provider: HTLangProvider) {
@@ -25,10 +26,17 @@ interface RagiumLangProvider {
             .forEach { (part: HTBlockPart, material: RagiumMaterial, block: HTHasTranslationKey) ->
                 provider.add(block, part, material)
             }
+        val casingPattern = HTLangPatternProvider("Machine Casing (%s)", "機械筐体 (%s)")
+        for ((machineType: HTLangName, casing: HTHasTranslationKey) in RagiumBlocks.MACHINE_CASINGS) {
+            provider.add(casing, casingPattern, machineType)
+        }
         // Fluid
         val dyePattern = HTLangPatternProvider("%s Dye", "%sの染料")
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
-            provider.addFluid(RagiumFluids.DYES[color], dyePattern.translate(langType, color))
+        for (color: DyeColor in DyeColor.entries) {
+            provider.addFluid(
+                RagiumFluids.DYES[color],
+                dyePattern.translate(langType, HTColoredCollection.TRANSLATED_NAMES[color])
+            )
         }
         // Item
         RagiumItems.MATERIAL_ITEMS
@@ -43,9 +51,9 @@ interface RagiumLangProvider {
             }
         provider.add(RagiumItems.COAL_COKE, RagiumMaterial.Fuel.COAL_COKE)
 
-        val casingPattern = HTLangPatternProvider("Machine Casing (%s)", "マシンケーシング (%s)")
-        for ((machineType: HTLangName, casing: HTHasTranslationKey) in RagiumItems.MACHINE_CASINGS) {
-            provider.add(casing, casingPattern, machineType)
+        val partsPattern = HTLangPatternProvider("Machine Parts (%s)", "機械部品 (%s)")
+        for ((machineType: HTLangName, parts: HTHasTranslationKey) in RagiumItems.MACHINE_PARTS) {
+            provider.add(parts, partsPattern, machineType)
         }
         for (toolType: HTToolType in HTToolType.entries) {
             provider.add(RagiumItems.SOOTY_IRON_TOOLS[toolType], toolType, RagiumMaterial.Metal.SOOTY_IRON)

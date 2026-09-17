@@ -9,13 +9,11 @@ import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
+import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
-import hiiragi283.ragium.common.item.RagiumItems
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 
 data object RagiumJeiRecipeTypes {
     // Mechanical
@@ -37,16 +35,16 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val DRAINING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.DRAINING, ItemStack(Items.GLASS_BOTTLE))
+        HTJeiRecipeType(RagiumRecipeTypes.DRAINING, RagiumBlocks.MACHINE_CASING)
 
     @JvmField
     val FILLING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> =
-        HTJeiRecipeType(RagiumRecipeTypes.FILLING, ItemStack(Items.GLASS_BOTTLE))
+        HTJeiRecipeType(RagiumRecipeTypes.FILLING, RagiumBlocks.MACHINE_CASING)
 
     // Heat
     @JvmField
     val ALLOYING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.ALLOYING, ItemStack(Items.FURNACE))
+        HTJeiRecipeType(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
     val FREEZING: HTHolderJeiRecipeType<HTFluidToRecipe.BasicItem> =
@@ -58,11 +56,11 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val PYROLYZING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumItems.COAL_COKE)
+        HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
 
     @JvmField
     val REFINING: HTHolderJeiRecipeType<RTRefiningRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.REFINING, RagiumItems.COAL_COKE)
+        HTJeiRecipeType(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
     // Chemical
     @JvmField
@@ -71,15 +69,15 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, ItemStack(Items.LIGHTNING_ROD))
+        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
 
     @JvmField
     val MIXING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> =
-        HTJeiRecipeType(RagiumRecipeTypes.MIXING, ItemStack(Items.BREEZE_ROD))
+        HTJeiRecipeType(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField
     val REACTING: HTHolderJeiRecipeType<RTReactingRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.REACTING, ItemStack(Items.GOLDEN_APPLE))
+        HTJeiRecipeType(RagiumRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)
 
     // Bio
     @JvmField
@@ -88,9 +86,12 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val PLANTING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.PLANTING, ItemStack(Items.FLOWER_POT))
+        HTJeiRecipeType(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     // Electronics
 
     // Arcane
+    @JvmField
+    val ENCHANTING: HTHolderJeiRecipeType<RTEnchantingRecipe> =
+        HTJeiRecipeType(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.MACHINE_CASING)
 }

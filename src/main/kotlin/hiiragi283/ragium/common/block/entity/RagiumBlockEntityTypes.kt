@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
@@ -15,6 +16,8 @@ import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
@@ -57,12 +60,20 @@ data object RagiumBlockEntityTypes {
 
     // Heat
     @JvmField
+    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> =
+        registerTick(RagiumConstants.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
+
+    @JvmField
     val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
         registerTick(RagiumConstants.FREEZER, ::HTFreezerBlockEntity)
 
     @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> =
         registerTick(RagiumConstants.MELTER, ::HTMelterBlockEntity)
+
+    @JvmField
+    val SMELTER: HTDeferredBlockEntityType<HTSmelterBlockEntity> =
+        registerTick(RagiumConstants.SMELTER, ::HTSmelterBlockEntity)
 
     // Chemical
     @JvmField
@@ -76,6 +87,12 @@ data object RagiumBlockEntityTypes {
 
     // Electronics
     // Arcane
+
+    //    Storage    //
+
+    @JvmField
+    val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
+        registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
 
     //    Event    //
 

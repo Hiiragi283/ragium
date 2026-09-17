@@ -1,6 +1,5 @@
 package hiiragi283.lib.text
 
-import hiiragi283.lib.color.HTDefaultColor
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
@@ -88,10 +87,3 @@ fun levelText(key: ResourceKey<Level>): MutableText {
  * @since 26.1.0
  */
 fun MutableText.withStyle(color: TextColor): MutableText = this.withStyle { style: Style -> style.withColor(color) }
-
-/**
- * 指定した[色][color]を適応します。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-fun MutableText.withStyle(color: HTDefaultColor): MutableText = this.withStyle(color.textColor)

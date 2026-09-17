@@ -9,7 +9,7 @@ import net.minecraft.resources.Identifier
  * @since 26.1.0
  */
 interface HTRecipeResult<STACK : Any> {
-    fun getId(): Identifier
+    fun getId(): Identifier?
 
     /**
      * 完成品を取得します。

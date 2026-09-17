@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
+import net.minecraft.world.item.HoneycombItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 import net.neoforged.bus.api.IEventBus
@@ -122,6 +123,14 @@ data object RagiumItems {
     val SYNTHETIC_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("synthetic_fiber")
 
     // Bio
+    @JvmField
+    val BEESWAX: HTSimpleDeferredItem = REGISTER.registerItem("beeswax", ::HoneycombItem)
+
+    @JvmField
+    val SPLASH_BOTTLE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("splash_bottle")
+
+    @JvmField
+    val LINGERING_BOTTLE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("lingering_bottle")
 
     // Electronics
 
@@ -138,13 +147,13 @@ data object RagiumItems {
     //    Parts    //
 
     @JvmField
-    val MACHINE_CASINGS: Map<HTMachineType, HTSimpleDeferredItem> = HTMachineType.entries
+    val MACHINE_PARTS: Map<HTMachineType, HTSimpleDeferredItem> = HTMachineType.entries
         .associateWithTo(mutableEnumMapOf()) { machineType: HTMachineType ->
-            REGISTER.registerSimpleItem("${machineType.materialName}_machine_casing")
+            REGISTER.registerSimpleItem("${machineType.materialName}_machine_parts")
         }
 
     @JvmStatic
-    fun getCasing(machineType: HTMachineType): HTSimpleDeferredItem = MACHINE_CASINGS[machineType]!!
+    fun getParts(machineType: HTMachineType): HTSimpleDeferredItem = MACHINE_PARTS[machineType]!!
 
     // Mechanical
 

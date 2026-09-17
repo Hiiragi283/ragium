@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,is_active=false": {
+      "model": "ragium:block/machine/heat",
+      "y": 90
+    },
+    "facing=east,is_active=true": {
+      "model": "ragium:block/smelter",
+      "y": 90
+    },
+    "facing=north,is_active=false": {
+      "model": "ragium:block/machine/heat"
+    },
+    "facing=north,is_active=true": {
+      "model": "ragium:block/smelter"
+    },
+    "facing=south,is_active=false": {
+      "model": "ragium:block/machine/heat",
+      "y": 180
+    },
+    "facing=south,is_active=true": {
+      "model": "ragium:block/smelter",
+      "y": 180
+    },
+    "facing=west,is_active=false": {
+      "model": "ragium:block/machine/heat",
+      "y": 270
+    },
+    "facing=west,is_active=true": {
+      "model": "ragium:block/smelter",
+      "y": 270
+    }
+  }
+}

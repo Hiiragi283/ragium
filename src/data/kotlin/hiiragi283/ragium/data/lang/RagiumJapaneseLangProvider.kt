@@ -25,11 +25,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumAdvancementKeys.ROOT, "ラギウム", "ラギウムへようこそ!")
         add(RagiumAdvancementKeys.SOOTY_IRON, "黒鉄（くろがね）を手に入れる", "煤鉄をつくる")
 
-        add(RagiumAdvancementKeys.MECHANICAL_MACHINE_CASING, "機械・加工・機械", "マシンケーシング（機械加工）を作る")
+        add(RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS, "機械・加工・機械", "マシンケーシング（機械加工）を作る")
         add(RagiumAdvancementKeys.ASSEMBLER, "ラヴェ（ン）ジャーズ，アッセンブル！", "組立機を手に入れる")
         add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "粉砕機を手に入れる")
 
-        add(RagiumAdvancementKeys.HEAT_MACHINE_CASING, "Heat And Cool", "マシンケーシング（熱）を作る")
+        add(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "マシンケーシング（熱）を作る")
         add(RagiumAdvancementKeys.BLACK_STEEL, "黒い咆哮", "黒鋼をつくる")
         add(RagiumAdvancementKeys.FREEZER, "私の消費電力は53万です", "冷凍機を手に入れる")
         add(RagiumAdvancementKeys.MELTER, "融けてしまいそう", "溶融炉を手に入れる")
@@ -39,16 +39,29 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CUTTING_MACHINE, "裁断機")
 
+        add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
         add(RagiumBlocks.FREEZER, "冷凍機")
         add(RagiumBlocks.MELTER, "溶融炉")
+        add(RagiumBlocks.PYROLYZER, "熱分解炉")
+        add(RagiumBlocks.REFINERY, "精製機")
+        add(RagiumBlocks.SMELTER, "製錬炉")
 
-        add(RagiumBlocks.CHEMICAL_BATH, "化学槽")
+        add(RagiumBlocks.CHEMICAL_BATH, "化学浴槽")
+        add(RagiumBlocks.CHEMICAL_REACTOR, "化学反応槽")
+        add(RagiumBlocks.ELECTROLYZER, "電解機")
+        add(RagiumBlocks.MIXER, "混合機")
 
         add(RagiumBlocks.BREWERY, "醸造機")
+        add(RagiumBlocks.PLANTER, "栽培機")
 
+        add(RagiumBlocks.SCANNER, "レーザースキャナ")
+
+        add(RagiumBlocks.CREATIVE_BATTERY, "クリエイティブ用バッテリー")
+
+        add(RagiumBlocks.MACHINE_CASING, "機械ケーシング")
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
-        add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
+        // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
         addFluid(RagiumFluids.OMINOUS_FLUX, "不吉な流動体")
         addFluid(RagiumFluids.MOLTEN_GLASS, "溶融ガラス")
@@ -75,7 +88,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
-        addFluid(RagiumFluids.MOLTEN_STEEL, "溶融した鋼鉄")
+        addFluid(RagiumFluids.BLEACH, "漂白剤")
 
         add(RagiumFluids.ORE_SLURRY.getFluidType().descriptionId, "無効な鉱石泥")
         add(RagiumFluids.ORE_SLURRY.bucketHolder, $$"%1$s入りバケツ")
@@ -88,6 +101,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
+        add(RagiumItems.BEESWAX, "密猟")
+        add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
+        add(RagiumItems.LINGERING_BOTTLE, "残留瓶")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")
@@ -131,6 +147,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumRecipeTypes.BREWING, "醸造")
         add(RagiumRecipeTypes.PLANTING, "栽培")
+
+        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
 
         // Text - Lib
         add(HTCommonTranslation.ERROR, "エラー")

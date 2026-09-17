@@ -6,12 +6,14 @@ import hiiragi283.lib.collection.buildListMultiMap
 import hiiragi283.lib.collection.buildSortedSetMultiMap
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.flatMapTable
+import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItemRegister
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
@@ -55,13 +57,26 @@ data object RagiumBlocks {
         .sound(SoundType.COPPER)
 
     @JvmStatic
+    private fun <BLOCK : Block> registerMachine(
+        type: HTDeferredBlockEntityType<*>,
+        factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> BLOCK,
+        properties: BlockBehaviour.Properties = machine()
+    ): HTBasicDeferredBlockAndItem<BLOCK> =
+        REGISTER.registerSimple(type.idOrThrow.path, { factory(type, properties.setId(it)) })
+
+    @JvmStatic
     private fun registerMachine(
         type: HTDeferredBlockEntityType<*>,
         properties: BlockBehaviour.Properties = machine()
+    ): HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(type, ::HTMachineBlock, properties)
+
+    @JvmStatic
+    private fun registerFakeMachine(
+        name: String,
+        properties: BlockBehaviour.Properties = machine()
     ): HTBasicDeferredBlockAndItem<HTMachineBlock> = REGISTER.registerSimple(
-        type.idOrThrow.path,
-        properties,
-        { prop: BlockBehaviour.Properties -> HTMachineBlock(type, prop) }
+        name,
+        { HTMachineBlock(RagiumBlockEntityTypes.CRUSHER, properties.setId(it)) } // TODO
     )
 
     //    Ingredient    //
@@ -83,8 +98,7 @@ data object RagiumBlocks {
                 material,
                 REGISTER.registerSimple(
                     part.createName(material),
-                    properties,
-                    blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), it) }
+                    blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), properties.setId(it)) }
                 )
             )
         }
@@ -128,13 +142,16 @@ data object RagiumBlocks {
 
     // Mechanical
     @JvmField
-    val ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ASSEMBLER)
+    val ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.ASSEMBLER)
 
     @JvmField
-    val CRUSHER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CRUSHER)
+    val CRUSHER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.CRUSHER)
 
     @JvmField
-    val COMPRESSOR: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.COMPRESSOR)
+    val COMPRESSOR: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.COMPRESSOR)
 
     @JvmField
     val CUTTING_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> =
@@ -142,21 +159,60 @@ data object RagiumBlocks {
 
     // Heat
     @JvmField
-    val FREEZER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.FREEZER)
+    val ALLOY_SMELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER)
 
     @JvmField
-    val MELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.MELTER)
+    val FREEZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.FREEZER)
+
+    @JvmField
+    val MELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.MELTER)
+
+    @JvmField
+    val PYROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.PYROLYZER)
+
+    @JvmField
+    val REFINERY: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.REFINERY)
+
+    @JvmField
+    val SMELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.SMELTER)
 
     // Chemical
     @JvmField
     val CHEMICAL_BATH: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.CHEMICAL_BATH)
 
+    @JvmField
+    val CHEMICAL_REACTOR: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.CHEMICAL_REACTOR)
+
+    @JvmField
+    val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.ELECTROLYZER)
+
+    @JvmField
+    val MIXER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.MIXER)
+
     // Bio
     @JvmField
-    val BREWERY: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.BREWERY)
+    val BREWERY: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.BREWERY)
+
+    @JvmField
+    val PLANTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.PLANTER)
 
     // Electronics
+    @JvmField
+    val SCANNER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.SCANNER)
+
     // Arcane
 
     @JvmField
@@ -167,11 +223,41 @@ data object RagiumBlocks {
             put(HTMachineType.MECHANICAL, COMPRESSOR)
             put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
 
+            put(HTMachineType.HEAT, ALLOY_SMELTER)
             put(HTMachineType.HEAT, FREEZER)
             put(HTMachineType.HEAT, MELTER)
+            put(HTMachineType.HEAT, PYROLYZER)
+            put(HTMachineType.HEAT, REFINERY)
+            put(HTMachineType.HEAT, SMELTER)
 
             put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
+            put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
+            put(HTMachineType.CHEMICAL, ELECTROLYZER)
+            put(HTMachineType.CHEMICAL, MIXER)
 
             put(HTMachineType.BIO, BREWERY)
+            put(HTMachineType.BIO, PLANTER)
+
+            put(HTMachineType.ELECTRONICS, SCANNER)
         }
+
+    //    Storage    //
+
+    @JvmField
+    val CREATIVE_BATTERY: HTBasicDeferredBlockAndItem<HTBasicEntityBlock> =
+        registerMachine(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBasicEntityBlock)
+
+    //    Decoration    //
+
+    @JvmField
+    val MACHINE_CASING: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple("machine_casing", machine())
+
+    @JvmField
+    val MACHINE_CASINGS: Map<HTMachineType, HTSimpleDeferredBlockAndItem> = HTMachineType.entries
+        .associateWithTo(mutableEnumMapOf()) { machineType: HTMachineType ->
+            REGISTER.registerSimple("${machineType.materialName}_machine_casing", machine())
+        }
+
+    @JvmStatic
+    fun getCasing(machineType: HTMachineType): HTSimpleDeferredBlockAndItem = MACHINE_CASINGS[machineType]!!
 }

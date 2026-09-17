@@ -14,23 +14,21 @@
   "result": {
     "type": "ragium:potion",
     "amount": 1000,
-    "contents": {
-      "custom_color": 16750848,
-      "custom_effects": [
-        {
-          "amplifier": 1,
-          "duration": 100,
-          "id": "minecraft:regeneration",
-          "show_icon": true
-        },
-        {
-          "duration": 2400,
-          "id": "minecraft:absorption",
-          "show_icon": true
-        }
-      ],
-      "custom_name": "golden_apple"
-    }
+    "custom_color": 16750848,
+    "custom_effects": [
+      {
+        "amplifier": 1,
+        "duration": 100,
+        "id": "minecraft:regeneration",
+        "show_icon": true
+      },
+      {
+        "duration": 2400,
+        "id": "minecraft:absorption",
+        "show_icon": true
+      }
+    ],
+    "custom_name": "golden_apple"
   },
   "time": 200
 }

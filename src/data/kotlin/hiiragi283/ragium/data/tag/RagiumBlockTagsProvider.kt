@@ -26,6 +26,9 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yieldAll(RagiumBlocks.MATERIAL_ORES.values)
             yieldAll(RagiumBlocks.STORAGE_BLOCKS.values)
             yieldAll(RagiumBlocks.MACHINES.values)
+            yieldAll(RagiumBlocks.MACHINE_CASINGS.values)
+
+            yield(RagiumBlocks.MACHINE_CASING)
         }.forEach { pickaxe.add(it.block) }
     }
 }

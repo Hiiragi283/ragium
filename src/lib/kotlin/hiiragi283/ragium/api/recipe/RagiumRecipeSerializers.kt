@@ -75,10 +75,6 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.MELTING, RTMeltingRecipe.SERIALIZER)
 
     @JvmField
-    val SMELTING: RecipeSerializer<RTSmeltingRecipe> =
-        register(RagiumConstants.SMELTING, RTSmeltingRecipe.SERIALIZER)
-
-    @JvmField
     val PYROLYZING: RecipeSerializer<RTPyrolyzingRecipe> =
         register(RagiumConstants.PYROLYZING, RTPyrolyzingRecipe.SERIALIZER)
 
@@ -115,4 +111,7 @@ data object RagiumRecipeSerializers {
     // Electronics
 
     // Arcane
+    @JvmField
+    val ENCHANTING: RecipeSerializer<RTEnchantingRecipe> =
+        register(RagiumConstants.ENCHANTING, RTEnchantingRecipe.SERIALIZER)
 }

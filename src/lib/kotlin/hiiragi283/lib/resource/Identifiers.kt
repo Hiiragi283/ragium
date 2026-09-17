@@ -62,6 +62,13 @@ val Identifier.itemId: Identifier get() = when {
     else -> this.withPrefix("item/")
 }
 
+/**
+ * @see Identifier.toDebugFileName
+ * @author Hiiragi Tsubasa
+ * @since 26.1.6
+ */
+val Identifier.debugPath: String get() = this.path.replace('/', '_')
+
 //    ResourceKey    //
 
 /**

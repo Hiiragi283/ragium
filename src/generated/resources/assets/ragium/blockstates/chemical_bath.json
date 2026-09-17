@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,is_active=false": {
-      "model": "ragium:block/chemical_bath",
+      "model": "ragium:block/machine/chemical",
       "y": 90
     },
     "facing=east,is_active=true": {
-      "model": "ragium:block/chemical_bath_active",
+      "model": "ragium:block/chemical_bath",
       "y": 90
     },
     "facing=north,is_active=false": {
-      "model": "ragium:block/chemical_bath"
+      "model": "ragium:block/machine/chemical"
     },
     "facing=north,is_active=true": {
-      "model": "ragium:block/chemical_bath_active"
+      "model": "ragium:block/chemical_bath"
     },
     "facing=south,is_active=false": {
-      "model": "ragium:block/chemical_bath",
+      "model": "ragium:block/machine/chemical",
       "y": 180
     },
     "facing=south,is_active=true": {
-      "model": "ragium:block/chemical_bath_active",
+      "model": "ragium:block/chemical_bath",
       "y": 180
     },
     "facing=west,is_active=false": {
-      "model": "ragium:block/chemical_bath",
+      "model": "ragium:block/machine/chemical",
       "y": 270
     },
     "facing=west,is_active=true": {
-      "model": "ragium:block/chemical_bath_active",
+      "model": "ragium:block/chemical_bath",
       "y": 270
     }
   }

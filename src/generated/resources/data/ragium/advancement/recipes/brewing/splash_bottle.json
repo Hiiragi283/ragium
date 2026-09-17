@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gunpowders": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:gunpowders"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:splash_bottle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gunpowders"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:splash_bottle"
+    ]
+  }
+}
