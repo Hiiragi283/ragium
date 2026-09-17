@@ -10,7 +10,6 @@ import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToItemAndFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
-import hiiragi283.lib.item.ItemStack
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
@@ -185,7 +184,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                     HTBottleType.entries.map { bottleType: HTBottleType ->
                         RagiumRecipeBuilders.draining {
                             +HTJeiRecipeHelper.fakeItem(
-                                ItemStack(bottleType.filledItem, 1, HTPotionHelper.createPotionPatch(potion))
+                                bottleType.filledItem.toStack(patch = HTPotionHelper.createPotionPatch(potion))
                             )
                             itemResult { +bottleType.emptyItem }
                             fluidResult { from(HTPotionHelper.createFluid(potion, HTPotionHelper.BOTTLE_AMOUNT)) }
@@ -208,7 +207,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                                 amount = HTPotionHelper.BOTTLE_AMOUNT
                             }
                             result {
-                                from(ItemStack(bottleType.filledItem, 1, HTPotionHelper.createPotionPatch(potion)))
+                                from(bottleType.filledItem.toStack(patch = HTPotionHelper.createPotionPatch(potion)))
                             }
                             recipeId replace potion.getKeyOrThrow()
                                 .identifier()
