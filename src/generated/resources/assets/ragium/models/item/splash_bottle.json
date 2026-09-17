@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/splash_bottle"
+    "layer0": "minecraft:item/splash_potion"
   }
 }

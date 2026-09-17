@@ -8,6 +8,7 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.HTSimpleBlockItemWithKey
 import hiiragi283.lib.resource.HTValueWithId
 import hiiragi283.lib.resource.blockId
+import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.HTMachineBlock
@@ -137,12 +138,23 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         buildSet {
             addAll(RagiumItems.REGISTER.asSequence())
 
+            remove(RagiumItems.SPLASH_BOTTLE)
+            remove(RagiumItems.LINGERING_BOTTLE)
+
             remove(RagiumItems.MEMORY_DISC)
 
             removeAll(RagiumItems.MACHINE_PARTS.values)
             removeAll(handheld)
         }.forEach { generators.generateFlatItem(it) }
 
+        generators.generateFlatItem(
+            RagiumItems.SPLASH_BOTTLE,
+            layer = vanillaId(HTConstants.ITEM, "splash_potion")
+        )
+        generators.generateFlatItem(
+            RagiumItems.LINGERING_BOTTLE,
+            layer = vanillaId(HTConstants.ITEM, "lingering_potion")
+        )
         generators.generateFlatItem(RagiumItems.MEMORY_DISC, template = ModelTemplates.MUSIC_DISC)
 
         for ((machineType: HTMachineType, parts: HTSimpleDeferredItem) in RagiumItems.MACHINE_PARTS) {
