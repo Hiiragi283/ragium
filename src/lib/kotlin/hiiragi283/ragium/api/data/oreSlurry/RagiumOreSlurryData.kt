@@ -1,14 +1,13 @@
-package hiiragi283.ragium.common.data.oreSlurry
+package hiiragi283.ragium.api.data.oreSlurry
 
 import hiiragi283.lib.registry.createKey
 import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.translatableText
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
 import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.HTMaterialAccess
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
@@ -43,7 +42,12 @@ data object RagiumOreSlurryData {
         }
 
         fun register(key: ResourceKey<HTOreSlurryData>, part: HTItemPart, material: RagiumMaterial, count: Int = 1) {
-            register(key, part.tagPrefix.itemTagKey(material), RagiumItems.getOrThrow(part, material), count)
+            register(
+                key,
+                part.tagPrefix.itemTagKey(material),
+                HTMaterialAccess.INSTANCE.getMaterialItem(part, material)?.item,
+                count
+            )
         }
 
         register(COPPER, HTItemPart.DUST, RagiumMaterial.Metal.COPPER, 3)
