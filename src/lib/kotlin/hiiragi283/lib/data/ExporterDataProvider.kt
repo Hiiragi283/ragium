@@ -61,11 +61,11 @@ abstract class ExporterDataProvider<R : Any>(
         .thenCompose { registries: HolderLookup.Provider ->
             val map: MutableMap<ResourceKey<R>, WithConditions<R>> = Object2ObjectOpenHashMap()
             this.registries = registries
-            this.exporter = ConditionalExporter { id: ResourceKey<R>, value: R, conditions: List<ICondition> ->
-                val fixedId: ResourceKey<R> = modifyId(id)
-                val oldValue: WithConditions<R>? = map.put(fixedId, WithConditions(conditions, value))
+            this.exporter = ConditionalExporter { key: ResourceKey<R>, value: R, conditions: List<ICondition> ->
+                val fixedKey: ResourceKey<R> = modifyId(key)
+                val oldValue: WithConditions<R>? = map.put(fixedKey, WithConditions(conditions, value))
                 if (oldValue != null) {
-                    error("Duplicate registration for $fixedId, new=$value, old=$oldValue")
+                    error("Duplicate registration for $fixedKey, new=$value, old=$oldValue")
                 }
             }
             exportValues()
