@@ -18,7 +18,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.recipe.HTOreSlurryData
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
@@ -27,7 +27,7 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
-import hiiragi283.ragium.common.data.recipe.RagiumOreSlurryData
+import hiiragi283.ragium.common.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext

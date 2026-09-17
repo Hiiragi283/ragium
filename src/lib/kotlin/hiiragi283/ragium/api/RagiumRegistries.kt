@@ -5,7 +5,7 @@ import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.lib.recipe.result.HTFluidResultType
 import hiiragi283.lib.recipe.result.HTItemResultType
 import hiiragi283.lib.resource.toId
-import hiiragi283.ragium.api.data.recipe.HTOreSlurryData
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.neoforged.bus.api.SubscribeEvent

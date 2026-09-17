@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data.oreSlurry
 
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.text.Text

@@ -5,7 +5,7 @@ import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.recipe.HTOreSlurryDataHelper
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryDataHelper
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import net.minecraft.world.item.ItemInstance
 import net.neoforged.neoforge.fluids.FluidInstance

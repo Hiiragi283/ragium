@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data.oreSlurry
 
 import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants

@@ -2,7 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.lib.data.createLootTables
 import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.common.data.recipe.RagiumOreSlurryData
+import hiiragi283.ragium.common.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
 import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider

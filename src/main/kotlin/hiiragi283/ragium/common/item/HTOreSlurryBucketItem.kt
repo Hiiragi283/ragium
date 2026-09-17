@@ -4,7 +4,7 @@ import hiiragi283.lib.item.HTSubCreativeTabContents
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.text.translatableText
 import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.api.data.recipe.HTOreSlurryDataHelper
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryDataHelper
 import hiiragi283.ragium.common.transfer.item.HTCustomBucketItemHandler
 import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component

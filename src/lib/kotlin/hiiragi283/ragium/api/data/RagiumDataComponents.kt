@@ -4,7 +4,7 @@ import hiiragi283.lib.data.DataComponentType
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.api.data.recipe.HTOreSlurryData
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.codec.ByteBufCodecs

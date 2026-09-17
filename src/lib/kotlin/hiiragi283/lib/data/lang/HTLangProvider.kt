@@ -7,7 +7,7 @@ import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTPotionContent
 import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.HTHasTranslationKey
-import hiiragi283.ragium.api.data.recipe.HTOreSlurryData
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.enchantment.Enchantment
