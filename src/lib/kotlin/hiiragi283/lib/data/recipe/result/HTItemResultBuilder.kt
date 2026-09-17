@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.lib.data.recipe
+package hiiragi283.lib.data.recipe.result
 
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.registry.HTDeferredBlockAndItem

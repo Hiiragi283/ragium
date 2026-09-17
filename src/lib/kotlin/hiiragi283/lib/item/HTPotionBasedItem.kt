@@ -5,12 +5,10 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.Identifier
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
-import kotlin.jvm.optionals.getOrElse
 
 /**
  * ポーションに基づいた[Item]の拡張クラスです。
@@ -29,8 +27,8 @@ open class HTPotionBasedItem(properties: Properties) :
 
     override fun getCreatorModId(registries: HolderLookup.Provider, itemStack: ItemStack): String? =
         HTPotionHelper.getPotionId(itemStack)
-            .map(Identifier::getNamespace)
-            .getOrElse { super.getCreatorModId(registries, itemStack) }
+            ?.namespace
+            ?: super.getCreatorModId(registries, itemStack)
 
     //    HTSubCreativeTabContents    //
 

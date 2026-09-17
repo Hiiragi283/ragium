@@ -3,7 +3,7 @@ package hiiragi283.lib.recipe.base
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.data.recipe.HTFluidToRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTFluidToRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult

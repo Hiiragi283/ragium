@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.lib.data.recipe
+package hiiragi283.lib.data.recipe.builder
 
 import hiiragi283.lib.data.ConditionBuilder
 import hiiragi283.lib.data.ConditionalExporter
@@ -84,13 +84,6 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
          */
         infix fun suffix(suffix: String) {
             modify { id: Identifier -> id.withSuffix(suffix) }
-        }
-
-        /**
-         * 現在の[ID][Identifier]を[path]で置換します。
-         */
-        infix fun replace(path: String) {
-            modify { id: Identifier -> id.withPath(path) }
         }
 
         /**

@@ -2,15 +2,15 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.color.HTColoredCollection
 import hiiragi283.lib.color.VanillaColoredCollections
-import hiiragi283.lib.data.recipe.HTItemIngredientBuilder
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
@@ -768,7 +768,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +RagiumFluids.HONEY
                 amount = 250
             }
-            recipeId replace "honey_from_bottle"
+            recipeId replace id("honey_from_bottle")
         }.save(exporter)
         // Wet Sponge -> Sponge + Water
         RagiumRecipeBuilders.draining {
@@ -782,7 +782,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { items { +Items.HONEYCOMB } }
             itemResult { +RagiumItems.BEESWAX }
             fluidResult { +RagiumFluids.HONEY }
-            recipeId replace "honey_from_comb"
+            recipeId replace id("honey_from_comb")
         }.save(exporter)
     }
 

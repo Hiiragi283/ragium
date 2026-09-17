@@ -9,7 +9,6 @@ import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.util.DFUEither
 import hiiragi283.lib.util.fold
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
@@ -67,7 +66,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
 
     override fun create(): FluidStack = entry.create(amount)
 
-    override fun getId(): Identifier = entry.getId()
+    override fun getId(): Identifier? = entry.getId()
 
     //    Entry    //
 
@@ -101,7 +100,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
 
         fun toResult(amount: Int = FluidType.BUCKET_VOLUME): HTFluidResult = HTFluidResult(this, amount)
 
-        fun getId(): Identifier
+        fun getId(): Identifier?
     }
 
     @JvmRecord
@@ -165,8 +164,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
 
         override fun create(amount: Int): FluidStack = HTPotionHelper.createFluid(contents, amount)
 
-        override fun getId(): Identifier =
-            HTPotionHelper.getPotionId(contents).orElseGet { RagiumAPI.id(HTConstants.POTION) }
+        override fun getId(): Identifier? = HTPotionHelper.getPotionId(contents)
     }
 }
 

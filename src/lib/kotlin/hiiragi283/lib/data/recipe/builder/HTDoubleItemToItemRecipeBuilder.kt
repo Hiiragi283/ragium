@@ -1,7 +1,9 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.lib.data.recipe
+package hiiragi283.lib.data.recipe.builder
 
+import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
+import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -20,7 +22,7 @@ import kotlin.contracts.contract
  */
 class HTDoubleItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
     HTProgressRecipeBuilder<RECIPE>(prefix) {
-    override fun getRecipeId(): Identifier = result.getId()
+    override fun getRecipeId(): Identifier? = result.getId()
 
     override fun createRecipe(): RECIPE = factory.create(primary, secondary, result, progressData)
 

@@ -1,13 +1,13 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data.recipe.builder
 
-import hiiragi283.lib.data.recipe.HTDoubleItemToItemRecipeBuilder
-import hiiragi283.lib.data.recipe.HTFluidToRecipeBuilder
-import hiiragi283.lib.data.recipe.HTItemAndFluidToRecipeBuilder
-import hiiragi283.lib.data.recipe.HTItemToDoubleItemRecipeBuilder
-import hiiragi283.lib.data.recipe.HTItemToItemAndFluidRecipeBuilder
-import hiiragi283.lib.data.recipe.HTItemToRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTDoubleItemToItemRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTFluidToRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemToRecipeBuilder
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe

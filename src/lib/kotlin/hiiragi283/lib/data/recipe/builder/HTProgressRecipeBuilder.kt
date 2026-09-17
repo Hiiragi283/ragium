@@ -1,4 +1,4 @@
-package hiiragi283.lib.data.recipe
+package hiiragi283.lib.data.recipe.builder
 
 import hiiragi283.lib.recipe.base.HTProgressData
 import net.minecraft.world.item.crafting.Recipe

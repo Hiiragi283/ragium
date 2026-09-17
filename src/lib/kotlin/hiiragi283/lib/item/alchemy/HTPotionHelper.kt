@@ -16,7 +16,7 @@ import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
-import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * @author Hiiragi Tsubasa
@@ -64,13 +64,14 @@ data object HTPotionHelper {
     // Potion Id
 
     @JvmStatic
-    fun getPotionId(getter: DataComponentGetter): Optional<Identifier> = getContents(getter).let(::getPotionId)
+    fun getPotionId(getter: DataComponentGetter): Identifier? = getContents(getter).let(::getPotionId)
 
     @JvmStatic
-    fun getPotionId(contents: PotionContents): Optional<Identifier> = contents
+    fun getPotionId(contents: PotionContents): Identifier? = contents
         .potion()
         .flatMap(Holder<Potion>::unwrapKey)
         .map(ResourceKey<Potion>::identifier)
+        .getOrNull()
 
     // Name
 

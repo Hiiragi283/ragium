@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.lib.data.recipe
+package hiiragi283.lib.data.recipe.ingredient
 
 import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient

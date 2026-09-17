@@ -1,11 +1,11 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data.recipe.builder
 
-import hiiragi283.lib.data.recipe.HTFluidIngredientBuilder
-import hiiragi283.lib.data.recipe.HTFluidResultBuilder
-import hiiragi283.lib.data.recipe.HTItemResultBuilder
-import hiiragi283.lib.data.recipe.HTProgressRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
+import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
+import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
+import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -19,7 +19,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class RTRefiningRecipeBuilder : HTProgressRecipeBuilder<RTRefiningRecipe>(RagiumConstants.REFINING) {
-    override fun getRecipeId(): Identifier = fluidResult.getId()
+    override fun getRecipeId(): Identifier? = fluidResult.getId()
 
     override fun createRecipe(): RTRefiningRecipe = RTRefiningRecipe(ingredient, itemResult, fluidResult, progressData)
 

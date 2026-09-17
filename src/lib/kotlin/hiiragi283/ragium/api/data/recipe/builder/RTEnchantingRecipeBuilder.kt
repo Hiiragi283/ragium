@@ -1,9 +1,9 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data.recipe.builder
 
-import hiiragi283.lib.data.recipe.HTItemIngredientBuilder
-import hiiragi283.lib.data.recipe.HTProgressRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
+import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
 import hiiragi283.lib.item.component.buildItemEnchantments
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.registry.getKeyOrThrow

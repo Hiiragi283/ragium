@@ -5,7 +5,7 @@ import hiiragi283.lib.item.component.PotionContents
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.RagiumRecipeBuilders
+import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.RagiumMaterial
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -62,7 +62,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                     customName = "hunger"
                 )
             }
-            recipeId replace "potion/hunger"
+            recipeId replace id("potion/hunger")
         }.save(exporter)
         // Wither
         // Health Boost
@@ -82,7 +82,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                     customName = "darkness"
                 )
             }
-            recipeId replace "potion/darkness"
+            recipeId replace id("potion/darkness")
         }.save(exporter)
 
         // Golden Apple
@@ -96,7 +96,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                     customName = "golden_apple"
                 )
             }
-            recipeId replace "potion/golden_apple"
+            recipeId replace id("potion/golden_apple")
         }.save(exporter)
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.ENCHANTED_GOLDEN_APPLE } }
@@ -108,7 +108,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                     customName = "enchanted_golden_apple"
                 )
             }
-            recipeId replace "potion/enchanted_golden_apple"
+            recipeId replace id("potion/enchanted_golden_apple")
         }.save(exporter)
     }
 

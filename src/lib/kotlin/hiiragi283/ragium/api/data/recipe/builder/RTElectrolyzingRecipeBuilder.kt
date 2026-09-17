@@ -1,11 +1,11 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data.recipe.builder
 
-import hiiragi283.lib.data.recipe.HTFluidIngredientBuilder
-import hiiragi283.lib.data.recipe.HTFluidResultBuilder
-import hiiragi283.lib.data.recipe.HTItemIngredientBuilder
-import hiiragi283.lib.data.recipe.HTProgressRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
+import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
+import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
+import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
@@ -20,7 +20,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class RTElectrolyzingRecipeBuilder : HTProgressRecipeBuilder<RTElectrolyzingRecipe>(RagiumConstants.ELECTROLYZING) {
-    override fun getRecipeId(): Identifier = results.first().getId()
+    override fun getRecipeId(): Identifier? = results.firstOrNull()?.getId()
 
     override fun createRecipe(): RTElectrolyzingRecipe =
         RTElectrolyzingRecipe(itemIngredient, fluidIngredient, results, progressData)

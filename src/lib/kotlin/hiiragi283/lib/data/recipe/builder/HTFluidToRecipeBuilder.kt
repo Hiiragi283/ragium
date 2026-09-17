@@ -1,7 +1,10 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.lib.data.recipe
+package hiiragi283.lib.data.recipe.builder
 
+import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
+import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
+import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
@@ -18,7 +21,7 @@ abstract class HTFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : R
     prefix: String,
     private val factory: Factory<RESULT, RECIPE>
 ) : HTProgressRecipeBuilder<RECIPE>(prefix) {
-    override fun getRecipeId(): Identifier = result.getId()
+    override fun getRecipeId(): Identifier? = result.getId()
 
     override fun createRecipe(): RECIPE = factory.create(ingredient, result, progressData)
 
