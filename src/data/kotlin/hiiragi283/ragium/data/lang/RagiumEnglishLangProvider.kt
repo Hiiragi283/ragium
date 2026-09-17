@@ -65,7 +65,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.MACHINE_CASING, "Machine Casing")
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")
-        add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
+        // add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
         addFluid(RagiumFluids.OMINOUS_FLUX, "Ominous Flux")
         addFluid(RagiumFluids.MOLTEN_GLASS, "Molten Glass")
@@ -106,6 +106,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
         add(RagiumItems.BEESWAX, "Beeswax")
+        add(RagiumItems.SPLASH_BOTTLE, "Splash Bottle")
+        add(RagiumItems.LINGERING_BOTTLE, "Lingering Bottle")
         add(RagiumItems.ELDER_HEART, "Elder Heart")
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")

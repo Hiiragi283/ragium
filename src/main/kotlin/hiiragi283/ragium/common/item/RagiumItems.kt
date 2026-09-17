@@ -126,6 +126,12 @@ data object RagiumItems {
     @JvmField
     val BEESWAX: HTSimpleDeferredItem = REGISTER.registerItem("beeswax", ::HoneycombItem)
 
+    @JvmField
+    val SPLASH_BOTTLE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("splash_bottle")
+
+    @JvmField
+    val LINGERING_BOTTLE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("lingering_bottle")
+
     // Electronics
 
     // Arcane

@@ -61,7 +61,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.MACHINE_CASING, "機械ケーシング")
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
-        add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
+        // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
         addFluid(RagiumFluids.OMINOUS_FLUX, "不吉な流動体")
         addFluid(RagiumFluids.MOLTEN_GLASS, "溶融ガラス")
@@ -102,6 +102,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
         add(RagiumItems.BEESWAX, "密猟")
+        add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
+        add(RagiumItems.LINGERING_BOTTLE, "残留瓶")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")

@@ -11,7 +11,6 @@ import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.recipe.HTRecipeType
-import hiiragi283.lib.recipe.display.HTPotionSlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -106,7 +105,6 @@ data object Ragium : HTCommonMod() {
             )
         }
         event.register(Registries.DATA_COMPONENT_TYPE) { helper ->
-            helper.register(RagiumAPI.id(HTConstants.BOTTLE_TYPE), RagiumDataComponents.BOTTLE_TYPE)
             helper.register(RagiumAPI.id(HTConstants.ENERGY), RagiumDataComponents.ENERGY)
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
             helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
@@ -126,9 +124,6 @@ data object Ragium : HTCommonMod() {
             for (recipeType: HTRecipeType<*> in RagiumRecipeTypes.allTypes) {
                 helper.register(recipeType.keyOrThrow, recipeType)
             }
-        }
-        event.register(Registries.SLOT_DISPLAY) { helper ->
-            helper.register(RagiumAPI.id(HTConstants.POTION), HTPotionSlotDisplay.TYPE)
         }
 
         event.register(NeoForgeRegistries.Keys.FLUID_INGREDIENT_TYPES) { helper ->
