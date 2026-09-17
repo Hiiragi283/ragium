@@ -178,6 +178,18 @@ data object HTStreamCodecs {
         ByteBufCodecs.holderRegistry(registryKey)
 
     /**
+     * 指定した[registryKey]から[Holder]の[StreamCodec]を返します。
+     * @param T レジストリの要素のクラス
+     * @param directCodec [Holder.Direct]に対する[StreamCodec]
+     * @since 26.1.6
+     */
+    @JvmStatic
+    fun <T : Any> holder(
+        registryKey: RegistryKey<T>,
+        directCodec: StreamCodec<in RegistryFriendlyByteBuf, T>
+    ): StreamCodec<RegistryFriendlyByteBuf, Holder<T>> = ByteBufCodecs.holder(registryKey, directCodec)
+
+    /**
      * 指定した[registryKey]から[HolderSet]の[StreamCodec]を返します。
      * @param T レジストリの要素のクラス
      */

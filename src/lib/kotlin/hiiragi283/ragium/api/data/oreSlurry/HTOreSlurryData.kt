@@ -4,11 +4,16 @@ import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
+import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.util.toOptional
+import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStackTemplate
 import java.util.Optional
@@ -27,7 +32,7 @@ data class HTOreSlurryData @JvmOverloads constructor(
 ) {
     companion object {
         @JvmField
-        val CODEC: Codec<HTOreSlurryData> = HTCodecs.record { instance ->
+        val DIRECT_CODEC: Codec<HTOreSlurryData> = HTCodecs.record { instance ->
             instance.group(
                 HTCodecs.TEXT.fieldOf("title").forGetter(HTOreSlurryData::title),
                 HTCodecs.holderSet(Registries.ITEM).fieldOf(HTConstants.RESULT).forGetter(HTOreSlurryData::result),
@@ -35,6 +40,26 @@ data class HTOreSlurryData @JvmOverloads constructor(
                 HTCodecs.POSITIVE_INT.optionalFieldOf(HTConstants.COUNT, 1).forGetter(HTOreSlurryData::count)
             ).apply(instance, ::HTOreSlurryData)
         }
+
+        @JvmField
+        val CODEC: Codec<Holder<HTOreSlurryData>> = HTCodecs.holder(RagiumRegistries.Keys.ORE_SLURRY_DATA, DIRECT_CODEC)
+
+        @JvmField
+        val DIRECT_STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTOreSlurryData> = StreamCodec.composite(
+            HTStreamCodecs.TEXT,
+            HTOreSlurryData::title,
+            HTStreamCodecs.holderSet(Registries.ITEM),
+            HTOreSlurryData::result,
+            HTStreamCodecs.optional(Item.STREAM_CODEC),
+            HTOreSlurryData::fallback,
+            ByteBufCodecs.VAR_INT,
+            HTOreSlurryData::count,
+            ::HTOreSlurryData
+        )
+
+        @JvmField
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Holder<HTOreSlurryData>> =
+            HTStreamCodecs.holder(RagiumRegistries.Keys.ORE_SLURRY_DATA, DIRECT_STREAM_CODEC)
     }
 
     @JvmOverloads constructor(title: Text, result: HolderSet<Item>, fallback: Holder<Item>?, count: Int = 1) : this(

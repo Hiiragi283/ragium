@@ -180,7 +180,11 @@ data object Ragium : HTCommonMod() {
     }
 
     override fun registerDynamicRegistries(event: DataPackRegistryEvent.NewRegistry) {
-        event.dataPackRegistry(RagiumRegistries.Keys.ORE_SLURRY_DATA, HTOreSlurryData.CODEC, HTOreSlurryData.CODEC)
+        event.dataPackRegistry(
+            RagiumRegistries.Keys.ORE_SLURRY_DATA,
+            HTOreSlurryData.DIRECT_CODEC,
+            HTOreSlurryData.DIRECT_CODEC
+        )
     }
 
     override fun commonSetup(event: FMLCommonSetupEvent) {
