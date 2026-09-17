@@ -86,15 +86,25 @@ class HTItemResultBuilder @PublishedApi internal constructor() {
     }
 
     // Enchanted Book
+
+    /**
+     * @since 26.1.6
+     */
     @JvmName("unaryPlusEnchantment")
     operator fun Holder<Enchantment>.unaryPlus() {
         +HTItemResult.EnchantedBookEntry(this)
     }
 
+    /**
+     * @since 26.1.6
+     */
     operator fun ItemEnchantments.unaryPlus() {
         +HTItemResult.EnchantedBookEntry(this)
     }
 
+    /**
+     * @since 26.1.6
+     */
     inline fun enchantedBook(builderAction: ItemEnchantments.Mutable.() -> Unit) {
         +buildItemEnchantments(builderAction = builderAction)
     }

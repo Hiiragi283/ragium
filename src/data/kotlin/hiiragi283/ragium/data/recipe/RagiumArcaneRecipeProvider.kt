@@ -23,9 +23,7 @@ class RagiumArcaneRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
                 count = 64
             }
-            result {
-                +registries.getOrThrow(Enchantments.PROTECTION)
-            }
+            result { +registries.getOrThrow(Enchantments.PROTECTION) }
         }.save(exporter)
         // Diamond -> Protection + Unbreaking
         RagiumRecipeBuilders.enchanting {
