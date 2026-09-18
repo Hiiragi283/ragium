@@ -1,0 +1,16 @@
+{
+  "type": "ragium:reacting",
+  "item_result": {
+    "count": 1,
+    "id": "ragium:plastic_plate"
+  },
+  "primary_ingredient": {
+    "amount": 500,
+    "fluids": "#c:naphtha"
+  },
+  "secondary_ingredient": {
+    "amount": 250,
+    "fluids": "#c:oxygen"
+  },
+  "time": 200
+}

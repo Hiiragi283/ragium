@@ -1,0 +1,12 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": {
+    "count": 1,
+    "items": "ragium:silicon_wafer"
+  },
+  "results": {
+    "count": 8,
+    "id": "ragium:circuit_chip"
+  },
+  "time": 200
+}

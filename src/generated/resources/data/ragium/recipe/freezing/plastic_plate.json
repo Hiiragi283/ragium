@@ -1,0 +1,12 @@
+{
+  "type": "ragium:freezing",
+  "ingredient": {
+    "amount": 500,
+    "fluids": "#c:naphtha"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:plastic_plate"
+  },
+  "time": 200
+}
