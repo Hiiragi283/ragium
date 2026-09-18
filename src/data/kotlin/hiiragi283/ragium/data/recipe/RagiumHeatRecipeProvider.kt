@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -48,6 +49,31 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             secondary { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
             result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
+        }.save(exporter)
+        // Iron + Coal -> Sooty Iron
+        RagiumRecipeBuilders.alloying {
+            primary { +dustOrIngot(RagiumMaterial.Metal.IRON) }
+            secondary {
+                items {
+                    +Items.COAL
+                    +Items.CHARCOAL
+                }
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            recipeId suffix "_by_coals"
+        }.save(exporter)
+        // 2x Iron + Cokes -> 2x Sooty Iron
+        RagiumRecipeBuilders.alloying {
+            primary {
+                +dustOrIngot(RagiumMaterial.Metal.IRON)
+                count = 2
+            }
+            secondary { +holderSet(RagiumTags.Items.COKES) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+                count = 2
+            }
+            recipeId suffix "_by_cokes"
         }.save(exporter)
         // Sooty Iron + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {

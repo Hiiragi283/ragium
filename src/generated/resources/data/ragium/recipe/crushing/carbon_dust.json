@@ -2,11 +2,11 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "items": "ragium:coal_coke"
+    "items": "#ragium:cokes"
   },
   "results": {
     "count": 1,
-    "id": "ragium:coal_coke_dust"
+    "id": "ragium:carbon_dust"
   },
   "time": 200
 }

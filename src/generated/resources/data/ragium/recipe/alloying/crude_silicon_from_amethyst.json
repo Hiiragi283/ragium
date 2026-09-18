@@ -1,0 +1,22 @@
+{
+  "type": "ragium:alloying",
+  "primary_ingredient": {
+    "count": 4,
+    "items": {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/amethyst",
+        "#c:gems/amethyst"
+      ]
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:crude_silicon"
+  },
+  "secondary_ingredient": {
+    "count": 1,
+    "items": "#ragium:cokes"
+  },
+  "time": 200
+}

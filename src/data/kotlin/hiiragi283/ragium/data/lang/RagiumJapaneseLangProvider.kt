@@ -104,6 +104,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.BEESWAX, "密猟")
         add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
         add(RagiumItems.LINGERING_BOTTLE, "残留瓶")
+        add(RagiumItems.CRUDE_SILICON, "粗製シリコン")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")

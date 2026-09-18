@@ -397,13 +397,18 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
     private fun crushMaterial() {
         // XX Dust
-        for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
-            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
-            RagiumRecipeBuilders.crushing {
-                ingredient { items { +baseItem } }
-                result { +RagiumItems.getOrThrow(HTItemPart.DUST, fuel) }
-            }.save(exporter)
-        }
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.COAL } }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.COAL) }
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.CHARCOAL } }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.CHARCOAL) }
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(RagiumTags.Items.COKES) }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.CARBON) }
+        }.save(exporter)
 
         for (gem: RagiumMaterial.Gem in RagiumMaterial.Gem.entries) {
             RagiumRecipeBuilders.crushing {

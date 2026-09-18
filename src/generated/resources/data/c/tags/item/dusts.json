@@ -2,9 +2,9 @@
   "values": [
     "#c:dusts/amethyst",
     "#c:dusts/borax",
+    "#c:dusts/carbon",
     "#c:dusts/charcoal",
     "#c:dusts/coal",
-    "#c:dusts/coal_coke",
     "#c:dusts/copper",
     "#c:dusts/diamond",
     "#c:dusts/echo",
@@ -21,6 +21,7 @@
     "#c:dusts/quartz",
     "#c:dusts/raginite",
     "#c:dusts/salt",
+    "#c:dusts/silicon",
     "#c:dusts/sulfur",
     "#c:dusts/wood"
   ]

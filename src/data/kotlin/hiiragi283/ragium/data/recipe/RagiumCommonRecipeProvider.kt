@@ -2,10 +2,12 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.tag.CommonTagPrefixes
+import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
@@ -25,6 +27,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     override fun exportValues() {
         heat()
         chemical()
+        electronics()
     }
 
     override fun getName(): String = "Common Recipes"
@@ -78,7 +81,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.COAL_COKE) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.CARBON) }
             fluidResult {
                 +RagiumFluids.COAL_TAR
                 amount = 500
@@ -305,5 +308,59 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
         // Clay + Liquid Explosive -> Plastic Explosive TODO
+    }
+
+    //    Electronics    //
+
+    private fun electronics() {
+        silicon()
+    }
+
+    private fun silicon() {
+        // Quartz + Coal Coke -> Crude Si
+        RagiumRecipeBuilders.alloying {
+            primary { +dustOrGem(RagiumMaterial.Gem.QUARTZ) }
+            secondary { +holderSet(RagiumTags.Items.COKES) }
+            result { +RagiumItems.CRUDE_SILICON }
+            recipeId suffix "_from_quartz"
+        }.save(exporter)
+        RagiumRecipeBuilders.alloying {
+            primary { +holderSet(RagiumTags.BlockItem.QUARTZ_BLOCKS.item) }
+            secondary {
+                +holderSet(RagiumTags.Items.COKES)
+                count = 4
+            }
+            result {
+                +RagiumItems.CRUDE_SILICON
+                count = 4
+            }
+            time *= 4
+            recipeId suffix "_from_quartz_block"
+        }.save(exporter)
+        // Amethyst + Coal Coke -> Crude Si
+        RagiumRecipeBuilders.alloying {
+            primary {
+                +dustOrGem(RagiumMaterial.Gem.AMETHYST)
+                count = 4
+            }
+            secondary { +holderSet(RagiumTags.Items.COKES) }
+            result { +RagiumItems.CRUDE_SILICON }
+            recipeId suffix "_from_amethyst"
+        }.save(exporter)
+        RagiumRecipeBuilders.alloying {
+            primary { items { +Items.AMETHYST_BLOCK } }
+            secondary { +holderSet(RagiumTags.Items.COKES) }
+            result { +RagiumItems.CRUDE_SILICON }
+            recipeId suffix "_from_amethyst_block"
+        }.save(exporter)
+        // Crude Si + HCl -> Si Dust
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(HTCommonTags.Items.SILICON) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.HYDROCHLORIC_ACID)
+                amount = 125
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.SILICON) }
+        }.save(exporter)
     }
 }

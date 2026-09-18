@@ -108,6 +108,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.BEESWAX, "Beeswax")
         add(RagiumItems.SPLASH_BOTTLE, "Splash Bottle")
         add(RagiumItems.LINGERING_BOTTLE, "Lingering Bottle")
+        add(RagiumItems.CRUDE_SILICON, "Crude Silicon")
         add(RagiumItems.ELDER_HEART, "Elder Heart")
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
