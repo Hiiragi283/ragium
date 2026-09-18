@@ -2,10 +2,13 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.tag.CommonTagPrefixes
+import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.HTMachineType
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
@@ -25,6 +28,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     override fun exportValues() {
         heat()
         chemical()
+        electronics()
     }
 
     override fun getName(): String = "Common Recipes"
@@ -78,7 +82,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.COAL_COKE) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.CARBON) }
             fluidResult {
                 +RagiumFluids.COAL_TAR
                 amount = 500
@@ -149,7 +153,25 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             recipeId suffix "_from_naphtha"
         }.save(exporter)
-        // Naphtha + O2 -> Plastic TODO
+        // Naphtha -> Plastic
+        RagiumRecipeBuilders.freezing {
+            ingredient {
+                +holderSet(RagiumFluids.NAPHTHA)
+                amount /= 2
+            }
+            result { +RagiumItems.PLASTIC_PLATE }
+        }.save(exporter)
+        RagiumRecipeBuilders.reacting {
+            primaryIngredient {
+                +holderSet(RagiumFluids.NAPHTHA)
+                amount /= 2
+            }
+            secondaryIngredient {
+                +holderSet(RagiumFluids.OXYGEN)
+                amount /= 4
+            }
+            itemResult { +RagiumItems.PLASTIC_PLATE }
+        }.save(exporter)
         // Naphtha + Redstone -> Anti-rust Oil
         RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
@@ -305,5 +327,111 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
         // Clay + Liquid Explosive -> Plastic Explosive TODO
+    }
+
+    //    Electronics    //
+
+    private fun electronics() {
+        silicon()
+    }
+
+    private fun silicon() {
+        // Quartz + Coal Coke -> Crude Si
+        RagiumRecipeBuilders.alloying {
+            primary { +dustOrGem(RagiumMaterial.Gem.QUARTZ) }
+            secondary { +holderSet(RagiumTags.Items.COKES) }
+            result { +RagiumItems.CRUDE_SILICON }
+            recipeId suffix "_from_quartz"
+        }.save(exporter)
+        RagiumRecipeBuilders.alloying {
+            primary { +holderSet(RagiumTags.BlockItem.QUARTZ_BLOCKS.item) }
+            secondary {
+                +holderSet(RagiumTags.Items.COKES)
+                count = 4
+            }
+            result {
+                +RagiumItems.CRUDE_SILICON
+                count = 4
+            }
+            time *= 4
+            recipeId suffix "_from_quartz_block"
+        }.save(exporter)
+        // Amethyst + Coal Coke -> Crude Si
+        RagiumRecipeBuilders.alloying {
+            primary {
+                +dustOrGem(RagiumMaterial.Gem.AMETHYST)
+                count = 4
+            }
+            secondary { +holderSet(RagiumTags.Items.COKES) }
+            result { +RagiumItems.CRUDE_SILICON }
+            recipeId suffix "_from_amethyst"
+        }.save(exporter)
+        RagiumRecipeBuilders.alloying {
+            primary { items { +Items.AMETHYST_BLOCK } }
+            secondary { +holderSet(RagiumTags.Items.COKES) }
+            result { +RagiumItems.CRUDE_SILICON }
+            recipeId suffix "_from_amethyst_block"
+        }.save(exporter)
+
+        // Crude Si + HCl -> Si Dust
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(HTCommonTags.Items.SILICON) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.HYDROCHLORIC_ACID)
+                amount = 125
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.SILICON) }
+        }.save(exporter)
+        // Si Dust + Redstone -> Silicon Wafer
+        RagiumRecipeBuilders.alloying {
+            primary {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.SILICON)
+                count = 8
+            }
+            secondary { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.RAGINITE) }
+            result { +RagiumItems.SILICON_WAFER }
+        }.save(exporter)
+        // Silicon Wafer -> Circuit Chip
+        RagiumRecipeBuilders.cutting {
+            ingredient { items { +RagiumItems.SILICON_WAFER } }
+            result {
+                +RagiumItems.CIRCUIT_CHIP
+                count = 8
+            }
+        }.save(exporter)
+
+        // Plastic + Gold Dust -> Circuit Board
+        RagiumRecipeBuilders.alloying {
+            primary { +holderSet(HTCommonTags.Items.PLASTICS) }
+            secondary { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
+            result { +RagiumItems.CIRCUIT_BOARD }
+        }.save(exporter)
+        // Circuit Chip + Circuit Board -> Electric Circuit
+        RagiumRecipeBuilders.assembling {
+            primary {
+                items { +RagiumItems.CIRCUIT_CHIP }
+                count = 2
+            }
+            secondary { items { +RagiumItems.CIRCUIT_BOARD } }
+            result { +RagiumItems.ELECTRIC_CIRCUIT }
+        }.save(exporter)
+        // Machine Parts
+        RagiumRecipeBuilders.assembling {
+            primary {
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
+                count = 4
+            }
+            secondary { items { +RagiumItems.ELECTRIC_CIRCUIT } }
+            result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
+            recipeId suffix "_by_black_metal"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            primary {
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.VOID_METAL)
+                count = 2
+            }
+            secondary { items { +RagiumItems.ELECTRIC_CIRCUIT } }
+            result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
+        }.save(exporter)
     }
 }

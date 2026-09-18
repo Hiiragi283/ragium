@@ -27,6 +27,12 @@ data object HTCommonTags {
     }
 
     data object Items {
+        /**
+         * @since 26.1.7
+         */
+        @JvmField
+        val COAL_COKE: TagKey<Item> = create("coal_coke")
+
         @JvmField
         val FOODS_DOUGH_WHEAT: TagKey<Item> = create("foods", "dough", "wheat")
 
@@ -38,6 +44,12 @@ data object HTCommonTags {
 
         @JvmField
         val PAPER: TagKey<Item> = create("paper")
+
+        /**
+         * @since 26.1.7
+         */
+        @JvmField
+        val PITCH_COKE: TagKey<Item> = create("pitch_coke")
 
         @JvmField
         val PLASTICS: TagKey<Item> = create("plastics")

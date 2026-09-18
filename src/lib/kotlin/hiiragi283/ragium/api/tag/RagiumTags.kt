@@ -40,6 +40,18 @@ data object RagiumTags {
      * @since 26.1.0
      */
     data object Items {
+        /**
+         * @since 26.1.7
+         */
+        @JvmField
+        val COALS: TagKey<Item> = create("coals")
+
+        /**
+         * @since 26.1.7
+         */
+        @JvmField
+        val COKES: TagKey<Item> = create("cokes")
+
         @JvmField
         val SOOTY_IRON_TOOL_MATERIALS: TagKey<Item> = create("sooty_iron_tool_materials")
 

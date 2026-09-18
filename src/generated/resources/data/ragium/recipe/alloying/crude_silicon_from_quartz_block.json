@@ -1,0 +1,16 @@
+{
+  "type": "ragium:alloying",
+  "primary_ingredient": {
+    "count": 1,
+    "items": "#ragium:quartz_blocks"
+  },
+  "result": {
+    "count": 4,
+    "id": "ragium:crude_silicon"
+  },
+  "secondary_ingredient": {
+    "count": 4,
+    "items": "#ragium:cokes"
+  },
+  "time": 800
+}

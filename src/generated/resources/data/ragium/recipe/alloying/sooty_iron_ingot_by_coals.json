@@ -1,0 +1,22 @@
+{
+  "type": "ragium:alloying",
+  "primary_ingredient": {
+    "count": 1,
+    "items": {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/iron",
+        "#c:ingots/iron"
+      ]
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:sooty_iron_ingot"
+  },
+  "secondary_ingredient": {
+    "count": 1,
+    "items": "#ragium:coals"
+  },
+  "time": 200
+}

@@ -134,6 +134,7 @@ sealed interface RagiumMaterial :
         PAPER(true, "Paper", "紙"),
 
         // Common
+        CARBON(false, "Carbon", "炭素"),
         SILICON(false, "Silicon", "シリコン")
         ;
 

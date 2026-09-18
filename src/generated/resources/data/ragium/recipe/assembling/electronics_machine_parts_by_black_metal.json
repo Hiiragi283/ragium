@@ -1,0 +1,16 @@
+{
+  "type": "ragium:assembling",
+  "primary_ingredient": {
+    "count": 4,
+    "items": "#c:ingots/black_steel"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:electronics_machine_parts"
+  },
+  "secondary_ingredient": {
+    "count": 1,
+    "items": "ragium:electric_circuit"
+  },
+  "time": 200
+}

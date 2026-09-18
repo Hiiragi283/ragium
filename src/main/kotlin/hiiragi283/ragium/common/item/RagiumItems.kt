@@ -27,6 +27,7 @@ data object RagiumItems {
         REGISTER.addAlias("steel_dust", "sooty_iron_dust")
         REGISTER.addAlias("steel_ingot", "sooty_iron_ingot")
         REGISTER.addAlias("steel_nugget", "sooty_iron_nugget")
+        REGISTER.addAlias("coal_coke_dust", "carbon_dust")
 
         REGISTER.register(eventBus)
     }
@@ -39,7 +40,7 @@ data object RagiumItems {
             // Fuel
             putAll(RagiumMaterial.Fuel.COAL, HTItemPart.DUST, HTItemPart.TINY)
             putAll(RagiumMaterial.Fuel.CHARCOAL, HTItemPart.DUST, HTItemPart.TINY)
-            putAll(RagiumMaterial.Fuel.COAL_COKE, HTItemPart.DUST, HTItemPart.TINY)
+            putAll(RagiumMaterial.Fuel.COAL_COKE, HTItemPart.TINY)
             // Mineral
             for (mineral: RagiumMaterial.Mineral in RagiumMaterial.Mineral.entries) {
                 if (!mineral.isVanilla) {
@@ -67,6 +68,8 @@ data object RagiumItems {
             putAll(RagiumMaterial.Other.GLASS, HTItemPart.DUST)
             putAll(RagiumMaterial.Other.OBSIDIAN, HTItemPart.DUST)
             putAll(RagiumMaterial.Other.PAPER, HTItemPart.DUST)
+            putAll(RagiumMaterial.Other.CARBON, HTItemPart.DUST)
+            putAll(RagiumMaterial.Other.SILICON, HTItemPart.DUST)
         }.flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
             parts.map { part: HTItemPart ->
                 Triple(
@@ -133,6 +136,20 @@ data object RagiumItems {
     val LINGERING_BOTTLE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("lingering_bottle")
 
     // Electronics
+    @JvmField
+    val CRUDE_SILICON: HTSimpleDeferredItem = REGISTER.registerSimpleItem("crude_silicon")
+
+    @JvmField
+    val SILICON_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_wafer")
+
+    @JvmField
+    val CIRCUIT_CHIP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_chip")
+
+    @JvmField
+    val CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board")
+
+    @JvmField
+    val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit")
 
     // Arcane
     @JvmField

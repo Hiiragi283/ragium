@@ -56,8 +56,19 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(Tags.Items.LEATHERS).add(RagiumItems.SYNTHETIC_LEATHER)
         builder(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
 
+        builder(HTCommonTags.Items.COAL_COKE).add(RagiumItems.COAL_COKE)
         builder(HTCommonTags.Items.PAPER).addItem(Items.PAPER)
+        builder(HTCommonTags.Items.PITCH_COKE).add(RagiumItems.PITCH_COKE)
         builder(HTCommonTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
+        builder(HTCommonTags.Items.SILICON).add(RagiumItems.CRUDE_SILICON)
         builder(HTCommonTags.Items.STICKY_BALLS).addTag(Tags.Items.SLIME_BALLS)
+
+        builder(RagiumTags.Items.COALS)
+            .add(RagiumItems.BAMBOO_CHARCOAL)
+            .addItem(Items.CHARCOAL)
+            .addItem(Items.COAL)
+        builder(RagiumTags.Items.COKES)
+            .addTag(HTCommonTags.Items.COAL_COKE)
+            .addTag(HTCommonTags.Items.PITCH_COKE)
     }
 }
