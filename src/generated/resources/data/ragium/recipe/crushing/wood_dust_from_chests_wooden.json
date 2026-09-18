@@ -4,7 +4,7 @@
     "count": 1,
     "items": "#c:chests/wooden"
   },
-  "primary_result": {
+  "results": {
     "count": 8,
     "id": "ragium:wood_dust"
   },

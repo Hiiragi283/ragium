@@ -4,7 +4,7 @@
     "count": 1,
     "items": "#c:sandstone/red_blocks"
   },
-  "primary_result": {
+  "results": {
     "count": 4,
     "id": "minecraft:red_sand"
   },

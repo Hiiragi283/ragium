@@ -4,13 +4,15 @@
     "count": 8,
     "items": "#c:seeds/beetroot"
   },
-  "primary_result": {
-    "count": 12,
-    "id": "minecraft:beetroot"
-  },
-  "secondary_result": {
-    "count": 12,
-    "id": "minecraft:beetroot_seeds"
-  },
+  "results": [
+    {
+      "count": 12,
+      "id": "minecraft:beetroot"
+    },
+    {
+      "count": 12,
+      "id": "minecraft:beetroot_seeds"
+    }
+  ],
   "time": 200
 }

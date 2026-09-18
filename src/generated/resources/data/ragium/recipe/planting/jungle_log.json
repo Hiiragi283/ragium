@@ -4,13 +4,15 @@
     "count": 8,
     "items": "minecraft:jungle_sapling"
   },
-  "primary_result": {
-    "count": 48,
-    "id": "minecraft:jungle_log"
-  },
-  "secondary_result": {
-    "count": 12,
-    "id": "minecraft:jungle_sapling"
-  },
+  "results": [
+    {
+      "count": 48,
+      "id": "minecraft:jungle_log"
+    },
+    {
+      "count": 12,
+      "id": "minecraft:jungle_sapling"
+    }
+  ],
   "time": 200
 }

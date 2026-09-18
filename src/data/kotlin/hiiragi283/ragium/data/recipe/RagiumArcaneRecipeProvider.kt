@@ -23,7 +23,7 @@ class RagiumArcaneRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
                 count = 64
             }
-            +registries.getOrThrow(Enchantments.PROTECTION)
+            result { +registries.getOrThrow(Enchantments.PROTECTION) }
         }.save(exporter)
         // Diamond -> Protection + Unbreaking
         RagiumRecipeBuilders.enchanting {
@@ -32,8 +32,10 @@ class RagiumArcaneRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 16
             }
             result {
-                set(registries.getOrThrow(Enchantments.PROTECTION), 4)
-                set(registries.getOrThrow(Enchantments.UNBREAKING), 3)
+                enchantedBook {
+                    set(registries.getOrThrow(Enchantments.PROTECTION), 4)
+                    set(registries.getOrThrow(Enchantments.UNBREAKING), 3)
+                }
             }
             recipeId replace id("diamond_armor")
         }.save(exporter)

@@ -65,9 +65,8 @@ class HTFluidResultBuilder @PublishedApi internal constructor() {
         +HTFluidResult.SimpleEntry(this)
     }
 
-    @Suppress("DEPRECATION")
     operator fun Fluid.unaryPlus() {
-        +HTFluidResult.SimpleEntry(this.builtInRegistryHolder())
+        +HTFluidResult.SimpleEntry(FluidStackTemplate(this, 1))
     }
 
     operator fun HTFluidContent.unaryPlus() {

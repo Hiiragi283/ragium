@@ -4,7 +4,7 @@
     "count": 1,
     "items": "#c:ingots/netherite"
   },
-  "primary_result": {
+  "results": {
     "count": 1,
     "id": "ragium:netherite_dust"
   },

@@ -5,6 +5,8 @@
     "items": "#c:ingots/iron"
   },
   "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
     "id": "minecraft:protection"
   },
   "time": 200

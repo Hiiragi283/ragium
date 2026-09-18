@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.fluid
 
 import hiiragi283.lib.fluid.HTFluidType
-import hiiragi283.ragium.api.data.recipe.HTOreSlurryDataHelper
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryDataHelper
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack

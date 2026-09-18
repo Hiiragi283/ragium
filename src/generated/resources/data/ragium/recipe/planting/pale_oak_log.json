@@ -4,13 +4,15 @@
     "count": 8,
     "items": "minecraft:pale_oak_sapling"
   },
-  "primary_result": {
-    "count": 48,
-    "id": "minecraft:pale_oak_log"
-  },
-  "secondary_result": {
-    "count": 12,
-    "id": "minecraft:pale_oak_sapling"
-  },
+  "results": [
+    {
+      "count": 48,
+      "id": "minecraft:pale_oak_log"
+    },
+    {
+      "count": 12,
+      "id": "minecraft:pale_oak_sapling"
+    }
+  ],
   "time": 200
 }

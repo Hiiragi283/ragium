@@ -81,7 +81,7 @@ data object HTPotionHelper {
 
     @JvmStatic
     fun getPotionName(contents: PotionContents, bottleType: HTBottleType): Text =
-        contents.getName("${bottleType.filledItem.descriptionId}.effect.")
+        contents.getName("${bottleType.filledItem.translationKey}.effect.")
 
     //    ItemStack    //
 
@@ -97,7 +97,7 @@ data object HTPotionHelper {
 
     @JvmStatic
     fun createFilled(contents: PotionContents, bottleType: HTBottleType): ItemStackTemplate =
-        ItemStackTemplate(bottleType.filledItem, 1, createPotionPatch(contents))
+        bottleType.filledItem.toTemplate(patch = createPotionPatch(contents))!!
 
     // Bucket
 

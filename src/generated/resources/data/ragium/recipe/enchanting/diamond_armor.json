@@ -5,6 +5,8 @@
     "items": "#c:gems/diamond"
   },
   "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
     "enchantments": {
       "minecraft:protection": 4,
       "minecraft:unbreaking": 3

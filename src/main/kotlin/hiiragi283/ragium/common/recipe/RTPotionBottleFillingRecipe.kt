@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.lib.item.ItemStack
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
@@ -24,7 +23,7 @@ data class RTPotionBottleFillingRecipe(val bottleType: HTBottleType, override va
     }
 
     override fun apply(first: ItemInstance, second: FluidInstance): ItemStack =
-        ItemStack(bottleType.filledItem, 1, HTPotionHelper.createPotionPatch(second))
+        bottleType.filledItem.toStack(patch = HTPotionHelper.createPotionPatch(second))
 
     override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = when {
         test(first, second) -> 1 to HTPotionHelper.BOTTLE_AMOUNT

@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
@@ -15,8 +16,9 @@ import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
+import hiiragi283.lib.serialization.codec.nelOf
 import hiiragi283.lib.serialization.network.HTStreamCodecs
-import hiiragi283.lib.serialization.network.listOf
+import hiiragi283.lib.serialization.network.nelOf
 import hiiragi283.lib.util.fold
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -30,7 +32,7 @@ import java.util.Optional
 data class RTElectrolyzingRecipe(
     val itemIngredient: Optional<HTItemIngredient>,
     val fluidIngredient: HTFluidIngredient,
-    val results: List<HTFluidResult>,
+    val results: Nel<HTFluidResult>,
     override val progressData: HTProgressData
 ) : HTRecipePredicates.ItemAndFluid,
     HTRecipeFactories.ItemAndFluid<Triple<FluidStack, FluidStack, FluidStack>>,
@@ -40,13 +42,13 @@ data class RTElectrolyzingRecipe(
         @JvmField
         val CODEC: MapCodec<RTElectrolyzingRecipe> = HTCodecs.recordMap { instance ->
             instance.group(
-                HTItemIngredient.CODEC.optionalFieldOf(
-                    HTConstants.ITEM_INGREDIENT
-                ).forGetter(RTElectrolyzingRecipe::itemIngredient),
-                HTFluidIngredient.CODEC.fieldOf(
-                    HTConstants.FLUID_INGREDIENT
-                ).forGetter(RTElectrolyzingRecipe::fluidIngredient),
-                HTFluidResult.CODEC.listOf(2, 3).fieldOf(HTConstants.RESULTS).forGetter(RTElectrolyzingRecipe::results),
+                HTItemIngredient.CODEC
+                    .optionalFieldOf(HTConstants.ITEM_INGREDIENT)
+                    .forGetter(RTElectrolyzingRecipe::itemIngredient),
+                HTFluidIngredient.CODEC
+                    .fieldOf(HTConstants.FLUID_INGREDIENT)
+                    .forGetter(RTElectrolyzingRecipe::fluidIngredient),
+                HTFluidResult.CODEC.nelOf(3).fieldOf(HTConstants.RESULTS).forGetter(RTElectrolyzingRecipe::results),
                 HTProgressData.CODEC.forGetter(RTElectrolyzingRecipe::progressData)
             ).apply(instance, ::RTElectrolyzingRecipe)
         }
@@ -57,7 +59,7 @@ data class RTElectrolyzingRecipe(
             RTElectrolyzingRecipe::itemIngredient,
             HTFluidIngredient.STREAM_CODEC,
             RTElectrolyzingRecipe::fluidIngredient,
-            HTFluidResult.STREAM_CODEC.listOf(),
+            HTFluidResult.STREAM_CODEC.nelOf(),
             RTElectrolyzingRecipe::results,
             HTProgressData.STREAM_CODEC,
             RTElectrolyzingRecipe::progressData,
@@ -77,8 +79,8 @@ data class RTElectrolyzingRecipe(
     )
 
     override fun apply(first: ItemInstance, second: FluidInstance): Triple<FluidStack, FluidStack, FluidStack> = Triple(
-        results[0].create(),
-        results[1].create(),
+        results.head.create(),
+        results.getOrNull(1).createOrEmpty(),
         results.getOrNull(2).createOrEmpty()
     )
 

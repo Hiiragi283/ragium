@@ -2,6 +2,7 @@
 
 package hiiragi283.ragium.api.data.recipe.builder
 
+import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
@@ -23,7 +24,7 @@ class RTElectrolyzingRecipeBuilder : HTProgressRecipeBuilder<RTElectrolyzingReci
     override fun getRecipeId(): Identifier? = results.firstOrNull()?.getId()
 
     override fun createRecipe(): RTElectrolyzingRecipe =
-        RTElectrolyzingRecipe(itemIngredient, fluidIngredient, results, progressData)
+        RTElectrolyzingRecipe(itemIngredient, fluidIngredient, results.toNel(), progressData)
 
     // Ingredient
     @PublishedApi internal var itemIngredient: Optional<HTItemIngredient> by HTDelegates.optionalInitialize()

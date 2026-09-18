@@ -4,13 +4,15 @@
     "count": 8,
     "items": "#c:seeds/pumpkin"
   },
-  "primary_result": {
-    "count": 12,
-    "id": "minecraft:pumpkin"
-  },
-  "secondary_result": {
-    "count": 12,
-    "id": "minecraft:pumpkin_seeds"
-  },
+  "results": [
+    {
+      "count": 12,
+      "id": "minecraft:pumpkin"
+    },
+    {
+      "count": 12,
+      "id": "minecraft:pumpkin_seeds"
+    }
+  ],
   "time": 200
 }

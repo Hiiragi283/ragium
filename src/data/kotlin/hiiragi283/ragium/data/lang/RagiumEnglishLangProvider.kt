@@ -4,11 +4,11 @@ import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
-import hiiragi283.ragium.common.data.recipe.RagiumOreSlurryData
 import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems

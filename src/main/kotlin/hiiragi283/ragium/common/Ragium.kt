@@ -18,7 +18,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.recipe.HTOreSlurryData
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
+import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
@@ -27,7 +28,6 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
-import hiiragi283.ragium.common.data.recipe.RagiumOreSlurryData
 import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
@@ -137,6 +137,7 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumRegistries.Keys.ITEM_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id(HTConstants.TAG), HTItemResult.TagEntry.TYPE)
+            helper.register(RagiumAPI.id("enchanted_book"), HTItemResult.EnchantedBookEntry.TYPE)
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
             helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)
@@ -179,7 +180,11 @@ data object Ragium : HTCommonMod() {
     }
 
     override fun registerDynamicRegistries(event: DataPackRegistryEvent.NewRegistry) {
-        event.dataPackRegistry(RagiumRegistries.Keys.ORE_SLURRY_DATA, HTOreSlurryData.CODEC, HTOreSlurryData.CODEC)
+        event.dataPackRegistry(
+            RagiumRegistries.Keys.ORE_SLURRY_DATA,
+            HTOreSlurryData.DIRECT_CODEC,
+            HTOreSlurryData.DIRECT_CODEC
+        )
     }
 
     override fun commonSetup(event: FMLCommonSetupEvent) {

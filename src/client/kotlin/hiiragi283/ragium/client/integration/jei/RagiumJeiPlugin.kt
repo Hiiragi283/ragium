@@ -10,15 +10,14 @@ import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToItemAndFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
 import hiiragi283.lib.item.HTPotionBasedItem
-import hiiragi283.lib.item.ItemStack
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.api.data.recipe.HTOreSlurryData
-import hiiragi283.ragium.api.data.recipe.HTOreSlurryDataHelper
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryDataHelper
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
@@ -185,7 +184,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                     HTBottleType.entries.map { bottleType: HTBottleType ->
                         RagiumRecipeBuilders.draining {
                             +HTJeiRecipeHelper.fakeItem(
-                                ItemStack(bottleType.filledItem, 1, HTPotionHelper.createPotionPatch(potion))
+                                bottleType.filledItem.toStack(patch = HTPotionHelper.createPotionPatch(potion))
                             )
                             itemResult { +bottleType.emptyItem }
                             fluidResult { from(HTPotionHelper.createFluid(potion, HTPotionHelper.BOTTLE_AMOUNT)) }
@@ -208,7 +207,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                                 amount = HTPotionHelper.BOTTLE_AMOUNT
                             }
                             result {
-                                from(ItemStack(bottleType.filledItem, 1, HTPotionHelper.createPotionPatch(potion)))
+                                from(bottleType.filledItem.toStack(patch = HTPotionHelper.createPotionPatch(potion)))
                             }
                             recipeId replace potion.getKeyOrThrow()
                                 .identifier()

@@ -4,7 +4,7 @@
     "count": 1,
     "items": "#c:ingots/iron"
   },
-  "primary_result": {
+  "results": {
     "count": 1,
     "id": "ragium:iron_dust"
   },

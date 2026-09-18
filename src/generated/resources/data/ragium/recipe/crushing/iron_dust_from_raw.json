@@ -4,7 +4,7 @@
     "count": 3,
     "items": "#c:raw_materials/iron"
   },
-  "primary_result": {
+  "results": {
     "count": 4,
     "id": "ragium:iron_dust"
   },

@@ -4,13 +4,15 @@
     "count": 8,
     "items": "minecraft:chorus_flower"
   },
-  "primary_result": {
-    "count": 48,
-    "id": "minecraft:chorus_fruit"
-  },
-  "secondary_result": {
-    "count": 12,
-    "id": "minecraft:chorus_flower"
-  },
+  "results": [
+    {
+      "count": 48,
+      "id": "minecraft:chorus_fruit"
+    },
+    {
+      "count": 12,
+      "id": "minecraft:chorus_flower"
+    }
+  ],
   "time": 200
 }

@@ -132,11 +132,11 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                     +holderSet(seedIn)
                     count = 8
                 }
-                primary {
+                result {
                     +crop
                     count = 12
                 }
-                secondary {
+                result {
                     +seedOut
                     count = 12
                 }
@@ -160,7 +160,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                     items { +crop }
                     count = 8
                 }
-                primary {
+                result {
                     +crop
                     count = 16
                 }
@@ -173,7 +173,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                     items { +crop }
                     count = 8
                 }
-                primary {
+                result {
                     +crop
                     count = 24
                 }
@@ -199,11 +199,11 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                     items { +sapling }
                     count = 8
                 }
-                primary {
+                result {
                     +log
                     count = 48
                 }
-                secondary {
+                result {
                     +sapling
                     count = 12
                 }
