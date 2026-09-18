@@ -293,6 +293,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 ingredient { +holderSet(CommonTagPrefixes.DUST, fuel) }
                 result { +baseItem }
                 recipeId suffix "_from_dust"
+                condition { itemTagPresent(CommonTagPrefixes.DUST, fuel) }
             }.save(exporter)
         }
         setOf(

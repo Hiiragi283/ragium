@@ -16,10 +16,7 @@
   },
   "secondary_ingredient": {
     "count": 1,
-    "items": [
-      "minecraft:coal",
-      "minecraft:charcoal"
-    ]
+    "items": "#ragium:coals"
   },
   "time": 200
 }

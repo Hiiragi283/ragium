@@ -50,15 +50,10 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             secondary { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
             result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
         }.save(exporter)
-        // Iron + Coal -> Sooty Iron
+        // Iron + Coals -> Sooty Iron
         RagiumRecipeBuilders.alloying {
             primary { +dustOrIngot(RagiumMaterial.Metal.IRON) }
-            secondary {
-                items {
-                    +Items.COAL
-                    +Items.CHARCOAL
-                }
-            }
+            secondary { +holderSet(RagiumTags.Items.COALS) }
             result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
             recipeId suffix "_by_coals"
         }.save(exporter)

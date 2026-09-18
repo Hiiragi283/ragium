@@ -44,6 +44,12 @@ data object RagiumTags {
          * @since 26.1.7
          */
         @JvmField
+        val COALS: TagKey<Item> = create("coals")
+
+        /**
+         * @since 26.1.7
+         */
+        @JvmField
         val COKES: TagKey<Item> = create("cokes")
 
         @JvmField
