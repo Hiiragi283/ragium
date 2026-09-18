@@ -2,18 +2,19 @@ package hiiragi283.lib.recipe.base
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.network.HTStreamCodecs
+import hiiragi283.lib.serialization.codec.nelOrElement
+import hiiragi283.lib.serialization.network.nelOf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
-import java.util.Optional
 
 /**
  * 1種類のアイテムから2種類のアイテムを作成するレシピを表すインターフェースです。
@@ -43,8 +44,7 @@ interface HTItemToDoubleItemRecipe :
      */
     open class Basic(
         val ingredient: HTItemIngredient,
-        val primary: HTItemResult,
-        val secondary: Optional<HTItemResult>,
+        val result: Nel<HTItemResult>,
         override val progressData: HTProgressData
     ) : HTItemToDoubleItemRecipe,
         HTProgressRecipe.Simple<SingleRecipeInput> {
@@ -54,8 +54,7 @@ interface HTItemToDoubleItemRecipe :
                 HTCodecs.recordMap { instance ->
                     instance.group(
                         HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
-                        HTItemResult.CODEC.fieldOf(HTConstants.PRIMARY_RESULT).forGetter(Basic::primary),
-                        HTItemResult.CODEC.optionalFieldOf(HTConstants.SECONDARY_RESULT).forGetter(Basic::secondary),
+                        HTItemResult.CODEC.nelOrElement(2).fieldOf(HTConstants.RESULTS).forGetter(Basic::result),
                         HTProgressData.CODEC.forGetter(Basic::progressData)
                     ).apply(instance, factory::create)
                 }
@@ -69,10 +68,8 @@ interface HTItemToDoubleItemRecipe :
             ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
                 HTItemIngredient.STREAM_CODEC,
                 Basic::ingredient,
-                HTItemResult.STREAM_CODEC,
-                Basic::primary,
-                HTStreamCodecs.optional(HTItemResult.STREAM_CODEC),
-                Basic::secondary,
+                HTItemResult.STREAM_CODEC.nelOf(),
+                Basic::result,
                 HTProgressData.STREAM_CODEC,
                 Basic::progressData,
                 factory::create
@@ -84,6 +81,6 @@ interface HTItemToDoubleItemRecipe :
         override fun getRequiredAmount(input: ItemInstance): Int = ingredient.getRequiredAmount(input)
 
         override fun apply(input: ItemInstance): Pair<ItemStack, ItemStack> =
-            primary.create() to secondary.createOrEmpty()
+            result.head.create() to result.getOrNull(1).createOrEmpty()
     }
 }

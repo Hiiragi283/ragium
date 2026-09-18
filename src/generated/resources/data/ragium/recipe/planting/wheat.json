@@ -4,13 +4,15 @@
     "count": 8,
     "items": "#c:seeds/wheat"
   },
-  "primary_result": {
-    "count": 12,
-    "id": "minecraft:wheat"
-  },
-  "secondary_result": {
-    "count": 12,
-    "id": "minecraft:wheat_seeds"
-  },
+  "results": [
+    {
+      "count": 12,
+      "id": "minecraft:wheat"
+    },
+    {
+      "count": 12,
+      "id": "minecraft:wheat_seeds"
+    }
+  ],
   "time": 200
 }

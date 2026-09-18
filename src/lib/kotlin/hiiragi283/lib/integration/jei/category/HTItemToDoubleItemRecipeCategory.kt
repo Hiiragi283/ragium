@@ -33,13 +33,13 @@ class HTItemToDoubleItemRecipeCategory(
         // output
         builder
             .addOutputSlot(getPosition(3), getPosition(0))
-            .add(recipe.primary)
+            .add(recipe.result.head)
             .setSlotBackground(HTBackgroundType.OUTPUT)
 
         val slot: IRecipeSlotBuilder = builder
             .addOutputSlot(getPosition(5), getPosition(0))
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
-        recipe.secondary.ifPresent(slot::add)
+        recipe.result.getOrNull(1)?.let(slot::add)
     }
 
     override fun setupRecipeExtras(

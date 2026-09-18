@@ -4,13 +4,15 @@
     "count": 1,
     "items": "#c:ores/quartz"
   },
-  "primary_result": {
-    "count": 4,
-    "id": "ragium:quartz_dust"
-  },
-  "secondary_result": {
-    "count": 1,
-    "id": "minecraft:gold_nugget"
-  },
+  "results": [
+    {
+      "count": 4,
+      "id": "ragium:quartz_dust"
+    },
+    {
+      "count": 1,
+      "id": "minecraft:gold_nugget"
+    }
+  ],
   "time": 200
 }

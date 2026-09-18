@@ -2,15 +2,17 @@
 
 package hiiragi283.lib.data.recipe.builder
 
+import hiiragi283.lib.collection.Nel
+import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
 import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
-import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -23,9 +25,9 @@ import kotlin.contracts.contract
  */
 class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
     HTProgressRecipeBuilder<RECIPE>(prefix) {
-    override fun getRecipeId(): Identifier? = primary.getId()
+    override fun getRecipeId(): Identifier? = results.first().getId()
 
-    override fun createRecipe(): RECIPE = factory.create(ingredient, primary, secondary, progressData)
+    override fun createRecipe(): RECIPE = factory.create(ingredient, results.toNel(), progressData)
 
     // Ingredient
     @PublishedApi internal var ingredient: HTItemIngredient by HTDelegates.onceInitialize()
@@ -42,22 +44,13 @@ class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
     }
 
     // Result
-    @PublishedApi internal var primary: HTItemResult by HTDelegates.onceInitialize()
+    @PublishedApi internal val results: MutableList<HTItemResult> = ObjectArrayList()
 
-    @PublishedApi internal var secondary: Optional<HTItemResult> by HTDelegates.optionalInitialize()
-
-    inline fun primary(builderAction: HTItemResultBuilder.() -> Unit) {
+    inline fun result(builderAction: HTItemResultBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        primary = HTItemResultBuilder.build(builderAction)
-    }
-
-    inline fun secondary(builderAction: HTItemResultBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        secondary = Optional.of(HTItemResultBuilder.build(builderAction))
+        results += HTItemResultBuilder.build(builderAction)
     }
 
     //    Factory    //
@@ -68,11 +61,6 @@ class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
      * @since 26.1.0
      */
     fun interface Factory<out RECIPE : Any> {
-        fun create(
-            ingredient: HTItemIngredient,
-            primary: HTItemResult,
-            secondary: Optional<HTItemResult>,
-            progressData: HTProgressData
-        ): RECIPE
+        fun create(ingredient: HTItemIngredient, results: Nel<HTItemResult>, progressData: HTProgressData): RECIPE
     }
 }
