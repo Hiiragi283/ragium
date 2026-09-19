@@ -50,6 +50,7 @@ interface RagiumLangProvider {
                 provider.add(item, patternProvider, material)
             }
         provider.add(RagiumItems.COAL_COKE, RagiumMaterial.Fuel.COAL_COKE)
+        provider.add(RagiumItems.PITCH_COKE, RagiumMaterial.Fuel.PITCH_COKE)
 
         val partsPattern = HTLangPatternProvider("Machine Parts (%s)", "機械部品 (%s)")
         for ((machineType: HTLangName, parts: HTHasTranslationKey) in RagiumItems.MACHINE_PARTS) {

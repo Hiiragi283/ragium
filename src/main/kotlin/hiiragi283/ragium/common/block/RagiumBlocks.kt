@@ -108,6 +108,7 @@ data object RagiumBlocks {
     val STORAGE_BLOCKS: Map<RagiumMaterial, HTSimpleDeferredBlockAndItem> = setOf(
         RagiumMaterial.Fuel.CHARCOAL to copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF),
         RagiumMaterial.Fuel.COAL_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY),
+        RagiumMaterial.Fuel.PITCH_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_BLUE),
         RagiumMaterial.Gem.ECHO to copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN),
         RagiumMaterial.Metal.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Metal.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),

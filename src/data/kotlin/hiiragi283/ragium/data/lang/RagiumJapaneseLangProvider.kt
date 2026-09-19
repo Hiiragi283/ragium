@@ -95,7 +95,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.TAR, "タール")
-        add(RagiumItems.PITCH_COKE, "ピッチコークス")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")

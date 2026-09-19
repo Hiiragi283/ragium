@@ -3,19 +3,9 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:sooty_iron_ingot_from_coke"
+        "recipe": "ragium:pitch_coke_from_tiny"
       },
       "trigger": "minecraft:recipe_unlocked"
-    },
-    "has_tiny_coal_coke": {
-      "conditions": {
-        "items": [
-          {
-            "items": "#c:tiny/coal_coke"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
     },
     "has_tiny_pitch_coke": {
       "conditions": {
@@ -31,13 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_tiny_coal_coke",
       "has_tiny_pitch_coke"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:sooty_iron_ingot_from_coke"
+      "ragium:pitch_coke_from_tiny"
     ]
   }
 }

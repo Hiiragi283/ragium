@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pitch_coke": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:pitch_coke"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:tiny_pitch_coke"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pitch_coke"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:tiny_pitch_coke"
+    ]
+  }
+}

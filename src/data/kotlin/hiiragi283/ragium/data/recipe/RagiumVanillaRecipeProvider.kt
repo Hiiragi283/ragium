@@ -502,10 +502,11 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
             .pattern(" A ")
             .pattern("ABA")
             .pattern(" A ")
-            .define('A', CommonTagPrefixes.TINY, RagiumMaterial.Fuel.COAL_COKE)
+            .define('A', CommonTagPrefixes.TINY, RagiumMaterial.Fuel.COAL_COKE, RagiumMaterial.Fuel.PITCH_COKE)
             .define('B', ironIngot)
             .group(sootyIronIngot.idOrThrow.path)
             .unlockedBy(CommonTagPrefixes.TINY, RagiumMaterial.Fuel.COAL_COKE)
+            .unlockedBy(CommonTagPrefixes.TINY, RagiumMaterial.Fuel.PITCH_COKE)
             .saveSuffixed(output, "_from_coke")
     }
 

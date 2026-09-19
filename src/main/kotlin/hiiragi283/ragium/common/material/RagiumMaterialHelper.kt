@@ -11,5 +11,6 @@ data object RagiumMaterialHelper {
         RagiumMaterial.Fuel.COAL -> HTSimpleDeferredItem(vanillaId("coal"))
         RagiumMaterial.Fuel.CHARCOAL -> HTSimpleDeferredItem(vanillaId("charcoal"))
         RagiumMaterial.Fuel.COAL_COKE -> RagiumItems.COAL_COKE
+        RagiumMaterial.Fuel.PITCH_COKE -> RagiumItems.PITCH_COKE
     }
 }

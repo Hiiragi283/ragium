@@ -28,7 +28,8 @@ sealed interface RagiumMaterial :
         CHARCOAL("Charcoal", "木炭"),
 
         // Common
-        COAL_COKE("Coal Coke", "石炭コークス")
+        COAL_COKE("Coal Coke", "石炭コークス"),
+        PITCH_COKE("Pitch Coke", "ピッチコークス")
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))

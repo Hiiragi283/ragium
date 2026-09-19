@@ -99,7 +99,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.TAR, "Tar")
-        add(RagiumItems.PITCH_COKE, "Pitch Coke")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")

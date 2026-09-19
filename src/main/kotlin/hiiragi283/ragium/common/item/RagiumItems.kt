@@ -41,6 +41,7 @@ data object RagiumItems {
             putAll(RagiumMaterial.Fuel.COAL, HTItemPart.DUST, HTItemPart.TINY)
             putAll(RagiumMaterial.Fuel.CHARCOAL, HTItemPart.DUST, HTItemPart.TINY)
             putAll(RagiumMaterial.Fuel.COAL_COKE, HTItemPart.TINY)
+            putAll(RagiumMaterial.Fuel.PITCH_COKE, HTItemPart.TINY)
             // Mineral
             for (mineral: RagiumMaterial.Mineral in RagiumMaterial.Mineral.entries) {
                 if (!mineral.isVanilla) {
@@ -107,7 +108,7 @@ data object RagiumItems {
     val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
 
     @JvmField
-    val PITCH_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("pitch_coke")
+    val PITCH_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.PITCH_COKE.materialName)
 
     // Chemical
     @JvmField

@@ -24,14 +24,15 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             .add(RagiumItems.BAMBOO_CHARCOAL, FurnaceFuel(200 * 6), false)
             .add(RagiumItems.COAL_COKE, FurnaceFuel(200 * 16), false)
             .add(RagiumItems.TAR, FurnaceFuel(200 * 4), false)
-            .add(RagiumItems.PITCH_COKE, FurnaceFuel(200 * 6), false)
+            .add(RagiumItems.PITCH_COKE, FurnaceFuel(200 * 12), false)
 
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
             val time: Int = when (fuel) {
-                RagiumMaterial.Fuel.COAL -> 1
-                RagiumMaterial.Fuel.CHARCOAL -> 1
-                RagiumMaterial.Fuel.COAL_COKE -> 2
-            } * 200
+                RagiumMaterial.Fuel.COAL -> 200
+                RagiumMaterial.Fuel.CHARCOAL -> 200
+                RagiumMaterial.Fuel.COAL_COKE -> 400
+                RagiumMaterial.Fuel.PITCH_COKE -> 300
+            }
             RagiumBlocks.STORAGE_BLOCKS[fuel]?.item?.let { storage: Holder<Item> ->
                 builder.add(storage, FurnaceFuel(time * 80), false)
             }
