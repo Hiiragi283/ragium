@@ -15,14 +15,12 @@ fun interface ConditionalExporter<T : Any> {
      * @param value 受け取った値
      * @param conditions 値を読み込む条件の一覧
      */
-    fun accept(key: ResourceKey<T>, value: T, conditions: List<ICondition>)
+    fun accept(key: ResourceKey<T>, value: T, conditions: List<ICondition>): ResourceKey<T>
 
     /**
      * 値を登録します。
      * @param key 受け取ったID
      * @param value 受け取った値
      */
-    fun accept(key: ResourceKey<T>, value: T) {
-        accept(key, value, listOf())
-    }
+    fun accept(key: ResourceKey<T>, value: T): ResourceKey<T> = accept(key, value, listOf())
 }

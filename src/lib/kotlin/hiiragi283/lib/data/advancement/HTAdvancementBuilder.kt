@@ -94,7 +94,7 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
 
     //    Save    //
 
-    fun save(exporter: ConditionalExporter<Advancement>) {
+    fun save(exporter: ConditionalExporter<Advancement>): AdvancementKey {
         val adv = Advancement(
             parent.map(AdvancementKey::identifier),
             display,
@@ -103,6 +103,6 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
             this.requirements ?: strategy.create(criterions.keys),
             true
         )
-        exporter.accept(key, adv, conditions)
+        return exporter.accept(key, adv, conditions)
     }
 }

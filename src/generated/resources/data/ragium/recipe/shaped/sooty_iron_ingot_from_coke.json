@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "sooty_iron_ingot",
+  "key": {
+    "A": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:tiny/coal_coke",
+        "c:tiny/pitch_coke"
+      ]
+    },
+    "B": "#c:ingots/iron"
+  },
+  "pattern": [
+    " A ",
+    "ABA",
+    " A "
+  ],
+  "result": {
+    "id": "ragium:sooty_iron_ingot"
+  }
+}

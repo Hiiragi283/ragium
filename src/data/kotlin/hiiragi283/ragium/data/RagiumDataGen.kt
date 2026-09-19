@@ -50,7 +50,7 @@ data object RagiumDataGen {
         )
         event.createProvider(::RagiumGlobalLootModifierProvider)
 
-        event.createProvider(RagiumVanillaRecipeProvider::Runner)
+        event.createProvider(::RagiumVanillaRecipeProvider)
         event.createProvider(::RagiumCommonRecipeProvider)
 
         event.createProvider(::RagiumMechanicalRecipeProvider)

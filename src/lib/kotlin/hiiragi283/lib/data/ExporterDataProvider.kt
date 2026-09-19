@@ -66,6 +66,7 @@ abstract class ExporterDataProvider<R : Any>(
                 if (oldValue != null) {
                     error("Duplicate registration for $fixedKey, new=$value, old=$oldValue")
                 }
+                fixedKey
             }
             exportValues()
 

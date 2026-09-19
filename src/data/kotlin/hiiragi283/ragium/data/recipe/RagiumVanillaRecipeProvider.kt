@@ -1,12 +1,17 @@
 package hiiragi283.ragium.data.recipe
 
-import hiiragi283.lib.HTComparators
+import hiiragi283.lib.collection.nelOf
+import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.builder.vanilla.HTCookingRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.vanilla.HTShapedRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.vanilla.HTShapelessRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.vanilla.HTSingleItemRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.vanilla.HTSmithingRecipeBuilder
+import hiiragi283.lib.data.recipe.ingredient.IngredientBuilder
 import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
-import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
-import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
@@ -14,6 +19,7 @@ import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -21,200 +27,144 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
-import net.minecraft.advancements.Advancement
-import net.minecraft.advancements.AdvancementHolder
-import net.minecraft.advancements.Criterion
-import net.minecraft.advancements.criterion.InventoryChangeTrigger
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.data.PackOutput
-import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeCategory
-import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.data.recipes.RecipeProvider
-import net.minecraft.data.recipes.ShapedRecipeBuilder
-import net.minecraft.data.recipes.ShapelessRecipeBuilder
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder
-import net.minecraft.data.recipes.SingleItemRecipeBuilder
-import net.minecraft.data.recipes.SmithingTransformRecipeBuilder
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.ToolMaterial
-import net.minecraft.world.item.crafting.CookingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.conditions.ICondition
-import net.neoforged.neoforge.common.crafting.CompoundIngredient
 import java.util.concurrent.CompletableFuture
+import kotlin.collections.forEach
 
-class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: RecipeOutput) :
-    RecipeProvider(registries, output) {
-    class Runner(packOutput: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
-        RecipeProvider.Runner(packOutput, registries) {
-        override fun createRecipeProvider(registries: HolderLookup.Provider, output: RecipeOutput): RecipeProvider =
-            RagiumVanillaRecipeProvider(
-                registries,
-                object : RecipeOutput {
-                    override fun accept(
-                        key: RecipeKey,
-                        recipe: Recipe<*>,
-                        advancement: AdvancementHolder?,
-                        vararg conditions: ICondition
-                    ) {
-                        output.accept(
-                            RecipeKey(RagiumAPI.id(key.identifier().path)),
-                            recipe,
-                            advancement?.let { AdvancementHolder(RagiumAPI.id(it.id().path), it.value()) },
-                            *conditions
-                        )
-                    }
-
-                    override fun advancement(): Advancement.Builder = output.advancement()
-
-                    override fun includeRootAdvancement() {
-                        output.includeRootAdvancement()
-                    }
-                }
-            )
-
-        override fun getName(): String = "Vanilla Recipes"
-    }
-
-    override fun buildRecipes() {
+class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
+    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+    override fun exportValues() {
         machine()
         material()
 
         // Prismarine Bricks -> 9x Prismarine Shard
-        shapeless(RecipeCategory.BUILDING_BLOCKS, Items.PRISMARINE_SHARD, 9)
-            .requires(Items.PRISMARINE_BRICKS)
-            .group(getItemName(Items.PRISMARINE_SHARD))
-            .unlockedBy(Items.PRISMARINE_BRICKS)
-            .saveSuffixed(output, "_from_bricks")
+        HTShapelessRecipeBuilder.create {
+            ingredient { items { +Items.PRISMARINE_BRICKS } }
+
+            result {
+                +Items.PRISMARINE_SHARD
+                count = 9
+            }
+            category = RecipeCategory.BUILDING_BLOCKS
+            group = "prismarine_shard"
+            recipeId suffix "_from_bricks"
+        }.save(exporter)
         // Gunpowder
-        shapeless(RecipeCategory.MISC, Items.GUNPOWDER, 3)
-            .requires(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL)
-            .requires(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR)
-            .requires(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER)
-            .group(getItemName(Items.GUNPOWDER))
-            .unlockedBy(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR)
-            .unlockedBy(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER)
-            .save(output)
+        HTShapelessRecipeBuilder.create {
+            ingredient {
+                +materialTags(CommonTagPrefixes.DUST, nelOf(RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL))
+            }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
+            result {
+                +Items.GUNPOWDER
+                count = 3
+            }
+        }.save(exporter)
         // Blaze Rod
-        shaped(RecipeCategory.MISC, Items.BLAZE_ROD)
-            .pattern("AAA")
-            .pattern("BBB")
-            .pattern("CCC")
-            .define('A', CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST)
-            .define('B', Items.MAGMA_BLOCK)
-            .define('C', CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR)
-            .group(getItemName(Items.BLAZE_ROD))
-            .unlockedBy(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST)
-            .unlockedBy(Items.MAGMA_BLOCK)
-            .unlockedBy(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR)
-            .save(output)
+        HTShapedRecipeBuilder.create {
+            layered()
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            define('B') { items { +Items.MAGMA_BLOCK } }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
+            result { +Items.BLAZE_ROD }
+        }.save(exporter)
         // Breeze Rod
-        shaped(RecipeCategory.MISC, Items.BREEZE_ROD)
-            .pattern("AAA")
-            .pattern("BBB")
-            .pattern("CCC")
-            .define('A', CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST)
-            .define('B', Items.ICE)
-            .define('C', CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER)
-            .group(getItemName(Items.BREEZE_ROD))
-            .unlockedBy(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST)
-            .unlockedBy(Items.ICE)
-            .unlockedBy(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER)
-            .save(output)
+        HTShapedRecipeBuilder.create {
+            layered()
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            define('B') { items { +Items.ICE } }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
+            result { +Items.BREEZE_ROD }
+        }.save(exporter)
         // Candle
-        shaped(RecipeCategory.DECORATIONS, Items.CANDLE)
-            .pattern("A")
-            .pattern("B")
-            .define('A', Tags.Items.STRINGS)
-            .define('B', RagiumItems.BEESWAX)
-            .unlockedBy(Tags.Items.STRINGS)
-            .unlockedBy(RagiumItems.BEESWAX)
-            .save(output)
+        HTShapedRecipeBuilder.create {
+            +"A"
+            +"B"
+            define('A') { +holderSet(Tags.Items.STRINGS) }
+            define('B') { items { +RagiumItems.BEESWAX } }
+            result { +Items.CANDLE }
+            category = RecipeCategory.DECORATIONS
+        }.save(exporter)
 
         // Bamboo Charcoal
-        SimpleCookingRecipeBuilder.smelting(
-            Ingredient.of(Items.BAMBOO),
-            RecipeCategory.MISC,
-            CookingBookCategory.MISC,
-            RagiumItems.BAMBOO_CHARCOAL,
-            0.5f,
-            200
-        ).unlockedBy(getHasName(Items.BAMBOO), has(Items.BAMBOO))
-            .save(output)
+        HTCookingRecipeBuilder.smelting {
+            ingredient { items { +Items.BAMBOO } }
+            result { +RagiumItems.BAMBOO_CHARCOAL }
+            exp = 0.5f
+        }.save(exporter)
         // Particle Board
-        shaped(RecipeCategory.MISC, RagiumItems.PARTICLE_BOARD, 4)
-            .pattern("AAA")
-            .pattern("ABA")
-            .pattern("AAA")
-            .define('A', CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD)
-            .define('B', HTCommonTags.Items.STICKY_BALLS)
-            .unlockedBy(HTCommonTags.Items.STICKY_BALLS)
-            .save(output)
+        HTShapedRecipeBuilder.create {
+            hollow8()
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD) }
+            define('B') { +holderSet(HTCommonTags.Items.STICKY_BALLS) }
+            result {
+                +RagiumItems.PARTICLE_BOARD
+                count = 4
+            }
+        }.save(exporter)
         // Synthetic
-        for (item: HTSimpleDeferredItem in listOf(
+        listOf(
             RagiumItems.SYNTHETIC_FEATHER,
             RagiumItems.SYNTHETIC_FIBER,
             RagiumItems.SYNTHETIC_LEATHER
-        )) {
-            SingleItemRecipeBuilder.stonecutting(
-                tag(HTCommonTags.Items.PLASTICS),
-                RecipeCategory.MISC,
-                item,
-                1
-            ).unlockedBy(getHasName(HTCommonTags.Items.PLASTICS), has(HTCommonTags.Items.PLASTICS))
-                .save(output)
+        ).forEach {
+            HTSingleItemRecipeBuilder.stonecutting {
+                ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
+                result { +it }
+            }.save(exporter)
         }
         // Splash Bottle
-        shapeless(RecipeCategory.BREWING, RagiumItems.SPLASH_BOTTLE, 4)
-            .requires(Tags.Items.GUNPOWDERS)
-            .requires(Items.GLASS_BOTTLE)
-            .requires(Items.GLASS_BOTTLE)
-            .requires(Items.GLASS_BOTTLE)
-            .requires(Items.GLASS_BOTTLE)
-            .unlockedBy(Tags.Items.GUNPOWDERS)
-            .save(output)
+        HTShapelessRecipeBuilder.create {
+            ingredient { +holderSet(Tags.Items.GUNPOWDERS) }
+            repeat(4) { ingredient { items { +Items.GLASS_BOTTLE } } }
+            result {
+                +RagiumItems.SPLASH_BOTTLE
+                count = 4
+            }
+        }.save(exporter)
         // Lingering Bottle
-        shapeless(RecipeCategory.BREWING, RagiumItems.LINGERING_BOTTLE, 4)
-            .requires(Items.DRAGON_BREATH)
-            .requires(Items.GLASS_BOTTLE)
-            .requires(Items.GLASS_BOTTLE)
-            .requires(Items.GLASS_BOTTLE)
-            .requires(Items.GLASS_BOTTLE)
-            .unlockedBy(Items.DRAGON_BREATH)
-            .save(output)
+        HTShapelessRecipeBuilder.create {
+            ingredient { items { +Items.DRAGON_BREATH } }
+            repeat(4) { ingredient { items { +Items.GLASS_BOTTLE } } }
+            result {
+                +RagiumItems.LINGERING_BOTTLE
+                count = 4
+            }
+        }.save(exporter)
 
         // XX Tools
         registerTools(RagiumItems.SOOTY_IRON_TOOLS, RagiumToolMaterials.SOOTY_IRON)
 
         // XX Dye Bucket
         for (color: DyeColor in DyeColor.entries) {
-            shapeless(RecipeCategory.MISC, RagiumFluids.DYES[color].bucketHolder)
-                .requires(Tags.Items.BUCKETS_WATER)
-                .requires(color.tag)
-                .requires(color.tag)
-                .requires(color.tag)
-                .requires(color.tag)
-                .unlockedBy(color.tag)
-                .save(output)
+            HTShapelessRecipeBuilder.create {
+                ingredient { +holderSet(Tags.Items.BUCKETS_WATER) }
+                repeat(4) { ingredient { +holderSet(color.tag) } }
+                result { +RagiumFluids.DYES[color].bucketHolder }
+            }.save(exporter)
         }
     }
 
-    private fun registerTools(tools: HTToolCollection<ItemLike>, material: ToolMaterial) {
+    private fun registerTools(tools: HTToolCollection<HTSimpleDeferredItem>, material: ToolMaterial) {
         fun registerTool(toolType: HTToolType, patterns: Iterable<String>) {
-            shaped(RecipeCategory.TOOLS, tools[toolType])
-                .apply { patterns.forEach(::pattern) }
-                .define('A', material.repairItems)
-                .define('B', Tags.Items.RODS_WOODEN)
-                .unlockedBy(material.repairItems)
-                .save(output)
+            HTShapedRecipeBuilder.create {
+                this.pattern(patterns)
+                define('A') { +holderSet(material.repairItems) }
+                define('B') { +holderSet(Tags.Items.RODS_WOODEN) }
+                result { +tools[toolType] }
+                category = RecipeCategory.TOOLS
+            }.save(exporter)
         }
 
         registerTool(HTToolType.SWORD, listOf("B", "A", "A"))
@@ -228,80 +178,51 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
 
     private fun machine() {
         // Mechanical
-        shaped(RecipeCategory.MISC, RagiumItems.getParts(HTMachineType.MECHANICAL), 3)
-            .pattern("AAA")
-            .pattern("BBB")
-            .pattern("AAA")
-            .define('A', CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
-            .define('B', CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE)
-            .unlockedBy(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
-            .save(output)
+        HTShapedRecipeBuilder.create {
+            layered2()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            result {
+                +RagiumItems.getParts(HTMachineType.MECHANICAL)
+                count = 3
+            }
+        }.save(exporter)
 
-        mechanical(RagiumBlocks.ASSEMBLER) {
-            define('D', Items.CRAFTER)
-            unlockedBy(Items.CRAFTER)
-        }
-        mechanical(RagiumBlocks.CRUSHER) {
-            define('D', Items.GRINDSTONE)
-            unlockedBy(Items.GRINDSTONE)
-        }
-        mechanical(RagiumBlocks.COMPRESSOR) {
-            define('D', ItemTags.ANVIL)
-            unlockedBy(ItemTags.ANVIL)
-        }
-        mechanical(RagiumBlocks.CUTTING_MACHINE) {
-            define('D', Items.STONECUTTER)
-            unlockedBy(Items.STONECUTTER)
-        }
+        mechanical(RagiumBlocks.ASSEMBLER) { items { +Items.CRAFTER } }
+        mechanical(RagiumBlocks.CRUSHER) { items { +Items.GRINDSTONE } }
+        mechanical(RagiumBlocks.COMPRESSOR) { +holderSet(ItemTags.ANVIL) }
+        mechanical(RagiumBlocks.CUTTING_MACHINE) { items { +Items.STONECUTTER } }
         // Heat
-        heat(RagiumBlocks.ALLOY_SMELTER) {
-            define('D', Items.BLAST_FURNACE)
-            unlockedBy(Items.BLAST_FURNACE)
-        }
-        heat(RagiumBlocks.FREEZER) {
-            define('D', Tags.Items.BUCKETS_WATER)
-            unlockedBy(Tags.Items.BUCKETS_WATER)
-        }
-        heat(RagiumBlocks.MELTER) {
-            define('D', Tags.Items.BUCKETS_LAVA)
-            unlockedBy(Tags.Items.BUCKETS_LAVA)
-        }
+        heat(RagiumBlocks.ALLOY_SMELTER) { items { +Items.BLAST_FURNACE } }
+        heat(RagiumBlocks.FREEZER) { +holderSet(Tags.Items.BUCKETS_WATER) }
+        heat(RagiumBlocks.MELTER) { +holderSet(Tags.Items.BUCKETS_LAVA) }
 
-        heat(RagiumBlocks.SMELTER) {
-            define('D', Items.FURNACE)
-            unlockedBy(Items.FURNACE)
-        }
+        heat(RagiumBlocks.SMELTER) { items { +Items.FURNACE } }
         // Chemical
-        chemical(RagiumBlocks.CHEMICAL_BATH) {
-            define('D', Items.CAULDRON)
-            unlockedBy(Items.CAULDRON)
-        }
+        chemical(RagiumBlocks.CHEMICAL_BATH) { items { +Items.CAULDRON } }
         // Bio
-        bio(RagiumBlocks.BREWERY) {
-            define('D', Items.BREWING_STAND)
-            unlockedBy(Items.BREWING_STAND)
-        }
+        bio(RagiumBlocks.BREWERY) { items { +Items.BREWING_STAND } }
         // Electronics
         // Arcane
 
         // Decoration
-        shaped(RecipeCategory.DECORATIONS, RagiumBlocks.MACHINE_CASING, 4)
-            .pattern("ABA")
-            .pattern("B B")
-            .pattern("ABA")
-            .define('A', CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SOOTY_IRON)
-            .define('B', CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
-            .unlockedBy(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
-            .save(output)
+        HTShapedRecipeBuilder.create {
+            +"ABA"
+            +"B B"
+            +"ABA"
+            define('A') { +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SOOTY_IRON) }
+            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            result {
+                +RagiumBlocks.MACHINE_CASING
+                count = 4
+            }
+        }.save(exporter)
 
         for (block: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINE_CASINGS.values) {
-            SingleItemRecipeBuilder.stonecutting(
-                Ingredient.of(RagiumBlocks.MACHINE_CASING),
-                RecipeCategory.DECORATIONS,
-                block,
-                1
-            ).unlockedBy(getHasName(RagiumBlocks.MACHINE_CASING), has(RagiumBlocks.MACHINE_CASING))
-                .save(output)
+            HTSingleItemRecipeBuilder.stonecutting {
+                ingredient { items { +RagiumBlocks.MACHINE_CASING } }
+                result { +block }
+            }.save(exporter)
         }
     }
 
@@ -310,20 +231,21 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         material: HTMaterialLike,
         gear: HTMaterialLike,
         result: HTSimpleDeferredBlockAndItem,
-        builderAction: ShapedRecipeBuilder.() -> Unit
+        builderAction: IngredientBuilder.() -> Unit
     ) {
-        shaped(RecipeCategory.MISC, result)
-            .pattern("ABA")
-            .pattern("BCB")
-            .pattern("ADA")
-            .define('A', CommonTagPrefixes.NUGGET, material)
-            .define('B', RagiumItems.getParts(machineType))
-            .define('C', CommonTagPrefixes.GEAR, gear)
-            .apply(builderAction)
-            .save(output)
+        HTShapedRecipeBuilder.create {
+            +"ABA"
+            +"BCB"
+            +"ADA"
+            define('A') { +holderSet(CommonTagPrefixes.NUGGET, material) }
+            define('B') { items { +RagiumItems.getParts(machineType) } }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, gear) }
+            define('D', builderAction)
+            result { +result }
+        }.save(exporter)
     }
 
-    private inline fun mechanical(result: HTSimpleDeferredBlockAndItem, builderAction: ShapedRecipeBuilder.() -> Unit) {
+    private inline fun mechanical(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.MECHANICAL,
             RagiumMaterial.Metal.SOOTY_IRON,
@@ -333,7 +255,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         )
     }
 
-    private inline fun heat(result: HTSimpleDeferredBlockAndItem, builderAction: ShapedRecipeBuilder.() -> Unit) {
+    private inline fun heat(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.HEAT,
             RagiumMaterial.Metal.SOOTY_IRON,
@@ -343,7 +265,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         )
     }
 
-    private inline fun chemical(result: HTSimpleDeferredBlockAndItem, builderAction: ShapedRecipeBuilder.() -> Unit) {
+    private inline fun chemical(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.CHEMICAL,
             RagiumMaterial.Metal.BLACK_STEEL,
@@ -353,7 +275,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         )
     }
 
-    private inline fun bio(result: HTSimpleDeferredBlockAndItem, builderAction: ShapedRecipeBuilder.() -> Unit) {
+    private inline fun bio(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.BIO,
             RagiumMaterial.Metal.BLACK_STEEL,
@@ -363,10 +285,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         )
     }
 
-    private inline fun electronics(
-        result: HTSimpleDeferredBlockAndItem,
-        builderAction: ShapedRecipeBuilder.() -> Unit
-    ) {
+    private inline fun electronics(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.ELECTRONICS,
             RagiumMaterial.Metal.VOID_METAL,
@@ -376,7 +295,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         )
     }
 
-    private inline fun arcane(result: HTSimpleDeferredBlockAndItem, builderAction: ShapedRecipeBuilder.() -> Unit) {
+    private inline fun arcane(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.ARCANE,
             RagiumMaterial.Metal.VOID_METAL,
@@ -390,26 +309,28 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
 
     private fun material() {
         // XX <-> Storage Block
-        baseToBlock(RagiumMaterial.Gem.ECHO, CommonTagPrefixes.GEM, Items.ECHO_SHARD, size = StorageBlockSize.FOUR)
+        baseToBlock(
+            RagiumMaterial.Gem.ECHO,
+            CommonTagPrefixes.GEM,
+            HTSimpleDeferredItem(vanillaId("echo_shard")),
+            size = StorageBlockSize.FOUR
+        )
         baseToBlock(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT)
         baseToBlock(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT)
         baseToBlock(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT)
         // Ingot <-> Nugget
-        ingotToNugget(RagiumMaterial.Metal.NETHERITE, ingot = Items.NETHERITE_INGOT)
+        ingotToNugget(RagiumMaterial.Metal.NETHERITE, ingot = HTSimpleDeferredItem(vanillaId("netherite_ingot")))
         ingotToNugget(RagiumMaterial.Metal.SOOTY_IRON)
         ingotToNugget(RagiumMaterial.Metal.BLACK_STEEL)
         ingotToNugget(RagiumMaterial.Metal.VOID_METAL)
         // Gear
         RagiumItems.getOrThrow(HTItemPart.GEAR, RagiumMaterial.Other.WOOD).let { gear: HTSimpleDeferredItem ->
-            shaped(RecipeCategory.MISC, gear)
-                .pattern(" A ")
-                .pattern("ABA")
-                .pattern(" A ")
-                .define('A', ItemTags.PLANKS)
-                .define('B', ItemTags.WOODEN_BUTTONS)
-                .group(gear.idOrThrow.path)
-                .unlockedBy(ItemTags.PLANKS)
-                .save(output)
+            HTShapedRecipeBuilder.create {
+                hollow4()
+                define('A') { +holderSet(ItemTags.PLANKS) }
+                define('B') { +holderSet(ItemTags.WOODEN_BUTTONS) }
+                result { +gear }
+            }.save(exporter)
         }
         gear(CommonTagPrefixes.GEM, RagiumMaterial.Gem.DIAMOND)
         gear(CommonTagPrefixes.GEM, RagiumMaterial.Gem.EMERALD)
@@ -417,18 +338,13 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
         gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD)
         RagiumItems.MATERIAL_ITEMS[HTItemPart.GEAR, RagiumMaterial.Metal.NETHERITE]?.let {
-            SmithingTransformRecipeBuilder.smithing(
-                Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
-                tag(CommonTagPrefixes.GEAR, RagiumMaterial.Gem.DIAMOND),
-                tag(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.NETHERITE),
-                RecipeCategory.MISC,
-                it.get()
-            ).unlocks(
-                getHasName(CommonTagPrefixes.GEAR, RagiumMaterial.Gem.DIAMOND),
-                has(CommonTagPrefixes.GEAR, RagiumMaterial.Gem.DIAMOND)
-            ).save(output, RecipeKey(it.idOrThrow.withSuffix("_smithing")))
+            HTSmithingRecipeBuilder.create {
+                template { items { +Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE } }
+                base { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Gem.DIAMOND) }
+                addition { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.NETHERITE) }
+                result { +it }
+            }.save(exporter)
         }
-
         // Dust -> Ingot
         for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
@@ -439,224 +355,153 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
                 RagiumMaterial.Metal.NETHERITE -> HTSimpleDeferredItem(vanillaId("netherite_ingot"))
                 else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, metal]
             } ?: continue
-            SimpleCookingRecipeBuilder.smelting(
-                Ingredient.of(dust),
-                RecipeCategory.MISC,
-                CookingBookCategory.MISC,
-                item,
-                0.35f,
-                200
-            ).group(item.idOrThrow.path)
-                .unlockedBy(getHasName(dust), has(dust))
-                .saveSuffixed(output, "_from_smelting_dust")
-            SimpleCookingRecipeBuilder.blasting(
-                Ingredient.of(dust),
-                RecipeCategory.MISC,
-                CookingBookCategory.MISC,
-                item,
-                0.35f,
-                100
-            ).group(item.idOrThrow.path)
-                .unlockedBy(getHasName(dust), has(dust))
-                .saveSuffixed(output, "_from_blasting_dust")
+            HTCookingRecipeBuilder.smeltingAndBlasting(exporter) {
+                ingredient { items { +dust } }
+                result { +item }
+                exp = 0.35f
+                group = item.id.path
+                recipeId suffix "_from_dust"
+            }
         }
-
         // Fuel
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
-            val base: ItemLike = RagiumMaterialHelper.getFuelBase(fuel)
+            val base: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
             // Storage
-            baseToBlock(fuel, Ingredient.of(base), base, getHasName(base) to has(base))
+            baseToBlock(fuel, Ingredient.of(base), base)
             // Tiny
             val tiny: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.TINY, fuel)
-            shapeless(RecipeCategory.MISC, tiny, 8)
-                .requires(base)
-                .group(tiny.idOrThrow.path)
-                .unlockedBy(getHasName(base), has(base))
-                .save(output)
-            shaped(RecipeCategory.MISC, base)
-                .pattern("AAA")
-                .pattern("A A")
-                .pattern("AAA")
-                .define('A', CommonTagPrefixes.TINY, fuel)
-                .group(getItemName(base))
-                .unlockedBy(CommonTagPrefixes.TINY, fuel)
-                .saveSuffixed(output, "_from_tiny")
+            HTShapelessRecipeBuilder.create {
+                ingredient { items { +base } }
+                result {
+                    +tiny
+                    count = 8
+                }
+                group = tiny.id.path
+            }.save(exporter)
+            HTShapedRecipeBuilder.create {
+                hollow()
+                define('A') { +holderSet(CommonTagPrefixes.TINY, fuel) }
+                result { +base }
+                group = base.id.path
+                recipeId suffix "_from_tiny"
+            }.save(exporter)
         }
         // Sooty Iron
-        val ironIngot: Ingredient = tag(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
-        val sootyIronIngot: HTSimpleDeferredItem = RagiumItems.getOrThrow(
-            HTItemPart.INGOT,
-            RagiumMaterial.Metal.SOOTY_IRON
-        )
-        shaped(RecipeCategory.MISC, sootyIronIngot)
-            .pattern("AAA")
-            .pattern("ABA")
-            .pattern("AAA")
-            .define('A', CommonTagPrefixes.TINY, RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL)
-            .define('B', ironIngot)
-            .group(sootyIronIngot.idOrThrow.path)
-            .unlockedBy(CommonTagPrefixes.TINY, RagiumMaterial.Fuel.COAL)
-            .unlockedBy(CommonTagPrefixes.TINY, RagiumMaterial.Fuel.CHARCOAL)
-            .save(output)
-        shaped(RecipeCategory.MISC, sootyIronIngot)
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
-            .define('A', CommonTagPrefixes.TINY, RagiumMaterial.Fuel.COAL_COKE, RagiumMaterial.Fuel.PITCH_COKE)
-            .define('B', ironIngot)
-            .group(sootyIronIngot.idOrThrow.path)
-            .unlockedBy(CommonTagPrefixes.TINY, RagiumMaterial.Fuel.COAL_COKE)
-            .unlockedBy(CommonTagPrefixes.TINY, RagiumMaterial.Fuel.PITCH_COKE)
-            .saveSuffixed(output, "_from_coke")
+        val ironIngot: HolderSet<Item> = holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
+        val sootyIronIngot: HTSimpleDeferredItem =
+            RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+        HTShapedRecipeBuilder.create {
+            hollow8()
+            define('A') {
+                +materialTags(CommonTagPrefixes.TINY, nelOf(RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL))
+            }
+            define('B') { +ironIngot }
+            result { +sootyIronIngot }
+            group = sootyIronIngot.id.path
+        }.save(exporter)
+        HTShapedRecipeBuilder.create {
+            hollow4()
+            define('A') {
+                +materialTags(
+                    CommonTagPrefixes.TINY,
+                    nelOf(RagiumMaterial.Fuel.COAL_COKE, RagiumMaterial.Fuel.PITCH_COKE)
+                )
+            }
+            define('B') { +ironIngot }
+            result { +sootyIronIngot }
+            group = sootyIronIngot.id.path
+            recipeId suffix "_from_coke"
+        }.save(exporter)
     }
 
     private fun baseToBlock(
         material: RagiumMaterial,
         basePrefix: HTTagPrefix,
-        base: ItemLike,
-        block: ItemLike? = RagiumBlocks.STORAGE_BLOCKS[material],
+        base: HTSimpleDeferredItem,
+        block: HTSimpleDeferredBlockAndItem? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
-        baseToBlock(
-            material,
-            tag(basePrefix, material),
-            base,
-            getHasName(basePrefix, material) to has(basePrefix, material),
-            block,
-            size
-        )
+        baseToBlock(material, Ingredient.of(holderSet(basePrefix, material)), base, block, size)
     }
 
     private fun baseToBlock(
         material: RagiumMaterial,
         basePart: HTItemPart,
-        block: ItemLike? = RagiumBlocks.STORAGE_BLOCKS[material],
+        block: HTSimpleDeferredBlockAndItem? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
-        val base: ItemLike = RagiumItems.MATERIAL_ITEMS[basePart, material] ?: return
+        val base: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[basePart, material] ?: return
         baseToBlock(material, basePart.tagPrefix, base, block, size)
     }
 
     private fun baseToBlock(
         material: RagiumMaterial,
         baseInput: Ingredient,
-        base: ItemLike,
-        criterion: Pair<String, Criterion<*>>,
-        block: ItemLike? = RagiumBlocks.STORAGE_BLOCKS[material],
+        base: HTSimpleDeferredItem,
+        block: HTSimpleDeferredBlockAndItem? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
         size: StorageBlockSize = StorageBlockSize.NINE
     ) {
         if (block == null) return
-        shapeless(RecipeCategory.MISC, base, size.count)
-            .requires(CommonTagPrefixes.STORAGE_BLOCK, material)
-            .group(getItemName(base))
-            .unlockedBy(CommonTagPrefixes.STORAGE_BLOCK, material)
-            .saveSuffixed(output, "_from_block")
-        shaped(RecipeCategory.BUILDING_BLOCKS, block)
-            .apply { size.pattern.forEach(::pattern) }
-            .define('A', baseInput)
-            .define('B', base)
-            .group(getItemName(block))
-            .unlockedBy(criterion.first, criterion.second)
-            .save(output)
+        HTShapelessRecipeBuilder.create {
+            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, material) }
+            result {
+                +base
+                count = size.count
+            }
+            group = base.id.path
+            recipeId suffix "_from_block"
+        }.save(exporter)
+        HTShapedRecipeBuilder.create {
+            size.pattern.invoke(this)
+            define('A') { +baseInput }
+            define('B') { items { +base } }
+            result { +block }
+            category = RecipeCategory.BUILDING_BLOCKS
+            group = block.item.id.path
+        }.save(exporter)
     }
 
-    private enum class StorageBlockSize(val count: Int, val pattern: List<String>) {
-        FOUR(4, listOf("AA", "AB")),
-        NINE(9, listOf("AAA", "ABA", "AAA"))
+    private enum class StorageBlockSize(val count: Int, val pattern: HTShapedRecipeBuilder.() -> Unit) {
+        FOUR(4, {
+            +"AA"
+            +"AB"
+        }),
+        NINE(9, HTShapedRecipeBuilder::hollow8)
     }
 
     private fun ingotToNugget(
         material: RagiumMaterial,
-        ingot: ItemLike? = RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, material],
-        nugget: ItemLike? = RagiumItems.MATERIAL_ITEMS[HTItemPart.NUGGET, material]
+        ingot: HTSimpleDeferredItem? = RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, material],
+        nugget: HTSimpleDeferredItem? = RagiumItems.MATERIAL_ITEMS[HTItemPart.NUGGET, material]
     ) {
         if (ingot == null || nugget == null) return
-        shapeless(RecipeCategory.MISC, nugget, 9)
-            .requires(CommonTagPrefixes.INGOT, material)
-            .group(getItemName(nugget))
-            .unlockedBy(CommonTagPrefixes.INGOT, material)
-            .saveSuffixed(output, "_from_ingot")
-        shaped(RecipeCategory.MISC, ingot)
-            .pattern("AAA")
-            .pattern("ABA")
-            .pattern("AAA")
-            .define('A', CommonTagPrefixes.NUGGET, material)
-            .define('B', nugget)
-            .group(getItemName(ingot))
-            .unlockedBy(CommonTagPrefixes.NUGGET, material)
-            .saveSuffixed(output, "_from_nugget")
+        HTShapelessRecipeBuilder.create {
+            ingredient { +holderSet(CommonTagPrefixes.INGOT, material) }
+            result {
+                +nugget
+                count = 9
+            }
+            group = nugget.id.path
+            recipeId suffix "_from_ingot"
+        }.save(exporter)
+        HTShapedRecipeBuilder.create {
+            hollow8()
+            define('A') { +holderSet(CommonTagPrefixes.NUGGET, material) }
+            define('B') { items { +nugget } }
+            result { +ingot }
+            group = ingot.id.path
+            recipeId suffix "_from_nugget"
+        }.save(exporter)
     }
 
     private fun gear(basePrefix: HTTagPrefix, material: RagiumMaterial) {
-        val gear: ItemLike = RagiumItems.getOrThrow(HTItemPart.GEAR, material)
-        shaped(RecipeCategory.MISC, gear)
-            .pattern(" A ")
-            .pattern("ABA")
-            .pattern(" A ")
-            .define('A', basePrefix, material)
-            .define('B', CommonTagPrefixes.GEAR, RagiumMaterial.Other.WOOD)
-            .group(getItemName(gear))
-            .unlockedBy(basePrefix, material)
-            .save(output)
+        HTShapedRecipeBuilder.create {
+            hollow4()
+            define('A') { +holderSet(basePrefix, material) }
+            define('B') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Other.WOOD) }
+            result { +RagiumItems.getOrThrow(HTItemPart.GEAR, material) }
+        }.save(exporter)
     }
 
-    //    Extensions    //
-
-    fun tag(prefix: HTTagPrefix, material: HTMaterialLike): Ingredient = tag(prefix.itemTagKey(material))
-
-    fun getHasName(tagKey: TagKey<*>): String = "has_${tagKey.location().debugPath}"
-
-    fun getHasName(prefix: HTTagPrefix, material: HTMaterialLike): String = getHasName(prefix.itemTagKey(material))
-
-    fun has(prefix: HTTagPrefix, material: HTMaterialLike): Criterion<InventoryChangeTrigger.TriggerInstance> =
-        has(prefix.itemTagKey(material))
-
-    fun RecipeBuilder.saveSuffixed(output: RecipeOutput, suffix: String) {
-        this.save(output, RecipeKey(this.defaultId().identifier().withSuffix(suffix)))
-    }
-
-    // ShapedRecipeBuilder
-    fun ShapedRecipeBuilder.define(symbol: Char, prefix: HTTagPrefix, material: HTMaterialLike): ShapedRecipeBuilder =
-        this.define(symbol, prefix.itemTagKey(material))
-
-    fun ShapedRecipeBuilder.define(
-        symbol: Char,
-        prefix: HTTagPrefix,
-        vararg materials: HTMaterialLike
-    ): ShapedRecipeBuilder = materials.map(prefix::itemTagKey)
-        .toSortedSet(HTComparators.TAG_KEY)
-        .map(::tag)
-        .let(::CompoundIngredient)
-        .toVanilla()
-        .let { this.define(symbol, it) }
-
-    fun ShapedRecipeBuilder.unlockedBy(item: ItemLike): ShapedRecipeBuilder =
-        this.unlockedBy(getHasName(item), has(item))
-
-    fun ShapedRecipeBuilder.unlockedBy(tagKey: TagKey<Item>): ShapedRecipeBuilder =
-        this.unlockedBy(getHasName(tagKey), has(tagKey))
-
-    fun ShapedRecipeBuilder.unlockedBy(prefix: HTTagPrefix, material: HTMaterialLike): ShapedRecipeBuilder =
-        this.unlockedBy(getHasName(prefix, material), has(prefix, material))
-
-    // ShapelessRecipeBuilder
-    fun ShapelessRecipeBuilder.requires(prefix: HTTagPrefix, material: HTMaterialLike): ShapelessRecipeBuilder =
-        this.requires(prefix.itemTagKey(material))
-
-    fun ShapelessRecipeBuilder.requires(prefix: HTTagPrefix, vararg materials: HTMaterialLike): ShapelessRecipeBuilder =
-        materials.map(prefix::itemTagKey)
-            .toSortedSet(HTComparators.TAG_KEY)
-            .map(::tag)
-            .let(::CompoundIngredient)
-            .toVanilla()
-            .let(this::requires)
-
-    fun ShapelessRecipeBuilder.unlockedBy(item: ItemLike): ShapelessRecipeBuilder =
-        this.unlockedBy(getHasName(item), has(item))
-
-    fun ShapelessRecipeBuilder.unlockedBy(tagKey: TagKey<Item>): ShapelessRecipeBuilder =
-        this.unlockedBy(getHasName(tagKey), has(tagKey))
-
-    fun ShapelessRecipeBuilder.unlockedBy(prefix: HTTagPrefix, material: HTMaterialLike): ShapelessRecipeBuilder =
-        this.unlockedBy(getHasName(prefix, material), has(prefix, material))
+    override fun getName(): String = "Vanilla Recipes"
 }

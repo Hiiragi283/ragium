@@ -116,7 +116,6 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
      * レシピを生成します。
      * @param exporter 生成したレシピの出力先
      */
-    open fun save(exporter: ConditionalExporter<Recipe<*>>) {
+    open fun save(exporter: ConditionalExporter<Recipe<*>>): RecipeKey =
         build().let { (key: RecipeKey, recipe: RECIPE) -> exporter.accept(key, recipe, conditions) }
-    }
 }
