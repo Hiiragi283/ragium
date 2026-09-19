@@ -3,7 +3,7 @@ package hiiragi283.lib.collection
 /**
  * @param E リストの要素のクラス
  * @author Hiiragi Tsubasa
- * @since 26.1.6
+ * @since 26.1.7
  */
 fun <E> nelOf(head: E): Nel<E> = Nel(head)
 

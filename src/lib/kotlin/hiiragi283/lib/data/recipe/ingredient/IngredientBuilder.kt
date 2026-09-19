@@ -21,9 +21,6 @@ import kotlin.contracts.contract
 @HTBuilderMarker
 abstract class IngredientBuilder {
     companion object {
-        /**
-         * @since 26.1.4
-         */
         @JvmStatic
         inline fun build(builderAction: IngredientBuilder.() -> Unit): Ingredient {
             contract {

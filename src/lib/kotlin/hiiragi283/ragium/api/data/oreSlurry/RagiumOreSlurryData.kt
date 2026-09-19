@@ -27,6 +27,9 @@ data object RagiumOreSlurryData {
     @JvmField
     val GOLD: ResourceKey<HTOreSlurryData> = create("gold")
 
+    /**
+     * @since 26.1.7
+     */
     @JvmField
     val NETHERITE_SCRAP: ResourceKey<HTOreSlurryData> = create("netherite_scrap")
 

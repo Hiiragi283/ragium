@@ -29,6 +29,10 @@ sealed interface RagiumMaterial :
 
         // Common
         COAL_COKE("Coal Coke", "石炭コークス"),
+
+        /**
+         * @since 26.1.7
+         */
         PITCH_COKE("Pitch Coke", "ピッチコークス")
         ;
 
@@ -136,6 +140,10 @@ sealed interface RagiumMaterial :
 
         // Common
         CARBON(false, "Carbon", "炭素"),
+
+        /**
+         * @since 26.1.7
+         */
         SILICON(false, "Silicon", "シリコン")
         ;
 
