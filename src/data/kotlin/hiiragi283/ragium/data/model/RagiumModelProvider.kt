@@ -5,8 +5,8 @@ import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.data.model.HTModelTemplates
 import hiiragi283.lib.data.model.createBlock
 import hiiragi283.lib.registry.HTFluidContent
+import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
-import hiiragi283.lib.resource.HTSimpleBlockItemWithKey
 import hiiragi283.lib.resource.HTValueWithId
 import hiiragi283.lib.resource.blockId
 import hiiragi283.lib.resource.vanillaId
@@ -69,7 +69,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             yield(RagiumBlocks.CREATIVE_BATTERY) // TODO
 
             yield(RagiumBlocks.MACHINE_CASING)
-        }.forEach { generators.createTrivialCube(it.block.getOrThrow()) }
+        }.forEach { generators.createTrivialCube(it.getOrThrow()) }
 
         // Machine
         val inactiveModels: Map<HTMachineType, Identifier> = HTMachineType.entries
@@ -81,34 +81,35 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
                     generators.modelOutput
                 )
             }
-        for ((machineType: HTMachineType, blockItem: HTSimpleBlockItemWithKey) in RagiumBlocks.MACHINES.flatEntries) {
-            val block: HTValueWithId<Block> = blockItem.block
-            generators.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(block.getOrThrow())
-                    .with(
-                        PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
-                            .select(false, BlockModelGenerators.plainVariant(inactiveModels[machineType]!!))
-                            .select(
-                                true,
-                                BlockModelGenerators.plainVariant(machineModel(generators, machineType, block))
-                            )
-                    ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
-            )
-        }
+        RagiumBlocks.MACHINES.flatEntries
+            .forEach { (machineType: HTMachineType, blockItem: HTSimpleDeferredBlockAndItem) ->
+                generators.blockStateOutput.accept(
+                    MultiVariantGenerator.dispatch(blockItem.getOrThrow())
+                        .with(
+                            PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
+                                .select(false, BlockModelGenerators.plainVariant(inactiveModels[machineType]!!))
+                                .select(
+                                    true,
+                                    BlockModelGenerators.plainVariant(machineModel(generators, machineType, blockItem))
+                                )
+                        ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+                )
+            }
         // Decoration
-        for ((machineType: HTMachineType, block: HTSimpleBlockItemWithKey) in RagiumBlocks.MACHINE_CASINGS) {
+        for ((machineType: HTMachineType, block: HTSimpleDeferredBlockAndItem) in RagiumBlocks.MACHINE_CASINGS) {
             generators.createSimple(
-                block.block.getOrThrow(),
+                block.getOrThrow(),
                 ModelTemplates.CUBE_TOP.createBlock(
-                    block.block,
+                    block,
                     textureMapping(machineType),
                     generators.modelOutput
                 )
             )
         }
         // Storage
-        generators.createTrivialBlock(RagiumBlocks.TANK.block.get(), HTModelTemplates.Providers.TANK_TEMPLATE)
-        generators.createTrivialBlock(RagiumBlocks.VOID_TANK.block.get(), HTModelTemplates.Providers.TANK_TEMPLATE)
+        generators.createTrivialBlock(RagiumBlocks.TANK.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
+        generators.createTrivialBlock(RagiumBlocks.VOID_TANK.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
+        generators.createTrivialBlock(RagiumBlocks.CREATIVE_TANK.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
     }
 
     private fun machineModel(
@@ -125,7 +126,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun textureMapping(machineType: HTMachineType): TextureMapping = TextureMapping()
-        .put(TextureSlot.TOP, Material(RagiumBlocks.MACHINE_CASING.block.idOrThrow.blockId))
+        .put(TextureSlot.TOP, Material(RagiumBlocks.MACHINE_CASING.idOrThrow.blockId))
         .put(
             TextureSlot.SIDE,
             Material(RagiumAPI.id(HTConstants.BLOCK, "machine", "${machineType.materialName}_side"))

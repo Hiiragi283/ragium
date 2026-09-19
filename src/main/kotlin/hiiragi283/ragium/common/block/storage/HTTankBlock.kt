@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.storage
 
+import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
-import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -15,7 +15,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
-class HTTankBlock(properties: Properties) : HTBasicEntityBlock(RagiumBlockEntityTypes.TANK, properties) {
+class HTTankBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : HTBasicEntityBlock(type, properties) {
     companion object {
         @JvmField
         val SHAPE: VoxelShape = box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0)

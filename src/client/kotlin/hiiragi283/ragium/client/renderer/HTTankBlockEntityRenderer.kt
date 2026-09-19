@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.lib.renderer.HTBlockEntityRenderer
 import hiiragi283.lib.renderer.HTRenderHelper
 import hiiragi283.lib.renderer.state.HTFluidBERenderState
-import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.base.HTBaseTankBlockEntity
 import net.minecraft.client.renderer.Sheets
 import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
@@ -15,7 +15,7 @@ import net.minecraft.world.phys.Vec3
 import org.joml.Vector3f
 
 class HTTankBlockEntityRenderer(context: BlockEntityRendererProvider.Context) :
-    HTBlockEntityRenderer<HTTankBlockEntity, HTFluidBERenderState>(context) {
+    HTBlockEntityRenderer<HTBaseTankBlockEntity, HTFluidBERenderState>(context) {
     companion object {
         @JvmStatic
         private val FROM: Vector3f = Vector3f(2 / 16f, 0f, 2 / 16f).add(0.01f, 0.01f, 0.01f)
@@ -24,7 +24,7 @@ class HTTankBlockEntityRenderer(context: BlockEntityRendererProvider.Context) :
     override fun createRenderState(): HTFluidBERenderState = HTFluidBERenderState()
 
     override fun extractRenderState(
-        blockEntity: HTTankBlockEntity,
+        blockEntity: HTBaseTankBlockEntity,
         state: HTFluidBERenderState,
         partialTicks: Float,
         cameraPosition: Vec3,

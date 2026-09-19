@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.loot
 
 import hiiragi283.lib.data.loot.HTBlockLootTableProvider
-import hiiragi283.lib.registry.HTSimpleDeferredBlock
+import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.HTMaterialAccess
@@ -27,12 +27,12 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
         registerOres(RagiumMaterial.Mineral.SULFUR, HTItemPart.DUST, UniformGenerator.between(2f, 5f))
         registerOres(RagiumMaterial.Mineral.NITER, HTItemPart.DUST, UniformGenerator.between(2f, 5f))
 
-        RagiumBlocks.STORAGE_BLOCKS.values.forEach { dropSelf(it.block) }
+        RagiumBlocks.STORAGE_BLOCKS.values.forEach(::dropSelf)
     }
 
     private fun registerOres(material: RagiumMaterial, rawPart: HTItemPart, countProvider: NumberProvider? = null) {
         for (part: HTOreBlockPart in HTOreBlockPart.entries) {
-            val block: HTSimpleDeferredBlock = RagiumBlocks.MATERIAL_ORES[part, material]?.block ?: continue
+            val block: HTSimpleDeferredBlockAndItem = RagiumBlocks.MATERIAL_ORES[part, material] ?: continue
             val drop: ItemLike = HTMaterialAccess.INSTANCE.getMaterialItem(rawPart, material) ?: continue
             add(block) { block: Block ->
                 val builder: LootPoolSingletonContainer.Builder<*> = LootItem.lootTableItem(drop)

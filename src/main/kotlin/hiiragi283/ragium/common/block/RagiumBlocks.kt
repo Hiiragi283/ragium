@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
@@ -9,10 +8,12 @@ import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.flatMapTable
 import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
+import hiiragi283.lib.registry.HTDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItemRegister
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
+import hiiragi283.lib.registry.ItemWithContextFactory
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.material.HTBlockPart
@@ -23,9 +24,11 @@ import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
+import hiiragi283.ragium.common.item.block.HTCreativeTankBlockItem
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
 import net.minecraft.util.valueproviders.UniformInt
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
@@ -73,6 +76,15 @@ data object RagiumBlocks {
         properties: BlockBehaviour.Properties = machine()
     ): HTBasicDeferredBlockAndItem<BLOCK> =
         REGISTER.registerSimple(type.idOrThrow.path, { factory(type, properties.setId(it)) })
+
+    @JvmStatic
+    private fun <BLOCK : Block, ITEM : Item> registerMachine(
+        type: HTDeferredBlockEntityType<*>,
+        factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> BLOCK,
+        itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
+        properties: BlockBehaviour.Properties = machine()
+    ): HTDeferredBlockAndItem<BLOCK, ITEM> =
+        REGISTER.register(type.idOrThrow.path, { factory(type, properties.setId(it)) }, itemFactory)
 
     @JvmStatic
     private fun registerMachine(
@@ -255,11 +267,10 @@ data object RagiumBlocks {
     //    Storage    //
 
     @JvmField
-    val TANK: HTBasicDeferredBlockAndItem<HTTankBlock> = REGISTER.registerSimple(
-        HTConstants.TANK,
-        machine().noOcclusion(),
-        ::HTTankBlock
-        // itemProp = { prop: Item.Properties -> prop.component(RagiumDataComponents.CAPACITY_SCALE, 1) }
+    val TANK: HTBasicDeferredBlockAndItem<HTTankBlock> = registerMachine(
+        RagiumBlockEntityTypes.TANK,
+        ::HTTankBlock,
+        machine().noOcclusion()
     )
 
     // Void
@@ -274,6 +285,14 @@ data object RagiumBlocks {
     @JvmField
     val CREATIVE_BATTERY: HTBasicDeferredBlockAndItem<HTBasicEntityBlock> =
         registerMachine(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBasicEntityBlock)
+
+    @JvmField
+    val CREATIVE_TANK: HTDeferredBlockAndItem<HTTankBlock, HTCreativeTankBlockItem> = registerMachine(
+        RagiumBlockEntityTypes.CREATIVE_TANK,
+        ::HTTankBlock,
+        ::HTCreativeTankBlockItem,
+        machine().noOcclusion()
+    )
 
     //    Decoration    //
 

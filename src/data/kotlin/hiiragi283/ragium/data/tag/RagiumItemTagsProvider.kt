@@ -74,5 +74,6 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)
             .add(RagiumBlocks.TANK)
             .add(RagiumBlocks.VOID_TANK)
+            .add(RagiumBlocks.CREATIVE_TANK)
     }
 }

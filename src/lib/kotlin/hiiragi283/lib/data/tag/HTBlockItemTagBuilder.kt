@@ -25,7 +25,7 @@ interface HTBlockItemTagBuilder {
      * @param type このエントリの依存関係
      */
     fun add(value: HTSimpleBlockItemWithKey, type: HTTagDependType = HTTagDependType.REQUIRED): HTBlockItemTagBuilder =
-        this.add(value.keyOrThrow, type)
+        this.add(value.blockItemKeyOrThrow, type)
 
     /**
      * 指定した子タグをタグに追加します。

@@ -21,6 +21,7 @@ import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -38,6 +39,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.common.tooltip.TooltipLocation
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.event.RegisterTooltipAppendersEvent
+import net.neoforged.neoforge.transfer.InfiniteResourceHandler
 import net.neoforged.neoforge.transfer.access.ItemAccess
 import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
 import net.neoforged.neoforge.transfer.fluid.FluidResource
@@ -296,6 +298,16 @@ data object RagiumItems {
             HTEnergyCapabilities.item,
             { _, _ -> InfiniteEnergyHandler.INSTANCE },
             RagiumBlocks.CREATIVE_BATTERY
+        )
+        event.registerItem(
+            HTFluidCapabilities.item,
+            { stack: ItemStack, _ ->
+                HTStorageHelper.getFluid(stack)
+                    .let(FluidResource::of)
+                    .takeUnless(FluidResource::isEmpty)
+                    ?.let(::InfiniteResourceHandler)
+            },
+            RagiumBlocks.CREATIVE_TANK
         )
         // Fluid
         event.registerItem(

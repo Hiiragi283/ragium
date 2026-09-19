@@ -3,6 +3,7 @@ package hiiragi283.lib.registry
 import hiiragi283.lib.item.HTItemInstanceLike
 import hiiragi283.lib.resource.BlockItemKey
 import hiiragi283.lib.resource.HTBlockItemWithKey
+import hiiragi283.lib.resource.HTValueWithKey
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.text.HTHasTranslationKey
 import net.minecraft.resources.Identifier
@@ -37,6 +38,7 @@ data class HTDeferredBlockAndItem<out BLOCK : Block, out ITEM : Item>(
     override val block: HTDeferredBlock<BLOCK>,
     override val item: HTDeferredItem<ITEM>
 ) : HTBlockItemWithKey<BLOCK, ITEM>,
+    HTValueWithKey<Block, BLOCK> by block,
     HTHasTranslationKey by item,
     HTHasText by item,
     ItemLike by item,

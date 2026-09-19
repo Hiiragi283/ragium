@@ -197,5 +197,6 @@ data object RagiumClient : HTClientMod() {
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankBlockEntityRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), ::HTTankBlockEntityRenderer)
     }
 }

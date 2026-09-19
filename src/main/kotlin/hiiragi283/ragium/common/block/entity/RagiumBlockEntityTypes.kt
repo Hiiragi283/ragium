@@ -24,6 +24,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import net.minecraft.core.Direction
@@ -111,6 +112,10 @@ data object RagiumBlockEntityTypes {
     val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
         registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
 
+    @JvmField
+    val CREATIVE_TANK: HTDeferredBlockEntityType<HTCreativeTankBlockEntity> =
+        registerTick("creative_tank", ::HTCreativeTankBlockEntity)
+
     //    Events    //
 
     @JvmStatic
@@ -163,12 +168,13 @@ data object RagiumBlockEntityTypes {
             { _, _, _, _, _ ->
                 HTVoidTankBlock.VOIDING_HANDLER
             },
-            RagiumBlocks.VOID_TANK.block.get()
+            RagiumBlocks.VOID_TANK.getOrThrow()
         )
 
         event.registerBlockEntity(
             HTEnergyCapabilities.block,
             CREATIVE_BATTERY.get()
         ) { _, _ -> InfiniteEnergyHandler.INSTANCE }
+        registerBlockEntity(CREATIVE_TANK.get())
     }
 }

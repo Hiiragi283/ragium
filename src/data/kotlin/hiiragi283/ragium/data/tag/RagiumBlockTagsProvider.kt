@@ -33,6 +33,7 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yield(RagiumBlocks.TANK)
             yield(RagiumBlocks.VOID_TANK)
             yield(RagiumBlocks.CREATIVE_BATTERY)
-        }.forEach { pickaxe.add(it.block) }
+            yield(RagiumBlocks.CREATIVE_TANK)
+        }.forEach(pickaxe::add)
     }
 }

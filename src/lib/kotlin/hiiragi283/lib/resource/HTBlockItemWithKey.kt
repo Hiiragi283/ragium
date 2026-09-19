@@ -20,8 +20,8 @@ interface HTBlockItemWithKey<out BLOCK : Block, out ITEM : Item> {
 
     val item: HTValueWithKey<Item, ITEM>
 
-    val keyOrNull: BlockItemKey? get() = block.keyOrNull?.let { blockKey: ResourceKey<Block> ->
+    val blockItemKeyOrNull: BlockItemKey? get() = block.keyOrNull?.let { blockKey: ResourceKey<Block> ->
         item.keyOrNull?.let { itemKey: ResourceKey<Item> -> BlockItemKey(blockKey, itemKey) }
     }
-    val keyOrThrow: BlockItemKey get() = BlockItemKey(block.keyOrThrow, item.keyOrThrow)
+    val blockItemKeyOrThrow: BlockItemKey get() = BlockItemKey(block.keyOrThrow, item.keyOrThrow)
 }

@@ -29,6 +29,7 @@ class RagiumBlockItemTagsProvider(factory: (BlockItemTag) -> HTBlockItemTagBuild
 
         builder(RagiumTags.BlockItem.STORAGES_CREATIVE)
             .add(RagiumBlocks.CREATIVE_BATTERY)
+            .add(RagiumBlocks.CREATIVE_TANK)
         // Machine
         for (machineType: HTMachineType in HTMachineType.entries) {
             for (block: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINES[machineType]) {
