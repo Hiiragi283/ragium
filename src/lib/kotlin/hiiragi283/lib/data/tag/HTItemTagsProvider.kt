@@ -1,6 +1,5 @@
 package hiiragi283.lib.data.tag
 
-import hiiragi283.lib.registry.asKeyOrValue
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import net.minecraft.core.HolderLookup
@@ -8,7 +7,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 import java.util.concurrent.CompletableFuture
 
 /**
@@ -31,13 +29,6 @@ abstract class HTItemTagsProvider : HTTagsProvider<Item> {
     ) : super(output, Registries.ITEM, lookupProvider, modId)
 
     //    Extensions    //
-
-    /**
-     * 指定した要素をタグに追加します。
-     * @param item アイテムの値
-     */
-    protected fun HTTagBuilder<Item>.addItem(item: ItemLike): HTTagBuilder<Item> =
-        this.add(item.asItem().asKeyOrValue())
 
     protected fun createTag(prefix: HTTagPrefix, material: HTMaterialLike): TagKey<Item> = prefix.itemTagKey(material)
 

@@ -6,6 +6,7 @@ import hiiragi283.lib.data.tag.HTItemTagsProvider
 import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.HTSimpleValueWithKey
+import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
@@ -19,7 +20,6 @@ import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
@@ -30,7 +30,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
             HTBlockItemTagsProvider.forItem(builder(item))
         }.run()
         // Material
-        builder(CommonTagPrefixes.GEM, RagiumMaterial.Gem.ECHO).addItem(Items.ECHO_SHARD)
+        builder(CommonTagPrefixes.GEM, RagiumMaterial.Gem.ECHO).add(createKey(vanillaId("echo_shard")))
 
         RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemPart, material, item: HTSimpleValueWithKey<Item>) ->
             builder(part.tagPrefix, material).add(item)
@@ -57,7 +57,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
 
         builder(HTCommonTags.Items.COAL_COKE).add(RagiumItems.COAL_COKE)
-        builder(HTCommonTags.Items.PAPER).addItem(Items.PAPER)
+        builder(HTCommonTags.Items.PAPER).add(createKey(vanillaId("paper")))
         builder(HTCommonTags.Items.PITCH_COKE).add(RagiumItems.PITCH_COKE)
         builder(HTCommonTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
         builder(HTCommonTags.Items.SILICON).add(RagiumItems.CRUDE_SILICON)
@@ -65,8 +65,8 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
 
         builder(RagiumTags.Items.COALS)
             .add(RagiumItems.BAMBOO_CHARCOAL)
-            .addItem(Items.CHARCOAL)
-            .addItem(Items.COAL)
+            .add(createKey(vanillaId("charcoal")))
+            .add(createKey(vanillaId("coal")))
         builder(RagiumTags.Items.COKES)
             .addTag(HTCommonTags.Items.COAL_COKE)
             .addTag(HTCommonTags.Items.PITCH_COKE)
