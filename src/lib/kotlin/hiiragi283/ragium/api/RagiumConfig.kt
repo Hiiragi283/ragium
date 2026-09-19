@@ -157,9 +157,13 @@ data object RagiumConfig {
             // Electronics
             @JvmField
             val scanner: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.SCANNER)
+                HTEnergyConfig.createMachine(builder, RagiumConstants.SCANNER, 64)
 
             // Arcane
+            @JvmField
+            val enchanter: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.ENCHANTER, 256)
+
             @JvmField
             val fluidDuplicator: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.FLUID_DUPLICATOR, 1024)

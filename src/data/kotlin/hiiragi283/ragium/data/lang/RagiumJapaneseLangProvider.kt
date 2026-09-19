@@ -56,6 +56,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.SCANNER, "レーザースキャナ")
 
+        add(RagiumBlocks.ENCHANTER, "エンチャンター")
+
         add(RagiumBlocks.TANK, "可変タンク")
         add(RagiumBlocks.VOID_TANK, "廃棄タンク")
         add(RagiumBlocks.CREATIVE_BATTERY, "クリエイティブ用バッテリー")

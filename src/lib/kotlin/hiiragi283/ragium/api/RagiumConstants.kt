@@ -36,6 +36,7 @@ data object RagiumConstants {
     const val SCANNER = "scanner"
 
     // Arcane
+    const val ENCHANTER = "enchanter"
     const val FLUID_DUPLICATOR = "fluid_duplicator"
     const val MASS_FABRICATOR = "mass_fabricator"
 

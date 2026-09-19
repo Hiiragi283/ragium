@@ -249,6 +249,9 @@ data object RagiumBlocks {
         registerFakeMachine(RagiumConstants.SCANNER)
 
     // Arcane
+    @JvmField
+    val ENCHANTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.ENCHANTER)
 
     @JvmField
     val MACHINES: ListMultiMap<HTMachineType, HTBasicDeferredBlockAndItem<HTMachineBlock>> =
@@ -274,6 +277,8 @@ data object RagiumBlocks {
             put(HTMachineType.BIO, PLANTER)
 
             put(HTMachineType.ELECTRONICS, SCANNER)
+
+            put(HTMachineType.ARCANE, ENCHANTER)
         }
 
     //    Storage    //

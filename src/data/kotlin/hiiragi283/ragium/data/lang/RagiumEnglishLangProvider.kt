@@ -60,6 +60,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
+        add(RagiumBlocks.ENCHANTER, "Enchanter")
+
         add(RagiumBlocks.TANK, "Variable Tank")
         add(RagiumBlocks.VOID_TANK, "Void Tank")
         add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")

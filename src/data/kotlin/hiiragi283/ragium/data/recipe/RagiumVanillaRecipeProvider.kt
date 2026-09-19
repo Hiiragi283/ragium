@@ -264,6 +264,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         bio(RagiumBlocks.PLANTER) { items { +Items.FLOWER_POT } }
         // Electronics
         // Arcane
+        arcane(RagiumBlocks.ENCHANTER) { items { +Items.ENCHANTING_TABLE } }
 
         // Decoration
         VanillaRecipeBuilders.shaped {

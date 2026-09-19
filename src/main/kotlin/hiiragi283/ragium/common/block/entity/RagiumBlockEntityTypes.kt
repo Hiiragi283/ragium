@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
@@ -111,6 +112,9 @@ data object RagiumBlockEntityTypes {
 
     // Electronics
     // Arcane
+    @JvmField
+    val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
+        registerTick(RagiumConstants.ENCHANTER, ::HTEnchanterBlockEntity)
 
     //    Storage    //
 
@@ -172,6 +176,8 @@ data object RagiumBlockEntityTypes {
 
         registerProcessor(BREWERY.get())
         registerProcessor(PLANTER.get())
+
+        registerProcessor(ENCHANTER.get())
         // Storage
         registerBlockEntity(TANK.get())
 

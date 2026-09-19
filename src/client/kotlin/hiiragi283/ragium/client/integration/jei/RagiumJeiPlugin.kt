@@ -278,6 +278,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RagiumJeiRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
         // Electronics
         // Arcane
+        registration.addCraftingStation(RagiumJeiRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
     }
 
     override fun registerGuiHandlers(registration: IGuiHandlerRegistration) {

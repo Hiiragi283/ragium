@@ -93,5 +93,5 @@ data object RagiumJeiRecipeTypes {
     // Arcane
     @JvmField
     val ENCHANTING: HTHolderJeiRecipeType<RTEnchantingRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.MACHINE_CASING)
+        HTJeiRecipeType(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 }

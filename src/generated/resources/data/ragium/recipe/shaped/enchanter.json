@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:nuggets/void_metal",
+    "B": "ragium:arcane_machine_parts",
+    "C": "#c:gears/netherite",
+    "D": "minecraft:enchanting_table"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ADA"
+  ],
+  "result": {
+    "id": "ragium:enchanter"
+  }
+}
