@@ -8,7 +8,7 @@ import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.codec.nelOrElement
+import hiiragi283.lib.serialization.codec.compactNelFieldOf
 import hiiragi283.lib.serialization.network.nelOf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -54,7 +54,9 @@ interface HTItemToDoubleItemRecipe :
                 HTCodecs.recordMap { instance ->
                     instance.group(
                         HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
-                        HTItemResult.CODEC.nelOrElement(2).fieldOf(HTConstants.RESULTS).forGetter(Basic::result),
+                        HTItemResult.CODEC
+                            .compactNelFieldOf(HTConstants.RESULT, HTConstants.RESULTS, 2)
+                            .forGetter(Basic::result),
                         HTProgressData.CODEC.forGetter(Basic::progressData)
                     ).apply(instance, factory::create)
                 }

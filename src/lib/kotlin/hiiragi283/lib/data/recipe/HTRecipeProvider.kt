@@ -1,15 +1,17 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.collection.Nel
+import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.ExporterDataProvider
+import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTMaterialLike
+import hiiragi283.lib.tag.HTTagPrefix
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import java.util.concurrent.CompletableFuture
@@ -27,11 +29,35 @@ abstract class HTRecipeProvider(
 ) : ExporterDataProvider<Recipe<*>>(packOutput, future, Registries.RECIPE, modId, Recipe.CONDITIONAL_CODEC) {
     //    Extension    //
 
-    fun dustOrGem(material: HTMaterialLike): HolderSet<Item> =
-        setOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM).map { it.itemTagKey(material) }.let(::holderSet)
+    /**
+     * @since 26.1.7
+     */
+    fun materialTags(prefixes: Nel<HTTagPrefix>, materials: Nel<HTMaterialLike>): HTMaterialTagsIngredient =
+        HTMaterialTagsIngredient(prefixes, materials)
 
-    fun dustOrIngot(material: HTMaterialLike): HolderSet<Item> =
-        setOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT).map { it.itemTagKey(material) }.let(::holderSet)
+    /**
+     * @since 26.1.7
+     */
+    fun materialTags(prefixes: Nel<HTTagPrefix>, material: HTMaterialLike): HTMaterialTagsIngredient =
+        materialTags(prefixes, nelOf(material))
+
+    /**
+     * @since 26.1.7
+     */
+    fun materialTags(prefix: HTTagPrefix, materials: Nel<HTMaterialLike>): HTMaterialTagsIngredient =
+        materialTags(nelOf(prefix), materials)
+
+    /**
+     * @since 26.1.7
+     */
+    fun dustOrGem(material: HTMaterialLike): HTMaterialTagsIngredient =
+        materialTags(nelOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM), material)
+
+    /**
+     * @since 26.1.7
+     */
+    fun dustOrIngot(material: HTMaterialLike): HTMaterialTagsIngredient =
+        materialTags(nelOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT), material)
 
     //    Integration    //
 

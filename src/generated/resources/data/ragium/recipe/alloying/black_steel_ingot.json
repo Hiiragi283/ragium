@@ -2,7 +2,13 @@
   "type": "ragium:alloying",
   "primary_ingredient": {
     "count": 1,
-    "items": "#c:ingots/sooty_iron"
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/sooty_iron",
+        "c:ingots/sooty_iron"
+      ]
+    }
   },
   "result": {
     "count": 1,

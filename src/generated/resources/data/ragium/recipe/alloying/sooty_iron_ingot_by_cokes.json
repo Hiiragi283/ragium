@@ -3,10 +3,10 @@
   "primary_ingredient": {
     "count": 2,
     "items": {
-      "type": "neoforge:or",
-      "values": [
-        "#c:dusts/iron",
-        "#c:ingots/iron"
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/iron",
+        "c:ingots/iron"
       ]
     }
   },

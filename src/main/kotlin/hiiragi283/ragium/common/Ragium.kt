@@ -11,6 +11,7 @@ import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.recipe.HTRecipeType
+import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -126,6 +127,9 @@ data object Ragium : HTCommonMod() {
             }
         }
 
+        event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES) { helper ->
+            helper.register(RagiumAPI.id("material_tags"), HTMaterialTagsIngredient.TYPE)
+        }
         event.register(NeoForgeRegistries.Keys.FLUID_INGREDIENT_TYPES) { helper ->
             helper.register(RagiumAPI.id(HTConstants.POTION), HTPotionFluidIngredient.TYPE)
         }

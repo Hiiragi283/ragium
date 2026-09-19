@@ -5,6 +5,13 @@ package hiiragi283.lib.collection
  * @author Hiiragi Tsubasa
  * @since 26.1.6
  */
+fun <E> nelOf(head: E): Nel<E> = Nel(head)
+
+/**
+ * @param E リストの要素のクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.6
+ */
 fun <E> nelOf(head: E, vararg tail: E): Nel<E> = Nel(head, listOf(*tail))
 
 /**

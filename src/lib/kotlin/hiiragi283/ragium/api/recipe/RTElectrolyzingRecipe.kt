@@ -16,7 +16,7 @@ import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.codec.nelOf
+import hiiragi283.lib.serialization.codec.compactNelFieldOf
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.nelOf
 import hiiragi283.lib.util.fold
@@ -48,7 +48,9 @@ data class RTElectrolyzingRecipe(
                 HTFluidIngredient.CODEC
                     .fieldOf(HTConstants.FLUID_INGREDIENT)
                     .forGetter(RTElectrolyzingRecipe::fluidIngredient),
-                HTFluidResult.CODEC.nelOf(3).fieldOf(HTConstants.RESULTS).forGetter(RTElectrolyzingRecipe::results),
+                HTFluidResult.CODEC
+                    .compactNelFieldOf(HTConstants.RESULT, HTConstants.RESULTS, 3)
+                    .forGetter(RTElectrolyzingRecipe::results),
                 HTProgressData.CODEC.forGetter(RTElectrolyzingRecipe::progressData)
             ).apply(instance, ::RTElectrolyzingRecipe)
         }

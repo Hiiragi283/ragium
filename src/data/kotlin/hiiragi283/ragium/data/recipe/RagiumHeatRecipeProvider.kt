@@ -53,7 +53,13 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Iron + Coals -> Sooty Iron
         RagiumRecipeBuilders.alloying {
             primary { +dustOrIngot(RagiumMaterial.Metal.IRON) }
-            secondary { +holderSet(RagiumTags.Items.COALS) }
+            secondary {
+                +holderSet(
+                    CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL),
+                    CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.CHARCOAL),
+                    RagiumTags.Items.COALS
+                )
+            }
             result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
             recipeId suffix "_by_coals"
         }.save(exporter)
@@ -72,7 +78,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Sooty Iron + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {
-            primary { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            primary { +dustOrIngot(RagiumMaterial.Metal.SOOTY_IRON) }
             secondary {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN)
                 count = 2

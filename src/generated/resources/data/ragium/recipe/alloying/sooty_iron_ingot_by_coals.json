@@ -3,10 +3,10 @@
   "primary_ingredient": {
     "count": 1,
     "items": {
-      "type": "neoforge:or",
-      "values": [
-        "#c:dusts/iron",
-        "#c:ingots/iron"
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/iron",
+        "c:ingots/iron"
       ]
     }
   },
@@ -16,7 +16,14 @@
   },
   "secondary_ingredient": {
     "count": 1,
-    "items": "#ragium:coals"
+    "items": {
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/charcoal",
+        "#c:dusts/coal",
+        "#ragium:coals"
+      ]
+    }
   },
   "time": 200
 }

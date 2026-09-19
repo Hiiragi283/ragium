@@ -3,10 +3,10 @@
   "primary_ingredient": {
     "count": 4,
     "items": {
-      "type": "neoforge:or",
-      "values": [
-        "#c:dusts/amethyst",
-        "#c:gems/amethyst"
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/amethyst",
+        "c:gems/amethyst"
       ]
     }
   },

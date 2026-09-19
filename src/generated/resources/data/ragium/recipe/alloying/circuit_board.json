@@ -11,10 +11,10 @@
   "secondary_ingredient": {
     "count": 1,
     "items": {
-      "type": "neoforge:or",
-      "values": [
-        "#c:dusts/gold",
-        "#c:ingots/gold"
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/gold",
+        "c:ingots/gold"
       ]
     }
   },
