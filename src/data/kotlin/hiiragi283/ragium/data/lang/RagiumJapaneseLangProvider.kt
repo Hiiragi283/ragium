@@ -122,6 +122,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addOreSlurry(RagiumOreSlurryData.COPPER, "銅の鉱石泥")
         addOreSlurry(RagiumOreSlurryData.IRON, "鉄の鉱石泥")
         addOreSlurry(RagiumOreSlurryData.GOLD, "金の鉱石泥")
+        addOreSlurry(RagiumOreSlurryData.NETHERITE_SCRAP, "古代の鉱石泥")
 
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "凍傷")

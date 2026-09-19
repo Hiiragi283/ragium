@@ -42,7 +42,6 @@ import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.crafting.display.SlotDisplay
@@ -242,7 +241,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 .listElements()
                 .asSequence()
                 .mapNotNull { holder: Holder<HTOreSlurryData> ->
-                    val template: ItemStackTemplate = holder.value().createTemplate() ?: return@mapNotNull null
+                    val template: ItemStack = holder.value().createResult()
+                    if (template.isEmpty) return@mapNotNull null
                     RagiumRecipeBuilders.reacting {
                         primaryIngredient = HTJeiRecipeHelper.fakeFluid(HTOreSlurryDataHelper.createFluid(holder))
                         secondaryIngredient = HTJeiRecipeHelper.fakeFluid(FluidTagSlotDisplay(Tags.Fluids.WATER))

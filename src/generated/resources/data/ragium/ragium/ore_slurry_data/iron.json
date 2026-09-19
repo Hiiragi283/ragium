@@ -1,8 +1,16 @@
 {
   "color": "#777777",
-  "count": 2,
-  "fallback": "ragium:iron_dust",
-  "result": "#c:dusts/iron",
+  "result": {
+    "type": "ragium:with_fallback",
+    "base": {
+      "type": "ragium:tag",
+      "tag": "#c:dusts/iron"
+    },
+    "count": 2,
+    "fallback": {
+      "id": "ragium:iron_dust"
+    }
+  },
   "title": {
     "translate": "ore_slurry_data.ragium.iron"
   }

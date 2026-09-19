@@ -53,7 +53,7 @@ class HTItemIngredientBuilder @PublishedApi internal constructor() {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HolderAcceptor.ItemSetBuilder().apply(builderAction).build()
+        +HolderAcceptor.buildItemSet(builderAction)
     }
 
     fun build(): HTItemIngredient = HTItemIngredient(ingredient, count)

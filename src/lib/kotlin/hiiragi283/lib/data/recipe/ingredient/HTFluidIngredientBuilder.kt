@@ -49,7 +49,7 @@ class HTFluidIngredientBuilder @PublishedApi internal constructor() {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HolderAcceptor.FluidSetBuilder().apply(builderAction).build()
+        +HolderAcceptor.buildFluidSet(builderAction)
     }
 
     fun build(): HTFluidIngredient = HTFluidIngredient(ingredient, amount)

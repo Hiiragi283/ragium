@@ -240,6 +240,40 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
         override fun getId(): Identifier? = content.leftOrNull()?.key?.identifier()
     }
+
+    /**
+     * @since 26.1.7
+     */
+    @JvmRecord
+    data class WithFallbackEntry(val base: Entry, val fallback: Entry) : Entry {
+        companion object {
+            @JvmField
+            val CODEC: MapCodec<WithFallbackEntry> = HTCodecs.recordMap { instance ->
+                instance.group(
+                    Entry.MAP_CODEC.fieldOf("base").forGetter(WithFallbackEntry::base),
+                    Entry.MAP_CODEC.fieldOf("fallback").forGetter(WithFallbackEntry::fallback)
+                ).apply(instance, ::WithFallbackEntry)
+            }
+
+            @JvmField
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, WithFallbackEntry> = StreamCodec.composite(
+                Entry.STREAM_CODEC,
+                WithFallbackEntry::base,
+                Entry.STREAM_CODEC,
+                WithFallbackEntry::fallback,
+                ::WithFallbackEntry
+            )
+
+            @JvmField
+            val TYPE: HTItemResultType<WithFallbackEntry> = HTItemResultType(CODEC, STREAM_CODEC)
+        }
+
+        override fun type(): HTItemResultType<*> = TYPE
+
+        override fun create(): ItemStack = base.create().takeUnless(ItemStack::isEmpty) ?: fallback.create()
+
+        override fun getId(): Identifier? = base.getId() ?: fallback.getId()
+    }
 }
 
 //    Extensions    //

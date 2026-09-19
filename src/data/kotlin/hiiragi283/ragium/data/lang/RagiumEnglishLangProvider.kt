@@ -126,6 +126,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addOreSlurry(RagiumOreSlurryData.COPPER, "Copper Ore Slurry")
         addOreSlurry(RagiumOreSlurryData.IRON, "Iron Ore Slurry")
         addOreSlurry(RagiumOreSlurryData.GOLD, "Gold Ore Slurry")
+        addOreSlurry(RagiumOreSlurryData.NETHERITE_SCRAP, "Ancient Debris Slurry")
 
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "Frostbite")
