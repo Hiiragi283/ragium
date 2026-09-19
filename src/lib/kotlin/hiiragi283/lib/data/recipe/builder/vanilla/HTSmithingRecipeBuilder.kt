@@ -20,16 +20,6 @@ import kotlin.contracts.contract
  * @since 26.1.0
  */
 class HTSmithingRecipeBuilder : HTVanillaRecipeBuilder<SmithingTransformRecipe>(HTConstants.SMITHING) {
-    companion object {
-        @JvmStatic
-        inline fun create(builderAction: HTSmithingRecipeBuilder.() -> Unit): HTSmithingRecipeBuilder {
-            contract {
-                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-            }
-            return HTSmithingRecipeBuilder().apply(builderAction)
-        }
-    }
-
     @PublishedApi internal var template: Optional<Ingredient> by HTDelegates.optionalInitialize()
 
     @PublishedApi internal var base: Ingredient by HTDelegates.onceInitialize()

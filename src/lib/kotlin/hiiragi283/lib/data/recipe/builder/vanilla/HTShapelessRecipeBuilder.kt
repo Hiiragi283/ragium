@@ -20,16 +20,6 @@ import kotlin.contracts.contract
  * @since 26.1.0
  */
 class HTShapelessRecipeBuilder : HTCraftingRecipeBuilder<ShapelessRecipe>(HTConstants.SHAPELESS) {
-    companion object {
-        @JvmStatic
-        inline fun create(builderAction: HTShapelessRecipeBuilder.() -> Unit): HTShapelessRecipeBuilder {
-            contract {
-                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-            }
-            return HTShapelessRecipeBuilder().apply(builderAction)
-        }
-    }
-
     @PublishedApi internal val ingredients: MutableList<Ingredient> = ObjectArrayList()
 
     operator fun Ingredient.unaryPlus() {

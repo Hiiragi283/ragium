@@ -35,7 +35,7 @@ abstract class HTVanillaRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String) : 
     var group: String by HTDelegates.onceInitialize { "" }
 
     // Result
-    @PublishedApi internal var result: ItemStackTemplate by HTDelegates.onceInitialize()
+    var result: ItemStackTemplate by HTDelegates.onceInitialize()
 
     operator fun ItemStackTemplate.unaryPlus() {
         result = this

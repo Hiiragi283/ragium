@@ -21,16 +21,6 @@ import kotlin.contracts.contract
  * @since 26.1.0
  */
 class HTShapedRecipeBuilder : HTCraftingRecipeBuilder<ShapedRecipe>(HTConstants.SHAPED) {
-    companion object {
-        @JvmStatic
-        inline fun create(builderAction: HTShapedRecipeBuilder.() -> Unit): HTShapedRecipeBuilder {
-            contract {
-                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-            }
-            return HTShapedRecipeBuilder().apply(builderAction)
-        }
-    }
-
     @PublishedApi internal val patterns: MutableList<String> = ObjectArrayList()
 
     @PublishedApi internal val keys: MutableMap<Char, Ingredient> = Char2ObjectLinkedOpenHashMap()
