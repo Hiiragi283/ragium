@@ -46,7 +46,7 @@ data class HTMaterialTagsIngredient private constructor(val tags: Nel<TagKey<Ite
     constructor(prefixes: Nel<HTTagPrefix>, materials: Nel<HTMaterialLike>) : this(
         prefixes
             .flatMap { prefix: HTTagPrefix -> materials.map(prefix::itemTagKey) }
-            .let(HTComparators::sortTagKeys)
+            .toSortedSet(HTComparators.TAG_KEY)
             .toNel()
     )
 

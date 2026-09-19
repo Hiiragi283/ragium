@@ -157,7 +157,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount /= 8
             }
             recipeId suffix "_from_stone"
-        }.save(exporter)
+        }
         // Magma block -> Lava
         RagiumRecipeBuilders.melting {
             ingredient { items { +Items.MAGMA_BLOCK } }
@@ -196,7 +196,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Molten Glass
         RagiumRecipeBuilders.melting {
             ingredient {
-                +holderSet(Tags.Items.GLASS_BLOCKS, CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Other.GLASS))
+                +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP, CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Other.GLASS))
             }
             result { +RagiumFluids.MOLTEN_GLASS }
             recipeId suffix "_from_block"

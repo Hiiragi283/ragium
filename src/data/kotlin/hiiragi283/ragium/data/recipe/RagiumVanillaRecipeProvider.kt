@@ -623,7 +623,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
         prefix: HTTagPrefix,
         vararg materials: HTMaterialLike
     ): ShapedRecipeBuilder = materials.map(prefix::itemTagKey)
-        .let(HTComparators::sortTagKeys)
+        .toSortedSet(HTComparators.TAG_KEY)
         .map(::tag)
         .let(::CompoundIngredient)
         .toVanilla()
@@ -644,7 +644,7 @@ class RagiumVanillaRecipeProvider(registries: HolderLookup.Provider, output: Rec
 
     fun ShapelessRecipeBuilder.requires(prefix: HTTagPrefix, vararg materials: HTMaterialLike): ShapelessRecipeBuilder =
         materials.map(prefix::itemTagKey)
-            .let(HTComparators::sortTagKeys)
+            .toSortedSet(HTComparators.TAG_KEY)
             .map(::tag)
             .let(::CompoundIngredient)
             .toVanilla()

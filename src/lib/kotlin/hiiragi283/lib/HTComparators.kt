@@ -1,5 +1,7 @@
 package hiiragi283.lib
 
+import com.google.common.collect.Comparators
+import net.minecraft.core.HolderSet
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
@@ -31,8 +33,9 @@ data object HTComparators {
         compareBy(KEY, TagKey<*>::registry).thenComparing(compareBy(ID, TagKey<*>::location))
 
     /**
-     * @since 26.1.4
+     * [HolderSet]の[Comparator]
+     * @since 26.1.7
      */
-    @JvmStatic
-    fun <T : Any> sortTagKeys(tagKeys: Iterable<TagKey<T>>): Set<TagKey<T>> = tagKeys.toSortedSet(TAG_KEY)
+    @JvmField
+    val HOLDER_SET: Comparator<HolderSet<*>> = compareBy(Comparators.emptiesLast(TAG_KEY), HolderSet<*>::unwrapKey)
 }

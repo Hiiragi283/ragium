@@ -35,7 +35,7 @@ abstract class HTSingleRecipeCategory<RECIPE : HTProgressRecipe.Simple<*>>(
         // output
         setOutput(
             builder
-                .addInputSlot(getPosition(3), getPosition(0))
+                .addOutputSlot(getPosition(3), getPosition(0))
                 .setSlotBackground(HTBackgroundType.OUTPUT),
             recipe
         )

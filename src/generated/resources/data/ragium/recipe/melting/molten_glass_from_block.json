@@ -6,7 +6,7 @@
       "type": "neoforge:or",
       "values": [
         "#c:dusts/glass",
-        "#c:glass_blocks"
+        "#c:glass_blocks/cheap"
       ]
     }
   },
