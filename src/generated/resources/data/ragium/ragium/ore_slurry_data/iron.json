@@ -1,4 +1,5 @@
 {
+  "color": "#777777",
   "count": 2,
   "fallback": "ragium:iron_dust",
   "result": "#c:dusts/iron",

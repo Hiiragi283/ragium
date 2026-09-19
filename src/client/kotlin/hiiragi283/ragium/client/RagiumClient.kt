@@ -9,6 +9,7 @@ import hiiragi283.lib.mod.HTClientMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryDataHelper
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
@@ -23,6 +24,7 @@ import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import net.minecraft.client.resources.model.sprite.Material
+import net.minecraft.util.ARGB
 import net.minecraft.world.item.DyeColor
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
@@ -74,11 +76,9 @@ data object RagiumClient : HTClientMod() {
         }
         register.register(RagiumFluids.POTION) {
             dull()
-            tintSource =
-                FluidStackTintSource { stack: FluidStack ->
-                    "ff000000".hexToInt() or
-                        HTPotionHelper.getContents(stack).color
-                }
+            tintSource = FluidStackTintSource { stack: FluidStack ->
+                ARGB.opaque(HTPotionHelper.getContents(stack).color)
+            }
         }
         register.register(RagiumFluids.OMINOUS_FLUX) {
             molten()
@@ -181,8 +181,10 @@ data object RagiumClient : HTClientMod() {
         }
 
         register.register(RagiumFluids.ORE_SLURRY) {
-            dull()
-            colorTint(Color(0x3399cc))
+            still = Material(vanillaId(HTConstants.BLOCK, "white_concrete_powder"))
+            tintSource = FluidStackTintSource { stack: FluidStack ->
+                ARGB.opaque(HTOreSlurryDataHelper.getData(stack)?.color ?: 0x333300)
+            }
         }
     }
 

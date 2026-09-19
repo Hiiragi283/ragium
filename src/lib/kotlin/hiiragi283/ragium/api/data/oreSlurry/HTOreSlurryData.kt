@@ -14,6 +14,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStackTemplate
 import java.util.Optional
@@ -26,6 +27,7 @@ import kotlin.jvm.optionals.getOrNull
 @JvmRecord
 data class HTOreSlurryData @JvmOverloads constructor(
     val title: Text,
+    val color: Int,
     val result: HolderSet<Item>,
     val fallback: Optional<Holder<Item>>,
     val count: Int = 1
@@ -35,6 +37,7 @@ data class HTOreSlurryData @JvmOverloads constructor(
         val DIRECT_CODEC: Codec<HTOreSlurryData> = HTCodecs.record { instance ->
             instance.group(
                 HTCodecs.TEXT.fieldOf("title").forGetter(HTOreSlurryData::title),
+                ExtraCodecs.STRING_RGB_COLOR.fieldOf("color").forGetter(HTOreSlurryData::color),
                 HTCodecs.holderSet(Registries.ITEM).fieldOf(HTConstants.RESULT).forGetter(HTOreSlurryData::result),
                 Item.CODEC.optionalFieldOf("fallback").forGetter(HTOreSlurryData::fallback),
                 HTCodecs.POSITIVE_INT.optionalFieldOf(HTConstants.COUNT, 1).forGetter(HTOreSlurryData::count)
@@ -48,6 +51,8 @@ data class HTOreSlurryData @JvmOverloads constructor(
         val DIRECT_STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTOreSlurryData> = StreamCodec.composite(
             HTStreamCodecs.TEXT,
             HTOreSlurryData::title,
+            ByteBufCodecs.VAR_INT,
+            HTOreSlurryData::color,
             HTStreamCodecs.holderSet(Registries.ITEM),
             HTOreSlurryData::result,
             HTStreamCodecs.optional(Item.STREAM_CODEC),
@@ -62,8 +67,15 @@ data class HTOreSlurryData @JvmOverloads constructor(
             HTStreamCodecs.holder(RagiumRegistries.Keys.ORE_SLURRY_DATA, DIRECT_STREAM_CODEC)
     }
 
-    @JvmOverloads constructor(title: Text, result: HolderSet<Item>, fallback: Holder<Item>?, count: Int = 1) : this(
+    @JvmOverloads constructor(
+        title: Text,
+        color: Int,
+        result: HolderSet<Item>,
+        fallback: Holder<Item>?,
+        count: Int = 1
+    ) : this(
         title,
+        color,
         result,
         fallback.toOptional(),
         count

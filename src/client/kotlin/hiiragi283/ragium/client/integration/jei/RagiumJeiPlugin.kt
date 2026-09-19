@@ -78,6 +78,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                     }
                 }
             }
+        // Ore Slurry Bucket
+        registration.registerSubtypeInterpreter(RagiumFluids.ORE_SLURRY.bucketHolder.get()) { stack: ItemStack, _ ->
+            HTOreSlurryDataHelper.getData(stack)
+        }
     }
 
     override fun <T : Any> registerFluidSubtypes(

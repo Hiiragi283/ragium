@@ -26,8 +26,6 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.WithConditions
-import net.neoforged.neoforge.registries.holdersets.CompositeHolderSet
-import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 
@@ -127,7 +125,7 @@ abstract class ExporterDataProvider<R : Any>(
     protected fun <T : Any> holderSet(tagKeys: Iterable<TagKey<T>>): HolderSet<T> = when (tagKeys.count()) {
         0 -> HolderSet.empty()
         1 -> holderSet(tagKeys.first())
-        else -> tagKeys.toSortedSet(HTComparators.TAG_KEY).map(::holderSet).let(::OrHolderSet)
+        else -> tagKeys.map(::holderSet).let(HTComparators::compressHolderSet)
     }
 
     protected fun <T : Any> holderSet(vararg tagKeys: TagKey<T>): HolderSet<T> = holderSet(tagKeys.toSet())
@@ -151,26 +149,4 @@ abstract class ExporterDataProvider<R : Any>(
     protected fun lavaSet(): HolderSet<Fluid> = holderSet(Tags.Fluids.LAVA)
 
     protected fun milkSet(): HolderSet<Fluid> = holderSet(Tags.Fluids.MILK)
-
-    /**
-     * @since 26.1.7
-     */
-    protected fun <T : Any> compressHolderSet(holderSets: Iterable<HolderSet<T>>): OrHolderSet<T> =
-        holderSets.flatMap { holderSet: HolderSet<T> ->
-            when (holderSet) {
-                is CompositeHolderSet -> holderSet.components.singleOrNull()?.let(::listOf) ?: listOf(holderSet)
-                else -> listOf(holderSet)
-            }
-        }.sortedWith(HTComparators.HOLDER_SET).let(::OrHolderSet)
-
-    /**
-     * @since 26.1.7
-     */
-    protected fun <T : Any> compressHolderSet(holderSets: Sequence<HolderSet<T>>): OrHolderSet<T> =
-        holderSets.flatMap { holderSet: HolderSet<T> ->
-            when (holderSet) {
-                is CompositeHolderSet -> holderSet.components.singleOrNull()?.let(::listOf) ?: listOf(holderSet)
-                else -> listOf(holderSet)
-            }
-        }.sortedWith(HTComparators.HOLDER_SET).toList().let(::OrHolderSet)
 }
