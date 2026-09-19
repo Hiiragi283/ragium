@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildSortedSetMultiMap
@@ -14,16 +13,12 @@ import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
-import hiiragi283.ragium.api.util.HTStorageHelper
-import hiiragi283.ragium.common.block.RagiumBlocks
-import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
 import net.minecraft.ChatFormatting
@@ -39,11 +34,8 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.common.tooltip.TooltipLocation
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.event.RegisterTooltipAppendersEvent
-import net.neoforged.neoforge.transfer.InfiniteResourceHandler
 import net.neoforged.neoforge.transfer.access.ItemAccess
-import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
 import net.neoforged.neoforge.transfer.fluid.FluidResource
-import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler
 import java.util.function.Consumer
 
 data object RagiumItems {
@@ -277,38 +269,6 @@ data object RagiumItems {
 
     @JvmStatic
     private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
-        // Block
-        event.registerItem(
-            HTFluidCapabilities.item,
-            { _, access ->
-                ItemAccessFluidHandler(
-                    access,
-                    RagiumDataComponents.FLUID,
-                    RagiumConfig.SERVER.tankCapacity.asInt
-                )
-            },
-            RagiumBlocks.TANK
-        )
-        event.registerItem(
-            HTFluidCapabilities.item,
-            { _, _ -> HTVoidTankBlock.VOIDING_HANDLER },
-            RagiumBlocks.VOID_TANK
-        )
-        event.registerItem(
-            HTEnergyCapabilities.item,
-            { _, _ -> InfiniteEnergyHandler.INSTANCE },
-            RagiumBlocks.CREATIVE_BATTERY
-        )
-        event.registerItem(
-            HTFluidCapabilities.item,
-            { stack: ItemStack, _ ->
-                HTStorageHelper.getFluid(stack)
-                    .let(FluidResource::of)
-                    .takeUnless(FluidResource::isEmpty)
-                    ?.let(::InfiniteResourceHandler)
-            },
-            RagiumBlocks.CREATIVE_TANK
-        )
         // Fluid
         event.registerItem(
             HTFluidCapabilities.item,
@@ -320,6 +280,7 @@ data object RagiumItems {
             { _, access: ItemAccess -> HTOreSlurryBucketItem.BucketHandler(access) },
             RagiumFluids.ORE_SLURRY.bucketHolder
         )
+        // Item
     }
 
     @JvmStatic

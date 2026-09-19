@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.lib.capability.HTEnergyCapabilities
+import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
@@ -15,12 +17,15 @@ import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.ItemWithContextFactory
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
+import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
+import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
@@ -29,6 +34,7 @@ import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
 import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
@@ -38,7 +44,12 @@ import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import net.neoforged.neoforge.transfer.InfiniteResourceHandler
+import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
+import net.neoforged.neoforge.transfer.fluid.FluidResource
+import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler
 
 data object RagiumBlocks {
     @JvmStatic
@@ -51,6 +62,7 @@ data object RagiumBlocks {
     fun register(eventBus: IEventBus) {
         REGISTER.addAlias("steel_block", "sooty_iron_block")
 
+        eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
 
         REGISTER.register(eventBus)
@@ -220,7 +232,7 @@ data object RagiumBlocks {
 
     @JvmField
     val MIXER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerFakeMachine(RagiumConstants.MIXER)
+        registerMachine(RagiumBlockEntityTypes.MIXER)
 
     // Bio
     @JvmField
@@ -229,7 +241,7 @@ data object RagiumBlocks {
 
     @JvmField
     val PLANTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerFakeMachine(RagiumConstants.PLANTER)
+        registerMachine(RagiumBlockEntityTypes.PLANTER)
 
     // Electronics
     @JvmField
@@ -309,6 +321,42 @@ data object RagiumBlocks {
     fun getCasing(machineType: HTMachineType): HTSimpleDeferredBlockAndItem = MACHINE_CASINGS[machineType]!!
 
     //    Events    //
+
+    @JvmStatic
+    private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
+        // Block
+        event.registerItem(
+            HTFluidCapabilities.item,
+            { _, access ->
+                ItemAccessFluidHandler(
+                    access,
+                    RagiumDataComponents.FLUID,
+                    RagiumConfig.SERVER.tankCapacity.asInt
+                )
+            },
+            TANK
+        )
+        event.registerItem(
+            HTFluidCapabilities.item,
+            { _, _ -> HTVoidTankBlock.VOIDING_HANDLER },
+            VOID_TANK
+        )
+        event.registerItem(
+            HTEnergyCapabilities.item,
+            { _, _ -> InfiniteEnergyHandler.INSTANCE },
+            CREATIVE_BATTERY
+        )
+        event.registerItem(
+            HTFluidCapabilities.item,
+            { stack: ItemStack, _ ->
+                HTStorageHelper.getFluid(stack)
+                    .let(FluidResource::of)
+                    .takeUnless(FluidResource::isEmpty)
+                    ?.let(::InfiniteResourceHandler)
+            },
+            CREATIVE_TANK
+        )
+    }
 
     @JvmStatic
     private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {

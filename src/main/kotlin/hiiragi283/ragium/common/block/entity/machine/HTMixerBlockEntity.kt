@@ -10,9 +10,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemAndFluidToFluidBlockEntity(RagiumBlockEntityTypes.BREWERY.get(), RagiumRecipeLookups.BREWING, pos, state) {
-    override fun getCompletedSound(): HTSoundInstance = HTSoundInstance(SoundEvents.BREWING_STAND_BREW)
+class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
+    HTItemAndFluidToFluidBlockEntity(RagiumBlockEntityTypes.MIXER.get(), RagiumRecipeLookups.MIXING, pos, state) {
+    override fun getCompletedSound(): HTSoundInstance = HTSoundInstance(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE)
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.brewery
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.mixer
 }

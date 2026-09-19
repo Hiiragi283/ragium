@@ -90,6 +90,7 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
             helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
             helper.register(RagiumAPI.id("ore_slurry_data"), RagiumDataComponents.ORE_SLURRY_DATA)
+            helper.register(RagiumAPI.id("owner_id"), RagiumDataComponents.OWNER_ID)
         }
         event.register(Registries.MENU) { helper ->
             helper.register(

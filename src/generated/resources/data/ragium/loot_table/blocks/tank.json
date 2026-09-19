@@ -11,6 +11,17 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:custom_name",
+                "ragium:fluid",
+                "ragium:owner_id"
+              ],
+              "source": "block_entity"
+            }
+          ],
           "name": "ragium:tank"
         }
       ],

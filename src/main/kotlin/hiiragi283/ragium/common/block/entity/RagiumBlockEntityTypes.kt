@@ -21,6 +21,8 @@ import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
@@ -94,10 +96,18 @@ data object RagiumBlockEntityTypes {
     val CHEMICAL_BATH: HTDeferredBlockEntityType<HTChemicalBathBlockEntity> =
         registerTick(RagiumConstants.CHEMICAL_BATH, ::HTChemicalBathBlockEntity)
 
+    @JvmField
+    val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> =
+        registerTick(RagiumConstants.MIXER, ::HTMixerBlockEntity)
+
     // Bio
     @JvmField
     val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> =
         registerTick(RagiumConstants.BREWERY, ::HTBreweryBlockEntity)
+
+    @JvmField
+    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
+        registerTick(RagiumConstants.PLANTER, ::HTPlanterBlockEntity)
 
     // Electronics
     // Arcane
@@ -158,8 +168,10 @@ data object RagiumBlockEntityTypes {
         registerProcessor(SMELTER.get())
 
         registerProcessor(CHEMICAL_BATH.get())
+        registerProcessor(MIXER.get())
 
         registerProcessor(BREWERY.get())
+        registerProcessor(PLANTER.get())
         // Storage
         registerBlockEntity(TANK.get())
 

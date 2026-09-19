@@ -198,8 +198,10 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         heat(RagiumBlocks.SMELTER) { items { +Items.FURNACE } }
         // Chemical
         chemical(RagiumBlocks.CHEMICAL_BATH) { items { +Items.CAULDRON } }
+        chemical(RagiumBlocks.MIXER) { +holderSet(Tags.Items.BUCKETS_EMPTY) }
         // Bio
         bio(RagiumBlocks.BREWERY) { items { +Items.BREWING_STAND } }
+        bio(RagiumBlocks.PLANTER) { items { +Items.FLOWER_POT } }
         // Electronics
         // Arcane
 

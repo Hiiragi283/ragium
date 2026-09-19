@@ -14,9 +14,13 @@ import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.lib.transfer.item.ItemResourceHandler
 import hiiragi283.lib.transfer.item.getItemStack
 import hiiragi283.lib.transfer.resolver.HTResourceCapabilityManager
+import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.common.transfer.HTCapabilityCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.component.DataComponentGetter
+import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Nameable
 import net.minecraft.world.level.Level
@@ -103,6 +107,18 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
         input.read("custom_name", HTCodecs.TEXT).ifPresent(::customName::set)
         // Owner
         input.read(HTConstants.OWNER, HTCodecs.UUID).ifPresent(::ownerId::set)
+    }
+
+    override fun applyImplicitComponents(components: DataComponentGetter) {
+        super.applyImplicitComponents(components)
+        components.get(DataComponents.CUSTOM_NAME)?.let(::customName::set)
+        components.get(RagiumDataComponents.OWNER_ID)?.let(::ownerId::set)
+    }
+
+    override fun collectImplicitComponents(components: DataComponentMap.Builder) {
+        super.collectImplicitComponents(components)
+        components[DataComponents.CUSTOM_NAME] = customName
+        components[RagiumDataComponents.OWNER_ID] = ownerId
     }
 
     //    Nameable    //
