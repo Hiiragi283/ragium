@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.lib.capability.HTEnergyCapabilities
+import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildSortedSetMultiMap
 import hiiragi283.lib.collection.flatMapTable
@@ -8,15 +10,39 @@ import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.registry.HTDeferredItemRegister
 import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.text.HTCommonTranslation
+import hiiragi283.lib.text.Text
+import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.data.RagiumDataComponents
+import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
+import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
+import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
+import net.minecraft.ChatFormatting
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentMap
 import net.minecraft.world.item.HoneycombItem
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import net.neoforged.neoforge.common.tooltip.TooltipLocation
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import net.neoforged.neoforge.event.RegisterTooltipAppendersEvent
+import net.neoforged.neoforge.transfer.access.ItemAccess
+import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
+import net.neoforged.neoforge.transfer.fluid.FluidResource
+import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler
+import java.util.function.Consumer
 
 data object RagiumItems {
     @JvmField
@@ -28,6 +54,10 @@ data object RagiumItems {
         REGISTER.addAlias("steel_ingot", "sooty_iron_ingot")
         REGISTER.addAlias("steel_nugget", "sooty_iron_nugget")
         REGISTER.addAlias("coal_coke_dust", "carbon_dust")
+
+        eventBus.addListener(::registerTooltipAppenders)
+        eventBus.addListener(::registerCapabilities)
+        eventBus.addListener(::modifyDefaultComponents)
 
         REGISTER.register(eventBus)
     }
@@ -195,5 +225,105 @@ data object RagiumItems {
             toolType.createPath(RagiumMaterial.Metal.SOOTY_IRON),
             { prop: Item.Properties -> toolType.createItem(prop, RagiumToolMaterials.SOOTY_IRON, 6f, -3.1f, -2f, -1f) }
         )
+    }
+
+    //    Events    //
+
+    @JvmStatic
+    private fun registerTooltipAppenders(event: RegisterTooltipAppendersEvent) {
+        event.registerAppender(
+            TooltipLocation.HEAD
+        ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
+            if (!stack.`is`(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)) return@registerAppender
+            val view: HTFluidView = HTFluidCapabilities.getSlot(stack, 0) ?: return@registerAppender
+            val isCreative: Boolean = stack.`is`(RagiumTags.BlockItem.STORAGES_CREATIVE.item)
+            // Fluid Name
+            val resource: FluidResource = view.resource
+            when {
+                resource.isEmpty -> HTCommonTranslation.EMPTY.translateColored(ChatFormatting.RED)
+
+                isCreative -> HTCommonTranslation.STORED.translateColored(
+                    ChatFormatting.LIGHT_PURPLE,
+                    resource.hoverName,
+                    ChatFormatting.GRAY,
+                    HTCommonTranslation.INFINITE
+                )
+
+                else -> HTCommonTranslation.STORED_MB.translateColored(
+                    ChatFormatting.LIGHT_PURPLE,
+                    resource.hoverName,
+                    ChatFormatting.GRAY,
+                    view.amount
+                )
+            }.let(builder::accept)
+            // Tank Capacity
+            when (isCreative) {
+                true -> HTCommonTranslation.CAPACITY.translateColored(
+                    ChatFormatting.BLUE,
+                    ChatFormatting.GRAY,
+                    HTCommonTranslation.INFINITE
+                )
+
+                false -> HTCommonTranslation.CAPACITY_MB.translateColored(
+                    ChatFormatting.BLUE,
+                    ChatFormatting.GRAY,
+                    view.currentCapacity
+                )
+            }.let(builder::accept)
+        }
+    }
+
+    @JvmStatic
+    private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
+        // Block
+        event.registerItem(
+            HTFluidCapabilities.item,
+            { _, access ->
+                ItemAccessFluidHandler(
+                    access,
+                    RagiumDataComponents.FLUID,
+                    RagiumConfig.SERVER.tankCapacity.asInt
+                )
+            },
+            RagiumBlocks.TANK
+        )
+        event.registerItem(
+            HTFluidCapabilities.item,
+            { _, _ -> HTVoidTankBlock.VOIDING_HANDLER },
+            RagiumBlocks.VOID_TANK
+        )
+        event.registerItem(
+            HTEnergyCapabilities.item,
+            { _, _ -> InfiniteEnergyHandler.INSTANCE },
+            RagiumBlocks.CREATIVE_BATTERY
+        )
+        // Fluid
+        event.registerItem(
+            HTFluidCapabilities.item,
+            { _, access: ItemAccess -> HTPotionBucketItem.BucketHandler(access) },
+            RagiumFluids.POTION.bucketHolder
+        )
+        event.registerItem(
+            HTFluidCapabilities.item,
+            { _, access: ItemAccess -> HTOreSlurryBucketItem.BucketHandler(access) },
+            RagiumFluids.ORE_SLURRY.bucketHolder
+        )
+    }
+
+    @JvmStatic
+    private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
+        // Item
+        event.modify(Items.RAW_COPPER) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
+            builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.COPPER))
+        }
+        event.modify(Items.RAW_IRON) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
+            builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.IRON))
+        }
+        event.modify(Items.RAW_GOLD) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
+            builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.GOLD))
+        }
+        event.modify(Items.ANCIENT_DEBRIS) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
+            builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.NETHERITE_SCRAP))
+        }
     }
 }

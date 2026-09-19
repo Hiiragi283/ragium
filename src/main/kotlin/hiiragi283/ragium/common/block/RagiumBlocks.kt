@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
@@ -20,7 +21,13 @@ import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.block.storage.HTTankBlock
+import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
+import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponents
 import net.minecraft.util.valueproviders.UniformInt
+import net.minecraft.world.item.Rarity
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.DropExperienceBlock
@@ -28,6 +35,7 @@ import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 
 data object RagiumBlocks {
     @JvmStatic
@@ -39,6 +47,8 @@ data object RagiumBlocks {
     @JvmStatic
     fun register(eventBus: IEventBus) {
         REGISTER.addAlias("steel_block", "sooty_iron_block")
+
+        eventBus.addListener(::modifyDefaultComponents)
 
         REGISTER.register(eventBus)
     }
@@ -245,6 +255,23 @@ data object RagiumBlocks {
     //    Storage    //
 
     @JvmField
+    val TANK: HTBasicDeferredBlockAndItem<HTTankBlock> = REGISTER.registerSimple(
+        HTConstants.TANK,
+        machine().noOcclusion(),
+        ::HTTankBlock
+        // itemProp = { prop: Item.Properties -> prop.component(RagiumDataComponents.CAPACITY_SCALE, 1) }
+    )
+
+    // Void
+    @JvmField
+    val VOID_TANK: HTBasicDeferredBlockAndItem<HTVoidTankBlock> = REGISTER.registerSimple(
+        "void_tank",
+        machine().noOcclusion(),
+        ::HTVoidTankBlock
+    )
+
+    // Creative
+    @JvmField
     val CREATIVE_BATTERY: HTBasicDeferredBlockAndItem<HTBasicEntityBlock> =
         registerMachine(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBasicEntityBlock)
 
@@ -261,4 +288,25 @@ data object RagiumBlocks {
 
     @JvmStatic
     fun getCasing(machineType: HTMachineType): HTSimpleDeferredBlockAndItem = MACHINE_CASINGS[machineType]!!
+
+    //    Events    //
+
+    @JvmStatic
+    private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
+        // Block
+        setOf(
+            RagiumMaterial.Metal.BLACK_STEEL to Rarity.UNCOMMON,
+            RagiumMaterial.Metal.VOID_METAL to Rarity.RARE
+        ).forEach { (material: RagiumMaterial, rarity: Rarity) ->
+            for (part: HTBlockPart in HTBlockPart.entries) {
+                val block: ItemLike = RagiumBlocks.MATERIAL_BLOCKS[part, material] ?: continue
+                event.modify(block) { builder: DataComponentMap.Builder, _, _ ->
+                    builder.set(DataComponents.RARITY, rarity)
+                }
+            }
+        }
+        event.modify(RagiumBlocks.CREATIVE_BATTERY) { builder: DataComponentMap.Builder, _, _ ->
+            builder.set(DataComponents.RARITY, Rarity.EPIC)
+        }
+    }
 }

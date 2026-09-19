@@ -5,8 +5,8 @@
     {
       "neoforge:ingredient_type": "ragium:material_tags",
       "tags": [
-        "c:dusts/charcoal",
-        "c:dusts/coal"
+        "c:dusts/coal",
+        "c:dusts/charcoal"
       ]
     },
     "#c:dusts/sulfur",

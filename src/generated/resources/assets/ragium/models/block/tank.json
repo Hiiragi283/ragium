@@ -1,0 +1,7 @@
+{
+  "parent": "ragium:block/tank_template",
+  "textures": {
+    "side": "ragium:block/tank_side",
+    "top": "ragium:block/tank_top"
+  }
+}

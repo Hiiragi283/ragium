@@ -1,5 +1,6 @@
 package hiiragi283.lib.data.tag
 
+import hiiragi283.lib.resource.HTSimpleBlockItemWithKey
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import net.minecraft.core.HolderLookup
@@ -39,4 +40,12 @@ abstract class HTItemTagsProvider : HTTagsProvider<Item> {
      */
     protected fun builder(prefix: HTTagPrefix, material: HTMaterialLike): HTTagBuilder<Item> =
         builders(prefix.rawCommonTag.item, prefix.itemTagKey(material))
+
+    /**
+     * @since 26.1.7
+     */
+    protected fun HTTagBuilder<Item>.add(
+        blockItem: HTSimpleBlockItemWithKey,
+        type: HTTagDependType = HTTagDependType.REQUIRED
+    ): HTTagBuilder<Item> = this.add(blockItem.item, type)
 }

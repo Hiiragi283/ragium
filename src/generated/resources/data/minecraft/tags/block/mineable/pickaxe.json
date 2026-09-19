@@ -12,6 +12,7 @@
     "ragium:chemical_reactor",
     "ragium:coal_coke_block",
     "ragium:compressor",
+    "ragium:creative_battery",
     "ragium:crusher",
     "ragium:cutting_machine",
     "ragium:deepslate_niter_ore",
@@ -36,6 +37,8 @@
     "ragium:smelter",
     "ragium:sooty_iron_block",
     "ragium:sulfur_ore",
-    "ragium:void_metal_block"
+    "ragium:tank",
+    "ragium:void_metal_block",
+    "ragium:void_tank"
   ]
 }

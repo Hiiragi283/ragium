@@ -6,8 +6,8 @@
     "A": {
       "neoforge:ingredient_type": "ragium:material_tags",
       "tags": [
-        "c:tiny/charcoal",
-        "c:tiny/coal"
+        "c:tiny/coal",
+        "c:tiny/charcoal"
       ]
     },
     "B": "#c:ingots/iron"

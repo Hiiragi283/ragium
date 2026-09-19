@@ -1,8 +1,13 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.lib.HTConstants
+import hiiragi283.lib.capability.HTEnergyCapabilities
+import hiiragi283.lib.capability.HTFluidCapabilities
+import hiiragi283.lib.capability.HTItemCapabilities
 import hiiragi283.lib.registry.HTDeferredBlock
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockEntityTypeRegister
+import hiiragi283.lib.transfer.HTHandlerProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
@@ -16,12 +21,19 @@ import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
+import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
+import net.minecraft.core.Direction
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
+import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
 
 data object RagiumBlockEntityTypes {
     @JvmField
@@ -30,6 +42,7 @@ data object RagiumBlockEntityTypes {
     @JvmStatic
     fun register(event: IEventBus) {
         event.addListener(::addSupportedBlocks)
+        event.addListener(::registerCapabilities)
 
         REGISTER.register(event)
     }
@@ -91,12 +104,15 @@ data object RagiumBlockEntityTypes {
     //    Storage    //
 
     @JvmField
+    val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> =
+        registerTick(HTConstants.TANK, ::HTTankBlockEntity)
+
+    @JvmField
     val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
         registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
 
-    //    Event    //
+    //    Events    //
 
-    // Supported Blocks
     @JvmStatic
     private fun addSupportedBlocks(event: BlockEntityTypeAddBlocksEvent) {
         for (holder: HTDeferredBlock<*> in RagiumBlocks.REGISTER.asBlockSequence()) {
@@ -105,5 +121,54 @@ data object RagiumBlockEntityTypes {
                 event.modify(block.type.get(), block)
             }
         }
+    }
+
+    @JvmStatic
+    private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
+        fun <BE> registerBlockEntity(type: BlockEntityType<BE>) where BE : BlockEntity, BE : HTHandlerProvider {
+            event.registerBlockEntity(HTItemCapabilities.block, type) { blockEntity: BE, side: Direction? ->
+                blockEntity.getItemHandler(side)
+            }
+            event.registerBlockEntity(HTFluidCapabilities.block, type) { blockEntity: BE, side: Direction? ->
+                blockEntity.getFluidHandler(side)
+            }
+        }
+
+        fun <BE : HTProcessorBlockEntity.Energized> registerProcessor(type: BlockEntityType<BE>) {
+            registerBlockEntity(type)
+            event.registerBlockEntity(HTEnergyCapabilities.block, type) { processor: BE, _ ->
+                processor.handler.asForge()
+            }
+        }
+
+        // Machine
+        registerProcessor(ASSEMBLER.get())
+        registerProcessor(CRUSHER.get())
+        registerProcessor(COMPRESSOR.get())
+        registerProcessor(CUTTING_MACHINE.get())
+
+        registerProcessor(ALLOY_SMELTER.get())
+        registerProcessor(FREEZER.get())
+        registerProcessor(MELTER.get())
+        registerProcessor(SMELTER.get())
+
+        registerProcessor(CHEMICAL_BATH.get())
+
+        registerProcessor(BREWERY.get())
+        // Storage
+        registerBlockEntity(TANK.get())
+
+        event.registerBlock(
+            HTFluidCapabilities.block,
+            { _, _, _, _, _ ->
+                HTVoidTankBlock.VOIDING_HANDLER
+            },
+            RagiumBlocks.VOID_TANK.block.get()
+        )
+
+        event.registerBlockEntity(
+            HTEnergyCapabilities.block,
+            CREATIVE_BATTERY.get()
+        ) { _, _ -> InfiniteEnergyHandler.INSTANCE }
     }
 }

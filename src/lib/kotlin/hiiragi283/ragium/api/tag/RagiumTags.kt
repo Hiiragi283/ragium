@@ -22,6 +22,12 @@ data object RagiumTags {
         @JvmField
         val QUARTZ_BLOCKS: BlockItemTag = create("quartz_blocks")
 
+        /**
+         * @since 26.1.7
+         */
+        @JvmField
+        val STORAGES_CREATIVE: BlockItemTag = create("storages", "creative")
+
         @JvmStatic
         private fun create(vararg path: String): BlockItemTag = BlockItemTag(RagiumAPI.id(*path))
     }
@@ -51,6 +57,12 @@ data object RagiumTags {
          */
         @JvmField
         val COKES: TagKey<Item> = create("cokes")
+
+        /**
+         * @since 26.1.7
+         */
+        @JvmField
+        val SHOW_FLUID_TOOLTIPS: TagKey<Item> = create("show_fluid_tooltips")
 
         @JvmField
         val SOOTY_IRON_TOOL_MATERIALS: TagKey<Item> = create("sooty_iron_tool_materials")

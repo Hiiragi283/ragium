@@ -6,13 +6,13 @@ import hiiragi283.lib.recipe.handler.HTInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.config.HTEnergyConfig
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.transfer.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
@@ -98,12 +98,12 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
             }
     }
 
-    private lateinit var inputTank: HTBasicFluidTank
-    private lateinit var outputTank: HTBasicFluidTank
+    private lateinit var inputTank: HTVariableFluidTank
+    private lateinit var outputTank: HTVariableFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
-        inputTank = builder.addSlot(HTSlotInfo.INPUT, HTBasicFluidTank.input(getTankCapacity().asInt, listener))
-        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicFluidTank.output(getTankCapacity().asInt, listener))
+        inputTank = builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(getTankCapacity(), listener))
+        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(getTankCapacity(), listener))
     }
 
     private lateinit var inputSlot: HTBasicItemSlot

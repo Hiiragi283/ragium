@@ -42,6 +42,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
         machine()
+        storage()
         material()
 
         // Prismarine Bricks -> 9x Prismarine Shard
@@ -300,6 +301,25 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result,
             builderAction
         )
+    }
+
+    //    Machine    //
+
+    private fun storage() {
+        // Tank
+        VanillaRecipeBuilders.shaped {
+            hollow8()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.COPPER) }
+            define('B') { +holderSet(Tags.Items.BUCKETS_EMPTY) }
+            result { +RagiumBlocks.TANK }
+        }.save(exporter)
+        // Void Tank
+        VanillaRecipeBuilders.shaped {
+            hollow8()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.VOID_METAL) }
+            define('B') { +holderSet(Tags.Items.BUCKETS_EMPTY) }
+            result { +RagiumBlocks.VOID_TANK }
+        }.save(exporter)
     }
 
     //    Material    //

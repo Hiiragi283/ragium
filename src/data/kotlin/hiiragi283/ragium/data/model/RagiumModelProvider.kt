@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.model
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.model.HTModelProvider
+import hiiragi283.lib.data.model.HTModelTemplates
 import hiiragi283.lib.data.model.createBlock
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredItem
@@ -105,6 +106,9 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
                 )
             )
         }
+        // Storage
+        generators.createTrivialBlock(RagiumBlocks.TANK.block.get(), HTModelTemplates.Providers.TANK_TEMPLATE)
+        generators.createTrivialBlock(RagiumBlocks.VOID_TANK.block.get(), HTModelTemplates.Providers.TANK_TEMPLATE)
     }
 
     private fun machineModel(

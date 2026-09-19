@@ -10,6 +10,7 @@ import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegistryBuilder
 
@@ -38,6 +39,15 @@ data object RagiumRegistries {
         event.register(ITEM_RESULT_TYPE)
         event.register(SYNCABLE_SLOT_TYPE)
         event.register(WIDGET_TYPE)
+    }
+
+    @SubscribeEvent
+    fun registerDynamicRegistries(event: DataPackRegistryEvent.NewRegistry) {
+        event.dataPackRegistry(
+            Keys.ORE_SLURRY_DATA,
+            HTOreSlurryData.DIRECT_CODEC,
+            HTOreSlurryData.DIRECT_CODEC
+        )
     }
 
     @JvmStatic
