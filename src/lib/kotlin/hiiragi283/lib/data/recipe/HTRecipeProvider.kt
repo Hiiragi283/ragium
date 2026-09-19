@@ -1,8 +1,10 @@
 package hiiragi283.lib.data.recipe
 
+import hiiragi283.lib.HTComparators
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.collection.nelOf
+import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.data.ExporterDataProvider
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
@@ -12,6 +14,8 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import java.util.concurrent.CompletableFuture
@@ -32,20 +36,30 @@ abstract class HTRecipeProvider(
     /**
      * @since 26.1.7
      */
+    fun materialTags(tags: Nel<TagKey<Item>>): HTMaterialTagsIngredient = HTMaterialTagsIngredient(tags)
+
+    /**
+     * @since 26.1.7
+     */
     fun materialTags(prefixes: Nel<HTTagPrefix>, materials: Nel<HTMaterialLike>): HTMaterialTagsIngredient =
-        HTMaterialTagsIngredient(prefixes, materials)
+        materialTags(
+            prefixes
+                .flatMap { prefix: HTTagPrefix -> materials.map(prefix::itemTagKey) }
+                .toSortedSet(HTComparators.TAG_KEY)
+                .toNel()
+        )
 
     /**
      * @since 26.1.7
      */
     fun materialTags(prefixes: Nel<HTTagPrefix>, material: HTMaterialLike): HTMaterialTagsIngredient =
-        materialTags(prefixes, nelOf(material))
+        materialTags(prefixes.map { it.itemTagKey(material) })
 
     /**
      * @since 26.1.7
      */
     fun materialTags(prefix: HTTagPrefix, materials: Nel<HTMaterialLike>): HTMaterialTagsIngredient =
-        materialTags(nelOf(prefix), materials)
+        materialTags(materials.map(prefix::itemTagKey))
 
     /**
      * @since 26.1.7

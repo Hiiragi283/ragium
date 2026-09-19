@@ -16,7 +16,14 @@
   },
   "secondary_ingredient": {
     "count": 1,
-    "items": "#ragium:cokes"
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/coal_coke",
+        "c:dusts/pitch_coke",
+        "ragium:cokes"
+      ]
+    }
   },
   "time": 200
 }

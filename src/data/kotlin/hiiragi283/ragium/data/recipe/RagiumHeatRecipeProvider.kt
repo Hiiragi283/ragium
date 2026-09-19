@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.recipe
 
+import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
@@ -54,10 +55,12 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         RagiumRecipeBuilders.alloying {
             primary { +dustOrIngot(RagiumMaterial.Metal.IRON) }
             secondary {
-                +holderSet(
-                    CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL),
-                    CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.CHARCOAL),
-                    RagiumTags.Items.COALS
+                +materialTags(
+                    nelOf(
+                        CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL),
+                        CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.CHARCOAL),
+                        RagiumTags.Items.COALS
+                    )
                 )
             }
             result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }

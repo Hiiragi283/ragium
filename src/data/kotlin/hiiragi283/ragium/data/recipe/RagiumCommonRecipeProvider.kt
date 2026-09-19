@@ -1,6 +1,8 @@
 package hiiragi283.ragium.data.recipe
 
+import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
@@ -336,17 +338,24 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun silicon() {
+        val dustOrCoke: HTMaterialTagsIngredient = materialTags(
+            nelOf(
+                CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL_COKE),
+                CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.PITCH_COKE),
+                RagiumTags.Items.COKES
+            )
+        )
         // Quartz + Coal Coke -> Crude Si
         RagiumRecipeBuilders.alloying {
             primary { +dustOrGem(RagiumMaterial.Gem.QUARTZ) }
-            secondary { +holderSet(RagiumTags.Items.COKES) }
+            secondary { +dustOrCoke }
             result { +RagiumItems.CRUDE_SILICON }
             recipeId suffix "_from_quartz"
         }.save(exporter)
         RagiumRecipeBuilders.alloying {
             primary { +holderSet(RagiumTags.BlockItem.QUARTZ_BLOCKS.item) }
             secondary {
-                +holderSet(RagiumTags.Items.COKES)
+                +dustOrCoke
                 count = 4
             }
             result {
@@ -362,13 +371,13 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +dustOrGem(RagiumMaterial.Gem.AMETHYST)
                 count = 4
             }
-            secondary { +holderSet(RagiumTags.Items.COKES) }
+            secondary { +dustOrCoke }
             result { +RagiumItems.CRUDE_SILICON }
             recipeId suffix "_from_amethyst"
         }.save(exporter)
         RagiumRecipeBuilders.alloying {
             primary { items { +Items.AMETHYST_BLOCK } }
-            secondary { +holderSet(RagiumTags.Items.COKES) }
+            secondary { +dustOrCoke }
             result { +RagiumItems.CRUDE_SILICON }
             recipeId suffix "_from_amethyst_block"
         }.save(exporter)
