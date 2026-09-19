@@ -34,7 +34,7 @@ import net.neoforged.neoforge.transfer.fluid.DispenseFluidContainer
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTFluidContentRegister(modId: String) {
+class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
     private val fluidRegister: HTDeferredRegister<Fluid> = HTDeferredRegister(Registries.FLUID, modId)
     private val typeRegister = HTDeferredFluidTypeRegister(modId)
     private val blockRegister = HTDeferredBlockRegister(modId)
@@ -79,10 +79,7 @@ class HTFluidContentRegister(modId: String) {
      */
     operator fun get(key: ResourceKey<Fluid>): HTFluidContent? = contentsCache[key]
 
-    /**
-     * @since 26.1.5
-     */
-    fun addAlias(from: Identifier, to: Identifier) {
+    override fun addAlias(from: Identifier, to: Identifier) {
         typeRegister.addAlias(from, to)
 
         fluidRegister.addAlias(from, to)
@@ -93,7 +90,7 @@ class HTFluidContentRegister(modId: String) {
         itemRegister.addAlias(from.withSuffix("_bucket"), to.withSuffix("_bucket"))
     }
 
-    fun addAlias(from: String, to: String) {
+    override fun addAlias(from: String, to: String) {
         typeRegister.addAlias(from, to)
 
         fluidRegister.addAlias(from, to)
