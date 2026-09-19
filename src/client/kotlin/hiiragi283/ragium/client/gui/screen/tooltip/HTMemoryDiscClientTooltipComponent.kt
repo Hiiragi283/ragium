@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.render
+package hiiragi283.ragium.client.gui.screen.tooltip
 
 import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.text.RagiumTranslation

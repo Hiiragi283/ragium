@@ -11,12 +11,14 @@ import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryDataHelper
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
+import hiiragi283.ragium.client.gui.screen.tooltip.HTMemoryDiscClientTooltipComponent
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTItemWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTProgressWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTWidgetRendererManager
-import hiiragi283.ragium.client.render.HTMemoryDiscClientTooltipComponent
+import hiiragi283.ragium.client.renderer.HTTankBlockEntityRenderer
+import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
@@ -31,6 +33,7 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
+import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent
@@ -190,5 +193,9 @@ data object RagiumClient : HTClientMod() {
 
     override fun registerScreens(event: RegisterMenuScreensEvent) {
         event.register(HTBlockWidgetHolderContext.MENU_TYPE.get(), ::HTWidgetContainerScreen)
+    }
+
+    override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankBlockEntityRenderer)
     }
 }
