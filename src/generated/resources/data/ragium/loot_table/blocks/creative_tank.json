@@ -16,8 +16,8 @@
               "function": "minecraft:copy_components",
               "include": [
                 "minecraft:custom_name",
-                "ragium:fluid",
-                "ragium:owner_id"
+                "ragium:owner_id",
+                "ragium:fluid"
               ],
               "source": "block_entity"
             }

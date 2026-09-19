@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ragium:tar",
+    "B": "#c:rods/wooden"
+  },
+  "pattern": [
+    "A",
+    "B"
+  ],
+  "result": {
+    "count": 3,
+    "id": "minecraft:torch"
+  }
+}

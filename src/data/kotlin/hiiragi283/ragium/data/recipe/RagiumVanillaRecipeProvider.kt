@@ -41,59 +41,10 @@ import kotlin.collections.forEach
 class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
+        vanilla()
         machine()
         storage()
         material()
-
-        // Prismarine Bricks -> 9x Prismarine Shard
-        VanillaRecipeBuilders.shapeless {
-            ingredient { items { +Items.PRISMARINE_BRICKS } }
-
-            result {
-                +Items.PRISMARINE_SHARD
-                count = 9
-            }
-            category = RecipeCategory.BUILDING_BLOCKS
-            group = "prismarine_shard"
-            recipeId suffix "_from_bricks"
-        }.save(exporter)
-        // Gunpowder
-        VanillaRecipeBuilders.shapeless {
-            ingredient {
-                +materialTags(CommonTagPrefixes.DUST, nelOf(RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL))
-            }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
-            result {
-                +Items.GUNPOWDER
-                count = 3
-            }
-        }.save(exporter)
-        // Blaze Rod
-        VanillaRecipeBuilders.shaped {
-            layered()
-            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
-            define('B') { items { +Items.MAGMA_BLOCK } }
-            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
-            result { +Items.BLAZE_ROD }
-        }.save(exporter)
-        // Breeze Rod
-        VanillaRecipeBuilders.shaped {
-            layered()
-            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
-            define('B') { items { +Items.ICE } }
-            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
-            result { +Items.BREEZE_ROD }
-        }.save(exporter)
-        // Candle
-        VanillaRecipeBuilders.shaped {
-            +"A"
-            +"B"
-            define('A') { +holderSet(Tags.Items.STRINGS) }
-            define('B') { items { +RagiumItems.BEESWAX } }
-            result { +Items.CANDLE }
-            category = RecipeCategory.DECORATIONS
-        }.save(exporter)
 
         // Bamboo Charcoal
         VanillaRecipeBuilders.smelting {
@@ -170,6 +121,115 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         registerTool(HTToolType.PICKAXE, listOf(" B ", " B ", "AAA"))
         registerTool(HTToolType.AXE, listOf("B ", "BA", "AA"))
         registerTool(HTToolType.HOE, listOf("B ", "B ", "AA"))
+    }
+
+    //    Vanilla    //
+
+    private fun vanilla() {
+        // Prismarine Bricks -> 9x Prismarine Shard
+        VanillaRecipeBuilders.shapeless {
+            ingredient { items { +Items.PRISMARINE_BRICKS } }
+
+            result {
+                +Items.PRISMARINE_SHARD
+                count = 9
+            }
+            category = RecipeCategory.BUILDING_BLOCKS
+            group = "prismarine_shard"
+            recipeId suffix "_from_bricks"
+        }.save(exporter)
+        // Gunpowder
+        VanillaRecipeBuilders.shapeless {
+            ingredient {
+                +materialTags(CommonTagPrefixes.DUST, nelOf(RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL))
+            }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
+            result {
+                +Items.GUNPOWDER
+                count = 3
+            }
+        }.save(exporter)
+        // Blaze Rod
+        VanillaRecipeBuilders.shaped {
+            layered()
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            define('B') { items { +Items.MAGMA_BLOCK } }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
+            result { +Items.BLAZE_ROD }
+        }.save(exporter)
+        // Breeze Rod
+        VanillaRecipeBuilders.shaped {
+            layered()
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            define('B') { items { +Items.ICE } }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
+            result { +Items.BREEZE_ROD }
+        }.save(exporter)
+        // Candle
+        VanillaRecipeBuilders.shaped {
+            +"A"
+            +"B"
+            define('A') { +holderSet(Tags.Items.STRINGS) }
+            define('B') { items { +RagiumItems.BEESWAX } }
+            result { +Items.CANDLE }
+            category = RecipeCategory.DECORATIONS
+        }.save(exporter)
+        // Torch
+        VanillaRecipeBuilders.shaped {
+            +"A"
+            +"B"
+            define('A') { items { +RagiumItems.TAR } }
+            define('B') { +holderSet(Tags.Items.RODS_WOODEN) }
+            result {
+                +Items.TORCH
+                count = 3
+            }
+            recipeId suffix "_from_tar"
+        }.save(exporter)
+        VanillaRecipeBuilders.shaped {
+            +"A"
+            +"B"
+            define('A') { +holderSet(HTCommonTags.Items.PITCH_COKE) }
+            define('B') { +holderSet(Tags.Items.RODS_WOODEN) }
+            result {
+                +Items.TORCH
+                count = 6
+            }
+            recipeId suffix "_from_pitch_coke"
+        }.save(exporter)
+        VanillaRecipeBuilders.shaped {
+            +"A"
+            +"B"
+            define('A') { +holderSet(HTCommonTags.Items.COAL_COKE) }
+            define('B') { +holderSet(Tags.Items.RODS_WOODEN) }
+            result {
+                +Items.TORCH
+                count = 8
+            }
+            recipeId suffix "_from_coal_coke"
+        }.save(exporter)
+        // Fire Charge
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(Tags.Items.GUNPOWDERS) }
+            ingredient { items { +Items.BLAZE_POWDER } }
+            ingredient { +holderSet(HTCommonTags.Items.PITCH_COKE) }
+            result {
+                +Items.FIRE_CHARGE
+                count = 4
+            }
+            recipeId suffix "_from_pitch_coke"
+        }.save(exporter)
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(Tags.Items.GUNPOWDERS) }
+            ingredient { items { +Items.BLAZE_POWDER } }
+            ingredient { +holderSet(HTCommonTags.Items.COAL_COKE) }
+            result {
+                +Items.FIRE_CHARGE
+                count = 6
+            }
+            recipeId suffix "_from_coal_coke"
+        }.save(exporter)
     }
 
     //    Machine    //
@@ -311,9 +371,17 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Tank
         VanillaRecipeBuilders.shaped {
             hollow8()
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.COPPER) }
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
             define('B') { +holderSet(Tags.Items.BUCKETS_EMPTY) }
             result { +RagiumBlocks.TANK }
+            recipeId suffix "_by_sooty_iron"
+        }.save(exporter)
+        VanillaRecipeBuilders.shaped {
+            hollow4()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
+            define('B') { +holderSet(Tags.Items.BUCKETS_EMPTY) }
+            result { +RagiumBlocks.TANK }
+            recipeId suffix "_by_black_steel"
         }.save(exporter)
         // Void Tank
         VanillaRecipeBuilders.shaped {

@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "#c:ingots/copper",
-    "B": "#c:buckets/empty"
+    "A": "#c:coal_coke",
+    "B": "#c:rods/wooden"
   },
   "pattern": [
-    "AAA",
-    "ABA",
-    "AAA"
+    "A",
+    "B"
   ],
   "result": {
-    "id": "ragium:tank"
+    "count": 8,
+    "id": "minecraft:torch"
   }
 }
