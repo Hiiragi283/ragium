@@ -1,16 +1,16 @@
 {
   "type": "ragium:assembling",
-  "primary_ingredient": {
+  "extra": {
+    "count": 8,
+    "items": "#c:gunpowders"
+  },
+  "ingredient": {
     "count": 1,
     "items": "minecraft:skeleton_skull"
   },
   "result": {
     "count": 1,
     "id": "minecraft:creeper_head"
-  },
-  "secondary_ingredient": {
-    "count": 8,
-    "items": "#c:gunpowders"
   },
   "time": 200
 }

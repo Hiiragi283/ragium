@@ -8,6 +8,7 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
+import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
@@ -18,7 +19,7 @@ import hiiragi283.ragium.common.block.RagiumBlocks
 data object RagiumJeiRecipeTypes {
     // Mechanical
     @JvmField
-    val ASSEMBLING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> =
+    val ASSEMBLING: HTHolderJeiRecipeType<HTTripleItemToItemRecipe.Basic> =
         HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER)
 
     @JvmField

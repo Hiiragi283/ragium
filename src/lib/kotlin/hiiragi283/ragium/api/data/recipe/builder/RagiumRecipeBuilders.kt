@@ -8,6 +8,7 @@ import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTTripleItemToItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
@@ -37,12 +38,12 @@ data object RagiumRecipeBuilders {
     // Mechanical
     @JvmStatic
     inline fun assembling(
-        builderAction: HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe>.() -> Unit
-    ): HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe> {
+        builderAction: HTTripleItemToItemRecipeBuilder<RTAssemblingRecipe>.() -> Unit
+    ): HTTripleItemToItemRecipeBuilder<RTAssemblingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTDoubleItemToItemRecipeBuilder(RagiumConstants.ASSEMBLING, ::RTAssemblingRecipe).apply(builderAction)
+        return HTTripleItemToItemRecipeBuilder(RagiumConstants.ASSEMBLING, ::RTAssemblingRecipe).apply(builderAction)
     }
 
     @JvmStatic

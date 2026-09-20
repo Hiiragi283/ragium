@@ -502,29 +502,29 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // Circuit Chip + Circuit Board -> Electric Circuit
         RagiumRecipeBuilders.assembling {
-            primary {
+            ingredient {
                 items { +RagiumItems.CIRCUIT_CHIP }
                 count = 2
             }
-            secondary { items { +RagiumItems.CIRCUIT_BOARD } }
+            extra { items { +RagiumItems.CIRCUIT_BOARD } }
             result { +RagiumItems.ELECTRIC_CIRCUIT }
         }.save(exporter)
         // Machine Parts
         RagiumRecipeBuilders.assembling {
-            primary {
+            ingredient {
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
                 count = 4
             }
-            secondary { items { +RagiumItems.ELECTRIC_CIRCUIT } }
+            extra { items { +RagiumItems.ELECTRIC_CIRCUIT } }
             result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
             recipeId suffix "_by_black_metal"
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
-            primary {
+            ingredient {
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.VOID_METAL)
                 count = 2
             }
-            secondary { items { +RagiumItems.ELECTRIC_CIRCUIT } }
+            extra { items { +RagiumItems.ELECTRIC_CIRCUIT } }
             result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
         }.save(exporter)
     }

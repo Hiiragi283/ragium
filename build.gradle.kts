@@ -279,7 +279,7 @@ dependencies {
     implementation(libs.bundles.common.impl)
     compileOnly(libs.bundles.common.compile)
     "localRuntime"(libs.bundles.common.runtime)
-    
+
     "libClientCompileOnly"(libs.jei.api)
     "clientRuntimeOnly"(libs.jei)
 }

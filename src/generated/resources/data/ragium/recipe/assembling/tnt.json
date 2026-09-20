@@ -1,16 +1,16 @@
 {
   "type": "ragium:assembling",
-  "primary_ingredient": {
+  "extra": {
+    "count": 5,
+    "items": "#c:gunpowders"
+  },
+  "ingredient": {
     "count": 4,
     "items": "#c:sands"
   },
   "result": {
     "count": 2,
     "id": "minecraft:tnt"
-  },
-  "secondary_ingredient": {
-    "count": 5,
-    "items": "#c:gunpowders"
   },
   "time": 200
 }

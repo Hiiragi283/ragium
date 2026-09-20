@@ -1,16 +1,16 @@
 {
   "type": "ragium:assembling",
-  "primary_ingredient": {
+  "extra": {
+    "count": 1,
+    "items": "ragium:electric_circuit"
+  },
+  "ingredient": {
     "count": 2,
     "items": "#c:ingots/void_metal"
   },
   "result": {
     "count": 1,
     "id": "ragium:electronics_machine_parts"
-  },
-  "secondary_ingredient": {
-    "count": 1,
-    "items": "ragium:electric_circuit"
   },
   "time": 200
 }

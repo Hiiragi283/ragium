@@ -133,7 +133,7 @@ abstract class HTDoubleItemToItemBlockEntity(
         )
         widgetHolder.track(primarySlot)
         widgetHolder += HTItemWidget.Container(
-            primarySlot,
+            secondarySlot,
             1,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
