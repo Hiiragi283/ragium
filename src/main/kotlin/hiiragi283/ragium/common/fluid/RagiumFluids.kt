@@ -127,9 +127,6 @@ data object RagiumFluids {
     @JvmField
     val OXYGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("oxygen") { properties = gaseous() }
 
-    @JvmField
-    val FLUORINE: HTFluidContent.Virtual = REGISTER.registerVirtual("fluorine") { properties = gaseous() }
-
     // 4th
     @JvmField
     val CHLORINE: HTFluidContent.Virtual = REGISTER.registerVirtual("chlorine") { properties = gaseous() }

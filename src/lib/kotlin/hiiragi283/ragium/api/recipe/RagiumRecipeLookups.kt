@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.lib.recipe.HTRecipeType
-import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
@@ -53,7 +52,7 @@ data object RagiumRecipeLookups {
 
     // Heat
     @JvmField
-    val ALLOYING: HTCompoundRecipeLookup<HTDoubleItemToItemRecipe> = create(RagiumConstants.ALLOYING)
+    val ALLOYING: HTCompoundRecipeLookup<HTTripleItemToItemRecipe> = create(RagiumConstants.ALLOYING)
 
     @JvmField
     val FREEZING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.FREEZING)

@@ -1,16 +1,16 @@
 {
   "type": "ragium:alloying",
-  "primary_ingredient": {
+  "extra": {
+    "count": 1,
+    "items": "#c:dusts/raginite"
+  },
+  "ingredient": {
     "count": 8,
     "items": "#c:dusts/silicon"
   },
   "result": {
     "count": 1,
     "id": "ragium:silicon_wafer"
-  },
-  "secondary_ingredient": {
-    "count": 1,
-    "items": "#c:dusts/raginite"
   },
   "time": 200
 }

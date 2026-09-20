@@ -1,14 +1,6 @@
 {
   "type": "ragium:alloying",
-  "primary_ingredient": {
-    "count": 1,
-    "items": "#ragium:quartz_blocks"
-  },
-  "result": {
-    "count": 4,
-    "id": "ragium:crude_silicon"
-  },
-  "secondary_ingredient": {
+  "extra": {
     "count": 4,
     "items": {
       "neoforge:ingredient_type": "ragium:material_tags",
@@ -18,6 +10,14 @@
         "ragium:cokes"
       ]
     }
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "#ragium:quartz_blocks"
+  },
+  "result": {
+    "count": 4,
+    "id": "ragium:crude_silicon"
   },
   "time": 800
 }

@@ -77,7 +77,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         addFluid(RagiumFluids.HYDROGEN, "水素")
         addFluid(RagiumFluids.OXYGEN, "酸素")
-        addFluid(RagiumFluids.FLUORINE, "フッ素")
         addFluid(RagiumFluids.CHLORINE, "塩素")
 
         addFluid(RagiumFluids.WOOD_TAR, "木タール")

@@ -1,6 +1,17 @@
 {
   "type": "ragium:alloying",
-  "primary_ingredient": {
+  "extra": {
+    "count": 1,
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/coal_coke",
+        "c:dusts/pitch_coke",
+        "ragium:cokes"
+      ]
+    }
+  },
+  "ingredient": {
     "count": 4,
     "items": {
       "neoforge:ingredient_type": "ragium:material_tags",
@@ -13,17 +24,6 @@
   "result": {
     "count": 1,
     "id": "ragium:crude_silicon"
-  },
-  "secondary_ingredient": {
-    "count": 1,
-    "items": {
-      "neoforge:ingredient_type": "ragium:material_tags",
-      "tags": [
-        "c:dusts/coal_coke",
-        "c:dusts/pitch_coke",
-        "ragium:cokes"
-      ]
-    }
   },
   "time": 200
 }

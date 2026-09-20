@@ -2,7 +2,6 @@ package hiiragi283.ragium.client.integration.jei
 
 import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.HTJeiRecipeType
-import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
@@ -44,7 +43,7 @@ data object RagiumJeiRecipeTypes {
 
     // Heat
     @JvmField
-    val ALLOYING: HTHolderJeiRecipeType<HTDoubleItemToItemRecipe.Basic> =
+    val ALLOYING: HTHolderJeiRecipeType<HTTripleItemToItemRecipe.Basic> =
         HTJeiRecipeType(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField

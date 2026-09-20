@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.integration.jei
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
-import hiiragi283.lib.integration.jei.category.HTDoubleItemToRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
@@ -125,7 +124,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemToItemAndFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.DRAINING),
             HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FILLING),
             // Heat
-            HTDoubleItemToRecipeCategory.Basic(guiHelper, RagiumJeiRecipeTypes.ALLOYING),
+            HTTripleItemToRecipeCategory.Basic(guiHelper, RagiumJeiRecipeTypes.ALLOYING),
             HTSingleRecipeCategory.FluidToItem(guiHelper, RagiumJeiRecipeTypes.FREEZING),
             HTSingleRecipeCategory.ItemToFluid(guiHelper, RagiumJeiRecipeTypes.MELTING),
             HTItemToItemAndFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING),

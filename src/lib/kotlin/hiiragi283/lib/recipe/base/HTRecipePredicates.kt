@@ -4,6 +4,7 @@ import hiiragi283.lib.recipe.HTRecipePredicate
 import hiiragi283.lib.recipe.input.HTFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
+import hiiragi283.lib.recipe.input.getItemOrEmpty
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -73,8 +74,7 @@ data object HTRecipePredicates {
      * 2種類のアイテムを判定する[DoubleInput]の拡張インターフェースです。
      */
     fun interface DoubleItem : DoubleInput<RecipeInput, ItemInstance, ItemInstance> {
-        override fun matches(input: RecipeInput): Boolean =
-            input.size() >= 2 && test(input.getItem(0), input.getItem(1))
+        override fun matches(input: RecipeInput): Boolean = test(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
     }
 
     /**
@@ -83,7 +83,7 @@ data object HTRecipePredicates {
      */
     fun interface DoubleFluid : DoubleInput<HTFluidRecipeInput, FluidInstance, FluidInstance> {
         override fun matches(input: HTFluidRecipeInput): Boolean =
-            input.size() >= 2 && test(input.getFluid(0), input.getFluid(1))
+            test(input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
     }
 
     //    Triple Input    //
@@ -102,10 +102,10 @@ data object HTRecipePredicates {
     }
 
     /**
-     * 3種類のアイテムを判定する[TripleItem]の拡張インターフェースです。
+     * 3種類のアイテムを判定する[TripleInput]の拡張インターフェースです。
      */
     fun interface TripleItem : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance> {
         override fun matches(input: RecipeInput): Boolean =
-            input.size() >= 3 && test(input.getItem(0), input.getItem(1), input.getItem(2))
+            test(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
     }
 }

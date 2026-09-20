@@ -344,15 +344,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             itemIngredient { +dustOrGem(RagiumMaterial.Gem.FLUORITE) }
             fluidIngredient { +holderSet(RagiumFluids.SULFURIC_ACID) }
             result {
-                +RagiumFluids.FLUORINE
-                amount *= 2
-            }
-        }.save(exporter)
-        // H2 + F2 -> 2 HF
-        RagiumRecipeBuilders.reacting {
-            primaryIngredient { +holderSet(RagiumFluids.HYDROGEN) }
-            secondaryIngredient { +holderSet(RagiumFluids.FLUORINE) }
-            fluidResult {
                 +RagiumFluids.HYDROGEN_FLUORIDE
                 amount *= 2
             }
@@ -398,7 +389,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // Al2O3 + Na3AlF6 -> Al
         RagiumRecipeBuilders.alloying {
-            primary {
+            ingredient {
                 +materialTags(
                     nelOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
                     nelOf(
@@ -408,7 +399,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     )
                 )
             }
-            secondary { +dustOrGem(RagiumMaterial.Gem.CRYOLITE) }
+            extra { +dustOrGem(RagiumMaterial.Gem.CRYOLITE) }
             result {
                 +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.ALUMINUM)
                 count = 3
@@ -432,14 +423,14 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         )
         // Quartz + Coal Coke -> Crude Si
         RagiumRecipeBuilders.alloying {
-            primary { +dustOrGem(RagiumMaterial.Gem.QUARTZ) }
-            secondary { +dustOrCoke }
+            ingredient { +dustOrGem(RagiumMaterial.Gem.QUARTZ) }
+            extra { +dustOrCoke }
             result { +RagiumItems.CRUDE_SILICON }
             recipeId suffix "_from_quartz"
         }.save(exporter)
         RagiumRecipeBuilders.alloying {
-            primary { +holderSet(RagiumTags.BlockItem.QUARTZ_BLOCKS.item) }
-            secondary {
+            ingredient { +holderSet(RagiumTags.BlockItem.QUARTZ_BLOCKS.item) }
+            extra {
                 +dustOrCoke
                 count = 4
             }
@@ -452,17 +443,17 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // Amethyst + Coal Coke -> Crude Si
         RagiumRecipeBuilders.alloying {
-            primary {
+            ingredient {
                 +dustOrGem(RagiumMaterial.Gem.AMETHYST)
                 count = 4
             }
-            secondary { +dustOrCoke }
+            extra { +dustOrCoke }
             result { +RagiumItems.CRUDE_SILICON }
             recipeId suffix "_from_amethyst"
         }.save(exporter)
         RagiumRecipeBuilders.alloying {
-            primary { items { +Items.AMETHYST_BLOCK } }
-            secondary { +dustOrCoke }
+            ingredient { items { +Items.AMETHYST_BLOCK } }
+            extra { +dustOrCoke }
             result { +RagiumItems.CRUDE_SILICON }
             recipeId suffix "_from_amethyst_block"
         }.save(exporter)
@@ -478,11 +469,11 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // Si Dust + Redstone -> Silicon Wafer
         RagiumRecipeBuilders.alloying {
-            primary {
+            ingredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.SILICON)
                 count = 8
             }
-            secondary { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.RAGINITE) }
+            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.RAGINITE) }
             result { +RagiumItems.SILICON_WAFER }
         }.save(exporter)
         // Silicon Wafer -> Circuit Chip
@@ -496,8 +487,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
         // Plastic + Gold Dust -> Circuit Board
         RagiumRecipeBuilders.alloying {
-            primary { +holderSet(HTCommonTags.Items.PLASTICS) }
-            secondary { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
+            ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
+            extra { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
             result { +RagiumItems.CIRCUIT_BOARD }
         }.save(exporter)
         // Circuit Chip + Circuit Board -> Electric Circuit
