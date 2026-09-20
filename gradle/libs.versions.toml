@@ -32,15 +32,12 @@ jei-api = { group = "mezz.jei", name = "jei-26.1.2-neoforge-api", version.ref = 
 
 common-impl = []
 
-common-compile = [
-    "jei-api",
-]
+common-compile = []
 
 common-runtime = [
     "ae2",
     "curios",
     "jade",
-    "jei"
 ]
 
 [plugins]

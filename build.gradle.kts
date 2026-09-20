@@ -74,6 +74,12 @@ base {
 }
 
 val libModule: SourceSet = sourceSets.register("lib").get()
+val libClientModule: SourceSet =
+    sourceSets
+        .register("libClient") {
+            compileClasspath += libModule.output + libModule.compileClasspath
+            runtimeClasspath += libModule.output + libModule.runtimeClasspath
+        }.get()
 val mainModule: SourceSet =
     sourceSets
         .named("main") {
@@ -89,7 +95,9 @@ val clientModule: SourceSet =
     sourceSets
         .register("client") {
             compileClasspath += mainModule.output + mainModule.compileClasspath
+            compileClasspath += libClientModule.output + libClientModule.compileClasspath
             runtimeClasspath += mainModule.output + mainModule.runtimeClasspath
+            runtimeClasspath += libClientModule.output + libClientModule.runtimeClasspath
         }.get()
 val dataModule: SourceSet =
     sourceSets
@@ -216,6 +224,7 @@ neoForge {
         // multi mod projects should define one per mod
         create(modId) {
             sourceSet(libModule)
+            sourceSet(libClientModule)
             sourceSet(sourceSets.main.get())
             sourceSet(clientModule)
             sourceSet(dataModule)
@@ -252,12 +261,15 @@ dependencies {
         runtimeClasspath.get().extendsFrom(create("localRuntime"))
 
         val libCompileClasspath: Configuration = named("libCompileClasspath").get()
+        val libClientCompileClasspath: Configuration = named("libClientCompileClasspath").get()
         val compileClasspath: Configuration = named("compileClasspath").get()
         val clientCompileClasspath: Configuration = named("clientCompileClasspath").get()
         val dataCompileClasspath: Configuration = named("dataCompileClasspath").get()
 
         libCompileClasspath.extendsFrom(compileClasspath)
+        libCompileClasspath.extendsFrom(libClientCompileClasspath)
         compileClasspath.extendsFrom(clientCompileClasspath)
+        libClientCompileClasspath.extendsFrom(clientCompileClasspath)
         clientCompileClasspath.extendsFrom(dataCompileClasspath)
     }
 
@@ -267,6 +279,9 @@ dependencies {
     implementation(libs.bundles.common.impl)
     compileOnly(libs.bundles.common.compile)
     "localRuntime"(libs.bundles.common.runtime)
+    
+    "libClientCompileOnly"(libs.jei.api)
+    "clientRuntimeOnly"(libs.jei)
 }
 
 // Example configuration to allow publishing using the maven-publish plugin
@@ -336,7 +351,7 @@ dokka {
     dokkaSourceSets {
         configureEach {
             sourceRoots.from(
-                listOf(libModule, clientModule)
+                listOf(libModule, libClientModule)
                     .map { it.kotlin }
                     .map { it.srcDirs.filter { "lib" in it.path } }
             )
@@ -379,12 +394,12 @@ tasks {
         from("LICENSE") {
             rename { "${it}_ragium" }
         }
-        from(libModule.output, clientModule.output)
+        from(libModule.output, libClientModule.output, clientModule.output)
     }
 
     named<Jar>("sourcesJar") {
         dependsOn("libClasses", "clientClasses")
         duplicatesStrategy = DuplicatesStrategy.FAIL
-        from(libModule.allSource, clientModule.allSource)
+        from(libModule.allSource, libClientModule.allSource)
     }
 }
