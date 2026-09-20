@@ -168,11 +168,6 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.7
          */
-        ALUMINA(false, "Alumina", "アルミナ"),
-
-        /**
-         * @since 26.1.7
-         */
         SILICON(false, "Silicon", "シリコン")
         ;
 

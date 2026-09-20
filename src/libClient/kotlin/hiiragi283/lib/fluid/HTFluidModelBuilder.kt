@@ -62,7 +62,8 @@ class HTFluidModelBuilder {
     }
 
     fun molten() {
-        still = Material(RagiumAPI.id(HTConstants.BLOCK, HTConstants.FLUID, "molten"))
+        still = Material(RagiumAPI.id(HTConstants.BLOCK, HTConstants.FLUID, "molten_still"))
+        flowing = Material(RagiumAPI.id(HTConstants.BLOCK, HTConstants.FLUID, "molten_flowing"))
     }
 
     /**

@@ -111,6 +111,14 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             ingredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
             result { +Items.GLASS }
         }.save(exporter)
+        // Aluminum
+        RagiumRecipeBuilders.freezing {
+            ingredient {
+                +holderSet(RagiumFluids.MOLTEN_ALUMINUM)
+                amount = 90
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.ALUMINUM) }
+        }.save(exporter)
     }
 
     private fun melting() {

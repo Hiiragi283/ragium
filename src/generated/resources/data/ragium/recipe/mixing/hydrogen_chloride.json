@@ -2,15 +2,15 @@
   "type": "ragium:mixing",
   "fluid_ingredient": {
     "amount": 500,
-    "fluids": "#c:sodium_hydroxide_solution"
+    "fluids": "#c:sulfuric_acid"
   },
   "item_ingredient": {
     "count": 1,
-    "items": "#c:dusts/bauxite"
+    "items": "#c:dusts/salt"
   },
   "result": {
-    "amount": 500,
-    "id": "ragium:alumina_solution"
+    "amount": 1000,
+    "id": "ragium:hydrogen_chloride"
   },
   "time": 200
 }

@@ -5,7 +5,6 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
-import hiiragi283.lib.tag.HTMaterialKey
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
@@ -214,6 +213,26 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun chlorine() {
+        // Dried Kelp + Water -> Salt
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(Tags.Items.STORAGE_BLOCKS_DRIED_KELP) }
+            fluidIngredient { +waterSet() }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SALT)
+                count = 6
+            }
+            recipeId suffix "_from_block"
+        }.save(exporter)
+        // 2x NaCl + H2SO4 -> 2x HCl + Na2SO4
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SALT) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.SULFURIC_ACID)
+                amount /= 2
+            }
+            result { +RagiumFluids.HYDROGEN_CHLORIDE }
+        }.save(exporter)
+
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
         RagiumRecipeBuilders.electrolyzing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SALT) }
@@ -357,18 +376,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun aluminum() {
-        // Bauxite + NaOH aq -> Al2O3
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.BAUXITE) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.NAOH_SOLUTION)
-                amount /= 2
-            }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.ALUMINA) }
-        }.save(exporter)
-        // Al2O3 + NaOH aq -> Alumina Solution
+        // Bauxite + NaOH aq -> Alumina Solution
         RagiumRecipeBuilders.mixing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.ALUMINA) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.BAUXITE) }
             fluidIngredient {
                 +holderSet(RagiumFluids.NAOH_SOLUTION)
                 amount /= 2
@@ -382,27 +392,18 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         RagiumRecipeBuilders.reacting {
             primaryIngredient { +holderSet(RagiumFluids.ALUMINA_SOLUTION) }
             secondaryIngredient {
-                +holderSet(RagiumFluids.HYDROGEN_FLUORIDE)
+                +holderSet(RagiumFluids.HYDROFLUORIC_ACID)
                 amount *= 6
             }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CRYOLITE) }
         }.save(exporter)
-        // Al2O3 + Na3AlF6 -> Al
-        RagiumRecipeBuilders.alloying {
-            ingredient {
-                +materialTags(
-                    nelOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
-                    nelOf(
-                        RagiumMaterial.Other.ALUMINA,
-                        HTMaterialKey("ruby"),
-                        HTMaterialKey("sapphire")
-                    )
-                )
-            }
-            extra { +dustOrGem(RagiumMaterial.Gem.CRYOLITE) }
+        // Alumina Solution + Na3AlF6 -> Molten Al
+        RagiumRecipeBuilders.electrolyzing {
+            itemIngredient { +dustOrGem(RagiumMaterial.Gem.CRYOLITE) }
+            fluidIngredient { +holderSet(RagiumFluids.ALUMINA_SOLUTION) }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.ALUMINUM)
-                count = 3
+                +RagiumFluids.MOLTEN_ALUMINUM
+                amount = 90 * 3
             }
         }.save(exporter)
     }

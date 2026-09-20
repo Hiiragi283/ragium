@@ -96,6 +96,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROFLUORIC_ACID, "Hydrofluoric Acid")
         addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "Alumina Solution")
+        addFluid(RagiumFluids.MOLTEN_ALUMINUM, "Molten Aluminum")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
