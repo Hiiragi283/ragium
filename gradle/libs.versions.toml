@@ -2,7 +2,7 @@
 minecraft = "26.1.2"
 
 neo-moddev = "2.0.146"
-neo-version = "26.1.2.107"
+neo-version = "26.1.2.109"
 kff-version = "6.3.0"
 
 kotlin = "2.4.0"
@@ -13,10 +13,10 @@ axion-release = "1.21.2"
 maven-publish = "0.37.0"
 mod-publish = "2.1.1"
 
-ae2 = "26.1.11-beta"
+ae2 = "26.1.12-beta"
 curios = "15.0.0+26.1.2"
 jade = "26.1.10+neoforge"
-jei = "29.37.0.98"
+jei = "29.37.0.100"
 
 [libraries]
 

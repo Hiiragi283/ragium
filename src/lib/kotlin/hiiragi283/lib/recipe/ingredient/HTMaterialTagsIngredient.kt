@@ -42,7 +42,9 @@ data class HTMaterialTagsIngredient(val tags: Nel<TagKey<Item>>) : ICustomIngred
     override fun test(stack: ItemStack): Boolean = tags.any(stack::`is`)
 
     override fun items(): Stream<Holder<Item>> = tags.stream()
-        .flatMap { tagKey: TagKey<Item> -> BuiltInRegistries.ITEM.get(tagKey).stream().flatMap { it.stream() } }
+        .map(BuiltInRegistries.ITEM::get)
+        .flatMap { it.stream() }
+        .flatMap { it.stream() }
 
     override fun isSimple(): Boolean = true
 
