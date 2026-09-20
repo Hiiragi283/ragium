@@ -1,0 +1,32 @@
+{
+  "type": "ragium:alloying",
+  "primary_ingredient": {
+    "count": 1,
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/alumina",
+        "c:dusts/ruby",
+        "c:dusts/sapphire",
+        "c:gems/alumina",
+        "c:gems/ruby",
+        "c:gems/sapphire"
+      ]
+    }
+  },
+  "result": {
+    "count": 3,
+    "id": "ragium:aluminum_ingot"
+  },
+  "secondary_ingredient": {
+    "count": 1,
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/cryolite",
+        "c:gems/cryolite"
+      ]
+    }
+  },
+  "time": 200
+}

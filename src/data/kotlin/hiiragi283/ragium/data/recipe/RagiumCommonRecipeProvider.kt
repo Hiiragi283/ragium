@@ -5,6 +5,7 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
+import hiiragi283.lib.tag.HTMaterialKey
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
@@ -207,6 +208,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         sulfuricAcid()
         nitricAcid()
         explosive()
+
+        fluorine()
+        aluminum()
     }
 
     private fun chlorine() {
@@ -226,11 +230,14 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             recipeId suffix "_from_salt_water"
         }.save(exporter)
 
-        // H2 + Cl2 -> 2 HCl
+        // H2 + Cl2 -> 2x HCl
         RagiumRecipeBuilders.reacting {
             primaryIngredient { +holderSet(RagiumFluids.HYDROGEN) }
             secondaryIngredient { +holderSet(RagiumFluids.CHLORINE) }
-            fluidResult { +RagiumFluids.HYDROGEN_CHLORIDE }
+            fluidResult {
+                +RagiumFluids.HYDROGEN_CHLORIDE
+                amount *= 2
+            }
         }.save(exporter)
         // HCl + H2O -> HCl(aq)
         RagiumRecipeBuilders.reacting {
@@ -329,6 +336,84 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
         // Clay + Liquid Explosive -> Plastic Explosive TODO
+    }
+
+    private fun fluorine() {
+        // CaF2 + H2SO4 -> 2x HF + CaSO4
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { +dustOrGem(RagiumMaterial.Gem.FLUORITE) }
+            fluidIngredient { +holderSet(RagiumFluids.SULFURIC_ACID) }
+            result {
+                +RagiumFluids.FLUORINE
+                amount *= 2
+            }
+        }.save(exporter)
+        // H2 + F2 -> 2 HF
+        RagiumRecipeBuilders.reacting {
+            primaryIngredient { +holderSet(RagiumFluids.HYDROGEN) }
+            secondaryIngredient { +holderSet(RagiumFluids.FLUORINE) }
+            fluidResult {
+                +RagiumFluids.HYDROGEN_FLUORIDE
+                amount *= 2
+            }
+        }.save(exporter)
+        // HF + H2O -> HF(aq)
+        RagiumRecipeBuilders.reacting {
+            primaryIngredient { +holderSet(RagiumFluids.HYDROGEN_FLUORIDE) }
+            secondaryIngredient { +waterSet() }
+            fluidResult { +RagiumFluids.HYDROFLUORIC_ACID }
+        }.save(exporter)
+    }
+
+    private fun aluminum() {
+        // Bauxite + NaOH aq -> Al2O3
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.BAUXITE) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.NAOH_SOLUTION)
+                amount /= 2
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.ALUMINA) }
+        }.save(exporter)
+        // Al2O3 + NaOH aq -> Alumina Solution
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.ALUMINA) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.NAOH_SOLUTION)
+                amount /= 2
+            }
+            result {
+                +RagiumFluids.ALUMINA_SOLUTION
+                amount /= 2
+            }
+        }.save(exporter)
+        // Alumina Solution + HF aq -> Na3AlF6
+        RagiumRecipeBuilders.reacting {
+            primaryIngredient { +holderSet(RagiumFluids.ALUMINA_SOLUTION) }
+            secondaryIngredient {
+                +holderSet(RagiumFluids.HYDROGEN_FLUORIDE)
+                amount *= 6
+            }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CRYOLITE) }
+        }.save(exporter)
+        // Al2O3 + Na3AlF6 -> Al
+        RagiumRecipeBuilders.alloying {
+            primary {
+                +materialTags(
+                    nelOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
+                    nelOf(
+                        RagiumMaterial.Other.ALUMINA,
+                        HTMaterialKey("ruby"),
+                        HTMaterialKey("sapphire")
+                    )
+                )
+            }
+            secondary { +dustOrGem(RagiumMaterial.Gem.CRYOLITE) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.ALUMINUM)
+                count = 3
+            }
+        }.save(exporter)
     }
 
     //    Electronics    //

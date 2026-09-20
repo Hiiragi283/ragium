@@ -1,5 +1,7 @@
 {
   "values": [
-    "#c:gems/echo"
+    "#c:gems/cryolite",
+    "#c:gems/echo",
+    "#c:gems/fluorite"
   ]
 }

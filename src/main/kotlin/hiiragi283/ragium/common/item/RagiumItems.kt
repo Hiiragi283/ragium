@@ -80,11 +80,14 @@ data object RagiumItems {
             putAll(RagiumMaterial.Gem.EMERALD, HTItemPart.DUST, HTItemPart.GEAR)
             putAll(RagiumMaterial.Gem.ECHO, HTItemPart.DUST)
             putAll(RagiumMaterial.Gem.PRISMARINE, HTItemPart.DUST)
+            putAll(RagiumMaterial.Gem.FLUORITE, HTItemPart.DUST, HTItemPart.GEM)
+            putAll(RagiumMaterial.Gem.CRYOLITE, HTItemPart.DUST, HTItemPart.GEM)
             // Metal
             putAll(RagiumMaterial.Metal.COPPER, HTItemPart.DUST, HTItemPart.GEAR)
             putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
             putAll(RagiumMaterial.Metal.GOLD, HTItemPart.DUST, HTItemPart.GEAR)
             putAll(RagiumMaterial.Metal.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
+            putAll(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT, HTItemPart.NUGGET)
             putAll(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
             putAll(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
             putAll(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT, HTItemPart.NUGGET)
@@ -94,6 +97,7 @@ data object RagiumItems {
             putAll(RagiumMaterial.Other.OBSIDIAN, HTItemPart.DUST)
             putAll(RagiumMaterial.Other.PAPER, HTItemPart.DUST)
             putAll(RagiumMaterial.Other.CARBON, HTItemPart.DUST)
+            putAll(RagiumMaterial.Other.ALUMINA, HTItemPart.DUST)
             putAll(RagiumMaterial.Other.SILICON, HTItemPart.DUST)
         }.flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
             parts.map { part: HTItemPart ->

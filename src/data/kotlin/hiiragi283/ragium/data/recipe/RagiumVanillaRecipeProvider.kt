@@ -403,11 +403,13 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             HTSimpleDeferredItem(vanillaId("echo_shard")),
             size = StorageBlockSize.FOUR
         )
+        baseToBlock(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT)
         baseToBlock(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT)
         baseToBlock(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT)
         baseToBlock(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT)
         // Ingot <-> Nugget
         ingotToNugget(RagiumMaterial.Metal.NETHERITE, ingot = HTSimpleDeferredItem(vanillaId("netherite_ingot")))
+        ingotToNugget(RagiumMaterial.Metal.ALUMINUM)
         ingotToNugget(RagiumMaterial.Metal.SOOTY_IRON)
         ingotToNugget(RagiumMaterial.Metal.BLACK_STEEL)
         ingotToNugget(RagiumMaterial.Metal.VOID_METAL)

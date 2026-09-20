@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "aluminum_ingot",
+  "ingredients": [
+    "#c:storage_blocks/aluminum"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:aluminum_ingot"
+  }
+}

@@ -1,14 +1,18 @@
 {
   "values": [
+    "#c:dusts/alumina",
     "#c:dusts/amethyst",
+    "#c:dusts/bauxite",
     "#c:dusts/borax",
     "#c:dusts/carbon",
     "#c:dusts/charcoal",
     "#c:dusts/coal",
     "#c:dusts/copper",
+    "#c:dusts/cryolite",
     "#c:dusts/diamond",
     "#c:dusts/echo",
     "#c:dusts/emerald",
+    "#c:dusts/fluorite",
     "#c:dusts/glass",
     "#c:dusts/gold",
     "#c:dusts/iron",

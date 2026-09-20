@@ -76,6 +76,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         addFluid(RagiumFluids.HYDROGEN, "水素")
         addFluid(RagiumFluids.OXYGEN, "酸素")
+        addFluid(RagiumFluids.FLUORINE, "フッ素")
         addFluid(RagiumFluids.CHLORINE, "塩素")
 
         addFluid(RagiumFluids.WOOD_TAR, "木タール")
@@ -87,7 +88,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "液体爆薬")
+        addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "フッ化水素")
+        addFluid(RagiumFluids.HYDROFLUORIC_ACID, "フッ化水素酸")
         addFluid(RagiumFluids.NAOH_SOLUTION, "水酸化ナトリウム水溶液")
+        addFluid(RagiumFluids.ALUMINA_SOLUTION, "アルミナ水溶液")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "二酸化硫黄")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")

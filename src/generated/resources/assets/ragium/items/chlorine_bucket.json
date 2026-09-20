@@ -3,7 +3,7 @@
     "type": "neoforge:fluid_container",
     "apply_fluid_luminosity": false,
     "flip_gas": true,
-    "fluid": "ragium:chloride",
+    "fluid": "ragium:chlorine",
     "textures": {
       "base": "minecraft:item/bucket",
       "fluid": "neoforge:item/mask/bucket_fluid",

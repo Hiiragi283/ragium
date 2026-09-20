@@ -113,6 +113,10 @@ data object RagiumClient : HTClientMod() {
             transparent()
             colorTint(Color(0x3399cc))
         }
+        register.register(RagiumFluids.FLUORINE) {
+            transparent()
+            colorTint(Color(0x33cc99))
+        }
         register.register(RagiumFluids.CHLORINE) {
             transparent()
             colorTint(Color(0x99cc33))
@@ -154,9 +158,22 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0xcc3333))
         }
+        register.register(RagiumFluids.HYDROGEN_FLUORIDE) {
+            transparent()
+            colorTint(Color(0x33cc66))
+        }
+        register.register(RagiumFluids.HYDROFLUORIC_ACID) {
+            dull()
+            colorTint(Color(0x33cc66))
+        }
+
         register.register(RagiumFluids.NAOH_SOLUTION) {
             dull()
             colorTint(Color(0x003366))
+        }
+        register.register(RagiumFluids.ALUMINA_SOLUTION) {
+            dull()
+            colorTint(Color(0xcc9999))
         }
         register.register(RagiumFluids.SULFUR_DIOXIDE) {
             transparent()
