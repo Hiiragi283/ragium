@@ -2,15 +2,15 @@
   "type": "ragium:assembling",
   "extra": {
     "count": 1,
-    "items": "#c:chests/wooden"
+    "items": "#c:rods/wooden"
   },
   "ingredient": {
-    "count": 5,
+    "count": 6,
     "items": "#c:ingots/iron"
   },
   "result": {
-    "count": 1,
-    "id": "minecraft:hopper"
+    "count": 24,
+    "id": "minecraft:rail"
   },
   "time": 200
 }

@@ -2,9 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "#c:nuggets/black_steel",
-    "B": "ragium:bio_machine_parts",
-    "C": "#c:gears/emerald",
+    "A": "#c:nuggets/void_metal",
+    "B": "ragium:electronics_machine_parts",
+    "C": "#c:gears/diamond",
     "D": "ragium:assembler"
   },
   "pattern": [

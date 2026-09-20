@@ -230,6 +230,31 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }
             recipeId suffix "_from_coal_coke"
         }.save(exporter)
+        // Hopper
+        VanillaRecipeBuilders.shaped {
+            +"A A"
+            +"ABA"
+            +" A "
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
+            result {
+                +Items.HOPPER
+                count = 2
+            }
+            recipeId suffix "_by_sooty_iron"
+        }.save(exporter)
+        VanillaRecipeBuilders.shaped {
+            +"A A"
+            +"ABA"
+            +" A "
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
+            define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
+            result {
+                +Items.HOPPER
+                count = 4
+            }
+            recipeId suffix "_by_black_steel"
+        }.save(exporter)
     }
 
     //    Machine    //

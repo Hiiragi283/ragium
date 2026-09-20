@@ -1,0 +1,22 @@
+{
+  "type": "ragium:assembling",
+  "extras": [
+    {
+      "count": 1,
+      "items": "#c:rods/wooden"
+    },
+    {
+      "count": 1,
+      "items": "#c:dusts/redstone"
+    }
+  ],
+  "ingredient": {
+    "count": 6,
+    "items": "#c:ingots/gold"
+  },
+  "result": {
+    "count": 9,
+    "id": "minecraft:powered_rail"
+  },
+  "time": 200
+}

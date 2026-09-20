@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
@@ -28,6 +29,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.crafting.BlockTagIngredient
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient
 import java.util.concurrent.CompletableFuture
 
@@ -128,20 +130,105 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 2
             }
         }.save(exporter)
-        // Iron Ingot + Chest -> Hopper
+        // Repeater
         RagiumRecipeBuilders.assembling {
-            ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
-                count = 5
+            ingredient { +holderSet(Tags.Items.STONES) }
+            extra {
+                items { +Items.REDSTONE_TORCH }
+                count = 2
             }
-            extra { +holderSet(Tags.Items.CHESTS_WOODEN) }
-            result { +Items.HOPPER }
+            extra {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE)
+            }
+            result {
+                +Items.REPEATER
+                count = 2
+            }
         }.save(exporter)
-        // Dropper + Bow -> Dispenser
+        // Comparator
+        RagiumRecipeBuilders.assembling {
+            ingredient { +holderSet(Tags.Items.STONES) }
+            extra {
+                items { +Items.REDSTONE_TORCH }
+                count = 3
+            }
+            extra {
+                +dustOrGem(RagiumMaterial.Gem.QUARTZ)
+            }
+            result {
+                +Items.COMPARATOR
+                count = 2
+            }
+        }.save(exporter)
+        // Dispenser
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.DROPPER } }
             extra { +holderSet(Tags.Items.TOOLS_BOW) }
             result { +Items.DISPENSER }
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +Items.DROPPER } }
+            extra {
+                +holderSet(Tags.Items.RODS_WOODEN)
+                count = 3
+            }
+            extra {
+                +holderSet(Tags.Items.STRINGS)
+                count = 3
+            }
+            result { +Items.DISPENSER }
+            recipeId suffix "_stackable"
+        }.save(exporter)
+        // Rail
+        RagiumRecipeBuilders.assembling {
+            ingredient {
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
+                count = 6
+            }
+            extra { +holderSet(Tags.Items.RODS_WOODEN) }
+            result {
+                +Items.RAIL
+                count = 24
+            }
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient {
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD)
+                count = 6
+            }
+            extra { +holderSet(Tags.Items.RODS_WOODEN) }
+            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            result {
+                +Items.POWERED_RAIL
+                count = 9
+            }
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient {
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
+                count = 6
+            }
+            extra { +BlockTagIngredient(BlockTags.STONE_PRESSURE_PLATES) }
+            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            result {
+                +Items.DETECTOR_RAIL
+                count = 9
+            }
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient {
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
+                count = 6
+            }
+            extra { +holderSet(Tags.Items.RODS_WOODEN) }
+            extra {
+                items { +Items.REDSTONE_TORCH }
+                count = 2
+            }
+            result {
+                +Items.ACTIVATOR_RAIL
+                count = 9
+            }
         }.save(exporter)
         // TNT
         RagiumRecipeBuilders.assembling {

@@ -1,0 +1,22 @@
+{
+  "type": "ragium:assembling",
+  "extras": [
+    {
+      "count": 1,
+      "items": "#c:rods/wooden"
+    },
+    {
+      "count": 2,
+      "items": "minecraft:redstone_torch"
+    }
+  ],
+  "ingredient": {
+    "count": 6,
+    "items": "#c:ingots/iron"
+  },
+  "result": {
+    "count": 9,
+    "id": "minecraft:activator_rail"
+  },
+  "time": 200
+}
