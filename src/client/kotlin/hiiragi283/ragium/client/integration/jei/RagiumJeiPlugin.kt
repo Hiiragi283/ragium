@@ -13,6 +13,7 @@ import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
+import hiiragi283.lib.registry.asHolderSequence
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
@@ -48,7 +49,6 @@ import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.display.FluidTagSlotDisplay
-import kotlin.streams.asSequence
 
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
@@ -56,14 +56,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         @JvmStatic
         private fun listItems(): Sequence<Holder.Reference<Item>> = HTPhysicalSideHelper
             .filteredLookup(BuiltInRegistries.ITEM)
-            .listElements()
-            .asSequence()
+            .asHolderSequence()
 
         @JvmStatic
         private fun listPotions(): Sequence<Holder.Reference<Potion>> = HTPhysicalSideHelper
             .filteredLookup(BuiltInRegistries.POTION)
-            .listElements()
-            .asSequence()
+            .asHolderSequence()
     }
 
     override fun registerItemSubtypes(registration: ISubtypeRegistration) {
@@ -108,7 +106,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addExtraIngredients(
             NeoForgeTypes.FLUID_STACK,
             HTPhysicalSideHelper.registryOrThrow(RagiumRegistries.Keys.ORE_SLURRY_DATA)
-                .listElements()
+                .asHolderSequence()
                 .map(HTOreSlurryDataHelper::createFluid)
                 .toList()
         )
@@ -238,8 +236,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(
             RagiumJeiRecipeTypes.REACTING,
             HTPhysicalSideHelper.registryOrThrow(RagiumRegistries.Keys.ORE_SLURRY_DATA)
-                .listElements()
-                .asSequence()
+                .asHolderSequence()
                 .mapNotNull { holder: Holder<HTOreSlurryData> ->
                     val template: ItemStack = holder.value().createResult()
                     if (template.isEmpty) return@mapNotNull null

@@ -11,6 +11,7 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 
 /**
  * シンプルな[HTBasicDeferredBlockAndItem]のエイリアスです。
@@ -49,4 +50,9 @@ data class HTDeferredBlockAndItem<out BLOCK : Block, out ITEM : Item>(
     constructor(key: BlockItemKey) : this(HTDeferredBlock(key.block), HTDeferredItem(key.item))
 
     constructor(id: Identifier) : this(HTDeferredBlock(id), HTDeferredItem(id))
+
+    /**
+     * @since 26.1.7
+     */
+    val defaultState: BlockState get() = block.defaultState
 }

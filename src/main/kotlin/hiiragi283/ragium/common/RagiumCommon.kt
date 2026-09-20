@@ -9,6 +9,7 @@ import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.fromRecipeType
+import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.resource.modifyPath
@@ -23,6 +24,7 @@ import hiiragi283.ragium.common.recipe.RTPotionBottleDrainingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.BuiltInRegistries
@@ -60,7 +62,7 @@ internal data object RagiumCommon {
                 ) { state: FluidState ->
                     when (state.isSource) {
                         true -> Blocks.OBSIDIAN.defaultBlockState()
-                        false -> VanillaColoredCollections.CONCRETE[color].block.defaultState
+                        false -> VanillaColoredCollections.CONCRETE[color].defaultState
                     }
                 }
             )
@@ -106,8 +108,7 @@ internal data object RagiumCommon {
         )
 
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
-            val oxygen: HolderSet.Named<Fluid> =
-                registries.getOrNull(RagiumFluids.OXYGEN.fluidTag) ?: return@addSubLookup sequenceOf()
+            val oxygen: HolderSet<Fluid> = registries.getOrNull(RagiumFluids.OXYGEN) ?: return@addSubLookup sequenceOf()
             BuiltInRegistries.BLOCK
                 .getDataMap(NeoForgeDataMaps.OXIDIZABLES)
                 .asSequence()
@@ -124,8 +125,8 @@ internal data object RagiumCommon {
                 }
         }
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
-            val hydrogen: HolderSet.Named<Fluid> =
-                registries.getOrNull(RagiumFluids.HYDROGEN.fluidTag) ?: return@addSubLookup sequenceOf()
+            val hydrogen: HolderSet<Fluid> =
+                registries.getOrNull(RagiumFluids.HYDROGEN) ?: return@addSubLookup sequenceOf()
             BuiltInRegistries.BLOCK
                 .getDataMap(NeoForgeDataMaps.OXIDIZABLES)
                 .asSequence()
@@ -142,8 +143,8 @@ internal data object RagiumCommon {
                 }
         }
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
-            val antiRustOil: HolderSet.Named<Fluid> =
-                registries.getOrNull(RagiumFluids.ANTI_RUST_OIL.fluidTag) ?: return@addSubLookup sequenceOf()
+            val antiRustOil: HolderSet<Fluid> =
+                registries.getOrNull(RagiumFluids.ANTI_RUST_OIL) ?: return@addSubLookup sequenceOf()
             BuiltInRegistries.BLOCK
                 .getDataMap(NeoForgeDataMaps.WAXABLES)
                 .asSequence()
@@ -187,4 +188,7 @@ internal data object RagiumCommon {
                 }
         }
     }
+
+    private fun HolderGetter.Provider.getOrNull(content: HTFluidContent): HolderSet<Fluid>? =
+        this.getOrNull(content.fluidTag)
 }

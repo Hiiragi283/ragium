@@ -373,7 +373,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.SAND
                 count = 4
             }
-            result { 
+            result {
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.NITER)
             }
         }.save(exporter)
@@ -399,7 +399,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.CRYOLITE)
             }
         }.save(exporter)
-        
+
         // Book -> 3x Paper Pulp
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.BOOK } }
