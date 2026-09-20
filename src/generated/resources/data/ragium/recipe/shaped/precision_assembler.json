@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:nuggets/black_steel",
+    "B": "ragium:bio_machine_parts",
+    "C": "#c:gears/emerald",
+    "D": "ragium:assembler"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ADA"
+  ],
+  "result": {
+    "id": "ragium:precision_assembler"
+  }
+}

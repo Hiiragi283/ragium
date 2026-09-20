@@ -58,6 +58,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.PLANTER, "Planter")
 
+        add(RagiumBlocks.PRECISION_ASSEMBLER, "Precision Assembler")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")

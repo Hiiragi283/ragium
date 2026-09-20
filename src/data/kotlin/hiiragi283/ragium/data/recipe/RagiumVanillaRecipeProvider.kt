@@ -263,6 +263,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         bio(RagiumBlocks.BREWERY) { items { +Items.BREWING_STAND } }
         bio(RagiumBlocks.PLANTER) { items { +Items.FLOWER_POT } }
         // Electronics
+        electronics(RagiumBlocks.PRECISION_ASSEMBLER) { items { +RagiumBlocks.ASSEMBLER } }
         // Arcane
         arcane(RagiumBlocks.ENCHANTER) { items { +Items.ENCHANTING_TABLE } }
 

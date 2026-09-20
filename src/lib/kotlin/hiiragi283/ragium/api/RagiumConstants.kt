@@ -33,6 +33,7 @@ data object RagiumConstants {
     const val PLANTER = "planter"
 
     // Electronics
+    const val PRECISION_ASSEMBLER = "precision_assembler"
     const val SCANNER = "scanner"
 
     // Arcane

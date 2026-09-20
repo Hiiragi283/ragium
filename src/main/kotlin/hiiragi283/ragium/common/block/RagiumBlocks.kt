@@ -246,6 +246,10 @@ data object RagiumBlocks {
 
     // Electronics
     @JvmField
+    val PRECISION_ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.PRECISION_ASSEMBLER)
+
+    @JvmField
     val SCANNER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerFakeMachine(RagiumConstants.SCANNER)
 
@@ -277,6 +281,7 @@ data object RagiumBlocks {
             put(HTMachineType.BIO, BREWERY)
             put(HTMachineType.BIO, PLANTER)
 
+            put(HTMachineType.ELECTRONICS, PRECISION_ASSEMBLER)
             put(HTMachineType.ELECTRONICS, SCANNER)
 
             put(HTMachineType.ARCANE, ENCHANTER)
