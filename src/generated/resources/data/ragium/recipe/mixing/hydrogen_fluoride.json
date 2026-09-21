@@ -1,0 +1,22 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:sulfuric_acid"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/fluorite",
+        "c:gems/fluorite"
+      ]
+    }
+  },
+  "result": {
+    "amount": 2000,
+    "id": "ragium:hydrogen_fluoride"
+  },
+  "time": 200
+}

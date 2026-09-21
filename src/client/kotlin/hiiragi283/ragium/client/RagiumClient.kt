@@ -154,9 +154,26 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0xcc3333))
         }
+        register.register(RagiumFluids.HYDROGEN_FLUORIDE) {
+            transparent()
+            colorTint(Color(0x33cc66))
+        }
+        register.register(RagiumFluids.HYDROFLUORIC_ACID) {
+            dull()
+            colorTint(Color(0x33cc66))
+        }
+
         register.register(RagiumFluids.NAOH_SOLUTION) {
             dull()
             colorTint(Color(0x003366))
+        }
+        register.register(RagiumFluids.ALUMINA_SOLUTION) {
+            dull()
+            colorTint(Color(0xcc9999))
+        }
+        register.register(RagiumFluids.MOLTEN_ALUMINUM) {
+            molten()
+            colorTint(Color(0xffcccc))
         }
         register.register(RagiumFluids.SULFUR_DIOXIDE) {
             transparent()

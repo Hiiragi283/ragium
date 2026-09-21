@@ -23,6 +23,7 @@ import hiiragi283.lib.util.fold
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
@@ -75,9 +76,9 @@ data class RTElectrolyzingRecipe(
     override fun test(first: ItemInstance, second: FluidInstance): Boolean =
         itemIngredient.test(first) && fluidIngredient.test(second)
 
-    override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = Pair(
-        itemIngredient.fold({ 0 }, { it.getRequiredAmount(first) }),
-        fluidIngredient.getRequiredAmount(second)
+    override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> = Pair(
+        itemIngredient.fold(ItemStack::EMPTY) { it.getMatchingStack(first) },
+        fluidIngredient.getMatchingStack(second)
     )
 
     override fun apply(first: ItemInstance, second: FluidInstance): Triple<FluidStack, FluidStack, FluidStack> = Triple(

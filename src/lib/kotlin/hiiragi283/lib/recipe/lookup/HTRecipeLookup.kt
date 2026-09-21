@@ -46,3 +46,17 @@ fun interface HTRecipeLookup<out RECIPE : Any> {
         ): Sequence<HTRecipeHolder<RECIPE>> = this.recipeMap.byType(recipeType).asSequence().map { it.kotlin }
     }
 }
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.7
+ */
+fun <T : Any, R : Any> HTRecipeLookup<T>.map(transform: (T) -> R): HTRecipeLookup<R> =
+    HTRecipeLookup { context -> this.getAllRecipes(context).map { it.map(transform) } }
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.7
+ */
+fun <T : Any, R : Any> HTRecipeLookup<T>.mapNotNull(transform: (T) -> R?): HTRecipeLookup<R> =
+    HTRecipeLookup { context -> this.getAllRecipes(context).mapNotNull { it.mapNotNull(transform) } }

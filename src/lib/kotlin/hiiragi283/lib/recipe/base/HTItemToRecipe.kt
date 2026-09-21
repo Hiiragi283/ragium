@@ -82,7 +82,7 @@ interface HTItemToRecipe<OUTPUT : Any> :
 
         override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
-        override fun getRequiredAmount(input: ItemInstance): Int = ingredient.getRequiredAmount(input)
+        override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
 
         override fun apply(input: ItemInstance): OUTPUT = result.create()
     }

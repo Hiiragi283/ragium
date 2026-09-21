@@ -230,6 +230,31 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }
             recipeId suffix "_from_coal_coke"
         }.save(exporter)
+        // Hopper
+        VanillaRecipeBuilders.shaped {
+            +"A A"
+            +"ABA"
+            +" A "
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
+            result {
+                +Items.HOPPER
+                count = 2
+            }
+            recipeId suffix "_by_sooty_iron"
+        }.save(exporter)
+        VanillaRecipeBuilders.shaped {
+            +"A A"
+            +"ABA"
+            +" A "
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
+            define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
+            result {
+                +Items.HOPPER
+                count = 4
+            }
+            recipeId suffix "_by_black_steel"
+        }.save(exporter)
     }
 
     //    Machine    //
@@ -263,6 +288,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         bio(RagiumBlocks.BREWERY) { items { +Items.BREWING_STAND } }
         bio(RagiumBlocks.PLANTER) { items { +Items.FLOWER_POT } }
         // Electronics
+        electronics(RagiumBlocks.PRECISION_ASSEMBLER) { items { +RagiumBlocks.ASSEMBLER } }
         // Arcane
         arcane(RagiumBlocks.ENCHANTER) { items { +Items.ENCHANTING_TABLE } }
 
@@ -403,11 +429,13 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             HTSimpleDeferredItem(vanillaId("echo_shard")),
             size = StorageBlockSize.FOUR
         )
+        baseToBlock(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT)
         baseToBlock(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT)
         baseToBlock(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT)
         baseToBlock(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT)
         // Ingot <-> Nugget
         ingotToNugget(RagiumMaterial.Metal.NETHERITE, ingot = HTSimpleDeferredItem(vanillaId("netherite_ingot")))
+        ingotToNugget(RagiumMaterial.Metal.ALUMINUM)
         ingotToNugget(RagiumMaterial.Metal.SOOTY_IRON)
         ingotToNugget(RagiumMaterial.Metal.BLACK_STEEL)
         ingotToNugget(RagiumMaterial.Metal.VOID_METAL)

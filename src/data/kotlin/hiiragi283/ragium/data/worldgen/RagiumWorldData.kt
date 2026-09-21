@@ -74,7 +74,7 @@ data object RagiumWorldData {
                 fun oreConfiguration(material: RagiumMaterial, size: Int): OreConfiguration = RagiumBlocks.MATERIAL_ORES
                     .column(material)
                     .map { (part: HTOreBlockPart, block: HTSimpleDeferredBlockAndItem) ->
-                        val state: BlockState = block.block.defaultState
+                        val state: BlockState = block.defaultState
                         when (part) {
                             HTOreBlockPart.STONE -> BlockTags.STONE_ORE_REPLACEABLES
                             HTOreBlockPart.DEEPSLATE -> BlockTags.DEEPSLATE_ORE_REPLACEABLES

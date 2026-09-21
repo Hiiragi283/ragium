@@ -1,16 +1,16 @@
 {
   "type": "ragium:assembling",
-  "primary_ingredient": {
+  "extra": {
+    "count": 1,
+    "items": "minecraft:crimson_fungus"
+  },
+  "ingredient": {
     "count": 1,
     "items": "#c:netherracks"
   },
   "result": {
     "count": 1,
     "id": "minecraft:crimson_nylium"
-  },
-  "secondary_ingredient": {
-    "count": 1,
-    "items": "minecraft:crimson_fungus"
   },
   "time": 200
 }

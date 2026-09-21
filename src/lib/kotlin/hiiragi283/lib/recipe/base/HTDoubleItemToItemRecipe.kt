@@ -67,8 +67,8 @@ interface HTDoubleItemToItemRecipe :
         override fun test(first: ItemInstance, second: ItemInstance): Boolean =
             primary.test(first) && secondary.test(second)
 
-        override fun getRequiredAmount(first: ItemInstance, second: ItemInstance): Pair<Int, Int> =
-            primary.getRequiredAmount(first) to secondary.getRequiredAmount(second)
+        override fun getMatchingStack(first: ItemInstance, second: ItemInstance): Pair<ItemInstance, ItemInstance> =
+            primary.getMatchingStack(first) to secondary.getMatchingStack(second)
 
         override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
     }

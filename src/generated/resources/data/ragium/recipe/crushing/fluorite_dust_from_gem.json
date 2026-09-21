@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:gems/fluorite"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:fluorite_dust"
+  },
+  "time": 200
+}

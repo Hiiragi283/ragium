@@ -1,0 +1,16 @@
+{
+  "type": "ragium:reacting",
+  "item_result": {
+    "count": 1,
+    "id": "ragium:cryolite"
+  },
+  "primary_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:alumina_solution"
+  },
+  "secondary_ingredient": {
+    "amount": 6000,
+    "fluids": "#c:hydrofluoric_acid"
+  },
+  "time": 200
+}

@@ -58,6 +58,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.PLANTER, "Planter")
 
+        add(RagiumBlocks.PRECISION_ASSEMBLER, "Precision Assembler")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")
@@ -91,7 +92,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
         addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "Liquid Explosive")
+        addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
+        addFluid(RagiumFluids.HYDROFLUORIC_ACID, "Hydrofluoric Acid")
         addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
+        addFluid(RagiumFluids.ALUMINA_SOLUTION, "Alumina Solution")
+        addFluid(RagiumFluids.MOLTEN_ALUMINUM, "Molten Aluminum")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")

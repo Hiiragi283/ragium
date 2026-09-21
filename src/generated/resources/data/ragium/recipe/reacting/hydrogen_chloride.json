@@ -1,7 +1,7 @@
 {
   "type": "ragium:reacting",
   "fluid_result": {
-    "amount": 1000,
+    "amount": 2000,
     "id": "ragium:hydrogen_chloride"
   },
   "primary_ingredient": {
@@ -10,7 +10,7 @@
   },
   "secondary_ingredient": {
     "amount": 1000,
-    "fluids": "#c:chloride"
+    "fluids": "#c:chlorine"
   },
   "time": 200
 }

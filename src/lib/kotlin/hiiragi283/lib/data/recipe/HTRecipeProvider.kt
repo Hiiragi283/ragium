@@ -86,12 +86,11 @@ abstract class HTRecipeProvider(
 
         final override fun modifyId(id: Identifier): Identifier {
             val namespace: String = id.namespace
-            return if (namespace in builtInIds) {
-                val path: List<String> = id.path.split("/", limit = 2)
-                id(path[0], modId, path[1])
-            } else {
+            return if (namespace !in builtInIds) {
                 val path: List<String> = id.path.split("/", limit = 2)
                 id(path[0], namespace, path[1])
+            } else {
+                super.modifyId(id)
             }
         }
     }

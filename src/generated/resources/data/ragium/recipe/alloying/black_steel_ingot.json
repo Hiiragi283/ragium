@@ -1,6 +1,10 @@
 {
   "type": "ragium:alloying",
-  "primary_ingredient": {
+  "extra": {
+    "count": 2,
+    "items": "#c:dusts/obsidian"
+  },
+  "ingredient": {
     "count": 1,
     "items": {
       "neoforge:ingredient_type": "ragium:material_tags",
@@ -13,10 +17,6 @@
   "result": {
     "count": 1,
     "id": "ragium:black_steel_ingot"
-  },
-  "secondary_ingredient": {
-    "count": 2,
-    "items": "#c:dusts/obsidian"
   },
   "time": 200
 }

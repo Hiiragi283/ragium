@@ -5,8 +5,10 @@ import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
+import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.result.HTItemAndFluidResult
 import net.minecraft.world.item.ItemInstance
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
 @JvmRecord
@@ -23,8 +25,8 @@ data class RTPotionBottleDrainingRecipe(val bottleType: HTBottleType, override v
         HTPotionHelper.createFluid(input, HTPotionHelper.BOTTLE_AMOUNT)
     )
 
-    override fun getRequiredAmount(input: ItemInstance): Int = when {
-        test(input) -> 1
-        else -> 0
+    override fun getMatchingStack(input: ItemInstance): ItemInstance = when {
+        test(input) -> HTIngredientHelper.copyWithCount(input, 1)
+        else -> ItemStack.EMPTY
     }
 }

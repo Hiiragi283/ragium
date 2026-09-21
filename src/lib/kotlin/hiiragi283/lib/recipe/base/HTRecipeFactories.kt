@@ -27,9 +27,9 @@ data object HTRecipeFactories {
         override fun apply(input: INPUT_A): OUTPUT
 
         /**
-         * 入力の消費量を取得します。
+         * 消費される入力を取得します。
          */
-        fun getRequiredAmount(input: INPUT_A): Int
+        fun getMatchingStack(input: INPUT_A): INPUT_A
     }
 
     /**
@@ -54,9 +54,9 @@ data object HTRecipeFactories {
         override fun apply(first: INPUT_A, second: INPUT_B): OUTPUT
 
         /**
-         * 入力の消費量を取得します。
+         * 消費される入力を取得します。
          */
-        fun getRequiredAmount(first: INPUT_A, second: INPUT_B): Pair<Int, Int>
+        fun getMatchingStack(first: INPUT_A, second: INPUT_B): Pair<INPUT_A, INPUT_B>
     }
 
     /**
@@ -89,7 +89,10 @@ data object HTRecipeFactories {
         Function3<INPUT_A, INPUT_B, INPUT_C, OUTPUT> {
         override fun apply(first: INPUT_A, second: INPUT_B, third: INPUT_C): OUTPUT
 
-        fun getRequiredAmount(first: INPUT_A, second: INPUT_B, third: INPUT_C): Triple<Int, Int, Int>
+        /**
+         * 消費される入力を取得します。
+         */
+        fun getMatchingStack(first: INPUT_A, second: INPUT_B, third: INPUT_C): Triple<INPUT_A, INPUT_B, INPUT_C>
     }
 
     /**

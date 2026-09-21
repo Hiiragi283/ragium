@@ -1,0 +1,16 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 500,
+    "fluids": "#c:sodium_hydroxide_solution"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": "#c:dusts/bauxite"
+  },
+  "result": {
+    "amount": 500,
+    "id": "ragium:alumina_solution"
+  },
+  "time": 200
+}

@@ -31,6 +31,7 @@ data object RagiumFluids {
         REGISTER.addAlias("calcium_hydroxide_solution", "sodium_hydroxide_solution")
         REGISTER.addAlias(RagiumAPI.id("molten_blaze"), vanillaId("lava"))
         REGISTER.addAlias("creosote", "coal_tar")
+        REGISTER.addAlias("chloride", "chlorine")
 
         REGISTER.register(eventBus)
     }
@@ -128,7 +129,7 @@ data object RagiumFluids {
 
     // 4th
     @JvmField
-    val CHLORINE: HTFluidContent.Virtual = REGISTER.registerVirtual("chloride") { properties = gaseous() }
+    val CHLORINE: HTFluidContent.Virtual = REGISTER.registerVirtual("chlorine") { properties = gaseous() }
 
     //    Chemical    //
 
@@ -184,11 +185,29 @@ data object RagiumFluids {
         typeFactory = { HTExplosiveFluidType(6f, it) }
     }
 
+    @JvmField
+    val HYDROGEN_FLUORIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen_fluoride") {
+        properties = gaseous()
+    }
+
+    @JvmField
+    val HYDROFLUORIC_ACID: HTFluidContent.Flowing = REGISTER.registerFlowing("hydrofluoric_acid") {
+        properties = liquid()
+    }
+
     // 4th
     @JvmField
     val NAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("sodium_hydroxide_solution") {
         properties = liquid()
     }
+
+    @JvmField
+    val ALUMINA_SOLUTION: HTFluidContent.Virtual = REGISTER.registerVirtual("alumina_solution") {
+        properties = liquid()
+    }
+
+    @JvmField
+    val MOLTEN_ALUMINUM: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_aluminum") { properties = molten() }
 
     @JvmField
     val SULFUR_DIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("sulfur_dioxide") { properties = gaseous() }

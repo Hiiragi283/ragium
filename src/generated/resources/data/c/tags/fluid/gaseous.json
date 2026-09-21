@@ -1,8 +1,9 @@
 {
   "values": [
-    "#c:chloride",
+    "#c:chlorine",
     "#c:hydrogen",
     "#c:hydrogen_chloride",
+    "#c:hydrogen_fluoride",
     "#c:oxygen",
     "#c:sulfur_dioxide",
     "#c:sulfur_trioxide"

@@ -1,6 +1,7 @@
 {
   "values": [
     "ragium:alloy_smelter",
+    "ragium:aluminum_block",
     "ragium:arcane_machine_casing",
     "ragium:assembler",
     "ragium:bio_machine_casing",
@@ -33,6 +34,7 @@
     "ragium:niter_ore",
     "ragium:pitch_coke_block",
     "ragium:planter",
+    "ragium:precision_assembler",
     "ragium:pyrolyzer",
     "ragium:refinery",
     "ragium:scanner",

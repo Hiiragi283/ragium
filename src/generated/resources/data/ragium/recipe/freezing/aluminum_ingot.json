@@ -1,0 +1,12 @@
+{
+  "type": "ragium:freezing",
+  "ingredient": {
+    "amount": 90,
+    "fluids": "#c:molten_aluminum"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:aluminum_ingot"
+  },
+  "time": 200
+}

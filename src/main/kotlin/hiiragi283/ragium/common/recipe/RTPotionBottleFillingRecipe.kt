@@ -5,6 +5,7 @@ import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
+import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
@@ -25,8 +26,8 @@ data class RTPotionBottleFillingRecipe(val bottleType: HTBottleType, override va
     override fun apply(first: ItemInstance, second: FluidInstance): ItemStack =
         bottleType.filledItem.toStack(patch = HTPotionHelper.createPotionPatch(second))
 
-    override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = when {
-        test(first, second) -> 1 to HTPotionHelper.BOTTLE_AMOUNT
-        else -> 0 to 0
-    }
+    override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> = Pair(
+        HTIngredientHelper.copyWithCount(first, 1),
+        HTIngredientHelper.copyWithAmount(second, HTPotionHelper.BOTTLE_AMOUNT)
+    )
 }

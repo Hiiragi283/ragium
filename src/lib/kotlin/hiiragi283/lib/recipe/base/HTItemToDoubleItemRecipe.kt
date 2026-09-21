@@ -29,8 +29,8 @@ interface HTItemToDoubleItemRecipe :
     fun asSingleOutput(): HTItemToItemRecipe = object : HTItemToItemRecipe {
         override fun test(input: ItemInstance): Boolean = this@HTItemToDoubleItemRecipe.test(input)
 
-        override fun getRequiredAmount(input: ItemInstance): Int =
-            this@HTItemToDoubleItemRecipe.getRequiredAmount(input)
+        override fun getMatchingStack(input: ItemInstance): ItemInstance =
+            this@HTItemToDoubleItemRecipe.getMatchingStack(input)
 
         override fun apply(input: ItemInstance): ItemStack = this@HTItemToDoubleItemRecipe.apply(input).first
 
@@ -80,7 +80,7 @@ interface HTItemToDoubleItemRecipe :
 
         override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
-        override fun getRequiredAmount(input: ItemInstance): Int = ingredient.getRequiredAmount(input)
+        override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
 
         override fun apply(input: ItemInstance): Pair<ItemStack, ItemStack> =
             result.head.create() to result.getOrNull(1).createOrEmpty()

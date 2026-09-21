@@ -24,8 +24,6 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
-import net.neoforged.neoforge.fluids.BaseFlowingFluid.Flowing
-import net.neoforged.neoforge.fluids.BaseFlowingFluid.Source
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.transfer.fluid.DispenseFluidContainer
 
@@ -155,7 +153,7 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
         lateinit var properties: FluidType.Properties
 
         /**
-         * [FluidType]をを作るブロック
+         * [FluidType]を作るブロック
          */
         var typeFactory: (FluidType.Properties) -> FluidType = ::FluidType
 
@@ -258,12 +256,12 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
         /**
          * 液体源を作るブロック
          */
-        var sourceFactory: (BaseFlowingFluid.Properties) -> Source = BaseFlowingFluid::Source
+        var sourceFactory: (BaseFlowingFluid.Properties) -> BaseFlowingFluid.Source = BaseFlowingFluid::Source
 
         /**
          * 液体流を作るブロック
          */
-        var flowingFactory: (BaseFlowingFluid.Properties) -> Flowing = BaseFlowingFluid::Flowing
+        var flowingFactory: (BaseFlowingFluid.Properties) -> BaseFlowingFluid.Flowing = BaseFlowingFluid::Flowing
 
         /**
          * 液体ブロックを作成するブロック
@@ -287,7 +285,7 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
                 ) { prop: BlockBehaviour.Properties -> blockFactory!!(sourceHolder.get(), prop) }
             }
             // Fluid
-            val flowingHolder: HTDeferredHolder<Fluid, Flowing> =
+            val flowingHolder: HTDeferredHolder<Fluid, BaseFlowingFluid.Flowing> =
                 HTDeferredHolder(fluidRegister.createKey("flowing_$name"))
             val fluidProperties: BaseFlowingFluid.Properties = BaseFlowingFluid
                 .Properties(typeHolder, sourceHolder, flowingHolder)

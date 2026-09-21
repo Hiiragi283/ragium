@@ -156,6 +156,10 @@ data object RagiumConfig {
 
             // Electronics
             @JvmField
+            val precisionAssembler: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.PRECISION_ASSEMBLER, 64)
+
+            @JvmField
             val scanner: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.SCANNER, 64)
 

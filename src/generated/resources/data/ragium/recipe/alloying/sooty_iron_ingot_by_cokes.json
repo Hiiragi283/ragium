@@ -1,6 +1,10 @@
 {
   "type": "ragium:alloying",
-  "primary_ingredient": {
+  "extra": {
+    "count": 1,
+    "items": "#ragium:cokes"
+  },
+  "ingredient": {
     "count": 2,
     "items": {
       "neoforge:ingredient_type": "ragium:material_tags",
@@ -13,10 +17,6 @@
   "result": {
     "count": 2,
     "id": "ragium:sooty_iron_ingot"
-  },
-  "secondary_ingredient": {
-    "count": 1,
-    "items": "#ragium:cokes"
   },
   "time": 200
 }

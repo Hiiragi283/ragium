@@ -70,10 +70,10 @@ interface RTReactingRecipe :
             primary.test(first) && secondary.test(second)
 
         override fun apply(first: FluidInstance, second: FluidInstance): HTItemAndFluidResult =
-            results.mapLeft(HTItemResult::create).mapRight(HTFluidResult::create).let(::HTItemAndFluidResult)
+            HTItemAndFluidResult.from(results)
 
-        override fun getRequiredAmount(first: FluidInstance, second: FluidInstance): Pair<Int, Int> =
-            primary.getRequiredAmount(first) to secondary.getRequiredAmount(second)
+        override fun getMatchingStack(first: FluidInstance, second: FluidInstance): Pair<FluidInstance, FluidInstance> =
+            primary.getMatchingStack(first) to secondary.getMatchingStack(second)
 
         override fun getSerializer(): RecipeSerializer<Basic> = RagiumRecipeSerializers.REACTING
 
