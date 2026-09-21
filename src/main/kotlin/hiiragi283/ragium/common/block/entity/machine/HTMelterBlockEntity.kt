@@ -7,6 +7,7 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
+import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -51,7 +52,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipeHandler = object : EnergizedHandler<SingleRecipeInput, FluidStack, HTItemToFluidRecipe>() {
             private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTMelterBlockEntity.inputSlot) }
             private val outputSlot: HTOutputSlot<FluidStack> by lazy {
-                HTOutputSlot.SingleFluid(this@HTMelterBlockEntity.outputTank)
+                HTOutputSlotHelper.forFluid(this@HTMelterBlockEntity.outputTank)
             }
 
             override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStoredInput())

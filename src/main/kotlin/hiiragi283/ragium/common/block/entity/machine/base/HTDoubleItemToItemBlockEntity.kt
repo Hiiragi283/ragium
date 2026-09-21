@@ -7,6 +7,7 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
+import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.input.HTItemListRecipeInput
 import hiiragi283.lib.recipe.input.getItemOrEmpty
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
@@ -62,7 +63,7 @@ abstract class HTDoubleItemToItemBlockEntity(
                 HTItemInputSlot(this@HTDoubleItemToItemBlockEntity.secondarySlot)
             }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-                HTOutputSlot.SingleItem(this@HTDoubleItemToItemBlockEntity.outputSlot)
+                HTOutputSlotHelper.forItem(this@HTDoubleItemToItemBlockEntity.outputSlot)
             }
 
             override fun createInput(): RecipeInput =

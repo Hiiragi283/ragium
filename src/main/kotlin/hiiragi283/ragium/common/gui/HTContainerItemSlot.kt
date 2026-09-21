@@ -5,7 +5,6 @@ import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.lib.transfer.item.getItemStack
-import hiiragi283.lib.transfer.item.toResourcePair
 import hiiragi283.lib.transfer.useTransaction
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -44,14 +43,8 @@ class HTContainerItemSlot(
         stackSetter.accept(stack)
     }
 
-    override fun mayPlace(itemStack: ItemStack): Boolean {
-        val (resource: ItemResource, count: Int) = itemStack.toResourcePair()
-        if (slot.resource.isEmpty) {
-            return useTransaction { slot.insert(resource, count, it, HTTransferAccess.MANUAL) } <= count
-        }
-        if (useTransaction { slot.extractSelf(1, it, HTTransferAccess.MANUAL) } == 0) return false
-        return manualFilter.test(resource, HTTransferAccess.MANUAL)
-    }
+    override fun mayPlace(itemStack: ItemStack): Boolean =
+        !itemStack.isEmpty && manualFilter.test(ItemResource.of(itemStack), HTTransferAccess.MANUAL)
 
     override fun getMaxStackSize(): Int = slot.currentCapacity
 

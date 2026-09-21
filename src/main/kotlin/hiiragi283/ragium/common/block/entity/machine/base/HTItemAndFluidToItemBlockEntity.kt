@@ -8,6 +8,7 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.handler.HTFluidInputTank
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
+import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
@@ -65,7 +66,7 @@ abstract class HTItemAndFluidToItemBlockEntity(
                 HTItemInputSlot(this@HTItemAndFluidToItemBlockEntity.inputSlot)
             }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-                HTOutputSlot.SingleItem(this@HTItemAndFluidToItemBlockEntity.outputSlot)
+                HTOutputSlotHelper.forItem(this@HTItemAndFluidToItemBlockEntity.outputSlot)
             }
 
             override fun createInput(): HTItemAndFluidRecipeInput =

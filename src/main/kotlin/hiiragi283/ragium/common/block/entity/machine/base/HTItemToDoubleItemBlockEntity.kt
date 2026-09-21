@@ -7,6 +7,7 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
+import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
@@ -58,10 +59,10 @@ abstract class HTItemToDoubleItemBlockEntity(
                     HTItemInputSlot(this@HTItemToDoubleItemBlockEntity.inputSlot)
                 }
                 private val primarySlot: HTOutputSlot<ItemStack> by lazy {
-                    HTOutputSlot.SingleItem(this@HTItemToDoubleItemBlockEntity.primarySlot)
+                    HTOutputSlotHelper.forItem(this@HTItemToDoubleItemBlockEntity.primarySlot)
                 }
                 private val secondarySlot: HTOutputSlot<ItemStack> by lazy {
-                    HTOutputSlot.SingleItem(this@HTItemToDoubleItemBlockEntity.secondarySlot)
+                    HTOutputSlotHelper.forItem(this@HTItemToDoubleItemBlockEntity.secondarySlot)
                 }
 
                 override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStoredInput())

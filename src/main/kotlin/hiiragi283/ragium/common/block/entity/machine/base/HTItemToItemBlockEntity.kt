@@ -7,6 +7,7 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
+import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
@@ -55,7 +56,7 @@ abstract class HTItemToItemBlockEntity(
         recipeHandler = object : EnergizedHandler<SingleRecipeInput, ItemStack, HTItemToItemRecipe>() {
             private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTItemToItemBlockEntity.inputSlot) }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-                HTOutputSlot.SingleItem(this@HTItemToItemBlockEntity.outputSlot)
+                HTOutputSlotHelper.forItem(this@HTItemToItemBlockEntity.outputSlot)
             }
 
             override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStoredInput())
