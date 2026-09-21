@@ -39,6 +39,8 @@ interface HTInputSlot<TYPE : Any, INSTANCE : TypedInstance<TYPE>> {
      */
     fun use(input: INSTANCE?, transaction: TransactionContext): UseResult
 
+    //    UseResult    //
+
     /**
      * [HTInputSlot.use]の結果を表すクラスです。
      * @author Hiiragi Tsubasa

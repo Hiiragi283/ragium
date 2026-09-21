@@ -19,20 +19,45 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
  */
 interface HTOutputSlot<STACK : Any> {
     /**
-     * 完成品を搬入します。
-     * @param stack 搬入する完成品
+     * 出力を受け取ります。
+     * @param stack 受け取る出力
      * @param transaction 現在のトランザクション
-     * @return 実際に搬入される数量
      */
-    fun insert(stack: STACK, transaction: TransactionContext): Int
+    fun take(stack: STACK, transaction: TransactionContext): TakeResult
+
+    //    TakeResult    //
 
     /**
-     * 完成品を搬入できるか判定します。
-     * @param stack 搬入する完成品
-     * @param transaction 現在のトランザクション
-     * @return 実際に消費される数量が[stack]の数量と等しい場合は`true`
+     * [HTOutputSlot.take]の結果を表すクラスです。
+     * @author Hiiragi Tsubasa
+     * @since 26.1.7
      */
-    fun canInsert(stack: STACK, transaction: TransactionContext): Boolean
+    enum class TakeResult {
+        /**
+         * 出力を受け取れない場合
+         */
+        NONE,
+
+        /**
+         * 出力を一部だけ受け取れる場合
+         */
+        PARTIALLY,
+
+        /**
+         * 出力をすべて受け取れる場合
+         */
+        FULL;
+
+        /**
+         * 出力の受け取りに失敗した場合は`true`
+         */
+        val noneTaken: Boolean get() = this == NONE
+
+        /**
+         * 出力の受け取りに成功した場合は`true`
+         */
+        val anyTaken: Boolean get() = !noneTaken
+    }
 
     //    Single    //
 
@@ -43,14 +68,15 @@ interface HTOutputSlot<STACK : Any> {
      */
     @JvmRecord
     data class SingleItem(private val slot: HTItemSlot) : HTOutputSlot<ItemStack> {
-        override fun insert(stack: ItemStack, transaction: TransactionContext): Int {
-            if (stack.isEmpty) return 0
+        override fun take(stack: ItemStack, transaction: TransactionContext): TakeResult {
+            if (stack.isEmpty) return TakeResult.NONE
             val (resource: ItemResource, amount: Int) = stack.toResourcePair()
-            return slot.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)
+            return when (slot.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)) {
+                0 -> TakeResult.NONE
+                amount -> TakeResult.FULL
+                else -> TakeResult.PARTIALLY
+            }
         }
-
-        override fun canInsert(stack: ItemStack, transaction: TransactionContext): Boolean =
-            insert(stack, transaction) == stack.count()
     }
 
     /**
@@ -60,13 +86,14 @@ interface HTOutputSlot<STACK : Any> {
      */
     @JvmRecord
     data class SingleFluid(private val tank: HTFluidTank) : HTOutputSlot<FluidStack> {
-        override fun insert(stack: FluidStack, transaction: TransactionContext): Int {
-            if (stack.isEmpty) return 0
+        override fun take(stack: FluidStack, transaction: TransactionContext): TakeResult {
+            if (stack.isEmpty) return TakeResult.NONE
             val (resource: FluidResource, amount: Int) = stack.toResourcePair()
-            return tank.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)
+            return when (tank.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)) {
+                0 -> TakeResult.NONE
+                amount -> TakeResult.FULL
+                else -> TakeResult.PARTIALLY
+            }
         }
-
-        override fun canInsert(stack: FluidStack, transaction: TransactionContext): Boolean =
-            insert(stack, transaction) == stack.amount()
     }
 }

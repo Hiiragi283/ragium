@@ -89,7 +89,7 @@ abstract class HTItemAndFluidToFluidBlockEntity(
                     when {
                         inputSlot.use(itemInput, transaction).failed -> false
                         inputTank.use(fluidInput, transaction).failed -> false
-                        else -> outputTank.canInsert(output, transaction)
+                        else -> outputTank.take(output, transaction) == HTOutputSlot.TakeResult.FULL
                     }
                 }
 
@@ -105,7 +105,7 @@ abstract class HTItemAndFluidToFluidBlockEntity(
                         )
                         inputSlot.use(itemInput, transaction)
                         inputTank.use(fluidInput, transaction)
-                        outputTank.insert(output, transaction)
+                        outputTank.take(output, transaction)
                         transaction.commit()
                     }
                     playSound(getCompletedSound())

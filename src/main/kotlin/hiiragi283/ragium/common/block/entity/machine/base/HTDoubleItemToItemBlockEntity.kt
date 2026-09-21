@@ -78,7 +78,7 @@ abstract class HTDoubleItemToItemBlockEntity(
                     when {
                         primarySlot.use(firstConsume, transaction).failed -> false
                         secondarySlot.use(secondConsume, transaction).failed -> false
-                        else -> outputSlot.canInsert(output, transaction)
+                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
                     }
                 }
             }
@@ -89,7 +89,7 @@ abstract class HTDoubleItemToItemBlockEntity(
                 useTransaction { transaction: Transaction ->
                     primarySlot.use(firstConsume, transaction)
                     secondarySlot.use(secondConsume, transaction)
-                    outputSlot.insert(output, transaction)
+                    outputSlot.take(output, transaction)
                     transaction.commit()
                 }
                 playSound(getCompletedSound())

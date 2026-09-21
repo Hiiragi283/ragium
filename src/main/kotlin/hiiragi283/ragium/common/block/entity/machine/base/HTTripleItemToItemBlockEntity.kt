@@ -86,7 +86,7 @@ abstract class HTTripleItemToItemBlockEntity(
                         primarySlot.use(firstInput, transaction).failed -> false
                         secondarySlot.use(secondInput, transaction).failed -> false
                         tertiarySlot.use(thirdInput, transaction).failed -> false
-                        else -> outputSlot.canInsert(output, transaction)
+                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
                     }
                 }
             }
@@ -98,7 +98,7 @@ abstract class HTTripleItemToItemBlockEntity(
                     primarySlot.use(firstInput, transaction)
                     secondarySlot.use(secondInput, transaction)
                     tertiarySlot.use(thirdInput, transaction)
-                    outputSlot.insert(output, transaction)
+                    outputSlot.take(output, transaction)
                     transaction.commit()
                 }
                 playSound(getCompletedSound())

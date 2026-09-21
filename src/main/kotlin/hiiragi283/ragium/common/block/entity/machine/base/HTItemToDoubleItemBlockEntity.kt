@@ -77,8 +77,8 @@ abstract class HTItemToDoubleItemBlockEntity(
                     val inputConsume: ItemInstance = recipe.getMatchingStack(input.item())
                     when {
                         inputSlot.use(inputConsume, transaction).failed -> false
-                        !primarySlot.canInsert(output.first, transaction) -> false
-                        else -> secondarySlot.canInsert(output.second, transaction)
+                        primarySlot.take(output.first, transaction) != HTOutputSlot.TakeResult.FULL -> false
+                        else -> secondarySlot.take(output.second, transaction) == HTOutputSlot.TakeResult.FULL
                     }
                 }
 
@@ -89,8 +89,8 @@ abstract class HTItemToDoubleItemBlockEntity(
                 ) {
                     useTransaction { transaction: Transaction ->
                         inputSlot.use(recipe.getMatchingStack(input.item()), transaction)
-                        primarySlot.insert(output.first, transaction)
-                        secondarySlot.insert(output.second, transaction)
+                        primarySlot.take(output.first, transaction)
+                        secondarySlot.take(output.second, transaction)
                         transaction.commit()
                     }
                     playSound(getCompletedSound())
