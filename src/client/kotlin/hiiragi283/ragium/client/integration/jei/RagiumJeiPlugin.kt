@@ -237,13 +237,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.REACTING,
             HTPhysicalSideHelper.registryOrThrow(RagiumRegistries.Keys.ORE_SLURRY_DATA)
                 .asHolderSequence()
-                .mapNotNull { holder: Holder<HTOreSlurryData> ->
-                    val template: ItemStack = holder.value().createResult()
-                    if (template.isEmpty) return@mapNotNull null
+                .map { holder: Holder<HTOreSlurryData> ->
                     RagiumRecipeBuilders.reacting {
                         primaryIngredient = HTJeiRecipeHelper.fakeFluid(HTOreSlurryDataHelper.createFluid(holder))
                         secondaryIngredient = HTJeiRecipeHelper.fakeFluid(FluidTagSlotDisplay(Tags.Fluids.WATER))
-                        itemResult { from(template) }
+                        +holder.value().result
                         recipeId replace holder.getKeyOrThrow().identifier().withPrefix("ore_slurry/")
                     }.buildSynthetic()
                 }.toList()

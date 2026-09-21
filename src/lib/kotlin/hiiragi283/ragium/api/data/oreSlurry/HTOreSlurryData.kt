@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.data.oreSlurry
 import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.text.Text
@@ -13,7 +12,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.ExtraCodecs
-import net.minecraft.world.item.ItemStack
 
 /**
  * @author Hiiragi Tsubasa
@@ -49,6 +47,4 @@ data class HTOreSlurryData(val title: Text, val color: Int, val result: HTItemRe
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Holder<HTOreSlurryData>> =
             HTStreamCodecs.holder(RagiumRegistries.Keys.ORE_SLURRY_DATA, DIRECT_STREAM_CODEC)
     }
-
-    fun createResult(): ItemStack = result.createOrEmpty()
 }

@@ -25,7 +25,7 @@ import java.util.Optional
  */
 @JvmRecord
 data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
-    HTIngredient<ItemInstance>,
+    HTIngredient<Item, ItemInstance>,
     HTStackPreview<ItemStack> {
     companion object {
         @JvmField
@@ -54,9 +54,9 @@ data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
 
     override fun testOnlyType(instance: ItemInstance): Boolean = HTIngredientHelper.unwrap(instance).let(unsized::test)
 
-    override fun getRequiredAmount(instance: ItemInstance): Int = when (testOnlyType(instance)) {
-        true -> count
-        false -> 0
+    override fun getMatchingStack(instance: ItemInstance): ItemInstance = when (testOnlyType(instance)) {
+        true -> HTIngredientHelper.copyWithCount(instance, count)
+        false -> ItemStack.EMPTY
     }
 
     override fun getPreviewStacks(contextMap: ContextMap): List<ItemStack> = unsized

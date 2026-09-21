@@ -82,7 +82,7 @@ interface HTFluidToRecipe<OUTPUT : Any> :
 
         override fun test(input: FluidInstance): Boolean = ingredient.test(input)
 
-        override fun getRequiredAmount(input: FluidInstance): Int = ingredient.getRequiredAmount(input)
+        override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
 
         override fun apply(input: FluidInstance): OUTPUT = result.create()
     }

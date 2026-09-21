@@ -5,7 +5,7 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
-import hiiragi283.lib.recipe.handler.HTInputSlot
+import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.input.HTItemListRecipeInput
 import hiiragi283.lib.recipe.input.getItemOrEmpty
@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -55,61 +56,48 @@ abstract class HTTripleItemToItemBlockEntity(
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
         recipeHandler = object : EnergizedHandler<RecipeInput, ItemStack, HTTripleItemToItemRecipe>() {
-            private val primarySlot: HTInputSlot.SingleItem by lazy {
-                HTInputSlot.SingleItem(this@HTTripleItemToItemBlockEntity.primarySlot)
+            private val primarySlot: HTItemInputSlot by lazy {
+                HTItemInputSlot(this@HTTripleItemToItemBlockEntity.primarySlot)
             }
-            private val secondarySlot: HTInputSlot.SingleItem by lazy {
-                HTInputSlot.SingleItem(this@HTTripleItemToItemBlockEntity.secondarySlot)
+            private val secondarySlot: HTItemInputSlot by lazy {
+                HTItemInputSlot(this@HTTripleItemToItemBlockEntity.secondarySlot)
             }
-            private val tertiarySlot: HTInputSlot.SingleItem by lazy {
-                HTInputSlot.SingleItem(this@HTTripleItemToItemBlockEntity.tertiarySlot)
+            private val tertiarySlot: HTItemInputSlot by lazy {
+                HTItemInputSlot(this@HTTripleItemToItemBlockEntity.tertiarySlot)
             }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlot.SingleItem(this@HTTripleItemToItemBlockEntity.outputSlot)
             }
 
-            override fun createInput(): RecipeInput =
-                HTItemListRecipeInput(primarySlot.getStack(), secondarySlot.getStack(), tertiarySlot.getStack())
+            override fun createInput(): RecipeInput = HTItemListRecipeInput(
+                primarySlot.getStoredInput(),
+                secondarySlot.getStoredInput(),
+                tertiarySlot.getStoredInput()
+            )
 
             override fun findRecipe(level: ServerLevel, input: RecipeInput): HTTripleItemToItemRecipe? =
                 cache.findFirstRecipe(input, level)
 
             override fun canComplete(recipe: HTTripleItemToItemRecipe, input: RecipeInput, output: ItemStack): Boolean {
-                val (firstCount: Int, secondCount: Int, thirdCount: Int) = recipe.getRequiredAmount(
-                    input.getItemOrEmpty(0),
-                    input.getItemOrEmpty(1),
-                    input.getItemOrEmpty(2)
-                )
-                useTransaction { transaction: Transaction ->
-                    if (firstCount > 0 && !primarySlot.canExtract(firstCount, transaction)) {
-                        return false
+                val (firstInput: ItemInstance, secondInput: ItemInstance, thirdInput: ItemInstance) =
+                    recipe.getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
+                return useTransaction { transaction: Transaction ->
+                    when {
+                        primarySlot.use(firstInput, transaction).failed -> false
+                        secondarySlot.use(secondInput, transaction).failed -> false
+                        tertiarySlot.use(thirdInput, transaction).failed -> false
+                        else -> outputSlot.canInsert(output, transaction)
                     }
-                    if (secondCount > 0 && !secondarySlot.canExtract(secondCount, transaction)) {
-                        return false
-                    }
-                    if (thirdCount > 0 && !tertiarySlot.canExtract(thirdCount, transaction)) {
-                        return false
-                    }
-                    return outputSlot.canInsert(output, transaction)
                 }
             }
 
             override fun onComplete(recipe: HTTripleItemToItemRecipe, input: RecipeInput, output: ItemStack) {
-                val (firstCount: Int, secondCount: Int, thirdCount: Int) = recipe.getRequiredAmount(
-                    input.getItemOrEmpty(0),
-                    input.getItemOrEmpty(1),
-                    input.getItemOrEmpty(2)
-                )
+                val (firstInput: ItemInstance, secondInput: ItemInstance, thirdInput: ItemInstance) =
+                    recipe.getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
                 useTransaction { transaction: Transaction ->
-                    if (firstCount > 0) {
-                        primarySlot.extract(firstCount, transaction)
-                    }
-                    if (secondCount > 0) {
-                        secondarySlot.extract(secondCount, transaction)
-                    }
-                    if (thirdCount > 0) {
-                        tertiarySlot.extract(thirdCount, transaction)
-                    }
+                    primarySlot.use(firstInput, transaction)
+                    secondarySlot.use(secondInput, transaction)
+                    tertiarySlot.use(thirdInput, transaction)
                     outputSlot.insert(output, transaction)
                     transaction.commit()
                 }

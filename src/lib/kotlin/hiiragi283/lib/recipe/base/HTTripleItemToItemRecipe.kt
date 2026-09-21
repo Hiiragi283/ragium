@@ -80,8 +80,11 @@ interface HTTripleItemToItemRecipe :
 
                 override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
 
-                override fun getRequiredAmount(first: ItemInstance, second: ItemInstance): Pair<Int, Int> =
-                    ingredient.getRequiredAmount(first) to secondary.getRequiredAmount(second)
+                override fun getMatchingStack(
+                    first: ItemInstance,
+                    second: ItemInstance
+                ): Pair<ItemInstance, ItemInstance> =
+                    ingredient.getMatchingStack(first) to secondary.getMatchingStack(second)
             }
         }
 
@@ -96,26 +99,26 @@ interface HTTripleItemToItemRecipe :
 
         override fun apply(first: ItemInstance, second: ItemInstance, third: ItemInstance): ItemStack = result.create()
 
-        override fun getRequiredAmount(
+        override fun getMatchingStack(
             first: ItemInstance,
             second: ItemInstance,
             third: ItemInstance
-        ): Triple<Int, Int, Int> {
-            val firstCount: Int = ingredient.getRequiredAmount(first)
+        ): Triple<ItemInstance, ItemInstance, ItemInstance> {
+            val firstInput = ingredient.getMatchingStack(first)
             return when {
                 secondary.test(second) -> Triple(
-                    firstCount,
-                    secondary.getRequiredAmount(second),
-                    tertiary?.getRequiredAmount(third) ?: 0
+                    firstInput,
+                    secondary.getMatchingStack(second),
+                    tertiary?.getMatchingStack(third) ?: ItemStack.EMPTY
                 )
 
                 secondary.test(third) -> Triple(
-                    firstCount,
-                    (tertiary?.getRequiredAmount(second) ?: 0),
-                    secondary.getRequiredAmount(third)
+                    firstInput,
+                    (tertiary?.getMatchingStack(second) ?: ItemStack.EMPTY),
+                    secondary.getMatchingStack(third)
                 )
 
-                else -> Triple(0, 0, 0)
+                else -> Triple(ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY)
             }
         }
     }

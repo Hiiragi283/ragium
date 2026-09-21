@@ -91,8 +91,8 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
         override fun test(first: ItemInstance, second: FluidInstance): Boolean =
             itemIngredient.test(first) && fluidIngredient.test(second)
 
-        override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> =
-            itemIngredient.getRequiredAmount(first) to fluidIngredient.getRequiredAmount(second)
+        override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> =
+            itemIngredient.getMatchingStack(first) to fluidIngredient.getMatchingStack(second)
 
         override fun apply(first: ItemInstance, second: FluidInstance): OUTPUT = result.create()
     }

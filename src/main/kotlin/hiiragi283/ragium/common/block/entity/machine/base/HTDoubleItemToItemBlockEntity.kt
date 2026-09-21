@@ -5,7 +5,7 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
-import hiiragi283.lib.recipe.handler.HTInputSlot
+import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.input.HTItemListRecipeInput
 import hiiragi283.lib.recipe.input.getItemOrEmpty
@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -54,50 +55,40 @@ abstract class HTDoubleItemToItemBlockEntity(
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
         recipeHandler = object : EnergizedHandler<RecipeInput, ItemStack, HTDoubleItemToItemRecipe>() {
-            private val primarySlot: HTInputSlot.SingleItem by lazy {
-                HTInputSlot.SingleItem(this@HTDoubleItemToItemBlockEntity.primarySlot)
+            private val primarySlot: HTItemInputSlot by lazy {
+                HTItemInputSlot(this@HTDoubleItemToItemBlockEntity.primarySlot)
             }
-            private val secondarySlot: HTInputSlot.SingleItem by lazy {
-                HTInputSlot.SingleItem(this@HTDoubleItemToItemBlockEntity.secondarySlot)
+            private val secondarySlot: HTItemInputSlot by lazy {
+                HTItemInputSlot(this@HTDoubleItemToItemBlockEntity.secondarySlot)
             }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlot.SingleItem(this@HTDoubleItemToItemBlockEntity.outputSlot)
             }
 
             override fun createInput(): RecipeInput =
-                HTItemListRecipeInput(primarySlot.getStack(), secondarySlot.getStack())
+                HTItemListRecipeInput(primarySlot.getStoredInput(), secondarySlot.getStoredInput())
 
             override fun findRecipe(level: ServerLevel, input: RecipeInput): HTDoubleItemToItemRecipe? =
                 cache.findFirstRecipe(input, level)
 
             override fun canComplete(recipe: HTDoubleItemToItemRecipe, input: RecipeInput, output: ItemStack): Boolean {
-                val (firstCount: Int, secondCount: Int) = recipe.getRequiredAmount(
-                    input.getItemOrEmpty(0),
-                    input.getItemOrEmpty(1)
-                )
-                useTransaction { transaction: Transaction ->
-                    if (firstCount > 0 && !primarySlot.canExtract(firstCount, transaction)) {
-                        return false
+                val (firstConsume: ItemInstance, secondConsume: ItemInstance) =
+                    recipe.getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
+                return useTransaction { transaction: Transaction ->
+                    when {
+                        primarySlot.use(firstConsume, transaction).failed -> false
+                        secondarySlot.use(secondConsume, transaction).failed -> false
+                        else -> outputSlot.canInsert(output, transaction)
                     }
-                    if (secondCount > 0 && !secondarySlot.canExtract(secondCount, transaction)) {
-                        return false
-                    }
-                    return outputSlot.canInsert(output, transaction)
                 }
             }
 
             override fun onComplete(recipe: HTDoubleItemToItemRecipe, input: RecipeInput, output: ItemStack) {
-                val (firstCount: Int, secondCount: Int) = recipe.getRequiredAmount(
-                    input.getItemOrEmpty(0),
-                    input.getItemOrEmpty(1)
-                )
+                val (firstConsume: ItemInstance, secondConsume: ItemInstance) =
+                    recipe.getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
                 useTransaction { transaction: Transaction ->
-                    if (firstCount > 0) {
-                        primarySlot.extract(firstCount, transaction)
-                    }
-                    if (secondCount > 0) {
-                        secondarySlot.extract(secondCount, transaction)
-                    }
+                    primarySlot.use(firstConsume, transaction)
+                    secondarySlot.use(secondConsume, transaction)
                     outputSlot.insert(output, transaction)
                     transaction.commit()
                 }
