@@ -34,6 +34,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         val dripFluids: List<HTFluidContent> = buildList {
             addAll(RagiumFluids.DYES)
             add(RagiumFluids.HONEY)
+            add(RagiumFluids.RESIN)
             add(RagiumFluids.OMINOUS_FLUX)
             add(RagiumFluids.MOLTEN_GLASS)
             add(RagiumFluids.MOLTEN_REDSTONE)
@@ -43,6 +44,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             add(RagiumFluids.WOOD_TAR)
             add(RagiumFluids.COAL_TAR)
             add(RagiumFluids.CRUDE_OIL)
+            add(RagiumFluids.SYNTHETIC_RESIN)
             add(RagiumFluids.SULFURIC_ACID)
 
             add(RagiumFluids.ORE_SLURRY)

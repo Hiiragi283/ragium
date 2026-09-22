@@ -1,0 +1,12 @@
+{
+  "type": "ragium:freezing",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:dyes/orange"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:orange_dye"
+  },
+  "time": 200
+}

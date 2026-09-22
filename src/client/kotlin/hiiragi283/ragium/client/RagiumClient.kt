@@ -77,6 +77,9 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.HONEY) {
             still = Material(vanillaId(HTConstants.BLOCK, "honey_block_top"), true)
         }
+        register.register(RagiumFluids.RESIN) {
+            still = Material(vanillaId(HTConstants.BLOCK, "resin_block"))
+        }
         register.register(RagiumFluids.POTION) {
             dull()
             tintSource = FluidStackTintSource { stack: FluidStack ->
@@ -119,11 +122,11 @@ data object RagiumClient : HTClientMod() {
         }
 
         register.register(RagiumFluids.WOOD_TAR) {
-            dull()
+            molten()
             colorTint(Color(0x663333))
         }
         register.register(RagiumFluids.COAL_TAR) {
-            dull()
+            molten()
             colorTint(Color(0x333366))
         }
         register.register(RagiumFluids.AROMATIC_COMPOUND) {
@@ -131,7 +134,7 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0xffcc99))
         }
         register.register(RagiumFluids.CRUDE_OIL) {
-            sticky()
+            molten()
             colorTint(Color(0x333333))
         }
         register.register(RagiumFluids.NAPHTHA) {
@@ -145,6 +148,10 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.ANTI_RUST_OIL) {
             dull()
             colorTint(Color(0xff9933))
+        }
+        register.register(RagiumFluids.SYNTHETIC_RESIN) {
+            molten()
+            colorTint(Color(0xff6633))
         }
         register.register(RagiumFluids.NITRIC_ACID) {
             dull()

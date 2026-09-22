@@ -185,6 +185,23 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             result { +RagiumFluids.HONEY }
             recipeId suffix "_from_block"
         }.save(exporter)
+        // Resin
+        RagiumRecipeBuilders.melting {
+            ingredient { +holderSet(Tags.Items.CLUMPS_RESIN) }
+            result {
+                +RagiumFluids.RESIN
+                amount = 90
+            }
+            recipeId suffix "_from_clump"
+        }.save(exporter)
+        RagiumRecipeBuilders.melting {
+            ingredient { +holderSet(Tags.Items.STORAGE_BLOCKS_RESIN) }
+            result {
+                +RagiumFluids.RESIN
+                amount = 90 * 9
+            }
+            recipeId suffix "_from_block"
+        }.save(exporter)
 
         // Ominous Bottle -> Ominous Flux
         (OminousBottleAmplifier.MIN_AMPLIFIER..OminousBottleAmplifier.MAX_AMPLIFIER).forEach { amplifier: Int ->

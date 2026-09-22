@@ -37,6 +37,12 @@ data object RagiumTags {
      * @since 26.1.5
      */
     data object Fluids {
+        /**
+         * @since 26.1.7
+         */
+        @JvmField
+        val RESINS: TagKey<Fluid> = create("resins")
+
         @JvmStatic
         private fun create(vararg path: String): TagKey<Fluid> = FluidTags.create(RagiumAPI.id(*path))
     }

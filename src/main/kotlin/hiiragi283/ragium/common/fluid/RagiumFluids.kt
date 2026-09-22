@@ -93,6 +93,12 @@ data object RagiumFluids {
     }
 
     @JvmField
+    val RESIN: HTFluidContent.Flowing = REGISTER.registerFlowing("resin") {
+        properties = create(SoundEvents.RESIN_PLACE, SoundEvents.RESIN_BREAK)
+        fluidProperties = STICK_PROPERTY
+    }
+
+    @JvmField
     val OMINOUS_FLUX: HTFluidContent.Virtual = REGISTER.registerVirtual("ominous_flux") {
         properties = molten()
     }
@@ -133,7 +139,7 @@ data object RagiumFluids {
 
     //    Chemical    //
 
-    // 3rd
+    // C
     @JvmField
     val WOOD_TAR: HTFluidContent.Virtual = REGISTER.registerVirtual("wood_tar") {
         properties = liquid()
@@ -177,6 +183,10 @@ data object RagiumFluids {
     val ANTI_RUST_OIL: HTFluidContent.Virtual = REGISTER.registerVirtual("anti_rust_oil") { properties = liquid() }
 
     @JvmField
+    val SYNTHETIC_RESIN: HTFluidContent.Virtual = REGISTER.registerVirtual("synthetic_resin") { properties = liquid() }
+
+    // N
+    @JvmField
     val NITRIC_ACID: HTFluidContent.Flowing = REGISTER.registerFlowing("nitric_acid") { properties = liquid() }
 
     @JvmField
@@ -185,6 +195,7 @@ data object RagiumFluids {
         typeFactory = { HTExplosiveFluidType(6f, it) }
     }
 
+    // F
     @JvmField
     val HYDROGEN_FLUORIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen_fluoride") {
         properties = gaseous()
@@ -195,12 +206,13 @@ data object RagiumFluids {
         properties = liquid()
     }
 
-    // 4th
+    // Na
     @JvmField
     val NAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("sodium_hydroxide_solution") {
         properties = liquid()
     }
 
+    // Al
     @JvmField
     val ALUMINA_SOLUTION: HTFluidContent.Virtual = REGISTER.registerVirtual("alumina_solution") {
         properties = liquid()
@@ -209,6 +221,7 @@ data object RagiumFluids {
     @JvmField
     val MOLTEN_ALUMINUM: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_aluminum") { properties = molten() }
 
+    // S
     @JvmField
     val SULFUR_DIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("sulfur_dioxide") { properties = gaseous() }
 
@@ -221,6 +234,7 @@ data object RagiumFluids {
         fluidProperties = STICK_PROPERTY
     }
 
+    // Cl
     @JvmField
     val HYDROGEN_CHLORIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen_chloride") {
         properties = gaseous()

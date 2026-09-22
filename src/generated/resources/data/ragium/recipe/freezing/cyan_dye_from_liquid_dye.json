@@ -1,0 +1,12 @@
+{
+  "type": "ragium:freezing",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:dyes/cyan"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:cyan_dye"
+  },
+  "time": 200
+}

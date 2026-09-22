@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:storage_blocks/resin"
+  },
+  "result": {
+    "amount": 810,
+    "id": "ragium:resin"
+  },
+  "time": 200
+}

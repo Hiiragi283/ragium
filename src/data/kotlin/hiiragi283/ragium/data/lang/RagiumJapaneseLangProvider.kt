@@ -67,6 +67,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.MACHINE_CASING, "機械ケーシング")
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
+        addFluid(RagiumFluids.RESIN, "樹脂")
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
         addFluid(RagiumFluids.OMINOUS_FLUX, "不吉な流動体")
@@ -86,6 +87,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
         addFluid(RagiumFluids.FUEL, "燃料油")
         addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
+        addFluid(RagiumFluids.SYNTHETIC_RESIN, "合成樹脂")
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "液体爆薬")
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "フッ化水素")

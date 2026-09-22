@@ -1,0 +1,16 @@
+{
+  "type": "ragium:reacting",
+  "fluid_result": {
+    "amount": 1000,
+    "id": "ragium:synthetic_resin"
+  },
+  "primary_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:aromatic_compound"
+  },
+  "secondary_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:water"
+  },
+  "time": 200
+}

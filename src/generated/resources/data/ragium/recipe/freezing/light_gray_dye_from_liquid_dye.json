@@ -1,0 +1,12 @@
+{
+  "type": "ragium:freezing",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:dyes/light_gray"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:light_gray_dye"
+  },
+  "time": 200
+}

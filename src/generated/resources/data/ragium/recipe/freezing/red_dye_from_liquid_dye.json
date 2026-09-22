@@ -1,0 +1,12 @@
+{
+  "type": "ragium:freezing",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:dyes/red"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:red_dye"
+  },
+  "time": 200
+}

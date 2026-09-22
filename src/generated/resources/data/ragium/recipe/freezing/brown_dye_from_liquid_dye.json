@@ -1,0 +1,12 @@
+{
+  "type": "ragium:freezing",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:dyes/brown"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:brown_dye"
+  },
+  "time": 200
+}

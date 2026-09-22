@@ -1,8 +1,10 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.collection.nelOf
+import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
+import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
@@ -18,6 +20,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -172,7 +175,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(RagiumFluids.OXYGEN)
                 amount /= 4
             }
-            itemResult { +RagiumItems.PLASTIC_PLATE }
+            itemResult {
+                +RagiumItems.PLASTIC_PLATE
+                count = 2
+            }
         }.save(exporter)
         // Naphtha + Redstone -> Anti-rust Oil
         RagiumRecipeBuilders.mixing {
@@ -198,11 +204,29 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             recipeId suffix "_from_tar"
         }.save(exporter)
+
+        // Aromatic Compound + Water -> Synthetic Resin
+        RagiumRecipeBuilders.reacting {
+            primaryIngredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
+            secondaryIngredient { +waterSet() }
+            fluidResult { +RagiumFluids.SYNTHETIC_RESIN }
+        }.save(exporter)
+        // Aluminum + ??? -> Black Steel
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.ALUMINUM) }
+            /*fluidIngredient {
+                +holderSet(RagiumFluids.COLORED_RESINS.black)
+                amount /= 4
+            }*/
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
+        }
     }
 
     //    Chemical    //
 
     private fun chemical() {
+        colored()
+
         chlorine()
         sulfuricAcid()
         nitricAcid()
@@ -210,6 +234,64 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
         fluorine()
         aluminum()
+    }
+
+    private fun colored() {
+        for (color: DyeColor in DyeColor.entries) {
+            val dyeContent: HTFluidContent = RagiumFluids.DYES[color]
+            // Water + Solid Dye -> Liquid Dye
+            RagiumRecipeBuilders.mixing {
+                itemIngredient { +holderSet(color.tag) }
+                fluidIngredient {
+                    +waterSet()
+                    amount /= 4
+                }
+                result {
+                    +dyeContent
+                    amount /= 4
+                }
+            }.save(exporter)
+            // Liquid Dye -> Solid Dye
+            RagiumRecipeBuilders.freezing {
+                ingredient {
+                    +holderSet(dyeContent)
+                    amount /= 4
+                }
+                result { +VanillaColoredCollections.DYE[color] }
+                recipeId suffix "_from_liquid_dye"
+            }.save(exporter)
+        }
+
+        // Lapis + Resin -> Blue Dye
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.LAPIS) }
+            fluidIngredient {
+                +holderSet(RagiumTags.Fluids.RESINS)
+                amount /= 4
+            }
+            result { +Items.BLUE_DYE }
+            recipeId suffix "_from_lapis"
+        }.save(exporter)
+        // Bauxite + Resin -> Blue Dye
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.BAUXITE) }
+            fluidIngredient {
+                +holderSet(RagiumTags.Fluids.RESINS)
+                amount /= 4
+            }
+            result { +Items.BROWN_DYE }
+            recipeId suffix "_from_bauxite"
+        }.save(exporter)
+        // Carbon + Resin -> Black Dye
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.CARBON) }
+            fluidIngredient {
+                +holderSet(RagiumTags.Fluids.RESINS)
+                amount /= 4
+            }
+            result { +Items.BLACK_DYE }
+            recipeId suffix "_from_carbon"
+        }.save(exporter)
     }
 
     private fun chlorine() {
