@@ -8,7 +8,7 @@ import net.minecraft.util.context.ContextMap
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-interface HTStackPreview<STACK : Any> {
+fun interface HTStackPreview<STACK : Any> {
     /**
      * 一致する材料のプレビューを取得します。
      */

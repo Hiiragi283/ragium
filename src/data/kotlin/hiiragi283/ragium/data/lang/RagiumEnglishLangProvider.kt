@@ -169,6 +169,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.BREWING, "Brewing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
 
+        add(RagiumRecipeTypes.RESOURCE_EXTRACTING, "Resource Extracting")
+
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
 
         // Text - Lib
@@ -189,6 +191,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(HTCommonTranslation.PROGRESS, $$"Progress: %1$s %%")
         add(HTCommonTranslation.SECONDS, $$"%1$s sec (%2$s ticks)")
+
+        add(HTCommonTranslation.BIOME, $$"Biome: %1$s")
 
         add(HTCommonTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(HTCommonTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")

@@ -5,6 +5,7 @@ package hiiragi283.lib.resource
 import hiiragi283.lib.util.Identity
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
+import net.neoforged.neoforge.common.Tags
 
 //    Identifier    //
 
@@ -73,16 +74,36 @@ val Identifier.debugPath: String get() = this.path.replace('/', '_')
 
 /**
  * この[ResourceKey]を翻訳キーに変換します。
+ * @see Tags.getTagTranslationKey
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun ResourceKey<*>.toLanguageKey(): String =
-    this.identifier().toLanguageKey(this.registryKey().identifier().path)
+inline fun ResourceKey<*>.toLanguageKey(): String = buildString {
+    val registryId: Identifier = this@toLanguageKey.registry()
+    val keyId: Identifier = this@toLanguageKey.identifier()
+
+    append(registryId.toShortLanguageKey().replace('/', '.'))
+    append('.')
+    append(keyId.namespace)
+    append('.')
+    append(keyId.path.replace('/', '.'))
+}
 
 /**
  * この[ResourceKey]を翻訳キーに変換します。
+ * @see Tags.getTagTranslationKey
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun ResourceKey<*>.toLanguageKey(suffix: String): String =
-    this.identifier().toLanguageKey(this.registryKey().identifier().path, suffix)
+inline fun ResourceKey<*>.toLanguageKey(suffix: String): String = buildString {
+    val registryId: Identifier = this@toLanguageKey.registry()
+    val keyId: Identifier = this@toLanguageKey.identifier()
+
+    append(registryId.toShortLanguageKey().replace('/', '.'))
+    append('.')
+    append(keyId.namespace)
+    append('.')
+    append(keyId.path.replace('/', '.'))
+    append('.')
+    append(suffix)
+}

@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
+import hiiragi283.ragium.api.recipe.RTResourceExtractingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
 
@@ -89,6 +90,9 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     // Electronics
+    @JvmField
+    val RESOURCE_EXTRACTING: HTHolderJeiRecipeType<RTResourceExtractingRecipe> =
+        HTJeiRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, RagiumBlocks.MACHINE_CASING)
 
     // Arcane
     @JvmField

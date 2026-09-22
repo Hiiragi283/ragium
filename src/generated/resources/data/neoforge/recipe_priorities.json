@@ -1,5 +1,8 @@
 {
   "entries": {
-    "ragium:melting/molten_glass_from_panes": 1
+    "ragium:melting/molten_glass_from_panes": 100,
+    "ragium:resource/extracting/crude_oil_at_soul_sand_valley": 100,
+    "ragium:resource/extracting/water_at_ocean": 200,
+    "ragium:resource/extracting/water_at_river": 100
   }
 }

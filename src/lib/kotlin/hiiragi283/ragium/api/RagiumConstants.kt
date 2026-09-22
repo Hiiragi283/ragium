@@ -71,6 +71,8 @@ data object RagiumConstants {
     // Electronics
     const val PRINTING = "printing"
 
+    const val RESOURCE_EXTRACTING = "resource/extracting"
+
     // Arcane
     const val ENCHANTING = "enchanting"
 }

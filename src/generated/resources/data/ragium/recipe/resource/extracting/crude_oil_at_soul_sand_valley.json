@@ -1,0 +1,9 @@
+{
+  "type": "ragium:resource/extracting",
+  "condition": "minecraft:soul_sand_valley",
+  "result": {
+    "amount": 250,
+    "id": "ragium:crude_oil"
+  },
+  "time": 200
+}

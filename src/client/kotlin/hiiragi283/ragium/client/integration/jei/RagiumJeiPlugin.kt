@@ -26,6 +26,7 @@ import hiiragi283.ragium.client.integration.jei.category.RTElectrolyzingRecipeCa
 import hiiragi283.ragium.client.integration.jei.category.RTEnchantingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTReactingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTRefiningRecipeCategory
+import hiiragi283.ragium.client.integration.jei.category.RTResourceExtractingRecipeCategory
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import mezz.jei.api.JeiPlugin
@@ -138,6 +139,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemAndFluidToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.BREWING),
             HTItemToDoubleItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PLANTING),
             // Electronics
+            RTResourceExtractingRecipeCategory(guiHelper),
             // Arcane
             RTEnchantingRecipeCategory(guiHelper)
         )
@@ -170,6 +172,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.BREWING, RagiumRecipeLookups.BREWING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.PLANTING, RagiumRecipeLookups.PLANTING)
         // Electronics
+        HTJeiRecipeHelper.addRecipes(
+            registration,
+            RagiumJeiRecipeTypes.RESOURCE_EXTRACTING,
+            RagiumRecipeLookups.RESOURCE_EXTRACTING
+        )
         // Arcane
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ENCHANTING, RagiumRecipeLookups.ENCHANTING)
 

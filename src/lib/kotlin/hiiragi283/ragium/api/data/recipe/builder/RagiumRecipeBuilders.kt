@@ -202,6 +202,17 @@ data object RagiumRecipeBuilders {
         return HTItemToDoubleItemRecipeBuilder(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
     }
 
+    // Electronics
+    @JvmStatic
+    inline fun resourceExtracting(
+        builderAction: RTResourceExtractingRecipeBuilder.() -> Unit
+    ): RTResourceExtractingRecipeBuilder {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return RTResourceExtractingRecipeBuilder().apply(builderAction)
+    }
+
     // Arcane
     @JvmStatic
     inline fun enchanting(

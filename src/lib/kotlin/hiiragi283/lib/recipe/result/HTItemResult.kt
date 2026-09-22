@@ -236,7 +236,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
             .mapLeft { holder: Holder<Enchantment> -> buildItemEnchantments { set(holder, holder.value().maxLevel) } }
             .unwrap()
             .let { buildDataPatch { set(DataComponents.STORED_ENCHANTMENTS, it) } }
-            .let { ItemStack(Items.ENCHANTED_BOOK, 1, it) }
+            .let { ItemStack(Items.ENCHANTED_BOOK, it) }
 
         override fun getId(): Identifier? = content.leftOrNull()?.key?.identifier()
     }

@@ -165,6 +165,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.BREWING, "醸造")
         add(RagiumRecipeTypes.PLANTING, "栽培")
 
+        add(RagiumRecipeTypes.RESOURCE_EXTRACTING, "資源採集")
+
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
 
         // Text - Lib
@@ -185,6 +187,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(HTCommonTranslation.PROGRESS, $$"進捗率: %1$s %%")
         add(HTCommonTranslation.SECONDS, $$"%1$s 秒 (%2$s ticks)")
+
+        add(HTCommonTranslation.BIOME, $$"バイオーム: %1$s")
 
         add(HTCommonTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
         add(HTCommonTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")
