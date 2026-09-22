@@ -9,8 +9,6 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTItemPart
-import hiiragi283.ragium.api.material.HTMaterialAccess
-import hiiragi283.ragium.api.material.HTMaterialContents
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
@@ -55,8 +53,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         part: HTItemPart,
         material: RagiumMaterial
     ) {
-        val item: HTMaterialContents.ItemEntry =
-            HTMaterialAccess.INSTANCE.getMaterialBlockOrItem(part, material) ?: return
+        val item: HTSimpleDeferredItem = RagiumItems.getOrThrow(part, material)
         HTAdvancementBuilder.create(key) {
             +parentKey
             display { +item }

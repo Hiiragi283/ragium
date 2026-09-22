@@ -1,13 +1,13 @@
 package hiiragi283.ragium.api.data.oreSlurry
 
 import hiiragi283.lib.recipe.result.HTItemResult
+import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.registry.createKey
 import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.translatableText
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.material.HTItemPart
-import hiiragi283.ragium.api.material.HTMaterialAccess
 import hiiragi283.ragium.api.material.RagiumMaterial
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
@@ -56,10 +56,12 @@ data object RagiumOreSlurryData {
             count: Int = 1
         ) {
             val tagEntry = HTItemResult.TagEntry(getter.getOrThrow(part.tagPrefix.itemTagKey(material)))
-            val entry: HTItemResult.Entry = HTMaterialAccess.INSTANCE.getMaterialItem(part, material)
-                ?.item
-                ?.let { HTItemResult.WithFallbackEntry(tagEntry, HTItemResult.SimpleEntry(it)) }
-                ?: tagEntry
+            val fallback = HTSimpleDeferredItem(RagiumAPI.id(part.createName(material)))
+            val entry: HTItemResult.Entry = if (fallback.isBound) {
+                HTItemResult.WithFallbackEntry(tagEntry, HTItemResult.SimpleEntry(fallback))
+            } else {
+                tagEntry
+            }
             register(
                 key,
                 color,

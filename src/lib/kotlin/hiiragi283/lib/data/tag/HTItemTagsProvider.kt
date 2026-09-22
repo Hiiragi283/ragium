@@ -1,6 +1,6 @@
 package hiiragi283.lib.data.tag
 
-import hiiragi283.lib.resource.HTSimpleBlockItemWithKey
+import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import net.minecraft.core.HolderLookup
@@ -45,7 +45,7 @@ abstract class HTItemTagsProvider : HTTagsProvider<Item> {
      * @since 26.1.7
      */
     protected fun HTTagBuilder<Item>.add(
-        blockItem: HTSimpleBlockItemWithKey,
+        blockItem: HTSimpleDeferredBlockAndItem,
         type: HTTagDependType = HTTagDependType.REQUIRED
     ): HTTagBuilder<Item> = this.add(blockItem.item, type)
 }

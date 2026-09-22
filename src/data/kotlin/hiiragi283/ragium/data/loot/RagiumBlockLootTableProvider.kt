@@ -2,16 +2,16 @@ package hiiragi283.ragium.data.loot
 
 import hiiragi283.lib.data.loot.HTBlockLootTableProvider
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
+import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.material.HTItemPart
-import hiiragi283.ragium.api.material.HTMaterialAccess
 import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
@@ -48,7 +48,7 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
     private fun registerOres(material: RagiumMaterial, rawPart: HTItemPart, countProvider: NumberProvider? = null) {
         for (part: HTOreBlockPart in HTOreBlockPart.entries) {
             val block: HTSimpleDeferredBlockAndItem = RagiumBlocks.MATERIAL_ORES[part, material] ?: continue
-            val drop: ItemLike = HTMaterialAccess.INSTANCE.getMaterialItem(rawPart, material) ?: continue
+            val drop: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[rawPart, material] ?: continue
             add(block) { block: Block ->
                 val builder: LootPoolSingletonContainer.Builder<*> = LootItem.lootTableItem(drop)
                 countProvider?.let(SetItemCountFunction::setCount)?.let(builder::apply)
