@@ -97,6 +97,7 @@ data object RagiumItems {
             putAll(RagiumMaterial.Other.OBSIDIAN, HTItemPart.DUST)
             putAll(RagiumMaterial.Other.PAPER, HTItemPart.DUST)
             putAll(RagiumMaterial.Other.CARBON, HTItemPart.DUST)
+            putAll(RagiumMaterial.Other.ALUMINA, HTItemPart.DUST)
             putAll(RagiumMaterial.Other.SILICON, HTItemPart.DUST)
         }.flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
             parts.map { part: HTItemPart ->

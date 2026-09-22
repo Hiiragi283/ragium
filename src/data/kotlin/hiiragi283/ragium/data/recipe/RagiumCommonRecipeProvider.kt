@@ -24,6 +24,7 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient
 import java.util.concurrent.CompletableFuture
@@ -465,10 +466,14 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(RagiumFluids.NAOH_SOLUTION)
                 amount /= 2
             }
-            result {
-                +RagiumFluids.ALUMINA_SOLUTION
-                amount /= 2
-            }
+            result { +RagiumFluids.ALUMINA_SOLUTION }
+        }.save(exporter)
+        // Alumina Solution -> Al2O3 + Water
+        RagiumRecipeBuilders.refining {
+            ingredient { +holderSet(RagiumFluids.ALUMINA_SOLUTION) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.ALUMINA) }
+            fluidResult { +Fluids.WATER }
+            recipeId replace id("alumina_dust_from_solution")
         }.save(exporter)
         // Alumina Solution + HF aq -> Na3AlF6
         RagiumRecipeBuilders.reacting {
@@ -479,14 +484,25 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CRYOLITE) }
         }.save(exporter)
-        // Alumina Solution + Na3AlF6 -> Molten Al
-        RagiumRecipeBuilders.electrolyzing {
-            itemIngredient { +dustOrGem(RagiumMaterial.Gem.CRYOLITE) }
-            fluidIngredient { +holderSet(RagiumFluids.ALUMINA_SOLUTION) }
+        // Al2O3 + Cokes + Na3AlF6 -> Al
+        RagiumRecipeBuilders.alloying {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.ALUMINA) }
+            extra { +holderSet(RagiumTags.Items.COKES) }
             result {
-                +RagiumFluids.MOLTEN_ALUMINUM
-                amount = 90 * 3
+                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.ALUMINUM)
+                count = 2
             }
+            time *= 4
+        }.save(exporter)
+        RagiumRecipeBuilders.alloying {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.ALUMINA) }
+            extra { +holderSet(RagiumTags.Items.COKES) }
+            extra { +dustOrGem(RagiumMaterial.Gem.CRYOLITE) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.ALUMINUM)
+                count = 3
+            }
+            recipeId suffix "_with_cryolite"
         }.save(exporter)
     }
 

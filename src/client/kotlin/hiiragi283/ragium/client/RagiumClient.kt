@@ -178,10 +178,6 @@ data object RagiumClient : HTClientMod() {
             transparent()
             colorTint(Color(0xffcccc))
         }
-        register.register(RagiumFluids.MOLTEN_ALUMINUM) {
-            molten()
-            colorTint(Color(0xffcccc))
-        }
         register.register(RagiumFluids.SULFUR_DIOXIDE) {
             transparent()
             colorTint(Color(0x996600))

@@ -218,9 +218,6 @@ data object RagiumFluids {
         properties = liquid()
     }
 
-    @JvmField
-    val MOLTEN_ALUMINUM: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_aluminum") { properties = molten() }
-
     // S
     @JvmField
     val SULFUR_DIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("sulfur_dioxide") { properties = gaseous() }

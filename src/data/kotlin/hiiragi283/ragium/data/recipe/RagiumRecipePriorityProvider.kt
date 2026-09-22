@@ -11,6 +11,7 @@ class RagiumRecipePriorityProvider(output: PackOutput, registries: CompletableFu
     RecipePrioritiesProvider(output, registries, RagiumAPI.MOD_ID) {
     override fun start() {
         // Heat
+        add("${RagiumConstants.ALLOYING}/aluminum_ingot_with_cryolite", 100)
         add("${RagiumConstants.MELTING}/molten_glass_from_panes", 100)
         // Electronics
         add("${RagiumConstants.RESOURCE_EXTRACTING}/water_at_ocean", 200)

@@ -1,0 +1,28 @@
+{
+  "type": "ragium:alloying",
+  "extras": [
+    {
+      "count": 1,
+      "items": "#ragium:cokes"
+    },
+    {
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/cryolite",
+          "c:gems/cryolite"
+        ]
+      }
+    }
+  ],
+  "ingredient": {
+    "count": 1,
+    "items": "#c:dusts/alumina"
+  },
+  "result": {
+    "count": 3,
+    "id": "ragium:aluminum_ingot"
+  },
+  "time": 200
+}
