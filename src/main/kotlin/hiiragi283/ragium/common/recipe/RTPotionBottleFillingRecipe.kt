@@ -18,7 +18,7 @@ data class RTPotionBottleFillingRecipe(val bottleType: HTBottleType, override va
     constructor(bottleType: HTBottleType) : this(bottleType, HTProgressData.time(60))
 
     override fun test(first: ItemInstance, second: FluidInstance): Boolean = when {
-        !first.`is`(bottleType.emptyItem) -> false
+        !bottleType.emptyItem.isOf(first) -> false
         !HTPotionHelper.hasAnyEffect(second) -> false
         else -> second.amount() >= HTPotionHelper.BOTTLE_AMOUNT
     }

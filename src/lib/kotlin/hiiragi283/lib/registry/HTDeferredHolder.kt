@@ -3,6 +3,7 @@ package hiiragi283.lib.registry
 import hiiragi283.lib.resource.HTValueWithKey
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.fold
+import net.minecraft.core.TypedInstance
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -27,6 +28,11 @@ open class HTDeferredHolder<R : Any, out T : R> :
     constructor(key: ResourceKey<R>) : super(key)
 
     constructor(key: RegistryKey<R>, id: Identifier) : super(key.createKey(id))
+
+    /**
+     * @since 26.1.7
+     */
+    fun isOf(instance: TypedInstance<R>): Boolean = this.isBound && instance.`is`(this)
 
     final override fun unwrapWithKey(): Ior<ResourceKey<R>, T> = asOptional().fold({
         Ior.Left(this.key)

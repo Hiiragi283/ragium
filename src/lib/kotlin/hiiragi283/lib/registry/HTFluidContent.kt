@@ -2,6 +2,7 @@ package hiiragi283.lib.registry
 
 import hiiragi283.lib.fluid.HTFluidInstanceLike
 import hiiragi283.lib.resource.HTSimpleValueWithKey
+import net.minecraft.core.TypedInstance
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -34,6 +35,11 @@ sealed class HTFluidContent(
      * 液体の種類を取得します。
      */
     fun getFluidType(): FluidType = typeHolder.get()
+
+    /**
+     * @since 26.1.7
+     */
+    fun isOf(instance: TypedInstance<Fluid>): Boolean = sourceHolder.isOf(instance)
 
     /**
      * 新しい[FluidStackTemplate]のインスタンスを作成します。

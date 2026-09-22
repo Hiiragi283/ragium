@@ -18,7 +18,7 @@ data class RTPotionBottleDrainingRecipe(val bottleType: HTBottleType, override v
     constructor(bottleType: HTBottleType) : this(bottleType, HTProgressData.time(60))
 
     override fun test(input: ItemInstance): Boolean =
-        input.`is`(bottleType.filledItem) && HTPotionHelper.hasAnyEffect(input)
+        bottleType.filledItem.isOf(input) && HTPotionHelper.hasAnyEffect(input)
 
     override fun apply(input: ItemInstance): HTItemAndFluidResult = HTItemAndFluidResult(
         bottleType.emptyItem.toStack(),
