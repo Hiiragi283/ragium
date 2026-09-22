@@ -3,6 +3,7 @@ package hiiragi283.ragium.data
 import hiiragi283.lib.data.createLootTables
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
+import hiiragi283.ragium.api.world.RagiumDamageTypes
 import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
 import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider
@@ -20,10 +21,12 @@ import hiiragi283.ragium.data.recipe.RagiumMechanicalRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumRecipePriorityProvider
 import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProvider
 import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
+import hiiragi283.ragium.data.tag.RagiumDamageTypeTagsProvider
 import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
 import hiiragi283.ragium.data.worldgen.RagiumWorldData
 import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -35,6 +38,7 @@ data object RagiumDataGen {
     fun gatherData(event: GatherDataEvent.Client) {
         event.createDatapackRegistryObjects(
             RegistrySetBuilder()
+                .add(Registries.DAMAGE_TYPE, RagiumDamageTypes::bootstrap)
                 .add(RagiumRegistries.Keys.ORE_SLURRY_DATA, RagiumOreSlurryData::bootstrap)
                 .apply(RagiumWorldData::bootstrap)
         )
@@ -65,6 +69,8 @@ data object RagiumDataGen {
         event.createProvider(::RagiumBlockTagsProvider)
         event.createProvider(::RagiumFluidTagsProvider)
         event.createProvider(::RagiumItemTagsProvider)
+
+        event.createProvider(::RagiumDamageTypeTagsProvider)
         // Client
         event.createProvider(::RagiumSpriteSourceProvider)
 

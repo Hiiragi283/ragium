@@ -49,8 +49,30 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
 
         // Haste
         // Nausea
+        RagiumRecipeBuilders.brewing {
+            itemIngredient { items { +Items.PUFFERFISH } }
+            fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
+            result {
+                +PotionContents(
+                    customEffects = listOf(MobEffectInstance(MobEffects.NAUSEA, 900)),
+                    customName = "nausea"
+                )
+            }
+            recipeId replace id("potion/nausea")
+        }.save(exporter)
         // Resistance
         // Blindness
+        RagiumRecipeBuilders.brewing {
+            itemIngredient { +holderSet(Tags.Items.GLASS_BLOCKS_TINTED) }
+            fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
+            result {
+                +PotionContents(
+                    customEffects = listOf(MobEffectInstance(MobEffects.BLINDNESS, 900)),
+                    customName = "blindness"
+                )
+            }
+            recipeId replace id("potion/blindness")
+        }.save(exporter)
         // Hunger
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.ROTTEN_FLESH } }
@@ -64,6 +86,22 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
             recipeId replace id("potion/hunger")
         }.save(exporter)
         // Wither
+        RagiumRecipeBuilders.brewing {
+            itemIngredient {
+                items {
+                    +Items.WITHER_ROSE
+                    +Items.WITHER_SKELETON_SKULL
+                }
+            }
+            fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
+            result {
+                +PotionContents(
+                    customEffects = listOf(MobEffectInstance(MobEffects.WITHER, 900)),
+                    customName = "wither"
+                )
+            }
+            recipeId replace id("potion/wither")
+        }.save(exporter)
         // Health Boost
         // Absorption
         // Saturation

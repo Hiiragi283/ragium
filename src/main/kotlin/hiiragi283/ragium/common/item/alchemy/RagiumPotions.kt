@@ -17,4 +17,7 @@ data object RagiumPotions {
 
     @JvmField
     val FROSTBITE: HTPotionContent = REGISTER.registerHarmful("frostbite", RagiumMobEffects.FROSTBITE)
+
+    @JvmField
+    val CHEMICAL_BURN: HTPotionContent = REGISTER.registerHarmful("chemical_burn", RagiumMobEffects.CHEMICAL_BURN)
 }

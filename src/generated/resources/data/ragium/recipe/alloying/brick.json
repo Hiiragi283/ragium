@@ -1,0 +1,16 @@
+{
+  "type": "ragium:alloying",
+  "extra": {
+    "count": 1,
+    "items": "#c:sands"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:clay_ball"
+  },
+  "result": {
+    "count": 2,
+    "id": "minecraft:brick"
+  },
+  "time": 200
+}

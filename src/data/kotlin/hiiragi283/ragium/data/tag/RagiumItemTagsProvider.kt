@@ -33,12 +33,16 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         // Material
         builder(CommonTagPrefixes.GEM, RagiumMaterial.Gem.ECHO).add(createKey(vanillaId("echo_shard")))
 
-        RagiumItems.MATERIAL_ITEMS.forEach { (part: HTItemPart, material, item: HTSimpleValueWithKey<Item>) ->
-            builder(part.tagPrefix, material).add(item)
-            if (part == HTItemPart.NUGGET) {
-                builder(ItemTags.METAL_NUGGETS).add(item)
+        RagiumItems.MATERIAL_ITEMS
+            .forEach { (part: HTItemPart, material: RagiumMaterial, item: HTSimpleValueWithKey<Item>) ->
+                builder(part.tagPrefix, material).add(item)
+                if (part == HTItemPart.GEM || part == HTItemPart.INGOT) {
+                    builder(ItemTags.BEACON_PAYMENT_ITEMS).add(item)
+                }
+                if (part == HTItemPart.NUGGET) {
+                    builder(ItemTags.METAL_NUGGETS).add(item)
+                }
             }
-        }
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             builders(Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)

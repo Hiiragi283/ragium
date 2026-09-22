@@ -65,6 +65,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブ用タンク")
 
         add(RagiumBlocks.MACHINE_CASING, "機械ケーシング")
+        // Damage Type
+        add("death.attack.chemicalBurn", $$"%1$sは化学火傷を負った")
+        add("death.attack.chemicalBurn.player", $$"%1$sは%2$sと戦いながら化学火傷を負った")
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
         addFluid(RagiumFluids.RESIN, "樹脂")
@@ -127,6 +130,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "凍傷")
+        add(RagiumMobEffects.CHEMICAL_BURN, "化学火傷")
 
         // Ore Slurry
         addOreSlurry(RagiumOreSlurryData.COPPER, "銅の鉱石泥")
@@ -136,8 +140,12 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "凍傷")
+        addPotion(RagiumPotions.CHEMICAL_BURN, "化学火傷")
 
+        addCustomPotion("nausea", "吐き気")
+        addCustomPotion("blindness", "盲目")
         addCustomPotion("hunger", "空腹")
+        addCustomPotion("wither", "衰退")
         addCustomPotion("darkness", "暗闇")
         addCustomPotion("golden_apple", "金リンゴ")
         addCustomPotion("enchanted_golden_apple", "エンチャントされた金リンゴ")

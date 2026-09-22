@@ -69,6 +69,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
 
         add(RagiumBlocks.MACHINE_CASING, "Machine Casing")
+        // Damage Type
+        add("death.attack.chemicalBurn", $$"%1$s was injured chemical burn")
+        add("death.attack.chemicalBurn.player", $$"%1$s was injured chemical burn while fighting %2$s")
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")
         addFluid(RagiumFluids.RESIN, "Resin")
@@ -131,6 +134,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "Frostbite")
+        add(RagiumMobEffects.CHEMICAL_BURN, "Chemical Burn")
 
         // Ore Slurry
         addOreSlurry(RagiumOreSlurryData.COPPER, "Copper Ore Slurry")
@@ -140,8 +144,12 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "Frostbite")
+        addPotion(RagiumPotions.CHEMICAL_BURN, "Chemical Burn")
 
+        addCustomPotion("nausea", "Nausea")
+        addCustomPotion("blindness", "Blindness")
         addCustomPotion("hunger", "Hunger")
+        addCustomPotion("wither", "Wither")
         addCustomPotion("darkness", "Darkness")
         addCustomPotion("golden_apple", "Golden Apple")
         addCustomPotion("enchanted_golden_apple", "Enchanted Golden Apple")

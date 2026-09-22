@@ -1,0 +1,30 @@
+{
+  "type": "ragium:brewing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": {
+      "neoforge:ingredient_type": "ragium:potion",
+      "potions": "minecraft:thick"
+    }
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": [
+      "minecraft:wither_rose",
+      "minecraft:wither_skeleton_skull"
+    ]
+  },
+  "result": {
+    "type": "ragium:potion",
+    "amount": 1000,
+    "custom_effects": [
+      {
+        "duration": 900,
+        "id": "minecraft:wither",
+        "show_icon": true
+      }
+    ],
+    "custom_name": "wither"
+  },
+  "time": 200
+}

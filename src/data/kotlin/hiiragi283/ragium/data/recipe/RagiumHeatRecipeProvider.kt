@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.PackOutput
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.OminousBottleAmplifier
 import net.neoforged.neoforge.common.Tags
@@ -40,6 +41,24 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 count = 2
             }
             result { +Items.NETHERITE_INGOT }
+        }.save(exporter)
+        // Clay + Sand -> Brick
+        RagiumRecipeBuilders.alloying {
+            ingredient { items { +Items.CLAY_BALL } }
+            extra { +holderSet(Tags.Items.SANDS) }
+            result {
+                +Items.BRICK
+                count = 2
+            }
+        }.save(exporter)
+        // Netherrack + Soul Sand -> Nether Brick
+        RagiumRecipeBuilders.alloying {
+            ingredient { +holderSet(Tags.Items.NETHERRACKS) }
+            extra { +holderSet(ItemTags.SOUL_FIRE_BASE_BLOCKS) }
+            result {
+                +Items.NETHER_BRICK
+                count = 2
+            }
         }.save(exporter)
 
         // Machine Casing
