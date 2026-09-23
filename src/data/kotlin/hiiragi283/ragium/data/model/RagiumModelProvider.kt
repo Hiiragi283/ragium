@@ -83,19 +83,25 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
                     generators.modelOutput
                 )
             }
-        RagiumBlocks.MACHINES.flatEntries
-            .forEach { (machineType: HTMachineType, blockItem: HTSimpleDeferredBlockAndItem) ->
-                generators.blockStateOutput.accept(
-                    MultiVariantGenerator.dispatch(blockItem.getOrThrow())
-                        .with(
-                            PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
-                                .select(false, BlockModelGenerators.plainVariant(inactiveModels[machineType]!!))
-                                .select(
-                                    true,
-                                    BlockModelGenerators.plainVariant(machineModel(generators, machineType, blockItem))
-                                )
-                        ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
-                )
+        RagiumBlocks.MACHINES
+            .entries
+            .forEach { (machineType: HTMachineType, blockItems: List<HTSimpleDeferredBlockAndItem>) ->
+                val inactiveModel: Identifier = inactiveModels[machineType]!!
+                for (blockItem: HTSimpleDeferredBlockAndItem in blockItems) {
+                    generators.blockStateOutput.accept(
+                        MultiVariantGenerator.dispatch(blockItem.getOrThrow())
+                            .with(
+                                PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
+                                    .select(false, BlockModelGenerators.plainVariant(inactiveModel))
+                                    .select(
+                                        true,
+                                        BlockModelGenerators.plainVariant(
+                                            machineModel(generators, machineType, blockItem)
+                                        )
+                                    )
+                            ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+                    )
+                }
             }
         // Decoration
         for ((machineType: HTMachineType, block: HTSimpleDeferredBlockAndItem) in RagiumBlocks.MACHINE_CASINGS) {

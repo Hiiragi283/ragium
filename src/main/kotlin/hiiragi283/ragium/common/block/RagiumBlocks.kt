@@ -2,10 +2,9 @@ package hiiragi283.ragium.common.block
 
 import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
-import hiiragi283.lib.collection.ListMultiMap
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
-import hiiragi283.lib.collection.buildSortedSetMultiMap
+import hiiragi283.lib.collection.buildSetMultiMap
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.flatMapTable
 import hiiragi283.lib.collection.mutableEnumMapOf
@@ -116,10 +115,13 @@ data object RagiumBlocks {
     //    Ingredient    //
 
     @JvmField
-    val MATERIAL_ORES: Table<HTOreBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildSortedSetMultiMap {
-        putAll(RagiumMaterial.Mineral.SULFUR, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
-        putAll(RagiumMaterial.Mineral.NITER, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
-    }.flatMapTable { (material: RagiumMaterial, parts: Collection<HTOreBlockPart>) ->
+    val MATERIAL_ORES: Table<HTOreBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildSetMultiMap(
+        {
+            putAll(RagiumMaterial.Mineral.SULFUR, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
+            putAll(RagiumMaterial.Mineral.NITER, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
+        },
+        ::sortedSetOf
+    ).flatMapTable { (material: RagiumMaterial, parts: Collection<HTOreBlockPart>) ->
         parts.map { part: HTOreBlockPart ->
             val properties: BlockBehaviour.Properties = when (part) {
                 HTOreBlockPart.STONE -> Blocks.COAL_ORE
@@ -259,33 +261,36 @@ data object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.ENCHANTER)
 
     @JvmField
-    val MACHINES: ListMultiMap<HTMachineType, HTBasicDeferredBlockAndItem<HTMachineBlock>> =
-        buildListMultiMap(sortedMapOf()) {
-            put(HTMachineType.MECHANICAL, ASSEMBLER)
-            put(HTMachineType.MECHANICAL, CRUSHER)
-            put(HTMachineType.MECHANICAL, COMPRESSOR)
-            put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
+    val MACHINES: Map<HTMachineType, List<HTBasicDeferredBlockAndItem<HTMachineBlock>>> =
+        buildListMultiMap(
+            sortedMapOf(),
+            {
+                put(HTMachineType.MECHANICAL, ASSEMBLER)
+                put(HTMachineType.MECHANICAL, CRUSHER)
+                put(HTMachineType.MECHANICAL, COMPRESSOR)
+                put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
 
-            put(HTMachineType.HEAT, ALLOY_SMELTER)
-            put(HTMachineType.HEAT, FREEZER)
-            put(HTMachineType.HEAT, MELTER)
-            put(HTMachineType.HEAT, PYROLYZER)
-            put(HTMachineType.HEAT, REFINERY)
-            put(HTMachineType.HEAT, SMELTER)
+                put(HTMachineType.HEAT, ALLOY_SMELTER)
+                put(HTMachineType.HEAT, FREEZER)
+                put(HTMachineType.HEAT, MELTER)
+                put(HTMachineType.HEAT, PYROLYZER)
+                put(HTMachineType.HEAT, REFINERY)
+                put(HTMachineType.HEAT, SMELTER)
 
-            put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
-            put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
-            put(HTMachineType.CHEMICAL, ELECTROLYZER)
-            put(HTMachineType.CHEMICAL, MIXER)
+                put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
+                put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
+                put(HTMachineType.CHEMICAL, ELECTROLYZER)
+                put(HTMachineType.CHEMICAL, MIXER)
 
-            put(HTMachineType.BIO, BREWERY)
-            put(HTMachineType.BIO, PLANTER)
+                put(HTMachineType.BIO, BREWERY)
+                put(HTMachineType.BIO, PLANTER)
 
-            put(HTMachineType.ELECTRONICS, PRECISION_ASSEMBLER)
-            put(HTMachineType.ELECTRONICS, SCANNER)
+                put(HTMachineType.ELECTRONICS, PRECISION_ASSEMBLER)
+                put(HTMachineType.ELECTRONICS, SCANNER)
 
-            put(HTMachineType.ARCANE, ENCHANTER)
-        }
+                put(HTMachineType.ARCANE, ENCHANTER)
+            }
+        )
 
     //    Storage    //
 

@@ -1,8 +1,9 @@
 package hiiragi283.lib.data.tag
 
-import hiiragi283.lib.collection.SetMultiMap
+import hiiragi283.lib.collection.SetMultiMapBuilder
 import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.registry.createKey
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
@@ -45,12 +46,14 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
         modId: String
     ) : super(output, registryKey, lookupProvider, modId)
 
-    private val entryCache = SetMultiMap.SortedBuilder<TagKey<T>, TagEntry>(COMPARATOR)
+    private val entryCache = SetMultiMapBuilder<TagKey<T>, TagEntry>(Object2ObjectLinkedOpenHashMap()) {
+        sortedSetOf(COMPARATOR)
+    }
 
     final override fun addTags(registries: HolderLookup.Provider) {
         appendTags(registries)
 
-        entryCache.build().asMap().forEach { (tagKey: TagKey<T>, entries: Collection<TagEntry>) ->
+        for ((tagKey: TagKey<T>, entries: Set<TagEntry>) in entryCache.build()) {
             entries
                 .distinctBy(TagEntry::toString)
                 .forEach { entry: TagEntry -> getOrCreateRawBuilder(tagKey).add(entry) }

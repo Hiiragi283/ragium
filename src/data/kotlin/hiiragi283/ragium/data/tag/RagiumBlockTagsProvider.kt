@@ -26,7 +26,7 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yieldAll(RagiumBlocks.MATERIAL_ORES.values)
             yieldAll(RagiumBlocks.STORAGE_BLOCKS.values)
 
-            yieldAll(RagiumBlocks.MACHINES.values)
+            yieldAll(RagiumBlocks.MACHINES.values.flatten())
             yield(RagiumBlocks.MACHINE_CASING)
             yieldAll(RagiumBlocks.MACHINE_CASINGS.values)
 

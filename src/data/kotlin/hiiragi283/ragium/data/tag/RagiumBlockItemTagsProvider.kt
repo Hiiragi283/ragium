@@ -32,7 +32,7 @@ class RagiumBlockItemTagsProvider(factory: (BlockItemTag) -> HTBlockItemTagBuild
             .add(RagiumBlocks.CREATIVE_TANK)
         // Machine
         for (machineType: HTMachineType in HTMachineType.entries) {
-            for (block: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINES[machineType]) {
+            for (block: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINES[machineType] ?: listOf()) {
                 builder(HTMachineType.PREFIX, machineType).add(block)
             }
         }

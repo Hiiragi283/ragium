@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.Table
-import hiiragi283.lib.collection.buildSortedSetMultiMap
+import hiiragi283.lib.collection.buildSetMultiMap
 import hiiragi283.lib.collection.flatMapTable
 import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.item.component.HTToolCollection
@@ -60,46 +60,50 @@ data object RagiumItems {
 
     @JvmField
     val MATERIAL_ITEMS: Table<HTItemPart, RagiumMaterial, HTSimpleDeferredItem> =
-        buildSortedSetMultiMap<RagiumMaterial, HTItemPart>(sortedMapOf(RagiumMaterial.COMPARATOR)) {
-            // Fuel
-            putAll(RagiumMaterial.Fuel.COAL, HTItemPart.DUST, HTItemPart.TINY)
-            putAll(RagiumMaterial.Fuel.CHARCOAL, HTItemPart.DUST, HTItemPart.TINY)
-            putAll(RagiumMaterial.Fuel.COAL_COKE, HTItemPart.TINY)
-            putAll(RagiumMaterial.Fuel.PITCH_COKE, HTItemPart.TINY)
-            // Mineral
-            for (mineral: RagiumMaterial.Mineral in RagiumMaterial.Mineral.entries) {
-                if (!mineral.isVanilla) {
-                    putAll(mineral, HTItemPart.DUST)
+        buildSetMultiMap<RagiumMaterial, HTItemPart>(
+            sortedMapOf(RagiumMaterial.COMPARATOR),
+            {
+                // Fuel
+                putAll(RagiumMaterial.Fuel.COAL, HTItemPart.DUST, HTItemPart.TINY)
+                putAll(RagiumMaterial.Fuel.CHARCOAL, HTItemPart.DUST, HTItemPart.TINY)
+                putAll(RagiumMaterial.Fuel.COAL_COKE, HTItemPart.TINY)
+                putAll(RagiumMaterial.Fuel.PITCH_COKE, HTItemPart.TINY)
+                // Mineral
+                for (mineral: RagiumMaterial.Mineral in RagiumMaterial.Mineral.entries) {
+                    if (!mineral.isVanilla) {
+                        putAll(mineral, HTItemPart.DUST)
+                    }
                 }
-            }
-            // Gem
-            putAll(RagiumMaterial.Gem.LAPIS, HTItemPart.DUST)
-            putAll(RagiumMaterial.Gem.QUARTZ, HTItemPart.DUST)
-            putAll(RagiumMaterial.Gem.AMETHYST, HTItemPart.DUST)
-            putAll(RagiumMaterial.Gem.DIAMOND, HTItemPart.DUST, HTItemPart.GEAR)
-            putAll(RagiumMaterial.Gem.EMERALD, HTItemPart.DUST, HTItemPart.GEAR)
-            putAll(RagiumMaterial.Gem.ECHO, HTItemPart.DUST)
-            putAll(RagiumMaterial.Gem.PRISMARINE, HTItemPart.DUST)
-            putAll(RagiumMaterial.Gem.FLUORITE, HTItemPart.DUST, HTItemPart.GEM)
-            putAll(RagiumMaterial.Gem.CRYOLITE, HTItemPart.DUST, HTItemPart.GEM)
-            // Metal
-            putAll(RagiumMaterial.Metal.COPPER, HTItemPart.DUST, HTItemPart.GEAR)
-            putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
-            putAll(RagiumMaterial.Metal.GOLD, HTItemPart.DUST, HTItemPart.GEAR)
-            putAll(RagiumMaterial.Metal.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
-            putAll(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT, HTItemPart.NUGGET)
-            putAll(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
-            putAll(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
-            putAll(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT, HTItemPart.NUGGET)
-            // Other
-            putAll(RagiumMaterial.Other.WOOD, HTItemPart.DUST, HTItemPart.GEAR)
-            putAll(RagiumMaterial.Other.GLASS, HTItemPart.DUST)
-            putAll(RagiumMaterial.Other.OBSIDIAN, HTItemPart.DUST)
-            putAll(RagiumMaterial.Other.PAPER, HTItemPart.DUST)
-            putAll(RagiumMaterial.Other.CARBON, HTItemPart.DUST)
-            putAll(RagiumMaterial.Other.ALUMINA, HTItemPart.DUST)
-            putAll(RagiumMaterial.Other.SILICON, HTItemPart.DUST)
-        }.flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
+                // Gem
+                putAll(RagiumMaterial.Gem.LAPIS, HTItemPart.DUST)
+                putAll(RagiumMaterial.Gem.QUARTZ, HTItemPart.DUST)
+                putAll(RagiumMaterial.Gem.AMETHYST, HTItemPart.DUST)
+                putAll(RagiumMaterial.Gem.DIAMOND, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Gem.EMERALD, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Gem.ECHO, HTItemPart.DUST)
+                putAll(RagiumMaterial.Gem.PRISMARINE, HTItemPart.DUST)
+                putAll(RagiumMaterial.Gem.FLUORITE, HTItemPart.DUST, HTItemPart.GEM)
+                putAll(RagiumMaterial.Gem.CRYOLITE, HTItemPart.DUST, HTItemPart.GEM)
+                // Metal
+                putAll(RagiumMaterial.Metal.COPPER, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Metal.GOLD, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Metal.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT, HTItemPart.NUGGET)
+                // Other
+                putAll(RagiumMaterial.Other.WOOD, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Other.GLASS, HTItemPart.DUST)
+                putAll(RagiumMaterial.Other.OBSIDIAN, HTItemPart.DUST)
+                putAll(RagiumMaterial.Other.PAPER, HTItemPart.DUST)
+                putAll(RagiumMaterial.Other.CARBON, HTItemPart.DUST)
+                putAll(RagiumMaterial.Other.ALUMINA, HTItemPart.DUST)
+                putAll(RagiumMaterial.Other.SILICON, HTItemPart.DUST)
+            },
+            ::sortedSetOf
+        ).flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
             parts.map { part: HTItemPart ->
                 Triple(
                     part,

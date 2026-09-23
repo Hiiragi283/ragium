@@ -36,7 +36,7 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
 
         RagiumBlocks.STORAGE_BLOCKS.values.forEach(::dropSelf)
         // Machine
-        for (machine: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINES.values) {
+        for (machine: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINES.values.flatten()) {
             add(machine, ::copyComponent)
         }
         // Storage
