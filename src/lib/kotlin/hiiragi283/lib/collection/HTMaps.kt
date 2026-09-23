@@ -48,16 +48,3 @@ inline fun <K, V> Map<K, Set<V>>.toMultiMap(): SetMultiMap<K, V> = SetMultiMap.c
 @JvmName("mapSetMultiMapTo")
 inline fun <K, V, W> Map<K, V>.mapMultiMapTo(transform: (Map.Entry<K, V>) -> Set<W>): SetMultiMap<K, W> =
     this.mapValues(transform).toMultiMap()
-
-//    Table    //
-
-inline fun <K, V, R, C, W> Map<K, V>.mapTable(transform: (Map.Entry<K, V>) -> Triple<R, C, W>): Table<R, C, W> =
-    this.mapTableTo(PairMapTable.Builder(), transform)
-
-inline fun <K, V, R, C, W, D : Table.Builder<R, C, W>> Map<K, V>.mapTableTo(
-    builder: D,
-    transform: (Map.Entry<K, V>) -> Triple<R, C, W>
-): Table<R, C, W> {
-    this.entries.map(transform).forEach(builder::put)
-    return builder.build()
-}

@@ -187,9 +187,9 @@ inline fun <K, V> buildSortedSetMultiMap(
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <K, V, R, C, W> MultiMap<K, V>.flatMapTable(
+inline fun <K, V, R : Any, C : Any, W : Any> MultiMap<K, V>.flatMapTable(
     transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>
-): Table<R, C, W> = this.flatMapTableTo(PairMapTable.Builder(), transform)
+): Table<R, C, W> = this.flatMapTableTo(DelegatingTable.Builder(), transform)
 
 /**
  * [Table]に変換します。
@@ -203,7 +203,7 @@ inline fun <K, V, R, C, W> MultiMap<K, V>.flatMapTable(
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <K, V, R, C, W, D : Table.Builder<R, C, W>> MultiMap<K, V>.flatMapTableTo(
+inline fun <K, V, R : Any, C : Any, W : Any, D : Table.Builder<R, C, W>> MultiMap<K, V>.flatMapTableTo(
     builder: D,
     transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>
 ): Table<R, C, W> {
