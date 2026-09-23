@@ -107,6 +107,20 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
         }.save(exporter)
+        // Aluminum + Copper + Obsidian Dust -> Black Steel
+        RagiumRecipeBuilders.alloying {
+            ingredient {
+                +dustOrIngot(RagiumMaterial.Metal.ALUMINUM)
+                count = 3
+            }
+            extra { +dustOrIngot(RagiumMaterial.Metal.COPPER) }
+            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
+                count = 4
+            }
+            recipeId replace id("obzinite_ingot")
+        }.save(exporter)
     }
 
     private fun freezing() {

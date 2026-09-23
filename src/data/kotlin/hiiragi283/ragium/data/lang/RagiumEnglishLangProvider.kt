@@ -22,21 +22,21 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addPatternTranslations(this)
 
         // Advancement
-        add(RagiumAdvancementKeys.ROOT, "Ragium", "Welcome to Ragium!")
-        add(RagiumAdvancementKeys.SOOTY_IRON, "Acquire Blackware", "Craft a Sooty Iron Ingot")
+        addAdvancement(RagiumAdvancementKeys.ROOT, "Ragium", "Welcome to Ragium!")
+        addAdvancement(RagiumAdvancementKeys.SOOTY_IRON, "Acquire Blackware", "Craft a Sooty Iron Ingot")
 
-        add(
+        addAdvancement(
             RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
             "Mechanical Machines",
             "Craft a Machine Casing (Mechanical)"
         )
-        add(RagiumAdvancementKeys.ASSEMBLER, "Rava(n)gers, assemble!", "Acquire Assembler")
-        add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
+        addAdvancement(RagiumAdvancementKeys.ASSEMBLER, "Rava(n)gers, assemble!", "Acquire Assembler")
+        addAdvancement(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
 
-        add(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "Craft a Machine Casing (Heat)")
-        add(RagiumAdvancementKeys.BLACK_STEEL, "Black Roaring", "Craft a Black Steel Ingot")
-        add(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
-        add(RagiumAdvancementKeys.MELTER, "(S)melter(y)", "Acquire Melter")
+        addAdvancement(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "Craft a Machine Casing (Heat)")
+        addAdvancement(RagiumAdvancementKeys.BLACK_STEEL, "Black Roaring", "Craft a Black Steel Ingot")
+        addAdvancement(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
+        addAdvancement(RagiumAdvancementKeys.MELTER, "(S)melter(y)", "Acquire Melter")
         // Block
         add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.CRUSHER, "Crusher")
