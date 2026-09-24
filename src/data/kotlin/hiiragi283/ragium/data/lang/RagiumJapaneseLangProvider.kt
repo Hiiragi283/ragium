@@ -34,6 +34,16 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addAdvancement(RagiumAdvancementKeys.FREEZER, "私の消費電力は53万です", "冷凍機を手に入れる")
         addAdvancement(RagiumAdvancementKeys.MELTER, "融けてしまいそう", "溶融炉を手に入れる")
         // Block
+        add(RagiumBlocks.ECHO_BLOCK, "残響ブロック")
+
+        add(RagiumBlocks.FLUORITE_BLOCK, "蛍石ブロック")
+        add(RagiumBlocks.FLUORITE_SLAB, "蛍石のハーフブロック")
+        add(RagiumBlocks.FLUORITE_STAIRS, "蛍石の階段")
+
+        add(RagiumBlocks.CRYOLITE_BLOCK, "氷晶石ブロック")
+        add(RagiumBlocks.CRYOLITE_SLAB, "氷晶石のハーフブロック")
+        add(RagiumBlocks.CRYOLITE_STAIRS, "氷晶石の階段")
+
         add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.CRUSHER, "破砕機")
         add(RagiumBlocks.COMPRESSOR, "圧縮機")

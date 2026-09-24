@@ -38,6 +38,16 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addAdvancement(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
         addAdvancement(RagiumAdvancementKeys.MELTER, "(S)melter(y)", "Acquire Melter")
         // Block
+        add(RagiumBlocks.ECHO_BLOCK, "Block of Echo")
+
+        add(RagiumBlocks.FLUORITE_BLOCK, "Block of Fluorite")
+        add(RagiumBlocks.FLUORITE_SLAB, "Fluorite Slab")
+        add(RagiumBlocks.FLUORITE_STAIRS, "Fluorite Stairs")
+
+        add(RagiumBlocks.CRYOLITE_BLOCK, "Block of Cryolite")
+        add(RagiumBlocks.CRYOLITE_SLAB, "Cryolite Slab")
+        add(RagiumBlocks.CRYOLITE_STAIRS, "Cryolite Stairs")
+
         add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.COMPRESSOR, "Compressor")

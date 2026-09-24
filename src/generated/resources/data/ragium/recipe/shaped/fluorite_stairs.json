@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fluorite_stairs",
+  "key": {
+    "A": "ragium:fluorite_block"
+  },
+  "pattern": [
+    "A  ",
+    "AA ",
+    "AAA"
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:fluorite_stairs"
+  }
+}

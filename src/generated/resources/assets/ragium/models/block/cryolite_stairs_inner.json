@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "ragium:block/cryolite_block",
+    "side": "ragium:block/cryolite_block",
+    "top": "ragium:block/cryolite_block"
+  }
+}

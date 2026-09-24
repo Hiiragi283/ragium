@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
@@ -27,6 +28,7 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.BlockTagIngredient
@@ -432,12 +434,15 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             Items.NETHER_BRICKS to Items.NETHER_BRICK,
             Items.PRISMARINE to Items.PRISMARINE_SHARD,
             Items.PURPUR_BLOCK to Items.POPPED_CHORUS_FRUIT,
-            Items.SNOW_BLOCK to Items.SNOWBALL
-        ).forEach { (block: Item, base: Item) ->
+            Items.SNOW_BLOCK to Items.SNOWBALL,
+            RagiumBlocks.ECHO_BLOCK to Items.ECHO_SHARD,
+            RagiumBlocks.FLUORITE_BLOCK to RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE),
+            RagiumBlocks.CRYOLITE_BLOCK to RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CRYOLITE)
+        ).forEach { (block: ItemLike, base: ItemLike) ->
             RagiumRecipeBuilders.crushing {
-                ingredient { items { +block } }
+                ingredient { items { +block.asItem() } }
                 result {
-                    +base
+                    +base.asItem()
                     count = 4
                 }
             }.save(exporter)

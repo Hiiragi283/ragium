@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ragium:block/fluorite_slab"
+    },
+    "type=double": {
+      "model": "ragium:block/fluorite_block"
+    },
+    "type=top": {
+      "model": "ragium:block/fluorite_slab_top"
+    }
+  }
+}

@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
-import hiiragi283.lib.data.recipe.builder.vanilla.HTShapedRecipeBuilder
 import hiiragi283.lib.data.recipe.ingredient.IngredientBuilder
 import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
@@ -423,16 +422,20 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
     private fun material() {
         // XX <-> Storage Block
-        baseToBlock(
-            RagiumMaterial.Gem.ECHO,
-            CommonTagPrefixes.GEM,
-            HTSimpleDeferredItem(vanillaId("echo_shard")),
-            size = StorageBlockSize.FOUR
-        )
-        baseToBlock(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT)
-        baseToBlock(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT)
-        baseToBlock(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT)
-        baseToBlock(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT)
+        gemBlock(RagiumMaterial.Gem.ECHO, RagiumBlocks.ECHO_BLOCK)
+
+        gemBlock(RagiumMaterial.Gem.FLUORITE, RagiumBlocks.FLUORITE_BLOCK)
+        registerSlabRecipes(RagiumBlocks.FLUORITE_SLAB, Ingredient.of(RagiumBlocks.FLUORITE_BLOCK))
+        registerStairsRecipes(RagiumBlocks.FLUORITE_STAIRS, Ingredient.of(RagiumBlocks.FLUORITE_BLOCK))
+
+        gemBlock(RagiumMaterial.Gem.CRYOLITE, RagiumBlocks.CRYOLITE_BLOCK)
+        registerSlabRecipes(RagiumBlocks.CRYOLITE_SLAB, Ingredient.of(RagiumBlocks.CRYOLITE_BLOCK))
+        registerStairsRecipes(RagiumBlocks.CRYOLITE_STAIRS, Ingredient.of(RagiumBlocks.CRYOLITE_BLOCK))
+
+        nineToBlock(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT)
+        nineToBlock(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT)
+        nineToBlock(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT)
+        nineToBlock(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT)
         // Ingot <-> Nugget
         ingotToNugget(RagiumMaterial.Metal.NETHERITE, ingot = HTSimpleDeferredItem(vanillaId("netherite_ingot")))
         ingotToNugget(RagiumMaterial.Metal.ALUMINUM)
@@ -483,7 +486,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
             val base: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
             // Storage
-            baseToBlock(fuel, Ingredient.of(base), base)
+            nineToBlock(fuel, Ingredient.of(base), base)
             // Tiny
             val tiny: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.TINY, fuel)
             VanillaRecipeBuilders.shapeless {
@@ -530,46 +533,32 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
-    private fun baseToBlock(
-        material: RagiumMaterial,
-        basePrefix: HTTagPrefix,
-        base: HTSimpleDeferredItem,
-        block: HTSimpleDeferredBlockAndItem? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
-        size: StorageBlockSize = StorageBlockSize.NINE
-    ) {
-        baseToBlock(material, Ingredient.of(holderSet(basePrefix, material)), base, block, size)
+    private fun gemBlock(material: RagiumMaterial, block: HTSimpleDeferredBlockAndItem) {
+        VanillaRecipeBuilders.shaped {
+            +"AA"
+            +"AA"
+            define('A') { +holderSet(CommonTagPrefixes.GEM, material) }
+            result { +block }
+            category = RecipeCategory.BUILDING_BLOCKS
+            group = block.idOrThrow.path
+        }.save(exporter)
     }
 
-    private fun baseToBlock(
-        material: RagiumMaterial,
-        basePart: HTItemPart,
-        block: HTSimpleDeferredBlockAndItem? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
-        size: StorageBlockSize = StorageBlockSize.NINE
-    ) {
-        val base: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[basePart, material] ?: return
-        baseToBlock(material, basePart.tagPrefix, base, block, size)
-    }
-
-    private fun baseToBlock(
-        material: RagiumMaterial,
-        baseInput: Ingredient,
-        base: HTSimpleDeferredItem,
-        block: HTSimpleDeferredBlockAndItem? = RagiumBlocks.MATERIAL_BLOCKS[HTStorageBlockPart.DEFAULT, material],
-        size: StorageBlockSize = StorageBlockSize.NINE
-    ) {
-        if (block == null) return
+    private fun nineToBlock(material: RagiumMaterial, basePart: HTItemPart) {
+        val base: HTSimpleDeferredItem = RagiumItems.getOrThrow(basePart, material)
+        val block: HTSimpleDeferredBlockAndItem = RagiumBlocks.getOrThrow(HTStorageBlockPart.DEFAULT, material)
         VanillaRecipeBuilders.shapeless {
             ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, material) }
             result {
                 +base
-                count = size.count
+                count = 9
             }
             group = base.id.path
             recipeId suffix "_from_block"
         }.save(exporter)
         VanillaRecipeBuilders.shaped {
-            size.pattern.invoke(this)
-            define('A') { +baseInput }
+            hollow8()
+            define('A') { +holderSet(basePart.tagPrefix, material) }
             define('B') { items { +base } }
             result { +block }
             category = RecipeCategory.BUILDING_BLOCKS
@@ -577,12 +566,25 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
-    private enum class StorageBlockSize(val count: Int, val pattern: HTShapedRecipeBuilder.() -> Unit) {
-        FOUR(4, {
-            +"AA"
-            +"AB"
-        }),
-        NINE(9, HTShapedRecipeBuilder::hollow8)
+    private fun nineToBlock(material: RagiumMaterial, baseInput: Ingredient, base: HTSimpleDeferredItem) {
+        val block: HTSimpleDeferredBlockAndItem = RagiumBlocks.STORAGE_BLOCKS[material] ?: return
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, material) }
+            result {
+                +base
+                count = 9
+            }
+            group = base.id.path
+            recipeId suffix "_from_block"
+        }.save(exporter)
+        VanillaRecipeBuilders.shaped {
+            hollow8()
+            define('A') { +baseInput }
+            define('B') { items { +base } }
+            result { +block }
+            category = RecipeCategory.BUILDING_BLOCKS
+            group = block.item.id.path
+        }.save(exporter)
     }
 
     private fun ingotToNugget(

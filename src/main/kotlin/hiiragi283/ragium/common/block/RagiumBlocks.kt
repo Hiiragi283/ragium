@@ -31,6 +31,7 @@ import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import hiiragi283.ragium.common.item.block.HTCreativeTankBlockItem
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
+import net.minecraft.resources.ResourceKey
 import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -39,7 +40,9 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.DropExperienceBlock
+import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
@@ -145,7 +148,6 @@ data object RagiumBlocks {
         RagiumMaterial.Fuel.CHARCOAL to copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF),
         RagiumMaterial.Fuel.COAL_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Fuel.PITCH_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_BLUE),
-        RagiumMaterial.Gem.ECHO to copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN),
         RagiumMaterial.Metal.ALUMINUM to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.COLOR_PINK),
         RagiumMaterial.Metal.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Metal.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
@@ -175,6 +177,51 @@ data object RagiumBlocks {
     @JvmStatic
     fun getOrThrow(part: HTBlockPart, material: RagiumMaterial): HTSimpleDeferredBlockAndItem =
         MATERIAL_BLOCKS[part, material] ?: error("Unregistered block: ${part.createName(material)}")
+
+    // Echo
+    @JvmField
+    val ECHO_BLOCK: HTSimpleDeferredBlockAndItem =
+        REGISTER.registerSimple("echo_block", copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.COLOR_CYAN))
+
+    // Fluorite
+    @JvmField
+    val FLUORITE_BLOCK: HTSimpleDeferredBlockAndItem =
+        REGISTER.registerSimple("fluorite_block", copyOf(Blocks.QUARTZ_BLOCK).mapColor(MapColor.COLOR_GREEN))
+
+    @JvmField
+    val FLUORITE_SLAB: HTBasicDeferredBlockAndItem<SlabBlock> = REGISTER.registerSimple(
+        "fluorite_slab",
+        copyOf(Blocks.QUARTZ_SLAB),
+        ::SlabBlock
+    )
+
+    @JvmField
+    val FLUORITE_STAIRS: HTBasicDeferredBlockAndItem<StairBlock> = REGISTER.registerSimple(
+        "fluorite_stairs",
+        blockFactory = { key: ResourceKey<Block> ->
+            StairBlock(FLUORITE_BLOCK.defaultState, copyOf(FLUORITE_BLOCK.getOrThrow()).setId(key))
+        }
+    )
+
+    // Cryolite
+    @JvmField
+    val CRYOLITE_BLOCK: HTSimpleDeferredBlockAndItem =
+        REGISTER.registerSimple("cryolite_block", copyOf(Blocks.QUARTZ_BLOCK))
+
+    @JvmField
+    val CRYOLITE_SLAB: HTBasicDeferredBlockAndItem<SlabBlock> = REGISTER.registerSimple(
+        "cryolite_slab",
+        copyOf(Blocks.QUARTZ_SLAB),
+        ::SlabBlock
+    )
+
+    @JvmField
+    val CRYOLITE_STAIRS: HTBasicDeferredBlockAndItem<StairBlock> = REGISTER.registerSimple(
+        "cryolite_stairs",
+        blockFactory = { key: ResourceKey<Block> ->
+            StairBlock(CRYOLITE_BLOCK.defaultState, copyOf(CRYOLITE_BLOCK.getOrThrow()).setId(key))
+        }
+    )
 
     //    Machine    //
 

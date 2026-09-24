@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "ragium:block/fluorite_block",
+    "side": "ragium:block/fluorite_block",
+    "top": "ragium:block/fluorite_block"
+  }
+}

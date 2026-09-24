@@ -102,8 +102,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.COAL_TAR
                 amount = 500 * 9
             }
-            time /= 2
-            time *= 9
+            time = time / 2 * 9
         }.save(exporter)
 
         // Coal Tar -> Aromatic Compound + Pitch Coke

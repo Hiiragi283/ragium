@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
-  "group": "echo_block",
+  "group": "cryolite_block",
   "key": {
-    "A": "#c:gems/echo"
+    "A": "#c:gems/cryolite"
   },
   "pattern": [
     "AA",
     "AA"
   ],
   "result": {
-    "id": "ragium:echo_block"
+    "id": "ragium:cryolite_block"
   }
 }

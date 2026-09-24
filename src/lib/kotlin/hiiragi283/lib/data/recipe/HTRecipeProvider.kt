@@ -6,7 +6,9 @@ import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.data.ExporterDataProvider
+import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
+import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
@@ -16,7 +18,10 @@ import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.level.block.SlabBlock
+import net.minecraft.world.level.block.StairBlock
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import java.util.concurrent.CompletableFuture
 
@@ -72,6 +77,55 @@ abstract class HTRecipeProvider(
      */
     fun dustOrIngot(material: HTMaterialLike): HTMaterialTagsIngredient =
         materialTags(nelOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT), material)
+
+    /**
+     * @since 26.1.7
+     */
+    fun registerSlabRecipes(slab: HTBasicDeferredBlockAndItem<SlabBlock>, base: Ingredient) {
+        // Shaped
+        VanillaRecipeBuilders.shaped {
+            +"AAA"
+            define('A') { +base }
+            result {
+                +slab
+                count = 6
+            }
+            group = slab.idOrThrow.path
+        }.save(exporter)
+        // Stonecutting
+        VanillaRecipeBuilders.stonecutting {
+            ingredient = base
+            result {
+                +slab
+                count = 2
+            }
+            group = slab.idOrThrow.path
+        }.save(exporter)
+    }
+
+    /**
+     * @since 26.1.7
+     */
+    fun registerStairsRecipes(stairs: HTBasicDeferredBlockAndItem<StairBlock>, base: Ingredient) {
+        // Shaped
+        VanillaRecipeBuilders.shaped {
+            +"A  "
+            +"AA "
+            +"AAA"
+            define('A') { +base }
+            result {
+                +stairs
+                count = 4
+            }
+            group = stairs.idOrThrow.path
+        }.save(exporter)
+        // Stonecutting
+        VanillaRecipeBuilders.stonecutting {
+            ingredient = base
+            result { +stairs }
+            group = stairs.idOrThrow.path
+        }.save(exporter)
+    }
 
     //    Integration    //
 

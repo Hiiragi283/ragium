@@ -20,11 +20,18 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             HTBlockItemTagsProvider.forBlock(builder(block))
         }.run()
 
-        val pickaxe: HTTagBuilder<Block> = builder(BlockTags.MINEABLE_WITH_PICKAXE)
         // Mineable
+        val pickaxe: HTTagBuilder<Block> = builder(BlockTags.MINEABLE_WITH_PICKAXE)
         sequence {
             yieldAll(RagiumBlocks.MATERIAL_ORES.values)
             yieldAll(RagiumBlocks.STORAGE_BLOCKS.values)
+            yield(RagiumBlocks.ECHO_BLOCK)
+            yield(RagiumBlocks.FLUORITE_BLOCK)
+            yield(RagiumBlocks.FLUORITE_SLAB)
+            yield(RagiumBlocks.FLUORITE_STAIRS)
+            yield(RagiumBlocks.CRYOLITE_BLOCK)
+            yield(RagiumBlocks.CRYOLITE_SLAB)
+            yield(RagiumBlocks.CRYOLITE_STAIRS)
 
             yieldAll(RagiumBlocks.MACHINES.values.flatten())
             yield(RagiumBlocks.MACHINE_CASING)
@@ -35,5 +42,12 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yield(RagiumBlocks.CREATIVE_BATTERY)
             yield(RagiumBlocks.CREATIVE_TANK)
         }.forEach(pickaxe::add)
+        // Other
+        builder(BlockTags.SLABS)
+            .add(RagiumBlocks.FLUORITE_SLAB)
+            .add(RagiumBlocks.CRYOLITE_SLAB)
+        builder(BlockTags.STAIRS)
+            .add(RagiumBlocks.FLUORITE_STAIRS)
+            .add(RagiumBlocks.CRYOLITE_STAIRS)
     }
 }
