@@ -119,7 +119,7 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
         when (progressData) {
             is HTProgressData.Energy -> this.addRecipeArrowWidget()
             is HTProgressData.Time -> this.addAnimatedRecipeArrowWidget(progressData.value)
-        }
+        }.setTooltip(progressData.getText())
 
     protected fun IRecipeExtrasBuilder.addRecipeArrow(recipe: HTProgressRecipe.Simple<*>): IDrawableWidget =
         this.addRecipeArrow(recipe.progressData)
