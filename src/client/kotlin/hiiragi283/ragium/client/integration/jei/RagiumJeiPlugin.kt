@@ -29,6 +29,8 @@ import hiiragi283.ragium.client.integration.jei.category.RTRefiningRecipeCategor
 import hiiragi283.ragium.client.integration.jei.category.RTResourceExtractingRecipeCategory
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.recipe.RTPotionBottleDrainingRecipe
+import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
@@ -196,6 +198,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                             )
                             itemResult { +bottleType.emptyItem }
                             fluidResult { from(HTPotionHelper.createFluid(potion, HTPotionHelper.BOTTLE_AMOUNT)) }
+                            progressData = RTPotionBottleDrainingRecipe.PROGRESS_DATA
                             recipeId replace potion.getKeyOrThrow()
                                 .identifier()
                                 .withPrefix("potion_bottle/${bottleType.serializedName}/")
@@ -217,6 +220,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                             result {
                                 from(bottleType.filledItem.toStack(patch = HTPotionHelper.createPotionPatch(potion)))
                             }
+                            progressData = RTPotionBottleFillingRecipe.PROGRESS_DATA
                             recipeId replace potion.getKeyOrThrow()
                                 .identifier()
                                 .withPrefix("potion_bottle/${bottleType.serializedName}/")

@@ -15,7 +15,12 @@ import net.neoforged.neoforge.fluids.FluidInstance
 data class RTPotionBottleFillingRecipe(val bottleType: HTBottleType, override val progressData: HTProgressData) :
     HTItemAndFluidToItemRecipe,
     HTProgressRecipe.Simple<HTItemAndFluidRecipeInput> {
-    constructor(bottleType: HTBottleType) : this(bottleType, HTProgressData.time(60))
+    companion object {
+        @JvmField
+        val PROGRESS_DATA: HTProgressData = HTProgressData.time(60)
+    }
+
+    constructor(bottleType: HTBottleType) : this(bottleType, PROGRESS_DATA)
 
     override fun test(first: ItemInstance, second: FluidInstance): Boolean = when {
         !bottleType.emptyItem.isOf(first) -> false

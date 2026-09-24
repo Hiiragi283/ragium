@@ -15,7 +15,12 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 data class RTPotionBottleDrainingRecipe(val bottleType: HTBottleType, override val progressData: HTProgressData) :
     HTItemToItemAndFluidRecipe,
     HTProgressRecipe.Simple<SingleRecipeInput> {
-    constructor(bottleType: HTBottleType) : this(bottleType, HTProgressData.time(60))
+    companion object {
+        @JvmField
+        val PROGRESS_DATA: HTProgressData = HTProgressData.time(60)
+    }
+
+    constructor(bottleType: HTBottleType) : this(bottleType, PROGRESS_DATA)
 
     override fun test(input: ItemInstance): Boolean =
         bottleType.filledItem.isOf(input) && HTPotionHelper.hasAnyEffect(input)
