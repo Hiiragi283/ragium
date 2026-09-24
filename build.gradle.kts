@@ -70,7 +70,7 @@ scmVersion {
 base {
     archivesName = modId
     group = "io.github.hiiragi283"
-    version = scmVersion.version
+    version = "${scmVersion.version}-beta"
 }
 
 val libModule: SourceSet = sourceSets.register("lib").get()
