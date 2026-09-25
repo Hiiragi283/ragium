@@ -72,6 +72,9 @@ data object HTConstants {
     const val POTIONS = "potions"
     const val BOTTLE_TYPE = "bottle_type"
 
+    const val ELEMENT = "element"
+    const val CHEMICAL = "chemical"
+
     //    Recipes    //
 
     // Vanilla

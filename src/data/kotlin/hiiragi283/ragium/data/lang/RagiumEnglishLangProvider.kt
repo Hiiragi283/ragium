@@ -147,10 +147,10 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumMobEffects.CHEMICAL_BURN, "Chemical Burn")
 
         // Ore Slurry
-        addOreSlurry(RagiumOreSlurryData.COPPER, "Copper Ore Slurry")
-        addOreSlurry(RagiumOreSlurryData.IRON, "Iron Ore Slurry")
-        addOreSlurry(RagiumOreSlurryData.GOLD, "Gold Ore Slurry")
-        addOreSlurry(RagiumOreSlurryData.NETHERITE_SCRAP, "Ancient Debris Slurry")
+        addFromKey(RagiumOreSlurryData.COPPER, "Copper Ore Slurry")
+        addFromKey(RagiumOreSlurryData.IRON, "Iron Ore Slurry")
+        addFromKey(RagiumOreSlurryData.GOLD, "Gold Ore Slurry")
+        addFromKey(RagiumOreSlurryData.NETHERITE_SCRAP, "Ancient Debris Slurry")
 
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "Frostbite")

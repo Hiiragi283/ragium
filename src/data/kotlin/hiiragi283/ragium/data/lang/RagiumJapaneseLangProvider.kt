@@ -143,10 +143,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumMobEffects.CHEMICAL_BURN, "化学火傷")
 
         // Ore Slurry
-        addOreSlurry(RagiumOreSlurryData.COPPER, "銅の鉱石泥")
-        addOreSlurry(RagiumOreSlurryData.IRON, "鉄の鉱石泥")
-        addOreSlurry(RagiumOreSlurryData.GOLD, "金の鉱石泥")
-        addOreSlurry(RagiumOreSlurryData.NETHERITE_SCRAP, "古代の鉱石泥")
+        addFromKey(RagiumOreSlurryData.COPPER, "銅の鉱石泥")
+        addFromKey(RagiumOreSlurryData.IRON, "鉄の鉱石泥")
+        addFromKey(RagiumOreSlurryData.GOLD, "金の鉱石泥")
+        addFromKey(RagiumOreSlurryData.NETHERITE_SCRAP, "古代の鉱石泥")
 
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "凍傷")

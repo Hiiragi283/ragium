@@ -11,9 +11,12 @@ import hiiragi283.lib.registry.HTDeferredItemRegister
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.Text
+import hiiragi283.lib.text.toText
 import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
+import hiiragi283.ragium.api.data.chemical.HTChemical
+import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -22,13 +25,17 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
 import net.minecraft.ChatFormatting
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponentType
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.HoneycombItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
+import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.common.tooltip.TooltipLocation
@@ -118,6 +125,9 @@ data object RagiumItems {
                         if (material == RagiumMaterial.Metal.NETHERITE) {
                             properties.fireResistant()
                         }
+                        material.chemicalKey?.let {
+                            properties.delayedHolderComponent(RagiumDataComponents.CHEMICAL, it)
+                        }
                         properties
                     }
                 )
@@ -134,13 +144,17 @@ data object RagiumItems {
 
     // Heat
     @JvmField
-    val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.COAL_COKE.materialName)
+    val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.COAL_COKE.materialName) {
+        it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
+    }
 
     @JvmField
     val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
 
     @JvmField
-    val PITCH_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.PITCH_COKE.materialName)
+    val PITCH_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.PITCH_COKE.materialName) {
+        it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
+    }
 
     // Chemical
     @JvmField
@@ -170,7 +184,9 @@ data object RagiumItems {
 
     // Electronics
     @JvmField
-    val CRUDE_SILICON: HTSimpleDeferredItem = REGISTER.registerSimpleItem("crude_silicon")
+    val CRUDE_SILICON: HTSimpleDeferredItem = REGISTER.registerSimpleItem("crude_silicon") {
+        it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON)
+    }
 
     @JvmField
     val SILICON_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_wafer")
@@ -273,6 +289,12 @@ data object RagiumItems {
                 )
             }.let(builder::accept)
         }
+        event.registerAppender(
+            TooltipLocation.HEAD
+        ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
+            val chemical: Holder<HTChemical> = stack.get(RagiumDataComponents.CHEMICAL) ?: return@registerAppender
+            builder.accept(chemical.value().getChemicalFormula().toText().withStyle(ChatFormatting.YELLOW))
+        }
     }
 
     @JvmStatic
@@ -293,18 +315,22 @@ data object RagiumItems {
 
     @JvmStatic
     private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
-        // Item
-        event.modify(Items.RAW_COPPER) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
-            builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.COPPER))
+        fun <T : Any> setHolder(item: ItemLike, type: DataComponentType<Holder<T>>, key: ResourceKey<T>) {
+            event.modify(item) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
+                builder.set(type, provider.getOrThrow(key))
+            }
         }
-        event.modify(Items.RAW_IRON) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
-            builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.IRON))
-        }
-        event.modify(Items.RAW_GOLD) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
-            builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.GOLD))
-        }
-        event.modify(Items.ANCIENT_DEBRIS) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
-            builder.set(RagiumDataComponents.ORE_SLURRY_DATA, provider.getOrThrow(RagiumOreSlurryData.NETHERITE_SCRAP))
-        }
+        // Chemical
+        setHolder(Items.COAL_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
+        setHolder(Items.COAL, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
+        setHolder(Items.CHARCOAL, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
+
+        setHolder(Items.DIAMOND_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.DIAMOND)
+        setHolder(Items.DIAMOND, RagiumDataComponents.CHEMICAL, RagiumChemicals.DIAMOND)
+        // Ore Slurry
+        setHolder(Items.RAW_COPPER, RagiumDataComponents.ORE_SLURRY_DATA, RagiumOreSlurryData.COPPER)
+        setHolder(Items.RAW_IRON, RagiumDataComponents.ORE_SLURRY_DATA, RagiumOreSlurryData.IRON)
+        setHolder(Items.RAW_GOLD, RagiumDataComponents.ORE_SLURRY_DATA, RagiumOreSlurryData.GOLD)
+        setHolder(Items.ANCIENT_DEBRIS, RagiumDataComponents.ORE_SLURRY_DATA, RagiumOreSlurryData.NETHERITE_SCRAP)
     }
 }

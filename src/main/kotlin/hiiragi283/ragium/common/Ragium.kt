@@ -17,6 +17,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.RagiumDataComponents
+import hiiragi283.ragium.api.data.chemical.HTCompoundChemical
+import hiiragi283.ragium.api.data.chemical.HTSimpleChemical
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -86,6 +88,7 @@ data object Ragium : HTCommonMod() {
             )
         }
         event.register(Registries.DATA_COMPONENT_TYPE) { helper ->
+            helper.register(RagiumAPI.id(HTConstants.CHEMICAL), RagiumDataComponents.CHEMICAL)
             helper.register(RagiumAPI.id(HTConstants.ENERGY), RagiumDataComponents.ENERGY)
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
             helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
@@ -115,6 +118,10 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id(HTConstants.POTION), HTPotionFluidIngredient.TYPE)
         }
 
+        event.register(RagiumRegistries.Keys.CHEMICAL_TYPE) { helper ->
+            helper.register(RagiumAPI.id("simple"), HTSimpleChemical.TYPE)
+            helper.register(RagiumAPI.id("compound"), HTCompoundChemical.TYPE)
+        }
         event.register(RagiumRegistries.Keys.FLUID_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTFluidResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id(HTConstants.POTION), HTFluidResult.PotionEntry.TYPE)
