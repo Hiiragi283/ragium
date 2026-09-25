@@ -9,7 +9,13 @@
   },
   "item_ingredient": {
     "count": 1,
-    "items": "#c:gems/echo"
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/echo",
+        "c:gems/echo"
+      ]
+    }
   },
   "result": {
     "type": "ragium:potion",

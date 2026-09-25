@@ -2,12 +2,14 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.lib.data.DataComponentType
 import hiiragi283.lib.serialization.codec.HTCodecs
+import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.world.item.ItemStackTemplate
 import net.neoforged.neoforge.fluids.SimpleFluidContent
+import java.util.UUID
 
 /**
  * Ragiumで使用される[DataComponentType]をまとめたクラスです。
@@ -35,4 +37,10 @@ data object RagiumDataComponents {
     @JvmField
     val ORE_SLURRY_DATA: DataComponentType<Holder<HTOreSlurryData>> =
         DataComponentType(HTOreSlurryData.CODEC, HTOreSlurryData.STREAM_CODEC)
+
+    /**
+     * @since 26.1.7
+     */
+    @JvmField
+    val OWNER_ID: DataComponentType<UUID> = DataComponentType(HTCodecs.UUID, HTStreamCodecs.UUID)
 }

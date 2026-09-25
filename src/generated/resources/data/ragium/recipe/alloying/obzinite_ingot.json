@@ -1,0 +1,34 @@
+{
+  "type": "ragium:alloying",
+  "extras": [
+    {
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/copper",
+          "c:ingots/copper"
+        ]
+      }
+    },
+    {
+      "count": 1,
+      "items": "#c:dusts/obsidian"
+    }
+  ],
+  "ingredient": {
+    "count": 3,
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/aluminum",
+        "c:ingots/aluminum"
+      ]
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "ragium:black_steel_ingot"
+  },
+  "time": 200
+}

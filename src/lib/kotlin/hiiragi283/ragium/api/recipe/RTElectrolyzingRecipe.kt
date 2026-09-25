@@ -16,13 +16,14 @@ import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.codec.nelOf
+import hiiragi283.lib.serialization.codec.compactNelFieldOf
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.nelOf
 import hiiragi283.lib.util.fold
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
@@ -48,7 +49,9 @@ data class RTElectrolyzingRecipe(
                 HTFluidIngredient.CODEC
                     .fieldOf(HTConstants.FLUID_INGREDIENT)
                     .forGetter(RTElectrolyzingRecipe::fluidIngredient),
-                HTFluidResult.CODEC.nelOf(3).fieldOf(HTConstants.RESULTS).forGetter(RTElectrolyzingRecipe::results),
+                HTFluidResult.CODEC
+                    .compactNelFieldOf(HTConstants.RESULT, HTConstants.RESULTS, 3)
+                    .forGetter(RTElectrolyzingRecipe::results),
                 HTProgressData.CODEC.forGetter(RTElectrolyzingRecipe::progressData)
             ).apply(instance, ::RTElectrolyzingRecipe)
         }
@@ -73,9 +76,9 @@ data class RTElectrolyzingRecipe(
     override fun test(first: ItemInstance, second: FluidInstance): Boolean =
         itemIngredient.test(first) && fluidIngredient.test(second)
 
-    override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = Pair(
-        itemIngredient.fold({ 0 }, { it.getRequiredAmount(first) }),
-        fluidIngredient.getRequiredAmount(second)
+    override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> = Pair(
+        itemIngredient.fold(ItemStack::EMPTY) { it.getMatchingStack(first) },
+        fluidIngredient.getMatchingStack(second)
     )
 
     override fun apply(first: ItemInstance, second: FluidInstance): Triple<FluidStack, FluidStack, FluidStack> = Triple(

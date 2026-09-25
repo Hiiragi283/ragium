@@ -22,22 +22,32 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addPatternTranslations(this)
 
         // Advancement
-        add(RagiumAdvancementKeys.ROOT, "Ragium", "Welcome to Ragium!")
-        add(RagiumAdvancementKeys.SOOTY_IRON, "Acquire Blackware", "Craft a Sooty Iron Ingot")
+        addAdvancement(RagiumAdvancementKeys.ROOT, "Ragium", "Welcome to Ragium!")
+        addAdvancement(RagiumAdvancementKeys.SOOTY_IRON, "Acquire Blackware", "Craft a Sooty Iron Ingot")
 
-        add(
+        addAdvancement(
             RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
             "Mechanical Machines",
             "Craft a Machine Casing (Mechanical)"
         )
-        add(RagiumAdvancementKeys.ASSEMBLER, "Rava(n)gers, assemble!", "Acquire Assembler")
-        add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
+        addAdvancement(RagiumAdvancementKeys.ASSEMBLER, "Rava(n)gers, assemble!", "Acquire Assembler")
+        addAdvancement(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
 
-        add(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "Craft a Machine Casing (Heat)")
-        add(RagiumAdvancementKeys.BLACK_STEEL, "Black Roaring", "Craft a Black Steel Ingot")
-        add(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
-        add(RagiumAdvancementKeys.MELTER, "(S)melter(y)", "Acquire Melter")
+        addAdvancement(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "Craft a Machine Casing (Heat)")
+        addAdvancement(RagiumAdvancementKeys.BLACK_STEEL, "Black Roaring", "Craft a Black Steel Ingot")
+        addAdvancement(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
+        addAdvancement(RagiumAdvancementKeys.MELTER, "(S)melter(y)", "Acquire Melter")
         // Block
+        add(RagiumBlocks.ECHO_BLOCK, "Block of Echo")
+
+        add(RagiumBlocks.FLUORITE_BLOCK, "Block of Fluorite")
+        add(RagiumBlocks.FLUORITE_SLAB, "Fluorite Slab")
+        add(RagiumBlocks.FLUORITE_STAIRS, "Fluorite Stairs")
+
+        add(RagiumBlocks.CRYOLITE_BLOCK, "Block of Cryolite")
+        add(RagiumBlocks.CRYOLITE_SLAB, "Cryolite Slab")
+        add(RagiumBlocks.CRYOLITE_STAIRS, "Cryolite Stairs")
+
         add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.COMPRESSOR, "Compressor")
@@ -58,13 +68,23 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.PLANTER, "Planter")
 
+        add(RagiumBlocks.PRECISION_ASSEMBLER, "Precision Assembler")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
+        add(RagiumBlocks.ENCHANTER, "Enchanter")
+
+        add(RagiumBlocks.TANK, "Variable Tank")
+        add(RagiumBlocks.VOID_TANK, "Void Tank")
         add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")
+        add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
 
         add(RagiumBlocks.MACHINE_CASING, "Machine Casing")
+        // Damage Type
+        add("death.attack.chemicalBurn", $$"%1$s was injured chemical burn")
+        add("death.attack.chemicalBurn.player", $$"%1$s was injured chemical burn while fighting %2$s")
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")
+        addFluid(RagiumFluids.RESIN, "Resin")
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
         addFluid(RagiumFluids.OMINOUS_FLUX, "Ominous Flux")
@@ -84,9 +104,13 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
         addFluid(RagiumFluids.FUEL, "Fuel")
         addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
+        addFluid(RagiumFluids.SYNTHETIC_RESIN, "Synthetic Resin")
         addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "Liquid Explosive")
+        addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
+        addFluid(RagiumFluids.HYDROFLUORIC_ACID, "Hydrofluoric Acid")
         addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
+        addFluid(RagiumFluids.ALUMINA_SOLUTION, "Alumina Solution")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
@@ -99,7 +123,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.TAR, "Tar")
-        add(RagiumItems.PITCH_COKE, "Pitch Coke")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
@@ -108,6 +131,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.BEESWAX, "Beeswax")
         add(RagiumItems.SPLASH_BOTTLE, "Splash Bottle")
         add(RagiumItems.LINGERING_BOTTLE, "Lingering Bottle")
+        add(RagiumItems.CRUDE_SILICON, "Crude Silicon")
+        add(RagiumItems.SILICON_WAFER, "Silicon Wafer")
+        add(RagiumItems.CIRCUIT_CHIP, "Circuit Chip")
+        add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
+        add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
         add(RagiumItems.ELDER_HEART, "Elder Heart")
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
@@ -116,16 +144,22 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "Frostbite")
+        add(RagiumMobEffects.CHEMICAL_BURN, "Chemical Burn")
 
         // Ore Slurry
         addOreSlurry(RagiumOreSlurryData.COPPER, "Copper Ore Slurry")
         addOreSlurry(RagiumOreSlurryData.IRON, "Iron Ore Slurry")
         addOreSlurry(RagiumOreSlurryData.GOLD, "Gold Ore Slurry")
+        addOreSlurry(RagiumOreSlurryData.NETHERITE_SCRAP, "Ancient Debris Slurry")
 
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "Frostbite")
+        addPotion(RagiumPotions.CHEMICAL_BURN, "Chemical Burn")
 
+        addCustomPotion("nausea", "Nausea")
+        addCustomPotion("blindness", "Blindness")
         addCustomPotion("hunger", "Hunger")
+        addCustomPotion("wither", "Wither")
         addCustomPotion("darkness", "Darkness")
         addCustomPotion("golden_apple", "Golden Apple")
         addCustomPotion("enchanted_golden_apple", "Enchanted Golden Apple")
@@ -152,6 +186,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.BREWING, "Brewing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
 
+        add(RagiumRecipeTypes.RESOURCE_EXTRACTING, "Resource Extracting")
+
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
 
         // Text - Lib
@@ -172,6 +208,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(HTCommonTranslation.PROGRESS, $$"Progress: %1$s %%")
         add(HTCommonTranslation.SECONDS, $$"%1$s sec (%2$s ticks)")
+
+        add(HTCommonTranslation.BIOME, $$"Biome: %1$s")
 
         add(HTCommonTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(HTCommonTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")

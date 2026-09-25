@@ -1,10 +1,19 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:raw_materials/iron"
+      }
+    }
+  ],
   "type": "ragium:crushing",
   "ingredient": {
     "count": 3,
     "items": "#c:raw_materials/iron"
   },
-  "results": {
+  "result": {
     "count": 4,
     "id": "ragium:iron_dust"
   },

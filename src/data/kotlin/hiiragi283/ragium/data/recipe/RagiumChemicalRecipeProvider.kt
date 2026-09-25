@@ -44,7 +44,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
 
         // Molten Glass + Amethyst -> Tinted Glass
         RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            itemIngredient { +dustOrGem(RagiumMaterial.Gem.AMETHYST) }
             fluidIngredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
             result {
                 +Items.TINTED_GLASS

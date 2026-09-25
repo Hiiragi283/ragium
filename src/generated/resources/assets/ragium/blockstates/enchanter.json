@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,is_active=false": {
+      "model": "ragium:block/machine/arcane",
+      "y": 90
+    },
+    "facing=east,is_active=true": {
+      "model": "ragium:block/enchanter",
+      "y": 90
+    },
+    "facing=north,is_active=false": {
+      "model": "ragium:block/machine/arcane"
+    },
+    "facing=north,is_active=true": {
+      "model": "ragium:block/enchanter"
+    },
+    "facing=south,is_active=false": {
+      "model": "ragium:block/machine/arcane",
+      "y": 180
+    },
+    "facing=south,is_active=true": {
+      "model": "ragium:block/enchanter",
+      "y": 180
+    },
+    "facing=west,is_active=false": {
+      "model": "ragium:block/machine/arcane",
+      "y": 270
+    },
+    "facing=west,is_active=true": {
+      "model": "ragium:block/enchanter",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "ragium:alloying",
+  "extra": {
+    "count": 1,
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/coal",
+        "c:dusts/charcoal",
+        "ragium:coals"
+      ]
+    }
+  },
+  "ingredient": {
+    "count": 1,
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/iron",
+        "c:ingots/iron"
+      ]
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:sooty_iron_ingot"
+  },
+  "time": 200
+}

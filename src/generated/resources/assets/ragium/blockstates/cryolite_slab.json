@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ragium:block/cryolite_slab"
+    },
+    "type=double": {
+      "model": "ragium:block/cryolite_block"
+    },
+    "type=top": {
+      "model": "ragium:block/cryolite_slab_top"
+    }
+  }
+}

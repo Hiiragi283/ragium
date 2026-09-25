@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:custom_name",
+                "ragium:owner_id",
+                "ragium:fluid"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "ragium:tank"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ragium:blocks/tank"
+}

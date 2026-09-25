@@ -18,7 +18,7 @@ import net.neoforged.bus.api.IEventBus
 class HTDeferredBlockAndItemRegister(
     private val blockRegister: HTDeferredBlockRegister,
     private val itemRegister: HTDeferredItemRegister
-) {
+) : RegistryAliasAcceptor {
     constructor(namespace: String) : this(HTDeferredBlockRegister(namespace))
 
     constructor(blockRegister: HTDeferredBlockRegister) : this(
@@ -26,18 +26,12 @@ class HTDeferredBlockAndItemRegister(
         HTDeferredItemRegister(blockRegister.namespace)
     )
 
-    /**
-     * @since 26.1.3
-     */
-    fun addAlias(from: String, to: String) {
+    override fun addAlias(from: String, to: String) {
         blockRegister.addAlias(from, to)
         itemRegister.addAlias(from, to)
     }
 
-    /**
-     * @since 26.1.3
-     */
-    fun addAlias(from: Identifier, to: Identifier) {
+    override fun addAlias(from: Identifier, to: Identifier) {
         blockRegister.addAlias(from, to)
         itemRegister.addAlias(from, to)
     }

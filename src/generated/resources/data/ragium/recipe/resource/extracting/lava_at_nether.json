@@ -1,0 +1,9 @@
+{
+  "type": "ragium:resource/extracting",
+  "condition": "#c:is_nether",
+  "result": {
+    "amount": 250,
+    "id": "minecraft:lava"
+  },
+  "time": 200
+}

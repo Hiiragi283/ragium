@@ -1,5 +1,6 @@
 {
   "values": [
+    "ragium:precision_assembler",
     "ragium:scanner"
   ]
 }

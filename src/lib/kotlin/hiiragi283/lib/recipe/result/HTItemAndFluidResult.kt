@@ -1,6 +1,5 @@
 package hiiragi283.lib.recipe.result
 
-import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
@@ -13,21 +12,37 @@ import java.util.Objects
  */
 @JvmRecord
 data class HTItemAndFluidResult(val item: ItemStack, val fluid: FluidStack) {
-    constructor(item: ItemStack) : this(item, FluidStack.EMPTY)
+    companion object {
+        /**
+         * @since 26.1.7
+         */
+        @JvmStatic
+        fun from(result: HTItemResult?): HTItemAndFluidResult =
+            HTItemAndFluidResult(result.createOrEmpty(), FluidStack.EMPTY)
 
-    constructor(fluid: FluidStack) : this(ItemStack.EMPTY, fluid)
+        /**
+         * @since 26.1.7
+         */
+        @JvmStatic
+        fun from(result: HTFluidResult?): HTItemAndFluidResult =
+            HTItemAndFluidResult(ItemStack.EMPTY, result.createOrEmpty())
 
-    constructor(pair: Pair<ItemStack, FluidStack>) : this(pair.first, pair.second)
+        /**
+         * @since 26.1.7
+         */
+        @JvmStatic
+        fun from(item: HTItemResult?, fluid: HTFluidResult?): HTItemAndFluidResult =
+            HTItemAndFluidResult(item.createOrEmpty(), fluid.createOrEmpty())
 
-    constructor(either: Either<ItemStack, FluidStack>) : this(
-        either.leftOrNull() ?: ItemStack.EMPTY,
-        either.getOrNull() ?: FluidStack.EMPTY
-    )
-
-    constructor(ior: Ior<ItemStack, FluidStack>) : this(
-        ior.getLeft() ?: ItemStack.EMPTY,
-        ior.getRight() ?: FluidStack.EMPTY
-    )
+        /**
+         * @since 26.1.7
+         */
+        @JvmStatic
+        fun from(results: Ior<HTItemResult, HTFluidResult>): HTItemAndFluidResult {
+            val (item: HTItemResult?, fluid: HTFluidResult?) = results.toPair()
+            return from(item, fluid)
+        }
+    }
 
     override fun equals(other: Any?): Boolean = (other as? HTItemAndFluidResult)?.let {
         ItemStack.isSameItemSameComponents(it.item, this.item) && FluidStack.isSameFluid(it.fluid, this.fluid)

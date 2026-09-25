@@ -39,6 +39,12 @@ fun ItemStackTemplate.transmuteCopy(newItem: ItemLike, newCount: Int = this.coun
 
 /**
  * @author Hiiragi Tsubasa
+ * @since 26.1.7
+ */
+fun ItemStack(item: ItemLike, patch: DataComponentPatch): ItemStack = ItemStack(item, 1, patch)
+
+/**
+ * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
 fun ItemStack(item: ItemLike, count: Int, patch: DataComponentPatch): ItemStack {

@@ -39,11 +39,11 @@ object HTTextUtil {
     @JvmStatic
     private val TEXT_NULL: Text = "null".toText()
 
-    @JvmStatic
-    private val INT_FORMAT: NumberFormat = NumberFormat.getIntegerInstance()
+    @JvmField
+    val INT_FORMAT: NumberFormat = NumberFormat.getIntegerInstance()
 
-    @JvmStatic
-    private val DOUBLE_FORMAT: NumberFormat = NumberFormat.getNumberInstance()
+    @JvmField
+    val DOUBLE_FORMAT: NumberFormat = NumberFormat.getNumberInstance()
 
     /**
      * 指定した[MOD ID][modId]からMOD名を取得します。

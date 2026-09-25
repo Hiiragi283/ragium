@@ -50,7 +50,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
 
     private fun renderSprite(bounds: HTBounds, graphics: GuiGraphicsExtractor) {
         if (!shouldRender()) return
-        val sprite: TextureAtlasSprite = getSprite()
+        val sprite: TextureAtlasSprite = getSprite() ?: return
         val color: Int = getColor()
         val fillLevel: Int = getScaledLevel().toInt()
 
@@ -62,6 +62,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
         y++
         width -= 2
         height -= 2
+        graphics.enableScissor(x, y, x + width, y + height)
         graphics.blitTiledSprite(
             RenderPipelines.GUI_TEXTURED,
             sprite,
@@ -77,6 +78,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
             tileScaling.height,
             color
         ) // TODO
+        graphics.disableScissor()
     }
 
     protected fun getTooltipFlag(): TooltipFlag = ClientTooltipFlag.of(
@@ -90,7 +92,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
 
     protected abstract fun shouldRender(): Boolean
 
-    protected abstract fun getSprite(): TextureAtlasSprite
+    protected abstract fun getSprite(): TextureAtlasSprite?
 
     protected fun getSprite(atlasId: Identifier, id: Identifier): TextureAtlasSprite = Minecraft
         .getInstance()

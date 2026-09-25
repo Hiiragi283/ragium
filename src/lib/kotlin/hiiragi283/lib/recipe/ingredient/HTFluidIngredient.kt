@@ -26,7 +26,7 @@ import java.util.Optional
  */
 @JvmRecord
 data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
-    HTIngredient<FluidInstance>,
+    HTIngredient<Fluid, FluidInstance>,
     HTStackPreview<FluidStack> {
     companion object {
         @JvmField
@@ -55,9 +55,9 @@ data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
 
     override fun testOnlyType(instance: FluidInstance): Boolean = HTIngredientHelper.unwrap(instance).let(unsized::test)
 
-    override fun getRequiredAmount(instance: FluidInstance): Int = when (testOnlyType(instance)) {
-        true -> amount
-        false -> 0
+    override fun getMatchingStack(instance: FluidInstance): FluidInstance = when (testOnlyType(instance)) {
+        true -> HTIngredientHelper.copyWithAmount(instance, amount)
+        false -> FluidStack.EMPTY
     }
 
     override fun getPreviewStacks(contextMap: ContextMap): List<FluidStack> = unsized

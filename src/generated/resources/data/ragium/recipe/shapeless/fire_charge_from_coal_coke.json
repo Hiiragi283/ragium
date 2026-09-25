@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:gunpowders",
+    "minecraft:blaze_powder",
+    "#c:coal_coke"
+  ],
+  "result": {
+    "count": 6,
+    "id": "minecraft:fire_charge"
+  }
+}

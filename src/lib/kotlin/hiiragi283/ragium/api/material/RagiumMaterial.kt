@@ -28,7 +28,12 @@ sealed interface RagiumMaterial :
         CHARCOAL("Charcoal", "木炭"),
 
         // Common
-        COAL_COKE("Coal Coke", "石炭コークス")
+        COAL_COKE("Coal Coke", "石炭コークス"),
+
+        /**
+         * @since 26.1.7
+         */
+        PITCH_COKE("Pitch Coke", "ピッチコークス")
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -53,6 +58,11 @@ sealed interface RagiumMaterial :
         NITER("Niter", "硝石"),
         BORAX("Borax", "ホウ砂"),
 
+        /**
+         * @since 26.1.7
+         */
+        BAUXITE("Bauxite", "ボーキサイト"),
+
         // Ragium
         RAGINITE("Raginite", "ラギナイト")
         ;
@@ -74,7 +84,19 @@ sealed interface RagiumMaterial :
         DIAMOND("Diamond", "ダイヤモンド"),
         EMERALD("Emerald", "エメラルド"),
         ECHO("Echo", "残響"),
-        PRISMARINE("Prismarine", "プリズマリン")
+        PRISMARINE("Prismarine", "プリズマリン"),
+
+        // Common
+
+        /**
+         * @since 26.1.7
+         */
+        FLUORITE("Fluorite", "蛍石"),
+
+        /**
+         * @since 26.1.7
+         */
+        CRYOLITE("Cryolite", "氷晶石")
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -90,8 +112,15 @@ sealed interface RagiumMaterial :
         IRON("Iron", "鉄"),
         GOLD("Gold", "金"),
         NETHERITE("Netherite", "ネザライト") {
-            override val isElement: Boolean = false
+            override val hasRawVariant: Boolean = false
         },
+
+        // Common
+
+        /**
+         * @since 26.1.7
+         */
+        ALUMINUM("Aluminum", "アルミニウム"),
 
         // Ragium
 
@@ -99,27 +128,27 @@ sealed interface RagiumMaterial :
          * @since 26.1.3
          */
         SOOTY_IRON("Sooty Iron", "煤鉄") {
-            override val isElement: Boolean = false
+            override val hasRawVariant: Boolean = false
         },
 
         /**
          * @since 26.1.3
          */
         BLACK_STEEL("Black Steel", "黒鋼") {
-            override val isElement: Boolean = false
+            override val hasRawVariant: Boolean = false
         },
 
         /**
          * @since 26.1.4
          */
         VOID_METAL("Void Metal", "虚金") {
-            override val isElement: Boolean = false
+            override val hasRawVariant: Boolean = false
         }
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
 
-        open val isElement: Boolean = true
+        open val hasRawVariant: Boolean = true
 
         override val materialName: String = name.lowercase()
     }
@@ -134,6 +163,16 @@ sealed interface RagiumMaterial :
         PAPER(true, "Paper", "紙"),
 
         // Common
+        CARBON(false, "Carbon", "炭素"),
+
+        /**
+         * @since 26.1.7
+         */
+        ALUMINA(false, "Alumina", "アルミナ"),
+
+        /**
+         * @since 26.1.7
+         */
         SILICON(false, "Silicon", "シリコン")
         ;
 

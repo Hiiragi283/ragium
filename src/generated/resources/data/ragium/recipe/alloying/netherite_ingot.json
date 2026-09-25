@@ -1,22 +1,22 @@
 {
   "type": "ragium:alloying",
-  "primary_ingredient": {
+  "extra": {
+    "count": 2,
+    "items": "minecraft:netherite_scrap"
+  },
+  "ingredient": {
     "count": 2,
     "items": {
-      "type": "neoforge:or",
-      "values": [
-        "#c:dusts/gold",
-        "#c:ingots/gold"
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/gold",
+        "c:ingots/gold"
       ]
     }
   },
   "result": {
     "count": 1,
     "id": "minecraft:netherite_ingot"
-  },
-  "secondary_ingredient": {
-    "count": 2,
-    "items": "minecraft:netherite_scrap"
   },
   "time": 200
 }

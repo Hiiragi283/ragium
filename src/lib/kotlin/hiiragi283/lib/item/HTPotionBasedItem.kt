@@ -37,10 +37,7 @@ open class HTPotionBasedItem(properties: Properties) :
         parameters: CreativeModeTab.ItemDisplayParameters,
         output: CreativeModeTab.Output
     ) {
-        parameters.holders()
-            .lookupOrThrow(Registries.POTION)
-            .filterFeatures(parameters.enabledFeatures())
-            .listElements()
+        parameters.filteredElements(Registries.POTION)
             .map { ItemStack(baseItem, 1, HTPotionHelper.createPotionPatch(it)) }
             .forEach(output::accept)
     }

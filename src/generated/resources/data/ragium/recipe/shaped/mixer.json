@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:nuggets/black_steel",
+    "B": "ragium:chemical_machine_parts",
+    "C": "#c:gears/gold",
+    "D": "#c:buckets/empty"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ADA"
+  ],
+  "result": {
+    "id": "ragium:mixer"
+  }
+}

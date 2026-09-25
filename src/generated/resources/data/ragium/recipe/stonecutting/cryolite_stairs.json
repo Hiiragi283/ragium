@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "ragium:cryolite_block",
+  "result": {
+    "id": "ragium:cryolite_stairs"
+  }
+}

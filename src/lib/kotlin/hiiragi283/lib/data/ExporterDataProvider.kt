@@ -26,7 +26,6 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.WithConditions
-import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 
@@ -67,6 +66,7 @@ abstract class ExporterDataProvider<R : Any>(
                 if (oldValue != null) {
                     error("Duplicate registration for $fixedKey, new=$value, old=$oldValue")
                 }
+                fixedKey
             }
             exportValues()
 
@@ -126,7 +126,7 @@ abstract class ExporterDataProvider<R : Any>(
     protected fun <T : Any> holderSet(tagKeys: Iterable<TagKey<T>>): HolderSet<T> = when (tagKeys.count()) {
         0 -> HolderSet.empty()
         1 -> holderSet(tagKeys.first())
-        else -> HTComparators.sortTagKeys(tagKeys).map(::holderSet).let(::OrHolderSet)
+        else -> tagKeys.map(::holderSet).let(HTComparators::compressHolderSet)
     }
 
     protected fun <T : Any> holderSet(vararg tagKeys: TagKey<T>): HolderSet<T> = holderSet(tagKeys.toSet())
@@ -138,9 +138,6 @@ abstract class ExporterDataProvider<R : Any>(
      */
     protected fun holderSet(prefix: HTTagPrefix, material: HTMaterialLike): HolderSet<Item> =
         holderSet(prefix.itemTagKey(material))
-
-    protected fun holderSet(prefix: HTTagPrefix, vararg materials: HTMaterialLike): HolderSet<Item> =
-        materials.map(prefix::itemTagKey).let(::holderSet)
 
     /**
      * [HolderSet]を取得します。

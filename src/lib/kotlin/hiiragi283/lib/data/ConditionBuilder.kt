@@ -1,5 +1,7 @@
 package hiiragi283.lib.data
 
+import hiiragi283.lib.tag.HTMaterialLike
+import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.lib.util.HTBuilderMarker
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
@@ -63,5 +65,13 @@ value class ConditionBuilder(private val conditions: MutableList<ICondition>) {
      */
     operator fun FeatureFlagSet.unaryPlus() {
         +NeoForgeConditions.featureFlagsEnabled(this)
+    }
+
+    /**
+     * [TagKey]が登録されているか判定する[ICondition]を追加します。
+     * @since 26.1.7
+     */
+    fun itemTagPresent(prefix: HTTagPrefix, material: HTMaterialLike) {
+        +prefix.itemTagKey(material)
     }
 }

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "ragium:fluorite_block",
+  "result": {
+    "id": "ragium:fluorite_stairs"
+  }
+}

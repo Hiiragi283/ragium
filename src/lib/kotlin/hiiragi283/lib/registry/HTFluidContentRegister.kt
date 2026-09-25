@@ -24,8 +24,6 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
-import net.neoforged.neoforge.fluids.BaseFlowingFluid.Flowing
-import net.neoforged.neoforge.fluids.BaseFlowingFluid.Source
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.transfer.fluid.DispenseFluidContainer
 
@@ -34,7 +32,7 @@ import net.neoforged.neoforge.transfer.fluid.DispenseFluidContainer
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTFluidContentRegister(modId: String) {
+class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
     private val fluidRegister: HTDeferredRegister<Fluid> = HTDeferredRegister(Registries.FLUID, modId)
     private val typeRegister = HTDeferredFluidTypeRegister(modId)
     private val blockRegister = HTDeferredBlockRegister(modId)
@@ -79,10 +77,7 @@ class HTFluidContentRegister(modId: String) {
      */
     operator fun get(key: ResourceKey<Fluid>): HTFluidContent? = contentsCache[key]
 
-    /**
-     * @since 26.1.5
-     */
-    fun addAlias(from: Identifier, to: Identifier) {
+    override fun addAlias(from: Identifier, to: Identifier) {
         typeRegister.addAlias(from, to)
 
         fluidRegister.addAlias(from, to)
@@ -93,7 +88,7 @@ class HTFluidContentRegister(modId: String) {
         itemRegister.addAlias(from.withSuffix("_bucket"), to.withSuffix("_bucket"))
     }
 
-    fun addAlias(from: String, to: String) {
+    override fun addAlias(from: String, to: String) {
         typeRegister.addAlias(from, to)
 
         fluidRegister.addAlias(from, to)
@@ -158,7 +153,7 @@ class HTFluidContentRegister(modId: String) {
         lateinit var properties: FluidType.Properties
 
         /**
-         * [FluidType]をを作るブロック
+         * [FluidType]を作るブロック
          */
         var typeFactory: (FluidType.Properties) -> FluidType = ::FluidType
 
@@ -261,12 +256,12 @@ class HTFluidContentRegister(modId: String) {
         /**
          * 液体源を作るブロック
          */
-        var sourceFactory: (BaseFlowingFluid.Properties) -> Source = BaseFlowingFluid::Source
+        var sourceFactory: (BaseFlowingFluid.Properties) -> BaseFlowingFluid.Source = BaseFlowingFluid::Source
 
         /**
          * 液体流を作るブロック
          */
-        var flowingFactory: (BaseFlowingFluid.Properties) -> Flowing = BaseFlowingFluid::Flowing
+        var flowingFactory: (BaseFlowingFluid.Properties) -> BaseFlowingFluid.Flowing = BaseFlowingFluid::Flowing
 
         /**
          * 液体ブロックを作成するブロック
@@ -290,7 +285,7 @@ class HTFluidContentRegister(modId: String) {
                 ) { prop: BlockBehaviour.Properties -> blockFactory!!(sourceHolder.get(), prop) }
             }
             // Fluid
-            val flowingHolder: HTDeferredHolder<Fluid, Flowing> =
+            val flowingHolder: HTDeferredHolder<Fluid, BaseFlowingFluid.Flowing> =
                 HTDeferredHolder(fluidRegister.createKey("flowing_$name"))
             val fluidProperties: BaseFlowingFluid.Properties = BaseFlowingFluid
                 .Properties(typeHolder, sourceHolder, flowingHolder)

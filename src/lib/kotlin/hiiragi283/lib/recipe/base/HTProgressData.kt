@@ -93,7 +93,7 @@ sealed interface HTProgressData : HTHasText {
 
         override fun getProcessTime(energyRate: Int): Int = value
 
-        override fun getText(): Text = HTCommonTranslation.SECONDS.translate(value, value / 20)
+        override fun getText(): Text = HTCommonTranslation.SECONDS.translate(value / 20, value)
     }
 
     /**

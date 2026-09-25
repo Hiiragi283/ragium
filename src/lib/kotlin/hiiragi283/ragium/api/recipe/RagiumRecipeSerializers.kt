@@ -109,6 +109,9 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.PLANTING, RTPlantingRecipe.SERIALIZER)
 
     // Electronics
+    @JvmField
+    val RESOURCE_EXTRACTING: RecipeSerializer<RTResourceExtractingRecipe> =
+        register(RagiumConstants.RESOURCE_EXTRACTING, RTResourceExtractingRecipe.SERIALIZER)
 
     // Arcane
     @JvmField

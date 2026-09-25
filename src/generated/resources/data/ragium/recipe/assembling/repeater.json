@@ -1,0 +1,22 @@
+{
+  "type": "ragium:assembling",
+  "extras": [
+    {
+      "count": 2,
+      "items": "minecraft:redstone_torch"
+    },
+    {
+      "count": 1,
+      "items": "#c:dusts/redstone"
+    }
+  ],
+  "ingredient": {
+    "count": 1,
+    "items": "#c:stones"
+  },
+  "result": {
+    "count": 2,
+    "id": "minecraft:repeater"
+  },
+  "time": 200
+}

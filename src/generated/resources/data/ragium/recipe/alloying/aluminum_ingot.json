@@ -1,0 +1,16 @@
+{
+  "type": "ragium:alloying",
+  "extra": {
+    "count": 1,
+    "items": "#ragium:cokes"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "#c:dusts/alumina"
+  },
+  "result": {
+    "count": 2,
+    "id": "ragium:aluminum_ingot"
+  },
+  "time": 800
+}

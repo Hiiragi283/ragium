@@ -16,7 +16,8 @@ import java.util.function.Supplier
  * @since 26.1.0
  */
 open class HTDeferredRegister<R : Any>(registryKey: RegistryKey<R>, namespace: String) :
-    DeferredRegister<R>(registryKey, namespace) {
+    DeferredRegister<R>(registryKey, namespace),
+    RegistryAliasAcceptor {
     /**
      * [名前空間][namespace]に基づいて，[パス][path]から[ID][Identifier]を作成します。
      */
@@ -32,12 +33,7 @@ open class HTDeferredRegister<R : Any>(registryKey: RegistryKey<R>, namespace: S
      */
     fun createKey(id: Identifier): ResourceKey<R> = this.registryKey.createKey(id)
 
-    /**
-     * [名前空間][namespace]に基づいて，IDのエイリアスを登録します。
-     * @param from 変更前のIDの[パス][Identifier.getPath]
-     * @param to 変更後のIDの[パス][Identifier.getPath]
-     */
-    fun addAlias(from: String, to: String) {
+    override fun addAlias(from: String, to: String) {
         this.addAlias(createId(from), createId(to))
     }
 

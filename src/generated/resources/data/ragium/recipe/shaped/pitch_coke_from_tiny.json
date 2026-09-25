@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "pitch_coke",
+  "key": {
+    "A": "#c:tiny/pitch_coke"
+  },
+  "pattern": [
+    "AAA",
+    "A A",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:pitch_coke"
+  }
+}

@@ -5,10 +5,10 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
-import hiiragi283.lib.recipe.handler.HTInputSlot
+import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
+import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.api.RagiumConfig
@@ -17,12 +17,14 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
 import hiiragi283.ragium.common.gui.widget.HTItemWidget
+import hiiragi283.ragium.common.transfer.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
@@ -48,14 +50,12 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
         recipeHandler = object : EnergizedHandler<SingleRecipeInput, FluidStack, HTItemToFluidRecipe>() {
-            private val inputSlot: HTInputSlot.SingleItem by lazy {
-                HTInputSlot.SingleItem(this@HTMelterBlockEntity.inputSlot)
-            }
+            private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTMelterBlockEntity.inputSlot) }
             private val outputSlot: HTOutputSlot<FluidStack> by lazy {
-                HTOutputSlot.SingleFluid(this@HTMelterBlockEntity.outputTank)
+                HTOutputSlotHelper.forFluid(this@HTMelterBlockEntity.outputTank)
             }
 
-            override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
+            override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStoredInput())
 
             override fun findRecipe(level: ServerLevel, input: SingleRecipeInput): HTItemToFluidRecipe? =
                 cache.findFirstRecipe(input, level)
@@ -64,19 +64,18 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
                 recipe: HTItemToFluidRecipe,
                 input: SingleRecipeInput,
                 output: FluidStack
-            ): Boolean {
-                val inputCount: Int = recipe.getRequiredAmount(input.item())
-                return inputCount != 0 &&
-                    useTransaction { transaction: Transaction ->
-                        inputSlot.canExtract(inputCount, transaction) &&
-                            outputSlot.canInsert(output, transaction)
-                    }
+            ): Boolean = useTransaction { transaction: Transaction ->
+                val inputConsume: ItemInstance = recipe.getMatchingStack(input.item())
+                when {
+                    inputSlot.use(inputConsume, transaction).failed -> false
+                    else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+                }
             }
 
             override fun onComplete(recipe: HTItemToFluidRecipe, input: SingleRecipeInput, output: FluidStack) {
                 useTransaction { transaction: Transaction ->
-                    inputSlot.extract(recipe.getRequiredAmount(input.item()), transaction)
-                    outputSlot.insert(output, transaction)
+                    inputSlot.use(recipe.getMatchingStack(input.item()), transaction)
+                    outputSlot.take(output, transaction)
                     transaction.commit()
                 }
                 playSound(SoundEvents.LAVA_POP)
@@ -84,10 +83,10 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    private lateinit var outputTank: HTBasicFluidTank
+    private lateinit var outputTank: HTVariableFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
-        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicFluidTank.output(getTankCapacity().asInt, listener))
+        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(getTankCapacity(), listener))
     }
 
     private lateinit var inputSlot: HTBasicItemSlot

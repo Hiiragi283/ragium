@@ -37,7 +37,7 @@ class HTItemPredicateBuilder {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        +HolderAcceptor.ItemSetBuilder().apply(builderAction).build()
+        +HolderAcceptor.buildItemSet(builderAction)
     }
 
     operator fun MinMaxBounds.Ints.unaryPlus() {

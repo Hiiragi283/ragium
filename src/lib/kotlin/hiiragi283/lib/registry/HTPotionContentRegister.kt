@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
+import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
@@ -17,7 +18,7 @@ private typealias PotionEffectProvider = () -> Array<out MobEffectInstance>
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTPotionContentRegister(modId: String) {
+class HTPotionContentRegister(modId: String) : RegistryAliasAcceptor {
     private val register: HTDeferredRegister<Potion> = HTDeferredRegister(Registries.POTION, modId)
 
     /**
@@ -39,10 +40,16 @@ class HTPotionContentRegister(modId: String) {
      */
     operator fun get(key: ResourceKey<Potion>): HTPotionContent? = contentsCache[key]
 
-    fun addAlias(from: String, to: String) {
+    override fun addAlias(from: String, to: String) {
         register.addAlias(from, to)
         register.addAlias("long_$from", "long_$to")
         register.addAlias("strong_$from", "strong_$to")
+    }
+
+    override fun addAlias(from: Identifier, to: Identifier) {
+        register.addAlias(from, to)
+        register.addAlias(from.withPrefix("long_"), to.withPrefix("long_"))
+        register.addAlias(from.withPrefix("strong_"), to.withPrefix("strong_"))
     }
 
     /**

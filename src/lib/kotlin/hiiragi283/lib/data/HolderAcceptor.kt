@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalContracts::class)
+
 package hiiragi283.lib.data
 
 import hiiragi283.lib.registry.HTDeferredBlockAndItem
@@ -8,6 +10,9 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.material.Fluid
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * [Holder]を受け取る処理を表すインターフェースです。
@@ -105,4 +110,28 @@ interface HolderAcceptor<T : Any> {
     class ItemSetBuilder :
         SetBuilder<Item>(),
         ItemAcceptor
+
+    companion object {
+        /**
+         * @since 26.1.7
+         */
+        @JvmStatic
+        inline fun buildFluidSet(builderAction: FluidSetBuilder.() -> Unit): HolderSet<Fluid> {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return FluidSetBuilder().apply(builderAction).build()
+        }
+
+        /**
+         * @since 26.1.7
+         */
+        @JvmStatic
+        inline fun buildItemSet(builderAction: ItemSetBuilder.() -> Unit): HolderSet<Item> {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return ItemSetBuilder().apply(builderAction).build()
+        }
+    }
 }

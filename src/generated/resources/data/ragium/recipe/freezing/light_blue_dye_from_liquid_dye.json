@@ -1,0 +1,12 @@
+{
+  "type": "ragium:freezing",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:dyes/light_blue"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:light_blue_dye"
+  },
+  "time": 200
+}

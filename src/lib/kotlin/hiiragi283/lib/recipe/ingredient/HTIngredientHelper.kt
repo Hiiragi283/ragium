@@ -38,6 +38,16 @@ data object HTIngredientHelper {
         else -> instance.typeHolder().isEmpty || instance.amount() <= 0
     }
 
+    /**
+     * @since 26.1.7
+     */
+    @JvmStatic
+    fun copyWithAmount(instance: FluidInstance, newAmount: Int): FluidInstance = when (instance) {
+        is FluidStack -> instance.copyWithAmount(newAmount)
+        is FluidStackTemplate -> instance.withAmount(newAmount)
+        else -> FluidStack(instance.typeHolder(), newAmount)
+    }
+
     //    Item    //
 
     /**
@@ -53,11 +63,20 @@ data object HTIngredientHelper {
     /**
      * [ItemInstance]が空かどうか判定します。
      */
-    @JvmName("isEmptyItem")
     @JvmStatic
     fun isEmpty(instance: ItemInstance): Boolean = when (instance) {
         is ItemStack -> instance.isEmpty
         is ItemStackTemplate -> false
         else -> instance.typeHolder().isAir || instance.count() <= 0
+    }
+
+    /**
+     * @since 26.1.7
+     */
+    @JvmStatic
+    fun copyWithCount(instance: ItemInstance, newCount: Int): ItemInstance = when (instance) {
+        is ItemStack -> instance.copyWithCount(newCount)
+        is ItemStackTemplate -> instance.withCount(newCount)
+        else -> ItemStack(instance.typeHolder(), newCount)
     }
 }

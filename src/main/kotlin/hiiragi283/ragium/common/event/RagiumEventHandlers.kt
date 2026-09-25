@@ -1,5 +1,8 @@
 package hiiragi283.ragium.common.event
 
+import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.PotionBrewing
@@ -13,5 +16,9 @@ data object RagiumEventHandlers {
     private fun registerBrewingRecipes(event: RegisterBrewingRecipesEvent) {
         val builder: PotionBrewing.Builder = event.builder
         RagiumPotions.FROSTBITE.registerMix(builder, Items.SNOW_BLOCK)
+        RagiumPotions.CHEMICAL_BURN.registerMix(
+            builder,
+            RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR)
+        )
     }
 }

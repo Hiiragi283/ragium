@@ -69,12 +69,10 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
     /**
      * ハーフブロックのブロックJSONを生成します。
      */
-    fun BlockModelGenerators.createSlab(
-        block: HTValueWithId<SlabBlock>,
-        fullModel: Identifier,
-        texture: Material = Material(block.idOrThrow.blockId)
-    ) {
-        this.createSlab(block, fullModel, texture, texture, texture)
+    fun BlockModelGenerators.createSlab(block: HTValueWithId<SlabBlock>, fullBlock: HTValueWithId<*>) {
+        val fullBlockId: Identifier = fullBlock.idOrThrow.blockId
+        val texture = Material(fullBlockId)
+        this.createSlab(block, fullBlockId, texture, texture, texture)
     }
 
     /**
@@ -108,10 +106,9 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
     /**
      * 階段ブロックのブロックJSONを生成します。
      */
-    fun BlockModelGenerators.createStairs(
-        block: HTValueWithId<StairBlock>,
-        texture: Material = Material(block.idOrThrow.blockId)
-    ) {
+    fun BlockModelGenerators.createStairs(block: HTValueWithId<StairBlock>, fullBlock: HTValueWithId<*>) {
+        val fullBlockId: Identifier = fullBlock.idOrThrow.blockId
+        val texture = Material(fullBlockId)
         this.createStairs(block, texture, texture, texture)
     }
 

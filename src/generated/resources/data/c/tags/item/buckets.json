@@ -1,9 +1,10 @@
 {
   "values": [
+    "#c:buckets/alumina_solution",
     "#c:buckets/anti_rust_oil",
     "#c:buckets/aromatic_compound",
     "#c:buckets/bleach",
-    "#c:buckets/chloride",
+    "#c:buckets/chlorine",
     "#c:buckets/coal_tar",
     "#c:buckets/crude_oil",
     "#c:buckets/dye/black",
@@ -25,8 +26,10 @@
     "#c:buckets/fuel",
     "#c:buckets/honey",
     "#c:buckets/hydrochloric_acid",
+    "#c:buckets/hydrofluoric_acid",
     "#c:buckets/hydrogen",
     "#c:buckets/hydrogen_chloride",
+    "#c:buckets/hydrogen_fluoride",
     "#c:buckets/liquid_explosive",
     "#c:buckets/molten_ender",
     "#c:buckets/molten_glass",
@@ -38,10 +41,12 @@
     "#c:buckets/ore_slurry",
     "#c:buckets/oxygen",
     "#c:buckets/potion",
+    "#c:buckets/resin",
     "#c:buckets/sodium_hydroxide_solution",
     "#c:buckets/sulfur_dioxide",
     "#c:buckets/sulfur_trioxide",
     "#c:buckets/sulfuric_acid",
+    "#c:buckets/synthetic_resin",
     "#c:buckets/wood_tar"
   ]
 }

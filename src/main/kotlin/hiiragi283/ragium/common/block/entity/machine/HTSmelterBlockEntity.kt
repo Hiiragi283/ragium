@@ -6,9 +6,11 @@ import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
-import hiiragi283.lib.recipe.handler.HTInputSlot
+import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
+import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
+import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.lookup.HTVanillaRecipeCache
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -61,14 +63,12 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
         recipeHandler = object : EnergizedHandler<SingleRecipeInput, ItemStack, HTItemToItemRecipe>() {
-            private val inputSlot: HTInputSlot.SingleItem by lazy {
-                HTInputSlot.SingleItem(this@HTSmelterBlockEntity.inputSlot)
-            }
+            private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTSmelterBlockEntity.inputSlot) }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-                HTOutputSlot.SingleItem(this@HTSmelterBlockEntity.outputSlot)
+                HTOutputSlotHelper.forItem(this@HTSmelterBlockEntity.outputSlot)
             }
 
-            override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStack())
+            override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStoredInput())
 
             override fun findRecipe(level: ServerLevel, input: SingleRecipeInput): HTItemToItemRecipe? {
                 val stackIn: ItemStack = typeSlot.getStackCopy()
@@ -81,38 +81,32 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
             }
 
             private fun wrapRecipe(recipe: AbstractCookingRecipe): HTItemToItemRecipe = object : HTItemToItemRecipe {
-                override fun test(input: ItemInstance): Boolean =
-                    HTIngredientHelper.unwrap(input).let(recipe.input()::test)
+                val ingredient = HTItemIngredient(recipe.input(), 1)
+
+                override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
                 override fun apply(input: ItemInstance): ItemStack =
                     HTIngredientHelper.unwrap(input).let(::SingleRecipeInput).let(recipe::assemble)
 
-                override fun getRequiredAmount(input: ItemInstance): Int = when {
-                    test(input) -> 1
-                    else -> 0
-                }
+                override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
 
                 override fun getProgressData(input: SingleRecipeInput): HTProgressData =
                     HTProgressData.time(recipe.cookingTime())
             }
 
-            override fun canComplete(recipe: HTItemToItemRecipe, input: SingleRecipeInput, output: ItemStack): Boolean {
-                val inputCount: Int = recipe.getRequiredAmount(input.item())
-                return inputCount != 0 && useTransaction { transaction: Transaction ->
+            override fun canComplete(recipe: HTItemToItemRecipe, input: SingleRecipeInput, output: ItemStack): Boolean =
+                useTransaction { transaction: Transaction ->
+                    val inputConsume: ItemInstance = recipe.getMatchingStack(input.item())
                     when {
-                        !inputSlot.canExtract(inputCount, transaction) -> false
-                        else -> outputSlot.canInsert(output, transaction)
+                        inputSlot.use(inputConsume, transaction).failed -> false
+                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
                     }
                 }
-            }
 
             override fun onComplete(recipe: HTItemToItemRecipe, input: SingleRecipeInput, output: ItemStack) {
-                val inputCount: Int = recipe.getRequiredAmount(input.item())
                 useTransaction { transaction: Transaction ->
-                    if (inputCount > 0) {
-                        inputSlot.extract(inputCount, transaction)
-                    }
-                    outputSlot.insert(output, transaction)
+                    inputSlot.use(recipe.getMatchingStack(input.item()), transaction)
+                    outputSlot.take(output, transaction)
                     transaction.commit()
                 }
                 playSound(SoundEvents.FIRE_EXTINGUISH)

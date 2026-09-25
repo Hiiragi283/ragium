@@ -1,0 +1,22 @@
+{
+  "type": "ragium:assembling",
+  "extras": [
+    {
+      "count": 3,
+      "items": "#c:rods/wooden"
+    },
+    {
+      "count": 3,
+      "items": "#c:strings"
+    }
+  ],
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:dropper"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:dispenser"
+  },
+  "time": 200
+}

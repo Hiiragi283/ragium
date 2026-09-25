@@ -1,0 +1,25 @@
+{
+  "type": "ragium:assembling",
+  "extras": [
+    {
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "neoforge:block_tag",
+        "tag": "minecraft:stone_pressure_plates"
+      }
+    },
+    {
+      "count": 1,
+      "items": "#c:dusts/redstone"
+    }
+  ],
+  "ingredient": {
+    "count": 6,
+    "items": "#c:ingots/iron"
+  },
+  "result": {
+    "count": 9,
+    "id": "minecraft:detector_rail"
+  },
+  "time": 200
+}

@@ -1,8 +1,17 @@
 {
-  "count": 3,
-  "fallback": "ragium:copper_dust",
-  "result": "#c:dusts/copper",
+  "color": "#c15a36",
+  "result": {
+    "type": "ragium:with_fallback",
+    "base": {
+      "type": "ragium:tag",
+      "tag": "#c:dusts/copper"
+    },
+    "count": 3,
+    "fallback": {
+      "id": "ragium:copper_dust"
+    }
+  },
   "title": {
-    "translate": "ore_slurry_data.ragium.copper"
+    "translate": "ragium.ore_slurry_data.ragium.copper"
   }
 }

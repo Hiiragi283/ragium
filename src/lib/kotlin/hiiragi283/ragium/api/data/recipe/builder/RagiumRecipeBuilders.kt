@@ -2,12 +2,12 @@
 
 package hiiragi283.ragium.api.data.recipe.builder
 
-import hiiragi283.lib.data.recipe.builder.HTDoubleItemToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTTripleItemToItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
@@ -37,12 +37,12 @@ data object RagiumRecipeBuilders {
     // Mechanical
     @JvmStatic
     inline fun assembling(
-        builderAction: HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe>.() -> Unit
-    ): HTDoubleItemToItemRecipeBuilder<RTAssemblingRecipe> {
+        builderAction: HTTripleItemToItemRecipeBuilder<RTAssemblingRecipe>.() -> Unit
+    ): HTTripleItemToItemRecipeBuilder<RTAssemblingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTDoubleItemToItemRecipeBuilder(RagiumConstants.ASSEMBLING, ::RTAssemblingRecipe).apply(builderAction)
+        return HTTripleItemToItemRecipeBuilder(RagiumConstants.ASSEMBLING, ::RTAssemblingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -98,12 +98,12 @@ data object RagiumRecipeBuilders {
     // Heat
     @JvmStatic
     inline fun alloying(
-        builderAction: HTDoubleItemToItemRecipeBuilder<RTAlloyingRecipe>.() -> Unit
-    ): HTDoubleItemToItemRecipeBuilder<RTAlloyingRecipe> {
+        builderAction: HTTripleItemToItemRecipeBuilder<RTAlloyingRecipe>.() -> Unit
+    ): HTTripleItemToItemRecipeBuilder<RTAlloyingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTDoubleItemToItemRecipeBuilder(RagiumConstants.ALLOYING, ::RTAlloyingRecipe).apply(builderAction)
+        return HTTripleItemToItemRecipeBuilder(RagiumConstants.ALLOYING, ::RTAlloyingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -200,6 +200,17 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTItemToDoubleItemRecipeBuilder(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
+    }
+
+    // Electronics
+    @JvmStatic
+    inline fun resourceExtracting(
+        builderAction: RTResourceExtractingRecipeBuilder.() -> Unit
+    ): RTResourceExtractingRecipeBuilder {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return RTResourceExtractingRecipeBuilder().apply(builderAction)
     }
 
     // Arcane

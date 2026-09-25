@@ -84,6 +84,8 @@ data object RagiumRecipeTypes {
     val PLANTING: HTRecipeType<RTPlantingRecipe> = create(RagiumConstants.PLANTING)
 
     // Electronics
+    @JvmField
+    val RESOURCE_EXTRACTING: HTRecipeType<RTResourceExtractingRecipe> = create(RagiumConstants.RESOURCE_EXTRACTING)
 
     // Arcane
     @JvmField

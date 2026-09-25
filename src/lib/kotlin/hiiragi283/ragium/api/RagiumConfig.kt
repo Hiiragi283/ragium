@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.config.definePositiveInt
 import hiiragi283.ragium.api.config.HTEnergyConfig
 import net.minecraft.resources.Identifier
 import net.neoforged.neoforge.common.ModConfigSpec
@@ -58,6 +59,28 @@ data object RagiumConfig {
 
         @JvmField
         val machine: Machine
+
+        // Storage
+        @JvmField
+        val energyBarColor: ModConfigSpec.IntValue
+
+        @JvmField
+        val batteryCapacity: ModConfigSpec.IntValue
+
+        @JvmField
+        val crateCapacity: ModConfigSpec.IntValue
+
+        @JvmField
+        val tankCapacity: ModConfigSpec.IntValue
+
+        init {
+            builder.push("storage")
+            energyBarColor = builder.definePositiveInt("energy_bar_color", 0xFF0033, 0)
+            batteryCapacity = builder.definePositiveInt("battery_capacity", 1_024_000)
+            crateCapacity = builder.definePositiveInt("crate_capacity", 32 * 64)
+            tankCapacity = builder.definePositiveInt("tank_capacity", 16000)
+            builder.pop()
+        }
 
         class Machine(builder: ModConfigSpec.Builder) {
             @JvmField
@@ -133,10 +156,18 @@ data object RagiumConfig {
 
             // Electronics
             @JvmField
+            val precisionAssembler: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.PRECISION_ASSEMBLER, 64)
+
+            @JvmField
             val scanner: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.SCANNER)
+                HTEnergyConfig.createMachine(builder, RagiumConstants.SCANNER, 64)
 
             // Arcane
+            @JvmField
+            val enchanter: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.ENCHANTER, 256)
+
             @JvmField
             val fluidDuplicator: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.FLUID_DUPLICATOR, 1024)

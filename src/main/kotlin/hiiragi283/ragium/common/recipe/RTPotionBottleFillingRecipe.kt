@@ -5,6 +5,7 @@ import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
+import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
@@ -14,10 +15,15 @@ import net.neoforged.neoforge.fluids.FluidInstance
 data class RTPotionBottleFillingRecipe(val bottleType: HTBottleType, override val progressData: HTProgressData) :
     HTItemAndFluidToItemRecipe,
     HTProgressRecipe.Simple<HTItemAndFluidRecipeInput> {
-    constructor(bottleType: HTBottleType) : this(bottleType, HTProgressData.time(60))
+    companion object {
+        @JvmField
+        val PROGRESS_DATA: HTProgressData = HTProgressData.time(60)
+    }
+
+    constructor(bottleType: HTBottleType) : this(bottleType, PROGRESS_DATA)
 
     override fun test(first: ItemInstance, second: FluidInstance): Boolean = when {
-        !first.`is`(bottleType.emptyItem) -> false
+        !bottleType.emptyItem.isOf(first) -> false
         !HTPotionHelper.hasAnyEffect(second) -> false
         else -> second.amount() >= HTPotionHelper.BOTTLE_AMOUNT
     }
@@ -25,8 +31,8 @@ data class RTPotionBottleFillingRecipe(val bottleType: HTBottleType, override va
     override fun apply(first: ItemInstance, second: FluidInstance): ItemStack =
         bottleType.filledItem.toStack(patch = HTPotionHelper.createPotionPatch(second))
 
-    override fun getRequiredAmount(first: ItemInstance, second: FluidInstance): Pair<Int, Int> = when {
-        test(first, second) -> 1 to HTPotionHelper.BOTTLE_AMOUNT
-        else -> 0 to 0
-    }
+    override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> = Pair(
+        HTIngredientHelper.copyWithCount(first, 1),
+        HTIngredientHelper.copyWithAmount(second, HTPotionHelper.BOTTLE_AMOUNT)
+    )
 }

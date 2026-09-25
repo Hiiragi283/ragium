@@ -26,9 +26,13 @@ class RagiumBlockItemTagsProvider(factory: (BlockItemTag) -> HTBlockItemTagBuild
             .add(BlockItemKey(vanillaId("quartz_block")))
             .add(BlockItemKey(vanillaId("quartz_bricks")))
             .add(BlockItemKey(vanillaId("quartz_pillar")))
+
+        builder(RagiumTags.BlockItem.STORAGES_CREATIVE)
+            .add(RagiumBlocks.CREATIVE_BATTERY)
+            .add(RagiumBlocks.CREATIVE_TANK)
         // Machine
         for (machineType: HTMachineType in HTMachineType.entries) {
-            for (block: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINES[machineType]) {
+            for (block: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINES[machineType] ?: listOf()) {
                 builder(HTMachineType.PREFIX, machineType).add(block)
             }
         }

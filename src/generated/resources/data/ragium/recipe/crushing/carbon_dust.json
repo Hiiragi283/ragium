@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#ragium:cokes"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:carbon_dust"
+  },
+  "time": 200
+}

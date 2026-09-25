@@ -33,9 +33,11 @@ data object RagiumConstants {
     const val PLANTER = "planter"
 
     // Electronics
+    const val PRECISION_ASSEMBLER = "precision_assembler"
     const val SCANNER = "scanner"
 
     // Arcane
+    const val ENCHANTER = "enchanter"
     const val FLUID_DUPLICATOR = "fluid_duplicator"
     const val MASS_FABRICATOR = "mass_fabricator"
 
@@ -68,6 +70,8 @@ data object RagiumConstants {
 
     // Electronics
     const val PRINTING = "printing"
+
+    const val RESOURCE_EXTRACTING = "resource/extracting"
 
     // Arcane
     const val ENCHANTING = "enchanting"

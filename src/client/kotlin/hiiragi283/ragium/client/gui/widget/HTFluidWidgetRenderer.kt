@@ -2,14 +2,13 @@ package hiiragi283.ragium.client.gui.widget
 
 import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.HTGuiAccess
+import hiiragi283.lib.gui.HTGuiRenderHelper
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.fluid.getFluidStack
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphicsExtractor
-import net.minecraft.client.renderer.block.FluidModel
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Item
@@ -28,14 +27,9 @@ class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) :
 
     override fun shouldRender(): Boolean = !widget.isEmpty
 
-    private fun getModel(): FluidModel = Minecraft.getInstance()
-        .modelManager
-        .fluidStateModelSet
-        .get(widget.resource.fluid.defaultFluidState())
+    override fun getSprite(): TextureAtlasSprite? = HTGuiRenderHelper.getSprite(widget.resource)
 
-    override fun getSprite(): TextureAtlasSprite = getModel().stillMaterial().sprite()
-
-    override fun getColor(): Int = getModel().fluidTintSource()?.colorAsStack(widget.getFluidStack()) ?: 0
+    override fun getColor(): Int = HTGuiRenderHelper.getColor(widget.getFluidStack())
 
     override fun getLevel(): Float = when (widget) {
         is HTFluidWidget.Slot -> 1f

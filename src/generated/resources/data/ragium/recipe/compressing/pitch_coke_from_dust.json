@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/pitch_coke"
+      }
+    }
+  ],
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:dusts/pitch_coke"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:pitch_coke"
+  },
+  "time": 200
+}

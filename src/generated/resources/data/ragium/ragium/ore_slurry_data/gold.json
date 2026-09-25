@@ -1,8 +1,17 @@
 {
-  "count": 2,
-  "fallback": "ragium:gold_dust",
-  "result": "#c:dusts/gold",
+  "color": "#ffcc00",
+  "result": {
+    "type": "ragium:with_fallback",
+    "base": {
+      "type": "ragium:tag",
+      "tag": "#c:dusts/gold"
+    },
+    "count": 2,
+    "fallback": {
+      "id": "ragium:gold_dust"
+    }
+  },
   "title": {
-    "translate": "ore_slurry_data.ragium.gold"
+    "translate": "ragium.ore_slurry_data.ragium.gold"
   }
 }

@@ -1,6 +1,7 @@
 package hiiragi283.lib.data.recipe.builder
 
 import hiiragi283.lib.recipe.base.HTProgressData
+import hiiragi283.lib.util.HTDelegates
 import net.minecraft.world.item.crafting.Recipe
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -12,8 +13,7 @@ import kotlin.reflect.KProperty
  * @since 26.1.0
  */
 abstract class HTProgressRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String) : HTRecipeBuilder<RECIPE>(prefix) {
-    protected var progressData: HTProgressData = HTProgressData.time(20 * 10)
-        private set
+    var progressData: HTProgressData by HTDelegates.onceInitialize { HTProgressData.time(20 * 10) }
 
     var energy: Int by object : ReadWriteProperty<Any?, Int> {
         override fun getValue(thisRef: Any?, property: KProperty<*>): Int = when (progressData) {

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:freezing",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:dyes/purple"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:purple_dye"
+  },
+  "time": 200
+}

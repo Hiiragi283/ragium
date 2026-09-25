@@ -23,18 +23,14 @@ class RTReactingRecipeCategory(guiHelper: IGuiHelper) :
     ) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTReactingRecipe.Basic, focuses: IFocusGroup) {
         // inputs
-        recipe.primary.let {
-            builder
-                .addInputSlot(getPosition(0), getPosition(0))
-                .add(it)
-                .setSlotBackground(HTBackgroundType.INPUT, it.amount)
-        }
-        recipe.secondary.let {
-            builder
-                .addInputSlot(getPosition(2), getPosition(0))
-                .add(it)
-                .setSlotBackground(HTBackgroundType.EXTRA_INPUT, it.amount)
-        }
+        builder
+            .addInputSlot(getPosition(0), getPosition(0))
+            .add(recipe.primary)
+            .setSlotBackground(HTBackgroundType.INPUT)
+        builder
+            .addInputSlot(getPosition(2), getPosition(0))
+            .add(recipe.secondary)
+            .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
         // outputs
         val (itemResult: HTItemResult?, fluidResult: HTFluidResult?) = recipe.results.toPair()
         val fluidOutput: IRecipeSlotBuilder = builder
@@ -43,7 +39,7 @@ class RTReactingRecipeCategory(guiHelper: IGuiHelper) :
         val itemOutput: IRecipeSlotBuilder = builder
             .addOutputSlot(getPosition(7), getPosition(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
-        fluidResult?.let { fluidOutput.add(it).setFluidSlot(it.amount) }
+        fluidResult?.let(fluidOutput::add)
         itemResult?.let(itemOutput::add)
     }
 

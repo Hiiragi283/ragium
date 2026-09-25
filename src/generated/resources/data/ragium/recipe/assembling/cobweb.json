@@ -1,16 +1,16 @@
 {
   "type": "ragium:assembling",
-  "primary_ingredient": {
+  "extra": {
+    "count": 1,
+    "items": "#c:sticky_balls"
+  },
+  "ingredient": {
     "count": 5,
     "items": "#c:strings"
   },
   "result": {
     "count": 1,
     "id": "minecraft:cobweb"
-  },
-  "secondary_ingredient": {
-    "count": 1,
-    "items": "#c:sticky_balls"
   },
   "time": 200
 }

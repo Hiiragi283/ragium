@@ -20,7 +20,6 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidInstance
-import net.neoforged.neoforge.fluids.FluidStack
 import java.util.Optional
 
 @JvmRecord
@@ -63,15 +62,12 @@ data class RTRefiningRecipe(
 
     override fun test(input: FluidInstance): Boolean = ingredient.test(input)
 
-    override fun getRequiredAmount(input: FluidInstance): Int = ingredient.getRequiredAmount(input)
+    override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
 
-    override fun apply(input: FluidInstance): HTItemAndFluidResult {
-        val stack: FluidStack = fluidResult.create()
-        return itemResult.map(HTItemResult::create).fold(
-            { HTItemAndFluidResult(stack) },
-            { HTItemAndFluidResult(it, stack) }
-        )
-    }
+    override fun apply(input: FluidInstance): HTItemAndFluidResult = itemResult.fold(
+        { HTItemAndFluidResult.from(fluidResult) },
+        { HTItemAndFluidResult.from(it, fluidResult) }
+    )
 
     override fun getSerializer(): RecipeSerializer<RTRefiningRecipe> = RagiumRecipeSerializers.REFINING
 

@@ -60,8 +60,8 @@ data class RTEnchantingRecipe(
 
     override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
 
-    override fun getRequiredAmount(first: ItemInstance, second: ItemInstance): Pair<Int, Int> =
-        BOOK_INGREDIENT.getRequiredAmount(first) to ingredient.getRequiredAmount(second)
+    override fun getMatchingStack(first: ItemInstance, second: ItemInstance): Pair<ItemInstance, ItemInstance> =
+        BOOK_INGREDIENT.getMatchingStack(first) to ingredient.getMatchingStack(second)
 
     override fun getSerializer(): RecipeSerializer<RTEnchantingRecipe> = RagiumRecipeSerializers.ENCHANTING
 

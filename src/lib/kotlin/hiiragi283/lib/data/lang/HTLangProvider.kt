@@ -54,8 +54,7 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
      * @param value エンチャントの翻訳名
      * @param desc エンチャントの説明
      */
-    @JvmName("addEnchantment")
-    protected fun add(key: ResourceKey<Enchantment>, value: String, desc: String) {
+    protected fun addEnchantment(key: ResourceKey<Enchantment>, value: String, desc: String) {
         add(key.toLanguageKey(), value)
         add(key.toLanguageKey("desc"), desc)
     }
@@ -66,8 +65,7 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
      * @param desc 進捗の説明
      * @since 26.1.3
      */
-    @JvmName("addAdvancement")
-    protected fun add(key: AdvancementKey, title: String, desc: String) {
+    protected fun addAdvancement(key: AdvancementKey, title: String, desc: String) {
         add(key.titleKey, title)
         add(key.descKey, desc)
     }

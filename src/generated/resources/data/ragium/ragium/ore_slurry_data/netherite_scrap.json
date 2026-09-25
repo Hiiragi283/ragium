@@ -1,0 +1,10 @@
+{
+  "color": "#473e3f",
+  "result": {
+    "count": 2,
+    "id": "minecraft:netherite_scrap"
+  },
+  "title": {
+    "translate": "ragium.ore_slurry_data.ragium.netherite_scrap"
+  }
+}

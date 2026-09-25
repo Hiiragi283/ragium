@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:nuggets/black_steel",
+    "B": "ragium:bio_machine_parts",
+    "C": "#c:gears/emerald",
+    "D": "minecraft:flower_pot"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ADA"
+  ],
+  "result": {
+    "id": "ragium:planter"
+  }
+}

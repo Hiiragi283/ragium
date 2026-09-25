@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "aluminum_ingot",
+  "key": {
+    "A": "#c:nuggets/aluminum",
+    "B": "ragium:aluminum_nugget"
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:aluminum_ingot"
+  }
+}

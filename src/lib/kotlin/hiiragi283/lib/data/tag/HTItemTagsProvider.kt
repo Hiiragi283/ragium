@@ -1,6 +1,6 @@
 package hiiragi283.lib.data.tag
 
-import hiiragi283.lib.registry.asKeyOrValue
+import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import net.minecraft.core.HolderLookup
@@ -8,7 +8,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 import java.util.concurrent.CompletableFuture
 
 /**
@@ -32,13 +31,6 @@ abstract class HTItemTagsProvider : HTTagsProvider<Item> {
 
     //    Extensions    //
 
-    /**
-     * 指定した要素をタグに追加します。
-     * @param item アイテムの値
-     */
-    protected fun HTTagBuilder<Item>.addItem(item: ItemLike): HTTagBuilder<Item> =
-        this.add(item.asItem().asKeyOrValue())
-
     protected fun createTag(prefix: HTTagPrefix, material: HTMaterialLike): TagKey<Item> = prefix.itemTagKey(material)
 
     /**
@@ -48,4 +40,12 @@ abstract class HTItemTagsProvider : HTTagsProvider<Item> {
      */
     protected fun builder(prefix: HTTagPrefix, material: HTMaterialLike): HTTagBuilder<Item> =
         builders(prefix.rawCommonTag.item, prefix.itemTagKey(material))
+
+    /**
+     * @since 26.1.7
+     */
+    protected fun HTTagBuilder<Item>.add(
+        blockItem: HTSimpleDeferredBlockAndItem,
+        type: HTTagDependType = HTTagDependType.REQUIRED
+    ): HTTagBuilder<Item> = this.add(blockItem.item, type)
 }

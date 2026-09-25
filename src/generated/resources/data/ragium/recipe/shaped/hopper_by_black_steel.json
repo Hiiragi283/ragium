@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:ingots/black_steel",
+    "B": "#c:chests/wooden"
+  },
+  "pattern": [
+    "A A",
+    "ABA",
+    " A "
+  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:hopper"
+  }
+}

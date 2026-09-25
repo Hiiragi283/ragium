@@ -22,12 +22,10 @@ class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) :
     ) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTElectrolyzingRecipe, focuses: IFocusGroup) {
         // inputs
-        recipe.fluidIngredient.let {
-            builder
-                .addInputSlot(getPosition(0), getPosition(0))
-                .add(it)
-                .setSlotBackground(HTBackgroundType.INPUT, it.amount)
-        }
+        builder
+            .addInputSlot(getPosition(0), getPosition(0))
+            .add(recipe.fluidIngredient)
+            .setSlotBackground(HTBackgroundType.INPUT)
         val itemInput: IRecipeSlotBuilder = builder.addInputSlot(
             getPosition(2),
             getPosition(0)
@@ -37,11 +35,8 @@ class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) :
         val outputSlots: Array<IRecipeSlotBuilder> = Array(3) { index: Int ->
             builder.addOutputSlot(getPosition(5 + index), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT)
         }
-        for (index: Int in recipe.results.indices) {
-            val result: HTFluidResult = recipe.results[index]
-            outputSlots[index]
-                .add(result)
-                .setFluidSlot(result.amount)
+        for ((index: Int, result: HTFluidResult) in recipe.results.withIndex()) {
+            outputSlots[index].add(result)
         }
     }
 

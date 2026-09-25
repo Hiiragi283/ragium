@@ -1,9 +1,12 @@
 package hiiragi283.lib.item
 
+import hiiragi283.lib.registry.RegistryKey
 import net.minecraft.core.Holder
+import net.minecraft.world.flag.FeatureElement
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import java.util.stream.Stream
 
 /**
  * クリエイティブタブに複数の[ItemStack]を追加するためのインターフェースです。
@@ -22,6 +25,17 @@ fun interface HTSubCreativeTabContents {
         parameters: CreativeModeTab.ItemDisplayParameters,
         output: CreativeModeTab.Output
     )
+
+    /**
+     * @since 26.1.7
+     */
+    fun <T : FeatureElement> CreativeModeTab.ItemDisplayParameters.filteredElements(
+        registryKey: RegistryKey<T>
+    ): Stream<Holder.Reference<T>> = this.holders()
+        .lookup(registryKey)
+        .map { it.filterFeatures(this.enabledFeatures()) }
+        .stream()
+        .flatMap { it.listElements() }
 
     /**
      * デフォルトの[ItemStack]を追加するか判定します。

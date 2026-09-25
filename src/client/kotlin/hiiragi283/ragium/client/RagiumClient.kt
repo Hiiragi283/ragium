@@ -9,13 +9,16 @@ import hiiragi283.lib.mod.HTClientMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryDataHelper
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
+import hiiragi283.ragium.client.gui.screen.tooltip.HTMemoryDiscClientTooltipComponent
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTItemWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTProgressWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTWidgetRendererManager
-import hiiragi283.ragium.client.render.HTMemoryDiscClientTooltipComponent
+import hiiragi283.ragium.client.renderer.HTTankBlockEntityRenderer
+import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
@@ -23,12 +26,14 @@ import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import net.minecraft.client.resources.model.sprite.Material
+import net.minecraft.util.ARGB
 import net.minecraft.world.item.DyeColor
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
+import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent
@@ -72,13 +77,14 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.HONEY) {
             still = Material(vanillaId(HTConstants.BLOCK, "honey_block_top"), true)
         }
+        register.register(RagiumFluids.RESIN) {
+            still = Material(vanillaId(HTConstants.BLOCK, "resin_block"))
+        }
         register.register(RagiumFluids.POTION) {
             dull()
-            tintSource =
-                FluidStackTintSource { stack: FluidStack ->
-                    "ff000000".hexToInt() or
-                        HTPotionHelper.getContents(stack).color
-                }
+            tintSource = FluidStackTintSource { stack: FluidStack ->
+                ARGB.opaque(HTPotionHelper.getContents(stack).color)
+            }
         }
         register.register(RagiumFluids.OMINOUS_FLUX) {
             molten()
@@ -116,11 +122,11 @@ data object RagiumClient : HTClientMod() {
         }
 
         register.register(RagiumFluids.WOOD_TAR) {
-            dull()
+            molten()
             colorTint(Color(0x663333))
         }
         register.register(RagiumFluids.COAL_TAR) {
-            dull()
+            molten()
             colorTint(Color(0x333366))
         }
         register.register(RagiumFluids.AROMATIC_COMPOUND) {
@@ -128,7 +134,7 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0xffcc99))
         }
         register.register(RagiumFluids.CRUDE_OIL) {
-            sticky()
+            molten()
             colorTint(Color(0x333333))
         }
         register.register(RagiumFluids.NAPHTHA) {
@@ -143,6 +149,10 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0xff9933))
         }
+        register.register(RagiumFluids.SYNTHETIC_RESIN) {
+            molten()
+            colorTint(Color(0xff6633))
+        }
         register.register(RagiumFluids.NITRIC_ACID) {
             dull()
             colorTint(Color(0x9999cc))
@@ -151,9 +161,22 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0xcc3333))
         }
+        register.register(RagiumFluids.HYDROGEN_FLUORIDE) {
+            transparent()
+            colorTint(Color(0x33cc66))
+        }
+        register.register(RagiumFluids.HYDROFLUORIC_ACID) {
+            dull()
+            colorTint(Color(0x33cc66))
+        }
+
         register.register(RagiumFluids.NAOH_SOLUTION) {
             dull()
             colorTint(Color(0x003366))
+        }
+        register.register(RagiumFluids.ALUMINA_SOLUTION) {
+            transparent()
+            colorTint(Color(0xffcccc))
         }
         register.register(RagiumFluids.SULFUR_DIOXIDE) {
             transparent()
@@ -181,12 +204,19 @@ data object RagiumClient : HTClientMod() {
         }
 
         register.register(RagiumFluids.ORE_SLURRY) {
-            dull()
-            colorTint(Color(0x3399cc))
+            still = Material(vanillaId(HTConstants.BLOCK, "white_concrete_powder"))
+            tintSource = FluidStackTintSource { stack: FluidStack ->
+                ARGB.opaque(HTOreSlurryDataHelper.getData(stack)?.color ?: 0x333300)
+            }
         }
     }
 
     override fun registerScreens(event: RegisterMenuScreensEvent) {
         event.register(HTBlockWidgetHolderContext.MENU_TYPE.get(), ::HTWidgetContainerScreen)
+    }
+
+    override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankBlockEntityRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), ::HTTankBlockEntityRenderer)
     }
 }

@@ -13,7 +13,10 @@
       "burn_time": 32000
     },
     "ragium:pitch_coke": {
-      "burn_time": 1200
+      "burn_time": 2400
+    },
+    "ragium:pitch_coke_block": {
+      "burn_time": 24000
     },
     "ragium:tar": {
       "burn_time": 800
@@ -26,6 +29,9 @@
     },
     "ragium:tiny_coal_coke": {
       "burn_time": 400
+    },
+    "ragium:tiny_pitch_coke": {
+      "burn_time": 300
     }
   }
 }

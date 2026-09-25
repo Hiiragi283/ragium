@@ -22,18 +22,28 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addPatternTranslations(this)
 
         // Advancement
-        add(RagiumAdvancementKeys.ROOT, "ラギウム", "ラギウムへようこそ!")
-        add(RagiumAdvancementKeys.SOOTY_IRON, "黒鉄（くろがね）を手に入れる", "煤鉄をつくる")
+        addAdvancement(RagiumAdvancementKeys.ROOT, "ラギウム", "ラギウムへようこそ!")
+        addAdvancement(RagiumAdvancementKeys.SOOTY_IRON, "黒鉄（くろがね）を手に入れる", "煤鉄をつくる")
 
-        add(RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS, "機械・加工・機械", "マシンケーシング（機械加工）を作る")
-        add(RagiumAdvancementKeys.ASSEMBLER, "ラヴェ（ン）ジャーズ，アッセンブル！", "組立機を手に入れる")
-        add(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "粉砕機を手に入れる")
+        addAdvancement(RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS, "機械・加工・機械", "マシンケーシング（機械加工）を作る")
+        addAdvancement(RagiumAdvancementKeys.ASSEMBLER, "ラヴェ（ン）ジャーズ，アッセンブル！", "組立機を手に入れる")
+        addAdvancement(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "粉砕機を手に入れる")
 
-        add(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "マシンケーシング（熱）を作る")
-        add(RagiumAdvancementKeys.BLACK_STEEL, "黒い咆哮", "黒鋼をつくる")
-        add(RagiumAdvancementKeys.FREEZER, "私の消費電力は53万です", "冷凍機を手に入れる")
-        add(RagiumAdvancementKeys.MELTER, "融けてしまいそう", "溶融炉を手に入れる")
+        addAdvancement(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "マシンケーシング（熱）を作る")
+        addAdvancement(RagiumAdvancementKeys.BLACK_STEEL, "黒い咆哮", "黒鋼をつくる")
+        addAdvancement(RagiumAdvancementKeys.FREEZER, "私の消費電力は53万です", "冷凍機を手に入れる")
+        addAdvancement(RagiumAdvancementKeys.MELTER, "融けてしまいそう", "溶融炉を手に入れる")
         // Block
+        add(RagiumBlocks.ECHO_BLOCK, "残響ブロック")
+
+        add(RagiumBlocks.FLUORITE_BLOCK, "蛍石ブロック")
+        add(RagiumBlocks.FLUORITE_SLAB, "蛍石のハーフブロック")
+        add(RagiumBlocks.FLUORITE_STAIRS, "蛍石の階段")
+
+        add(RagiumBlocks.CRYOLITE_BLOCK, "氷晶石ブロック")
+        add(RagiumBlocks.CRYOLITE_SLAB, "氷晶石のハーフブロック")
+        add(RagiumBlocks.CRYOLITE_STAIRS, "氷晶石の階段")
+
         add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.CRUSHER, "破砕機")
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
@@ -54,13 +64,23 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.PLANTER, "栽培機")
 
+        add(RagiumBlocks.PRECISION_ASSEMBLER, "精密組立機")
         add(RagiumBlocks.SCANNER, "レーザースキャナ")
 
+        add(RagiumBlocks.ENCHANTER, "エンチャンター")
+
+        add(RagiumBlocks.TANK, "可変タンク")
+        add(RagiumBlocks.VOID_TANK, "廃棄タンク")
         add(RagiumBlocks.CREATIVE_BATTERY, "クリエイティブ用バッテリー")
+        add(RagiumBlocks.CREATIVE_TANK, "クリエイティブ用タンク")
 
         add(RagiumBlocks.MACHINE_CASING, "機械ケーシング")
+        // Damage Type
+        add("death.attack.chemicalBurn", $$"%1$sは化学火傷を負った")
+        add("death.attack.chemicalBurn.player", $$"%1$sは%2$sと戦いながら化学火傷を負った")
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
+        addFluid(RagiumFluids.RESIN, "樹脂")
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
         addFluid(RagiumFluids.OMINOUS_FLUX, "不吉な流動体")
@@ -80,9 +100,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
         addFluid(RagiumFluids.FUEL, "燃料油")
         addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
+        addFluid(RagiumFluids.SYNTHETIC_RESIN, "合成樹脂")
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "液体爆薬")
+        addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "フッ化水素")
+        addFluid(RagiumFluids.HYDROFLUORIC_ACID, "フッ化水素酸")
         addFluid(RagiumFluids.NAOH_SOLUTION, "水酸化ナトリウム水溶液")
+        addFluid(RagiumFluids.ALUMINA_SOLUTION, "アルミナ水溶液")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "二酸化硫黄")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
@@ -95,7 +119,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.TAR, "タール")
-        add(RagiumItems.PITCH_COKE, "ピッチコークス")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
@@ -104,6 +127,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.BEESWAX, "密猟")
         add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
         add(RagiumItems.LINGERING_BOTTLE, "残留瓶")
+        add(RagiumItems.CRUDE_SILICON, "粗製シリコン")
+        add(RagiumItems.SILICON_WAFER, "シリコンウェハ")
+        add(RagiumItems.CIRCUIT_CHIP, "回路チップ")
+        add(RagiumItems.CIRCUIT_BOARD, "回路基板")
+        add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")
@@ -112,16 +140,22 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "凍傷")
+        add(RagiumMobEffects.CHEMICAL_BURN, "化学火傷")
 
         // Ore Slurry
         addOreSlurry(RagiumOreSlurryData.COPPER, "銅の鉱石泥")
         addOreSlurry(RagiumOreSlurryData.IRON, "鉄の鉱石泥")
         addOreSlurry(RagiumOreSlurryData.GOLD, "金の鉱石泥")
+        addOreSlurry(RagiumOreSlurryData.NETHERITE_SCRAP, "古代の鉱石泥")
 
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "凍傷")
+        addPotion(RagiumPotions.CHEMICAL_BURN, "化学火傷")
 
+        addCustomPotion("nausea", "吐き気")
+        addCustomPotion("blindness", "盲目")
         addCustomPotion("hunger", "空腹")
+        addCustomPotion("wither", "衰退")
         addCustomPotion("darkness", "暗闇")
         addCustomPotion("golden_apple", "金リンゴ")
         addCustomPotion("enchanted_golden_apple", "エンチャントされた金リンゴ")
@@ -148,6 +182,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.BREWING, "醸造")
         add(RagiumRecipeTypes.PLANTING, "栽培")
 
+        add(RagiumRecipeTypes.RESOURCE_EXTRACTING, "資源採集")
+
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
 
         // Text - Lib
@@ -168,6 +204,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(HTCommonTranslation.PROGRESS, $$"進捗率: %1$s %%")
         add(HTCommonTranslation.SECONDS, $$"%1$s 秒 (%2$s ticks)")
+
+        add(HTCommonTranslation.BIOME, $$"バイオーム: %1$s")
 
         add(HTCommonTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
         add(HTCommonTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")

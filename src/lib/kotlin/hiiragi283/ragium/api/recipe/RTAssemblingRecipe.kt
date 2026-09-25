@@ -1,20 +1,21 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
-import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
+import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 
 class RTAssemblingRecipe(
-    primary: HTItemIngredient,
-    secondary: HTItemIngredient,
+    ingredient: HTItemIngredient,
+    extras: Nel<HTItemIngredient>,
     result: HTItemResult,
     progressData: HTProgressData
-) : HTDoubleItemToItemRecipe.Basic(primary, secondary, result, progressData),
+) : HTTripleItemToItemRecipe.Basic(ingredient, extras, result, progressData),
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField

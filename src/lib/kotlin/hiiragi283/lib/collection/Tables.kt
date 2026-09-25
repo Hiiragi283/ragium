@@ -42,39 +42,39 @@ private data object EmptyTable : Table<Any?, Any?, Nothing> {
 }
 
 /**
- * 新しい[PairMapTable]のインスタンスを作成します。
+ * 新しい[DelegatingTable]のインスタンスを作成します。
  * @param R 行のクラス
  * @param C 列のクラス
  * @param V 値のクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <R, C, V> buildTable(
+inline fun <R : Any, C : Any, V : Any> buildTable(
     initialCapacity: Int = 10,
     builderAction: Table.Builder<R, C, V>.() -> Unit
 ): Table<R, C, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
-    return PairMapTable.Builder<R, C, V>(initialCapacity).apply(builderAction).build()
+    return DelegatingTable.Builder<R, C, V>(initialCapacity).apply(builderAction).build()
 }
 
 /**
- * 新しい[PairMapTable]のインスタンスを作成します。
+ * 新しい[DelegatingTable]のインスタンスを作成します。
  * @param R 行のクラス
  * @param C 列のクラス
  * @param V 値のクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <R, C, V> buildTable(
-    map: MutableMap<Pair<R, C>, V>,
+inline fun <R : Any, C : Any, V : Any> buildTable(
+    parent: com.google.common.collect.Table<R, C, V>,
     builderAction: Table.Builder<R, C, V>.() -> Unit
 ): Table<R, C, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
-    return PairMapTable.Builder(map).apply(builderAction).build()
+    return DelegatingTable.Builder(parent).apply(builderAction).build()
 }
 
 /**
@@ -103,8 +103,8 @@ fun <R, C, V> Table<R, C, V>.asSequence(): Sequence<Triple<R, C, V>> = this.entr
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun <R, C, V1, V2> Table<R, C, V1>.mapValue(transform: (Triple<R, C, V1>) -> V2): Table<R, C, V2> =
-    this.mapValueTo(PairMapTable.Builder(), transform)
+fun <R : Any, C : Any, V1, V2 : Any> Table<R, C, V1>.mapValue(transform: (Triple<R, C, V1>) -> V2): Table<R, C, V2> =
+    this.mapValueTo(DelegatingTable.Builder(), transform)
 
 /**
  * @author Hiiragi Tsubasa

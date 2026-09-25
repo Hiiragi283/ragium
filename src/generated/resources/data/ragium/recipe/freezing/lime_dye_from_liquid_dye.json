@@ -1,0 +1,12 @@
+{
+  "type": "ragium:freezing",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:dyes/lime"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:lime_dye"
+  },
+  "time": 200
+}

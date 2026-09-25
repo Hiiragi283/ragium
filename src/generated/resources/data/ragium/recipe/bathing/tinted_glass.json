@@ -6,7 +6,13 @@
   },
   "item_ingredient": {
     "count": 1,
-    "items": "#c:dusts/amethyst"
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/amethyst",
+        "c:gems/amethyst"
+      ]
+    }
   },
   "result": {
     "count": 2,

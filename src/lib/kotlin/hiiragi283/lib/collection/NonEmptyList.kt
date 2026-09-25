@@ -15,43 +15,20 @@ typealias Nel<E> = NonEmptyList<E>
  * @author Hiiragi Tsubasa
  * @since 26.1.6
  */
-class NonEmptyList<out E> @PublishedApi internal constructor(val head: E, val tail: List<E>) : List<E> {
+class NonEmptyList<out E> @PublishedApi internal constructor(val head: E, val tail: List<E>) : AbstractList<E>() {
     constructor(head: E) : this(head, listOf())
 
-    val all: List<E> get() = listOf(head) + tail
-
-    override fun equals(other: Any?): Boolean = when (other) {
-        is Nel<*> -> this.all == other.all
-        else -> this.all == other
-    }
-
-    override fun hashCode(): Int = all.hashCode()
-
-    override fun toString(): String = all.toString()
+    val all: List<E> get() = this
 
     //    List    //
 
-    override val size: Int get() = all.size
+    override val size: Int get() = 1 + tail.size
 
-    override fun isEmpty(): Boolean = false
-
-    override fun contains(element: @UnsafeVariance E): Boolean = all.contains(element)
-
-    override fun iterator(): Iterator<E> = all.iterator()
-
-    override fun containsAll(elements: Collection<@UnsafeVariance E>): Boolean = all.containsAll(elements)
-
-    override fun get(index: Int): E = all[index]
-
-    override fun indexOf(element: @UnsafeVariance E): Int = all.indexOf(element)
-
-    override fun lastIndexOf(element: @UnsafeVariance E): Int = all.lastIndexOf(element)
-
-    override fun listIterator(): ListIterator<E> = all.listIterator()
-
-    override fun listIterator(index: Int): ListIterator<E> = all.listIterator(index)
-
-    override fun subList(fromIndex: Int, toIndex: Int): List<E> = all.subList(fromIndex, toIndex)
+    override fun get(index: Int): E = when (index) {
+        0 -> head
+        in 1 until size -> tail[index - 1]
+        else -> throw IndexOutOfBoundsException("index: $index, size: $size")
+    }
 
     //    Extensions    //
 

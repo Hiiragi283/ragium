@@ -1,10 +1,19 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:raw_materials/copper"
+      }
+    }
+  ],
   "type": "ragium:crushing",
   "ingredient": {
     "count": 3,
     "items": "#c:raw_materials/copper"
   },
-  "results": {
+  "result": {
     "count": 4,
     "id": "ragium:copper_dust"
   },
