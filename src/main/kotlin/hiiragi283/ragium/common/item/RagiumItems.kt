@@ -327,6 +327,21 @@ data object RagiumItems {
 
         setHolder(Items.DIAMOND_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.DIAMOND)
         setHolder(Items.DIAMOND, RagiumDataComponents.CHEMICAL, RagiumChemicals.DIAMOND)
+
+        setHolder(Items.IRON_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.IRON)
+        setHolder(Items.IRON_INGOT, RagiumDataComponents.CHEMICAL, RagiumChemicals.IRON)
+        setHolder(Items.IRON_NUGGET, RagiumDataComponents.CHEMICAL, RagiumChemicals.IRON)
+
+        setHolder(Items.COPPER_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.COPPER)
+        setHolder(Items.COPPER_INGOT, RagiumDataComponents.CHEMICAL, RagiumChemicals.COPPER)
+        setHolder(Items.COPPER_NUGGET, RagiumDataComponents.CHEMICAL, RagiumChemicals.COPPER)
+
+        setHolder(Items.GOLD_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
+        setHolder(Items.GOLD_INGOT, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
+        setHolder(Items.GOLD_NUGGET, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
+
+        setHolder(Items.QUARTZ_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
+        setHolder(Items.QUARTZ, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
         // Ore Slurry
         setHolder(Items.RAW_COPPER, RagiumDataComponents.ORE_SLURRY_DATA, RagiumOreSlurryData.COPPER)
         setHolder(Items.RAW_IRON, RagiumDataComponents.ORE_SLURRY_DATA, RagiumOreSlurryData.IRON)

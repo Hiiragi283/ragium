@@ -19,6 +19,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.RagiumDataComponents
+import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
@@ -137,7 +138,11 @@ data object RagiumBlocks {
                 material,
                 REGISTER.registerSimple(
                     part.createName(material),
-                    blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), properties.setId(it)) }
+                    blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), properties.setId(it)) },
+                    itemProp = { prop: Item.Properties ->
+                        material.chemicalKey?.let { prop.delayedHolderComponent(RagiumDataComponents.CHEMICAL, it) }
+                        prop
+                    }
                 )
             )
         }
@@ -185,8 +190,11 @@ data object RagiumBlocks {
 
     // Fluorite
     @JvmField
-    val FLUORITE_BLOCK: HTSimpleDeferredBlockAndItem =
-        REGISTER.registerSimple("fluorite_block", copyOf(Blocks.QUARTZ_BLOCK).mapColor(MapColor.COLOR_GREEN))
+    val FLUORITE_BLOCK: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple(
+        "fluorite_block",
+        copyOf(Blocks.QUARTZ_BLOCK).mapColor(MapColor.COLOR_GREEN),
+        itemProp = { it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.FLUORITE) }
+    )
 
     @JvmField
     val FLUORITE_SLAB: HTBasicDeferredBlockAndItem<SlabBlock> = REGISTER.registerSimple(
@@ -205,8 +213,11 @@ data object RagiumBlocks {
 
     // Cryolite
     @JvmField
-    val CRYOLITE_BLOCK: HTSimpleDeferredBlockAndItem =
-        REGISTER.registerSimple("cryolite_block", copyOf(Blocks.QUARTZ_BLOCK))
+    val CRYOLITE_BLOCK: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple(
+        "cryolite_block",
+        copyOf(Blocks.QUARTZ_BLOCK),
+        itemProp = { it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CRYOLITE) }
+    )
 
     @JvmField
     val CRYOLITE_SLAB: HTBasicDeferredBlockAndItem<SlabBlock> = REGISTER.registerSimple(
@@ -429,13 +440,13 @@ data object RagiumBlocks {
             RagiumMaterial.Metal.VOID_METAL to Rarity.RARE
         ).forEach { (material: RagiumMaterial, rarity: Rarity) ->
             for (part: HTBlockPart in HTBlockPart.entries) {
-                val block: ItemLike = RagiumBlocks.MATERIAL_BLOCKS[part, material] ?: continue
+                val block: ItemLike = MATERIAL_BLOCKS[part, material] ?: continue
                 event.modify(block) { builder: DataComponentMap.Builder, _, _ ->
                     builder.set(DataComponents.RARITY, rarity)
                 }
             }
         }
-        event.modify(RagiumBlocks.CREATIVE_BATTERY) { builder: DataComponentMap.Builder, _, _ ->
+        event.modify(CREATIVE_BATTERY) { builder: DataComponentMap.Builder, _, _ ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
     }

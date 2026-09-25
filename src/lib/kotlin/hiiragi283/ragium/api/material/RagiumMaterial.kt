@@ -60,9 +60,9 @@ sealed interface RagiumMaterial :
         },
 
         // Common
-        SALT("Salt", "食塩"),
+        SALT("Salt", "食塩", RagiumChemicals.SODIUM_CHLORIDE),
         SULFUR("Sulfur", "硫黄", RagiumChemicals.SULFUR),
-        NITER("Niter", "硝石"),
+        NITER("Niter", "硝石", RagiumChemicals.POTASSIUM_NITRATE),
         BORAX("Borax", "ホウ砂"),
 
         /**
@@ -89,8 +89,8 @@ sealed interface RagiumMaterial :
         HTLangName by langName {
         // Minecraft
         LAPIS("Lapis", "ラピス"),
-        QUARTZ("Quartz", "水晶"),
-        AMETHYST("Amethyst", "アメジスト"),
+        QUARTZ("Quartz", "水晶", RagiumChemicals.SILICON_DIOXIDE),
+        AMETHYST("Amethyst", "アメジスト", RagiumChemicals.SILICON_DIOXIDE),
         DIAMOND("Diamond", "ダイヤモンド", RagiumChemicals.DIAMOND),
         EMERALD("Emerald", "エメラルド"),
         ECHO("Echo", "残響"),
@@ -101,12 +101,12 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.7
          */
-        FLUORITE("Fluorite", "蛍石"),
+        FLUORITE("Fluorite", "蛍石", RagiumChemicals.FLUORITE),
 
         /**
          * @since 26.1.7
          */
-        CRYOLITE("Cryolite", "氷晶石")
+        CRYOLITE("Cryolite", "氷晶石", RagiumChemicals.CRYOLITE)
         ;
 
         constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>? = null) : this(
@@ -121,9 +121,9 @@ sealed interface RagiumMaterial :
         RagiumMaterial,
         HTLangName by langName {
         // Minecraft
-        COPPER("Copper", "銅"),
-        IRON("Iron", "鉄"),
-        GOLD("Gold", "金"),
+        COPPER("Copper", "銅", RagiumChemicals.COPPER),
+        IRON("Iron", "鉄", RagiumChemicals.IRON),
+        GOLD("Gold", "金", RagiumChemicals.GOLD),
         NETHERITE("Netherite", "ネザライト") {
             override val hasRawVariant: Boolean = false
         },
@@ -176,7 +176,7 @@ sealed interface RagiumMaterial :
         WOOD("Wood", "木") {
             override val isPulp: Boolean = true
         },
-        GLASS("Glass", "ガラス"),
+        GLASS("Glass", "ガラス", RagiumChemicals.SILICON_DIOXIDE),
         OBSIDIAN("Obsidian", "黒曜石"),
         PAPER("Paper", "紙") {
             override val isPulp: Boolean = true

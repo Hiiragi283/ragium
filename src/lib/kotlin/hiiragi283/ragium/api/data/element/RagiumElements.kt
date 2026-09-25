@@ -46,6 +46,21 @@ data object RagiumElements {
     val CHLORINE: ResourceKey<HTElement> = create("chlorine")
 
     // 4th Period
+    @JvmField
+    val POTASSIUM: ResourceKey<HTElement> = create("potassium")
+
+    @JvmField
+    val CALCIUM: ResourceKey<HTElement> = create("calcium")
+
+    @JvmField
+    val IRON: ResourceKey<HTElement> = create("iron")
+
+    @JvmField
+    val COPPER: ResourceKey<HTElement> = create("copper")
+
+    // 6th Period
+    @JvmField
+    val GOLD: ResourceKey<HTElement> = create("gold")
 
     @JvmStatic
     private fun create(name: String): ResourceKey<HTElement> =
@@ -69,5 +84,12 @@ data object RagiumElements {
         register(SILICON, "Si")
         register(SULFUR, "S")
         register(CHLORINE, "Cl")
+
+        register(POTASSIUM, "K")
+        register(CALCIUM, "Ca")
+        register(IRON, "Fe")
+        register(COPPER, "Cu")
+
+        register(GOLD, "Au")
     }
 }

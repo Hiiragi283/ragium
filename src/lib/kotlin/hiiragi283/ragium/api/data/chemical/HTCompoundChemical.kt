@@ -73,7 +73,13 @@ data class HTCompoundChemical(val composition: Nel<Pair<Either<Holder<HTChemical
             buildString {
                 append(
                     either.fold(
-                        { chemical: Holder<HTChemical> -> "(${chemical.value().getChemicalFormula()})" },
+                        { chemical: Holder<HTChemical> ->
+                            val formula: String = chemical.value().getChemicalFormula()
+                            when {
+                                weight > 1 -> "($formula)"
+                                else -> formula
+                            }
+                        },
                         { element: Holder<HTElement> -> element.value().symbol }
                     )
                 )
