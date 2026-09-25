@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.event.HTRegisterWidgetRendererEvent
 import hiiragi283.lib.fluid.FluidStackTintSource
 import hiiragi283.lib.fluid.HTFluidModelRegister
@@ -8,8 +9,13 @@ import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.mod.HTClientMod
 import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.resource.vanillaId
+import hiiragi283.lib.text.HTCommonTranslation
+import hiiragi283.lib.text.Text
+import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.chemical.HTClientChemicalHelper
 import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryDataHelper
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.screen.tooltip.HTMemoryDiscClientTooltipComponent
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
@@ -25,9 +31,11 @@ import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
+import net.minecraft.ChatFormatting
 import net.minecraft.client.resources.model.sprite.Material
 import net.minecraft.util.ARGB
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.ItemStack
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -37,8 +45,12 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent
+import net.neoforged.neoforge.common.tooltip.TooltipLocation
+import net.neoforged.neoforge.event.RegisterTooltipAppendersEvent
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.transfer.fluid.FluidResource
 import java.awt.Color
+import java.util.function.Consumer
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
 data object RagiumClient : HTClientMod() {
@@ -46,6 +58,7 @@ data object RagiumClient : HTClientMod() {
         eventBus.addListener { event: RegisterClientTooltipComponentFactoriesEvent ->
             event.register(HTMemoryDiscTooltipComponent::class.java, ::HTMemoryDiscClientTooltipComponent)
         }
+        eventBus.addListener(::registerTooltipAppenders)
 
         configScreen(container)
     }
@@ -218,5 +231,54 @@ data object RagiumClient : HTClientMod() {
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankBlockEntityRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), ::HTTankBlockEntityRenderer)
+    }
+
+    @JvmStatic
+    private fun registerTooltipAppenders(event: RegisterTooltipAppendersEvent) {
+        event.registerAppender(
+            TooltipLocation.HEAD
+        ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
+            if (!stack.`is`(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)) return@registerAppender
+            val view: HTFluidView = HTFluidCapabilities.getSlot(stack, 0) ?: return@registerAppender
+            val isCreative: Boolean = stack.`is`(RagiumTags.BlockItem.STORAGES_CREATIVE.item)
+            // Fluid Name
+            val resource: FluidResource = view.resource
+            when {
+                resource.isEmpty -> HTCommonTranslation.EMPTY.translateColored(ChatFormatting.RED)
+
+                isCreative -> HTCommonTranslation.STORED.translateColored(
+                    ChatFormatting.LIGHT_PURPLE,
+                    resource.hoverName,
+                    ChatFormatting.GRAY,
+                    HTCommonTranslation.INFINITE
+                )
+
+                else -> HTCommonTranslation.STORED_MB.translateColored(
+                    ChatFormatting.LIGHT_PURPLE,
+                    resource.hoverName,
+                    ChatFormatting.GRAY,
+                    view.amount
+                )
+            }.let(builder::accept)
+            // Tank Capacity
+            when (isCreative) {
+                true -> HTCommonTranslation.CAPACITY.translateColored(
+                    ChatFormatting.BLUE,
+                    ChatFormatting.GRAY,
+                    HTCommonTranslation.INFINITE
+                )
+
+                false -> HTCommonTranslation.CAPACITY_MB.translateColored(
+                    ChatFormatting.BLUE,
+                    ChatFormatting.GRAY,
+                    view.currentCapacity
+                )
+            }.let(builder::accept)
+        }
+        event.registerAppender(
+            TooltipLocation.HEAD
+        ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
+            HTClientChemicalHelper.addToTooltip(stack, builder::accept)
+        }
     }
 }

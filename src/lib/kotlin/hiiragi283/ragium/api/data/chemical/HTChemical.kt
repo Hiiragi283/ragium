@@ -4,6 +4,9 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
+import hiiragi283.lib.text.HTHasText
+import hiiragi283.lib.text.MutableText
+import hiiragi283.lib.text.toText
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -15,7 +18,7 @@ import net.minecraft.network.codec.StreamCodec
  * @author Hiiragi Tsubasa
  * @since 26.1.8
  */
-interface HTChemical {
+interface HTChemical : HTHasText {
     companion object {
         @JvmField
         val DISPATCH_CODEC: Codec<HTChemical> =
@@ -58,6 +61,8 @@ interface HTChemical {
     fun type(): Type<out HTChemical>
 
     fun getChemicalFormula(): String
+
+    override fun getText(): MutableText = this.getChemicalFormula().toText()
 
     @JvmRecord
     data class Type<T : HTChemical>(val codec: MapCodec<T>, val streamCodec: StreamCodec<RegistryFriendlyByteBuf, T>)

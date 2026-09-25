@@ -9,22 +9,15 @@ import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.registry.HTDeferredItemRegister
 import hiiragi283.lib.registry.HTSimpleDeferredItem
-import hiiragi283.lib.text.HTCommonTranslation
-import hiiragi283.lib.text.Text
-import hiiragi283.lib.text.toText
-import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.chemical.HTChemical
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
-import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
-import net.minecraft.ChatFormatting
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
@@ -32,18 +25,13 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.HoneycombItem
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.common.tooltip.TooltipLocation
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import net.neoforged.neoforge.event.RegisterTooltipAppendersEvent
 import net.neoforged.neoforge.transfer.access.ItemAccess
-import net.neoforged.neoforge.transfer.fluid.FluidResource
-import java.util.function.Consumer
 
 data object RagiumItems {
     @JvmField
@@ -56,7 +44,6 @@ data object RagiumItems {
         REGISTER.addAlias("steel_nugget", "sooty_iron_nugget")
         REGISTER.addAlias("coal_coke_dust", "carbon_dust")
 
-        eventBus.addListener(::registerTooltipAppenders)
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
 
@@ -248,56 +235,6 @@ data object RagiumItems {
     //    Events    //
 
     @JvmStatic
-    private fun registerTooltipAppenders(event: RegisterTooltipAppendersEvent) {
-        event.registerAppender(
-            TooltipLocation.HEAD
-        ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
-            if (!stack.`is`(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)) return@registerAppender
-            val view: HTFluidView = HTFluidCapabilities.getSlot(stack, 0) ?: return@registerAppender
-            val isCreative: Boolean = stack.`is`(RagiumTags.BlockItem.STORAGES_CREATIVE.item)
-            // Fluid Name
-            val resource: FluidResource = view.resource
-            when {
-                resource.isEmpty -> HTCommonTranslation.EMPTY.translateColored(ChatFormatting.RED)
-
-                isCreative -> HTCommonTranslation.STORED.translateColored(
-                    ChatFormatting.LIGHT_PURPLE,
-                    resource.hoverName,
-                    ChatFormatting.GRAY,
-                    HTCommonTranslation.INFINITE
-                )
-
-                else -> HTCommonTranslation.STORED_MB.translateColored(
-                    ChatFormatting.LIGHT_PURPLE,
-                    resource.hoverName,
-                    ChatFormatting.GRAY,
-                    view.amount
-                )
-            }.let(builder::accept)
-            // Tank Capacity
-            when (isCreative) {
-                true -> HTCommonTranslation.CAPACITY.translateColored(
-                    ChatFormatting.BLUE,
-                    ChatFormatting.GRAY,
-                    HTCommonTranslation.INFINITE
-                )
-
-                false -> HTCommonTranslation.CAPACITY_MB.translateColored(
-                    ChatFormatting.BLUE,
-                    ChatFormatting.GRAY,
-                    view.currentCapacity
-                )
-            }.let(builder::accept)
-        }
-        event.registerAppender(
-            TooltipLocation.HEAD
-        ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
-            val chemical: Holder<HTChemical> = stack.get(RagiumDataComponents.CHEMICAL) ?: return@registerAppender
-            builder.accept(chemical.value().getChemicalFormula().toText().withStyle(ChatFormatting.YELLOW))
-        }
-    }
-
-    @JvmStatic
     private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
         // Fluid
         event.registerItem(
@@ -339,6 +276,15 @@ data object RagiumItems {
         setHolder(Items.GOLD_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
         setHolder(Items.GOLD_INGOT, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
         setHolder(Items.GOLD_NUGGET, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
+
+        setHolder(Items.SNOWBALL, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
+        setHolder(Items.SNOW_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
+        setHolder(Items.ICE, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
+        setHolder(Items.PACKED_ICE, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
+        setHolder(Items.BLUE_ICE, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
+
+        setHolder(Items.AMETHYST_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
+        setHolder(Items.AMETHYST_SHARD, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
 
         setHolder(Items.QUARTZ_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
         setHolder(Items.QUARTZ, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)

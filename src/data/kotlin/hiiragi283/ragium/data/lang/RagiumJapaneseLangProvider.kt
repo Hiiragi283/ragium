@@ -4,6 +4,8 @@ import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.chemical.RagiumChemicals
+import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -142,12 +144,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumMobEffects.FROSTBITE, "凍傷")
         add(RagiumMobEffects.CHEMICAL_BURN, "化学火傷")
 
-        // Ore Slurry
-        addFromKey(RagiumOreSlurryData.COPPER, "銅の鉱石泥")
-        addFromKey(RagiumOreSlurryData.IRON, "鉄の鉱石泥")
-        addFromKey(RagiumOreSlurryData.GOLD, "金の鉱石泥")
-        addFromKey(RagiumOreSlurryData.NETHERITE_SCRAP, "古代の鉱石泥")
-
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "凍傷")
         addPotion(RagiumPotions.CHEMICAL_BURN, "化学火傷")
@@ -219,5 +215,53 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"スキャン済み: %1$s")
+
+        addDataTranslations()
+    }
+
+    private fun addDataTranslations() {
+        // Chemical
+        addFromKey(RagiumChemicals.HYDROGEN, "水素")
+
+        addFromKey(RagiumChemicals.CARBON, "炭素")
+        addFromKey(RagiumChemicals.DIAMOND, "ダイヤモンド")
+        addFromKey(RagiumChemicals.NITROGEN, "窒素")
+        addFromKey(RagiumChemicals.OXYGEN, "酸素")
+
+        addFromKey(RagiumChemicals.ALUMINUM, "アルミニウム")
+        addFromKey(RagiumChemicals.SILICON, "ケイ素")
+        addFromKey(RagiumChemicals.SULFUR, "硫黄")
+        addFromKey(RagiumChemicals.CHLORINE, "塩素")
+
+        addFromKey(RagiumChemicals.IRON, "鉄")
+        addFromKey(RagiumChemicals.COPPER, "銅")
+
+        addFromKey(RagiumChemicals.HYDROXIDE, "水酸基")
+        addFromKey(RagiumChemicals.WATER, "水")
+        // Element
+        addFromKey(RagiumElements.HYDROGEN, "水素")
+
+        addFromKey(RagiumElements.CARBON, "炭素")
+        addFromKey(RagiumElements.NITROGEN, "窒素")
+        addFromKey(RagiumElements.OXYGEN, "酸素")
+        addFromKey(RagiumElements.FLUORINE, "フッ素")
+
+        addFromKey(RagiumElements.SODIUM, "ナトリウム")
+        addFromKey(RagiumElements.ALUMINUM, "アルミニウム")
+        addFromKey(RagiumElements.SILICON, "ケイ素")
+        addFromKey(RagiumElements.SULFUR, "硫黄")
+        addFromKey(RagiumElements.CHLORINE, "塩素")
+
+        addFromKey(RagiumElements.POTASSIUM, "カリウム")
+        addFromKey(RagiumElements.CALCIUM, "カルシウム")
+        addFromKey(RagiumElements.IRON, "鉄")
+        addFromKey(RagiumElements.COPPER, "銅")
+
+        addFromKey(RagiumElements.GOLD, "金")
+        // Ore Slurry
+        addFromKey(RagiumOreSlurryData.COPPER, "銅の鉱石泥")
+        addFromKey(RagiumOreSlurryData.IRON, "鉄の鉱石泥")
+        addFromKey(RagiumOreSlurryData.GOLD, "金の鉱石泥")
+        addFromKey(RagiumOreSlurryData.NETHERITE_SCRAP, "古代の鉱石泥")
     }
 }

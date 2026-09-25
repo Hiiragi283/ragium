@@ -4,6 +4,8 @@ import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.chemical.RagiumChemicals
+import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -146,12 +148,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumMobEffects.FROSTBITE, "Frostbite")
         add(RagiumMobEffects.CHEMICAL_BURN, "Chemical Burn")
 
-        // Ore Slurry
-        addFromKey(RagiumOreSlurryData.COPPER, "Copper Ore Slurry")
-        addFromKey(RagiumOreSlurryData.IRON, "Iron Ore Slurry")
-        addFromKey(RagiumOreSlurryData.GOLD, "Gold Ore Slurry")
-        addFromKey(RagiumOreSlurryData.NETHERITE_SCRAP, "Ancient Debris Slurry")
-
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "Frostbite")
         addPotion(RagiumPotions.CHEMICAL_BURN, "Chemical Burn")
@@ -223,5 +219,53 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"Scanned Item: %1$s")
+
+        addDataTranslations()
+    }
+
+    private fun addDataTranslations() {
+        // Chemical
+        addFromKey(RagiumChemicals.HYDROGEN, "Hydrogen")
+
+        addFromKey(RagiumChemicals.CARBON, "Carbon")
+        addFromKey(RagiumChemicals.DIAMOND, "Diamond")
+        addFromKey(RagiumChemicals.NITROGEN, "Nitrogen")
+        addFromKey(RagiumChemicals.OXYGEN, "Oxygen")
+
+        addFromKey(RagiumChemicals.ALUMINUM, "Aluminum")
+        addFromKey(RagiumChemicals.SILICON, "Silicon")
+        addFromKey(RagiumChemicals.SULFUR, "Sulfur")
+        addFromKey(RagiumChemicals.CHLORINE, "Chlorine")
+
+        addFromKey(RagiumChemicals.IRON, "Iron")
+        addFromKey(RagiumChemicals.COPPER, "Copper")
+
+        addFromKey(RagiumChemicals.HYDROXIDE, "Hydroxide")
+        addFromKey(RagiumChemicals.WATER, "Water")
+        // Element
+        addFromKey(RagiumElements.HYDROGEN, "Hydrogen")
+
+        addFromKey(RagiumElements.CARBON, "Carbon")
+        addFromKey(RagiumElements.NITROGEN, "Nitrogen")
+        addFromKey(RagiumElements.OXYGEN, "Oxygen")
+        addFromKey(RagiumElements.FLUORINE, "Fluorine")
+
+        addFromKey(RagiumElements.SODIUM, "Sodium")
+        addFromKey(RagiumElements.ALUMINUM, "Aluminum")
+        addFromKey(RagiumElements.SILICON, "Silicon")
+        addFromKey(RagiumElements.SULFUR, "Sulfur")
+        addFromKey(RagiumElements.CHLORINE, "Chlorine")
+
+        addFromKey(RagiumElements.POTASSIUM, "Potassium")
+        addFromKey(RagiumElements.CALCIUM, "Calcium")
+        addFromKey(RagiumElements.IRON, "Iron")
+        addFromKey(RagiumElements.COPPER, "Copper")
+
+        addFromKey(RagiumElements.GOLD, "Gold")
+        // Ore Slurry
+        addFromKey(RagiumOreSlurryData.COPPER, "Copper Ore Slurry")
+        addFromKey(RagiumOreSlurryData.IRON, "Iron Ore Slurry")
+        addFromKey(RagiumOreSlurryData.GOLD, "Gold Ore Slurry")
+        addFromKey(RagiumOreSlurryData.NETHERITE_SCRAP, "Ancient Debris Slurry")
     }
 }

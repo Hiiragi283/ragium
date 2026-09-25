@@ -60,12 +60,22 @@ data object RagiumChemicals {
 
     //    Compounds    //
 
+    // 1st Period
+    @JvmField
+    val HYDROXIDE: ResourceKey<HTChemical> = create("hydroxide")
+
+    @JvmField
+    val WATER: ResourceKey<HTChemical> = create("water")
+
     // 2nd Period
     @JvmField
     val NITRATE: ResourceKey<HTChemical> = create("nitrate")
 
     @JvmField
-    val POTASSIUM_NITRATE: ResourceKey<HTChemical> = create("potassium_nitrate")
+    val NITRIC_ACID: ResourceKey<HTChemical> = create("nitric_acid")
+
+    @JvmField
+    val HYDROGEN_FLUORIDE: ResourceKey<HTChemical> = create("hydrogen_fluoride")
 
     @JvmField
     val FLUORITE: ResourceKey<HTChemical> = create("fluorite")
@@ -74,6 +84,9 @@ data object RagiumChemicals {
     val CRYOLITE: ResourceKey<HTChemical> = create("cryolite")
 
     // 3rd Period
+    @JvmField
+    val SODIUM_HYDROXIDE: ResourceKey<HTChemical> = create("sodium_hydroxide")
+
     @JvmField
     val SODIUM_CHLORIDE: ResourceKey<HTChemical> = create("sodium_chloride")
 
@@ -84,7 +97,23 @@ data object RagiumChemicals {
     val SILICON_DIOXIDE: ResourceKey<HTChemical> = create("silicon_dioxide")
 
     @JvmField
+    val SULFUR_DIOXIDE: ResourceKey<HTChemical> = create("sulfur_dioxide")
+
+    @JvmField
+    val SULFUR_TRIOXIDE: ResourceKey<HTChemical> = create("sulfur_trioxide")
+
+    @JvmField
     val SULFATE: ResourceKey<HTChemical> = create("sulfate")
+
+    @JvmField
+    val SULFURIC_ACID: ResourceKey<HTChemical> = create("sulfuric_acid")
+
+    @JvmField
+    val HYDROGEN_CHLORIDE: ResourceKey<HTChemical> = create("hydrogen_chloride")
+
+    // 4th Period
+    @JvmField
+    val POTASSIUM_NITRATE: ResourceKey<HTChemical> = create("potassium_nitrate")
 
     //    Mixtures    //
 
@@ -115,6 +144,21 @@ data object RagiumChemicals {
 
         // Compounds
         context.register(
+            HYDROXIDE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.OXYGEN, 1)
+                add(RagiumElements.HYDROGEN, 1)
+            }
+        )
+        context.register(
+            WATER,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.HYDROGEN, 2)
+                add(RagiumElements.OXYGEN, 1)
+            }
+        )
+
+        context.register(
             NITRATE,
             HTCompoundChemical.build(context) {
                 add(RagiumElements.NITROGEN, 1)
@@ -122,10 +166,17 @@ data object RagiumChemicals {
             }
         )
         context.register(
-            POTASSIUM_NITRATE,
+            NITRIC_ACID,
             HTCompoundChemical.build(context) {
-                add(RagiumElements.POTASSIUM, 1)
+                add(RagiumElements.NITROGEN, 1)
                 add(NITRATE, 1)
+            }
+        )
+        context.register(
+            HYDROGEN_FLUORIDE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.HYDROGEN, 1)
+                add(RagiumElements.FLUORINE, 1)
             }
         )
         context.register(
@@ -144,6 +195,13 @@ data object RagiumChemicals {
             }
         )
 
+        context.register(
+            SODIUM_HYDROXIDE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.SODIUM, 1)
+                add(HYDROXIDE, 1)
+            }
+        )
         context.register(
             SODIUM_CHLORIDE,
             HTCompoundChemical.build(context) {
@@ -166,10 +224,46 @@ data object RagiumChemicals {
             }
         )
         context.register(
+            SULFUR_DIOXIDE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.SULFUR, 1)
+                add(RagiumElements.OXYGEN, 2)
+            }
+        )
+        context.register(
+            SULFUR_TRIOXIDE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.SULFUR, 1)
+                add(RagiumElements.OXYGEN, 3)
+            }
+        )
+        context.register(
             SULFATE,
             HTCompoundChemical.build(context) {
                 add(RagiumElements.SULFUR, 1)
                 add(RagiumElements.OXYGEN, 4)
+            }
+        )
+        context.register(
+            SULFURIC_ACID,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.HYDROGEN, 2)
+                add(SULFATE, 1)
+            }
+        )
+        context.register(
+            HYDROGEN_CHLORIDE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.HYDROGEN, 1)
+                add(RagiumElements.CHLORINE, 1)
+            }
+        )
+
+        context.register(
+            POTASSIUM_NITRATE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.POTASSIUM, 1)
+                add(NITRATE, 1)
             }
         )
     }
