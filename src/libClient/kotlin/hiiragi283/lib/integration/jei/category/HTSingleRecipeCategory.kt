@@ -7,8 +7,6 @@ import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTProgressRecipe
-import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.result.HTFluidResult
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -62,13 +60,11 @@ abstract class HTSingleRecipeCategory<RECIPE : HTProgressRecipe.Simple<*>>(
             HTFluidToRecipe.BasicFluid.SIMPLE_CODEC
         ) {
         override fun setInput(builder: IRecipeSlotBuilder, recipe: HTFluidToRecipe.BasicFluid) {
-            val ingredient: HTFluidIngredient = recipe.ingredient
-            builder.add(ingredient).setFluidSlot(ingredient.amount)
+            builder.add(recipe.ingredient)
         }
 
         override fun setOutput(builder: IRecipeSlotBuilder, recipe: HTFluidToRecipe.BasicFluid) {
-            val result: HTFluidResult = recipe.result
-            builder.add(result).setFluidSlot(result.amount)
+            builder.add(recipe.result)
         }
     }
 
@@ -85,8 +81,7 @@ abstract class HTSingleRecipeCategory<RECIPE : HTProgressRecipe.Simple<*>>(
             HTFluidToRecipe.BasicItem.SIMPLE_CODEC
         ) {
         override fun setInput(builder: IRecipeSlotBuilder, recipe: HTFluidToRecipe.BasicItem) {
-            val ingredient: HTFluidIngredient = recipe.ingredient
-            builder.add(ingredient).setFluidSlot(ingredient.amount)
+            builder.add(recipe.ingredient)
         }
 
         override fun setOutput(builder: IRecipeSlotBuilder, recipe: HTFluidToRecipe.BasicItem) {
@@ -111,8 +106,7 @@ abstract class HTSingleRecipeCategory<RECIPE : HTProgressRecipe.Simple<*>>(
         }
 
         override fun setOutput(builder: IRecipeSlotBuilder, recipe: HTItemToRecipe.BasicFluid) {
-            val result: HTFluidResult = recipe.result
-            builder.add(result).setFluidSlot(result.amount)
+            builder.add(recipe.result)
         }
     }
 

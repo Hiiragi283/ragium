@@ -9,6 +9,7 @@ import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToItemAndFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTTripleItemToRecipeCategory
+import hiiragi283.lib.integration.jei.ingredient.HTIngredientTypes
 import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
@@ -38,6 +39,7 @@ import mezz.jei.api.helpers.IPlatformFluidHelper
 import mezz.jei.api.neoforge.NeoForgeTypes
 import mezz.jei.api.registration.IExtraIngredientRegistration
 import mezz.jei.api.registration.IGuiHandlerRegistration
+import mezz.jei.api.registration.IModIngredientRegistration
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
@@ -96,6 +98,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             NeoForgeTypes.FLUID_STACK,
             RagiumFluids.ORE_SLURRY.getOrThrow()
         ) { stack: FluidStack, _ -> HTOreSlurryDataHelper.getHolder(stack) }
+    }
+
+    override fun registerIngredients(registration: IModIngredientRegistration) {
+        HTIngredientTypes.register(registration)
     }
 
     override fun registerExtraIngredients(registration: IExtraIngredientRegistration) {

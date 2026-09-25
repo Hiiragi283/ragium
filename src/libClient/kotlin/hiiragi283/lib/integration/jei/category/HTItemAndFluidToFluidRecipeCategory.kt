@@ -25,23 +25,19 @@ class HTItemAndFluidToFluidRecipeCategory(
         focuses: IFocusGroup
     ) {
         // input
-        recipe.fluidIngredient.let {
-            builder
-                .addInputSlot(getPosition(0), getPosition(0))
-                .add(it)
-                .setSlotBackground(HTBackgroundType.INPUT, it.amount)
-        }
+        builder
+            .addInputSlot(getPosition(0), getPosition(0))
+            .add(recipe.fluidIngredient)
+            .setSlotBackground(HTBackgroundType.INPUT)
         builder
             .addInputSlot(getPosition(2), getPosition(0))
             .add(recipe.itemIngredient)
             .setSlotBackground(HTBackgroundType.INPUT)
         // output
-        recipe.result.let {
-            builder
-                .addOutputSlot(getPosition(5), getPosition(0))
-                .add(it)
-                .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
-        }
+        builder
+            .addOutputSlot(getPosition(5), getPosition(0))
+            .add(recipe.result)
+            .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 
     override fun setupRecipeExtras(

@@ -53,12 +53,10 @@ class RTResourceExtractingRecipeCategory(guiHelper: IGuiHelper) :
                 }
             )
         // output
-        recipe.result.let {
-            builder
-                .addOutputSlot(getPosition(3), getPosition(0))
-                .add(it)
-                .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
-        }
+        builder
+            .addOutputSlot(getPosition(3), getPosition(0))
+            .add(recipe.result)
+            .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 
     override fun setupRecipeExtras(

@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.HTJeiDrawables
 import hiiragi283.lib.integration.jei.HTJeiRecipeType
+import hiiragi283.lib.integration.jei.ingredient.HTFluidSlotRenderer
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.text.Text
@@ -16,6 +17,7 @@ import mezz.jei.api.gui.widgets.IDrawableWidget
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
+import mezz.jei.api.neoforge.NeoForgeTypes
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.category.IRecipeCategory
@@ -91,25 +93,10 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
     fun getPosition(index: Double): Int = (index * 18).toInt()
 
     // IRecipeSlotBuilder
-    protected fun IRecipeSlotBuilder.setSlotBackground(type: HTBackgroundType): IRecipeSlotBuilder =
-        this.setBackground(HTJeiDrawables.getSlot(type, guiHelper), -1, -1).setSlotName(type.name)
-
-    /**
-     * @since 26.1.6
-     */
-    protected fun IRecipeSlotBuilder.setFluidSlot(capacity: Int): IRecipeSlotBuilder =
-        this.setFluidRenderer(fixCapacity(capacity), false, 16, 16)
-
-    protected fun IRecipeSlotBuilder.setSlotBackground(type: HTBackgroundType, capacity: Int): IRecipeSlotBuilder = this
-        .setSlotBackground(type)
-        .setFluidSlot(capacity)
-
-    protected fun IRecipeSlotBuilder.setTankBackground(type: HTBackgroundType, capacity: Int): IRecipeSlotBuilder = this
-        .setBackground(HTJeiDrawables.getTank(type, guiHelper), -1, -1)
+    protected fun IRecipeSlotBuilder.setSlotBackground(type: HTBackgroundType): IRecipeSlotBuilder = this
+        .setBackground(HTJeiDrawables.getSlot(type, guiHelper), -1, -1)
         .setSlotName(type.name)
-        .setFluidSlot(capacity)
-
-    private fun fixCapacity(capacity: Int): Long = maxOf(capacity, 1).toLong()
+        .setCustomRenderer(NeoForgeTypes.FLUID_STACK, HTFluidSlotRenderer)
 
     // IRecipeExtrasBuilder
     protected fun IRecipeExtrasBuilder.addRecipePlus(x: Int, y: Int = getPosition(0)): IDrawableWidget =
