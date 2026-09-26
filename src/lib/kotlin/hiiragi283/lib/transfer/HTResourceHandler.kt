@@ -1,10 +1,9 @@
 package hiiragi283.lib.transfer
 
-import net.neoforged.neoforge.transfer.ResourceHandler
 import net.neoforged.neoforge.transfer.resource.Resource
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
-class HTResourceHandler<T : Resource>(val slots: List<HTResourceSlot<T>>) : ResourceHandler<T> {
+class HTResourceHandler<T : Resource>(val slots: List<HTResourceSlot<T>>) : ExtendedResourceHandler<T> {
     fun getSlot(index: Int): HTResourceSlot<T> = slots[index]
 
     override fun size(): Int = slots.size
@@ -23,9 +22,19 @@ class HTResourceHandler<T : Resource>(val slots: List<HTResourceSlot<T>>) : Reso
 
     override fun isValid(index: Int, resource: T): Boolean = getSlot(index).isValid(resource)
 
-    override fun insert(index: Int, resource: T, amount: Int, transaction: TransactionContext): Int =
-        getSlot(index).insert(resource, amount, transaction, HTTransferAccess.EXTERNAL)
+    override fun insert(
+        index: Int,
+        resource: T,
+        amount: Int,
+        transaction: TransactionContext,
+        access: HTTransferAccess
+    ): Int = getSlot(index).insert(resource, amount, transaction, access)
 
-    override fun extract(index: Int, resource: T, amount: Int, transaction: TransactionContext): Int =
-        getSlot(index).extract(resource, amount, transaction, HTTransferAccess.EXTERNAL)
+    override fun extract(
+        index: Int,
+        resource: T,
+        amount: Int,
+        transaction: TransactionContext,
+        access: HTTransferAccess
+    ): Int = getSlot(index).extract(resource, amount, transaction, access)
 }

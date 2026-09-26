@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ragium:machine_casing",
+    "ragium:tank"
+  ],
+  "result": {
+    "id": "ragium:fluid_output_bus"
+  }
+}

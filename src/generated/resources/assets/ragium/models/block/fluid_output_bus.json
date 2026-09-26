@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "ragium:block/fluid_output_bus_bottom",
+    "side": "ragium:block/fluid_output_bus_side",
+    "top": "ragium:block/fluid_output_bus_top"
+  }
+}

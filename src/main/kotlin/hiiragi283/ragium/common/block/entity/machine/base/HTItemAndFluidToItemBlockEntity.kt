@@ -80,10 +80,8 @@ abstract class HTItemAndFluidToItemBlockEntity(
                 input: HTItemAndFluidRecipeInput,
                 output: ItemStack
             ): Boolean = useTransaction { transaction: Transaction ->
-                val (itemInput: ItemInstance, fluidInput: FluidInstance) = recipe.getMatchingStack(
-                    input.item,
-                    input.fluid
-                )
+                val (itemInput: ItemInstance, fluidInput: FluidInstance) =
+                    recipe.getMatchingStack(input.item, input.fluid)
                 when {
                     inputSlot.use(itemInput, transaction).failed -> false
                     inputTank.use(fluidInput, transaction).failed -> false
@@ -97,10 +95,8 @@ abstract class HTItemAndFluidToItemBlockEntity(
                 output: ItemStack
             ) {
                 useTransaction { transaction: Transaction ->
-                    val (itemInput: ItemInstance, fluidInput: FluidInstance) = recipe.getMatchingStack(
-                        input.item,
-                        input.fluid
-                    )
+                    val (itemInput: ItemInstance, fluidInput: FluidInstance) =
+                        recipe.getMatchingStack(input.item, input.fluid)
                     inputSlot.use(itemInput, transaction)
                     inputTank.use(fluidInput, transaction)
                     outputSlot.take(output, transaction)

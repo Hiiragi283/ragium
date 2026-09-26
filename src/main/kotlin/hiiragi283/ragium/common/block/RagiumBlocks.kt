@@ -15,6 +15,7 @@ import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.ItemWithContextFactory
+import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
@@ -27,6 +28,7 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.block.entity.bus.HTFluidBusBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import hiiragi283.ragium.common.item.block.HTCreativeTankBlockItem
@@ -52,7 +54,6 @@ import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.transfer.InfiniteResourceHandler
 import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
 import net.neoforged.neoforge.transfer.fluid.FluidResource
-import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler
 
 data object RagiumBlocks {
     @JvmStatic
@@ -289,7 +290,7 @@ data object RagiumBlocks {
 
     @JvmField
     val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerFakeMachine(RagiumConstants.ELECTROLYZER)
+        registerMachine(RagiumBlockEntityTypes.ELECTROLYZER)
 
     @JvmField
     val MIXER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
@@ -350,6 +351,14 @@ data object RagiumBlocks {
             }
         )
 
+    //    Bus    //
+
+    @JvmField
+    val FLUID_OUTPUT_BUS: HTBasicDeferredBlockAndItem<HTFluidBusBlock> = registerMachine(
+        RagiumBlockEntityTypes.FLUID_OUTPUT_BUS,
+        ::HTFluidBusBlock
+    )
+
     //    Storage    //
 
     @JvmField
@@ -402,11 +411,15 @@ data object RagiumBlocks {
         event.registerItem(
             HTFluidCapabilities.item,
             { _, access ->
-                ItemAccessFluidHandler(
-                    access,
-                    RagiumDataComponents.FLUID,
-                    RagiumConfig.SERVER.tankCapacity.asInt
-                )
+                HTItemAccessFluidHandler.output(access, RagiumConfig.SERVER.tankCapacity.asInt)
+            },
+            FLUID_OUTPUT_BUS
+        )
+
+        event.registerItem(
+            HTFluidCapabilities.item,
+            { _, access ->
+                HTItemAccessFluidHandler.create(access, RagiumConfig.SERVER.tankCapacity.asInt)
             },
             TANK
         )

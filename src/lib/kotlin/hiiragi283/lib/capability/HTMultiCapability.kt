@@ -42,9 +42,7 @@ interface HTMultiCapability<HANDLER : Any> {
         level: ServerLevel,
         pos: BlockPos,
         side: Direction?,
-        validator: BooleanSupplier = BooleanSupplier {
-            true
-        },
+        validator: BooleanSupplier = BooleanSupplier { true },
         listener: Runnable = Runnables.doNothing()
     ): BlockCapabilityCache<HANDLER, Direction?> =
         BlockCapabilityCache.create(block, level, pos, side, validator, listener)

@@ -282,6 +282,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         heat(RagiumBlocks.SMELTER) { items { +Items.FURNACE } }
         // Chemical
         chemical(RagiumBlocks.CHEMICAL_BATH) { items { +Items.CAULDRON } }
+        chemical(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
         chemical(RagiumBlocks.MIXER) { +holderSet(Tags.Items.BUCKETS_EMPTY) }
         // Bio
         bio(RagiumBlocks.BREWERY) { items { +Items.BREWING_STAND } }
@@ -291,6 +292,12 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Arcane
         arcane(RagiumBlocks.ENCHANTER) { items { +Items.ENCHANTING_TABLE } }
 
+        // Bus
+        VanillaRecipeBuilders.shapeless {
+            ingredient { items { +RagiumBlocks.MACHINE_CASING } }
+            ingredient { items { +RagiumBlocks.TANK } }
+            result { +RagiumBlocks.FLUID_OUTPUT_BUS }
+        }.save(exporter)
         // Decoration
         VanillaRecipeBuilders.shaped {
             +"ABA"

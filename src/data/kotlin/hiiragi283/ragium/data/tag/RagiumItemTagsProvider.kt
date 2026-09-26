@@ -83,6 +83,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
             .addTag(HTCommonTags.Items.COAL_COKE)
             .addTag(HTCommonTags.Items.PITCH_COKE)
         builder(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)
+            .add(RagiumBlocks.FLUID_OUTPUT_BUS)
             .add(RagiumBlocks.TANK)
             .add(RagiumBlocks.VOID_TANK)
             .add(RagiumBlocks.CREATIVE_TANK)

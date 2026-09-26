@@ -36,7 +36,7 @@ data class RTElectrolyzingRecipe(
     val results: Nel<HTFluidResult>,
     override val progressData: HTProgressData
 ) : HTRecipePredicates.ItemAndFluid,
-    HTRecipeFactories.ItemAndFluid<Triple<FluidStack, FluidStack, FluidStack>>,
+    HTRecipeFactories.ItemAndFluid<RTElectrolyzingRecipe.ElectrolyzedResult>,
     HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
@@ -81,7 +81,7 @@ data class RTElectrolyzingRecipe(
         fluidIngredient.getMatchingStack(second)
     )
 
-    override fun apply(first: ItemInstance, second: FluidInstance): Triple<FluidStack, FluidStack, FluidStack> = Triple(
+    override fun apply(first: ItemInstance, second: FluidInstance): ElectrolyzedResult = ElectrolyzedResult(
         results.head.create(),
         results.getOrNull(1).createOrEmpty(),
         results.getOrNull(2).createOrEmpty()
@@ -90,4 +90,7 @@ data class RTElectrolyzingRecipe(
     override fun getSerializer(): RecipeSerializer<RTElectrolyzingRecipe> = RagiumRecipeSerializers.ELECTROLYZING
 
     override fun getType(): HTRecipeType<RTElectrolyzingRecipe> = RagiumRecipeTypes.ELECTROLYZING
+
+    @JvmRecord
+    data class ElectrolyzedResult(val right: FluidStack, val left: FluidStack, val main: FluidStack)
 }

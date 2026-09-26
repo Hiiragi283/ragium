@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTElectrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
@@ -29,6 +30,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTFluidOutputBusBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import net.minecraft.core.Direction
@@ -99,6 +101,10 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.CHEMICAL_BATH, ::HTChemicalBathBlockEntity)
 
     @JvmField
+    val ELECTROLYZER: HTDeferredBlockEntityType<HTElectrolyzerBlockEntity> =
+        registerTick(RagiumConstants.ELECTROLYZER, ::HTElectrolyzerBlockEntity)
+
+    @JvmField
     val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> =
         registerTick(RagiumConstants.MIXER, ::HTMixerBlockEntity)
 
@@ -120,6 +126,12 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
         registerTick(RagiumConstants.ENCHANTER, ::HTEnchanterBlockEntity)
+
+    //    Bus    //
+
+    @JvmField
+    val FLUID_OUTPUT_BUS: HTDeferredBlockEntityType<HTFluidOutputBusBlockEntity> =
+        registerTick("fluid_output_bus", ::HTFluidOutputBusBlockEntity)
 
     //    Storage    //
 
@@ -177,6 +189,7 @@ data object RagiumBlockEntityTypes {
         registerProcessor(SMELTER.get())
 
         registerProcessor(CHEMICAL_BATH.get())
+        registerProcessor(ELECTROLYZER.get())
         registerProcessor(MIXER.get())
 
         registerProcessor(BREWERY.get())
@@ -185,6 +198,8 @@ data object RagiumBlockEntityTypes {
         registerProcessor(PRECISION_ASSEMBLER.get())
 
         registerProcessor(ENCHANTER.get())
+        // Bus
+        registerBlockEntity(FLUID_OUTPUT_BUS.get())
         // Storage
         registerBlockEntity(TANK.get())
 

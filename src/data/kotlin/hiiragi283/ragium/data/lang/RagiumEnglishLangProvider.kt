@@ -75,6 +75,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")
 
+        add(RagiumBlocks.FLUID_OUTPUT_BUS, "Fluid Output Bus")
+
         add(RagiumBlocks.TANK, "Variable Tank")
         add(RagiumBlocks.VOID_TANK, "Void Tank")
         add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")

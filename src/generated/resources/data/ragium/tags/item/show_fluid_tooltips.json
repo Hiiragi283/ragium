@@ -1,6 +1,7 @@
 {
   "values": [
     "ragium:creative_tank",
+    "ragium:fluid_output_bus",
     "ragium:tank",
     "ragium:void_tank"
   ]

@@ -4,8 +4,8 @@ import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
+import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -17,18 +17,13 @@ abstract class HTBaseTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, st
     HTConfigurableBlockEntity(type, pos, state) {
     abstract val tank: HTFluidTank
 
-    override fun createFluidHandler(listener: Runnable): HTResourceSlotHolder<HTFluidTank> {
-        initTank(listener)
-        return object : HTResourceSlotHolder<HTFluidTank> {
-            override fun getSlots(side: Direction?): List<HTFluidTank> = listOf(tank)
-
-            override fun canInsert(side: Direction?): Boolean = true
-
-            override fun canExtract(side: Direction?): Boolean = true
-        }
+    final override fun createFluidHandler(listener: Runnable): HTResourceSlotHolder<HTFluidTank>? {
+        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+        createFluidTanks(builder, listener)
+        return builder.build()
     }
 
-    protected abstract fun initTank(listener: Runnable)
+    protected open fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {}
 
     override fun markDirtyComparator() {
         level?.updateNeighbourForOutputSignal(blockPos, blockState.block)

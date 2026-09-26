@@ -63,4 +63,29 @@ data object HTDelegates {
             setter.accept(value)
         }
     }
+
+    /**
+     * @since 26.1.8
+     */
+    fun <T : Any> memoizeNotNull(supplier: () -> T?): ReadWriteProperty<Any?, T?> = MemoizeNotNull(supplier)
+
+    private class MemoizeNotNull<T : Any>(private val supplier: () -> T?) : ReadWriteProperty<Any?, T?> {
+        private var cachedValue: T? = null
+
+        override fun getValue(thisRef: Any?, property: KProperty<*>): T? {
+            if (cachedValue != null) {
+                return cachedValue
+            } else {
+                val value: T? = supplier()
+                if (value != null) {
+                    cachedValue = value
+                }
+                return value
+            }
+        }
+
+        override fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
+            cachedValue = value
+        }
+    }
 }
