@@ -18,6 +18,7 @@ import hiiragi283.lib.registry.asHolderSequence
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
+import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
 import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryDataHelper
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
@@ -45,9 +46,9 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.registration.ISubtypeRegistration
 import net.minecraft.core.Holder
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.crafting.display.SlotDisplay
@@ -75,15 +76,17 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             .map(Holder<Item>::value)
             .forEach { item: Item ->
                 if (item is HTPotionBasedItem) {
-                    registration.registerSubtypeInterpreter(item) { stack: ItemStack, _ ->
-                        HTPotionHelper.getContents(stack)
-                    }
+                    registration.registerFromDataComponentTypes(item, DataComponents.POTION_CONTENTS)
                 }
             }
+
+        // Creative Tank
+        registration.registerFromDataComponentTypes(RagiumBlocks.CREATIVE_TANK.asItem(), RagiumDataComponents.FLUID)
         // Ore Slurry Bucket
-        registration.registerSubtypeInterpreter(RagiumFluids.ORE_SLURRY.bucketHolder.get()) { stack: ItemStack, _ ->
-            HTOreSlurryDataHelper.getData(stack)
-        }
+        registration.registerFromDataComponentTypes(
+            RagiumFluids.ORE_SLURRY.bucketHolder.get(),
+            RagiumDataComponents.ORE_SLURRY_DATA
+        )
     }
 
     override fun <T : Any> registerFluidSubtypes(
