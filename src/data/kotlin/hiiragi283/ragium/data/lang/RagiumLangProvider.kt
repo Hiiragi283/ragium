@@ -61,7 +61,7 @@ interface RagiumLangProvider {
             provider.add(parts, partsPattern, machineType)
         }
         for (toolType: HTToolType in HTToolType.entries) {
-            provider.add(RagiumItems.SOOTY_IRON_TOOLS[toolType], toolType, RagiumMaterial.Metal.SOOTY_IRON)
+            provider.add(RagiumItems.SOOTY_IRON_TOOLS[toolType], toolType, RagiumMaterial.Alloy.SOOTY_IRON)
         }
         // Text
         // API - Constants

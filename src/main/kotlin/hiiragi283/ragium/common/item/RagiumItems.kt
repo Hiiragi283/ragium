@@ -82,11 +82,12 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Metal.COPPER, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Metal.GOLD, HTItemPart.DUST, HTItemPart.GEAR)
-                putAll(RagiumMaterial.Metal.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT, HTItemPart.NUGGET)
-                putAll(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
-                putAll(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
-                putAll(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT, HTItemPart.NUGGET)
+                // Alloy
+                putAll(RagiumMaterial.Alloy.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Alloy.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Alloy.VOID_METAL, HTItemPart.INGOT, HTItemPart.NUGGET)
                 // Other
                 putAll(RagiumMaterial.Other.WOOD, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Other.GLASS, HTItemPart.DUST)
@@ -105,11 +106,11 @@ data object RagiumItems {
                     REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties ->
                         when (material) {
                             RagiumMaterial.Mineral.RAGINITE -> Rarity.EPIC
-                            RagiumMaterial.Metal.BLACK_STEEL -> Rarity.UNCOMMON
-                            RagiumMaterial.Metal.VOID_METAL -> Rarity.RARE
+                            RagiumMaterial.Alloy.BLACK_STEEL -> Rarity.UNCOMMON
+                            RagiumMaterial.Alloy.VOID_METAL -> Rarity.RARE
                             else -> null
                         }?.let(properties::rarity)
-                        if (material == RagiumMaterial.Metal.NETHERITE) {
+                        if (material == RagiumMaterial.Alloy.NETHERITE) {
                             properties.fireResistant()
                         }
                         material.chemicalKey?.let {
@@ -233,7 +234,7 @@ data object RagiumItems {
     @JvmField
     val SOOTY_IRON_TOOLS: HTToolCollection<HTSimpleDeferredItem> = HTToolCollection { toolType: HTToolType ->
         REGISTER.registerItem(
-            toolType.createPath(RagiumMaterial.Metal.SOOTY_IRON),
+            toolType.createPath(RagiumMaterial.Alloy.SOOTY_IRON),
             { prop: Item.Properties -> toolType.createItem(prop, RagiumToolMaterials.SOOTY_IRON, 6f, -3.1f, -2f, -1f) }
         )
     }

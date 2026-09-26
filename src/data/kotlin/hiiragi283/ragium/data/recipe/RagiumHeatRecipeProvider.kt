@@ -66,7 +66,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Machine Casing
         RagiumRecipeBuilders.alloying {
             ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL)
                 count = 2
             }
             extra { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
@@ -84,7 +84,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                     )
                 )
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             recipeId suffix "_by_coals"
         }.save(exporter)
         // 2x Iron + Cokes -> 2x Sooty Iron
@@ -95,19 +95,19 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             extra { +holderSet(RagiumTags.Items.COKES) }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON)
                 count = 2
             }
             recipeId suffix "_by_cokes"
         }.save(exporter)
         // Sooty Iron + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {
-            ingredient { +dustOrIngot(RagiumMaterial.Metal.SOOTY_IRON) }
+            ingredient { +dustOrIngot(RagiumMaterial.Alloy.SOOTY_IRON) }
             extra {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN)
                 count = 2
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
         }.save(exporter)
         // Aluminum + Copper + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {
@@ -118,7 +118,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             extra { +dustOrIngot(RagiumMaterial.Metal.COPPER) }
             extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN) }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
+                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.BLACK_STEEL)
                 count = 4
             }
             recipeId replace id("obzinite_ingot")

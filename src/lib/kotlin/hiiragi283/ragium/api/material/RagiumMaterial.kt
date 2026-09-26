@@ -16,6 +16,7 @@ sealed interface RagiumMaterial :
             yieldAll(Mineral.entries)
             yieldAll(Gem.entries)
             yieldAll(Metal.entries)
+            yieldAll(Alloy.entries)
             yieldAll(Other.entries)
         }
 
@@ -52,12 +53,8 @@ sealed interface RagiumMaterial :
         RagiumMaterial,
         HTLangName by langName {
         // Minecraft
-        REDSTONE("Redstone", "レッドストーン") {
-            override val isVanilla: Boolean = true
-        },
-        GLOWSTONE("Glowstone", "グロウストーン") {
-            override val isVanilla: Boolean = true
-        },
+        REDSTONE("Redstone", "レッドストーン"),
+        GLOWSTONE("Glowstone", "グロウストーン"),
 
         // Common
         SALT("Salt", "食塩", RagiumChemicals.SODIUM_CHLORIDE),
@@ -79,7 +76,7 @@ sealed interface RagiumMaterial :
             chemicalKey
         )
 
-        open val isVanilla: Boolean = false
+        val isVanilla: Boolean get() = this == REDSTONE || this == GLOWSTONE
 
         override val materialName: String = name.lowercase()
     }
@@ -124,39 +121,13 @@ sealed interface RagiumMaterial :
         COPPER("Copper", "銅", RagiumChemicals.COPPER),
         IRON("Iron", "鉄", RagiumChemicals.IRON),
         GOLD("Gold", "金", RagiumChemicals.GOLD),
-        NETHERITE("Netherite", "ネザライト") {
-            override val hasRawVariant: Boolean = false
-        },
 
         // Common
 
         /**
          * @since 26.1.7
          */
-        ALUMINUM("Aluminum", "アルミニウム", RagiumChemicals.ALUMINUM),
-
-        // Ragium
-
-        /**
-         * @since 26.1.3
-         */
-        SOOTY_IRON("Sooty Iron", "煤鉄") {
-            override val hasRawVariant: Boolean = false
-        },
-
-        /**
-         * @since 26.1.3
-         */
-        BLACK_STEEL("Black Steel", "黒鋼") {
-            override val hasRawVariant: Boolean = false
-        },
-
-        /**
-         * @since 26.1.4
-         */
-        VOID_METAL("Void Metal", "虚金") {
-            override val hasRawVariant: Boolean = false
-        }
+        ALUMINUM("Aluminum", "アルミニウム", RagiumChemicals.ALUMINUM)
         ;
 
         constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>? = null) : this(
@@ -164,7 +135,37 @@ sealed interface RagiumMaterial :
             chemicalKey
         )
 
-        open val hasRawVariant: Boolean = true
+        override val materialName: String = name.lowercase()
+    }
+
+    enum class Alloy(langName: HTLangName, override val chemicalKey: ResourceKey<HTChemical>?) :
+        RagiumMaterial,
+        HTLangName by langName {
+        // Minecraft
+        NETHERITE("Netherite", "ネザライト"),
+
+        // Ragium
+
+        /**
+         * @since 26.1.3
+         */
+        SOOTY_IRON("Sooty Iron", "煤鉄"),
+
+        /**
+         * @since 26.1.3
+         */
+        BLACK_STEEL("Black Steel", "黒鋼"),
+
+        /**
+         * @since 26.1.4
+         */
+        VOID_METAL("Void Metal", "虚金")
+        ;
+
+        constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>? = null) : this(
+            HTLangName(enName, jaName),
+            chemicalKey
+        )
 
         override val materialName: String = name.lowercase()
     }

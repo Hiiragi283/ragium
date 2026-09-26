@@ -155,9 +155,9 @@ data object RagiumBlocks {
         RagiumMaterial.Fuel.COAL_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Fuel.PITCH_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_BLUE),
         RagiumMaterial.Metal.ALUMINUM to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.COLOR_PINK),
-        RagiumMaterial.Metal.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
-        RagiumMaterial.Metal.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
-        RagiumMaterial.Metal.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
+        RagiumMaterial.Alloy.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
+        RagiumMaterial.Alloy.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
+        RagiumMaterial.Alloy.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
     ).associateTo(
         sortedMapOf(RagiumMaterial.COMPARATOR)
     ) { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
@@ -449,8 +449,8 @@ data object RagiumBlocks {
     private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
         // Block
         setOf(
-            RagiumMaterial.Metal.BLACK_STEEL to Rarity.UNCOMMON,
-            RagiumMaterial.Metal.VOID_METAL to Rarity.RARE
+            RagiumMaterial.Alloy.BLACK_STEEL to Rarity.UNCOMMON,
+            RagiumMaterial.Alloy.VOID_METAL to Rarity.RARE
         ).forEach { (material: RagiumMaterial, rarity: Rarity) ->
             for (part: HTBlockPart in HTBlockPart.entries) {
                 val block: ItemLike = MATERIAL_BLOCKS[part, material] ?: continue

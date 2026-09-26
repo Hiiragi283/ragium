@@ -234,7 +234,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"A A"
             +"ABA"
             +" A "
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
             result {
                 +Items.HOPPER
@@ -246,7 +246,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"A A"
             +"ABA"
             +" A "
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
             define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
             result {
                 +Items.HOPPER
@@ -262,7 +262,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Mechanical
         VanillaRecipeBuilders.shaped {
             layered2()
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
             result {
                 +RagiumItems.getParts(HTMachineType.MECHANICAL)
@@ -303,8 +303,8 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"ABA"
             +"B B"
             +"ABA"
-            define('A') { +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SOOTY_IRON) }
-            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            define('A') { +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Alloy.SOOTY_IRON) }
+            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             result {
                 +RagiumBlocks.MACHINE_CASING
                 count = 4
@@ -341,7 +341,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private inline fun mechanical(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.MECHANICAL,
-            RagiumMaterial.Metal.SOOTY_IRON,
+            RagiumMaterial.Alloy.SOOTY_IRON,
             RagiumMaterial.Metal.COPPER,
             result,
             builderAction
@@ -351,7 +351,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private inline fun heat(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.HEAT,
-            RagiumMaterial.Metal.SOOTY_IRON,
+            RagiumMaterial.Alloy.SOOTY_IRON,
             RagiumMaterial.Metal.IRON,
             result,
             builderAction
@@ -361,7 +361,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private inline fun chemical(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.CHEMICAL,
-            RagiumMaterial.Metal.BLACK_STEEL,
+            RagiumMaterial.Alloy.BLACK_STEEL,
             RagiumMaterial.Metal.GOLD,
             result,
             builderAction
@@ -371,7 +371,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private inline fun bio(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
             HTMachineType.BIO,
-            RagiumMaterial.Metal.BLACK_STEEL,
+            RagiumMaterial.Alloy.BLACK_STEEL,
             RagiumMaterial.Gem.EMERALD,
             result,
             builderAction
@@ -398,7 +398,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"ADA"
             define('A') { items { +Items.GHAST_TEAR } }
             define('B') { items { +RagiumItems.getParts(HTMachineType.ARCANE) } }
-            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.NETHERITE) }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Alloy.NETHERITE) }
             define('D', builderAction)
             result { +result }
         }.save(exporter)
@@ -410,14 +410,14 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Tank
         VanillaRecipeBuilders.shaped {
             hollow8()
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             define('B') { +holderSet(Tags.Items.BUCKETS_EMPTY) }
             result { +RagiumBlocks.TANK }
             recipeId suffix "_by_sooty_iron"
         }.save(exporter)
         VanillaRecipeBuilders.shaped {
             hollow4()
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
             define('B') { +holderSet(Tags.Items.BUCKETS_EMPTY) }
             result { +RagiumBlocks.TANK }
             recipeId suffix "_by_black_steel"
@@ -425,7 +425,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Void Tank
         VanillaRecipeBuilders.shaped {
             hollow8()
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.VOID_METAL) }
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.VOID_METAL) }
             define('B') { +holderSet(Tags.Items.BUCKETS_EMPTY) }
             result { +RagiumBlocks.VOID_TANK }
         }.save(exporter)
@@ -446,15 +446,15 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         registerStairsRecipes(RagiumBlocks.CRYOLITE_STAIRS, Ingredient.of(RagiumBlocks.CRYOLITE_BLOCK))
 
         nineToBlock(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT)
-        nineToBlock(RagiumMaterial.Metal.SOOTY_IRON, HTItemPart.INGOT)
-        nineToBlock(RagiumMaterial.Metal.BLACK_STEEL, HTItemPart.INGOT)
-        nineToBlock(RagiumMaterial.Metal.VOID_METAL, HTItemPart.INGOT)
+        nineToBlock(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT)
+        nineToBlock(RagiumMaterial.Alloy.BLACK_STEEL, HTItemPart.INGOT)
+        nineToBlock(RagiumMaterial.Alloy.VOID_METAL, HTItemPart.INGOT)
         // Ingot <-> Nugget
-        ingotToNugget(RagiumMaterial.Metal.NETHERITE, ingot = HTSimpleDeferredItem(vanillaId("netherite_ingot")))
         ingotToNugget(RagiumMaterial.Metal.ALUMINUM)
-        ingotToNugget(RagiumMaterial.Metal.SOOTY_IRON)
-        ingotToNugget(RagiumMaterial.Metal.BLACK_STEEL)
-        ingotToNugget(RagiumMaterial.Metal.VOID_METAL)
+        ingotToNugget(RagiumMaterial.Alloy.NETHERITE, ingot = HTSimpleDeferredItem(vanillaId("netherite_ingot")))
+        ingotToNugget(RagiumMaterial.Alloy.SOOTY_IRON)
+        ingotToNugget(RagiumMaterial.Alloy.BLACK_STEEL)
+        ingotToNugget(RagiumMaterial.Alloy.VOID_METAL)
         // Gear
         RagiumItems.getOrThrow(HTItemPart.GEAR, RagiumMaterial.Other.WOOD).let { gear: HTSimpleDeferredItem ->
             VanillaRecipeBuilders.shaped {
@@ -469,11 +469,11 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.COPPER)
         gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
         gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD)
-        RagiumItems.MATERIAL_ITEMS[HTItemPart.GEAR, RagiumMaterial.Metal.NETHERITE]?.let {
+        RagiumItems.MATERIAL_ITEMS[HTItemPart.GEAR, RagiumMaterial.Alloy.NETHERITE]?.let {
             VanillaRecipeBuilders.smithing {
                 template { items { +Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE } }
                 base { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Gem.DIAMOND) }
-                addition { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.NETHERITE) }
+                addition { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.NETHERITE) }
                 result { +it }
             }.save(exporter)
         }
@@ -484,8 +484,21 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 RagiumMaterial.Metal.COPPER -> HTSimpleDeferredItem(vanillaId("copper_ingot"))
                 RagiumMaterial.Metal.IRON -> HTSimpleDeferredItem(vanillaId("iron_ingot"))
                 RagiumMaterial.Metal.GOLD -> HTSimpleDeferredItem(vanillaId("gold_ingot"))
-                RagiumMaterial.Metal.NETHERITE -> HTSimpleDeferredItem(vanillaId("netherite_ingot"))
                 else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, metal]
+            } ?: continue
+            VanillaRecipeBuilders.smeltingAndBlasting(exporter) {
+                ingredient { items { +dust } }
+                result { +item }
+                exp = 0.35f
+                group = item.id.path
+                recipeId suffix "_from_dust"
+            }
+        }
+        for (alloy: RagiumMaterial.Alloy in RagiumMaterial.Alloy.entries) {
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, alloy] ?: continue
+            val item: HTSimpleDeferredItem = when (alloy) {
+                RagiumMaterial.Alloy.NETHERITE -> HTSimpleDeferredItem(vanillaId("netherite_ingot"))
+                else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, alloy]
             } ?: continue
             VanillaRecipeBuilders.smeltingAndBlasting(exporter) {
                 ingredient { items { +dust } }
@@ -521,7 +534,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Sooty Iron
         val ironIngot: HolderSet<Item> = holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
         val sootyIronIngot: HTSimpleDeferredItem =
-            RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+            RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON)
         VanillaRecipeBuilders.shaped {
             hollow8()
             define('A') {

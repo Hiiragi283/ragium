@@ -545,7 +545,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
 
-        for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
+        for (metal: RagiumMaterial in RagiumMaterial.Metal.entries + RagiumMaterial.Alloy.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
             RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(CommonTagPrefixes.INGOT, metal) }
@@ -733,7 +733,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
         // Raw XX -> XX Dust
         for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
-            if (!metal.hasRawVariant) continue
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
             RagiumRecipeBuilders.crushing {
                 ingredient {

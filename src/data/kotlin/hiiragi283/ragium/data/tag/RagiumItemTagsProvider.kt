@@ -53,7 +53,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         }
 
         builder(RagiumTags.Items.SOOTY_IRON_TOOL_MATERIALS)
-            .addTag(CommonTagPrefixes.INGOT.itemTagKey(RagiumMaterial.Metal.SOOTY_IRON))
+            .addTag(CommonTagPrefixes.INGOT.itemTagKey(RagiumMaterial.Alloy.SOOTY_IRON))
         // Other
         builder(ItemTags.SLABS)
             .add(RagiumBlocks.FLUORITE_SLAB)
