@@ -107,7 +107,7 @@ internal data object RagiumCommon {
 
         setChemical(RagiumFluids.SALT_WATER, RagiumChemicals.SODIUM_CHLORIDE)
         setChemical(RagiumFluids.NAOH_SOLUTION, RagiumChemicals.SODIUM_HYDROXIDE)
-        setChemical(RagiumFluids.ALUMINA_SOLUTION, RagiumChemicals.ALUMINA)
+        setChemical(RagiumFluids.ALUMINA_SOLUTION, RagiumChemicals.ALUMINUM_OXIDE)
         setChemical(RagiumFluids.SULFUR_DIOXIDE, RagiumChemicals.SULFUR_DIOXIDE)
         setChemical(RagiumFluids.SULFUR_TRIOXIDE, RagiumChemicals.SULFUR_TRIOXIDE)
         setChemical(RagiumFluids.SULFURIC_ACID, RagiumChemicals.SULFURIC_ACID)

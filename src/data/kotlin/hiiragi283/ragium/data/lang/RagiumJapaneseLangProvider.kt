@@ -38,11 +38,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         // Block
         add(RagiumBlocks.ECHO_BLOCK, "残響ブロック")
 
-        add(RagiumBlocks.FLUORITE_BLOCK, "蛍石ブロック")
         add(RagiumBlocks.FLUORITE_SLAB, "蛍石のハーフブロック")
         add(RagiumBlocks.FLUORITE_STAIRS, "蛍石の階段")
 
-        add(RagiumBlocks.CRYOLITE_BLOCK, "氷晶石ブロック")
         add(RagiumBlocks.CRYOLITE_SLAB, "氷晶石のハーフブロック")
         add(RagiumBlocks.CRYOLITE_STAIRS, "氷晶石の階段")
 
@@ -239,9 +237,28 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         addFromKey(RagiumChemicals.IRON, "鉄")
         addFromKey(RagiumChemicals.COPPER, "銅")
+        addFromKey(RagiumChemicals.GOLD, "金")
 
-        addFromKey(RagiumChemicals.HYDROXIDE, "水酸基")
+        addFromKey(RagiumChemicals.HYDROXIDE, "水酸化物")
         addFromKey(RagiumChemicals.WATER, "水")
+
+        addFromKey(RagiumChemicals.NITRATE, "硝酸塩")
+        addFromKey(RagiumChemicals.NITRIC_ACID, "硝酸")
+        addFromKey(RagiumChemicals.HYDROGEN_FLUORIDE, "フッ化水素")
+        addFromKey(RagiumChemicals.FLUORITE, "蛍石")
+        addFromKey(RagiumChemicals.CRYOLITE, "氷晶石")
+
+        addFromKey(RagiumChemicals.SODIUM_HYDROXIDE, "水酸化ナトリウム")
+        addFromKey(RagiumChemicals.SODIUM_CHLORIDE, "塩化ナトリウム")
+        addFromKey(RagiumChemicals.ALUMINUM_OXIDE, "酸化アルミニウム")
+        addFromKey(RagiumChemicals.SILICON_DIOXIDE, "二酸化ケイ素")
+        addFromKey(RagiumChemicals.SULFUR_DIOXIDE, "二酸化硫黄")
+        addFromKey(RagiumChemicals.SULFUR_TRIOXIDE, "三酸化硫黄")
+        addFromKey(RagiumChemicals.SULFATE, "硫酸塩")
+        addFromKey(RagiumChemicals.SULFURIC_ACID, "硫酸")
+        addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "塩化水素")
+
+        addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "硝酸カリウム")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "水素")
 

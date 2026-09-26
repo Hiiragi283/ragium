@@ -42,11 +42,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         // Block
         add(RagiumBlocks.ECHO_BLOCK, "Block of Echo")
 
-        add(RagiumBlocks.FLUORITE_BLOCK, "Block of Fluorite")
         add(RagiumBlocks.FLUORITE_SLAB, "Fluorite Slab")
         add(RagiumBlocks.FLUORITE_STAIRS, "Fluorite Stairs")
 
-        add(RagiumBlocks.CRYOLITE_BLOCK, "Block of Cryolite")
         add(RagiumBlocks.CRYOLITE_SLAB, "Cryolite Slab")
         add(RagiumBlocks.CRYOLITE_STAIRS, "Cryolite Stairs")
 
@@ -243,9 +241,28 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         addFromKey(RagiumChemicals.IRON, "Iron")
         addFromKey(RagiumChemicals.COPPER, "Copper")
+        addFromKey(RagiumChemicals.GOLD, "Gold")
 
         addFromKey(RagiumChemicals.HYDROXIDE, "Hydroxide")
         addFromKey(RagiumChemicals.WATER, "Water")
+
+        addFromKey(RagiumChemicals.NITRATE, "Nitrate")
+        addFromKey(RagiumChemicals.NITRIC_ACID, "Nitric Acid")
+        addFromKey(RagiumChemicals.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
+        addFromKey(RagiumChemicals.FLUORITE, "Fluorite")
+        addFromKey(RagiumChemicals.CRYOLITE, "Cryolite")
+
+        addFromKey(RagiumChemicals.SODIUM_HYDROXIDE, "Sodium Hydroxide")
+        addFromKey(RagiumChemicals.SODIUM_CHLORIDE, "Sodium Chloride")
+        addFromKey(RagiumChemicals.ALUMINUM_OXIDE, "Aluminum Oxide")
+        addFromKey(RagiumChemicals.SILICON_DIOXIDE, "Silicon Dioxide")
+        addFromKey(RagiumChemicals.SULFUR_DIOXIDE, "Sulfur Dioxide")
+        addFromKey(RagiumChemicals.SULFUR_TRIOXIDE, "Sulfur Trioxide")
+        addFromKey(RagiumChemicals.SULFATE, "Sulfate")
+        addFromKey(RagiumChemicals.SULFURIC_ACID, "Sulfuric Acid")
+        addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "Hydrogen chloride")
+
+        addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "Potassium Nitrate")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "Hydrogen")
 

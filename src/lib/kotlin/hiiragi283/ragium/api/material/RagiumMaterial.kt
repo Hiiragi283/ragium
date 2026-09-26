@@ -188,7 +188,7 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.7
          */
-        ALUMINA("Alumina", "アルミナ", RagiumChemicals.ALUMINA),
+        ALUMINA("Alumina", "アルミナ", RagiumChemicals.ALUMINUM_OXIDE),
 
         /**
          * @since 26.1.7

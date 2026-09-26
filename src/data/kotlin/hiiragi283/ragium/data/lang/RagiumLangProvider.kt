@@ -11,6 +11,7 @@ import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -26,6 +27,9 @@ interface RagiumLangProvider {
             .forEach { (part: HTBlockPart, material: RagiumMaterial, block: HTHasTranslationKey) ->
                 provider.add(block, part, material)
             }
+        provider.add(RagiumBlocks.FLUORITE_BLOCK, HTStorageBlockPart.DEFAULT, RagiumMaterial.Gem.FLUORITE)
+        provider.add(RagiumBlocks.CRYOLITE_BLOCK, HTStorageBlockPart.DEFAULT, RagiumMaterial.Gem.CRYOLITE)
+
         val casingPattern = HTLangPatternProvider("Machine Casing (%s)", "機械筐体 (%s)")
         for ((machineType: HTLangName, casing: HTHasTranslationKey) in RagiumBlocks.MACHINE_CASINGS) {
             provider.add(casing, casingPattern, machineType)
