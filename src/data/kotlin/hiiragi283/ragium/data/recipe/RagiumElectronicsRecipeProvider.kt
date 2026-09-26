@@ -22,7 +22,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         RagiumRecipeBuilders.resourceExtracting {
             biomes { +holderSet(Tags.Biomes.IS_OCEAN) }
             result {
-                +Fluids.WATER
+                +RagiumFluids.SALT_WATER
                 amount *= 4
             }
             recipeId suffix "_at_ocean"

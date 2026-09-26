@@ -25,7 +25,6 @@ data object RagiumConstants {
     // Chemical
     const val CHEMICAL_BATH = "chemical_bath"
     const val CHEMICAL_REACTOR = "chemical_reactor"
-    const val ELECTROLYZER = "electrolyzer"
     const val MIXER = "mixer"
 
     // Bio
@@ -33,6 +32,7 @@ data object RagiumConstants {
     const val PLANTER = "planter"
 
     // Electronics
+    const val ELECTROLYZER = "electrolyzer"
     const val PRECISION_ASSEMBLER = "precision_assembler"
     const val SCANNER = "scanner"
 
@@ -60,7 +60,6 @@ data object RagiumConstants {
 
     // Chemical
     const val BATHING = "bathing"
-    const val ELECTROLYZING = "electrolyzing"
     const val MIXING = "mixing"
     const val REACTING = "reacting"
 
@@ -69,6 +68,7 @@ data object RagiumConstants {
     const val PLANTING = "planting"
 
     // Electronics
+    const val ELECTROLYZING = "electrolyzing"
     const val PRINTING = "printing"
 
     const val RESOURCE_EXTRACTING = "resource/extracting"

@@ -44,6 +44,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
+import net.neoforged.neoforge.client.fluid.FluidTintSources
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent
 import net.neoforged.neoforge.common.tooltip.TooltipLocation
 import net.neoforged.neoforge.event.RegisterTooltipAppendersEvent
@@ -183,6 +184,10 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0x33cc66))
         }
 
+        register.register(RagiumFluids.SALT_WATER) {
+            dull()
+            tintSource = FluidTintSources.water()
+        }
         register.register(RagiumFluids.NAOH_SOLUTION) {
             dull()
             colorTint(Color(0x003366))

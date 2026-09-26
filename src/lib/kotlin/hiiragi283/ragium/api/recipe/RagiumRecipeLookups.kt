@@ -71,9 +71,6 @@ data object RagiumRecipeLookups {
     val BATHING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.BATHING)
 
     @JvmField
-    val ELECTROLYZING: HTRecipeLookup<RTElectrolyzingRecipe> = create(RagiumRecipeTypes.ELECTROLYZING)
-
-    @JvmField
     val MIXING: HTCompoundRecipeLookup<HTItemAndFluidToFluidRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
@@ -87,6 +84,9 @@ data object RagiumRecipeLookups {
     val PLANTING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.PLANTING)
 
     // Electronics
+    @JvmField
+    val ELECTROLYZING: HTRecipeLookup<RTElectrolyzingRecipe> = create(RagiumRecipeTypes.ELECTROLYZING)
+
     @JvmField
     val RESOURCE_EXTRACTING: HTRecipeLookup<RTResourceExtractingRecipe> = create(RagiumRecipeTypes.RESOURCE_EXTRACTING)
 

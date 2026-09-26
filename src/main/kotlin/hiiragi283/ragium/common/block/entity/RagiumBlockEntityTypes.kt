@@ -101,10 +101,6 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.CHEMICAL_BATH, ::HTChemicalBathBlockEntity)
 
     @JvmField
-    val ELECTROLYZER: HTDeferredBlockEntityType<HTElectrolyzerBlockEntity> =
-        registerTick(RagiumConstants.ELECTROLYZER, ::HTElectrolyzerBlockEntity)
-
-    @JvmField
     val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> =
         registerTick(RagiumConstants.MIXER, ::HTMixerBlockEntity)
 
@@ -118,6 +114,10 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.PLANTER, ::HTPlanterBlockEntity)
 
     // Electronics
+    @JvmField
+    val ELECTROLYZER: HTDeferredBlockEntityType<HTElectrolyzerBlockEntity> =
+        registerTick(RagiumConstants.ELECTROLYZER, ::HTElectrolyzerBlockEntity)
+
     @JvmField
     val PRECISION_ASSEMBLER: HTDeferredBlockEntityType<HTPrecisionAssemblerBlockEntity> =
         registerTick(RagiumConstants.PRECISION_ASSEMBLER, ::HTPrecisionAssemblerBlockEntity)
@@ -189,12 +189,12 @@ data object RagiumBlockEntityTypes {
         registerProcessor(SMELTER.get())
 
         registerProcessor(CHEMICAL_BATH.get())
-        registerProcessor(ELECTROLYZER.get())
         registerProcessor(MIXER.get())
 
         registerProcessor(BREWERY.get())
         registerProcessor(PLANTER.get())
 
+        registerProcessor(ELECTROLYZER.get())
         registerProcessor(PRECISION_ASSEMBLER.get())
 
         registerProcessor(ENCHANTER.get())

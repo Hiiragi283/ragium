@@ -16,7 +16,7 @@ class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) :
     HTHolderRecipeCategory<RTElectrolyzingRecipe>(
         guiHelper,
         RagiumJeiRecipeTypes.ELECTROLYZING,
-        18 * 8,
+        18 * 6,
         18 * 1,
         RTElectrolyzingRecipe.CODEC
     ) {
@@ -24,16 +24,11 @@ class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) :
         // inputs
         builder
             .addInputSlot(getPosition(0), getPosition(0))
-            .add(recipe.fluidIngredient)
+            .add(recipe.ingredient)
             .setSlotBackground(HTBackgroundType.INPUT)
-        val itemInput: IRecipeSlotBuilder = builder.addInputSlot(
-            getPosition(2),
-            getPosition(0)
-        ).setSlotBackground(HTBackgroundType.INPUT)
-        recipe.itemIngredient.ifPresent(itemInput::add)
         // outputs
         val outputSlots: Array<IRecipeSlotBuilder> = Array(3) { index: Int ->
-            builder.addOutputSlot(getPosition(5 + index), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT)
+            builder.addOutputSlot(getPosition(3 + index), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT)
         }
         for ((index: Int, result: HTFluidResult) in recipe.results.withIndex()) {
             outputSlots[index].add(result)
@@ -41,7 +36,6 @@ class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) :
     }
 
     override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTElectrolyzingRecipe, focuses: IFocusGroup) {
-        builder.addRecipePlus(getPosition(1))
-        builder.addRecipeArrow(recipe).setPosition(getPosition(3.25), getPosition(0))
+        builder.addRecipeArrow(recipe).setPosition(getPosition(1.25), getPosition(0))
     }
 }

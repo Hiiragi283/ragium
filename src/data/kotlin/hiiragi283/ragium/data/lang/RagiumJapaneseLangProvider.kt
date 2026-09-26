@@ -60,12 +60,12 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.CHEMICAL_BATH, "化学浴槽")
         add(RagiumBlocks.CHEMICAL_REACTOR, "化学反応槽")
-        add(RagiumBlocks.ELECTROLYZER, "電解機")
         add(RagiumBlocks.MIXER, "混合機")
 
         add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.PLANTER, "栽培機")
 
+        add(RagiumBlocks.ELECTROLYZER, "電解機")
         add(RagiumBlocks.PRECISION_ASSEMBLER, "精密組立機")
         add(RagiumBlocks.SCANNER, "レーザースキャナ")
 
@@ -109,6 +109,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "液体爆薬")
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "フッ化水素")
         addFluid(RagiumFluids.HYDROFLUORIC_ACID, "フッ化水素酸")
+        addFluid(RagiumFluids.SALT_WATER, "塩水")
         addFluid(RagiumFluids.NAOH_SOLUTION, "水酸化ナトリウム水溶液")
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "アルミナ水溶液")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "二酸化硫黄")
@@ -173,13 +174,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.REFINING, "蒸留")
 
         add(RagiumRecipeTypes.BATHING, "化学洗浄")
-        add(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.REACTING, "化学反応")
 
         add(RagiumRecipeTypes.BREWING, "醸造")
         add(RagiumRecipeTypes.PLANTING, "栽培")
 
+        add(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
         add(RagiumRecipeTypes.RESOURCE_EXTRACTING, "資源採集")
 
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")

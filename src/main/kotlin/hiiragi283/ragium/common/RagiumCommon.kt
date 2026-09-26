@@ -105,6 +105,7 @@ internal data object RagiumCommon {
         setChemical(RagiumFluids.HYDROGEN_FLUORIDE, RagiumChemicals.HYDROGEN_FLUORIDE)
         setChemical(RagiumFluids.HYDROFLUORIC_ACID, RagiumChemicals.HYDROGEN_FLUORIDE)
 
+        setChemical(RagiumFluids.SALT_WATER, RagiumChemicals.SODIUM_CHLORIDE)
         setChemical(RagiumFluids.NAOH_SOLUTION, RagiumChemicals.SODIUM_HYDROXIDE)
         setChemical(RagiumFluids.ALUMINA_SOLUTION, RagiumChemicals.ALUMINA)
         setChemical(RagiumFluids.SULFUR_DIOXIDE, RagiumChemicals.SULFUR_DIOXIDE)

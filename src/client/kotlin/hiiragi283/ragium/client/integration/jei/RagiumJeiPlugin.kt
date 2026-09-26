@@ -172,17 +172,17 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.REFINING, RagiumRecipeLookups.REFINING)
         // Chemical
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.BATHING, RagiumRecipeLookups.BATHING)
-        HTJeiRecipeHelper.addRecipes(
-            registration,
-            RagiumJeiRecipeTypes.ELECTROLYZING,
-            RagiumRecipeLookups.ELECTROLYZING
-        )
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.REACTING, RagiumRecipeLookups.REACTING)
         // Bio
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.BREWING, RagiumRecipeLookups.BREWING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.PLANTING, RagiumRecipeLookups.PLANTING)
         // Electronics
+        HTJeiRecipeHelper.addRecipes(
+            registration,
+            RagiumJeiRecipeTypes.ELECTROLYZING,
+            RagiumRecipeLookups.ELECTROLYZING
+        )
         HTJeiRecipeHelper.addRecipes(
             registration,
             RagiumJeiRecipeTypes.RESOURCE_EXTRACTING,
@@ -286,12 +286,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Chemical
         registration.addCraftingStation(RagiumJeiRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
         registration.addCraftingStation(RagiumJeiRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)
-        registration.addCraftingStation(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.MIXING, RagiumBlocks.MIXER)
         // Bio
         registration.addCraftingStation(RagiumJeiRecipeTypes.BREWING, RagiumBlocks.BREWERY)
         registration.addCraftingStation(RagiumJeiRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
         // Electronics
+        registration.addCraftingStation(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.ASSEMBLING, RagiumBlocks.PRECISION_ASSEMBLER)
         // Arcane
         registration.addCraftingStation(RagiumJeiRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)

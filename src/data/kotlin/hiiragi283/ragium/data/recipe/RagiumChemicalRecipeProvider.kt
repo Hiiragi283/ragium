@@ -56,7 +56,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     private fun electrolyzing() {
         // 2x H2O -> 2x H2 + O2
         RagiumRecipeBuilders.electrolyzing {
-            fluidIngredient { +waterSet() }
+            ingredient { +waterSet() }
             result { +RagiumFluids.HYDROGEN }
             result {
                 +RagiumFluids.OXYGEN

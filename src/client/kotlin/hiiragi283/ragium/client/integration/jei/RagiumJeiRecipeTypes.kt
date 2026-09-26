@@ -69,10 +69,6 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
 
     @JvmField
-    val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
-
-    @JvmField
     val MIXING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> =
         HTJeiRecipeType(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
@@ -90,6 +86,10 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     // Electronics
+    @JvmField
+    val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =
+        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
+
     @JvmField
     val RESOURCE_EXTRACTING: HTHolderJeiRecipeType<RTResourceExtractingRecipe> =
         HTJeiRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, RagiumBlocks.MACHINE_CASING)

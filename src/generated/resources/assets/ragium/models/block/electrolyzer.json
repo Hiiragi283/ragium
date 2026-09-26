@@ -2,7 +2,7 @@
   "parent": "minecraft:block/orientable",
   "textures": {
     "front": "ragium:block/electrolyzer_front",
-    "side": "ragium:block/machine/chemical_side",
+    "side": "ragium:block/machine/electronics_side",
     "top": "ragium:block/machine_casing"
   }
 }

@@ -317,8 +317,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
         RagiumRecipeBuilders.electrolyzing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SALT) }
-            fluidIngredient { +waterSet() }
+            ingredient { +holderSet(RagiumFluids.SALT_WATER) }
             result {
                 +RagiumFluids.HYDROGEN
                 amount /= 2

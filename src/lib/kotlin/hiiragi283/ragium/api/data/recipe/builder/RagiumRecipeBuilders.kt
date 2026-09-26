@@ -156,14 +156,6 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun electrolyzing(builderAction: RTElectrolyzingRecipeBuilder.() -> Unit): RTElectrolyzingRecipeBuilder {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return RTElectrolyzingRecipeBuilder().apply(builderAction)
-    }
-
-    @JvmStatic
     inline fun mixing(
         builderAction: HTItemAndFluidToRecipeBuilder.ToFluid<RTMixingRecipe>.() -> Unit
     ): HTItemAndFluidToRecipeBuilder.ToFluid<RTMixingRecipe> {
@@ -203,6 +195,14 @@ data object RagiumRecipeBuilders {
     }
 
     // Electronics
+    @JvmStatic
+    inline fun electrolyzing(builderAction: RTElectrolyzingRecipeBuilder.() -> Unit): RTElectrolyzingRecipeBuilder {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return RTElectrolyzingRecipeBuilder().apply(builderAction)
+    }
+
     @JvmStatic
     inline fun resourceExtracting(
         builderAction: RTResourceExtractingRecipeBuilder.() -> Unit

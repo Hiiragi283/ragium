@@ -208,6 +208,9 @@ data object RagiumFluids {
 
     // Na
     @JvmField
+    val SALT_WATER: HTFluidContent.Flowing = REGISTER.registerFlowing("salt_water") { properties = liquid() }
+
+    @JvmField
     val NAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("sodium_hydroxide_solution") {
         properties = liquid()
     }

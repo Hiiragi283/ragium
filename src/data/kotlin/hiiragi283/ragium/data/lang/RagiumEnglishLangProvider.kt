@@ -64,12 +64,12 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.CHEMICAL_BATH, "Chemical Bath")
         add(RagiumBlocks.CHEMICAL_REACTOR, "Chemical Reactor")
-        add(RagiumBlocks.ELECTROLYZER, "Electrolyzer")
         add(RagiumBlocks.MIXER, "Mixer")
 
         add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.PLANTER, "Planter")
 
+        add(RagiumBlocks.ELECTROLYZER, "Electrolyzer")
         add(RagiumBlocks.PRECISION_ASSEMBLER, "Precision Assembler")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
@@ -113,6 +113,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "Liquid Explosive")
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
         addFluid(RagiumFluids.HYDROFLUORIC_ACID, "Hydrofluoric Acid")
+        addFluid(RagiumFluids.SALT_WATER, "Salt Water")
         addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "Alumina Solution")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
@@ -177,13 +178,13 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.REFINING, "Refining")
 
         add(RagiumRecipeTypes.BATHING, "Chemical Bathing")
-        add(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.REACTING, "Chemical Reacting")
 
         add(RagiumRecipeTypes.BREWING, "Brewing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
 
+        add(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
         add(RagiumRecipeTypes.RESOURCE_EXTRACTING, "Resource Extracting")
 
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")

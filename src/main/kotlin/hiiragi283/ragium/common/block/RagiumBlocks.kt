@@ -289,10 +289,6 @@ data object RagiumBlocks {
         registerFakeMachine(RagiumConstants.CHEMICAL_REACTOR)
 
     @JvmField
-    val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerMachine(RagiumBlockEntityTypes.ELECTROLYZER)
-
-    @JvmField
     val MIXER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.MIXER)
 
@@ -306,6 +302,10 @@ data object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.PLANTER)
 
     // Electronics
+    @JvmField
+    val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.ELECTROLYZER)
+
     @JvmField
     val PRECISION_ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.PRECISION_ASSEMBLER)
@@ -338,12 +338,12 @@ data object RagiumBlocks {
 
                 put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
                 put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
-                put(HTMachineType.CHEMICAL, ELECTROLYZER)
                 put(HTMachineType.CHEMICAL, MIXER)
 
                 put(HTMachineType.BIO, BREWERY)
                 put(HTMachineType.BIO, PLANTER)
 
+                put(HTMachineType.ELECTRONICS, ELECTROLYZER)
                 put(HTMachineType.ELECTRONICS, PRECISION_ASSEMBLER)
                 put(HTMachineType.ELECTRONICS, SCANNER)
 
