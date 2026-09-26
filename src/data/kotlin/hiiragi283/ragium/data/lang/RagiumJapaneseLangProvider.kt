@@ -96,6 +96,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.OXYGEN, "酸素")
         addFluid(RagiumFluids.CHLORINE, "塩素")
 
+        addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
         addFluid(RagiumFluids.WOOD_TAR, "木タール")
         addFluid(RagiumFluids.COAL_TAR, "石炭タール")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "芳香族化合物")
@@ -117,13 +118,16 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
         addFluid(RagiumFluids.BLEACH, "漂白剤")
+        addFluid(RagiumFluids.CAOH_SOLUTION, "水酸化カルシウム水溶液")
 
         add(RagiumFluids.ORE_SLURRY.getFluidType().descriptionId, "無効な鉱石泥")
         add(RagiumFluids.ORE_SLURRY.bucketHolder, $$"%1$s入りバケツ")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
-        add(RagiumItems.TAR, "タール")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
+        add(RagiumItems.CEMENT, "セメント")
+        add(RagiumItems.MORTAR, "モルタル")
+        add(RagiumItems.TAR, "タール")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")

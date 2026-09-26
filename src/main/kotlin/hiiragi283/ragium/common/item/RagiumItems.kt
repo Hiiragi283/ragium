@@ -63,10 +63,9 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Fuel.COAL_COKE, HTItemPart.TINY)
                 putAll(RagiumMaterial.Fuel.PITCH_COKE, HTItemPart.TINY)
                 // Mineral
-                for (mineral: RagiumMaterial.Mineral in RagiumMaterial.Mineral.entries) {
-                    if (!mineral.isVanilla) {
-                        putAll(mineral, HTItemPart.DUST)
-                    }
+                for (dustLike: RagiumMaterial.DustLike in RagiumMaterial.DustLike.entries) {
+                    if (dustLike is RagiumMaterial.Mineral && dustLike.isVanilla) continue
+                    putAll(dustLike, HTItemPart.DUST)
                 }
                 // Gem
                 putAll(RagiumMaterial.Gem.LAPIS, HTItemPart.DUST)
@@ -89,13 +88,7 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Alloy.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.VOID_METAL, HTItemPart.INGOT, HTItemPart.NUGGET)
                 // Other
-                putAll(RagiumMaterial.Other.WOOD, HTItemPart.DUST, HTItemPart.GEAR)
-                putAll(RagiumMaterial.Other.GLASS, HTItemPart.DUST)
-                putAll(RagiumMaterial.Other.OBSIDIAN, HTItemPart.DUST)
-                putAll(RagiumMaterial.Other.PAPER, HTItemPart.DUST)
-                putAll(RagiumMaterial.Other.CARBON, HTItemPart.DUST)
-                putAll(RagiumMaterial.Other.ALUMINA, HTItemPart.DUST)
-                putAll(RagiumMaterial.Other.SILICON, HTItemPart.DUST)
+                putAll(RagiumMaterial.Other.WOOD, HTItemPart.GEAR)
             },
             ::sortedSetOf
         ).flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
@@ -130,6 +123,15 @@ data object RagiumItems {
     @JvmField
     val BAMBOO_CHARCOAL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("bamboo_charcoal")
 
+    @JvmField
+    val PARTICLE_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("particle_board")
+
+    @JvmField
+    val CEMENT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cement")
+
+    @JvmField
+    val MORTAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("mortar")
+
     // Heat
     @JvmField
     val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.COAL_COKE.materialName) {
@@ -145,9 +147,6 @@ data object RagiumItems {
     }
 
     // Chemical
-    @JvmField
-    val PARTICLE_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("particle_board")
-
     @JvmField
     val PLASTIC_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plastic_plate")
 

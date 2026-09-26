@@ -90,6 +90,36 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 count = 4
             }
         }.save(exporter)
+        // Cement
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(Tags.Items.SANDS) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.CALCIUM_OXIDE) }
+            result {
+                +RagiumItems.CEMENT
+                count = 2
+            }
+        }.save(exporter)
+        // Mortar
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(Tags.Items.BUCKETS_WATER) }
+            repeat(4) { ingredient { items { +RagiumItems.CEMENT } } }
+            result {
+                +RagiumItems.MORTAR
+                count = 4
+            }
+        }.save(exporter)
+        VanillaRecipeBuilders.shaped {
+            mosaic4()
+            define('A') { +holderSet(Tags.Items.BRICKS_NORMAL) }
+            define('B') { items { +RagiumItems.MORTAR } }
+            result { +Items.BRICKS }
+        }.save(exporter)
+        VanillaRecipeBuilders.shaped {
+            mosaic4()
+            define('A') { +holderSet(Tags.Items.BRICKS_NETHER) }
+            define('B') { items { +RagiumItems.MORTAR } }
+            result { +Items.NETHER_BRICKS }
+        }.save(exporter)
 
         // XX Tools
         registerTools(RagiumItems.SOOTY_IRON_TOOLS, RagiumToolMaterials.SOOTY_IRON)
@@ -478,28 +508,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }.save(exporter)
         }
         // Dust -> Ingot
-        for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
-            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
-            val item: HTSimpleDeferredItem = when (metal) {
-                RagiumMaterial.Metal.COPPER -> HTSimpleDeferredItem(vanillaId("copper_ingot"))
-                RagiumMaterial.Metal.IRON -> HTSimpleDeferredItem(vanillaId("iron_ingot"))
-                RagiumMaterial.Metal.GOLD -> HTSimpleDeferredItem(vanillaId("gold_ingot"))
-                else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, metal]
-            } ?: continue
-            VanillaRecipeBuilders.smeltingAndBlasting(exporter) {
-                ingredient { items { +dust } }
-                result { +item }
-                exp = 0.35f
-                group = item.id.path
-                recipeId suffix "_from_dust"
-            }
-        }
-        for (alloy: RagiumMaterial.Alloy in RagiumMaterial.Alloy.entries) {
-            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, alloy] ?: continue
-            val item: HTSimpleDeferredItem = when (alloy) {
-                RagiumMaterial.Alloy.NETHERITE -> HTSimpleDeferredItem(vanillaId("netherite_ingot"))
-                else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, alloy]
-            } ?: continue
+        for (metalLike: RagiumMaterial.MetalLike in RagiumMaterial.MetalLike.entries) {
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metalLike] ?: continue
+            val item: HTSimpleDeferredItem = RagiumMaterialHelper.getIngot(metalLike)
             VanillaRecipeBuilders.smeltingAndBlasting(exporter) {
                 ingredient { items { +dust } }
                 result { +item }
@@ -510,7 +521,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }
         // Fuel
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
-            val base: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
+            val base: HTSimpleDeferredItem = RagiumMaterialHelper.getBase(fuel)
             // Storage
             nineToBlock(fuel, Ingredient.of(base), base)
             // Tiny

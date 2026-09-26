@@ -1,16 +1,16 @@
 {
-  "type": "ragium:bathing",
+  "type": "ragium:mixing",
   "fluid_ingredient": {
     "amount": 1000,
     "fluids": "#c:water"
   },
   "item_ingredient": {
     "count": 1,
-    "items": "#c:storage_blocks/dried_kelp"
+    "items": "#c:dusts/calcium_oxide"
   },
   "result": {
-    "count": 6,
-    "id": "ragium:salt_dust"
+    "amount": 1000,
+    "id": "ragium:calcium_hydroxide_solution"
   },
   "time": 200
 }

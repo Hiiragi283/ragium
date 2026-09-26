@@ -1,0 +1,16 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 1000,
+    "id": "ragium:carbon_dioxide"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "#c:dusts/calcium_carbonate"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "ragium:calcium_oxide_dust"
+  },
+  "time": 200
+}

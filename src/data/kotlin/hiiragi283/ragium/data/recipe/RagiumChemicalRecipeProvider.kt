@@ -1,59 +1,25 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
-import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
-import hiiragi283.ragium.api.material.HTItemPart
-import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
-import net.minecraft.world.item.Items
 import java.util.concurrent.CompletableFuture
 
 class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
-        bathing()
-        centrifuging()
-    }
-
-    private fun bathing() {
-        // Wood Pulp + NaOH aq -> Paper Pulp
+        // Cement + Water -> Mortar
         RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.NAOH_SOLUTION)
-                amount = 250
-            }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.PAPER) }
-            recipeId suffix "_from_wood"
-        }.save(exporter)
-        // Paper Pulp + Water -> Paper
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.PAPER) }
+            itemIngredient { items { +RagiumItems.CEMENT } }
             fluidIngredient {
                 +waterSet()
-                amount = 250
+                amount /= 4
             }
-            result { +Items.PAPER }
-            recipeId suffix "_from_pulp"
+            result { +RagiumItems.MORTAR }
         }.save(exporter)
-
-        // Molten Glass + Amethyst -> Tinted Glass
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { +dustOrGem(RagiumMaterial.Gem.AMETHYST) }
-            fluidIngredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
-            result {
-                +Items.TINTED_GLASS
-                count = 2
-            }
-        }.save(exporter)
-    }
-
-    private fun centrifuging() {
     }
 
     override fun getName(): String = "Chemical Recipes"

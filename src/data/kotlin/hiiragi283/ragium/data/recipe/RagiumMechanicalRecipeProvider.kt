@@ -379,7 +379,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         // XX Dust -> XX
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
-            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
+            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getBase(fuel)
             RagiumRecipeBuilders.compressing {
                 ingredient { +holderSet(CommonTagPrefixes.DUST, fuel) }
                 result { +baseItem }
@@ -533,7 +533,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(RagiumTags.Items.COKES) }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.CARBON) }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CARBON) }
         }.save(exporter)
 
         for (gem: RagiumMaterial.Gem in RagiumMaterial.Gem.entries) {
@@ -545,10 +545,10 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
 
-        for (metal: RagiumMaterial in RagiumMaterial.Metal.entries + RagiumMaterial.Alloy.entries) {
-            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
+        for (metalLike: RagiumMaterial.MetalLike in RagiumMaterial.MetalLike.entries) {
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metalLike] ?: continue
             RagiumRecipeBuilders.crushing {
-                ingredient { +holderSet(CommonTagPrefixes.INGOT, metal) }
+                ingredient { +holderSet(CommonTagPrefixes.INGOT, metalLike) }
                 result { +dust }
                 recipeId suffix "_from_ingot"
             }.save(exporter)
@@ -664,6 +664,12 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.RAGINITE)
             }
             recipeId suffix "_from_ore"
+        }.save(exporter)
+
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.CALCITE } }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CALCIUM_CARBONATE) }
+            recipeId suffix "_from_calcite"
         }.save(exporter)
 
         RagiumRecipeBuilders.crushing {

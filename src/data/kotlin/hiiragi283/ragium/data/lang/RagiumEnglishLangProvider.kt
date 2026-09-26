@@ -100,6 +100,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
         addFluid(RagiumFluids.CHLORINE, "Chlorine")
 
+        addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
         addFluid(RagiumFluids.WOOD_TAR, "Wood Tar")
         addFluid(RagiumFluids.COAL_TAR, "Coal Tar")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "Aromatic Compound")
@@ -121,13 +122,16 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "Hydrogen Chloride")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
         addFluid(RagiumFluids.BLEACH, "Bleach")
+        addFluid(RagiumFluids.CAOH_SOLUTION, "Calcium Hydroxide Solution")
 
         add(RagiumFluids.ORE_SLURRY.getFluidType().descriptionId, "Invalid Ore Slurry")
         add(RagiumFluids.ORE_SLURRY.bucketHolder, $$"%1$s Bucket")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
-        add(RagiumItems.TAR, "Tar")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
+        add(RagiumItems.CEMENT, "Cement")
+        add(RagiumItems.MORTAR, "Mortar")
+        add(RagiumItems.TAR, "Tar")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")

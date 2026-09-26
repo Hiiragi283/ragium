@@ -13,11 +13,9 @@ sealed interface RagiumMaterial :
         @JvmField
         val entries: Sequence<RagiumMaterial> = sequence {
             yieldAll(Fuel.entries)
-            yieldAll(Mineral.entries)
+            yieldAll(DustLike.entries)
             yieldAll(Gem.entries)
-            yieldAll(Metal.entries)
-            yieldAll(Alloy.entries)
-            yieldAll(Other.entries)
+            yieldAll(MetalLike.entries)
         }
 
         @JvmField
@@ -49,8 +47,22 @@ sealed interface RagiumMaterial :
         override val materialName: String = name.lowercase()
     }
 
+    /**
+     * @since 26.1.8
+     */
+    sealed interface DustLike : RagiumMaterial {
+        companion object {
+            @JvmField
+            val entries: Sequence<DustLike> = sequence {
+                yieldAll(Mineral.entries)
+                yieldAll(Chemicals.entries)
+                yieldAll(Other.entries)
+            }
+        }
+    }
+
     enum class Mineral(langName: HTLangName, override val chemicalKey: ResourceKey<HTChemical>?) :
-        RagiumMaterial,
+        DustLike,
         HTLangName by langName {
         // Minecraft
         REDSTONE("Redstone", "レッドストーン"),
@@ -77,6 +89,49 @@ sealed interface RagiumMaterial :
         )
 
         val isVanilla: Boolean get() = this == REDSTONE || this == GLOWSTONE
+
+        override val materialName: String = name.lowercase()
+    }
+
+    /**
+     * @since 26.1.8
+     */
+    enum class Chemicals(langName: HTLangName, override val chemicalKey: ResourceKey<HTChemical>?) :
+        DustLike,
+        HTLangName by langName {
+        // Common
+        CARBON("Carbon", "炭素", RagiumChemicals.CARBON),
+
+        /**
+         * @since 26.1.8
+         */
+        SODIUM_CARBONATE("Sodium Carbonate", "炭酸ナトリウム"),
+
+        /**
+         * @since 26.1.7
+         */
+        ALUMINA("Alumina", "アルミナ", RagiumChemicals.ALUMINUM_OXIDE),
+
+        /**
+         * @since 26.1.7
+         */
+        SILICON("Silicon", "シリコン", RagiumChemicals.SILICON),
+
+        /**
+         * @since 26.1.8
+         */
+        CALCIUM_CARBONATE("Calcium Carbonate", "炭酸カルシウム"),
+
+        /**
+         * @since 26.1.8
+         */
+        CALCIUM_OXIDE("Calcium Oxide", "酸化カルシウム")
+        ;
+
+        constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>? = null) : this(
+            HTLangName(enName, jaName),
+            chemicalKey
+        )
 
         override val materialName: String = name.lowercase()
     }
@@ -114,8 +169,21 @@ sealed interface RagiumMaterial :
         override val materialName: String = name.lowercase()
     }
 
+    /**
+     * @since 26.1.8
+     */
+    sealed interface MetalLike : RagiumMaterial {
+        companion object {
+            @JvmField
+            val entries: Sequence<MetalLike> = sequence {
+                yieldAll(Metal.entries)
+                yieldAll(Alloy.entries)
+            }
+        }
+    }
+
     enum class Metal(langName: HTLangName, override val chemicalKey: ResourceKey<HTChemical>?) :
-        RagiumMaterial,
+        MetalLike,
         HTLangName by langName {
         // Minecraft
         COPPER("Copper", "銅", RagiumChemicals.COPPER),
@@ -139,7 +207,7 @@ sealed interface RagiumMaterial :
     }
 
     enum class Alloy(langName: HTLangName, override val chemicalKey: ResourceKey<HTChemical>?) :
-        RagiumMaterial,
+        MetalLike,
         HTLangName by langName {
         // Minecraft
         NETHERITE("Netherite", "ネザライト"),
@@ -171,7 +239,7 @@ sealed interface RagiumMaterial :
     }
 
     enum class Other(langName: HTLangName, override val chemicalKey: ResourceKey<HTChemical>?) :
-        RagiumMaterial,
+        DustLike,
         HTLangName by langName {
         // Minecraft
         WOOD("Wood", "木") {
@@ -181,20 +249,7 @@ sealed interface RagiumMaterial :
         OBSIDIAN("Obsidian", "黒曜石"),
         PAPER("Paper", "紙") {
             override val isPulp: Boolean = true
-        },
-
-        // Common
-        CARBON("Carbon", "炭素", RagiumChemicals.CARBON),
-
-        /**
-         * @since 26.1.7
-         */
-        ALUMINA("Alumina", "アルミナ", RagiumChemicals.ALUMINUM_OXIDE),
-
-        /**
-         * @since 26.1.7
-         */
-        SILICON("Silicon", "シリコン", RagiumChemicals.SILICON)
+        }
         ;
 
         constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>? = null) : this(
