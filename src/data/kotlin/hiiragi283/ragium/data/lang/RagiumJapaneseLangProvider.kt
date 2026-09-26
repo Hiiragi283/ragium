@@ -92,6 +92,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
 
         addFluid(RagiumFluids.HYDROGEN, "水素")
+        addFluid(RagiumFluids.NITROGEN, "窒素")
         addFluid(RagiumFluids.OXYGEN, "酸素")
         addFluid(RagiumFluids.CHLORINE, "塩素")
 
@@ -126,6 +127,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
+        add(RagiumItems.CARBON_FIBER, "炭素繊維")
+        add(RagiumItems.CFRP_PLATE, "炭素繊維強化プラスチック板")
+        add(RagiumItems.ALCLAD_PLATE, "アルクラッド板")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
         add(RagiumItems.BEESWAX, "密猟")
         add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
@@ -133,7 +137,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.CRUDE_SILICON, "粗製シリコン")
         add(RagiumItems.SILICON_WAFER, "シリコンウェハ")
         add(RagiumItems.CIRCUIT_CHIP, "回路チップ")
-        add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")

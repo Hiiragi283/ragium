@@ -182,6 +182,17 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 2
             }
         }.save(exporter)
+        // Synthetic Fiber + Nitrogen -> Carbon Fiber
+        // Carbon Fiber + Resin -> CFRP Plate
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { items { +RagiumItems.CARBON_FIBER } }
+            fluidIngredient {
+                +holderSet(RagiumTags.Fluids.RESINS)
+                amount /= 4
+            }
+            result { +RagiumItems.CFRP_PLATE }
+        }.save(exporter)
+
         // Naphtha + Redstone -> Anti-rust Oil
         RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
@@ -512,6 +523,18 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             recipeId suffix "_with_cryolite"
         }.save(exporter)
+        // Al + Cu -> Alclad Plate
+        RagiumRecipeBuilders.assembling {
+            ingredient {
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.ALUMINUM)
+                count = 3
+            }
+            extra { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.COPPER) }
+            result {
+                +RagiumItems.ALCLAD_PLATE
+                count = 4
+            }
+        }.save(exporter)
     }
 
     //    Electronics    //
@@ -592,26 +615,24 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
 
-        // Plastic + Gold Dust -> Circuit Board
-        RagiumRecipeBuilders.alloying {
-            ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
-            extra { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
-            result { +RagiumItems.CIRCUIT_BOARD }
-        }.save(exporter)
-        // Circuit Chip + Circuit Board -> Electric Circuit
+        // Plastic + Circuit Chip + Gold Nugget -> Electric Circuit
         RagiumRecipeBuilders.assembling {
-            ingredient {
+            ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
+            extra {
                 items { +RagiumItems.CIRCUIT_CHIP }
                 count = 2
             }
-            extra { items { +RagiumItems.CIRCUIT_BOARD } }
+            extra {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.GOLD)
+                count = 3
+            }
             result { +RagiumItems.ELECTRIC_CIRCUIT }
         }.save(exporter)
         // Machine Parts
         RagiumRecipeBuilders.assembling {
             ingredient {
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
-                count = 4
+                count = 2
             }
             extra { items { +RagiumItems.ELECTRIC_CIRCUIT } }
             result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
@@ -619,10 +640,16 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
             ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.VOID_METAL)
+                items { +RagiumItems.CFRP_PLATE }
+            }
+            extra {
+                items { +RagiumItems.CIRCUIT_CHIP }
                 count = 2
             }
-            extra { items { +RagiumItems.ELECTRIC_CIRCUIT } }
+            extra {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.GOLD)
+                count = 3
+            }
             result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
         }.save(exporter)
     }

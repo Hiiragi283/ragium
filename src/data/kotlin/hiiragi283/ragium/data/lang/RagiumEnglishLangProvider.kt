@@ -96,6 +96,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_ENDER, "Resonant Ender")
 
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
+        addFluid(RagiumFluids.NITROGEN, "Nitrogen")
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
         addFluid(RagiumFluids.CHLORINE, "Chlorine")
 
@@ -130,6 +131,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
+        add(RagiumItems.CARBON_FIBER, "Carbon Fiber")
+        add(RagiumItems.CFRP_PLATE, "CFRP Plate")
+        add(RagiumItems.ALCLAD_PLATE, "Alclad Plate")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
         add(RagiumItems.BEESWAX, "Beeswax")
         add(RagiumItems.SPLASH_BOTTLE, "Splash Bottle")
@@ -137,7 +141,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.CRUDE_SILICON, "Crude Silicon")
         add(RagiumItems.SILICON_WAFER, "Silicon Wafer")
         add(RagiumItems.CIRCUIT_CHIP, "Circuit Chip")
-        add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
         add(RagiumItems.ELDER_HEART, "Elder Heart")
         add(RagiumItems.WITHER_DOLL, "Wither Doll")

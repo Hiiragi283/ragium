@@ -126,6 +126,10 @@ data object RagiumClient : HTClientMod() {
             transparent()
             colorTint(Color(0x003399))
         }
+        register.register(RagiumFluids.NITROGEN) {
+            transparent()
+            colorTint(Color(0x009999))
+        }
         register.register(RagiumFluids.OXYGEN) {
             transparent()
             colorTint(Color(0x3399cc))

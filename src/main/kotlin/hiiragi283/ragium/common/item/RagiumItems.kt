@@ -159,6 +159,15 @@ data object RagiumItems {
     @JvmField
     val SYNTHETIC_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("synthetic_fiber")
 
+    @JvmField
+    val CARBON_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("carbon_fiber")
+
+    @JvmField
+    val CFRP_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cfrp_plate")
+
+    @JvmField
+    val ALCLAD_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alclad_plate")
+
     // Bio
     @JvmField
     val BEESWAX: HTSimpleDeferredItem = REGISTER.registerItem("beeswax", ::HoneycombItem)
@@ -180,9 +189,6 @@ data object RagiumItems {
 
     @JvmField
     val CIRCUIT_CHIP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_chip")
-
-    @JvmField
-    val CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board")
 
     @JvmField
     val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit")

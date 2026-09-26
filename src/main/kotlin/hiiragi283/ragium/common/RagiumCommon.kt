@@ -98,6 +98,7 @@ internal data object RagiumCommon {
         setChemical(RagiumFluids.MOLTEN_GLASS, RagiumChemicals.SILICON_DIOXIDE)
 
         setChemical(RagiumFluids.HYDROGEN, RagiumChemicals.HYDROGEN)
+        setChemical(RagiumFluids.NITROGEN, RagiumChemicals.NITROGEN)
         setChemical(RagiumFluids.OXYGEN, RagiumChemicals.OXYGEN)
         setChemical(RagiumFluids.CHLORINE, RagiumChemicals.CHLORINE)
 

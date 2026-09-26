@@ -379,23 +379,29 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     }
 
     private inline fun electronics(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
-        machine(
-            HTMachineType.ELECTRONICS,
-            RagiumMaterial.Metal.VOID_METAL,
-            RagiumMaterial.Gem.DIAMOND,
-            result,
-            builderAction
-        )
+        VanillaRecipeBuilders.shaped {
+            +"ABA"
+            +"BCB"
+            +"ADA"
+            define('A') { items { +RagiumItems.ALCLAD_PLATE } }
+            define('B') { items { +RagiumItems.getParts(HTMachineType.ELECTRONICS) } }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Gem.DIAMOND) }
+            define('D', builderAction)
+            result { +result }
+        }.save(exporter)
     }
 
     private inline fun arcane(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
-        machine(
-            HTMachineType.ARCANE,
-            RagiumMaterial.Metal.VOID_METAL,
-            RagiumMaterial.Metal.NETHERITE,
-            result,
-            builderAction
-        )
+        VanillaRecipeBuilders.shaped {
+            +"ABA"
+            +"BCB"
+            +"ADA"
+            define('A') { items { +Items.GHAST_TEAR } }
+            define('B') { items { +RagiumItems.getParts(HTMachineType.ARCANE) } }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.NETHERITE) }
+            define('D', builderAction)
+            result { +result }
+        }.save(exporter)
     }
 
     //    Machine    //
