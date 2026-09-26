@@ -2,6 +2,7 @@
 
 package hiiragi283.ragium.api.data.recipe.builder
 
+import hiiragi283.lib.data.recipe.builder.HTFluidToDoubleFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
@@ -13,6 +14,7 @@ import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
 import hiiragi283.ragium.api.recipe.RTBrewingRecipe
+import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
@@ -153,6 +155,17 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTItemAndFluidToRecipeBuilder.ToItem(RagiumConstants.BATHING, ::RTBathingRecipe).apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun centrifuging(
+        builderAction: HTFluidToDoubleFluidRecipeBuilder<RTCentrifugingRecipe>.() -> Unit
+    ): HTFluidToDoubleFluidRecipeBuilder<RTCentrifugingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTFluidToDoubleFluidRecipeBuilder(RagiumConstants.CENTRIFUGING, ::RTCentrifugingRecipe)
+            .apply(builderAction)
     }
 
     @JvmStatic

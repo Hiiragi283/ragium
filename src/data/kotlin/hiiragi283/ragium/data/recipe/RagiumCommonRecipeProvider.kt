@@ -305,6 +305,14 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             recipeId suffix "_from_block"
         }.save(exporter)
+        // NaCl(aq) -> H2O + NaCl
+        RagiumRecipeBuilders.refining {
+            ingredient { +holderSet(RagiumFluids.SALT_WATER) }
+            fluidResult { +Fluids.WATER }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SALT) }
+            recipeId replace id("salt_dust_from_salt_water")
+        }.save(exporter)
+
         // 2x NaCl + H2SO4 -> 2x HCl + Na2SO4
         RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SALT) }

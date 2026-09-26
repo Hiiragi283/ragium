@@ -88,6 +88,10 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.BATHING, RTBathingRecipe.SERIALIZER)
 
     @JvmField
+    val CENTRIFUGING: RecipeSerializer<RTCentrifugingRecipe> =
+        register(RagiumConstants.CENTRIFUGING, RTCentrifugingRecipe.SERIALIZER)
+
+    @JvmField
     val MIXING: RecipeSerializer<RTMixingRecipe> =
         register(RagiumConstants.MIXING, RTMixingRecipe.SERIALIZER)
 

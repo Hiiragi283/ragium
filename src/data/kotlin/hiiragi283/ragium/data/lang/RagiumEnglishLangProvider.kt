@@ -178,6 +178,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.REFINING, "Refining")
 
         add(RagiumRecipeTypes.BATHING, "Chemical Bathing")
+        add(RagiumRecipeTypes.CENTRIFUGING, "Centrifuging")
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.REACTING, "Chemical Reacting")
 

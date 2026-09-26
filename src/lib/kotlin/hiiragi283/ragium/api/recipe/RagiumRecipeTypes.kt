@@ -68,6 +68,9 @@ data object RagiumRecipeTypes {
     val BATHING: HTRecipeType<RTBathingRecipe> = create(RagiumConstants.BATHING)
 
     @JvmField
+    val CENTRIFUGING: HTRecipeType<RTCentrifugingRecipe> = create(RagiumConstants.CENTRIFUGING)
+
+    @JvmField
     val MIXING: HTRecipeType<RTMixingRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField

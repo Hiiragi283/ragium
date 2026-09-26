@@ -130,6 +130,7 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING, identity())
 
         RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
+        RagiumRecipeLookups.CENTRIFUGING.fromRecipeType(RagiumRecipeTypes.CENTRIFUGING, identity())
         RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING, identity())
         RagiumRecipeLookups.REACTING.fromRecipeType(RagiumRecipeTypes.REACTING, identity())
 

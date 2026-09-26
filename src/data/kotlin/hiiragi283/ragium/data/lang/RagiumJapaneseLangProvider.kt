@@ -174,6 +174,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.REFINING, "蒸留")
 
         add(RagiumRecipeTypes.BATHING, "化学洗浄")
+        add(RagiumRecipeTypes.CENTRIFUGING, "遠心分離")
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.REACTING, "化学反応")
 

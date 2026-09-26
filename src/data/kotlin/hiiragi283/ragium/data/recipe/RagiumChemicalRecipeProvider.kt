@@ -17,7 +17,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
         bathing()
-        electrolyzing()
+        centrifuging()
     }
 
     private fun bathing() {
@@ -53,17 +53,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }.save(exporter)
     }
 
-    private fun electrolyzing() {
-        // 2x H2O -> 2x H2 + O2
-        RagiumRecipeBuilders.electrolyzing {
-            ingredient { +waterSet() }
-            result { +RagiumFluids.HYDROGEN }
-            result {
-                +RagiumFluids.OXYGEN
-                amount /= 2
-            }
-            recipeId suffix "_from_water"
-        }.save(exporter)
+    private fun centrifuging() {
     }
 
     override fun getName(): String = "Chemical Recipes"

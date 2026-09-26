@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.integration.jei
 
 import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.HTJeiRecipeType
+import hiiragi283.lib.recipe.base.HTFluidToDoubleFluidRecipe
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
@@ -67,6 +68,10 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val BATHING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> =
         HTJeiRecipeType(RagiumRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
+
+    @JvmField
+    val CENTRIFUGING: HTHolderJeiRecipeType<HTFluidToDoubleFluidRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.CENTRIFUGING, RagiumBlocks.CHEMICAL_BATH)
 
     @JvmField
     val MIXING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> =
