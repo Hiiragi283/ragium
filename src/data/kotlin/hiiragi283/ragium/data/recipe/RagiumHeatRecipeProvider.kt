@@ -132,6 +132,15 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             ingredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
             result { +Items.GLASS }
         }.save(exporter)
+
+        // Sticky Ball
+        RagiumRecipeBuilders.freezing {
+            ingredient {
+                +holderSet(RagiumTags.Fluids.RESINS)
+                amount /= 4
+            }
+            result { +RagiumItems.STICKY_BALL }
+        }.save(exporter)
     }
 
     private fun melting() {

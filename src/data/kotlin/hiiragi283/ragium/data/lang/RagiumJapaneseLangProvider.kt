@@ -128,6 +128,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.CEMENT, "セメント")
         add(RagiumItems.MORTAR, "モルタル")
         add(RagiumItems.TAR, "タール")
+        add(RagiumItems.STICKY_BALL, "粘着質な塊")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")

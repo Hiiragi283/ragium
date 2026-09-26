@@ -146,6 +146,9 @@ data object RagiumItems {
         it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
     }
 
+    @JvmField
+    val STICKY_BALL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("sticky_ball")
+
     // Chemical
     @JvmField
     val PLASTIC_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plastic_plate")

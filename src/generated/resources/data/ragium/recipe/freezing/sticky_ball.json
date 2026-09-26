@@ -1,0 +1,12 @@
+{
+  "type": "ragium:freezing",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#ragium:resins"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:sticky_ball"
+  },
+  "time": 200
+}

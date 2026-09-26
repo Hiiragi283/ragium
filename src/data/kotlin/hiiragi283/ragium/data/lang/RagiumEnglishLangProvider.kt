@@ -132,6 +132,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.CEMENT, "Cement")
         add(RagiumItems.MORTAR, "Mortar")
         add(RagiumItems.TAR, "Tar")
+        add(RagiumItems.STICKY_BALL, "Sticky Ball")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
