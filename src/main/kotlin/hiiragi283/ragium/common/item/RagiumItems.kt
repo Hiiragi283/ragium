@@ -42,6 +42,7 @@ data object RagiumItems {
         REGISTER.addAlias("steel_ingot", "sooty_iron_ingot")
         REGISTER.addAlias("steel_nugget", "sooty_iron_nugget")
         REGISTER.addAlias("coal_coke_dust", "carbon_dust")
+        REGISTER.addAlias("circuit_board", "cfrp_plate")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)

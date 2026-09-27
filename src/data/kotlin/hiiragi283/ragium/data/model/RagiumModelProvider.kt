@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.model
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.data.model.HTModelTemplates
-import hiiragi283.lib.data.model.createBlock
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
@@ -115,14 +114,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             }
         // Decoration
         for ((machineType: HTMachineType, block: HTSimpleDeferredBlockAndItem) in RagiumBlocks.MACHINE_CASINGS) {
-            generators.createSimple(
-                block.getOrThrow(),
-                ModelTemplates.CUBE_TOP.createBlock(
-                    block,
-                    textureMapping(machineType),
-                    generators.modelOutput
-                )
-            )
+            generators.createSimple(block.getOrThrow(), ModelTemplates.CUBE_TOP, textureMapping(machineType))
         }
         // Bus
         generators.createTrivialBlock(RagiumBlocks.FLUID_OUTPUT_BUS.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)

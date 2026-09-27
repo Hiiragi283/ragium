@@ -39,6 +39,17 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
     /**
      * ブロックJSONを生成します。
      * @param block ブロックのインスタンス
+     * @param template 生成するモデルのテンプレート
+     * @param mapping テクスチャのマッピング
+     * @since 26.1.8
+     */
+    fun BlockModelGenerators.createSimple(block: Block, template: ModelTemplate, mapping: TextureMapping) {
+        this.createSimple(block, template.create(block, mapping, this.modelOutput))
+    }
+
+    /**
+     * ブロックJSONを生成します。
+     * @param block ブロックのインスタンス
      * @param modelId 使用するモデルのID
      */
     fun BlockModelGenerators.createSimple(block: Block, modelId: Identifier) {
@@ -52,18 +63,6 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      */
     fun BlockModelGenerators.createSimple(block: Block, variant: MultiVariant) {
         this.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant))
-    }
-
-    /**
-     * ブロックJSONを生成します。
-     * @param block ブロックの提供元
-     * @param modelId 使用するモデルのID
-     */
-    fun BlockModelGenerators.createAltModel(
-        block: HTValueWithId<Block>,
-        modelId: Identifier = block.idOrThrow.blockId
-    ) {
-        this.createSimple(block.getOrThrow(), modelId)
     }
 
     /**
@@ -122,10 +121,10 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
         bottom: Material
     ) {
         val stairs: StairBlock = block.getOrThrow()
-        val mapping: TextureMapping = TextureMapping().put(
-            TextureSlot.TOP,
-            top
-        ).put(TextureSlot.BOTTOM, bottom).put(TextureSlot.SIDE, side)
+        val mapping: TextureMapping = TextureMapping()
+            .put(TextureSlot.TOP, top)
+            .put(TextureSlot.BOTTOM, bottom)
+            .put(TextureSlot.SIDE, side)
         val modelId: Identifier = ModelTemplates.STAIRS_STRAIGHT.createBlock(block, mapping, modelOutput)
 
         blockStateOutput.accept(
@@ -144,13 +143,10 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @param fluidBlock 液体ブロックの提供元
      */
     fun BlockModelGenerators.createFluid(fluidBlock: HTValueWithId<Block>) {
-        this.createAltModel(
-            fluidBlock,
-            HTModelTemplates.FLUID_BLOCK.createBlock(
-                fluidBlock,
-                TextureMapping.particle(Material(vanillaId(HTConstants.BLOCK, "water_still"))),
-                this.modelOutput
-            )
+        this.createSimple(
+            fluidBlock.getOrThrow(),
+            HTModelTemplates.FLUID_BLOCK,
+            TextureMapping.particle(Material(vanillaId(HTConstants.BLOCK, "water_still")))
         )
     }
 

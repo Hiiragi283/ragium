@@ -355,26 +355,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CALCIUM_OXIDE) }
             fluidResult { +RagiumFluids.CARBON_DIOXIDE }
         }.save(exporter)
-        // CaO + H2O -> Ca(OH)2 (aq)
-        RagiumRecipeBuilders.mixing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.CALCIUM_OXIDE) }
-            fluidIngredient { +waterSet() }
-            result { +RagiumFluids.CAOH_SOLUTION }
-        }.save(exporter)
-        // Ca(OH)2 (aq) + CO2 -> CaCO3 + H2O
-        RagiumRecipeBuilders.reacting {
-            primaryIngredient { +holderSet(RagiumFluids.CAOH_SOLUTION) }
-            secondaryIngredient { +holderSet(RagiumFluids.CARBON_DIOXIDE) }
-            fluidResult {
-                +Fluids.WATER
-                amount *= 2
-            }
-            val dust: HTSimpleDeferredItem =
-                RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CALCIUM_CARBONATE)
-            itemResult { +dust }
-            recipeId replace dust.idOrThrow
-            recipeId suffix "_from_solution"
-        }.save(exporter)
 
         // Wood Pulp + NaOH aq -> Paper Pulp
         RagiumRecipeBuilders.bathing {
@@ -475,12 +455,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun sulfuricAcid() {
-        // S + O2 -> SO2
-        RagiumRecipeBuilders.mixing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
-            fluidIngredient { +holderSet(RagiumFluids.OXYGEN) }
-            result { +RagiumFluids.SULFUR_DIOXIDE }
-        }.save(exporter)
         // SO2 + 1/2 O2 -> SO3
         RagiumRecipeBuilders.reacting {
             primaryIngredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
@@ -489,12 +463,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount /= 2
             }
             fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
-        }.save(exporter)
-        // Blaze Powder + O2 -> SO3
-        RagiumRecipeBuilders.mixing {
-            itemIngredient { items { +Items.BLAZE_POWDER } }
-            fluidIngredient { +holderSet(RagiumFluids.OXYGEN) }
-            result { +RagiumFluids.SULFUR_TRIOXIDE }
         }.save(exporter)
         // SO3 + H2O -> H2SO4
         RagiumRecipeBuilders.reacting {

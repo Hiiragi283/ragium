@@ -227,10 +227,6 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0xccff99))
         }
-        register.register(RagiumFluids.CAOH_SOLUTION) {
-            dull()
-            colorTint(Color(0x333399))
-        }
     }
 
     override fun registerScreens(event: RegisterMenuScreensEvent) {

@@ -112,7 +112,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             result {
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.COPPER)
-                count = 3
+                count = 2
             }
             recipeId suffix "_from_raw"
         }.save(exporter)

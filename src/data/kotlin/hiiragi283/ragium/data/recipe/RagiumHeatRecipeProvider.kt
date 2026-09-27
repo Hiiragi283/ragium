@@ -295,6 +295,22 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount = 90
             }
         }.save(exporter)
+
+        // C -> CO2
+        RagiumRecipeBuilders.melting {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.CARBON) }
+            result { +RagiumFluids.CARBON_DIOXIDE }
+        }.save(exporter)
+        // S -> SO2
+        RagiumRecipeBuilders.melting {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
+            result { +RagiumFluids.SULFUR_DIOXIDE }
+        }.save(exporter)
+        // Blaze Powder -> SO3
+        RagiumRecipeBuilders.melting {
+            ingredient { items { +Items.BLAZE_POWDER } }
+            result { +RagiumFluids.SULFUR_TRIOXIDE }
+        }.save(exporter)
     }
 
     override fun getName(): String = "Heat Recipes"

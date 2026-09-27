@@ -35,10 +35,16 @@ enum class HTBottleType(val filledItem: HTSimpleDeferredItem) : StringRepresenta
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTBottleType> = HTStreamCodecs.enum()
 
+        /**
+         * @since 26.1.8
+         */
         @JvmStatic
         fun getFromFilled(instance: TypedInstance<Item>): HTBottleType? =
             HTBottleType.entries.firstOrNull { it.filledItem.isOf(instance) }
 
+        /**
+         * @since 26.1.8
+         */
         @JvmStatic
         fun getFromEmpty(instance: TypedInstance<Item>): HTBottleType? =
             HTBottleType.entries.firstOrNull { it.emptyItem.isOf(instance) }

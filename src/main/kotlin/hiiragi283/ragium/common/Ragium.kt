@@ -18,6 +18,7 @@ import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.chemical.HTCompoundChemical
+import hiiragi283.ragium.api.data.chemical.HTMixtureChemical
 import hiiragi283.ragium.api.data.chemical.HTSimpleChemical
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -120,6 +121,7 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumRegistries.Keys.CHEMICAL_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTSimpleChemical.TYPE)
             helper.register(RagiumAPI.id("compound"), HTCompoundChemical.TYPE)
+            helper.register(RagiumAPI.id("mixture"), HTMixtureChemical.TYPE)
         }
         event.register(RagiumRegistries.Keys.FLUID_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTFluidResult.SimpleEntry.TYPE)

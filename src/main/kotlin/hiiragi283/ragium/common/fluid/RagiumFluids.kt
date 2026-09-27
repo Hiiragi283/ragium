@@ -27,6 +27,7 @@ data object RagiumFluids {
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
+        REGISTER.addAlias("calcium_hydroxide_solution", "sodium_hydroxide_solution")
         REGISTER.addAlias(RagiumAPI.id("molten_blaze"), vanillaId("lava"))
         REGISTER.addAlias("creosote", "coal_tar")
         REGISTER.addAlias("chloride", "chlorine")
@@ -251,10 +252,4 @@ data object RagiumFluids {
 
     @JvmField
     val BLEACH: HTFluidContent.Virtual = REGISTER.registerVirtual("bleach") { properties = liquid() }
-
-    // Ca
-    @JvmField
-    val CAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("calcium_hydroxide_solution") {
-        properties = liquid()
-    }
 }

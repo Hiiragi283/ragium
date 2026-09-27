@@ -13,6 +13,7 @@ import net.minecraft.util.ExtraCodecs
 
 /**
  * 元素を表すクラスです。
+ * @param symbol 元素記号
  * @author Hiiragi Tsubasa
  * @since 26.1.8
  */
