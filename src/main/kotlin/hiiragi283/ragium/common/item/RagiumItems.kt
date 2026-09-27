@@ -12,7 +12,6 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
-import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
@@ -251,11 +250,6 @@ data object RagiumItems {
             { _, access: ItemAccess -> HTPotionBucketItem.BucketHandler(access) },
             RagiumFluids.POTION.bucketHolder
         )
-        event.registerItem(
-            HTFluidCapabilities.item,
-            { _, access: ItemAccess -> HTOreSlurryBucketItem.BucketHandler(access) },
-            RagiumFluids.ORE_SLURRY.bucketHolder
-        )
         // Item
     }
 
@@ -297,10 +291,5 @@ data object RagiumItems {
 
         setHolder(Items.QUARTZ_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
         setHolder(Items.QUARTZ, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
-        // Ore Slurry
-        setHolder(Items.RAW_COPPER, RagiumDataComponents.ORE_SLURRY_DATA, RagiumOreSlurryData.COPPER)
-        setHolder(Items.RAW_IRON, RagiumDataComponents.ORE_SLURRY_DATA, RagiumOreSlurryData.IRON)
-        setHolder(Items.RAW_GOLD, RagiumDataComponents.ORE_SLURRY_DATA, RagiumOreSlurryData.GOLD)
-        setHolder(Items.ANCIENT_DEBRIS, RagiumDataComponents.ORE_SLURRY_DATA, RagiumOreSlurryData.NETHERITE_SCRAP)
     }
 }

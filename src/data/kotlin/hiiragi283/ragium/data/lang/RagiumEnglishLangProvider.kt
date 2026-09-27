@@ -6,7 +6,6 @@ import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.element.RagiumElements
-import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
@@ -123,9 +122,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
         addFluid(RagiumFluids.BLEACH, "Bleach")
         addFluid(RagiumFluids.CAOH_SOLUTION, "Calcium Hydroxide Solution")
-
-        add(RagiumFluids.ORE_SLURRY.getFluidType().descriptionId, "Invalid Ore Slurry")
-        add(RagiumFluids.ORE_SLURRY.bucketHolder, $$"%1$s Bucket")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
@@ -135,11 +131,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.STICKY_BALL, "Sticky Ball")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
+        add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         add(RagiumItems.CARBON_FIBER, "Carbon Fiber")
         add(RagiumItems.CFRP_PLATE, "CFRP Plate")
         add(RagiumItems.ALCLAD_PLATE, "Alclad Plate")
-        add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
         add(RagiumItems.BEESWAX, "Beeswax")
         add(RagiumItems.SPLASH_BOTTLE, "Splash Bottle")
         add(RagiumItems.LINGERING_BOTTLE, "Lingering Bottle")
@@ -187,6 +183,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.CENTRIFUGING, "Centrifuging")
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.REACTING, "Chemical Reacting")
+        add(RagiumRecipeTypes.WASHING, "Washing")
 
         add(RagiumRecipeTypes.BREWING, "Brewing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
@@ -291,10 +288,5 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumElements.COPPER, "Copper")
 
         addFromKey(RagiumElements.GOLD, "Gold")
-        // Ore Slurry
-        addFromKey(RagiumOreSlurryData.COPPER, "Copper Ore Slurry")
-        addFromKey(RagiumOreSlurryData.IRON, "Iron Ore Slurry")
-        addFromKey(RagiumOreSlurryData.GOLD, "Gold Ore Slurry")
-        addFromKey(RagiumOreSlurryData.NETHERITE_SCRAP, "Ancient Debris Slurry")
     }
 }

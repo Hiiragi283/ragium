@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RTResourceExtractingRecipe
+import hiiragi283.ragium.api.recipe.RTWashingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
 
@@ -80,6 +81,10 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val REACTING: HTHolderJeiRecipeType<RTReactingRecipe.Basic> =
         HTJeiRecipeType(RagiumRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)
+
+    @JvmField
+    val WASHING: HTHolderJeiRecipeType<RTWashingRecipe> =
+        HTJeiRecipeType(RagiumRecipeTypes.WASHING, RagiumBlocks.MACHINE_CASING)
 
     // Bio
     @JvmField

@@ -6,7 +6,6 @@ import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.element.RagiumElements
-import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
@@ -119,9 +118,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
         addFluid(RagiumFluids.BLEACH, "漂白剤")
         addFluid(RagiumFluids.CAOH_SOLUTION, "水酸化カルシウム水溶液")
-
-        add(RagiumFluids.ORE_SLURRY.getFluidType().descriptionId, "無効な鉱石泥")
-        add(RagiumFluids.ORE_SLURRY.bucketHolder, $$"%1$s入りバケツ")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
@@ -131,11 +127,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.STICKY_BALL, "粘着質な塊")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
+        add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.CARBON_FIBER, "炭素繊維")
         add(RagiumItems.CFRP_PLATE, "炭素繊維強化プラスチック板")
         add(RagiumItems.ALCLAD_PLATE, "アルクラッド板")
-        add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
         add(RagiumItems.BEESWAX, "密猟")
         add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
         add(RagiumItems.LINGERING_BOTTLE, "残留瓶")
@@ -183,6 +179,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumRecipeTypes.CENTRIFUGING, "遠心分離")
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.REACTING, "化学反応")
+        add(RagiumRecipeTypes.WASHING, "洗浄")
 
         add(RagiumRecipeTypes.BREWING, "醸造")
         add(RagiumRecipeTypes.PLANTING, "栽培")
@@ -287,10 +284,5 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumElements.COPPER, "銅")
 
         addFromKey(RagiumElements.GOLD, "金")
-        // Ore Slurry
-        addFromKey(RagiumOreSlurryData.COPPER, "銅の鉱石泥")
-        addFromKey(RagiumOreSlurryData.IRON, "鉄の鉱石泥")
-        addFromKey(RagiumOreSlurryData.GOLD, "金の鉱石泥")
-        addFromKey(RagiumOreSlurryData.NETHERITE_SCRAP, "古代の鉱石泥")
     }
 }

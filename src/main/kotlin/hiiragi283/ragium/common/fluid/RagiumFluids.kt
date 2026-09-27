@@ -8,7 +8,6 @@ import hiiragi283.lib.resource.toId
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.Identity
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.item.HTOreSlurryBucketItem
 import hiiragi283.ragium.common.item.HTPotionBucketItem
 import hiiragi283.ragium.common.item.component.RagiumConsumables
 import net.minecraft.core.component.DataComponents
@@ -257,13 +256,5 @@ data object RagiumFluids {
     @JvmField
     val CAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("calcium_hydroxide_solution") {
         properties = liquid()
-    }
-
-    // Other
-    @JvmField
-    val ORE_SLURRY: HTFluidContent.Virtual = REGISTER.registerVirtual("ore_slurry") {
-        properties = liquid()
-        typeFactory = ::HTOreSlurryFluidType
-        bucketFactory = ::HTOreSlurryBucketItem
     }
 }

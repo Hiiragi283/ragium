@@ -73,7 +73,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(HTCommonTags.Items.PITCH_COKE).add(RagiumItems.PITCH_COKE)
         builder(HTCommonTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
         builder(HTCommonTags.Items.SILICON).add(RagiumItems.CRUDE_SILICON)
-        builder(Tags.Items.SLIME_BALLS)
+        builder(HTCommonTags.Items.STICKY_BALLS)
             .addTag(Tags.Items.SLIME_BALLS)
             .add(RagiumItems.STICKY_BALL)
 

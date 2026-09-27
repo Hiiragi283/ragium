@@ -188,6 +188,14 @@ data object RagiumRecipeBuilders {
         return RTReactingRecipeBuilder().apply(builderAction)
     }
 
+    @JvmStatic
+    inline fun washing(builderAction: RTWashingRecipeBuilder.() -> Unit): RTWashingRecipeBuilder {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return RTWashingRecipeBuilder().apply(builderAction)
+    }
+
     // Bio
     @JvmStatic
     inline fun brewing(

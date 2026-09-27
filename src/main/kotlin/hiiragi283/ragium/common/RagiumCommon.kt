@@ -25,8 +25,6 @@ import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
-import hiiragi283.ragium.common.recipe.RTOreSlurryWashingRecipe
-import hiiragi283.ragium.common.recipe.RTOreSolvingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleDrainingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
@@ -235,13 +233,6 @@ internal data object RagiumCommon {
                     }.build()
                 }
         }
-
-        RagiumRecipeLookups.MIXING.addRecipes(
-            RecipeKey(RagiumAPI.id("/${RagiumConstants.MIXING}", "ore_solvation")) to RTOreSolvingRecipe
-        )
-        RagiumRecipeLookups.REACTING.addRecipes(
-            RecipeKey(RagiumAPI.id("/${RagiumConstants.REACTING}", "ore_slurry_washing")) to RTOreSlurryWashingRecipe
-        )
     }
 
     private fun HolderGetter.Provider.getOrNull(content: HTFluidContent): HolderSet<Fluid>? =

@@ -27,6 +27,7 @@ data object RagiumConstants {
     const val CHEMICAL_BATH = "chemical_bath"
     const val CHEMICAL_REACTOR = "chemical_reactor"
     const val MIXER = "mixer"
+    const val WASHER = "washer"
 
     // Bio
     const val BREWERY = "brewery"
@@ -64,6 +65,7 @@ data object RagiumConstants {
     const val CENTRIFUGING = "centrifuging"
     const val MIXING = "mixing"
     const val REACTING = "reacting"
+    const val WASHING = "washing"
 
     // Bio
     const val BREWING = "brewing"

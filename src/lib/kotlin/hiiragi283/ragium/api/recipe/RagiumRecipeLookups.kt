@@ -80,6 +80,9 @@ data object RagiumRecipeLookups {
     @JvmField
     val REACTING: HTCompoundRecipeLookup<RTReactingRecipe> = create(RagiumConstants.REACTING)
 
+    @JvmField
+    val WASHING: HTRecipeLookup<RTWashingRecipe> = create(RagiumRecipeTypes.WASHING)
+
     // Bio
     @JvmField
     val BREWING: HTCompoundRecipeLookup<HTItemAndFluidToFluidRecipe> = create(RagiumConstants.BREWING)

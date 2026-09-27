@@ -14,7 +14,6 @@ import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.chemical.HTClientChemicalHelper
-import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryDataHelper
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.screen.tooltip.HTMemoryDiscClientTooltipComponent
@@ -231,13 +230,6 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.CAOH_SOLUTION) {
             dull()
             colorTint(Color(0x333399))
-        }
-
-        register.register(RagiumFluids.ORE_SLURRY) {
-            still = Material(vanillaId(HTConstants.BLOCK, "white_concrete_powder"))
-            tintSource = FluidStackTintSource { stack: FluidStack ->
-                ARGB.opaque(HTOreSlurryDataHelper.getData(stack)?.color ?: 0x333300)
-            }
         }
     }
 

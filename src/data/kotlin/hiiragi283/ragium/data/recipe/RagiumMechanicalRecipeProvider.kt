@@ -450,6 +450,8 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
         setOf(
+            Tags.Items.SANDSTONE_UNCOLORED_BLOCKS to Items.SAND,
+            Tags.Items.SANDSTONE_RED_BLOCKS to Items.RED_SAND,
             RagiumTags.BlockItem.QUARTZ_BLOCKS.item to Items.QUARTZ
         ).forEach { (block: TagKey<Item>, base: Item) ->
             RagiumRecipeBuilders.crushing {
@@ -460,39 +462,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 }
             }.save(exporter)
         }
-        // Sandstone -> 4x Sand + Niter
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS) }
-            result {
-                +Items.SAND
-                count = 4
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.NITER)
-            }
-        }.save(exporter)
-        // Red Sandstone -> 4x Red Sand + Bauxite
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(Tags.Items.SANDSTONE_RED_BLOCKS) }
-            result {
-                +Items.RED_SAND
-                count = 4
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.BAUXITE)
-            }
-        }.save(exporter)
-        // Blue Ice -> 9x Packed Ice + Cryolite
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.BLUE_ICE } }
-            result {
-                +Items.PACKED_ICE
-                count = 9
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.CRYOLITE)
-            }
-        }.save(exporter)
 
         // Book -> 3x Paper Pulp
         RagiumRecipeBuilders.crushing {

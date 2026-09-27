@@ -4,15 +4,9 @@
     "count": 1,
     "items": "#c:sandstone/uncolored_blocks"
   },
-  "results": [
-    {
-      "count": 4,
-      "id": "minecraft:sand"
-    },
-    {
-      "count": 1,
-      "id": "ragium:niter_dust"
-    }
-  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:sand"
+  },
   "time": 200
 }

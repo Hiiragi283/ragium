@@ -47,8 +47,6 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.SYNTHETIC_RESIN)
             add(RagiumFluids.SULFURIC_ACID)
-
-            add(RagiumFluids.ORE_SLURRY)
         }
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             // Item

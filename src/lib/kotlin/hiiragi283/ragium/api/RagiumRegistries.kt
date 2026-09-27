@@ -8,7 +8,6 @@ import hiiragi283.lib.recipe.result.HTItemResultType
 import hiiragi283.lib.resource.toId
 import hiiragi283.ragium.api.data.chemical.HTChemical
 import hiiragi283.ragium.api.data.element.HTElement
-import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.neoforged.bus.api.SubscribeEvent
@@ -63,11 +62,6 @@ data object RagiumRegistries {
             HTElement.DIRECT_CODEC,
             HTElement.DIRECT_CODEC
         )
-        event.dataPackRegistry(
-            Keys.ORE_SLURRY_DATA,
-            HTOreSlurryData.DIRECT_CODEC,
-            HTOreSlurryData.DIRECT_CODEC
-        )
     }
 
     @JvmStatic
@@ -112,12 +106,6 @@ data object RagiumRegistries {
          */
         @JvmField
         val ELEMENT: ResourceKey<Registry<HTElement>> = createKey(HTConstants.ELEMENT)
-
-        /**
-         * @since 26.1.5
-         */
-        @JvmField
-        val ORE_SLURRY_DATA: ResourceKey<Registry<HTOreSlurryData>> = createKey("ore_slurry_data")
 
         @JvmStatic
         private fun <T : Any> createKey(path: String): ResourceKey<Registry<T>> =
