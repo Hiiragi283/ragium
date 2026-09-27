@@ -14,7 +14,21 @@ import java.util.concurrent.CompletableFuture
 class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
+        electrolyzing()
         resourceExtracting()
+    }
+
+    private fun electrolyzing() {
+        // 2x H2O -> 2x H2 + O2
+        RagiumRecipeBuilders.electrolyzing {
+            ingredient { +waterSet() }
+            result { +RagiumFluids.HYDROGEN }
+            result {
+                +RagiumFluids.OXYGEN
+                amount /= 2
+            }
+            recipeId suffix "_from_water"
+        }.save(exporter)
     }
 
     private fun resourceExtracting() {
@@ -22,7 +36,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         RagiumRecipeBuilders.resourceExtracting {
             biomes { +holderSet(Tags.Biomes.IS_OCEAN) }
             result {
-                +Fluids.WATER
+                +RagiumFluids.SALT_WATER
                 amount *= 4
             }
             recipeId suffix "_at_ocean"

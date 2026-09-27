@@ -78,7 +78,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             RagiumAdvancementKeys.SOOTY_IRON,
             RagiumAdvancementKeys.ROOT,
             HTItemPart.INGOT,
-            RagiumMaterial.Metal.SOOTY_IRON
+            RagiumMaterial.Alloy.SOOTY_IRON
         )
         // Mechanical
         createSimple(
@@ -113,7 +113,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             RagiumAdvancementKeys.BLACK_STEEL,
             RagiumAdvancementKeys.ALLOY_SMELTER,
             HTItemPart.INGOT,
-            RagiumMaterial.Metal.BLACK_STEEL
+            RagiumMaterial.Alloy.BLACK_STEEL
         )
         createSimple(
             RagiumAdvancementKeys.FREEZER,

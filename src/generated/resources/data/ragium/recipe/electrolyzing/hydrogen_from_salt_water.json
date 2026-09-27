@@ -1,12 +1,8 @@
 {
   "type": "ragium:electrolyzing",
-  "fluid_ingredient": {
+  "ingredient": {
     "amount": 1000,
-    "fluids": "#c:water"
-  },
-  "item_ingredient": {
-    "count": 1,
-    "items": "#c:dusts/salt"
+    "fluids": "#c:salt_water"
   },
   "results": [
     {

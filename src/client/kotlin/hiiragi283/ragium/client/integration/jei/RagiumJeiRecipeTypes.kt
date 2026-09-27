@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.integration.jei
 
 import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.HTJeiRecipeType
+import hiiragi283.lib.recipe.base.HTFluidToDoubleFluidRecipe
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
@@ -13,6 +14,7 @@ import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RTResourceExtractingRecipe
+import hiiragi283.ragium.api.recipe.RTWashingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
 
@@ -69,8 +71,8 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
 
     @JvmField
-    val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
+    val CENTRIFUGING: HTHolderJeiRecipeType<HTFluidToDoubleFluidRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.CENTRIFUGING, RagiumBlocks.CHEMICAL_BATH)
 
     @JvmField
     val MIXING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> =
@@ -79,6 +81,10 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val REACTING: HTHolderJeiRecipeType<RTReactingRecipe.Basic> =
         HTJeiRecipeType(RagiumRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)
+
+    @JvmField
+    val WASHING: HTHolderJeiRecipeType<RTWashingRecipe> =
+        HTJeiRecipeType(RagiumRecipeTypes.WASHING, RagiumBlocks.MACHINE_CASING)
 
     // Bio
     @JvmField
@@ -90,6 +96,10 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     // Electronics
+    @JvmField
+    val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =
+        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
+
     @JvmField
     val RESOURCE_EXTRACTING: HTHolderJeiRecipeType<RTResourceExtractingRecipe> =
         HTJeiRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, RagiumBlocks.MACHINE_CASING)

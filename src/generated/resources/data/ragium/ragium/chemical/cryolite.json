@@ -1,0 +1,16 @@
+{
+  "type": "ragium:compound",
+  "composition": [
+    {
+      "element": "ragium:sodium",
+      "weight": 3
+    },
+    {
+      "element": "ragium:aluminum"
+    },
+    {
+      "element": "ragium:fluorine",
+      "weight": 6
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "#c:nuggets/void_metal",
+    "A": "ragium:alclad_plate",
     "B": "ragium:electronics_machine_parts",
     "C": "#c:gears/diamond",
     "D": "ragium:assembler"

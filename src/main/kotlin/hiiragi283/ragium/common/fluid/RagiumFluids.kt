@@ -8,7 +8,6 @@ import hiiragi283.lib.resource.toId
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.Identity
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.item.HTOreSlurryBucketItem
 import hiiragi283.ragium.common.item.HTPotionBucketItem
 import hiiragi283.ragium.common.item.component.RagiumConsumables
 import net.minecraft.core.component.DataComponents
@@ -28,7 +27,6 @@ data object RagiumFluids {
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
-        REGISTER.addAlias("calcium_hydroxide_solution", "sodium_hydroxide_solution")
         REGISTER.addAlias(RagiumAPI.id("molten_blaze"), vanillaId("lava"))
         REGISTER.addAlias("creosote", "coal_tar")
         REGISTER.addAlias("chloride", "chlorine")
@@ -131,6 +129,9 @@ data object RagiumFluids {
 
     // 3rd
     @JvmField
+    val NITROGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("nitrogen") { properties = gaseous() }
+
+    @JvmField
     val OXYGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("oxygen") { properties = gaseous() }
 
     // 4th
@@ -140,6 +141,9 @@ data object RagiumFluids {
     //    Chemical    //
 
     // C
+    @JvmField
+    val CARBON_DIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("carbon_dioxide") { properties = gaseous() }
+
     @JvmField
     val WOOD_TAR: HTFluidContent.Virtual = REGISTER.registerVirtual("wood_tar") {
         properties = liquid()
@@ -208,6 +212,9 @@ data object RagiumFluids {
 
     // Na
     @JvmField
+    val SALT_WATER: HTFluidContent.Flowing = REGISTER.registerFlowing("salt_water") { properties = liquid() }
+
+    @JvmField
     val NAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("sodium_hydroxide_solution") {
         properties = liquid()
     }
@@ -245,11 +252,9 @@ data object RagiumFluids {
     @JvmField
     val BLEACH: HTFluidContent.Virtual = REGISTER.registerVirtual("bleach") { properties = liquid() }
 
-    // Other
+    // Ca
     @JvmField
-    val ORE_SLURRY: HTFluidContent.Virtual = REGISTER.registerVirtual("ore_slurry") {
+    val CAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("calcium_hydroxide_solution") {
         properties = liquid()
-        typeFactory = ::HTOreSlurryFluidType
-        bucketFactory = ::HTOreSlurryBucketItem
     }
 }

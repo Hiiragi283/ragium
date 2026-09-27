@@ -7,8 +7,10 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.HTMachineBlock
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -18,6 +20,8 @@ abstract class HTBaseMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
     HTConfigurableBlockEntity(type, pos, state),
     HTBlockEntityWithMenu {
     protected fun getTankCapacity(): IntSupplier = RagiumConfig.SERVER.machine.tankCapacity
+
+    fun getFront(): Direction = this.blockState.getValue(HTHorizontalEntityBlock.FACING)
 
     fun isActive(): Boolean = isActive(this.blockState)
 

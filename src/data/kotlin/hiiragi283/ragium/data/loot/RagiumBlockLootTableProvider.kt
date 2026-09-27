@@ -43,8 +43,12 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
             add(machine, ::copyComponent)
         }
         // Storage
-        for (tank: HTSimpleDeferredBlockAndItem in listOf(RagiumBlocks.TANK, RagiumBlocks.CREATIVE_TANK)) {
-            add(tank) { block: Block -> copyComponent(block) { include(RagiumDataComponents.FLUID) } }
+        listOf(
+            RagiumBlocks.FLUID_OUTPUT_BUS,
+            RagiumBlocks.TANK,
+            RagiumBlocks.CREATIVE_TANK
+        ).forEach { blockItem: HTSimpleDeferredBlockAndItem ->
+            add(blockItem) { block: Block -> copyComponent(block) { include(RagiumDataComponents.FLUID) } }
         }
     }
 

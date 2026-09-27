@@ -15,10 +15,12 @@ import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.ItemWithContextFactory
+import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.RagiumDataComponents
+import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
@@ -26,6 +28,7 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.block.entity.bus.HTFluidBusBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import hiiragi283.ragium.common.item.block.HTCreativeTankBlockItem
@@ -51,7 +54,6 @@ import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.transfer.InfiniteResourceHandler
 import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
 import net.neoforged.neoforge.transfer.fluid.FluidResource
-import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler
 
 data object RagiumBlocks {
     @JvmStatic
@@ -137,7 +139,11 @@ data object RagiumBlocks {
                 material,
                 REGISTER.registerSimple(
                     part.createName(material),
-                    blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), properties.setId(it)) }
+                    blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), properties.setId(it)) },
+                    itemProp = { prop: Item.Properties ->
+                        material.chemicalKey?.let { prop.delayedHolderComponent(RagiumDataComponents.CHEMICAL, it) }
+                        prop
+                    }
                 )
             )
         }
@@ -149,9 +155,9 @@ data object RagiumBlocks {
         RagiumMaterial.Fuel.COAL_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Fuel.PITCH_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_BLUE),
         RagiumMaterial.Metal.ALUMINUM to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.COLOR_PINK),
-        RagiumMaterial.Metal.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
-        RagiumMaterial.Metal.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
-        RagiumMaterial.Metal.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
+        RagiumMaterial.Alloy.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
+        RagiumMaterial.Alloy.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
+        RagiumMaterial.Alloy.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
     ).associateTo(
         sortedMapOf(RagiumMaterial.COMPARATOR)
     ) { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
@@ -185,8 +191,11 @@ data object RagiumBlocks {
 
     // Fluorite
     @JvmField
-    val FLUORITE_BLOCK: HTSimpleDeferredBlockAndItem =
-        REGISTER.registerSimple("fluorite_block", copyOf(Blocks.QUARTZ_BLOCK).mapColor(MapColor.COLOR_GREEN))
+    val FLUORITE_BLOCK: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple(
+        "fluorite_block",
+        copyOf(Blocks.QUARTZ_BLOCK).mapColor(MapColor.COLOR_GREEN),
+        itemProp = { it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.FLUORITE) }
+    )
 
     @JvmField
     val FLUORITE_SLAB: HTBasicDeferredBlockAndItem<SlabBlock> = REGISTER.registerSimple(
@@ -205,8 +214,11 @@ data object RagiumBlocks {
 
     // Cryolite
     @JvmField
-    val CRYOLITE_BLOCK: HTSimpleDeferredBlockAndItem =
-        REGISTER.registerSimple("cryolite_block", copyOf(Blocks.QUARTZ_BLOCK))
+    val CRYOLITE_BLOCK: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple(
+        "cryolite_block",
+        copyOf(Blocks.QUARTZ_BLOCK),
+        itemProp = { it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CRYOLITE) }
+    )
 
     @JvmField
     val CRYOLITE_SLAB: HTBasicDeferredBlockAndItem<SlabBlock> = REGISTER.registerSimple(
@@ -277,10 +289,6 @@ data object RagiumBlocks {
         registerFakeMachine(RagiumConstants.CHEMICAL_REACTOR)
 
     @JvmField
-    val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerFakeMachine(RagiumConstants.ELECTROLYZER)
-
-    @JvmField
     val MIXER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.MIXER)
 
@@ -294,6 +302,10 @@ data object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.PLANTER)
 
     // Electronics
+    @JvmField
+    val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.ELECTROLYZER)
+
     @JvmField
     val PRECISION_ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.PRECISION_ASSEMBLER)
@@ -326,18 +338,26 @@ data object RagiumBlocks {
 
                 put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
                 put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
-                put(HTMachineType.CHEMICAL, ELECTROLYZER)
                 put(HTMachineType.CHEMICAL, MIXER)
 
                 put(HTMachineType.BIO, BREWERY)
                 put(HTMachineType.BIO, PLANTER)
 
+                put(HTMachineType.ELECTRONICS, ELECTROLYZER)
                 put(HTMachineType.ELECTRONICS, PRECISION_ASSEMBLER)
                 put(HTMachineType.ELECTRONICS, SCANNER)
 
                 put(HTMachineType.ARCANE, ENCHANTER)
             }
         )
+
+    //    Bus    //
+
+    @JvmField
+    val FLUID_OUTPUT_BUS: HTBasicDeferredBlockAndItem<HTFluidBusBlock> = registerMachine(
+        RagiumBlockEntityTypes.FLUID_OUTPUT_BUS,
+        ::HTFluidBusBlock
+    )
 
     //    Storage    //
 
@@ -391,11 +411,15 @@ data object RagiumBlocks {
         event.registerItem(
             HTFluidCapabilities.item,
             { _, access ->
-                ItemAccessFluidHandler(
-                    access,
-                    RagiumDataComponents.FLUID,
-                    RagiumConfig.SERVER.tankCapacity.asInt
-                )
+                HTItemAccessFluidHandler.output(access, RagiumConfig.SERVER.tankCapacity.asInt)
+            },
+            FLUID_OUTPUT_BUS
+        )
+
+        event.registerItem(
+            HTFluidCapabilities.item,
+            { _, access ->
+                HTItemAccessFluidHandler.create(access, RagiumConfig.SERVER.tankCapacity.asInt)
             },
             TANK
         )
@@ -425,17 +449,17 @@ data object RagiumBlocks {
     private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
         // Block
         setOf(
-            RagiumMaterial.Metal.BLACK_STEEL to Rarity.UNCOMMON,
-            RagiumMaterial.Metal.VOID_METAL to Rarity.RARE
+            RagiumMaterial.Alloy.BLACK_STEEL to Rarity.UNCOMMON,
+            RagiumMaterial.Alloy.VOID_METAL to Rarity.RARE
         ).forEach { (material: RagiumMaterial, rarity: Rarity) ->
             for (part: HTBlockPart in HTBlockPart.entries) {
-                val block: ItemLike = RagiumBlocks.MATERIAL_BLOCKS[part, material] ?: continue
+                val block: ItemLike = MATERIAL_BLOCKS[part, material] ?: continue
                 event.modify(block) { builder: DataComponentMap.Builder, _, _ ->
                     builder.set(DataComponents.RARITY, rarity)
                 }
             }
         }
-        event.modify(RagiumBlocks.CREATIVE_BATTERY) { builder: DataComponentMap.Builder, _, _ ->
+        event.modify(CREATIVE_BATTERY) { builder: DataComponentMap.Builder, _, _ ->
             builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
     }

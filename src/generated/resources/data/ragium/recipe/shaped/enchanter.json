@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "#c:nuggets/void_metal",
+    "A": "minecraft:ghast_tear",
     "B": "ragium:arcane_machine_parts",
     "C": "#c:gears/netherite",
     "D": "minecraft:enchanting_table"

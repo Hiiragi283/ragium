@@ -4,6 +4,8 @@
     "#c:dusts/amethyst",
     "#c:dusts/bauxite",
     "#c:dusts/borax",
+    "#c:dusts/calcium_carbonate",
+    "#c:dusts/calcium_oxide",
     "#c:dusts/carbon",
     "#c:dusts/charcoal",
     "#c:dusts/coal",
@@ -26,6 +28,7 @@
     "#c:dusts/raginite",
     "#c:dusts/salt",
     "#c:dusts/silicon",
+    "#c:dusts/sodium_carbonate",
     "#c:dusts/sulfur",
     "#c:dusts/wood"
   ]

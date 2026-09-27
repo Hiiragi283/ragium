@@ -19,6 +19,7 @@ import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.FluidIngredientType
@@ -48,8 +49,10 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>) : FluidIngred
 
     constructor(potion: Holder<Potion>) : this(HolderSet.direct(potion))
 
-    override fun test(fluidStack: FluidStack): Boolean =
-        HTPotionHelper.getContents(fluidStack).potion().fold({ false }, potions::contains)
+    override fun test(fluidStack: FluidStack): Boolean = when {
+        fluidStack.`is`(Tags.Fluids.WATER) -> Potions.WATER in potions
+        else -> HTPotionHelper.getContents(fluidStack).potion().fold({ false }, potions::contains)
+    }
 
     @Suppress("DEPRECATION")
     override fun generateFluids(): Stream<Holder<Fluid>> =

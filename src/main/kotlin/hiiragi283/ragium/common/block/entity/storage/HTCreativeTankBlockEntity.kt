@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.entity.storage.base.HTBaseTankBlockEntity
 import hiiragi283.ragium.common.transfer.fluid.HTCreativeFluidTank
+import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentGetter
 import net.minecraft.core.component.DataComponentMap
@@ -13,9 +15,12 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource
 
 class HTCreativeTankBlockEntity(pos: BlockPos, state: BlockState) :
     HTBaseTankBlockEntity(RagiumBlockEntityTypes.CREATIVE_TANK.get(), pos, state) {
-    override val tank: HTCreativeFluidTank = HTCreativeFluidTank()
+    override lateinit var tank: HTCreativeFluidTank
+        private set
 
-    override fun initTank(listener: Runnable) {}
+    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
+        tank = builder.addSlot(HTSlotInfo.INPUT, HTCreativeFluidTank())
+    }
 
     //    Sync    //
 

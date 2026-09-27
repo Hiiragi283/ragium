@@ -1,6 +1,6 @@
 {
   "type": "ragium:electrolyzing",
-  "fluid_ingredient": {
+  "ingredient": {
     "amount": 1000,
     "fluids": "#c:water"
   },

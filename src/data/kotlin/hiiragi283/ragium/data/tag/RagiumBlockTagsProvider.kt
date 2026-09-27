@@ -37,6 +37,8 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yield(RagiumBlocks.MACHINE_CASING)
             yieldAll(RagiumBlocks.MACHINE_CASINGS.values)
 
+            yield(RagiumBlocks.FLUID_OUTPUT_BUS)
+
             yield(RagiumBlocks.TANK)
             yield(RagiumBlocks.VOID_TANK)
             yield(RagiumBlocks.CREATIVE_BATTERY)

@@ -3,6 +3,8 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.color.HTColoredCollection
 import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.builder.ingredient
+import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.debugPath
@@ -377,7 +379,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         // XX Dust -> XX
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
-            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getFuelBase(fuel)
+            val baseItem: HTSimpleDeferredItem = RagiumMaterialHelper.getBase(fuel)
             RagiumRecipeBuilders.compressing {
                 ingredient { +holderSet(CommonTagPrefixes.DUST, fuel) }
                 result { +baseItem }
@@ -448,6 +450,8 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
         setOf(
+            Tags.Items.SANDSTONE_UNCOLORED_BLOCKS to Items.SAND,
+            Tags.Items.SANDSTONE_RED_BLOCKS to Items.RED_SAND,
             RagiumTags.BlockItem.QUARTZ_BLOCKS.item to Items.QUARTZ
         ).forEach { (block: TagKey<Item>, base: Item) ->
             RagiumRecipeBuilders.crushing {
@@ -458,39 +462,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 }
             }.save(exporter)
         }
-        // Sandstone -> 4x Sand + Niter
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS) }
-            result {
-                +Items.SAND
-                count = 4
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.NITER)
-            }
-        }.save(exporter)
-        // Red Sandstone -> 4x Red Sand + Bauxite
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(Tags.Items.SANDSTONE_RED_BLOCKS) }
-            result {
-                +Items.RED_SAND
-                count = 4
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.BAUXITE)
-            }
-        }.save(exporter)
-        // Blue Ice -> 9x Packed Ice + Cryolite
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.BLUE_ICE } }
-            result {
-                +Items.PACKED_ICE
-                count = 9
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.CRYOLITE)
-            }
-        }.save(exporter)
 
         // Book -> 3x Paper Pulp
         RagiumRecipeBuilders.crushing {
@@ -531,7 +502,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(RagiumTags.Items.COKES) }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.CARBON) }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CARBON) }
         }.save(exporter)
 
         for (gem: RagiumMaterial.Gem in RagiumMaterial.Gem.entries) {
@@ -543,10 +514,10 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
 
-        for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
-            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
+        for (metalLike: RagiumMaterial.MetalLike in RagiumMaterial.MetalLike.entries) {
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metalLike] ?: continue
             RagiumRecipeBuilders.crushing {
-                ingredient { +holderSet(CommonTagPrefixes.INGOT, metal) }
+                ingredient { +holderSet(CommonTagPrefixes.INGOT, metalLike) }
                 result { +dust }
                 recipeId suffix "_from_ingot"
             }.save(exporter)
@@ -665,6 +636,12 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
 
         RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.CALCITE } }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CALCIUM_CARBONATE) }
+            recipeId suffix "_from_calcite"
+        }.save(exporter)
+
+        RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.LAPIS) }
             result {
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.LAPIS)
@@ -731,7 +708,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
         // Raw XX -> XX Dust
         for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
-            if (!metal.hasRawVariant) continue
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
             RagiumRecipeBuilders.crushing {
                 ingredient {

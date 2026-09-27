@@ -1,0 +1,20 @@
+{
+  "type": "ragium:reacting",
+  "fluid_result": {
+    "amount": 2000,
+    "id": "minecraft:water"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "ragium:sodium_carbonate_dust"
+  },
+  "primary_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:sodium_hydroxide_solution"
+  },
+  "secondary_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:carbon_dioxide"
+  },
+  "time": 200
+}

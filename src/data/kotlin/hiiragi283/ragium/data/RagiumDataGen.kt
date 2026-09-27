@@ -2,7 +2,8 @@ package hiiragi283.ragium.data
 
 import hiiragi283.lib.data.createLootTables
 import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
+import hiiragi283.ragium.api.data.chemical.RagiumChemicals
+import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.world.RagiumDamageTypes
 import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
 import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
@@ -39,7 +40,8 @@ data object RagiumDataGen {
         event.createDatapackRegistryObjects(
             RegistrySetBuilder()
                 .add(Registries.DAMAGE_TYPE, RagiumDamageTypes::bootstrap)
-                .add(RagiumRegistries.Keys.ORE_SLURRY_DATA, RagiumOreSlurryData::bootstrap)
+                .add(RagiumRegistries.Keys.ELEMENT, RagiumElements::bootstrap)
+                .add(RagiumRegistries.Keys.CHEMICAL, RagiumChemicals::bootstrap)
                 .apply(RagiumWorldData::bootstrap)
         )
 

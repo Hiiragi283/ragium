@@ -7,7 +7,6 @@ import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTPotionContent
 import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.HTHasTranslationKey
-import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.enchantment.Enchantment
@@ -50,13 +49,27 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
     }
 
     /**
+     * @since 26.1.8
+     */
+    fun addFromKey(key: ResourceKey<*>, value: String) {
+        add(key.toLanguageKey(), value)
+    }
+
+    /**
+     * @since 26.1.8
+     */
+    fun addFromKey(key: ResourceKey<*>, suffix: String, value: String) {
+        add(key.toLanguageKey(suffix), value)
+    }
+
+    /**
      * エンチャントの翻訳名を追加します。
      * @param value エンチャントの翻訳名
      * @param desc エンチャントの説明
      */
     protected fun addEnchantment(key: ResourceKey<Enchantment>, value: String, desc: String) {
-        add(key.toLanguageKey(), value)
-        add(key.toLanguageKey("desc"), desc)
+        addFromKey(key, value)
+        addFromKey(key, "desc", desc)
     }
 
     /**
@@ -91,12 +104,5 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
         add("item.minecraft.splash_potion.effect.$name", SPLASH_POTION_PATTERN.translate(langType, value))
         add("item.minecraft.lingering_potion.effect.$name", LINGERING_POTION_PATTERN.translate(langType, value))
         add("item.minecraft.tipped_arrow.effect.$name", TIPPED_ARROW_PATTERN.translate(langType, value))
-    }
-
-    /**
-     * @since 26.1.5
-     */
-    fun addOreSlurry(key: ResourceKey<HTOreSlurryData>, value: String) {
-        add(key.toLanguageKey(), value)
     }
 }

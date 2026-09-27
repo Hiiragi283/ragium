@@ -40,13 +40,8 @@ interface HTOutputSlot<STACK : Any> {
         FULL;
 
         /**
-         * 出力の受け取りに失敗した場合は`true`
+         * 出力をすべて受け取れた場合は`true`
          */
-        val noneTaken: Boolean get() = this == NONE
-
-        /**
-         * 出力の受け取りに成功した場合は`true`
-         */
-        val anyTaken: Boolean get() = !noneTaken
+        val fullOrNoneTaken: Boolean get() = this == NONE || this == FULL
     }
 }
