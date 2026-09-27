@@ -51,7 +51,7 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>) : FluidIngred
 
     override fun test(fluidStack: FluidStack): Boolean = when {
         fluidStack.`is`(Tags.Fluids.WATER) -> Potions.WATER in potions
-        else -> HTPotionHelper.getContents(fluidStack).potion().fold({ false }, potions::contains)
+        else -> HTPotionHelper.getContentsOrEmpty(fluidStack).potion().fold({ false }, potions::contains)
     }
 
     @Suppress("DEPRECATION")

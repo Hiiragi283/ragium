@@ -96,7 +96,7 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.POTION) {
             dull()
             tintSource = FluidStackTintSource { stack: FluidStack ->
-                ARGB.opaque(HTPotionHelper.getContents(stack).color)
+                ARGB.opaque(HTPotionHelper.getContentsOrEmpty(stack).color)
             }
         }
         register.register(RagiumFluids.OMINOUS_FLUX) {
@@ -239,6 +239,7 @@ data object RagiumClient : HTClientMod() {
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankBlockEntityRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.POTION_TANK.get(), ::HTTankBlockEntityRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), ::HTTankBlockEntityRenderer)
     }
 

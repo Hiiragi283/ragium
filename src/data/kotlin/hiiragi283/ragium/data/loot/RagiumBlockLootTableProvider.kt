@@ -46,6 +46,7 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
         listOf(
             RagiumBlocks.FLUID_OUTPUT_BUS,
             RagiumBlocks.TANK,
+            RagiumBlocks.POTION_TANK,
             RagiumBlocks.CREATIVE_TANK
         ).forEach { blockItem: HTSimpleDeferredBlockAndItem ->
             add(blockItem) { block: Block -> copyComponent(block) { include(RagiumDataComponents.FLUID) } }

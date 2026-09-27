@@ -75,7 +75,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 }
             }
 
-        // Creative Tank
+        // Tanks
+        registration.registerFromDataComponentTypes(RagiumBlocks.POTION_TANK.asItem(), RagiumDataComponents.FLUID)
         registration.registerFromDataComponentTypes(RagiumBlocks.CREATIVE_TANK.asItem(), RagiumDataComponents.FLUID)
     }
 
@@ -86,7 +87,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.registerSubtypeInterpreter(
             NeoForgeTypes.FLUID_STACK,
             RagiumFluids.POTION.getOrThrow()
-        ) { stack: FluidStack, _ -> HTPotionHelper.getContents(stack) }
+        ) { stack: FluidStack, _ -> HTPotionHelper.getContentsNotEmpty(stack) }
     }
 
     override fun registerIngredients(registration: IModIngredientRegistration) {

@@ -39,10 +39,8 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
 
             yield(RagiumBlocks.FLUID_OUTPUT_BUS)
 
-            yield(RagiumBlocks.TANK)
-            yield(RagiumBlocks.VOID_TANK)
+            yieldAll(RagiumBlocks.TANKS)
             yield(RagiumBlocks.CREATIVE_BATTERY)
-            yield(RagiumBlocks.CREATIVE_TANK)
         }.forEach(pickaxe::add)
         // Other
         builder(BlockTags.SLABS)

@@ -26,13 +26,13 @@ class HTCreativeTankBlockItem(block: Block, properties: Properties) :
         parameters.holders
             .lookupOrThrow(Registries.FLUID)
             .asHolderSequence()
-            .mapNotNull { fluid ->
-                if (!HTFlowingFluidHelper.isSource(fluid)) return@mapNotNull null
+            .forEach { fluid ->
+                if (!HTFlowingFluidHelper.isSource(fluid)) return@forEach
                 val content: SimpleFluidContent = FluidStack(fluid).let(SimpleFluidContent::copyOf)
-                if (content.isEmpty) return@mapNotNull null
-                ItemStack(baseItem, 1, buildDataPatch { set(RagiumDataComponents.FLUID, content) })
-            }.forEach(output::accept)
+                if (content.isEmpty) return@forEach
+                output.accept(
+                    ItemStack(baseItem, 1, buildDataPatch { set(RagiumDataComponents.FLUID, content) })
+                )
+            }
     }
-
-    override fun shouldAddDefault(): Boolean = false
 }

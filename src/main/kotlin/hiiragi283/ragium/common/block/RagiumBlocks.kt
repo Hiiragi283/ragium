@@ -8,6 +8,7 @@ import hiiragi283.lib.collection.buildSetMultiMap
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.flatMapTable
 import hiiragi283.lib.collection.mutableEnumMapOf
+import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItemRegister
@@ -27,11 +28,13 @@ import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.util.HTStorageHelper
+import hiiragi283.ragium.common.block.entity.HTFluidStorageBlock
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.block.entity.bus.HTFluidBusBlock
+import hiiragi283.ragium.common.block.storage.HTPotionTankBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import hiiragi283.ragium.common.item.block.HTCreativeTankBlockItem
+import hiiragi283.ragium.common.item.block.HTPotionTankBlockItem
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
@@ -354,13 +357,14 @@ data object RagiumBlocks {
     //    Bus    //
 
     @JvmField
-    val FLUID_OUTPUT_BUS: HTBasicDeferredBlockAndItem<HTFluidBusBlock> = registerMachine(
+    val FLUID_OUTPUT_BUS: HTBasicDeferredBlockAndItem<HTFluidStorageBlock> = registerMachine(
         RagiumBlockEntityTypes.FLUID_OUTPUT_BUS,
-        ::HTFluidBusBlock
+        ::HTFluidStorageBlock
     )
 
     //    Storage    //
 
+    // Tank
     @JvmField
     val TANK: HTBasicDeferredBlockAndItem<HTTankBlock> = registerMachine(
         RagiumBlockEntityTypes.TANK,
@@ -368,18 +372,20 @@ data object RagiumBlocks {
         machine().noOcclusion()
     )
 
-    // Void
+    @JvmField
+    val POTION_TANK: HTDeferredBlockAndItem<HTPotionTankBlock, HTPotionTankBlockItem> = registerMachine(
+        RagiumBlockEntityTypes.POTION_TANK,
+        ::HTPotionTankBlock,
+        ::HTPotionTankBlockItem,
+        machine().noOcclusion()
+    )
+
     @JvmField
     val VOID_TANK: HTBasicDeferredBlockAndItem<HTVoidTankBlock> = REGISTER.registerSimple(
         "void_tank",
         machine().noOcclusion(),
         ::HTVoidTankBlock
     )
-
-    // Creative
-    @JvmField
-    val CREATIVE_BATTERY: HTBasicDeferredBlockAndItem<HTBasicEntityBlock> =
-        registerMachine(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBasicEntityBlock)
 
     @JvmField
     val CREATIVE_TANK: HTDeferredBlockAndItem<HTTankBlock, HTCreativeTankBlockItem> = registerMachine(
@@ -388,6 +394,14 @@ data object RagiumBlocks {
         ::HTCreativeTankBlockItem,
         machine().noOcclusion()
     )
+
+    @JvmField
+    val TANKS: List<HTSimpleDeferredBlockAndItem> = listOf(TANK, POTION_TANK, VOID_TANK, CREATIVE_TANK)
+
+    // Battery
+    @JvmField
+    val CREATIVE_BATTERY: HTBasicDeferredBlockAndItem<HTBasicEntityBlock> =
+        registerMachine(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBasicEntityBlock)
 
     //    Decoration    //
 
@@ -422,6 +436,17 @@ data object RagiumBlocks {
                 HTItemAccessFluidHandler.create(access, RagiumConfig.SERVER.tankCapacity.asInt)
             },
             TANK
+        )
+        event.registerItem(
+            HTFluidCapabilities.item,
+            { _, access ->
+                HTItemAccessFluidHandler.create(
+                    access,
+                    RagiumConfig.SERVER.tankCapacity.asInt,
+                    filter = HTPotionHelper::hasAnyEffect
+                )
+            },
+            POTION_TANK
         )
         event.registerItem(
             HTFluidCapabilities.item,

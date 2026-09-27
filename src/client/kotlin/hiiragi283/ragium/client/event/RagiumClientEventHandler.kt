@@ -19,7 +19,7 @@ data object RagiumClientEventHandler {
         val appender: (Text) -> Unit = event.toolTip::add
         // Potion Fluid
         if (RagiumFluids.POTION.isOf(stack)) {
-            HTPotionHelper.getContents(stack).addToTooltip(event.context, appender, event.flags, stack)
+            HTPotionHelper.getContentsNotEmpty(stack)?.addToTooltip(event.context, appender, event.flags, stack)
         }
         // Chemical Tooltip
         HTClientChemicalHelper.addToTooltip(stack, appender)

@@ -31,6 +31,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTFluidOutputBusBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTPotionTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import net.minecraft.core.Direction
@@ -140,6 +141,10 @@ data object RagiumBlockEntityTypes {
         registerTick(HTConstants.TANK, ::HTTankBlockEntity)
 
     @JvmField
+    val POTION_TANK: HTDeferredBlockEntityType<HTPotionTankBlockEntity> =
+        registerTick("potion_tank", ::HTPotionTankBlockEntity)
+
+    @JvmField
     val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
         registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
 
@@ -202,6 +207,7 @@ data object RagiumBlockEntityTypes {
         registerBlockEntity(FLUID_OUTPUT_BUS.get())
         // Storage
         registerBlockEntity(TANK.get())
+        registerBlockEntity(POTION_TANK.get())
 
         event.registerBlock(
             HTFluidCapabilities.block,

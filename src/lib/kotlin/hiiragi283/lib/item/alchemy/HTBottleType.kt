@@ -8,9 +8,11 @@ import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import io.netty.buffer.ByteBuf
+import net.minecraft.core.TypedInstance
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
 import net.minecraft.util.StringRepresentable
+import net.minecraft.world.item.Item
 
 /**
  * ポーション瓶の種類を管理するクラスです。
@@ -32,6 +34,14 @@ enum class HTBottleType(val filledItem: HTSimpleDeferredItem) : StringRepresenta
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTBottleType> = HTStreamCodecs.enum()
+
+        @JvmStatic
+        fun getFromFilled(instance: TypedInstance<Item>): HTBottleType? =
+            HTBottleType.entries.firstOrNull { it.filledItem.isOf(instance) }
+
+        @JvmStatic
+        fun getFromEmpty(instance: TypedInstance<Item>): HTBottleType? =
+            HTBottleType.entries.firstOrNull { it.emptyItem.isOf(instance) }
     }
 
     constructor(filledItem: Identifier) : this(HTSimpleDeferredItem(filledItem))

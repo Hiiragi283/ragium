@@ -10,6 +10,7 @@ import hiiragi283.lib.recipe.result.HTItemAndFluidResult
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.neoforged.neoforge.fluids.FluidStack
 
 @JvmRecord
 data class RTPotionBottleDrainingRecipe(val bottleType: HTBottleType, override val progressData: HTProgressData) :
@@ -27,7 +28,7 @@ data class RTPotionBottleDrainingRecipe(val bottleType: HTBottleType, override v
 
     override fun apply(input: ItemInstance): HTItemAndFluidResult = HTItemAndFluidResult(
         bottleType.emptyItem.toStack(),
-        HTPotionHelper.createFluid(input, HTPotionHelper.BOTTLE_AMOUNT)
+        HTPotionHelper.createFluid(input, HTPotionHelper.BOTTLE_AMOUNT) ?: FluidStack.EMPTY
     )
 
     override fun getMatchingStack(input: ItemInstance): ItemInstance = when {

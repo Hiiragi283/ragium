@@ -127,9 +127,9 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         // Bus
         generators.createTrivialBlock(RagiumBlocks.FLUID_OUTPUT_BUS.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
         // Storage
-        generators.createTrivialBlock(RagiumBlocks.TANK.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
-        generators.createTrivialBlock(RagiumBlocks.VOID_TANK.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
-        generators.createTrivialBlock(RagiumBlocks.CREATIVE_TANK.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
+        for (blockItem: HTSimpleDeferredBlockAndItem in RagiumBlocks.TANKS) {
+            generators.createTrivialBlock(blockItem.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
+        }
     }
 
     private fun machineModel(

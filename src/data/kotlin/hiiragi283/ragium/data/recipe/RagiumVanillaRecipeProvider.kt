@@ -452,6 +452,13 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +RagiumBlocks.TANK }
             recipeId suffix "_by_black_steel"
         }.save(exporter)
+        // Potion Tank
+        VanillaRecipeBuilders.shaped {
+            hollow4()
+            define('A') { +holderSet(Tags.Items.RODS_BLAZE) }
+            define('B') { +holderSet(Tags.Items.BUCKETS_EMPTY) }
+            result { +RagiumBlocks.POTION_TANK }
+        }.save(exporter)
         // Void Tank
         VanillaRecipeBuilders.shaped {
             hollow8()
