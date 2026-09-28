@@ -80,5 +80,7 @@ data object RagiumDataGen {
 
         event.createProvider(::RagiumEnglishLangProvider)
         event.createProvider(::RagiumJapaneseLangProvider)
+        // Report
+        event.createProvider(::RagiumRegistryDumpReport)
     }
 }
