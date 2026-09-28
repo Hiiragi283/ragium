@@ -663,7 +663,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         RagiumRecipeBuilders.cutting {
             ingredient { items { +RagiumItems.SILICON_WAFER } }
             result {
-                +RagiumItems.CIRCUIT_CHIP
+                +RagiumItems.SILICON_CHIP
                 count = 8
             }
         }.save(exporter)
@@ -672,7 +672,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         RagiumRecipeBuilders.assembling {
             ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
             extra {
-                items { +RagiumItems.CIRCUIT_CHIP }
+                items { +RagiumItems.SILICON_CHIP }
                 count = 2
             }
             extra {
@@ -696,7 +696,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 items { +RagiumItems.CFRP_PLATE }
             }
             extra {
-                items { +RagiumItems.CIRCUIT_CHIP }
+                items { +RagiumItems.SILICON_CHIP }
                 count = 2
             }
             extra {

@@ -43,6 +43,7 @@ data object RagiumItems {
         REGISTER.addAlias("steel_nugget", "sooty_iron_nugget")
         REGISTER.addAlias("coal_coke_dust", "carbon_dust")
         REGISTER.addAlias("circuit_board", "cfrp_plate")
+        REGISTER.addAlias("circuit_chip", "silicon_chip")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -191,7 +192,7 @@ data object RagiumItems {
     val SILICON_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_wafer")
 
     @JvmField
-    val CIRCUIT_CHIP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_chip")
+    val SILICON_CHIP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_chip")
 
     @JvmField
     val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit")

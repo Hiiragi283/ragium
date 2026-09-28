@@ -136,7 +136,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.LINGERING_BOTTLE, "残留瓶")
         add(RagiumItems.CRUDE_SILICON, "粗製シリコン")
         add(RagiumItems.SILICON_WAFER, "シリコンウェハ")
-        add(RagiumItems.CIRCUIT_CHIP, "回路チップ")
+        add(RagiumItems.SILICON_CHIP, "シリコンチップ")
         add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
