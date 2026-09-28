@@ -69,6 +69,9 @@ data object RagiumChemicals {
 
     // 2nd Period
     @JvmField
+    val CARBONATE: ResourceKey<HTChemical> = create("carbonate")
+
+    @JvmField
     val NITRATE: ResourceKey<HTChemical> = create("nitrate")
 
     @JvmField
@@ -86,6 +89,9 @@ data object RagiumChemicals {
     // 3rd Period
     @JvmField
     val SODIUM_HYDROXIDE: ResourceKey<HTChemical> = create("sodium_hydroxide")
+
+    @JvmField
+    val SODIUM_CARBONATE: ResourceKey<HTChemical> = create("sodium_carbonate")
 
     @JvmField
     val SODIUM_CHLORIDE: ResourceKey<HTChemical> = create("sodium_chloride")
@@ -114,6 +120,12 @@ data object RagiumChemicals {
     // 4th Period
     @JvmField
     val POTASSIUM_NITRATE: ResourceKey<HTChemical> = create("potassium_nitrate")
+
+    @JvmField
+    val CALCIUM_CARBONATE: ResourceKey<HTChemical> = create("calcium_carbonate")
+
+    @JvmField
+    val CALCIUM_OXIDE: ResourceKey<HTChemical> = create("calcium_oxide")
 
     //    Mixtures    //
 
@@ -159,6 +171,13 @@ data object RagiumChemicals {
         )
 
         context.register(
+            CARBONATE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.CARBON, 1)
+                add(RagiumElements.OXYGEN, 3)
+            }
+        )
+        context.register(
             NITRATE,
             HTCompoundChemical.build(context) {
                 add(RagiumElements.NITROGEN, 1)
@@ -200,6 +219,13 @@ data object RagiumChemicals {
             HTCompoundChemical.build(context) {
                 add(RagiumElements.SODIUM, 1)
                 add(HYDROXIDE, 1)
+            }
+        )
+        context.register(
+            SODIUM_CARBONATE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.SODIUM, 2)
+                add(CARBONATE, 1)
             }
         )
         context.register(
@@ -264,6 +290,20 @@ data object RagiumChemicals {
             HTCompoundChemical.build(context) {
                 add(RagiumElements.POTASSIUM, 1)
                 add(NITRATE, 1)
+            }
+        )
+        context.register(
+            CALCIUM_CARBONATE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.CALCIUM, 1)
+                add(CARBONATE, 1)
+            }
+        )
+        context.register(
+            CALCIUM_OXIDE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.CALCIUM, 1)
+                add(RagiumElements.OXYGEN, 1)
             }
         )
     }

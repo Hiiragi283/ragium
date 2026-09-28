@@ -10,7 +10,6 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
-import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
@@ -85,13 +84,13 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             extra { items { +Items.WARPED_FUNGUS } }
             result { +Items.WARPED_NYLIUM }
         }.save(exporter)
-        // String + Sticky -> Cobweb
+        // String + Slime Ball -> Cobweb
         RagiumRecipeBuilders.assembling {
             ingredient {
                 +holderSet(Tags.Items.STRINGS)
                 count = 5
             }
-            extra { +holderSet(HTCommonTags.Items.STICKY_BALLS) }
+            extra { +holderSet(Tags.Items.SLIME_BALLS) }
             result { +Items.COBWEB }
         }.save(exporter)
 
@@ -633,12 +632,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.RAGINITE)
             }
             recipeId suffix "_from_ore"
-        }.save(exporter)
-
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.CALCITE } }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CALCIUM_CARBONATE) }
-            recipeId suffix "_from_calcite"
         }.save(exporter)
 
         RagiumRecipeBuilders.crushing {

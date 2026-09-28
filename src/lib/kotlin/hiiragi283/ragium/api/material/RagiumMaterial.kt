@@ -105,7 +105,7 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.8
          */
-        SODIUM_CARBONATE("Sodium Carbonate", "炭酸ナトリウム"),
+        SODIUM_CARBONATE("Sodium Carbonate", "炭酸ナトリウム", RagiumChemicals.SODIUM_CARBONATE),
 
         /**
          * @since 26.1.7
@@ -120,12 +120,12 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.8
          */
-        CALCIUM_CARBONATE("Calcium Carbonate", "炭酸カルシウム"),
+        LIME("Lime", "石灰", RagiumChemicals.CALCIUM_CARBONATE),
 
         /**
          * @since 26.1.8
          */
-        CALCIUM_OXIDE("Calcium Oxide", "酸化カルシウム")
+        QUICK_LIME("Quick Lime", "生石灰", RagiumChemicals.CALCIUM_OXIDE)
         ;
 
         constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>? = null) : this(

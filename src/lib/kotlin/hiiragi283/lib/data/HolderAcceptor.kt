@@ -3,12 +3,13 @@
 package hiiragi283.lib.data
 
 import hiiragi283.lib.registry.HTDeferredBlockAndItem
+import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.util.HTBuilderMarker
-import hiiragi283.lib.util.HTDelegates
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -28,12 +29,34 @@ interface HolderAcceptor<T : Any> {
     operator fun Holder<T>.unaryPlus()
 
     /**
+     * [Block]向けの[HolderAcceptor]の拡張インターフェースです。
+     * @since 26.1.8
+     */
+    interface BlockAcceptor : HolderAcceptor<Block> {
+        @Suppress("DEPRECATION")
+        operator fun Block.unaryPlus() {
+            +this.builtInRegistryHolder()
+        }
+
+        operator fun HTDeferredBlockAndItem<*, *>.unaryPlus() {
+            +this.block
+        }
+    }
+
+    /**
      * [Fluid]向けの[HolderAcceptor]の拡張インターフェースです。
      */
     interface FluidAcceptor : HolderAcceptor<Fluid> {
         @Suppress("DEPRECATION")
         operator fun Fluid.unaryPlus() {
             +this.builtInRegistryHolder()
+        }
+
+        /**
+         * @since 26.1.8
+         */
+        operator fun HTFluidContent.unaryPlus() {
+            +this.sourceHolder
         }
     }
 
@@ -50,36 +73,6 @@ interface HolderAcceptor<T : Any> {
             +this.item
         }
     }
-
-    //    ValueBuilder    //
-
-    /**
-     * 単一の[Holder]のみを保持する[HolderAcceptor]の実装クラスです。
-     */
-    open class ValueBuilder<T : Any> : HolderAcceptor<T> {
-        private var holder: Holder<T> by HTDelegates.onceInitialize()
-
-        override fun Holder<T>.unaryPlus() {
-            check(this.delegate is Holder.Reference<T>) { "Cannot serialize given holder $this" }
-            holder = this
-        }
-
-        fun build(): Holder<T> = holder
-    }
-
-    /**
-     * [Fluid]向けの[ValueBuilder]の拡張クラスです。
-     */
-    class FluidValueBuilder :
-        ValueBuilder<Fluid>(),
-        FluidAcceptor
-
-    /**
-     * [Item]向けの[ValueBuilder]の拡張クラスです。
-     */
-    class ItemValueBuilder :
-        ValueBuilder<Item>(),
-        ItemAcceptor
 
     //    SetBuilder    //
 
@@ -98,6 +91,13 @@ interface HolderAcceptor<T : Any> {
     }
 
     /**
+     * [Block]向けの[SetBuilder]の拡張クラスです。
+     */
+    class BlockSetBuilder :
+        SetBuilder<Block>(),
+        BlockAcceptor
+
+    /**
      * [Fluid]向けの[SetBuilder]の拡張クラスです。
      */
     class FluidSetBuilder :
@@ -112,6 +112,17 @@ interface HolderAcceptor<T : Any> {
         ItemAcceptor
 
     companion object {
+        /**
+         * @since 26.1.8
+         */
+        @JvmStatic
+        inline fun buildBlockSet(builderAction: BlockSetBuilder.() -> Unit): HolderSet<Block> {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return BlockSetBuilder().apply(builderAction).build()
+        }
+
         /**
          * @since 26.1.7
          */

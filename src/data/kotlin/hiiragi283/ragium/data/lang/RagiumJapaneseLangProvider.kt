@@ -96,7 +96,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.OXYGEN, "酸素")
         addFluid(RagiumFluids.CHLORINE, "塩素")
 
-        addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
         addFluid(RagiumFluids.WOOD_TAR, "木タール")
         addFluid(RagiumFluids.COAL_TAR, "石炭タール")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "芳香族化合物")
@@ -247,6 +246,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.HYDROXIDE, "水酸化物")
         addFromKey(RagiumChemicals.WATER, "水")
 
+        addFromKey(RagiumChemicals.CARBONATE, "炭酸塩")
         addFromKey(RagiumChemicals.NITRATE, "硝酸塩")
         addFromKey(RagiumChemicals.NITRIC_ACID, "硝酸")
         addFromKey(RagiumChemicals.HYDROGEN_FLUORIDE, "フッ化水素")
@@ -254,6 +254,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.CRYOLITE, "氷晶石")
 
         addFromKey(RagiumChemicals.SODIUM_HYDROXIDE, "水酸化ナトリウム")
+        addFromKey(RagiumChemicals.SODIUM_CARBONATE, "炭酸ナトリウム")
         addFromKey(RagiumChemicals.SODIUM_CHLORIDE, "塩化ナトリウム")
         addFromKey(RagiumChemicals.ALUMINUM_OXIDE, "酸化アルミニウム")
         addFromKey(RagiumChemicals.SILICON_DIOXIDE, "二酸化ケイ素")
@@ -264,6 +265,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "塩化水素")
 
         addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "硝酸カリウム")
+        addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "炭酸カルシウム")
+        addFromKey(RagiumChemicals.CALCIUM_OXIDE, "酸化カルシウム")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "水素")
 

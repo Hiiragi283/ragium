@@ -67,15 +67,13 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(Tags.Items.FEATHERS).add(RagiumItems.SYNTHETIC_FEATHER)
         builder(Tags.Items.LEATHERS).add(RagiumItems.SYNTHETIC_LEATHER)
         builder(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
+        builder(Tags.Items.SLIME_BALLS).add(RagiumItems.STICKY_BALL)
 
         builder(HTCommonTags.Items.COAL_COKE).add(RagiumItems.COAL_COKE)
         builder(HTCommonTags.Items.PAPER).add(createKey(vanillaId("paper")))
         builder(HTCommonTags.Items.PITCH_COKE).add(RagiumItems.PITCH_COKE)
         builder(HTCommonTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
         builder(HTCommonTags.Items.SILICON).add(RagiumItems.CRUDE_SILICON)
-        builder(HTCommonTags.Items.STICKY_BALLS)
-            .addTag(Tags.Items.SLIME_BALLS)
-            .add(RagiumItems.STICKY_BALL)
 
         builder(RagiumTags.Items.COALS)
             .add(RagiumItems.BAMBOO_CHARCOAL)

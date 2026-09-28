@@ -100,7 +100,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
         addFluid(RagiumFluids.CHLORINE, "Chlorine")
 
-        addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
         addFluid(RagiumFluids.WOOD_TAR, "Wood Tar")
         addFluid(RagiumFluids.COAL_TAR, "Coal Tar")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "Aromatic Compound")
@@ -251,6 +250,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.HYDROXIDE, "Hydroxide")
         addFromKey(RagiumChemicals.WATER, "Water")
 
+        addFromKey(RagiumChemicals.CARBONATE, "Carbonate")
         addFromKey(RagiumChemicals.NITRATE, "Nitrate")
         addFromKey(RagiumChemicals.NITRIC_ACID, "Nitric Acid")
         addFromKey(RagiumChemicals.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
@@ -258,6 +258,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.CRYOLITE, "Cryolite")
 
         addFromKey(RagiumChemicals.SODIUM_HYDROXIDE, "Sodium Hydroxide")
+        addFromKey(RagiumChemicals.SODIUM_CARBONATE, "Sodium Carbonate")
         addFromKey(RagiumChemicals.SODIUM_CHLORIDE, "Sodium Chloride")
         addFromKey(RagiumChemicals.ALUMINUM_OXIDE, "Aluminum Oxide")
         addFromKey(RagiumChemicals.SILICON_DIOXIDE, "Silicon Dioxide")
@@ -268,6 +269,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "Hydrogen chloride")
 
         addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "Potassium Nitrate")
+        addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "Calcium Carbonate")
+        addFromKey(RagiumChemicals.CALCIUM_OXIDE, "Calcium Oxide")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "Hydrogen")
 

@@ -318,9 +318,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             exp = 0.15f
         }
         // 2x NaOH (aq) + CO2 -> Na2CO3 + H2O
-        RagiumRecipeBuilders.reacting {
-            primaryIngredient { +holderSet(RagiumFluids.NAOH_SOLUTION) }
-            secondaryIngredient { +holderSet(RagiumFluids.CARBON_DIOXIDE) }
+        RagiumRecipeBuilders.refining {
+            ingredient { +holderSet(RagiumFluids.NAOH_SOLUTION) }
             fluidResult {
                 +Fluids.WATER
                 amount *= 2
@@ -344,17 +343,22 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
 
+        // Calcite / Dripstone -> CaCO3
+        RagiumRecipeBuilders.crushing {
+            ingredient {
+                items {
+                    +Items.CALCITE
+                    +Items.DRIPSTONE_BLOCK
+                }
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.LIME) }
+        }.save(exporter)
         // CaCO3 -> CaO + CO2
         VanillaRecipeBuilders.smeltingAndBlasting(exporter) {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.CALCIUM_CARBONATE) }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CALCIUM_OXIDE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.LIME) }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.QUICK_LIME) }
             exp = 0.15f
         }
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.CALCIUM_CARBONATE) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CALCIUM_OXIDE) }
-            fluidResult { +RagiumFluids.CARBON_DIOXIDE }
-        }.save(exporter)
 
         // Wood Pulp + NaOH aq -> Paper Pulp
         RagiumRecipeBuilders.bathing {

@@ -29,6 +29,7 @@ class HTItemPredicateBuilder {
         DataComponentMatchers.ANY
     }
 
+    // items
     operator fun HolderSet<Item>.unaryPlus() {
         items = Optional.of(this)
     }
@@ -40,10 +41,12 @@ class HTItemPredicateBuilder {
         +HolderAcceptor.buildItemSet(builderAction)
     }
 
+    // count
     operator fun MinMaxBounds.Ints.unaryPlus() {
         count = this
     }
 
+    // components
     operator fun DataComponentMatchers.unaryPlus() {
         components = this
     }

@@ -143,9 +143,6 @@ data object RagiumFluids {
 
     // C
     @JvmField
-    val CARBON_DIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("carbon_dioxide") { properties = gaseous() }
-
-    @JvmField
     val WOOD_TAR: HTFluidContent.Virtual = REGISTER.registerVirtual("wood_tar") {
         properties = liquid()
     }

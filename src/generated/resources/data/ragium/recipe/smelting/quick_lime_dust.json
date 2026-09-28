@@ -3,8 +3,8 @@
   "category": "misc",
   "cookingtime": 200,
   "experience": 0.15,
-  "ingredient": "#c:dusts/calcium_carbonate",
+  "ingredient": "#c:dusts/lime",
   "result": {
-    "id": "ragium:calcium_oxide_dust"
+    "id": "ragium:quick_lime_dust"
   }
 }

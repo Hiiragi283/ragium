@@ -3,11 +3,13 @@ package hiiragi283.lib.recipe.base
 import hiiragi283.lib.recipe.HTRecipePredicate
 import hiiragi283.lib.recipe.input.HTFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTLocationRecipeInput
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.lib.recipe.input.getItemOrEmpty
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.level.block.state.pattern.BlockInWorld
 import net.neoforged.neoforge.common.util.TriPredicate
 import net.neoforged.neoforge.fluids.FluidInstance
 import java.util.function.BiPredicate
@@ -44,6 +46,13 @@ data object HTRecipePredicates {
      */
     fun interface SingleItem : SingleInput<SingleRecipeInput, ItemInstance> {
         override fun matches(input: SingleRecipeInput): Boolean = test(input.item())
+    }
+
+    /**
+     * @since 26.1.8
+     */
+    fun interface Located : SingleInput<HTLocationRecipeInput, BlockInWorld> {
+        override fun matches(input: HTLocationRecipeInput): Boolean = test(input.blockInWorld)
     }
 
     //    Double Input    //

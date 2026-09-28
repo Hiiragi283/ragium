@@ -57,9 +57,6 @@ data object HTCommonTags {
         @JvmField
         val SILICON: TagKey<Item> = create("silicon")
 
-        @JvmField
-        val STICKY_BALLS: TagKey<Item> = create("sticky_balls")
-
         @JvmStatic
         private fun create(vararg path: String): TagKey<Item> = ItemTags.create(HTConstants.COMMON.toId(*path))
     }

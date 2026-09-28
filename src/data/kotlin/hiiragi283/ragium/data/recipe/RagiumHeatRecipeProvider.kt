@@ -296,11 +296,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
         }.save(exporter)
 
-        // C -> CO2
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.CARBON) }
-            result { +RagiumFluids.CARBON_DIOXIDE }
-        }.save(exporter)
         // S -> SO2
         RagiumRecipeBuilders.melting {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }

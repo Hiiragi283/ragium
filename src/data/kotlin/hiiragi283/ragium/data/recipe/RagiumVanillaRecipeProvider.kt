@@ -55,7 +55,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         VanillaRecipeBuilders.shaped {
             hollow8()
             define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD) }
-            define('B') { +holderSet(HTCommonTags.Items.STICKY_BALLS) }
+            define('B') { +holderSet(Tags.Items.SLIME_BALLS) }
             result {
                 +RagiumItems.PARTICLE_BOARD
                 count = 4
@@ -93,7 +93,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Cement
         VanillaRecipeBuilders.shapeless {
             ingredient { +holderSet(Tags.Items.SANDS) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.CALCIUM_OXIDE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.QUICK_LIME) }
             result {
                 +RagiumItems.CEMENT
                 count = 2
