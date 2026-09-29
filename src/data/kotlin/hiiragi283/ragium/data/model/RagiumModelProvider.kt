@@ -68,19 +68,16 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             yield(RagiumBlocks.ECHO_BLOCK)
             yield(RagiumBlocks.FLUORITE_BLOCK)
             yield(RagiumBlocks.CRYOLITE_BLOCK)
+            yield(RagiumBlocks.GYPSUM)
 
             yield(RagiumBlocks.CREATIVE_BATTERY) // TODO
 
             yield(RagiumBlocks.MACHINE_CASING)
         }.forEach { generators.createTrivialCube(it.getOrThrow()) }
 
-        // Slab
-        generators.createSlab(RagiumBlocks.FLUORITE_SLAB, RagiumBlocks.FLUORITE_BLOCK)
-        generators.createSlab(RagiumBlocks.CRYOLITE_SLAB, RagiumBlocks.CRYOLITE_BLOCK)
-
-        // Stairs
-        generators.createStairs(RagiumBlocks.FLUORITE_STAIRS, RagiumBlocks.FLUORITE_BLOCK)
-        generators.createStairs(RagiumBlocks.CRYOLITE_STAIRS, RagiumBlocks.CRYOLITE_BLOCK)
+        generators.createDecoration(RagiumBlocks.FLUORITE_DECORATION)
+        generators.createDecoration(RagiumBlocks.CRYOLITE_DECORATION)
+        generators.createDecoration(RagiumBlocks.GYPSUM_DECORATION)
 
         // Machine
         val inactiveModels: Map<HTMachineType, Identifier> = HTMachineType.entries
@@ -114,7 +111,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             }
         // Decoration
         for ((machineType: HTMachineType, block: HTSimpleDeferredBlockAndItem) in RagiumBlocks.MACHINE_CASINGS) {
-            generators.createSimple(block.getOrThrow(), ModelTemplates.CUBE_TOP, textureMapping(machineType))
+            generators.createSimple(block, ModelTemplates.CUBE_TOP, textureMapping(machineType))
         }
         // Bus
         generators.createTrivialBlock(RagiumBlocks.FLUID_OUTPUT_BUS.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)

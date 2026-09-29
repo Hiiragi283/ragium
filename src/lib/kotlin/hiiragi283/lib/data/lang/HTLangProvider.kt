@@ -3,6 +3,7 @@ package hiiragi283.lib.data.lang
 import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.lib.advancment.descKey
 import hiiragi283.lib.advancment.titleKey
+import hiiragi283.lib.registry.HTDecorationContent
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTPotionContent
 import hiiragi283.lib.resource.toLanguageKey
@@ -34,6 +35,15 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
 
         @JvmField
         val TIPPED_ARROW_PATTERN = HTLangPatternProvider("Arrow of %s", "%sの矢")
+
+        @JvmField
+        val SLAB_PATTERN = HTLangPatternProvider("%s Slab", "%sのハーフブロック")
+
+        @JvmField
+        val STAIRS_PATTERN = HTLangPatternProvider("%s Stairs", "%sの階段")
+
+        @JvmField
+        val WALL_PATTERN = HTLangPatternProvider("%s Wall", "%sの壁")
     }
 
     fun add(translatable: HTHasTranslationKey, value: String) {
@@ -104,5 +114,17 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
         add("item.minecraft.splash_potion.effect.$name", SPLASH_POTION_PATTERN.translate(langType, value))
         add("item.minecraft.lingering_potion.effect.$name", LINGERING_POTION_PATTERN.translate(langType, value))
         add("item.minecraft.tipped_arrow.effect.$name", TIPPED_ARROW_PATTERN.translate(langType, value))
+    }
+
+    /**
+     * @since 26.1.8
+     */
+    fun addDecoration(content: HTDecorationContent, name: HTLangName) {
+        // Slab
+        add(content.slab, SLAB_PATTERN, name)
+        // Stairs
+        content.stairs?.let { add(it, STAIRS_PATTERN, name) }
+        // Wall
+        content.wall?.let { add(it, WALL_PATTERN, name) }
     }
 }

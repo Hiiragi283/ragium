@@ -55,12 +55,11 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(RagiumTags.Items.SOOTY_IRON_TOOL_MATERIALS)
             .addTag(CommonTagPrefixes.INGOT.itemTagKey(RagiumMaterial.Alloy.SOOTY_IRON))
         // Other
-        builder(ItemTags.SLABS)
-            .add(RagiumBlocks.FLUORITE_SLAB)
-            .add(RagiumBlocks.CRYOLITE_SLAB)
-        builder(ItemTags.STAIRS)
-            .add(RagiumBlocks.FLUORITE_STAIRS)
-            .add(RagiumBlocks.CRYOLITE_STAIRS)
+        for ((_, slab, stairs, wall) in RagiumBlocks.ALL_DECORATIONS) {
+            builder(ItemTags.SLABS).add(slab)
+            stairs?.let { builder(ItemTags.STAIRS).add(it) }
+            wall?.let { builder(ItemTags.WALLS).add(it) }
+        }
 
         builder(ItemTags.PLANKS).add(RagiumItems.PARTICLE_BOARD)
 

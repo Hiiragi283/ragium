@@ -10,6 +10,7 @@ import hiiragi283.lib.collection.flatMapTable
 import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
+import hiiragi283.lib.registry.HTDecorationContent
 import hiiragi283.lib.registry.HTDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDeferredBlockAndItemRegister
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
@@ -37,7 +38,6 @@ import hiiragi283.ragium.common.item.block.HTCreativeTankBlockItem
 import hiiragi283.ragium.common.item.block.HTPotionTankBlockItem
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
-import net.minecraft.resources.ResourceKey
 import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -46,9 +46,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.DropExperienceBlock
-import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.SoundType
-import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
@@ -201,18 +199,10 @@ data object RagiumBlocks {
     )
 
     @JvmField
-    val FLUORITE_SLAB: HTBasicDeferredBlockAndItem<SlabBlock> = REGISTER.registerSimple(
-        "fluorite_slab",
-        copyOf(Blocks.QUARTZ_SLAB),
-        ::SlabBlock
-    )
-
-    @JvmField
-    val FLUORITE_STAIRS: HTBasicDeferredBlockAndItem<StairBlock> = REGISTER.registerSimple(
-        "fluorite_stairs",
-        blockFactory = { key: ResourceKey<Block> ->
-            StairBlock(FLUORITE_BLOCK.defaultState, copyOf(FLUORITE_BLOCK.getOrThrow()).setId(key))
-        }
+    val FLUORITE_DECORATION: HTDecorationContent = HTDecorationContent.create(
+        REGISTER,
+        RagiumMaterial.Gem.FLUORITE.materialName,
+        FLUORITE_BLOCK
     )
 
     // Cryolite
@@ -224,18 +214,33 @@ data object RagiumBlocks {
     )
 
     @JvmField
-    val CRYOLITE_SLAB: HTBasicDeferredBlockAndItem<SlabBlock> = REGISTER.registerSimple(
-        "cryolite_slab",
-        copyOf(Blocks.QUARTZ_SLAB),
-        ::SlabBlock
+    val CRYOLITE_DECORATION: HTDecorationContent = HTDecorationContent.create(
+        REGISTER,
+        RagiumMaterial.Gem.CRYOLITE.materialName,
+        CRYOLITE_BLOCK
+    )
+
+    // Gypsum
+    @JvmField
+    val GYPSUM: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple(
+        "gypsum",
+        copyOf(Blocks.TUFF).mapColor(MapColor.TERRACOTTA_PINK)
+        // itemProp = { it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CRYOLITE) }
     )
 
     @JvmField
-    val CRYOLITE_STAIRS: HTBasicDeferredBlockAndItem<StairBlock> = REGISTER.registerSimple(
-        "cryolite_stairs",
-        blockFactory = { key: ResourceKey<Block> ->
-            StairBlock(CRYOLITE_BLOCK.defaultState, copyOf(CRYOLITE_BLOCK.getOrThrow()).setId(key))
-        }
+    val GYPSUM_DECORATION: HTDecorationContent = HTDecorationContent.create(
+        REGISTER,
+        RagiumMaterial.Mineral.GYPSUM.materialName,
+        GYPSUM
+    )
+
+    // Helper
+    @JvmField
+    val ALL_DECORATIONS: List<HTDecorationContent> = listOf(
+        FLUORITE_DECORATION,
+        CRYOLITE_DECORATION,
+        GYPSUM_DECORATION
     )
 
     //    Machine    //

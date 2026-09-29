@@ -1,6 +1,7 @@
 package hiiragi283.lib.data.model
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.registry.HTDecorationContent
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.HTValueWithId
 import hiiragi283.lib.resource.blockId
@@ -23,6 +24,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
+import net.minecraft.world.level.block.WallBlock
 import net.neoforged.neoforge.client.model.item.DynamicFluidContainerModel
 import java.util.Optional
 
@@ -37,14 +39,27 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
     //    Block    //
 
     /**
+     * @since 26.1.8
+     */
+    fun BlockModelGenerators.plainVariant(
+        block: HTValueWithId<*>,
+        template: ModelTemplate,
+        mapping: TextureMapping
+    ): MultiVariant = BlockModelGenerators.plainVariant(template.createBlock(block, mapping, this.modelOutput))
+
+    /**
      * ブロックJSONを生成します。
      * @param block ブロックのインスタンス
      * @param template 生成するモデルのテンプレート
      * @param mapping テクスチャのマッピング
      * @since 26.1.8
      */
-    fun BlockModelGenerators.createSimple(block: Block, template: ModelTemplate, mapping: TextureMapping) {
-        this.createSimple(block, template.create(block, mapping, this.modelOutput))
+    fun BlockModelGenerators.createSimple(
+        block: HTValueWithId<Block>,
+        template: ModelTemplate,
+        mapping: TextureMapping
+    ) {
+        this.createSimple(block.getOrThrow(), this.plainVariant(block, template, mapping))
     }
 
     /**
@@ -66,12 +81,15 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
     }
 
     /**
-     * ハーフブロックのブロックJSONを生成します。
+     * @since 26.1.8
      */
-    fun BlockModelGenerators.createSlab(block: HTValueWithId<SlabBlock>, fullBlock: HTValueWithId<*>) {
-        val fullBlockId: Identifier = fullBlock.idOrThrow.blockId
+    fun BlockModelGenerators.createDecoration(content: HTDecorationContent) {
+        val fullBlockId: Identifier = content.base.idOrThrow.blockId
         val texture = Material(fullBlockId)
-        this.createSlab(block, fullBlockId, texture, texture, texture)
+
+        this.createSlab(content.slab, fullBlockId, texture, texture, texture)
+        content.stairs?.let { this.createStairs(it, texture, texture, texture) }
+        content.wall?.let { this.createWall(it, texture) }
     }
 
     /**
@@ -95,20 +113,11 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
             BlockModelGenerators.createSlab(
                 slab,
                 BlockModelGenerators.plainVariant(modelId),
-                BlockModelGenerators.plainVariant(ModelTemplates.SLAB_TOP.createBlock(block, mapping, modelOutput)),
+                this.plainVariant(block, ModelTemplates.SLAB_TOP, mapping),
                 BlockModelGenerators.plainVariant(fullModel)
             )
         )
         registerSimpleItemModel(slab, modelId)
-    }
-
-    /**
-     * 階段ブロックのブロックJSONを生成します。
-     */
-    fun BlockModelGenerators.createStairs(block: HTValueWithId<StairBlock>, fullBlock: HTValueWithId<*>) {
-        val fullBlockId: Identifier = fullBlock.idOrThrow.blockId
-        val texture = Material(fullBlockId)
-        this.createStairs(block, texture, texture, texture)
     }
 
     /**
@@ -130,12 +139,32 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
         blockStateOutput.accept(
             BlockModelGenerators.createStairs(
                 stairs,
-                BlockModelGenerators.plainVariant(ModelTemplates.STAIRS_INNER.createBlock(block, mapping, modelOutput)),
+                this.plainVariant(block, ModelTemplates.STAIRS_INNER, mapping),
                 BlockModelGenerators.plainVariant(modelId),
-                BlockModelGenerators.plainVariant(ModelTemplates.STAIRS_OUTER.createBlock(block, mapping, modelOutput))
+                this.plainVariant(block, ModelTemplates.STAIRS_OUTER, mapping)
             )
         )
         registerSimpleItemModel(stairs, modelId)
+    }
+
+    /**
+     * 壁ブロックのブロックJSONを生成します。
+     * @since 26.1.8
+     */
+    fun BlockModelGenerators.createWall(block: HTValueWithId<WallBlock>, wall: Material) {
+        val mapping: TextureMapping = TextureMapping().put(TextureSlot.WALL, wall)
+        this.blockStateOutput.accept(
+            BlockModelGenerators.createWall(
+                block.getOrThrow(),
+                this.plainVariant(block, ModelTemplates.WALL_POST, mapping),
+                this.plainVariant(block, ModelTemplates.WALL_LOW_SIDE, mapping),
+                this.plainVariant(block, ModelTemplates.WALL_TALL_SIDE, mapping)
+            )
+        )
+        this.registerSimpleItemModel(
+            block.getOrThrow(),
+            ModelTemplates.WALL_INVENTORY.createBlock(block, mapping, this.modelOutput)
+        )
     }
 
     /**
@@ -144,7 +173,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      */
     fun BlockModelGenerators.createFluid(fluidBlock: HTValueWithId<Block>) {
         this.createSimple(
-            fluidBlock.getOrThrow(),
+            fluidBlock,
             HTModelTemplates.FLUID_BLOCK,
             TextureMapping.particle(Material(vanillaId(HTConstants.BLOCK, "water_still")))
         )

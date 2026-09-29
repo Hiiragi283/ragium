@@ -8,7 +8,7 @@ import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.data.ExporterDataProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
-import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
+import hiiragi283.lib.registry.HTDecorationContent
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
@@ -18,10 +18,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.level.block.SlabBlock
-import net.minecraft.world.level.block.StairBlock
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import java.util.concurrent.CompletableFuture
 
@@ -79,52 +76,65 @@ abstract class HTRecipeProvider(
         materialTags(nelOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT), material)
 
     /**
-     * @since 26.1.7
+     * @since 26.1.8
      */
-    fun registerSlabRecipes(slab: HTBasicDeferredBlockAndItem<SlabBlock>, base: Ingredient) {
-        // Shaped
+    fun registerDecoration(content: HTDecorationContent) {
+        val (base, slab, stairs, wall) = content
+        // Slab
         VanillaRecipeBuilders.shaped {
             +"AAA"
-            define('A') { +base }
+            define('A') { items { +base } }
             result {
-                +slab
+                +content.slab
                 count = 6
             }
-            group = slab.idOrThrow.path
+            group = content.slab.idOrThrow.path
         }.save(exporter)
-        // Stonecutting
         VanillaRecipeBuilders.stonecutting {
-            ingredient = base
+            ingredient { items { +base } }
             result {
                 +slab
                 count = 2
             }
             group = slab.idOrThrow.path
         }.save(exporter)
-    }
-
-    /**
-     * @since 26.1.7
-     */
-    fun registerStairsRecipes(stairs: HTBasicDeferredBlockAndItem<StairBlock>, base: Ingredient) {
-        // Shaped
-        VanillaRecipeBuilders.shaped {
-            +"A  "
-            +"AA "
-            +"AAA"
-            define('A') { +base }
-            result {
-                +stairs
-                count = 4
-            }
-            group = stairs.idOrThrow.path
-        }.save(exporter)
-        // Stonecutting
-        VanillaRecipeBuilders.stonecutting {
-            ingredient = base
-            result { +stairs }
-            group = stairs.idOrThrow.path
-        }.save(exporter)
+        // Stairs
+        if (stairs != null) {
+            VanillaRecipeBuilders.shaped {
+                +"A  "
+                +"AA "
+                +"AAA"
+                define('A') { items { +base } }
+                result {
+                    +stairs
+                    count = 4
+                }
+                group = stairs.idOrThrow.path
+            }.save(exporter)
+            VanillaRecipeBuilders.stonecutting {
+                ingredient { items { +base } }
+                result { +stairs }
+                group = stairs.idOrThrow.path
+            }.save(exporter)
+        }
+        // Wall
+        if (wall != null) {
+            VanillaRecipeBuilders.shaped {
+                +"AAA"
+                +"AAA"
+                define('A') { items { +base } }
+                result {
+                    +wall
+                    count = 6
+                }
+                group = wall.idOrThrow.path
+            }.save(exporter)
+            VanillaRecipeBuilders.stonecutting {
+                ingredient { items { +base } }
+                result { +wall }
+                group = wall.idOrThrow.path
+            }.save(exporter)
+        }
     }
 
     //    Integration    //

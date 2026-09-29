@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "gypsum_wall",
+  "key": {
+    "A": "ragium:gypsum"
+  },
+  "pattern": [
+    "AAA",
+    "AAA"
+  ],
+  "result": {
+    "count": 6,
+    "id": "ragium:gypsum_wall"
+  }
+}

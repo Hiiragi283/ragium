@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "gypsum_slab",
+  "key": {
+    "A": "ragium:gypsum"
+  },
+  "pattern": [
+    "AAA"
+  ],
+  "result": {
+    "count": 6,
+    "id": "ragium:gypsum_slab"
+  }
+}

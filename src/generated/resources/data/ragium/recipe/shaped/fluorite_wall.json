@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "fluorite_wall",
+  "key": {
+    "A": "ragium:fluorite_block"
+  },
+  "pattern": [
+    "AAA",
+    "AAA"
+  ],
+  "result": {
+    "count": 6,
+    "id": "ragium:fluorite_wall"
+  }
+}

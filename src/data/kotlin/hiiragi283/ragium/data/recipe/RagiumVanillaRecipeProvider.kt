@@ -473,14 +473,10 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private fun material() {
         // XX <-> Storage Block
         gemBlock(RagiumMaterial.Gem.ECHO, RagiumBlocks.ECHO_BLOCK)
-
         gemBlock(RagiumMaterial.Gem.FLUORITE, RagiumBlocks.FLUORITE_BLOCK)
-        registerSlabRecipes(RagiumBlocks.FLUORITE_SLAB, Ingredient.of(RagiumBlocks.FLUORITE_BLOCK))
-        registerStairsRecipes(RagiumBlocks.FLUORITE_STAIRS, Ingredient.of(RagiumBlocks.FLUORITE_BLOCK))
-
         gemBlock(RagiumMaterial.Gem.CRYOLITE, RagiumBlocks.CRYOLITE_BLOCK)
-        registerSlabRecipes(RagiumBlocks.CRYOLITE_SLAB, Ingredient.of(RagiumBlocks.CRYOLITE_BLOCK))
-        registerStairsRecipes(RagiumBlocks.CRYOLITE_STAIRS, Ingredient.of(RagiumBlocks.CRYOLITE_BLOCK))
+
+        RagiumBlocks.ALL_DECORATIONS.forEach(::registerDecoration)
 
         nineToBlock(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT)
