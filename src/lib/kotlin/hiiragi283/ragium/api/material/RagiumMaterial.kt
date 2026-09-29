@@ -77,12 +77,12 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.7
          */
-        BAUXITE("Bauxite", "ボーキサイト"),
+        BAUXITE("Bauxite", "ボーキサイト", RagiumChemicals.ALUMINUM_OXIDE),
 
         /**
          * @since 26.1.8
          */
-        GYPSUM("Gypsum", "石膏"),
+        GYPSUM("Gypsum", "石膏", RagiumChemicals.CALCIUM_SULFATE),
 
         // Ragium
         RAGINITE("Raginite", "ラギナイト")

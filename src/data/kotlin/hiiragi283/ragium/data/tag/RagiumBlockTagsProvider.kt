@@ -38,10 +38,6 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yield(RagiumBlocks.CREATIVE_BATTERY)
         }.forEach(pickaxe::add)
         // Other
-        for ((_, slab, stairs, wall) in RagiumBlocks.ALL_DECORATIONS) {
-            builder(BlockTags.SLABS).add(slab)
-            stairs?.let(builder(BlockTags.STAIRS)::add)
-            wall?.let(builder(BlockTags.WALLS)::add)
-        }
+        RagiumBlocks.ALL_DECORATIONS.forEach { it.appendBlockTags(::builder) }
     }
 }

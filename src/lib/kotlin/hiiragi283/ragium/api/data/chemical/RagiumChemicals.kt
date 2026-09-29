@@ -127,6 +127,9 @@ data object RagiumChemicals {
     @JvmField
     val CALCIUM_OXIDE: ResourceKey<HTChemical> = create("calcium_oxide")
 
+    @JvmField
+    val CALCIUM_SULFATE: ResourceKey<HTChemical> = create("calcium_sulfate")
+
     //    Mixtures    //
 
     @JvmStatic
@@ -304,6 +307,13 @@ data object RagiumChemicals {
             HTCompoundChemical.build(context) {
                 add(RagiumElements.CALCIUM, 1)
                 add(RagiumElements.OXYGEN, 1)
+            }
+        )
+        context.register(
+            CALCIUM_SULFATE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.CALCIUM, 1)
+                add(SULFATE, 1)
             }
         )
     }

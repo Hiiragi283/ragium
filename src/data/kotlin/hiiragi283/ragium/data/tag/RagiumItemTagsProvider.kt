@@ -55,11 +55,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(RagiumTags.Items.SOOTY_IRON_TOOL_MATERIALS)
             .addTag(CommonTagPrefixes.INGOT.itemTagKey(RagiumMaterial.Alloy.SOOTY_IRON))
         // Other
-        for ((_, slab, stairs, wall) in RagiumBlocks.ALL_DECORATIONS) {
-            builder(ItemTags.SLABS).add(slab)
-            stairs?.let { builder(ItemTags.STAIRS).add(it) }
-            wall?.let { builder(ItemTags.WALLS).add(it) }
-        }
+        RagiumBlocks.ALL_DECORATIONS.forEach { it.appendItemTags(::builder) }
 
         builder(ItemTags.PLANKS).add(RagiumItems.PARTICLE_BOARD)
 

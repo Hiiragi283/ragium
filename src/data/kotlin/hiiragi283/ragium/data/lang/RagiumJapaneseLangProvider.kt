@@ -260,6 +260,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "硝酸カリウム")
         addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "炭酸カルシウム")
         addFromKey(RagiumChemicals.CALCIUM_OXIDE, "酸化カルシウム")
+        addFromKey(RagiumChemicals.CALCIUM_SULFATE, "硫酸カルシウム")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "水素")
 
