@@ -1,5 +1,6 @@
 package hiiragi283.lib.recipe.ingredient
 
+import hiiragi283.lib.data.HTDataComponentHelper
 import hiiragi283.lib.registry.isAir
 import hiiragi283.lib.registry.isEmpty
 import net.minecraft.core.TypedInstance
@@ -25,7 +26,7 @@ data object HTIngredientHelper {
     fun unwrap(instance: FluidInstance): FluidStack = when (instance) {
         is FluidStack -> instance
         is FluidStackTemplate -> instance.create()
-        else -> FluidStack(instance.typeHolder(), instance.amount())
+        else -> FluidStack(instance.typeHolder(), instance.amount(), HTDataComponentHelper.createPatch(instance))
     }
 
     /**
@@ -57,7 +58,7 @@ data object HTIngredientHelper {
     fun unwrap(instance: ItemInstance): ItemStack = when (instance) {
         is ItemStack -> instance
         is ItemStackTemplate -> instance.create()
-        else -> ItemStack(instance.typeHolder(), instance.count())
+        else -> ItemStack(instance.typeHolder(), instance.count(), HTDataComponentHelper.createPatch(instance))
     }
 
     /**
