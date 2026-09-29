@@ -6,6 +6,7 @@ import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.ingredient.IngredientBuilder
 import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
+import hiiragi283.lib.registry.HTDecorationContent
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.vanillaId
@@ -41,6 +42,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
         vanilla()
+        decoration()
         machine()
         storage()
         material()
@@ -286,6 +288,88 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
+    //    Decoration    //
+
+    private fun decoration() {
+        RagiumBlocks.ALL_DECORATIONS.forEach(::registerDecoration)
+
+        // Smooth Gypsum
+        VanillaRecipeBuilders.shaped {
+            +"AA"
+            +"AA"
+            define('A') { items { +RagiumBlocks.GYPSUM } }
+            result {
+                +RagiumBlocks.SMOOTH_GYPSUM
+                count = 4
+            }
+        }.save(exporter)
+    }
+
+    private fun registerDecoration(content: HTDecorationContent) {
+        val (base, slab, stairs, wall) = content
+        val stonecutterInput: IngredientBuilder.() -> Unit = {
+            items {
+                +base
+                content.parent()?.base?.let { +it }
+            }
+        }
+        // Slab
+        VanillaRecipeBuilders.shaped {
+            +"AAA"
+            define('A') { items { +base } }
+            result {
+                +content.slab
+                count = 6
+            }
+            group = content.slab.idOrThrow.path
+        }.save(exporter)
+        VanillaRecipeBuilders.stonecutting {
+            ingredient(stonecutterInput)
+            result {
+                +slab
+                count = 2
+            }
+            group = slab.idOrThrow.path
+        }.save(exporter)
+        // Stairs
+        if (stairs != null) {
+            VanillaRecipeBuilders.shaped {
+                +"A  "
+                +"AA "
+                +"AAA"
+                define('A') { items { +base } }
+                result {
+                    +stairs
+                    count = 4
+                }
+                group = stairs.idOrThrow.path
+            }.save(exporter)
+            VanillaRecipeBuilders.stonecutting {
+                ingredient(stonecutterInput)
+                result { +stairs }
+                group = stairs.idOrThrow.path
+            }.save(exporter)
+        }
+        // Wall
+        if (wall != null) {
+            VanillaRecipeBuilders.shaped {
+                +"AAA"
+                +"AAA"
+                define('A') { items { +base } }
+                result {
+                    +wall
+                    count = 6
+                }
+                group = wall.idOrThrow.path
+            }.save(exporter)
+            VanillaRecipeBuilders.stonecutting {
+                ingredient(stonecutterInput)
+                result { +wall }
+                group = wall.idOrThrow.path
+            }.save(exporter)
+        }
+    }
+
     //    Machine    //
 
     private fun machine() {
@@ -475,8 +559,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         gemBlock(RagiumMaterial.Gem.ECHO, RagiumBlocks.ECHO_BLOCK)
         gemBlock(RagiumMaterial.Gem.FLUORITE, RagiumBlocks.FLUORITE_BLOCK)
         gemBlock(RagiumMaterial.Gem.CRYOLITE, RagiumBlocks.CRYOLITE_BLOCK)
-
-        RagiumBlocks.ALL_DECORATIONS.forEach(::registerDecoration)
 
         nineToBlock(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT)

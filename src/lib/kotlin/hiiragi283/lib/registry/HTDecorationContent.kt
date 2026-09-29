@@ -17,7 +17,8 @@ data class HTDecorationContent(
     val base: HTSimpleDeferredBlockAndItem,
     val slab: HTBasicDeferredBlockAndItem<SlabBlock>,
     val stairs: HTBasicDeferredBlockAndItem<StairBlock>?,
-    val wall: HTBasicDeferredBlockAndItem<WallBlock>?
+    val wall: HTBasicDeferredBlockAndItem<WallBlock>?,
+    val parent: () -> HTDecorationContent?
 ) {
     companion object {
         @JvmStatic
@@ -30,7 +31,8 @@ data class HTDecorationContent(
             name: String,
             base: HTSimpleDeferredBlockAndItem,
             hasStairs: Boolean = true,
-            hasWall: Boolean = true
+            hasWall: Boolean = true,
+            parent: () -> HTDecorationContent? = { null }
         ): HTDecorationContent = HTDecorationContent(
             base,
             register.registerSimple(
@@ -52,7 +54,8 @@ data class HTDecorationContent(
                 )
 
                 false -> null
-            }
+            },
+            parent
         )
     }
 

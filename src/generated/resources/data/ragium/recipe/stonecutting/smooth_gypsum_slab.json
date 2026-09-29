@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": [
+    "ragium:smooth_gypsum",
+    "ragium:gypsum"
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:smooth_gypsum_slab"
+  }
+}

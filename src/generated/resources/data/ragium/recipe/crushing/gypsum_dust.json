@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "ragium:gypsum"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:gypsum_dust"
+  },
+  "time": 200
+}

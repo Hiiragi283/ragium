@@ -34,6 +34,9 @@ interface RagiumLangProvider {
         provider.addDecoration(RagiumBlocks.CRYOLITE_DECORATION, RagiumMaterial.Gem.CRYOLITE)
         provider.add(RagiumBlocks.GYPSUM, RagiumMaterial.Mineral.GYPSUM)
         provider.addDecoration(RagiumBlocks.GYPSUM_DECORATION, RagiumMaterial.Mineral.GYPSUM)
+        val smoothGypsum = HTLangName("Smooth Gypsum", "滑らかな石膏")
+        provider.add(RagiumBlocks.SMOOTH_GYPSUM, smoothGypsum)
+        provider.addDecoration(RagiumBlocks.SMOOTH_GYPSUM_DECORATION, smoothGypsum)
 
         val casingPattern = HTLangPatternProvider("Machine Casing (%s)", "機械筐体 (%s)")
         for ((machineType: HTLangName, casing: HTHasTranslationKey) in RagiumBlocks.MACHINE_CASINGS) {

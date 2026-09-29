@@ -1,0 +1,16 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 1000,
+    "id": "ragium:sulfur_trioxide"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "#c:dusts/gypsum"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "ragium:quick_lime_dust"
+  },
+  "time": 800
+}

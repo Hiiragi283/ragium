@@ -69,15 +69,14 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             yield(RagiumBlocks.FLUORITE_BLOCK)
             yield(RagiumBlocks.CRYOLITE_BLOCK)
             yield(RagiumBlocks.GYPSUM)
+            yield(RagiumBlocks.SMOOTH_GYPSUM)
 
             yield(RagiumBlocks.CREATIVE_BATTERY) // TODO
 
             yield(RagiumBlocks.MACHINE_CASING)
         }.forEach { generators.createTrivialCube(it.getOrThrow()) }
 
-        generators.createDecoration(RagiumBlocks.FLUORITE_DECORATION)
-        generators.createDecoration(RagiumBlocks.CRYOLITE_DECORATION)
-        generators.createDecoration(RagiumBlocks.GYPSUM_DECORATION)
+        RagiumBlocks.ALL_DECORATIONS.forEach { generators.createDecoration(it) }
 
         // Machine
         val inactiveModels: Map<HTMachineType, Identifier> = HTMachineType.entries

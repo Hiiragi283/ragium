@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "smooth_gypsum_stairs",
+  "key": {
+    "A": "ragium:smooth_gypsum"
+  },
+  "pattern": [
+    "A  ",
+    "AA ",
+    "AAA"
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:smooth_gypsum_stairs"
+  }
+}
