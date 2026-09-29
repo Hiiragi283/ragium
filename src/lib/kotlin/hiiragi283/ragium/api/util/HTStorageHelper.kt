@@ -12,6 +12,8 @@ import hiiragi283.lib.transfer.energy.HTEnergyHandler
 import hiiragi283.lib.util.fixedFraction
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import net.minecraft.ChatFormatting
+import net.minecraft.core.component.DataComponentGetter
+import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.util.Mth
 import net.minecraft.world.item.Item
@@ -85,7 +87,7 @@ data object HTStorageHelper {
     }
 
     @JvmStatic
-    fun getEnergy(container: ItemStack): Int = container.getOrDefault(RagiumDataComponents.ENERGY, 0)
+    fun getEnergy(container: DataComponentGetter): Int = container.getOrDefault(RagiumDataComponents.ENERGY, 0)
 
     @JvmStatic
     fun updateEnergy(container: ItemStack, newAmount: Int) {
@@ -94,6 +96,14 @@ data object HTStorageHelper {
         } else {
             container.set(RagiumDataComponents.ENERGY, newAmount)
         }
+    }
+
+    /**
+     * @since 26.1.8
+     */
+    @JvmStatic
+    fun updateEnergy(container: DataComponentMap.Builder, newAmount: Int) {
+        container.set(RagiumDataComponents.ENERGY, newAmount.takeIf { it > 0 })
     }
 
     @JvmStatic
@@ -141,7 +151,7 @@ data object HTStorageHelper {
     }
 
     @JvmStatic
-    fun getFluid(container: ItemStack): FluidStack =
+    fun getFluid(container: DataComponentGetter): FluidStack =
         container.getOrDefault(RagiumDataComponents.FLUID, SimpleFluidContent.EMPTY).copy()
 
     @JvmStatic
@@ -151,6 +161,17 @@ data object HTStorageHelper {
         } else {
             container[RagiumDataComponents.FLUID] = SimpleFluidContent.copyOf(newStack)
         }
+    }
+
+    /**
+     * @since 26.1.8
+     */
+    @JvmStatic
+    fun updateFluid(container: DataComponentMap.Builder, newStack: FluidStack) {
+        container.set(
+            RagiumDataComponents.FLUID,
+            newStack.takeUnless(FluidStack::isEmpty)?.let(SimpleFluidContent::copyOf)
+        )
     }
 
     @JvmStatic
@@ -195,8 +216,7 @@ data object HTStorageHelper {
 
     @JvmStatic
     private fun getFluidDurability(container: ItemStack): Double {
-        val bestRatio: Double =
-            HTFluidCapabilities.getSlot(ItemAccess.forStack(container), 0)?.currentFilledLevel?.toDouble() ?: 0.0
+        val bestRatio: Double = HTFluidCapabilities.getSlot(container, 0)?.currentFilledLevel?.toDouble() ?: 0.0
         return 1 - bestRatio
     }
 
