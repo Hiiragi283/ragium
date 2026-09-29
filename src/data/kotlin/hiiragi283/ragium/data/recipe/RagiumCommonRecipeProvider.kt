@@ -690,7 +690,23 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
 
-        // Plastic + Circuit Chip + Gold Nugget -> Electric Circuit
+        // Plastic + Gold Dust -> Circuit Board
+        RagiumRecipeBuilders.alloying {
+            ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
+            extra { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
+            result { +RagiumItems.CIRCUIT_BOARD }
+        }.save(exporter)
+        // Silicon Chip + Circuit Board -> Electric Circuit
+        RagiumRecipeBuilders.assembling {
+            ingredient {
+                items { +RagiumItems.SILICON_CHIP }
+                count = 2
+            }
+            extra { items { +RagiumItems.CIRCUIT_BOARD } }
+            result { +RagiumItems.ELECTRIC_CIRCUIT }
+            recipeId suffix "_with_board"
+        }.save(exporter)
+        // Plastic + Silicon Chip + Gold Nugget -> Electric Circuit
         RagiumRecipeBuilders.assembling {
             ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
             extra {

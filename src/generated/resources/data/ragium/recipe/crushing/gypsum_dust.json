@@ -2,7 +2,10 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "items": "ragium:gypsum"
+    "items": [
+      "ragium:gypsum",
+      "ragium:smooth_gypsum"
+    ]
   },
   "result": {
     "count": 1,
