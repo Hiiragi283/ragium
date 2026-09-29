@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.data.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.util.Mth
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
@@ -159,7 +158,6 @@ data object HTStorageHelper {
         stack: FluidStack,
         consumer: Consumer<Text>,
         context: Item.TooltipContext,
-        player: Player?,
         flag: TooltipFlag,
         isCreative: Boolean
     ) {
@@ -175,7 +173,7 @@ data object HTStorageHelper {
             HTCommonTranslation.STORED_MB.translate(stack, stack.amount)
         }.let(consumer::accept)
         // Default Fluid Tooltips
-        val tooltips: MutableList<Text> = stack.getTooltipLines(context, player, flag)
+        val tooltips: MutableList<Text> = stack.getTooltipLines(context, context.player(), flag)
         tooltips.removeFirst() // remove fluid name
         tooltips.forEach(consumer)
         // Mod Name
