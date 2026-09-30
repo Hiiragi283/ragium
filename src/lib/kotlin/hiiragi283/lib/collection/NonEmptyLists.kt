@@ -19,7 +19,7 @@ fun <E> nelOf(head: E, vararg tail: E): Nel<E> = Nel(head, listOf(*tail))
  * @author Hiiragi Tsubasa
  * @since 26.1.6
  */
-fun <E> E.toNel(): Nel<E> = NonEmptyList(this)
+fun <E> E.nel(): Nel<E> = NonEmptyList(this)
 
 //    Iterable <-> Nel    //
 

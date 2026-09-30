@@ -1,8 +1,9 @@
 package hiiragi283.lib.registry
 
 import hiiragi283.lib.resource.HTValueWithKey
+import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
-import hiiragi283.lib.util.fold
+import hiiragi283.lib.util.toIor
 import net.minecraft.core.TypedInstance
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
@@ -34,7 +35,13 @@ open class HTDeferredHolder<R : Any, out T : R> :
      */
     fun isOf(instance: TypedInstance<R>): Boolean = this.isBound && instance.`is`(this)
 
-    final override fun unwrapWithKey(): Ior<ResourceKey<R>, T> = asOptional().fold({
-        Ior.Left(this.key)
-    }, { Ior.Both(this.key, it) })
+    /**
+     * @since 26.1.8
+     */
+    fun asEither(): Either<String, T> = when {
+        this.isBound -> Either.Right(this.get())
+        else -> Either.Left("Trying to access unbound value: $key")
+    }
+
+    final override fun unwrapWithKey(): Ior<ResourceKey<R>, T> = asOptional().toIor { this.key }
 }

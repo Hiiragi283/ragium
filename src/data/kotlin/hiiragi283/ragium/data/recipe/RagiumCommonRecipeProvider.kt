@@ -8,7 +8,6 @@ import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
@@ -117,7 +116,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.AROMATIC_COMPOUND
                 amount = 250
             }
-            recipeId suffix "_from_coal_tar"
+            recipeId replace RagiumFluids.COAL_TAR.idOrThrow
         }.save(exporter)
     }
 
@@ -150,6 +149,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount = 750
             }
             itemResult { +RagiumItems.TAR }
+            recipeId replace RagiumFluids.CRUDE_OIL.idOrThrow
         }.save(exporter)
 
         // Naphtha -> Fuel + Sulfur
@@ -160,7 +160,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.FUEL
                 amount = 500
             }
-            recipeId suffix "_from_naphtha"
+            recipeId replace RagiumFluids.NAPHTHA.idOrThrow
         }.save(exporter)
         // Naphtha -> Plastic
         RagiumRecipeBuilders.freezing {
@@ -380,11 +380,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +Fluids.WATER
                 amount *= 2
             }
-            val dust: HTSimpleDeferredItem =
-                RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SODIUM_CARBONATE)
-            itemResult { +dust }
-            recipeId replace dust.idOrThrow
-            recipeId suffix "_from_solution"
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SODIUM_CARBONATE) }
+            recipeId replace RagiumFluids.NAOH_SOLUTION.idOrThrow
         }.save(exporter)
         // SiO2 + Na2CO3 -> Glass
         RagiumRecipeBuilders.alloying {
@@ -436,7 +433,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             ingredient { +holderSet(RagiumFluids.ALUMINA_SOLUTION) }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.ALUMINA) }
             fluidResult { +Fluids.WATER }
-            recipeId replace id("alumina_dust_from_solution")
+            recipeId replace RagiumFluids.ALUMINA_SOLUTION.idOrThrow
         }.save(exporter)
         // Alumina Solution + HF aq -> Na3AlF6
         RagiumRecipeBuilders.reacting {
@@ -505,7 +502,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             ingredient { +holderSet(RagiumFluids.SALT_WATER) }
             fluidResult { +Fluids.WATER }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SALT) }
-            recipeId replace id("salt_dust_from_salt_water")
+            recipeId replace RagiumFluids.SALT_WATER.idOrThrow
         }.save(exporter)
 
         // 2x NaCl + H2SO4 -> 2x HCl + Na2SO4
