@@ -93,6 +93,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         addFluid(RagiumFluids.WOOD_TAR, "木タール")
         addFluid(RagiumFluids.COAL_TAR, "石炭タール")
+        addFluid(RagiumFluids.ALCOHOL, "アルコール")
+        addFluid(RagiumFluids.ALDEHYDE, "アルデヒド")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "芳香族化合物")
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")

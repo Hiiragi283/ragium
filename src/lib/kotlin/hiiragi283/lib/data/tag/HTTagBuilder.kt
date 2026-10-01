@@ -37,7 +37,7 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
      * @param id 要素のID
      * @param type このエントリの依存関係
      */
-    private fun add(id: Identifier, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = apply {
+    fun add(id: Identifier, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = apply {
         when (type) {
             HTTagDependType.REQUIRED -> TagEntry.element(id)
             HTTagDependType.OPTIONAL -> TagEntry.optionalElement(id)
@@ -57,7 +57,7 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
      * @param id 子タグのID
      * @param type このエントリの依存関係
      */
-    private fun addTag(id: Identifier, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = apply {
+    fun addTag(id: Identifier, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = apply {
         when (type) {
             HTTagDependType.REQUIRED -> TagEntry.tag(id)
             HTTagDependType.OPTIONAL -> TagEntry.optionalTag(id)

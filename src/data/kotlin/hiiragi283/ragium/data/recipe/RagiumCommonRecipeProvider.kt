@@ -75,7 +75,15 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             time /= 2
         }.save(exporter)
 
-        // Wood Tar -> Alcohol + Aromatic Compound TODO
+        // Wood Tar -> Alcohol + Aromatic Compound
+        RagiumRecipeBuilders.refining {
+            ingredient { +holderSet(RagiumFluids.WOOD_TAR) }
+            fluidResult {
+                +RagiumFluids.ALCOHOL
+                amount = 500
+            }
+            recipeId replace RagiumFluids.WOOD_TAR.idOrThrow
+        }.save(exporter)
     }
 
     private fun coal() {
@@ -228,12 +236,18 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }
 
         // Alcohol -> Aldehyde
+        RagiumRecipeBuilders.refining {
+            ingredient { +holderSet(RagiumTags.Fluids.ALCOHOLS) }
+            fluidResult { +RagiumFluids.ALDEHYDE }
+        }.save(exporter)
         // Aromatic Compound + Aldehyde -> Synthetic Resin
-        // Aromatic Compound + Water -> Synthetic Resin
         RagiumRecipeBuilders.reacting {
             primaryIngredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
-            secondaryIngredient { +waterSet() }
-            fluidResult { +RagiumFluids.SYNTHETIC_RESIN }
+            secondaryIngredient { +holderSet(RagiumTags.Fluids.ALDEHYDES) }
+            fluidResult {
+                +RagiumFluids.SYNTHETIC_RESIN
+                amount *= 2
+            }
         }.save(exporter)
 
         // Synthetic Fiber + Nitrogen -> Carbon Fiber

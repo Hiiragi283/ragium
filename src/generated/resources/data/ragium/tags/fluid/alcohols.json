@@ -1,0 +1,21 @@
+{
+  "values": [
+    {
+      "id": "#c:bio_ethanol",
+      "required": false
+    },
+    {
+      "id": "#c:bioethanol",
+      "required": false
+    },
+    {
+      "id": "#c:ethanol",
+      "required": false
+    },
+    {
+      "id": "#c:methanol",
+      "required": false
+    },
+    "#c:alcohol"
+  ]
+}

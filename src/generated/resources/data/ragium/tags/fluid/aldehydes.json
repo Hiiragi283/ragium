@@ -1,0 +1,13 @@
+{
+  "values": [
+    {
+      "id": "#c:acetaldehyde",
+      "required": false
+    },
+    {
+      "id": "#c:formaldehyde",
+      "required": false
+    },
+    "#c:aldehyde"
+  ]
+}

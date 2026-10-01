@@ -43,6 +43,18 @@ data object RagiumTags {
         @JvmField
         val RESINS: TagKey<Fluid> = create("resins")
 
+        /**
+         * @since 26.1.8
+         */
+        @JvmField
+        val ALCOHOLS: TagKey<Fluid> = create("alcohols")
+
+        /**
+         * @since 26.1.8
+         */
+        @JvmField
+        val ALDEHYDES: TagKey<Fluid> = create("aldehydes")
+
         @JvmStatic
         private fun create(vararg path: String): TagKey<Fluid> = FluidTags.create(RagiumAPI.id(*path))
     }

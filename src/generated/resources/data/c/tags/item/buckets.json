@@ -1,5 +1,7 @@
 {
   "values": [
+    "#c:buckets/alcohol",
+    "#c:buckets/aldehyde",
     "#c:buckets/alumina_solution",
     "#c:buckets/anti_rust_oil",
     "#c:buckets/aromatic_compound",

@@ -130,6 +130,8 @@
     "owner_id"
   ],
   "minecraft:fluid": [
+    "alcohol",
+    "aldehyde",
     "alumina_solution",
     "anti_rust_oil",
     "aromatic_compound",
@@ -212,6 +214,8 @@
   ],
   "minecraft:item": [
     "alclad_plate",
+    "alcohol_bucket",
+    "aldehyde_bucket",
     "alloy_smelter",
     "alumina_dust",
     "alumina_solution_bucket",
@@ -502,6 +506,8 @@
     "potion"
   ],
   "neoforge:fluid_type": [
+    "alcohol",
+    "aldehyde",
     "alumina_solution",
     "anti_rust_oil",
     "aromatic_compound",

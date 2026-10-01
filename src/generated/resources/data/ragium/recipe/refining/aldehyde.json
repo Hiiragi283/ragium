@@ -1,0 +1,12 @@
+{
+  "type": "ragium:refining",
+  "fluid_result": {
+    "amount": 1000,
+    "id": "ragium:aldehyde"
+  },
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#ragium:alcohols"
+  },
+  "time": 200
+}

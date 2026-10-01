@@ -151,6 +151,12 @@ data object RagiumFluids {
     val COAL_TAR: HTFluidContent.Virtual = REGISTER.registerVirtual("coal_tar") { properties = liquid() }
 
     @JvmField
+    val ALCOHOL: HTFluidContent.Virtual = REGISTER.registerVirtual("alcohol") { properties = liquid() }
+
+    @JvmField
+    val ALDEHYDE: HTFluidContent.Virtual = REGISTER.registerVirtual("aldehyde") { properties = liquid() }
+
+    @JvmField
     val AROMATIC_COMPOUND: HTFluidContent.Flowing = REGISTER.registerFlowing("aromatic_compound") {
         properties = liquid()
         typeFactory = { HTExplosiveFluidType(3f, it) }

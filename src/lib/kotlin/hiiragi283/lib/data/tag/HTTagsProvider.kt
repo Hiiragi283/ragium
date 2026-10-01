@@ -2,13 +2,10 @@ package hiiragi283.lib.data.tag
 
 import hiiragi283.lib.collection.SetMultiMapBuilder
 import hiiragi283.lib.registry.RegistryKey
-import hiiragi283.lib.registry.createKey
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
-import net.minecraft.resources.Identifier
-import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
 import java.util.concurrent.CompletableFuture
@@ -83,9 +80,4 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
             builder.addTag(tagKeyIn)
             builder(tagKeyIn)
         }
-
-    /**
-     * @since 26.1.7
-     */
-    protected fun createKey(id: Identifier): ResourceKey<T> = registryKey.createKey(id)
 }

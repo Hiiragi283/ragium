@@ -31,7 +31,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
             HTBlockItemTagsProvider.forItem(builder(item))
         }.run()
         // Material
-        builder(CommonTagPrefixes.GEM, RagiumMaterial.Gem.ECHO).add(createKey(vanillaId("echo_shard")))
+        builder(CommonTagPrefixes.GEM, RagiumMaterial.Gem.ECHO).add(vanillaId("echo_shard"))
 
         RagiumItems.MATERIAL_ITEMS
             .forEach { (part: HTItemPart, material: RagiumMaterial, item: HTSimpleValueWithKey<Item>) ->
@@ -63,15 +63,15 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(Tags.Items.SLIME_BALLS).add(RagiumItems.STICKY_BALL)
 
         builder(HTCommonTags.Items.COAL_COKE).add(RagiumItems.COAL_COKE)
-        builder(HTCommonTags.Items.PAPER).add(createKey(vanillaId("paper")))
+        builder(HTCommonTags.Items.PAPER).add(vanillaId("paper"))
         builder(HTCommonTags.Items.PITCH_COKE).add(RagiumItems.PITCH_COKE)
         builder(HTCommonTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
         builder(HTCommonTags.Items.SILICON).add(RagiumItems.CRUDE_SILICON)
 
         builder(RagiumTags.Items.COALS)
             .add(RagiumItems.BAMBOO_CHARCOAL)
-            .add(createKey(vanillaId("charcoal")))
-            .add(createKey(vanillaId("coal")))
+            .add(vanillaId("charcoal"))
+            .add(vanillaId("coal"))
         builder(RagiumTags.Items.COKES)
             .addTag(HTCommonTags.Items.COAL_COKE)
             .addTag(HTCommonTags.Items.PITCH_COKE)
