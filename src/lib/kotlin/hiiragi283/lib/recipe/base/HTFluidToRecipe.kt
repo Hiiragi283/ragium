@@ -4,6 +4,8 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
+import hiiragi283.lib.recipe.result.HTItemAndFluidStack
+import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -24,6 +26,13 @@ typealias HTFluidToFluidRecipe = HTFluidToRecipe<FluidStack>
  * @since 26.1.5
  */
 typealias HTFluidToItemRecipe = HTFluidToRecipe<ItemStack>
+
+/**
+ * 1種類の液体から1種類のアイテムと液体を作成するレシピを表すインターフェースです。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.8
+ */
+typealias HTFluidToItemAndFluidRecipe = HTFluidToRecipe<HTItemAndFluidStack>
 
 /**
  * 1種類の液体から1種類の完成品を作成するレシピを表すインターフェースです。
@@ -99,6 +108,43 @@ interface HTFluidToRecipe<OUTPUT : Any> :
         override fun test(input: FluidInstance): Boolean = ingredient.test(input)
 
         override fun apply(input: FluidInstance): FluidStack = result.create()
+
+        override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
+    }
+
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.8
+     */
+    open class BasicItemAndFluid(
+        ingredient: HTFluidIngredient,
+        result: HTItemOrFluidResult,
+        progressData: HTProgressData
+    ) : HTBasicSingleRecipe<HTSingleFluidRecipeInput, HTFluidIngredient, HTItemOrFluidResult>(
+        ingredient,
+        result,
+        progressData
+    ),
+        HTFluidToRecipe<HTItemAndFluidStack> {
+        companion object {
+            @JvmStatic
+            fun <RECIPE : BasicItemAndFluid> codec(
+                factory: Factory<HTFluidIngredient, HTItemOrFluidResult, RECIPE>
+            ): MapCodec<RECIPE> = codec(HTFluidIngredient.CODEC, HTItemOrFluidResult.CODEC, factory)
+
+            @JvmStatic
+            fun <RECIPE : BasicItemAndFluid> streamCodec(
+                factory: Factory<HTFluidIngredient, HTItemOrFluidResult, RECIPE>
+            ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> =
+                streamCodec(HTFluidIngredient.STREAM_CODEC, HTItemOrFluidResult.STREAM_CODEC, factory)
+
+            @JvmField
+            val SIMPLE_CODEC: MapCodec<BasicItemAndFluid> = codec(::BasicItemAndFluid)
+        }
+
+        override fun test(input: FluidInstance): Boolean = ingredient.test(input)
+
+        override fun apply(input: FluidInstance): HTItemAndFluidStack = result.create()
 
         override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
     }

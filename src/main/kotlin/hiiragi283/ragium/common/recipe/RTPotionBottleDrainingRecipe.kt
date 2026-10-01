@@ -6,7 +6,7 @@ import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
-import hiiragi283.lib.recipe.result.HTItemAndFluidResult
+import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -26,7 +26,7 @@ data class RTPotionBottleDrainingRecipe(val bottleType: HTBottleType, override v
     override fun test(input: ItemInstance): Boolean =
         bottleType.filledItem.isOf(input) && HTPotionHelper.hasAnyEffect(input)
 
-    override fun apply(input: ItemInstance): HTItemAndFluidResult = HTItemAndFluidResult(
+    override fun apply(input: ItemInstance): HTItemAndFluidStack = HTItemAndFluidStack(
         bottleType.emptyItem.toStack(),
         HTPotionHelper.createFluid(input, HTPotionHelper.BOTTLE_AMOUNT) ?: FluidStack.EMPTY
     )

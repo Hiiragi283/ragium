@@ -38,6 +38,19 @@ open class HTBasicSingleRecipe<INPUT : RecipeInput, ING : HTIngredient<*, *>, RE
         }
 
         @JvmStatic
+        fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, RECIPE : HTBasicSingleRecipe<*, ING, RES>> codec(
+            ingredient: Codec<ING>,
+            result: MapCodec<RES>,
+            factory: Factory<ING, RES, RECIPE>
+        ): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
+            instance.group(
+                ingredient.fieldOf(HTConstants.INGREDIENT).forGetter { it.ingredient },
+                result.forGetter { it.result },
+                HTProgressData.CODEC.forGetter { it.progressData }
+            ).apply(instance, factory::create)
+        }
+
+        @JvmStatic
         fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, RECIPE : HTBasicSingleRecipe<*, ING, RES>> streamCodec(
             ingredient: StreamCodec<in RegistryFriendlyByteBuf, ING>,
             result: StreamCodec<in RegistryFriendlyByteBuf, RES>,

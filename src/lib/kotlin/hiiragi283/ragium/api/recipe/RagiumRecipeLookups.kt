@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.base.HTFluidToDoubleFluidRecipe
+import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
@@ -65,7 +66,7 @@ data object RagiumRecipeLookups {
     val PYROLYZING: HTCompoundRecipeLookup<HTItemToItemAndFluidRecipe> = create(RagiumConstants.PYROLYZING)
 
     @JvmField
-    val REFINING: HTRecipeLookup<RTRefiningRecipe> = create(RagiumRecipeTypes.REFINING)
+    val REFINING: HTCompoundRecipeLookup<HTFluidToItemAndFluidRecipe> = create(RagiumConstants.REFINING)
 
     // Chemical
     @JvmField

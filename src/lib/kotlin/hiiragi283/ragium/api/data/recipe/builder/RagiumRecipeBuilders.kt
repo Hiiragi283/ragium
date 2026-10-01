@@ -3,6 +3,7 @@
 package hiiragi283.ragium.api.data.recipe.builder
 
 import hiiragi283.lib.data.recipe.builder.HTFluidToDoubleFluidRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTFluidToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTFluidToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
@@ -28,6 +29,7 @@ import hiiragi283.ragium.api.recipe.RTMeltingRecipe
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
+import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -141,11 +143,13 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun refining(builderAction: RTRefiningRecipeBuilder.() -> Unit): RTRefiningRecipeBuilder {
+    inline fun refining(
+        builderAction: HTFluidToItemAndFluidRecipeBuilder<RTRefiningRecipe>.() -> Unit
+    ): HTFluidToItemAndFluidRecipeBuilder<RTRefiningRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTRefiningRecipeBuilder().apply(builderAction)
+        return HTFluidToItemAndFluidRecipeBuilder(RagiumConstants.REFINING, ::RTRefiningRecipe).apply(builderAction)
     }
 
     // Chemical
