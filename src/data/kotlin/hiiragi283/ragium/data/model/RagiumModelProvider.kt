@@ -92,19 +92,20 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         RagiumBlocks.MACHINES
             .entries
             .forEach { (machineType: HTMachineType, blockItems: List<HTSimpleDeferredBlockAndItem>) ->
-                val inactiveModel: Identifier = inactiveModels[machineType]!!
                 for (blockItem: HTSimpleDeferredBlockAndItem in blockItems) {
+                    val (inactive: Identifier, active: Identifier) = when (blockItem) {
+                        RagiumBlocks.FREEZER -> {
+                            RagiumAPI.id(HTConstants.BLOCK, "machine", "cryo") to blockItem.idOrThrow.blockId
+                        }
+
+                        else -> inactiveModels[machineType]!! to machineModel(generators, machineType, blockItem)
+                    }
                     generators.blockStateOutput.accept(
                         MultiVariantGenerator.dispatch(blockItem.getOrThrow())
                             .with(
                                 PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
-                                    .select(false, BlockModelGenerators.plainVariant(inactiveModel))
-                                    .select(
-                                        true,
-                                        BlockModelGenerators.plainVariant(
-                                            machineModel(generators, machineType, blockItem)
-                                        )
-                                    )
+                                    .select(false, BlockModelGenerators.plainVariant(inactive))
+                                    .select(true, BlockModelGenerators.plainVariant(active))
                             ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
                     )
                 }

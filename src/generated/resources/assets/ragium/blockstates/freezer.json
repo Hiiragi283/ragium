@@ -1,7 +1,7 @@
 {
   "variants": {
     "facing=east,is_active=false": {
-      "model": "ragium:block/machine/heat",
+      "model": "ragium:block/machine/cryo",
       "y": 90
     },
     "facing=east,is_active=true": {
@@ -9,13 +9,13 @@
       "y": 90
     },
     "facing=north,is_active=false": {
-      "model": "ragium:block/machine/heat"
+      "model": "ragium:block/machine/cryo"
     },
     "facing=north,is_active=true": {
       "model": "ragium:block/freezer"
     },
     "facing=south,is_active=false": {
-      "model": "ragium:block/machine/heat",
+      "model": "ragium:block/machine/cryo",
       "y": 180
     },
     "facing=south,is_active=true": {
@@ -23,7 +23,7 @@
       "y": 180
     },
     "facing=west,is_active=false": {
-      "model": "ragium:block/machine/heat",
+      "model": "ragium:block/machine/cryo",
       "y": 270
     },
     "facing=west,is_active=true": {
