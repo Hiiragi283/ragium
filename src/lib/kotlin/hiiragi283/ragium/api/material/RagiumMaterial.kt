@@ -118,6 +118,11 @@ sealed interface RagiumMaterial :
         ALUMINA("Alumina", "アルミナ", RagiumChemicals.ALUMINUM_OXIDE),
 
         /**
+         * @since 26.1.8
+         */
+        ALUMINUM_FLUORIDE("Aluminum Fluoride", "フッ化アルミニウム", RagiumChemicals.ALUMINUM_FLUORIDE),
+
+        /**
          * @since 26.1.7
          */
         SILICON("Silicon", "シリコン", RagiumChemicals.SILICON),

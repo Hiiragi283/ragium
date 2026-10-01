@@ -27,7 +27,6 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient
 import java.util.concurrent.CompletableFuture
@@ -403,7 +402,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         RagiumRecipeBuilders.refining {
             ingredient { +holderSet(RagiumFluids.NAOH_SOLUTION) }
             fluidResult {
-                +Fluids.WATER
+                water()
                 amount *= 2
             }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SODIUM_CARBONATE) }
@@ -445,7 +444,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun aluminum() {
-        // Bauxite + NaOH aq -> Alumina Solution
+        // Bauxite + NaOH aq -> Al(OH)3 (aq)
         RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.BAUXITE) }
             fluidIngredient {
@@ -454,21 +453,34 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             result { +RagiumFluids.ALUMINA_SOLUTION }
         }.save(exporter)
-        // Alumina Solution -> Al2O3 + Water
+        // Al(OH)3 (aq) -> Al2O3 + Water
         RagiumRecipeBuilders.refining {
             ingredient { +holderSet(RagiumFluids.ALUMINA_SOLUTION) }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.ALUMINA) }
-            fluidResult { +Fluids.WATER }
+            fluidResult { water() }
             recipeId replace RagiumFluids.ALUMINA_SOLUTION.idOrThrow
         }.save(exporter)
-        // Alumina Solution + HF aq -> Na3AlF6
+        // Al(OH)3 (aq) + HF (aq) -> AlF3 (aq)
         RagiumRecipeBuilders.reacting {
             primaryIngredient { +holderSet(RagiumFluids.ALUMINA_SOLUTION) }
             secondaryIngredient {
                 +holderSet(RagiumFluids.HYDROFLUORIC_ACID)
-                amount *= 6
+                amount *= 3
             }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CRYOLITE) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.ALUMINUM_FLUORIDE) }
+            fluidResult { water() }
+        }.save(exporter)
+        // 2x AlF3 + 3x Na2CO3 -> Na3AlF6 + 3x CO2
+        RagiumRecipeBuilders.alloying {
+            ingredient {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.ALUMINUM_FLUORIDE)
+                count = 2
+            }
+            extra {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SODIUM_CARBONATE)
+                count = 3
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.CRYOLITE) }
         }.save(exporter)
         // Al2O3 + Cokes + Na3AlF6 -> Al
         RagiumRecipeBuilders.alloying {
@@ -594,7 +606,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         // NaCl(aq) -> H2O + NaCl
         RagiumRecipeBuilders.refining {
             ingredient { +holderSet(RagiumFluids.SALT_WATER) }
-            fluidResult { +Fluids.WATER }
+            fluidResult { water() }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SALT) }
             recipeId replace RagiumFluids.SALT_WATER.idOrThrow
         }.save(exporter)

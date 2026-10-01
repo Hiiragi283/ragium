@@ -260,6 +260,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.SODIUM_CARBONATE, "Sodium Carbonate")
         addFromKey(RagiumChemicals.SODIUM_CHLORIDE, "Sodium Chloride")
         addFromKey(RagiumChemicals.ALUMINUM_OXIDE, "Aluminum Oxide")
+        addFromKey(RagiumChemicals.ALUMINUM_FLUORIDE, "Aluminum Fluoride")
         addFromKey(RagiumChemicals.SILICON_DIOXIDE, "Silicon Dioxide")
         addFromKey(RagiumChemicals.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFromKey(RagiumChemicals.SULFUR_TRIOXIDE, "Sulfur Trioxide")

@@ -7,7 +7,6 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.level.biome.Biomes
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
@@ -44,14 +43,14 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         RagiumRecipeBuilders.resourceExtracting {
             biomes { +holderSet(Tags.Biomes.IS_RIVER) }
             result {
-                +Fluids.WATER
+                water()
                 amount *= 2
             }
             recipeId suffix "_at_river"
         }.save(exporter)
         RagiumRecipeBuilders.resourceExtracting {
             biomes { +holderSet(Tags.Biomes.IS_WET) }
-            result { +Fluids.WATER }
+            result { water() }
             recipeId suffix "_at_wet_biomes"
         }.save(exporter)
 
@@ -59,7 +58,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         RagiumRecipeBuilders.resourceExtracting {
             biomes { +holderSet(Tags.Biomes.IS_NETHER) }
             result {
-                +Fluids.LAVA
+                lava()
                 amount /= 4
             }
             recipeId suffix "_at_nether"

@@ -220,6 +220,7 @@
     "alumina_dust",
     "alumina_solution_bucket",
     "aluminum_block",
+    "aluminum_fluoride_dust",
     "aluminum_ingot",
     "aluminum_nugget",
     "amethyst_dust",
@@ -564,6 +565,7 @@
   ],
   "ragium:chemical": [
     "aluminum",
+    "aluminum_fluoride",
     "aluminum_oxide",
     "calcium_carbonate",
     "calcium_oxide",

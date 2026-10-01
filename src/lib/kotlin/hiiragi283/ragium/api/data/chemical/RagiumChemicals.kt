@@ -100,6 +100,9 @@ data object RagiumChemicals {
     val ALUMINUM_OXIDE: ResourceKey<HTChemical> = create("aluminum_oxide")
 
     @JvmField
+    val ALUMINUM_FLUORIDE: ResourceKey<HTChemical> = create("aluminum_fluoride")
+
+    @JvmField
     val SILICON_DIOXIDE: ResourceKey<HTChemical> = create("silicon_dioxide")
 
     @JvmField
@@ -243,6 +246,13 @@ data object RagiumChemicals {
             HTCompoundChemical.build(context) {
                 add(RagiumElements.ALUMINUM, 2)
                 add(RagiumElements.OXYGEN, 3)
+            }
+        )
+        context.register(
+            ALUMINUM_FLUORIDE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.ALUMINUM, 1)
+                add(RagiumElements.FLUORINE, 3)
             }
         )
         context.register(

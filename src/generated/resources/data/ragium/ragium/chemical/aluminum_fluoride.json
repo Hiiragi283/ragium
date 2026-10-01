@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compound",
+  "composition": [
+    {
+      "element": "ragium:aluminum"
+    },
+    {
+      "element": "ragium:fluorine",
+      "weight": 3
+    }
+  ]
+}

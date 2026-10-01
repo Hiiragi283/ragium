@@ -256,6 +256,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.SODIUM_CARBONATE, "炭酸ナトリウム")
         addFromKey(RagiumChemicals.SODIUM_CHLORIDE, "塩化ナトリウム")
         addFromKey(RagiumChemicals.ALUMINUM_OXIDE, "酸化アルミニウム")
+        addFromKey(RagiumChemicals.ALUMINUM_FLUORIDE, "フッ化アルミニウム")
         addFromKey(RagiumChemicals.SILICON_DIOXIDE, "二酸化ケイ素")
         addFromKey(RagiumChemicals.SULFUR_DIOXIDE, "二酸化硫黄")
         addFromKey(RagiumChemicals.SULFUR_TRIOXIDE, "三酸化硫黄")
