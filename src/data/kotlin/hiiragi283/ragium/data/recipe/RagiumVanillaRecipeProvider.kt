@@ -63,17 +63,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 count = 4
             }
         }.save(exporter)
-        // Synthetic
-        listOf(
-            RagiumItems.SYNTHETIC_FEATHER,
-            RagiumItems.SYNTHETIC_FIBER,
-            RagiumItems.SYNTHETIC_LEATHER
-        ).forEach {
-            VanillaRecipeBuilders.stonecutting {
-                ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
-                result { +it }
-            }.save(exporter)
-        }
         // Splash Bottle
         VanillaRecipeBuilders.shapeless {
             ingredient { +holderSet(Tags.Items.GUNPOWDERS) }

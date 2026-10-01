@@ -185,6 +185,9 @@ data object RagiumFluids {
     val ANTI_RUST_OIL: HTFluidContent.Virtual = REGISTER.registerVirtual("anti_rust_oil") { properties = liquid() }
 
     @JvmField
+    val MOLTEN_PLASTIC: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_plastic") { properties = molten() }
+
+    @JvmField
     val SYNTHETIC_RESIN: HTFluidContent.Virtual = REGISTER.registerVirtual("synthetic_resin") { properties = liquid() }
 
     // N

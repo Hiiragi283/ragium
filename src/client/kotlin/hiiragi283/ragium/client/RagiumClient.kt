@@ -166,6 +166,10 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0xff9933))
         }
+        register.register(RagiumFluids.MOLTEN_PLASTIC) {
+            molten()
+            colorTint(Color(0xccccdd))
+        }
         register.register(RagiumFluids.SYNTHETIC_RESIN) {
             molten()
             colorTint(Color(0xff6633))

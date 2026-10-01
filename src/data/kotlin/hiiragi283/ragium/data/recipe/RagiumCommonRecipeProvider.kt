@@ -121,6 +121,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun oilRefining() {
+        plastic()
+
         // Soul Sand -> Sand + Crude Oil
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { items { +Items.SOUL_SAND } }
@@ -162,39 +164,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             recipeId replace RagiumFluids.NAPHTHA.idOrThrow
         }.save(exporter)
-        // Naphtha -> Plastic
-        RagiumRecipeBuilders.freezing {
-            ingredient {
-                +holderSet(RagiumFluids.NAPHTHA)
-                amount /= 2
-            }
-            result { +RagiumItems.PLASTIC_PLATE }
-        }.save(exporter)
-        RagiumRecipeBuilders.reacting {
-            primaryIngredient {
-                +holderSet(RagiumFluids.NAPHTHA)
-                amount /= 2
-            }
-            secondaryIngredient {
-                +holderSet(RagiumFluids.OXYGEN)
-                amount /= 4
-            }
-            itemResult {
-                +RagiumItems.PLASTIC_PLATE
-                count = 2
-            }
-        }.save(exporter)
-        // Synthetic Fiber + Nitrogen -> Carbon Fiber
-        // Carbon Fiber + Resin -> CFRP Plate
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { items { +RagiumItems.CARBON_FIBER } }
-            fluidIngredient {
-                +holderSet(RagiumTags.Fluids.RESINS)
-                amount /= 4
-            }
-            result { +RagiumItems.CFRP_PLATE }
-        }.save(exporter)
-
         // Naphtha + Redstone -> Anti-rust Oil
         RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
@@ -219,22 +188,64 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             recipeId suffix "_from_tar"
         }.save(exporter)
+    }
 
+    private fun plastic() {
+        // Naphtha + O2 -> Molten Plastic
+        RagiumRecipeBuilders.reacting {
+            primaryIngredient {
+                +holderSet(RagiumFluids.NAPHTHA)
+                amount /= 2
+            }
+            secondaryIngredient {
+                +holderSet(RagiumFluids.OXYGEN)
+                amount /= 4
+            }
+            fluidResult {
+                +RagiumFluids.MOLTEN_PLASTIC
+                amount = 180
+            }
+        }.save(exporter)
+        // Molten Plastic -> Plastic
+        RagiumRecipeBuilders.freezing {
+            ingredient {
+                +holderSet(RagiumFluids.MOLTEN_PLASTIC)
+                amount = 90
+            }
+            result { +RagiumItems.PLASTIC_PLATE }
+        }.save(exporter)
+
+        // Plastic -> Synthetic XX
+        listOf(
+            RagiumItems.SYNTHETIC_FEATHER,
+            RagiumItems.SYNTHETIC_FIBER,
+            RagiumItems.SYNTHETIC_LEATHER
+        ).forEach {
+            VanillaRecipeBuilders.stonecutting {
+                ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
+                result { +it }
+            }.save(exporter)
+        }
+
+        // Alcohol -> Aldehyde
+        // Aromatic Compound + Aldehyde -> Synthetic Resin
         // Aromatic Compound + Water -> Synthetic Resin
         RagiumRecipeBuilders.reacting {
             primaryIngredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
             secondaryIngredient { +waterSet() }
             fluidResult { +RagiumFluids.SYNTHETIC_RESIN }
         }.save(exporter)
-        // Aluminum + ??? -> Black Steel
+
+        // Synthetic Fiber + Nitrogen -> Carbon Fiber
+        // Carbon Fiber + Resin -> CFRP Plate
         RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.ALUMINUM) }
-            /*fluidIngredient {
-                +holderSet(RagiumFluids.COLORED_RESINS.black)
+            itemIngredient { items { +RagiumItems.CARBON_FIBER } }
+            fluidIngredient {
+                +holderSet(RagiumTags.Fluids.RESINS)
                 amount /= 4
-            }*/
-            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
-        }
+            }
+            result { +RagiumItems.CFRP_PLATE }
+        }.save(exporter)
     }
 
     //    Chemical    //
