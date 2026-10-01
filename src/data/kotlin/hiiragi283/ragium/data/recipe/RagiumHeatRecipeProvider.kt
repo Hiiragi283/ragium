@@ -127,11 +127,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             ingredient { +holderSet(RagiumFluids.HONEY) }
             result { +Items.HONEY_BLOCK }
         }.save(exporter)
-        // Glass
-        RagiumRecipeBuilders.freezing {
-            ingredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
-            result { +Items.GLASS }
-        }.save(exporter)
 
         // Sticky Ball
         RagiumRecipeBuilders.freezing {
@@ -243,34 +238,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 recipeId prefix "${amplifier}x_"
             }.save(exporter)
         }
-        // Molten Glass
-        RagiumRecipeBuilders.melting {
-            ingredient {
-                +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP, CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Other.GLASS))
-            }
-            result { +RagiumFluids.MOLTEN_GLASS }
-            recipeId suffix "_from_block"
-        }.save(exporter)
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.GLASS_PANES) }
-            result {
-                +RagiumFluids.MOLTEN_GLASS
-                amount = 375
-            }
-            recipeId suffix "_from_pane"
-        }.save(exporter)
-        RagiumRecipeBuilders.melting {
-            ingredient {
-                +holderSet(Tags.Items.GLASS_PANES)
-                count = 8
-            }
-            result {
-                +RagiumFluids.MOLTEN_GLASS
-                amount *= 3
-            }
-            time *= 8
-            recipeId suffix "_from_panes"
-        }.save(exporter)
         // Molten Redstone
         RagiumRecipeBuilders.melting {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
@@ -294,17 +261,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +RagiumFluids.MOLTEN_ENDER
                 amount = 90
             }
-        }.save(exporter)
-
-        // S -> SO2
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
-            result { +RagiumFluids.SULFUR_DIOXIDE }
-        }.save(exporter)
-        // Blaze Powder -> SO3
-        RagiumRecipeBuilders.melting {
-            ingredient { items { +Items.BLAZE_POWDER } }
-            result { +RagiumFluids.SULFUR_TRIOXIDE }
         }.save(exporter)
     }
 

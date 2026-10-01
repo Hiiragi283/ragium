@@ -55,8 +55,6 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(RagiumTags.Items.SOOTY_IRON_TOOL_MATERIALS)
             .addTag(CommonTagPrefixes.INGOT.itemTagKey(RagiumMaterial.Alloy.SOOTY_IRON))
         // Other
-        RagiumBlocks.ALL_DECORATIONS.forEach { it.appendItemTags(::builder) }
-
         builder(ItemTags.PLANKS).add(RagiumItems.PARTICLE_BOARD)
 
         builder(Tags.Items.FEATHERS).add(RagiumItems.SYNTHETIC_FEATHER)

@@ -18,7 +18,7 @@ data object RagiumTags {
      * @author Hiiragi Tsubasa
      * @since 26.1.5
      */
-    data object BlockItem {
+    data object BlockItems {
         @JvmField
         val QUARTZ_BLOCKS: BlockItemTag = create("quartz_blocks")
 

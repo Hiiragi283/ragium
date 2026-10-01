@@ -242,7 +242,7 @@ data object RagiumClient : HTClientMod() {
         ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
             if (!stack.`is`(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)) return@registerAppender
             val view: HTFluidView = HTFluidCapabilities.getSlot(stack, 0) ?: return@registerAppender
-            val isCreative: Boolean = stack.`is`(RagiumTags.BlockItem.STORAGES_CREATIVE.item)
+            val isCreative: Boolean = stack.`is`(RagiumTags.BlockItems.STORAGES_CREATIVE.item)
             // Fluid Name
             val resource: FluidResource = view.resource
             when {

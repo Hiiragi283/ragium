@@ -109,6 +109,11 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
                 }
             }
         // Decoration
+        generators.createGlassBlocks(
+            RagiumBlocks.QUARTZ_GLASS.getOrThrow(),
+            RagiumBlocks.QUARTZ_GLASS_PANE.getOrThrow()
+        )
+
         for ((machineType: HTMachineType, block: HTSimpleDeferredBlockAndItem) in RagiumBlocks.MACHINE_CASINGS) {
             generators.createSimple(block, ModelTemplates.CUBE_TOP, textureMapping(machineType))
         }

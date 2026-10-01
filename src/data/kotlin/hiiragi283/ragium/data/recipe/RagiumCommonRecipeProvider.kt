@@ -248,6 +248,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
         sodium()
         aluminum()
+        silica()
         sulfur()
         chlorine()
 
@@ -478,7 +479,70 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
     }
 
+    private fun silica() {
+        // Glass -> Molten Glass
+        RagiumRecipeBuilders.melting {
+            ingredient {
+                +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP, CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Other.GLASS))
+            }
+            result { +RagiumFluids.MOLTEN_GLASS }
+            recipeId suffix "_from_block"
+        }.save(exporter)
+        RagiumRecipeBuilders.melting {
+            ingredient { +holderSet(Tags.Items.GLASS_PANES) }
+            result {
+                +RagiumFluids.MOLTEN_GLASS
+                amount = 375
+            }
+            recipeId suffix "_from_pane"
+        }.save(exporter)
+        RagiumRecipeBuilders.melting {
+            ingredient {
+                +holderSet(Tags.Items.GLASS_PANES)
+                count = 8
+            }
+            result {
+                +RagiumFluids.MOLTEN_GLASS
+                amount *= 3
+            }
+            time *= 8
+            recipeId suffix "_from_panes"
+        }.save(exporter)
+        // Molten Glass -> Glass
+        RagiumRecipeBuilders.freezing {
+            ingredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
+            result { +Items.GLASS }
+        }.save(exporter)
+        // SiO2 + Sand -> Quartz Glass
+        RagiumRecipeBuilders.alloying {
+            ingredient { +dustOrGem(RagiumMaterial.Gem.QUARTZ) }
+            extra { +holderSet(Tags.Items.SANDS) }
+            result { +RagiumBlocks.QUARTZ_GLASS }
+            recipeId suffix "_from_quartz"
+        }.save(exporter)
+        RagiumRecipeBuilders.alloying {
+            ingredient {
+                +dustOrGem(RagiumMaterial.Gem.AMETHYST)
+                count = 4
+            }
+            extra { +holderSet(Tags.Items.SANDS) }
+            result { +RagiumBlocks.QUARTZ_GLASS }
+            recipeId suffix "_from_amethyst"
+        }.save(exporter)
+        RagiumRecipeBuilders.alloying {
+            ingredient { items { +Items.AMETHYST_BLOCK } }
+            extra { +holderSet(Tags.Items.SANDS) }
+            result { +RagiumBlocks.QUARTZ_GLASS }
+            recipeId suffix "_from_amethyst_block"
+        }.save(exporter)
+    }
+
     private fun sulfur() {
+        // S -> SO2
+        RagiumRecipeBuilders.pyrolyzing {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
+            fluidResult { +RagiumFluids.SULFUR_DIOXIDE }
+        }.save(exporter)
         // SO2 + 1/2 O2 -> SO3
         RagiumRecipeBuilders.reacting {
             primaryIngredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
@@ -486,6 +550,11 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(RagiumFluids.OXYGEN)
                 amount /= 2
             }
+            fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
+        }.save(exporter)
+        // Blaze Powder -> SO3
+        RagiumRecipeBuilders.pyrolyzing {
+            ingredient { items { +Items.BLAZE_POWDER } }
             fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
         }.save(exporter)
         // SO3 + H2O -> H2SO4
@@ -631,7 +700,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             recipeId suffix "_from_quartz"
         }.save(exporter)
         RagiumRecipeBuilders.alloying {
-            ingredient { +holderSet(RagiumTags.BlockItem.QUARTZ_BLOCKS.item) }
+            ingredient { +holderSet(RagiumTags.BlockItems.QUARTZ_BLOCKS.item) }
             extra {
                 +dustOrCoke
                 count = 4

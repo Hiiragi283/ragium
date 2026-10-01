@@ -4,6 +4,7 @@ import hiiragi283.lib.resource.BlockItemKey
 import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 
@@ -46,6 +47,12 @@ abstract class HTBlockItemTagsProvider(private val factory: (BlockItemTag) -> HT
     abstract fun run()
 
     protected fun builder(tagKey: BlockItemTag): HTBlockItemTagBuilder = factory(tagKey)
+
+    /**
+     * @since 26.1.8
+     */
+    protected fun builder(block: TagKey<Block>, item: TagKey<Item>): HTBlockItemTagBuilder =
+        builder(BlockItemTag(block, item))
 
     protected fun builders(tagKey: BlockItemTag, vararg children: BlockItemTag): HTBlockItemTagBuilder =
         children.fold(builder(tagKey)) { builder: HTBlockItemTagBuilder, tagKeyIn: BlockItemTag ->

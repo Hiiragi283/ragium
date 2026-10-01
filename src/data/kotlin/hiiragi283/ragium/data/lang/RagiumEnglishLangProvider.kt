@@ -39,6 +39,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addAdvancement(RagiumAdvancementKeys.FREEZER, "My power is 530,000.", "Acquire Freezer")
         addAdvancement(RagiumAdvancementKeys.MELTER, "(S)melter(y)", "Acquire Melter")
         // Block
+        add(RagiumBlocks.QUARTZ_GLASS, "Quartz Glass")
+        add(RagiumBlocks.QUARTZ_GLASS_PANE, "Quartz Glass Pane")
+
         add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.COMPRESSOR, "Compressor")

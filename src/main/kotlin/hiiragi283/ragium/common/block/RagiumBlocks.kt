@@ -46,7 +46,9 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.DropExperienceBlock
+import net.minecraft.world.level.block.IronBarsBlock
 import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.TransparentBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
@@ -249,6 +251,15 @@ data object RagiumBlocks {
         SMOOTH_GYPSUM,
         parent = { GYPSUM_DECORATION }
     )
+
+    // Glass
+    @JvmField
+    val QUARTZ_GLASS: HTBasicDeferredBlockAndItem<TransparentBlock> =
+        REGISTER.registerSimple("quartz_glass", copyOf(Blocks.GLASS), ::TransparentBlock)
+
+    @JvmField
+    val QUARTZ_GLASS_PANE: HTBasicDeferredBlockAndItem<IronBarsBlock> =
+        REGISTER.registerSimple("quartz_glass_pane", copyOf(Blocks.GLASS_PANE), ::IronBarsBlock)
 
     // Helper
     @JvmField

@@ -451,7 +451,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         setOf(
             Tags.Items.SANDSTONE_UNCOLORED_BLOCKS to Items.SAND,
             Tags.Items.SANDSTONE_RED_BLOCKS to Items.RED_SAND,
-            RagiumTags.BlockItem.QUARTZ_BLOCKS.item to Items.QUARTZ
+            RagiumTags.BlockItems.QUARTZ_BLOCKS.item to Items.QUARTZ
         ).forEach { (block: TagKey<Item>, base: Item) ->
             RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(block) }

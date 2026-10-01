@@ -303,6 +303,16 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 count = 4
             }
         }.save(exporter)
+        // Quartz Glass Pane
+        VanillaRecipeBuilders.shaped {
+            +"AAA"
+            +"AAA"
+            define('A') { items { +RagiumBlocks.QUARTZ_GLASS } }
+            result {
+                +RagiumBlocks.QUARTZ_GLASS_PANE
+                count = 8
+            }
+        }.save(exporter)
     }
 
     private fun registerDecoration(content: HTDecorationContent) {
@@ -604,6 +614,14 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 recipeId suffix "_from_dust"
             }
         }
+        // Dust -> Base
+        VanillaRecipeBuilders.smelting {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLASS) }
+            result { +Items.GLASS }
+            group = "glass"
+            recipeId suffix "_from_dust"
+        }.save(exporter)
+
         // Fuel
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {
             val base: HTSimpleDeferredItem = RagiumMaterialHelper.getBase(fuel)

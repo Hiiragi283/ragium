@@ -26,6 +26,8 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yieldAll(RagiumBlocks.MATERIAL_ORES.values)
             yieldAll(RagiumBlocks.STORAGE_BLOCKS.values)
             yield(RagiumBlocks.ECHO_BLOCK)
+            yield(RagiumBlocks.QUARTZ_GLASS)
+            yield(RagiumBlocks.QUARTZ_GLASS_PANE)
             yieldAll(RagiumBlocks.ALL_DECORATIONS.flatMap { it.all })
 
             yieldAll(RagiumBlocks.MACHINES.values.flatten())
@@ -37,7 +39,5 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yieldAll(RagiumBlocks.TANKS)
             yield(RagiumBlocks.CREATIVE_BATTERY)
         }.forEach(pickaxe::add)
-        // Other
-        RagiumBlocks.ALL_DECORATIONS.forEach { it.appendBlockTags(::builder) }
     }
 }
