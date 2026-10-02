@@ -1,6 +1,8 @@
 package hiiragi283.lib.registry
 
 import hiiragi283.lib.resource.HTValueWithKey
+import hiiragi283.lib.resource.toLanguageKey
+import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.toIor
@@ -44,4 +46,20 @@ open class HTDeferredHolder<R : Any, out T : R> :
     }
 
     final override fun unwrapWithKey(): Ior<ResourceKey<R>, T> = asOptional().toIor { this.key }
+
+    /**
+     * @param R レジストリの要素のクラス
+     * @param T 要素のクラス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.8
+     */
+    open class Translatable<R : Any, out T : R> :
+        HTDeferredHolder<R, T>,
+        HTHasText.Translatable {
+        constructor(key: ResourceKey<R>) : super(key)
+
+        constructor(key: RegistryKey<R>, id: Identifier) : super(key, id)
+
+        override val translationKey: String = key.toLanguageKey()
+    }
 }

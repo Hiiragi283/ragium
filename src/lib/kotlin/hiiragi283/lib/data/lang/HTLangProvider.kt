@@ -8,8 +8,10 @@ import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTPotionContent
 import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.HTHasTranslationKey
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
 import net.neoforged.neoforge.common.data.LanguageProvider
 
@@ -126,5 +128,14 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
         content.stairs?.let { add(it, STAIRS_PATTERN, name) }
         // Wall
         content.wall?.let { add(it, WALL_PATTERN, name) }
+    }
+
+    /**
+     * @since 26.1.8
+     */
+    fun addRecipeType(recipeType: RecipeType<*>, value: String) {
+        BuiltInRegistries.RECIPE_TYPE.getResourceKey(recipeType).ifPresent {
+            add(it.toLanguageKey(), value)
+        }
     }
 }

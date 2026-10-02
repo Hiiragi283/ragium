@@ -4,11 +4,9 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.sync.HTFluidSyncPayload
 import hiiragi283.lib.gui.sync.HTIntSyncPayload
 import hiiragi283.lib.gui.sync.HTItemSyncPayload
-import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
@@ -59,6 +57,8 @@ data object Ragium : HTCommonMod() {
         RagiumMobEffects.register(eventBus)
         RagiumPotions.register(eventBus)
 
+        RagiumWidgetTypes.REGISTER.register(eventBus)
+
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
         container.registerConfig(ModConfig.Type.SERVER, RagiumConfig.SERVER_SPEC)
     }
@@ -106,9 +106,7 @@ data object Ragium : HTCommonMod() {
             RagiumRecipeSerializers.allSerializers.forEach(helper::register)
         }
         event.register(Registries.RECIPE_TYPE) { helper ->
-            for (recipeType: HTRecipeType<*> in RagiumRecipeTypes.allTypes) {
-                helper.register(recipeType.keyOrThrow, recipeType)
-            }
+            RagiumRecipeTypes.allTypes.forEach(helper::register)
         }
 
         event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES) { helper ->
@@ -137,11 +135,6 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)
             helper.register(RagiumAPI.id(HTConstants.ITEM), HTItemSyncPayload.TYPE)
             helper.register(RagiumAPI.id(HTConstants.FLUID), HTFluidSyncPayload.TYPE)
-        }
-        event.register(RagiumRegistries.Keys.WIDGET_TYPE) { helper ->
-            for (widgetType: HTWidgetType<*> in RagiumWidgetTypes.allTypes) {
-                helper.register(widgetType.keyOrThrow, widgetType)
-            }
         }
     }
 

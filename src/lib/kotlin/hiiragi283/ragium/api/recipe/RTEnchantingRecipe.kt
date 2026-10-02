@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
@@ -18,6 +17,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 
 @JvmRecord
 data class RTEnchantingRecipe(
@@ -65,5 +65,5 @@ data class RTEnchantingRecipe(
 
     override fun getSerializer(): RecipeSerializer<RTEnchantingRecipe> = RagiumRecipeSerializers.ENCHANTING
 
-    override fun getType(): HTRecipeType<RTEnchantingRecipe> = RagiumRecipeTypes.ENCHANTING
+    override fun getType(): RecipeType<RTEnchantingRecipe> = RagiumRecipeTypes.ENCHANTING
 }

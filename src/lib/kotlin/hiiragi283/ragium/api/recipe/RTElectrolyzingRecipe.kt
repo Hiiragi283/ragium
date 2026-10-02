@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
@@ -19,6 +18,7 @@ import hiiragi283.lib.serialization.network.nelOf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 
@@ -72,7 +72,7 @@ data class RTElectrolyzingRecipe(
 
     override fun getSerializer(): RecipeSerializer<RTElectrolyzingRecipe> = RagiumRecipeSerializers.ELECTROLYZING
 
-    override fun getType(): HTRecipeType<RTElectrolyzingRecipe> = RagiumRecipeTypes.ELECTROLYZING
+    override fun getType(): RecipeType<RTElectrolyzingRecipe> = RagiumRecipeTypes.ELECTROLYZING
 
     @JvmRecord
     data class ElectrolyzedResult(val right: FluidStack, val left: FluidStack, val main: FluidStack)

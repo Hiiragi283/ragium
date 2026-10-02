@@ -164,32 +164,32 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addCustomPotion("enchanted_golden_apple", "Enchanted Golden Apple")
 
         // Recipe Type
-        add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
-        add(RagiumRecipeTypes.COMPRESSING, "Compressing")
-        add(RagiumRecipeTypes.CRUSHING, "Crushing")
-        add(RagiumRecipeTypes.CUTTING, "Cutting")
-        add(RagiumRecipeTypes.DRAINING, "Draining")
-        add(RagiumRecipeTypes.FILLING, "Filling")
+        addRecipeType(RagiumRecipeTypes.ASSEMBLING, "Assembling")
+        addRecipeType(RagiumRecipeTypes.COMPRESSING, "Compressing")
+        addRecipeType(RagiumRecipeTypes.CRUSHING, "Crushing")
+        addRecipeType(RagiumRecipeTypes.CUTTING, "Cutting")
+        addRecipeType(RagiumRecipeTypes.DRAINING, "Draining")
+        addRecipeType(RagiumRecipeTypes.FILLING, "Filling")
 
-        add(RagiumRecipeTypes.ALLOYING, "Alloying")
-        add(RagiumRecipeTypes.FREEZING, "Freezing")
-        add(RagiumRecipeTypes.MELTING, "Melting")
-        add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
-        add(RagiumRecipeTypes.REFINING, "Refining")
+        addRecipeType(RagiumRecipeTypes.ALLOYING, "Alloying")
+        addRecipeType(RagiumRecipeTypes.FREEZING, "Freezing")
+        addRecipeType(RagiumRecipeTypes.MELTING, "Melting")
+        addRecipeType(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
+        addRecipeType(RagiumRecipeTypes.REFINING, "Refining")
 
-        add(RagiumRecipeTypes.BATHING, "Chemical Bathing")
-        add(RagiumRecipeTypes.CENTRIFUGING, "Centrifuging")
-        add(RagiumRecipeTypes.MIXING, "Mixing")
-        add(RagiumRecipeTypes.REACTING, "Chemical Reacting")
-        add(RagiumRecipeTypes.WASHING, "Washing")
+        addRecipeType(RagiumRecipeTypes.BATHING, "Chemical Bathing")
+        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "Centrifuging")
+        addRecipeType(RagiumRecipeTypes.MIXING, "Mixing")
+        addRecipeType(RagiumRecipeTypes.REACTING, "Chemical Reacting")
+        addRecipeType(RagiumRecipeTypes.WASHING, "Washing")
 
-        add(RagiumRecipeTypes.BREWING, "Brewing")
-        add(RagiumRecipeTypes.PLANTING, "Planting")
+        addRecipeType(RagiumRecipeTypes.BREWING, "Brewing")
+        addRecipeType(RagiumRecipeTypes.PLANTING, "Planting")
 
-        add(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
-        add(RagiumRecipeTypes.RESOURCE_EXTRACTING, "Resource Extracting")
+        addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
+        addRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, "Resource Extracting")
 
-        add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
+        addRecipeType(RagiumRecipeTypes.ENCHANTING, "Enchanting")
 
         // Text - Lib
         add(HTCommonTranslation.ERROR, "Error")

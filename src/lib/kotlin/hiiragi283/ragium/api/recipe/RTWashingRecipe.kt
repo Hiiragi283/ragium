@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
@@ -21,6 +20,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidInstance
 
 @JvmRecord
@@ -77,5 +77,5 @@ data class RTWashingRecipe(
 
     override fun getSerializer(): RecipeSerializer<RTWashingRecipe> = RagiumRecipeSerializers.WASHING
 
-    override fun getType(): HTRecipeType<RTWashingRecipe> = RagiumRecipeTypes.WASHING
+    override fun getType(): RecipeType<RTWashingRecipe> = RagiumRecipeTypes.WASHING
 }

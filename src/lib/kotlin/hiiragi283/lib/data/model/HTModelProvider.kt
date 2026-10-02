@@ -3,7 +3,8 @@ package hiiragi283.lib.data.model
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.registry.HTDecorationContent
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.resource.HTValueWithId
+import hiiragi283.lib.resource.HTSimpleValueWithKey
+import hiiragi283.lib.resource.HTValueWithKey
 import hiiragi283.lib.resource.blockId
 import hiiragi283.lib.resource.itemId
 import hiiragi283.lib.resource.toId
@@ -42,7 +43,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @since 26.1.8
      */
     fun BlockModelGenerators.plainVariant(
-        block: HTValueWithId<*>,
+        block: HTSimpleValueWithKey<*>,
         template: ModelTemplate,
         mapping: TextureMapping
     ): MultiVariant = BlockModelGenerators.plainVariant(template.createBlock(block, mapping, this.modelOutput))
@@ -55,7 +56,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @since 26.1.8
      */
     fun BlockModelGenerators.createSimple(
-        block: HTValueWithId<Block>,
+        block: HTSimpleValueWithKey<Block>,
         template: ModelTemplate,
         mapping: TextureMapping
     ) {
@@ -96,7 +97,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * ハーフブロックのブロックJSONを生成します。
      */
     fun BlockModelGenerators.createSlab(
-        block: HTValueWithId<SlabBlock>,
+        block: HTValueWithKey<Block, SlabBlock>,
         fullModel: Identifier,
         top: Material,
         side: Material,
@@ -124,7 +125,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * 階段ブロックのブロックJSONを生成します。
      */
     fun BlockModelGenerators.createStairs(
-        block: HTValueWithId<StairBlock>,
+        block: HTValueWithKey<Block, StairBlock>,
         top: Material,
         side: Material,
         bottom: Material
@@ -151,7 +152,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * 壁ブロックのブロックJSONを生成します。
      * @since 26.1.8
      */
-    fun BlockModelGenerators.createWall(block: HTValueWithId<WallBlock>, wall: Material) {
+    fun BlockModelGenerators.createWall(block: HTValueWithKey<Block, WallBlock>, wall: Material) {
         val mapping: TextureMapping = TextureMapping().put(TextureSlot.WALL, wall)
         this.blockStateOutput.accept(
             BlockModelGenerators.createWall(
@@ -171,7 +172,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * 液体ブロックのブロックJSONを生成します。
      * @param fluidBlock 液体ブロックの提供元
      */
-    fun BlockModelGenerators.createFluid(fluidBlock: HTValueWithId<Block>) {
+    fun BlockModelGenerators.createFluid(fluidBlock: HTSimpleValueWithKey<Block>) {
         this.createSimple(
             fluidBlock,
             HTModelTemplates.FLUID_BLOCK,
@@ -188,7 +189,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @param template 使用するモデルのテンプレート
      */
     fun ItemModelGenerators.generateFlatItem(
-        item: HTValueWithId<Item>,
+        item: HTSimpleValueWithKey<Item>,
         layer: Identifier = item.idOrThrow.itemId,
         template: ModelTemplate = ModelTemplates.FLAT_ITEM
     ) {
@@ -204,7 +205,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @param layers モデルのテクスチャのパス
      * @throws IllegalStateException [layers]のサイズが`0`または`4`以上の場合
      */
-    fun ItemModelGenerators.generateLayeredItem(item: HTValueWithId<Item>, vararg layers: Identifier) {
+    fun ItemModelGenerators.generateLayeredItem(item: HTSimpleValueWithKey<Item>, vararg layers: Identifier) {
         val (mapping: TextureMapping, template: ModelTemplate) = when (layers.size) {
             1 -> TextureMapping.layer0(Material(layers[0])) to ModelTemplates.FLAT_ITEM
 
@@ -229,7 +230,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @return モデルのパス
      */
     fun ItemModelGenerators.createFlatItemModel(
-        item: HTValueWithId<*>,
+        item: HTSimpleValueWithKey<*>,
         layer: Identifier = item.idOrThrow.itemId,
         template: ModelTemplate = ModelTemplates.FLAT_ITEM
     ): Identifier = template.createItem(item, TextureMapping.layer0(Material(layer)), this.modelOutput)

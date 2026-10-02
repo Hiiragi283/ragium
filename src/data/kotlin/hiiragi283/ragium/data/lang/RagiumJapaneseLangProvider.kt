@@ -160,32 +160,32 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addCustomPotion("enchanted_golden_apple", "エンチャントされた金リンゴ")
 
         // Recipe Type
-        add(RagiumRecipeTypes.ASSEMBLING, "組立")
-        add(RagiumRecipeTypes.COMPRESSING, "圧縮")
-        add(RagiumRecipeTypes.CRUSHING, "粉砕")
-        add(RagiumRecipeTypes.CUTTING, "切断")
-        add(RagiumRecipeTypes.DRAINING, "排出")
-        add(RagiumRecipeTypes.FILLING, "封入")
+        addRecipeType(RagiumRecipeTypes.ASSEMBLING, "組立")
+        addRecipeType(RagiumRecipeTypes.COMPRESSING, "圧縮")
+        addRecipeType(RagiumRecipeTypes.CRUSHING, "粉砕")
+        addRecipeType(RagiumRecipeTypes.CUTTING, "切断")
+        addRecipeType(RagiumRecipeTypes.DRAINING, "排出")
+        addRecipeType(RagiumRecipeTypes.FILLING, "封入")
 
-        add(RagiumRecipeTypes.ALLOYING, "合金")
-        add(RagiumRecipeTypes.FREEZING, "冷凍")
-        add(RagiumRecipeTypes.MELTING, "溶融")
-        add(RagiumRecipeTypes.PYROLYZING, "熱分解")
-        add(RagiumRecipeTypes.REFINING, "蒸留")
+        addRecipeType(RagiumRecipeTypes.ALLOYING, "合金")
+        addRecipeType(RagiumRecipeTypes.FREEZING, "冷凍")
+        addRecipeType(RagiumRecipeTypes.MELTING, "溶融")
+        addRecipeType(RagiumRecipeTypes.PYROLYZING, "熱分解")
+        addRecipeType(RagiumRecipeTypes.REFINING, "蒸留")
 
-        add(RagiumRecipeTypes.BATHING, "化学洗浄")
-        add(RagiumRecipeTypes.CENTRIFUGING, "遠心分離")
-        add(RagiumRecipeTypes.MIXING, "混合")
-        add(RagiumRecipeTypes.REACTING, "化学反応")
-        add(RagiumRecipeTypes.WASHING, "洗浄")
+        addRecipeType(RagiumRecipeTypes.BATHING, "化学洗浄")
+        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "遠心分離")
+        addRecipeType(RagiumRecipeTypes.MIXING, "混合")
+        addRecipeType(RagiumRecipeTypes.REACTING, "化学反応")
+        addRecipeType(RagiumRecipeTypes.WASHING, "洗浄")
 
-        add(RagiumRecipeTypes.BREWING, "醸造")
-        add(RagiumRecipeTypes.PLANTING, "栽培")
+        addRecipeType(RagiumRecipeTypes.BREWING, "醸造")
+        addRecipeType(RagiumRecipeTypes.PLANTING, "栽培")
 
-        add(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
-        add(RagiumRecipeTypes.RESOURCE_EXTRACTING, "資源採集")
+        addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
+        addRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, "資源採集")
 
-        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
+        addRecipeType(RagiumRecipeTypes.ENCHANTING, "エンチャント")
 
         // Text - Lib
         add(HTCommonTranslation.ERROR, "エラー")

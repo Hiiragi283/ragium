@@ -6,7 +6,7 @@ import hiiragi283.lib.data.model.HTModelTemplates
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
-import hiiragi283.lib.resource.HTValueWithId
+import hiiragi283.lib.resource.HTSimpleValueWithKey
 import hiiragi283.lib.resource.blockId
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
@@ -130,7 +130,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     private fun machineModel(
         generators: BlockModelGenerators,
         machineType: HTMachineType,
-        block: HTValueWithId<Block>
+        block: HTSimpleValueWithKey<Block>
     ): Identifier {
         val blockId: Identifier = block.idOrThrow.blockId
         return ModelTemplates.CUBE_ORIENTABLE.create(

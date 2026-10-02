@@ -27,7 +27,7 @@ sealed class HTFluidWidget(
     HTGhostWidget,
     HTIngredientWidget,
     HTFluidView by view {
-    final override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.FLUID
+    final override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.FLUID.get()
 
     final override fun mouseClicked(access: HTWidget.Access, mouseX: Double, mouseY: Double, button: Int) {
         if (isGhost) {

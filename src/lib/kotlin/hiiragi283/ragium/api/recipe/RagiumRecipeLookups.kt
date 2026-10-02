@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.base.HTFluidToDoubleFluidRecipe
 import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTFluidToItemRecipe
@@ -18,6 +17,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.RecipeType
 
 /**
  * Ragiumで使用される[HTRecipeLookup]をまとめたクラスです。
@@ -31,7 +31,7 @@ data object RagiumRecipeLookups {
 
     @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(
-        recipeType: HTRecipeType<RECIPE>
+        recipeType: RecipeType<RECIPE>
     ): HTRecipeLookup<RECIPE> = HTVanillaRecipeLookup(recipeType)
 
     // Mechanical

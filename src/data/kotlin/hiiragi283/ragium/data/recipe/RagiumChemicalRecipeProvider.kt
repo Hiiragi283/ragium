@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
@@ -12,6 +13,7 @@ import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
@@ -48,9 +50,34 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             result { +RagiumItems.MORTAR }
         }.save(exporter)
+
+        // Poison + Spider Eye -> Fermented Spider Eye
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { items { +Items.SPIDER_EYE } }
+            fluidIngredient {
+                +HTPotionFluidIngredient(Potions.POISON)
+                amount = 250
+            }
+            result { +Items.FERMENTED_SPIDER_EYE }
+        }.save(exporter)
+        // Poison + Potato -> Poisonous Potato
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(Tags.Items.CROPS_POTATO) }
+            fluidIngredient {
+                +HTPotionFluidIngredient(Potions.POISON)
+                amount = 250
+            }
+            result { +Items.POISONOUS_POTATO }
+        }.save(exporter)
     }
 
     private fun washing() {
+        // Gravel + Water -> Flint
+        RagiumRecipeBuilders.washing {
+            itemIngredient { +holderSet(Tags.Items.GRAVELS) }
+            fluidIngredient { +waterSet() }
+            result { +Items.FLINT }
+        }.save(exporter)
         // Sand + Water -> SiO2 + Borax
         RagiumRecipeBuilders.washing {
             itemIngredient {

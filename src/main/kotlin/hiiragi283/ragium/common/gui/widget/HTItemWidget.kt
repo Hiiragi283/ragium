@@ -18,7 +18,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
     HTIngredientWidget {
     abstract fun getStack(): ItemStack
 
-    final override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.ITEM
+    final override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.ITEM.get()
 
     final override fun getIngredient(): ItemStack = getStack()
 

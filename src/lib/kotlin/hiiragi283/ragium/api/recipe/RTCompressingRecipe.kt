@@ -1,12 +1,12 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
 class RTCompressingRecipe(ingredient: HTItemIngredient, result: HTItemResult, progressData: HTProgressData) :
@@ -20,5 +20,5 @@ class RTCompressingRecipe(ingredient: HTItemIngredient, result: HTItemResult, pr
 
     override fun getSerializer(): RecipeSerializer<RTCompressingRecipe> = RagiumRecipeSerializers.COMPRESSING
 
-    override fun getType(): HTRecipeType<RTCompressingRecipe> = RagiumRecipeTypes.COMPRESSING
+    override fun getType(): RecipeType<RTCompressingRecipe> = RagiumRecipeTypes.COMPRESSING
 }

@@ -73,10 +73,10 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
-        event.register(RagiumWidgetTypes.ENERGY, ::HTEnergySlotWidgetRenderer)
-        event.register(RagiumWidgetTypes.FLUID, ::HTFluidWidgetRenderer)
-        event.register(RagiumWidgetTypes.ITEM, ::HTItemWidgetRenderer)
-        event.register(RagiumWidgetTypes.PROGRESS, ::HTProgressWidgetRenderer)
+        event.register(RagiumWidgetTypes.ENERGY.get(), ::HTEnergySlotWidgetRenderer)
+        event.register(RagiumWidgetTypes.FLUID.get(), ::HTFluidWidgetRenderer)
+        event.register(RagiumWidgetTypes.ITEM.get(), ::HTItemWidgetRenderer)
+        event.register(RagiumWidgetTypes.PROGRESS.get(), ::HTProgressWidgetRenderer)
     }
 
     override fun registerFluidModels(register: HTFluidModelRegister) {

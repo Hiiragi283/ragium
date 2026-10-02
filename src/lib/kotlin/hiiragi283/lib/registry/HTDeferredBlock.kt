@@ -1,7 +1,5 @@
 package hiiragi283.lib.registry
 
-import hiiragi283.lib.text.HTHasText
-import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.lib.text.Text
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
@@ -22,10 +20,7 @@ typealias HTSimpleDeferredBlock = HTDeferredBlock<Block>
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTDeferredBlock<out BLOCK : Block> :
-    HTDeferredHolder<Block, BLOCK>,
-    HTHasTranslationKey,
-    HTHasText {
+class HTDeferredBlock<out BLOCK : Block> : HTDeferredHolder.Translatable<Block, BLOCK> {
     constructor(key: ResourceKey<Block>) : super(key)
 
     constructor(id: Identifier) : super(Registries.BLOCK.createKey(id))

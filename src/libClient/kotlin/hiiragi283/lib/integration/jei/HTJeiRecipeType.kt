@@ -2,12 +2,14 @@ package hiiragi283.lib.integration.jei
 
 import hiiragi283.lib.item.HTItemInstanceLike
 import hiiragi283.lib.recipe.HTRecipeHolder
-import hiiragi283.lib.resource.HTValueWithId
 import hiiragi283.lib.text.HTHasText
+import hiiragi283.lib.text.translatableText
 import hiiragi283.lib.util.Either
 import mezz.jei.api.recipe.types.IRecipeType
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeType
 
 /**
  * [HTRecipeHolder]向けの[HTJeiRecipeType]のエイリアスです。
@@ -49,18 +51,9 @@ inline fun <reified T : Any> HTJeiRecipeType(
 
 /**
  * @author Hiiragi Tsubasa
- * @since 26.1.0
+ * @since 26.1.8
  */
-inline fun <reified T : Any, U> HTJeiRecipeType(
-    id: U,
-    icon: ItemStack
-): HTJeiRecipeType<T> where U : HTValueWithId<*>, U : HTHasText = HTJeiRecipeType(id.idOrThrow, id, Either.Right(icon))
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-inline fun <reified T : Any, U> HTJeiRecipeType(
-    id: U,
-    icon: HTItemInstanceLike
-): HTJeiRecipeType<T> where U : HTValueWithId<*>, U : HTHasText = HTJeiRecipeType(id, icon.toStack())
+inline fun <reified T : Any> HTJeiRecipeType(type: RecipeType<*>, icon: HTItemInstanceLike): HTJeiRecipeType<T> {
+    val id: Identifier = BuiltInRegistries.RECIPE_TYPE.getKeyOrNull(type) ?: error("Unregistered recipe type: $type")
+    return HTJeiRecipeType(id, HTHasText { translatableText(id.toLanguageKey()) }, Either.Right(icon.toStack()))
+}

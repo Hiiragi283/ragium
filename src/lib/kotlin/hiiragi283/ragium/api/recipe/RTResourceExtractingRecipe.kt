@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
@@ -15,6 +14,7 @@ import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.state.pattern.BlockInWorld
 import net.neoforged.neoforge.fluids.FluidStack
 
@@ -58,5 +58,5 @@ class RTResourceExtractingRecipe(
     override fun getSerializer(): RecipeSerializer<RTResourceExtractingRecipe> =
         RagiumRecipeSerializers.RESOURCE_EXTRACTING
 
-    override fun getType(): HTRecipeType<RTResourceExtractingRecipe> = RagiumRecipeTypes.RESOURCE_EXTRACTING
+    override fun getType(): RecipeType<RTResourceExtractingRecipe> = RagiumRecipeTypes.RESOURCE_EXTRACTING
 }

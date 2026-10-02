@@ -1,99 +1,105 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
-import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.event.OnDatapackSyncEvent
 
 /**
- * Ragiumで使用される[HTRecipeType]をまとめたクラスです。
+ * Ragiumで使用される[RecipeType]をまとめたクラスです。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
 @EventBusSubscriber
 data object RagiumRecipeTypes {
     @JvmStatic
-    val allTypes: Set<HTRecipeType<*>> field: MutableSet<HTRecipeType<*>> = ObjectLinkedOpenHashSet()
+    val allTypes: Map<Identifier, RecipeType<*>>
+        field: MutableMap<Identifier, RecipeType<*>> = Object2ObjectLinkedOpenHashMap()
 
     @JvmStatic
-    private fun <T : Recipe<*>> create(name: String): HTRecipeType<T> =
-        HTRecipeType<T>(RagiumAPI.id(name)).also(allTypes::add)
+    private fun <T : Recipe<*>> create(name: String): RecipeType<T> {
+        val id: Identifier = RagiumAPI.id(name)
+        val recipeType: RecipeType<T> = RecipeType.simple<T>(id)
+        allTypes[id] = recipeType
+        return recipeType
+    }
 
     @SubscribeEvent
     fun onDatapackSync(event: OnDatapackSyncEvent) {
-        event.sendRecipes(allTypes)
+        event.sendRecipes(allTypes.values)
     }
 
     // Mechanical
     @JvmField
-    val ASSEMBLING: HTRecipeType<RTAssemblingRecipe> = create(RagiumConstants.ASSEMBLING)
+    val ASSEMBLING: RecipeType<RTAssemblingRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
-    val COMPRESSING: HTRecipeType<RTCompressingRecipe> = create(RagiumConstants.COMPRESSING)
+    val COMPRESSING: RecipeType<RTCompressingRecipe> = create(RagiumConstants.COMPRESSING)
 
     @JvmField
-    val CRUSHING: HTRecipeType<RTCrushingRecipe> = create(RagiumConstants.CRUSHING)
+    val CRUSHING: RecipeType<RTCrushingRecipe> = create(RagiumConstants.CRUSHING)
 
     @JvmField
-    val CUTTING: HTRecipeType<RTCuttingRecipe> = create(RagiumConstants.CUTTING)
+    val CUTTING: RecipeType<RTCuttingRecipe> = create(RagiumConstants.CUTTING)
 
     @JvmField
-    val DRAINING: HTRecipeType<RTDrainingRecipe> = create(RagiumConstants.DRAINING)
+    val DRAINING: RecipeType<RTDrainingRecipe> = create(RagiumConstants.DRAINING)
 
     @JvmField
-    val FILLING: HTRecipeType<RTFillingRecipe> = create(RagiumConstants.FILLING)
+    val FILLING: RecipeType<RTFillingRecipe> = create(RagiumConstants.FILLING)
 
     // Heat
     @JvmField
-    val ALLOYING: HTRecipeType<RTAlloyingRecipe> = create(RagiumConstants.ALLOYING)
+    val ALLOYING: RecipeType<RTAlloyingRecipe> = create(RagiumConstants.ALLOYING)
 
     @JvmField
-    val FREEZING: HTRecipeType<RTFreezingRecipe> = create(RagiumConstants.FREEZING)
+    val FREEZING: RecipeType<RTFreezingRecipe> = create(RagiumConstants.FREEZING)
 
     @JvmField
-    val MELTING: HTRecipeType<RTMeltingRecipe> = create(RagiumConstants.MELTING)
+    val MELTING: RecipeType<RTMeltingRecipe> = create(RagiumConstants.MELTING)
 
     @JvmField
-    val PYROLYZING: HTRecipeType<RTPyrolyzingRecipe> = create(RagiumConstants.PYROLYZING)
+    val PYROLYZING: RecipeType<RTPyrolyzingRecipe> = create(RagiumConstants.PYROLYZING)
 
     @JvmField
-    val REFINING: HTRecipeType<RTRefiningRecipe> = create(RagiumConstants.REFINING)
+    val REFINING: RecipeType<RTRefiningRecipe> = create(RagiumConstants.REFINING)
 
     // Chemical
     @JvmField
-    val BATHING: HTRecipeType<RTBathingRecipe> = create(RagiumConstants.BATHING)
+    val BATHING: RecipeType<RTBathingRecipe> = create(RagiumConstants.BATHING)
 
     @JvmField
-    val CENTRIFUGING: HTRecipeType<RTCentrifugingRecipe> = create(RagiumConstants.CENTRIFUGING)
+    val CENTRIFUGING: RecipeType<RTCentrifugingRecipe> = create(RagiumConstants.CENTRIFUGING)
 
     @JvmField
-    val MIXING: HTRecipeType<RTMixingRecipe> = create(RagiumConstants.MIXING)
+    val MIXING: RecipeType<RTMixingRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
-    val REACTING: HTRecipeType<RTReactingRecipe.Basic> = create(RagiumConstants.REACTING)
+    val REACTING: RecipeType<RTReactingRecipe.Basic> = create(RagiumConstants.REACTING)
 
     @JvmField
-    val WASHING: HTRecipeType<RTWashingRecipe> = create(RagiumConstants.WASHING)
+    val WASHING: RecipeType<RTWashingRecipe> = create(RagiumConstants.WASHING)
 
     // Bio
     @JvmField
-    val BREWING: HTRecipeType<RTBrewingRecipe> = create(RagiumConstants.BREWING)
+    val BREWING: RecipeType<RTBrewingRecipe> = create(RagiumConstants.BREWING)
 
     @JvmField
-    val PLANTING: HTRecipeType<RTPlantingRecipe> = create(RagiumConstants.PLANTING)
+    val PLANTING: RecipeType<RTPlantingRecipe> = create(RagiumConstants.PLANTING)
 
     // Electronics
     @JvmField
-    val ELECTROLYZING: HTRecipeType<RTElectrolyzingRecipe> = create(RagiumConstants.ELECTROLYZING)
+    val ELECTROLYZING: RecipeType<RTElectrolyzingRecipe> = create(RagiumConstants.ELECTROLYZING)
 
     @JvmField
-    val RESOURCE_EXTRACTING: HTRecipeType<RTResourceExtractingRecipe> = create(RagiumConstants.RESOURCE_EXTRACTING)
+    val RESOURCE_EXTRACTING: RecipeType<RTResourceExtractingRecipe> = create(RagiumConstants.RESOURCE_EXTRACTING)
 
     // Arcane
     @JvmField
-    val ENCHANTING: HTRecipeType<RTEnchantingRecipe> = create(RagiumConstants.ENCHANTING)
+    val ENCHANTING: RecipeType<RTEnchantingRecipe> = create(RagiumConstants.ENCHANTING)
 }

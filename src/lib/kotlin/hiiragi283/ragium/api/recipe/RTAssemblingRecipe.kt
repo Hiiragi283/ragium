@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.lib.collection.Nel
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
@@ -9,6 +8,7 @@ import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 
 class RTAssemblingRecipe(
     ingredient: HTItemIngredient,
@@ -25,5 +25,5 @@ class RTAssemblingRecipe(
 
     override fun getSerializer(): RecipeSerializer<RTAssemblingRecipe> = RagiumRecipeSerializers.ASSEMBLING
 
-    override fun getType(): HTRecipeType<RTAssemblingRecipe> = RagiumRecipeTypes.ASSEMBLING
+    override fun getType(): RecipeType<RTAssemblingRecipe> = RagiumRecipeTypes.ASSEMBLING
 }

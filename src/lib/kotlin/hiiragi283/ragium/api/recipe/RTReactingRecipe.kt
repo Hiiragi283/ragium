@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
@@ -16,6 +15,7 @@ import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidInstance
 
 interface RTReactingRecipe :
@@ -70,6 +70,6 @@ interface RTReactingRecipe :
 
         override fun getSerializer(): RecipeSerializer<Basic> = RagiumRecipeSerializers.REACTING
 
-        override fun getType(): HTRecipeType<Basic> = RagiumRecipeTypes.REACTING
+        override fun getType(): RecipeType<Basic> = RagiumRecipeTypes.REACTING
     }
 }

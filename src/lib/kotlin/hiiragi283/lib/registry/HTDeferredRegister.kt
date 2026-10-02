@@ -48,4 +48,30 @@ open class HTDeferredRegister<R : Any>(registryKey: RegistryKey<R>, namespace: S
 
     override fun <I : R> register(name: String, func: Function<Identifier, out I>): HTDeferredHolder<R, I> =
         super.register(name, func) as HTDeferredHolder<R, I>
+
+    /**
+     * @param R レジストリの要素のクラス
+     * @param registryKey レジストリのキー
+     * @param namespace 登録する値の名前空間
+     * @author Hiiragi Tsubasa
+     * @since 26.1.8
+     */
+    open class Translatable<R : Any>(registryKey: RegistryKey<R>, namespace: String) :
+        HTDeferredRegister<R>(registryKey, namespace) {
+        override fun <I : R> createHolder(
+            registryKey: RegistryKey<R>,
+            key: Identifier
+        ): HTDeferredHolder.Translatable<R, I> = HTDeferredHolder.Translatable(registryKey, key)
+
+        override fun <I : R> register(name: String, sup: Supplier<out I>): HTDeferredHolder.Translatable<R, I> =
+            super.register(name, sup) as HTDeferredHolder.Translatable<R, I>
+
+        override fun <I : R> register(
+            name: String,
+            func: Function<Identifier, out I>
+        ): HTDeferredHolder.Translatable<R, I> = super.register(name, func) as HTDeferredHolder.Translatable<R, I>
+
+        override fun asSequence(): Sequence<HTDeferredHolder<R, *>> =
+            super.asSequence().filterIsInstance<HTDeferredHolder.Translatable<R, *>>()
+    }
 }
