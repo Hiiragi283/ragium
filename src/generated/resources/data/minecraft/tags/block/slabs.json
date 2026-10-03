@@ -1,8 +1,6 @@
 {
   "values": [
     "ragium:cryolite_slab",
-    "ragium:fluorite_slab",
-    "ragium:gypsum_slab",
-    "ragium:smooth_gypsum_slab"
+    "ragium:fluorite_slab"
   ]
 }

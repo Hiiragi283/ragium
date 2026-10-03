@@ -4,8 +4,6 @@ import hiiragi283.lib.resource.HTValueWithKey
 import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.util.Either
-import hiiragi283.lib.util.Ior
-import hiiragi283.lib.util.toIor
 import net.minecraft.core.TypedInstance
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
@@ -45,7 +43,12 @@ open class HTDeferredHolder<R : Any, out T : R> :
         else -> Either.Left("Trying to access unbound value: $key")
     }
 
-    final override fun unwrapWithKey(): Ior<ResourceKey<R>, T> = asOptional().toIor { this.key }
+    final override val keyOrNull: ResourceKey<R> get() = this.key
+
+    final override fun getOrNull(): T? = when (this.isBound) {
+        true -> get()
+        false -> null
+    }
 
     /**
      * @param R レジストリの要素のクラス

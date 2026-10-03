@@ -1,8 +1,6 @@
 {
   "values": [
     "ragium:cryolite_wall",
-    "ragium:fluorite_wall",
-    "ragium:gypsum_wall",
-    "ragium:smooth_gypsum_wall"
+    "ragium:fluorite_wall"
   ]
 }

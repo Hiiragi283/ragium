@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "ragium:gypsum",
-  "result": {
-    "id": "ragium:gypsum_stairs"
-  }
-}

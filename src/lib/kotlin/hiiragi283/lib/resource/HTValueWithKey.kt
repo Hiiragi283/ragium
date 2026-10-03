@@ -1,6 +1,5 @@
 package hiiragi283.lib.resource
 
-import hiiragi283.lib.util.Ior
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 
@@ -19,16 +18,11 @@ typealias HTSimpleValueWithKey<R> = HTValueWithKey<R, R>
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun interface HTValueWithKey<R : Any, out T : R> {
-    /**
-     * 保持している値を[Ior]に変換します。
-     */
-    fun unwrapWithKey(): Ior<ResourceKey<R>, T>
-
+interface HTValueWithKey<R : Any, out T : R> {
     /**
      * [ID][ResourceKey]を取得します。
      */
-    val keyOrNull: ResourceKey<R>? get() = unwrapWithKey().getLeft()
+    val keyOrNull: ResourceKey<R>?
 
     /**
      * [ID][ResourceKey]を取得します。
@@ -50,7 +44,7 @@ fun interface HTValueWithKey<R : Any, out T : R> {
     /**
      * 値を取得します。
      */
-    fun getOrNull(): T? = unwrapWithKey().getRight()
+    fun getOrNull(): T?
 
     /**
      * 値を取得します。

@@ -1,8 +1,6 @@
 {
   "values": [
     "ragium:cryolite_stairs",
-    "ragium:fluorite_stairs",
-    "ragium:gypsum_stairs",
-    "ragium:smooth_gypsum_stairs"
+    "ragium:fluorite_stairs"
   ]
 }

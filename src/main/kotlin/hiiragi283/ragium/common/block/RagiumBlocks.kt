@@ -222,36 +222,6 @@ data object RagiumBlocks {
         CRYOLITE_BLOCK
     )
 
-    // Gypsum
-    @JvmField
-    val GYPSUM: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple(
-        "gypsum",
-        copyOf(Blocks.TUFF).mapColor(MapColor.TERRACOTTA_PINK)
-        // itemProp = { it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CRYOLITE) }
-    )
-
-    @JvmField
-    val GYPSUM_DECORATION: HTDecorationContent = HTDecorationContent.create(
-        REGISTER,
-        RagiumMaterial.Mineral.GYPSUM.materialName,
-        GYPSUM
-    )
-
-    @JvmField
-    val SMOOTH_GYPSUM: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple(
-        "smooth_gypsum",
-        copyOf(Blocks.TUFF).mapColor(MapColor.TERRACOTTA_PINK)
-        // itemProp = { it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CRYOLITE) }
-    )
-
-    @JvmField
-    val SMOOTH_GYPSUM_DECORATION: HTDecorationContent = HTDecorationContent.create(
-        REGISTER,
-        "smooth_gypsum",
-        SMOOTH_GYPSUM,
-        parent = { GYPSUM_DECORATION }
-    )
-
     // Glass
     @JvmField
     val QUARTZ_GLASS: HTBasicDeferredBlockAndItem<TransparentBlock> =
@@ -265,9 +235,7 @@ data object RagiumBlocks {
     @JvmField
     val ALL_DECORATIONS: List<HTDecorationContent> = listOf(
         FLUORITE_DECORATION,
-        CRYOLITE_DECORATION,
-        GYPSUM_DECORATION,
-        SMOOTH_GYPSUM_DECORATION
+        CRYOLITE_DECORATION
     )
 
     //    Machine    //

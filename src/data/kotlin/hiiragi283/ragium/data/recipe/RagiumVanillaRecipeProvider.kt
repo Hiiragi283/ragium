@@ -282,16 +282,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private fun decoration() {
         RagiumBlocks.ALL_DECORATIONS.forEach(::registerDecoration)
 
-        // Smooth Gypsum
-        VanillaRecipeBuilders.shaped {
-            +"AA"
-            +"AA"
-            define('A') { items { +RagiumBlocks.GYPSUM } }
-            result {
-                +RagiumBlocks.SMOOTH_GYPSUM
-                count = 4
-            }
-        }.save(exporter)
         // Quartz Glass Pane
         VanillaRecipeBuilders.shaped {
             +"AAA"

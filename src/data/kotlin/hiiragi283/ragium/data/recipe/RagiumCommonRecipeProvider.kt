@@ -696,16 +696,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             exp = 0.15f
         }
 
-        // Gypsum Dust
-        RagiumRecipeBuilders.crushing {
-            ingredient {
-                items {
-                    +RagiumBlocks.GYPSUM
-                    +RagiumBlocks.SMOOTH_GYPSUM
-                }
-            }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.GYPSUM) }
-        }.save(exporter)
         // CaSO4 -> CaO + SO3
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.GYPSUM) }
