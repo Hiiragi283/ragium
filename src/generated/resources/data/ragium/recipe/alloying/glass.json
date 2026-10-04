@@ -2,7 +2,7 @@
   "type": "ragium:alloying",
   "extra": {
     "count": 1,
-    "items": "#c:dusts/sodium_carbonate"
+    "items": "#c:dusts/soda_ash"
   },
   "ingredient": {
     "count": 2,

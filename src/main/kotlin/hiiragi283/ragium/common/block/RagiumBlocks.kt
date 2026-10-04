@@ -208,7 +208,7 @@ data object RagiumBlocks {
     )
 
     // Cryolite
-    @JvmField
+    /*@JvmField
     val CRYOLITE_BLOCK: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple(
         "cryolite_block",
         copyOf(Blocks.QUARTZ_BLOCK),
@@ -220,7 +220,7 @@ data object RagiumBlocks {
         REGISTER,
         RagiumMaterial.Gem.CRYOLITE.materialName,
         CRYOLITE_BLOCK
-    )
+    )*/
 
     // Glass
     @JvmField
@@ -234,8 +234,8 @@ data object RagiumBlocks {
     // Helper
     @JvmField
     val ALL_DECORATIONS: List<HTDecorationContent> = listOf(
-        FLUORITE_DECORATION,
-        CRYOLITE_DECORATION
+        FLUORITE_DECORATION
+        // CRYOLITE_DECORATION
     )
 
     //    Machine    //

@@ -486,7 +486,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"ABA"
             +"BCB"
             +"ADA"
-            define('A') { items { +RagiumItems.ALCLAD_PLATE } }
+            define('A') { +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Alloy.BLACK_STEEL) }
             define('B') { items { +RagiumItems.getParts(HTMachineType.ELECTRONICS) } }
             define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Gem.DIAMOND) }
             define('D', builderAction)
@@ -547,7 +547,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // XX <-> Storage Block
         gemBlock(RagiumMaterial.Gem.ECHO, RagiumBlocks.ECHO_BLOCK)
         gemBlock(RagiumMaterial.Gem.FLUORITE, RagiumBlocks.FLUORITE_BLOCK)
-        gemBlock(RagiumMaterial.Gem.CRYOLITE, RagiumBlocks.CRYOLITE_BLOCK)
+        // gemBlock(RagiumMaterial.Gem.CRYOLITE, RagiumBlocks.CRYOLITE_BLOCK)
 
         nineToBlock(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT)

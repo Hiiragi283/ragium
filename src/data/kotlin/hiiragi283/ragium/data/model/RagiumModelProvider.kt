@@ -68,7 +68,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             yieldAll(RagiumBlocks.MATERIAL_BLOCKS.values)
             yield(RagiumBlocks.ECHO_BLOCK)
             yield(RagiumBlocks.FLUORITE_BLOCK)
-            yield(RagiumBlocks.CRYOLITE_BLOCK)
+            // yield(RagiumBlocks.CRYOLITE_BLOCK)
 
             yield(RagiumBlocks.CREATIVE_BATTERY) // TODO
 

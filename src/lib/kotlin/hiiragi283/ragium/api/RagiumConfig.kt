@@ -114,15 +114,15 @@ data object RagiumConfig {
 
             @JvmField
             val melter: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.MELTER)
+                HTEnergyConfig.createMachine(builder, RagiumConstants.MELTER, 64)
 
             @JvmField
             val pyrolyzer: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.PYROLYZER)
+                HTEnergyConfig.createMachine(builder, RagiumConstants.PYROLYZER, 32)
 
             @JvmField
             val refinery: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.REFINERY)
+                HTEnergyConfig.createMachine(builder, RagiumConstants.REFINERY, 32)
 
             @JvmField
             val smelter: HTEnergyConfig =

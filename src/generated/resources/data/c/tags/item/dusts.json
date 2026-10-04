@@ -1,7 +1,6 @@
 {
   "values": [
     "#c:dusts/alumina",
-    "#c:dusts/aluminum_fluoride",
     "#c:dusts/amethyst",
     "#c:dusts/bauxite",
     "#c:dusts/borax",
@@ -9,7 +8,6 @@
     "#c:dusts/charcoal",
     "#c:dusts/coal",
     "#c:dusts/copper",
-    "#c:dusts/cryolite",
     "#c:dusts/diamond",
     "#c:dusts/echo",
     "#c:dusts/emerald",
@@ -30,7 +28,7 @@
     "#c:dusts/raginite",
     "#c:dusts/salt",
     "#c:dusts/silicon",
-    "#c:dusts/sodium_carbonate",
+    "#c:dusts/soda_ash",
     "#c:dusts/sulfur",
     "#c:dusts/wood"
   ]

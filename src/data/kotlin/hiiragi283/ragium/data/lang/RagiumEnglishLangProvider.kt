@@ -132,7 +132,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         add(RagiumItems.CARBON_FIBER, "Carbon Fiber")
         add(RagiumItems.CFRP_PLATE, "CFRP Plate")
-        add(RagiumItems.ALCLAD_PLATE, "Alclad Plate")
+        // add(RagiumItems.ALCLAD_PLATE, "Alclad Plate")
         add(RagiumItems.BEESWAX, "Beeswax")
         add(RagiumItems.SPLASH_BOTTLE, "Splash Bottle")
         add(RagiumItems.LINGERING_BOTTLE, "Lingering Bottle")

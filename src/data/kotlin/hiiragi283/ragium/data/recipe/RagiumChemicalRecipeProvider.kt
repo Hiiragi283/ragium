@@ -106,15 +106,19 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.BAUXITE) }
             recipeId suffix "_from_red_sands"
         }.save(exporter)
-        // Blue Ice + HF (aq) -> Packed Ice + Cryolite
+        // Clay + Water -> Al2O3 + SiO2
         RagiumRecipeBuilders.washing {
-            itemIngredient { items { +Items.BLUE_ICE } }
-            fluidIngredient { +holderSet(RagiumFluids.HYDROFLUORIC_ACID) }
+            itemIngredient { items { +Items.CLAY } }
+            fluidIngredient { +waterSet() }
             result {
-                +Items.PACKED_ICE
-                count = 6
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.ALUMINA)
+                count = 2
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CRYOLITE) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ)
+                count = 2
+            }
+            recipeId suffix "_from_clay"
         }.save(exporter)
 
         // Ancient Debris -> Netherite Scrap

@@ -55,5 +55,9 @@ inline fun <reified T : Any> HTJeiRecipeType(
  */
 inline fun <reified T : Any> HTJeiRecipeType(type: RecipeType<*>, icon: HTItemInstanceLike): HTJeiRecipeType<T> {
     val id: Identifier = BuiltInRegistries.RECIPE_TYPE.getKeyOrNull(type) ?: error("Unregistered recipe type: $type")
-    return HTJeiRecipeType(id, HTHasText { translatableText(id.toLanguageKey()) }, Either.Right(icon.toStack()))
+    return HTJeiRecipeType(
+        id,
+        HTHasText { translatableText(id.toLanguageKey("recipe_type")) },
+        Either.Right(icon.toStack())
+    )
 }

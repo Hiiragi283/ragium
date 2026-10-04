@@ -30,8 +30,8 @@ interface RagiumLangProvider {
         provider.add(RagiumBlocks.ECHO_BLOCK, HTStorageBlockPart.DEFAULT, RagiumMaterial.Gem.ECHO)
         provider.add(RagiumBlocks.FLUORITE_BLOCK, HTStorageBlockPart.DEFAULT, RagiumMaterial.Gem.FLUORITE)
         provider.addDecoration(RagiumBlocks.FLUORITE_DECORATION, RagiumMaterial.Gem.FLUORITE)
-        provider.add(RagiumBlocks.CRYOLITE_BLOCK, HTStorageBlockPart.DEFAULT, RagiumMaterial.Gem.CRYOLITE)
-        provider.addDecoration(RagiumBlocks.CRYOLITE_DECORATION, RagiumMaterial.Gem.CRYOLITE)
+        // provider.add(RagiumBlocks.CRYOLITE_BLOCK, HTStorageBlockPart.DEFAULT, RagiumMaterial.Gem.CRYOLITE)
+        // provider.addDecoration(RagiumBlocks.CRYOLITE_DECORATION, RagiumMaterial.Gem.CRYOLITE)
 
         val casingPattern = HTLangPatternProvider("Machine Casing (%s)", "機械筐体 (%s)")
         for ((machineType: HTLangName, casing: HTHasTranslationKey) in RagiumBlocks.MACHINE_CASINGS) {

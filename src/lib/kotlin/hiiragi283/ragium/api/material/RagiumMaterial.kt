@@ -110,17 +110,12 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.8
          */
-        SODIUM_CARBONATE("Sodium Carbonate", "炭酸ナトリウム", RagiumChemicals.SODIUM_CARBONATE),
+        SODA_ASH("Soda Ash", "ソーダ灰", RagiumChemicals.SODIUM_CARBONATE),
 
         /**
          * @since 26.1.7
          */
         ALUMINA("Alumina", "アルミナ", RagiumChemicals.ALUMINUM_OXIDE),
-
-        /**
-         * @since 26.1.8
-         */
-        ALUMINUM_FLUORIDE("Aluminum Fluoride", "フッ化アルミニウム", RagiumChemicals.ALUMINUM_FLUORIDE),
 
         /**
          * @since 26.1.7
@@ -163,12 +158,7 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.7
          */
-        FLUORITE("Fluorite", "蛍石", RagiumChemicals.FLUORITE),
-
-        /**
-         * @since 26.1.7
-         */
-        CRYOLITE("Cryolite", "氷晶石", RagiumChemicals.CRYOLITE)
+        FLUORITE("Fluorite", "蛍石", RagiumChemicals.FLUORITE)
         ;
 
         constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>? = null) : this(

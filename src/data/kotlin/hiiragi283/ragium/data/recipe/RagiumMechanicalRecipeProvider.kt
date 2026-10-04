@@ -436,8 +436,8 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             Items.PURPUR_BLOCK to Items.POPPED_CHORUS_FRUIT,
             Items.SNOW_BLOCK to Items.SNOWBALL,
             RagiumBlocks.ECHO_BLOCK to Items.ECHO_SHARD,
-            RagiumBlocks.FLUORITE_BLOCK to RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE),
-            RagiumBlocks.CRYOLITE_BLOCK to RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CRYOLITE)
+            RagiumBlocks.FLUORITE_BLOCK to RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE)
+            // RagiumBlocks.CRYOLITE_BLOCK to RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CRYOLITE)
         ).forEach { (block: ItemLike, base: ItemLike) ->
             RagiumRecipeBuilders.crushing {
                 ingredient { items { +block.asItem() } }

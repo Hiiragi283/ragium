@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/aluminum_fluoride_dust"
+    "layer0": "ragium:item/soda_ash_dust"
   }
 }

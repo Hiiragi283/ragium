@@ -271,7 +271,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         fluorine()
 
         sodium()
-        aluminum()
+        // aluminum()
         silica()
         sulfur()
         chlorine()
@@ -395,7 +395,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         // Dried Kelp -> Na2CO3
         VanillaRecipeBuilders.smeltingAndBlasting(exporter) {
             ingredient { items { +Items.DRIED_KELP } }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SODIUM_CARBONATE) }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SODA_ASH) }
             exp = 0.15f
         }
         // 2x NaOH (aq) + CO2 -> Na2CO3 + H2O
@@ -405,7 +405,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 water()
                 amount *= 2
             }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SODIUM_CARBONATE) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SODA_ASH) }
             recipeId replace RagiumFluids.NAOH_SOLUTION.idOrThrow
         }.save(exporter)
         // SiO2 + Na2CO3 -> Glass
@@ -414,7 +414,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.QUARTZ)
                 count = 2
             }
-            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SODIUM_CARBONATE) }
+            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SODA_ASH) }
             result {
                 +Items.GLASS
                 count = 6
@@ -443,7 +443,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
     }
 
-    private fun aluminum() {
+    /*private fun aluminum() {
         // Bauxite + NaOH aq -> Al(OH)3 (aq)
         RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.BAUXITE) }
@@ -514,7 +514,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 4
             }
         }.save(exporter)
-    }
+    }*/
 
     private fun silica() {
         // Glass -> Molten Glass

@@ -76,7 +76,7 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Gem.ECHO, HTItemPart.DUST)
                 putAll(RagiumMaterial.Gem.PRISMARINE, HTItemPart.DUST)
                 putAll(RagiumMaterial.Gem.FLUORITE, HTItemPart.DUST, HTItemPart.GEM)
-                putAll(RagiumMaterial.Gem.CRYOLITE, HTItemPart.DUST, HTItemPart.GEM)
+                // putAll(RagiumMaterial.Gem.CRYOLITE, HTItemPart.DUST, HTItemPart.GEM)
                 // Metal
                 putAll(RagiumMaterial.Metal.COPPER, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
@@ -168,8 +168,7 @@ data object RagiumItems {
     @JvmField
     val CFRP_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cfrp_plate")
 
-    @JvmField
-    val ALCLAD_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alclad_plate")
+    // val ALCLAD_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alclad_plate")
 
     // Bio
     @JvmField
