@@ -1,5 +1,6 @@
 {
   "type": "ragium:freezing",
+  "catalyst": "ragium:ball_mold",
   "ingredient": {
     "amount": 250,
     "fluids": "#ragium:resins"

@@ -1,5 +1,6 @@
 {
   "type": "ragium:freezing",
+  "catalyst": "ragium:block_mold",
   "ingredient": {
     "amount": 1000,
     "fluids": "#c:water"

@@ -19,6 +19,7 @@ import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
@@ -111,6 +112,20 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('B') { items { +RagiumItems.MORTAR } }
             result { +Items.NETHER_BRICKS }
         }.save(exporter)
+
+        // XX Mold
+        VanillaRecipeBuilders.shaped {
+            +"AA"
+            +"AA"
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
+            result { +RagiumItems.BLANK_MOLD }
+        }.save(exporter)
+        for (mold: HTSimpleDeferredItem in RagiumItems.MOLDS) {
+            VanillaRecipeBuilders.stonecutting {
+                ingredient { +holderSet(RagiumTags.Items.MOLDS) }
+                result { +mold }
+            }.save(exporter)
+        }
 
         // XX Tools
         registerTools(RagiumItems.SOOTY_IRON_TOOLS, RagiumToolMaterials.SOOTY_IRON)

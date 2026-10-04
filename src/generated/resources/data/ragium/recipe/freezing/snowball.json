@@ -3,11 +3,11 @@
   "catalyst": "ragium:ball_mold",
   "ingredient": {
     "amount": 250,
-    "fluids": "#c:dyes/pink"
+    "fluids": "#c:water"
   },
   "result": {
     "count": 1,
-    "id": "minecraft:pink_dye"
+    "id": "minecraft:snowball"
   },
   "time": 200
 }

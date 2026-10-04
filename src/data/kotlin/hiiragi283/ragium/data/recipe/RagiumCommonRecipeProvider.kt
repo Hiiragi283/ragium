@@ -8,6 +8,7 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
+import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredItem
@@ -33,6 +34,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.concurrent.CompletableFuture
 
 class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
@@ -399,25 +401,28 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount = 90
             }
         }.save(exporter)
+        val moltenPlastic = HTFluidIngredient(FluidIngredient.of(holderSet(RagiumFluids.MOLTEN_PLASTIC)), 90)
         RagiumRecipeBuilders.freezing {
-            ingredient {
-                +holderSet(RagiumFluids.MOLTEN_PLASTIC)
-                amount = 90
-            }
+            ingredient = moltenPlastic
+            catalyst { items { +RagiumItems.PLATE_MOLD } }
             result { +RagiumItems.PLASTIC_PLATE }
         }.save(exporter)
-
         // Plastic -> Synthetic XX
-        listOf(
-            RagiumItems.SYNTHETIC_FEATHER,
-            RagiumItems.SYNTHETIC_FIBER,
-            RagiumItems.SYNTHETIC_LEATHER
-        ).forEach {
-            VanillaRecipeBuilders.stonecutting {
-                ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
-                result { +it }
-            }.save(exporter)
-        }
+        RagiumRecipeBuilders.freezing {
+            ingredient = moltenPlastic
+            catalyst { +holderSet(Tags.Items.FEATHERS) }
+            result { +RagiumItems.SYNTHETIC_FEATHER }
+        }.save(exporter)
+        RagiumRecipeBuilders.freezing {
+            ingredient = moltenPlastic
+            catalyst { +holderSet(Tags.Items.LEATHERS) }
+            result { +RagiumItems.SYNTHETIC_LEATHER }
+        }.save(exporter)
+        RagiumRecipeBuilders.freezing {
+            ingredient = moltenPlastic
+            catalyst { +holderSet(Tags.Items.STRINGS) }
+            result { +RagiumItems.SYNTHETIC_FIBER }
+        }.save(exporter)
 
         // Alcohol -> Aldehyde
         RagiumRecipeBuilders.refining {
@@ -485,6 +490,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     +holderSet(dyeContent)
                     amount /= 4
                 }
+                catalyst { items { +RagiumItems.BALL_MOLD } }
                 result { +VanillaColoredCollections.DYE[color] }
                 recipeId suffix "_from_liquid_dye"
             }.save(exporter)
@@ -733,7 +739,16 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         // Molten Glass -> Glass
         RagiumRecipeBuilders.freezing {
             ingredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
+            catalyst { items { +RagiumItems.BLOCK_MOLD } }
             result { +Items.GLASS }
+        }.save(exporter)
+        RagiumRecipeBuilders.freezing {
+            ingredient {
+                +holderSet(RagiumFluids.MOLTEN_GLASS)
+                amount = 375
+            }
+            catalyst { items { +RagiumItems.PLATE_MOLD } }
+            result { +Items.GLASS_PANE }
         }.save(exporter)
         // SiO2 + Sand -> Quartz Glass
         RagiumRecipeBuilders.alloying {

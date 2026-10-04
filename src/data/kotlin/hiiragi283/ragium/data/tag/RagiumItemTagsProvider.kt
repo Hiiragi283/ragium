@@ -75,6 +75,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(RagiumTags.Items.COKES)
             .addTag(HTCommonTags.Items.COAL_COKE)
             .addTag(HTCommonTags.Items.PITCH_COKE)
+        RagiumItems.MOLDS.forEach(builder(RagiumTags.Items.MOLDS)::add)
         builder(RagiumTags.Items.SMELTING_FLUXES)
             .addTag(CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Mineral.CINNABAR))
             .addTag(CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Gem.FLUORITE))

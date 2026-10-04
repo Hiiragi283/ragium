@@ -1,13 +1,13 @@
 {
   "type": "ragium:freezing",
-  "catalyst": "ragium:plate_mold",
+  "catalyst": "#c:leathers",
   "ingredient": {
     "amount": 90,
     "fluids": "#c:molten_plastic"
   },
   "result": {
     "count": 1,
-    "id": "ragium:plastic_plate"
+    "id": "ragium:synthetic_leather"
   },
   "time": 200
 }

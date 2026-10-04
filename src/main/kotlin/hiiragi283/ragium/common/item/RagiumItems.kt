@@ -222,6 +222,20 @@ data object RagiumItems {
     // Mechanical
 
     // Heat
+    @JvmField
+    val BLANK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_mold") { it.stacksTo(1) }
+
+    @JvmField
+    val BALL_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ball_mold") { it.stacksTo(1) }
+
+    @JvmField
+    val BLOCK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("block_mold") { it.stacksTo(1) }
+
+    @JvmField
+    val PLATE_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plate_mold") { it.stacksTo(1) }
+
+    @JvmField
+    val MOLDS: Set<HTSimpleDeferredItem> = setOf(BLANK_MOLD, BALL_MOLD, BLOCK_MOLD, PLATE_MOLD)
 
     // Chemical
 

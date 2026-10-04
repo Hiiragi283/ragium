@@ -141,6 +141,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")
 
+        add(RagiumItems.BLANK_MOLD, "空の鋳型")
+        add(RagiumItems.BALL_MOLD, "ボールの鋳型")
+        add(RagiumItems.BLOCK_MOLD, "ブロックの鋳型")
+        add(RagiumItems.PLATE_MOLD, "板の鋳型")
         add(RagiumItems.MEMORY_DISC, "メモリーディスク")
 
         // Mob Effect

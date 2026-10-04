@@ -145,6 +145,10 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
 
+        add(RagiumItems.BLANK_MOLD, "Blank Mold")
+        add(RagiumItems.BALL_MOLD, "Ball Mold")
+        add(RagiumItems.BLOCK_MOLD, "Block Mold")
+        add(RagiumItems.PLATE_MOLD, "Plate Mold")
         add(RagiumItems.MEMORY_DISC, "Memory Disc")
 
         // Mob Effect
