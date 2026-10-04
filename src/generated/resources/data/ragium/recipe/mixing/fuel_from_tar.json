@@ -4,13 +4,13 @@
     "amount": 1000,
     "fluids": "#c:hydrogen"
   },
+  "fluid_result": {
+    "amount": 500,
+    "id": "ragium:fuel"
+  },
   "item_ingredient": {
     "count": 1,
     "items": "ragium:tar"
-  },
-  "result": {
-    "amount": 500,
-    "id": "ragium:fuel"
   },
   "time": 200
 }

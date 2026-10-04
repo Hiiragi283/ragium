@@ -19,7 +19,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidInstance
 
-class RTFreezingRecipe(
+@JvmRecord
+data class RTFreezingRecipe(
     val ingredient: HTFluidIngredient,
     val catalyst: HTItemCatalyst,
     val result: HTItemResult,

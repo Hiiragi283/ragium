@@ -355,7 +355,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
             fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
-            result { +RagiumFluids.ANTI_RUST_OIL }
+            fluidResult { +RagiumFluids.ANTI_RUST_OIL }
         }.save(exporter)
 
         // Tar -> Aromatic Compound + Pitch Coke
@@ -369,7 +369,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         RagiumRecipeBuilders.mixing {
             itemIngredient { items { +RagiumItems.TAR } }
             fluidIngredient { +holderSet(RagiumFluids.HYDROGEN) }
-            result {
+            fluidResult {
                 +RagiumFluids.FUEL
                 amount = 500
             }
@@ -479,10 +479,11 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     +waterSet()
                     amount /= 4
                 }
-                result {
+                fluidResult {
                     +dyeContent
                     amount /= 4
                 }
+                time /= 2
             }.save(exporter)
             // Liquid Dye -> Solid Dye
             RagiumRecipeBuilders.freezing {
@@ -492,7 +493,22 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 }
                 catalyst { items { +RagiumItems.BALL_MOLD } }
                 result { +VanillaColoredCollections.DYE[color] }
+                time /= 4
                 recipeId suffix "_from_liquid_dye"
+            }.save(exporter)
+            // Sand + Gravel + Liquid Dye -> XX Concrete
+            RagiumRecipeBuilders.mixing {
+                itemIngredient { +holderSet(Tags.Items.SANDS) }
+                itemIngredient { +holderSet(Tags.Items.GRAVELS) }
+                fluidIngredient {
+                    +holderSet(dyeContent)
+                    amount /= 4
+                }
+                itemResult {
+                    +VanillaColoredCollections.CONCRETE[color]
+                    count = 2
+                }
+                time /= 2
             }.save(exporter)
         }
 
@@ -536,7 +552,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(RagiumFluids.SULFURIC_ACID)
                 amount /= 2
             }
-            result { +RagiumFluids.NITRIC_ACID }
+            fluidResult { +RagiumFluids.NITRIC_ACID }
             recipeId suffix "_from_niter"
         }.save(exporter)
     }
@@ -569,7 +585,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         RagiumRecipeBuilders.mixing {
             itemIngredient { +dustOrGem(RagiumMaterial.Gem.FLUORITE) }
             fluidIngredient { +holderSet(RagiumFluids.SULFURIC_ACID) }
-            result {
+            fluidResult {
                 +RagiumFluids.HYDROGEN_FLUORIDE
                 amount *= 2
             }
@@ -818,7 +834,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(RagiumFluids.SULFURIC_ACID)
                 amount /= 2
             }
-            result { +RagiumFluids.HYDROGEN_CHLORIDE }
+            fluidResult { +RagiumFluids.HYDROGEN_CHLORIDE }
         }.save(exporter)
 
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)

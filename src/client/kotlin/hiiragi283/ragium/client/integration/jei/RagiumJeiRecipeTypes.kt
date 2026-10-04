@@ -11,6 +11,7 @@ import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
+import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTResourceExtractingRecipe
 import hiiragi283.ragium.api.recipe.RTWashingRecipe
@@ -74,7 +75,7 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.CENTRIFUGING, RagiumBlocks.CHEMICAL_BATH)
 
     @JvmField
-    val MIXING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> =
+    val MIXING: HTHolderJeiRecipeType<RTMixingRecipe> =
         HTJeiRecipeType(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField

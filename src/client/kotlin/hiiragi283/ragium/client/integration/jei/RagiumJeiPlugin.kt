@@ -24,6 +24,7 @@ import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.integration.jei.category.RTElectrolyzingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTEnchantingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTFreezingRecipeCategory
+import hiiragi283.ragium.client.integration.jei.category.RTMixingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTReactingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTResourceExtractingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTWashingRecipeCategory
@@ -124,7 +125,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Chemical
             HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.BATHING),
             RTElectrolyzingRecipeCategory(guiHelper),
-            HTItemAndFluidToFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MIXING),
+            RTMixingRecipeCategory(guiHelper),
             RTReactingRecipeCategory(guiHelper),
             RTWashingRecipeCategory(guiHelper),
             // Bio

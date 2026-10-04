@@ -76,7 +76,7 @@ data object RagiumRecipeLookups {
     val CENTRIFUGING: HTCompoundRecipeLookup<HTFluidToDoubleFluidRecipe> = create(RagiumConstants.CENTRIFUGING)
 
     @JvmField
-    val MIXING: HTCompoundRecipeLookup<HTItemAndFluidToFluidRecipe> = create(RagiumConstants.MIXING)
+    val MIXING: HTRecipeLookup<RTMixingRecipe> = create(RagiumRecipeTypes.MIXING)
 
     @JvmField
     val REACTING: HTCompoundRecipeLookup<RTReactingRecipe> = create(RagiumConstants.REACTING)

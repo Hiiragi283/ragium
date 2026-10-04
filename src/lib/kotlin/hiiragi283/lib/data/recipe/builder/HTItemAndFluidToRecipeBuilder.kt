@@ -33,7 +33,7 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
 
     final override fun createRecipe(): RECIPE = factory.create(itemIngredient, fluidIngredient, result, progressData)
 
-    // Ingredient
+    // Ingredients
     var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()
     var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 

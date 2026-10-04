@@ -22,7 +22,7 @@ abstract class HTTripleItemToRecipeCategory<RECIPE : HTProgressRecipe.Simple<*>>
     codec: MapCodec<RECIPE>
 ) : HTHolderRecipeCategory<RECIPE>(guiHelper, recipeType, 18 * 7, 18 * 1, codec) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RECIPE, focuses: IFocusGroup) {
-        // input
+        // inputs
         setPrimaryInput(
             builder
                 .addInputSlot(getPosition(0), getPosition(0))

@@ -24,7 +24,6 @@ import hiiragi283.ragium.api.recipe.RTDrainingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTFillingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
-import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
@@ -171,13 +170,11 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun mixing(
-        builderAction: HTItemAndFluidToRecipeBuilder.ToFluid<RTMixingRecipe>.() -> Unit
-    ): HTItemAndFluidToRecipeBuilder.ToFluid<RTMixingRecipe> {
+    inline fun mixing(builderAction: RTMixingRecipeBuilder.() -> Unit): RTMixingRecipeBuilder {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemAndFluidToRecipeBuilder.ToFluid(RagiumConstants.MIXING, ::RTMixingRecipe).apply(builderAction)
+        return RTMixingRecipeBuilder().apply(builderAction)
     }
 
     @JvmStatic

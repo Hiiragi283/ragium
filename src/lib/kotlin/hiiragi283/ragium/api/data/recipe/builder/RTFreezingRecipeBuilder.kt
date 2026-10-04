@@ -25,15 +25,6 @@ class RTFreezingRecipeBuilder : HTProgressRecipeBuilder<RTFreezingRecipe>(Ragium
 
     // Ingredient
     var ingredient: HTFluidIngredient by HTDelegates.onceInitialize()
-    var catalyst: HTItemCatalyst by HTDelegates.onceInitialize(HTItemCatalyst::EMPTY)
-
-    operator fun HTFluidIngredient.unaryPlus() {
-        ingredient = this
-    }
-
-    operator fun HTItemCatalyst.unaryPlus() {
-        catalyst = this
-    }
 
     operator fun Ingredient.unaryPlus() {
         +HTItemCatalyst(this)
@@ -44,6 +35,17 @@ class RTFreezingRecipeBuilder : HTProgressRecipeBuilder<RTFreezingRecipe>(Ragium
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         +HTFluidIngredientBuilder.build(builderAction)
+    }
+
+    // Catalyst
+    var catalyst: HTItemCatalyst by HTDelegates.onceInitialize(HTItemCatalyst::EMPTY)
+
+    operator fun HTFluidIngredient.unaryPlus() {
+        ingredient = this
+    }
+
+    operator fun HTItemCatalyst.unaryPlus() {
+        catalyst = this
     }
 
     inline fun catalyst(builderAction: IngredientBuilder.() -> Unit) {

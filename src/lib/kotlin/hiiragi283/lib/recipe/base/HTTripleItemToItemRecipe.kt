@@ -88,14 +88,12 @@ interface HTTripleItemToItemRecipe :
             }
         }
 
-        override fun test(first: ItemInstance, second: ItemInstance, third: ItemInstance): Boolean {
-            if (!ingredient.test(first)) return false
-            return when {
+        override fun test(first: ItemInstance, second: ItemInstance, third: ItemInstance): Boolean =
+            ingredient.test(first) && when {
                 secondary.test(second) -> tertiary?.test(third) ?: true
                 secondary.test(third) -> tertiary?.test(second) ?: true
                 else -> false
             }
-        }
 
         override fun apply(first: ItemInstance, second: ItemInstance, third: ItemInstance): ItemStack = result.create()
 
@@ -104,7 +102,7 @@ interface HTTripleItemToItemRecipe :
             second: ItemInstance,
             third: ItemInstance
         ): Triple<ItemInstance, ItemInstance, ItemInstance> {
-            val firstInput = ingredient.getMatchingStack(first)
+            val firstInput: ItemInstance = ingredient.getMatchingStack(first)
             return when {
                 secondary.test(second) -> Triple(
                     firstInput,
