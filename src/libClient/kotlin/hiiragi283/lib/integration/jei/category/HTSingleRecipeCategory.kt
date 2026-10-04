@@ -4,9 +4,9 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.add
+import hiiragi283.lib.recipe.base.HTBasicSingleRecipe
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
-import hiiragi283.lib.recipe.base.HTProgressRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -17,7 +17,7 @@ import mezz.jei.api.recipe.IFocusGroup
  * @author Hiiragi Tsubasa
  * @since 26.1.6
  */
-abstract class HTSingleRecipeCategory<RECIPE : HTProgressRecipe.Simple<*>>(
+abstract class HTSingleRecipeCategory<RECIPE : HTBasicSingleRecipe<*, *, *>>(
     guiHelper: IGuiHelper,
     recipeType: HTHolderJeiRecipeType<RECIPE>,
     codec: MapCodec<RECIPE>
