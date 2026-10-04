@@ -1,0 +1,16 @@
+{
+  "type": "ragium:alloying",
+  "extra": {
+    "count": 1,
+    "items": "#ragium:smelting_fluxes"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "#c:ores/coal"
+  },
+  "result": {
+    "count": 3,
+    "id": "minecraft:coal"
+  },
+  "time": 200
+}

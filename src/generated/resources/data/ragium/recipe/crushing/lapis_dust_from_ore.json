@@ -4,9 +4,15 @@
     "count": 1,
     "items": "#c:ores/lapis"
   },
-  "result": {
-    "count": 6,
-    "id": "ragium:lapis_dust"
-  },
+  "results": [
+    {
+      "count": 6,
+      "id": "ragium:lapis_dust"
+    },
+    {
+      "count": 1,
+      "id": "minecraft:prismarine_shard"
+    }
+  ],
   "time": 200
 }

@@ -82,6 +82,12 @@ data object RagiumTags {
         @JvmField
         val SHOW_FLUID_TOOLTIPS: TagKey<Item> = create("show_fluid_tooltips")
 
+        /**
+         * @since 26.1.8
+         */
+        @JvmField
+        val SMELTING_FLUXES: TagKey<Item> = create("smelting_fluxes")
+
         @JvmField
         val SOOTY_IRON_TOOL_MATERIALS: TagKey<Item> = create("sooty_iron_tool_materials")
 

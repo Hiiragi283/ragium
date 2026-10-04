@@ -4,9 +4,15 @@
     "count": 1,
     "items": "#c:ores/diamond"
   },
-  "result": {
-    "count": 2,
-    "id": "ragium:diamond_dust"
-  },
+  "results": [
+    {
+      "count": 2,
+      "id": "ragium:diamond_dust"
+    },
+    {
+      "count": 1,
+      "id": "ragium:carbon_dust"
+    }
+  ],
   "time": 200
 }

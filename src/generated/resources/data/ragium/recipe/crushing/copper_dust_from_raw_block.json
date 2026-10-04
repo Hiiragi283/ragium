@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:storage_blocks/raw_copper"
+      }
+    }
+  ],
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:storage_blocks/raw_copper"
+  },
+  "result": {
+    "count": 12,
+    "id": "ragium:copper_dust"
+  },
+  "time": 200
+}

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:alloying",
+  "extra": {
+    "count": 1,
+    "items": "#ragium:smelting_fluxes"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "#c:ores/quartz"
+  },
+  "result": {
+    "count": 6,
+    "id": "minecraft:quartz"
+  },
+  "time": 200
+}

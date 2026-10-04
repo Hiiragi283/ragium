@@ -69,20 +69,26 @@ sealed interface RagiumMaterial :
         GLOWSTONE("Glowstone", "グロウストーン"),
 
         // Common
-        SALT("Salt", "食塩", RagiumChemicals.SODIUM_CHLORIDE),
-        SULFUR("Sulfur", "硫黄", RagiumChemicals.SULFUR),
-        NITER("Niter", "硝石", RagiumChemicals.POTASSIUM_NITRATE),
         BORAX("Borax", "ホウ砂"),
+        SALT("Salt", "食塩", RagiumChemicals.SODIUM_CHLORIDE),
 
         /**
          * @since 26.1.7
          */
         BAUXITE("Bauxite", "ボーキサイト", RagiumChemicals.ALUMINUM_OXIDE),
 
+        SULFUR("Sulfur", "硫黄", RagiumChemicals.SULFUR),
+        NITER("Niter", "硝石", RagiumChemicals.POTASSIUM_NITRATE),
+        
         /**
          * @since 26.1.8
          */
         GYPSUM("Gypsum", "石膏", RagiumChemicals.CALCIUM_SULFATE),
+
+        /**
+         * @since 26.1.8
+         */
+        CINNABAR("Cinnabar", "辰砂"),
 
         // Ragium
         RAGINITE("Raginite", "ラギナイト")
