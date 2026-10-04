@@ -10,6 +10,7 @@ import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTResourceExtractingRecipe
 import hiiragi283.ragium.api.recipe.RTWashingRecipe
@@ -48,7 +49,7 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
-    val FREEZING: HTHolderJeiRecipeType<HTFluidToRecipe.BasicItem> =
+    val FREEZING: HTHolderJeiRecipeType<RTFreezingRecipe> =
         HTJeiRecipeType(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
 
     @JvmField

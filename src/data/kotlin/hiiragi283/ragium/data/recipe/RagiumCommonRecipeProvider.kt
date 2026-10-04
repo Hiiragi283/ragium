@@ -47,12 +47,12 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     override fun getName(): String = "Common Recipes"
 
     //    Mechanical    //
-    
+
     private fun mechanical() {
         ore()
         rawMaterial()
     }
-    
+
     private fun ore() {
         // Crushing
         RagiumRecipeBuilders.crushing {
@@ -84,7 +84,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 }
                 recipeId suffix "_from_ore"
             }.save(exporter)
-            // Alloyinh
+            // Alloying
             RagiumRecipeBuilders.alloying {
                 ingredient { +holderSet(CommonTagPrefixes.ORE, mineral) }
                 extra { +holderSet(RagiumTags.Items.SMELTING_FLUXES) }
@@ -95,7 +95,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 recipeId suffix "_from_ore"
             }.save(exporter)
         }
-        
+
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.LAPIS) }
             result {
@@ -167,7 +167,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         buildTable {
             put(RagiumMaterial.Fuel.COAL, Items.COAL, 3)
             put(RagiumMaterial.Mineral.REDSTONE, Items.REDSTONE, 9)
-            
+
             put(RagiumMaterial.Gem.LAPIS, Items.LAPIS_LAZULI, 9)
             put(RagiumMaterial.Gem.QUARTZ, Items.QUARTZ, 6)
             put(RagiumMaterial.Gem.DIAMOND, Items.DIAMOND, 3)
@@ -391,7 +391,14 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount = 180
             }
         }.save(exporter)
-        // Molten Plastic -> Plastic
+        // Molten Plastic <-> Plastic
+        RagiumRecipeBuilders.melting {
+            ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
+            result {
+                +RagiumFluids.MOLTEN_PLASTIC
+                amount = 90
+            }
+        }.save(exporter)
         RagiumRecipeBuilders.freezing {
             ingredient {
                 +holderSet(RagiumFluids.MOLTEN_PLASTIC)

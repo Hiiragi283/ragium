@@ -23,6 +23,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.integration.jei.category.RTElectrolyzingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTEnchantingRecipeCategory
+import hiiragi283.ragium.client.integration.jei.category.RTFreezingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTReactingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTResourceExtractingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTWashingRecipeCategory
@@ -116,7 +117,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FILLING),
             // Heat
             HTTripleItemToRecipeCategory.Basic(guiHelper, RagiumJeiRecipeTypes.ALLOYING),
-            HTSingleRecipeCategory.FluidToItem(guiHelper, RagiumJeiRecipeTypes.FREEZING),
+            RTFreezingRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING),
             HTSingleRecipeCategory.ItemToFluid(guiHelper, RagiumJeiRecipeTypes.MELTING),
             HTSingleToItemAndFluidRecipeCategory.ItemTo(guiHelper, RagiumJeiRecipeTypes.PYROLYZING),
             HTSingleToItemAndFluidRecipeCategory.FluidTo(guiHelper, RagiumJeiRecipeTypes.REFINING),

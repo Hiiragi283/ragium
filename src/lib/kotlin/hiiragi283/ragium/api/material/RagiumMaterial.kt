@@ -79,7 +79,7 @@ sealed interface RagiumMaterial :
 
         SULFUR("Sulfur", "硫黄", RagiumChemicals.SULFUR),
         NITER("Niter", "硝石", RagiumChemicals.POTASSIUM_NITRATE),
-        
+
         /**
          * @since 26.1.8
          */

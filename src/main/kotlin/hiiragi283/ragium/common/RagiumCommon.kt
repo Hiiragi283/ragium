@@ -124,7 +124,6 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.FILLING.fromRecipeType(RagiumRecipeTypes.FILLING, identity())
 
         RagiumRecipeLookups.ALLOYING.fromRecipeType(RagiumRecipeTypes.ALLOYING, identity())
-        RagiumRecipeLookups.FREEZING.fromRecipeType(RagiumRecipeTypes.FREEZING, identity())
         RagiumRecipeLookups.MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())
         RagiumRecipeLookups.PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING, identity())
         RagiumRecipeLookups.REFINING.fromRecipeType(RagiumRecipeTypes.REFINING, identity())
