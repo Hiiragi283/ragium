@@ -40,7 +40,7 @@ class HTProgressWidget : HTAbstractWidget {
 
     fun getProgress(): Float = progressGetter()
 
-    override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.PROGRESS
+    override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.PROGRESS.get()
 
     override fun toString(): String =
         "HTProgressWidget(bounds=$bounds, progress=${getProgress()}, fillDirection=$fillDirection)"

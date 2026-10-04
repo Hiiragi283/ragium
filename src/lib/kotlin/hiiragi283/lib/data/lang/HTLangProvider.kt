@@ -3,13 +3,15 @@ package hiiragi283.lib.data.lang
 import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.lib.advancment.descKey
 import hiiragi283.lib.advancment.titleKey
+import hiiragi283.lib.registry.HTDecorationContent
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTPotionContent
 import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.HTHasTranslationKey
-import hiiragi283.ragium.api.data.oreSlurry.HTOreSlurryData
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
 import net.neoforged.neoforge.common.data.LanguageProvider
 
@@ -35,6 +37,15 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
 
         @JvmField
         val TIPPED_ARROW_PATTERN = HTLangPatternProvider("Arrow of %s", "%sの矢")
+
+        @JvmField
+        val SLAB_PATTERN = HTLangPatternProvider("%s Slab", "%sのハーフブロック")
+
+        @JvmField
+        val STAIRS_PATTERN = HTLangPatternProvider("%s Stairs", "%sの階段")
+
+        @JvmField
+        val WALL_PATTERN = HTLangPatternProvider("%s Wall", "%sの壁")
     }
 
     fun add(translatable: HTHasTranslationKey, value: String) {
@@ -50,13 +61,27 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
     }
 
     /**
+     * @since 26.1.8
+     */
+    fun addFromKey(key: ResourceKey<*>, value: String) {
+        add(key.toLanguageKey(), value)
+    }
+
+    /**
+     * @since 26.1.8
+     */
+    fun addFromKey(key: ResourceKey<*>, suffix: String, value: String) {
+        add(key.toLanguageKey(suffix), value)
+    }
+
+    /**
      * エンチャントの翻訳名を追加します。
      * @param value エンチャントの翻訳名
      * @param desc エンチャントの説明
      */
     protected fun addEnchantment(key: ResourceKey<Enchantment>, value: String, desc: String) {
-        add(key.toLanguageKey(), value)
-        add(key.toLanguageKey("desc"), desc)
+        addFromKey(key, value)
+        addFromKey(key, "desc", desc)
     }
 
     /**
@@ -94,9 +119,23 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
     }
 
     /**
-     * @since 26.1.5
+     * @since 26.1.8
      */
-    fun addOreSlurry(key: ResourceKey<HTOreSlurryData>, value: String) {
-        add(key.toLanguageKey(), value)
+    fun addDecoration(content: HTDecorationContent, name: HTLangName) {
+        // Slab
+        add(content.slab, SLAB_PATTERN, name)
+        // Stairs
+        content.stairs?.let { add(it, STAIRS_PATTERN, name) }
+        // Wall
+        content.wall?.let { add(it, WALL_PATTERN, name) }
+    }
+
+    /**
+     * @since 26.1.8
+     */
+    fun addRecipeType(recipeType: RecipeType<*>, value: String) {
+        BuiltInRegistries.RECIPE_TYPE.getResourceKey(recipeType).ifPresent {
+            add(it.toLanguageKey(), value)
+        }
     }
 }

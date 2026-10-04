@@ -2,6 +2,8 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.builder.ingredient
+import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
@@ -64,7 +66,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Machine Casing
         RagiumRecipeBuilders.alloying {
             ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
+                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL)
                 count = 2
             }
             extra { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
@@ -82,7 +84,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                     )
                 )
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON) }
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             recipeId suffix "_by_coals"
         }.save(exporter)
         // 2x Iron + Cokes -> 2x Sooty Iron
@@ -93,33 +95,19 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             extra { +holderSet(RagiumTags.Items.COKES) }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.SOOTY_IRON)
+                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON)
                 count = 2
             }
             recipeId suffix "_by_cokes"
         }.save(exporter)
         // Sooty Iron + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {
-            ingredient { +dustOrIngot(RagiumMaterial.Metal.SOOTY_IRON) }
+            ingredient { +dustOrIngot(RagiumMaterial.Alloy.SOOTY_IRON) }
             extra {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN)
                 count = 2
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL) }
-        }.save(exporter)
-        // Aluminum + Copper + Obsidian Dust -> Black Steel
-        RagiumRecipeBuilders.alloying {
-            ingredient {
-                +dustOrIngot(RagiumMaterial.Metal.ALUMINUM)
-                count = 3
-            }
-            extra { +dustOrIngot(RagiumMaterial.Metal.COPPER) }
-            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.BLACK_STEEL)
-                count = 4
-            }
-            recipeId replace id("obzinite_ingot")
+            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
         }.save(exporter)
     }
 
@@ -139,10 +127,14 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             ingredient { +holderSet(RagiumFluids.HONEY) }
             result { +Items.HONEY_BLOCK }
         }.save(exporter)
-        // Glass
+
+        // Sticky Ball
         RagiumRecipeBuilders.freezing {
-            ingredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
-            result { +Items.GLASS }
+            ingredient {
+                +holderSet(RagiumTags.Fluids.RESINS)
+                amount /= 4
+            }
+            result { +RagiumItems.STICKY_BALL }
         }.save(exporter)
     }
 
@@ -246,34 +238,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 recipeId prefix "${amplifier}x_"
             }.save(exporter)
         }
-        // Molten Glass
-        RagiumRecipeBuilders.melting {
-            ingredient {
-                +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP, CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Other.GLASS))
-            }
-            result { +RagiumFluids.MOLTEN_GLASS }
-            recipeId suffix "_from_block"
-        }.save(exporter)
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.GLASS_PANES) }
-            result {
-                +RagiumFluids.MOLTEN_GLASS
-                amount = 375
-            }
-            recipeId suffix "_from_pane"
-        }.save(exporter)
-        RagiumRecipeBuilders.melting {
-            ingredient {
-                +holderSet(Tags.Items.GLASS_PANES)
-                count = 8
-            }
-            result {
-                +RagiumFluids.MOLTEN_GLASS
-                amount *= 3
-            }
-            time *= 8
-            recipeId suffix "_from_panes"
-        }.save(exporter)
         // Molten Redstone
         RagiumRecipeBuilders.melting {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }

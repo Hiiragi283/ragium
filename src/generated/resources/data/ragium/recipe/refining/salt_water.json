@@ -1,0 +1,16 @@
+{
+  "type": "ragium:refining",
+  "fluid_result": {
+    "amount": 1000,
+    "id": "minecraft:water"
+  },
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:salt_water"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "ragium:salt_dust"
+  },
+  "time": 200
+}

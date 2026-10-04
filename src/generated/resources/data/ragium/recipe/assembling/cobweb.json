@@ -2,7 +2,7 @@
   "type": "ragium:assembling",
   "extra": {
     "count": 1,
-    "items": "#c:sticky_balls"
+    "items": "#c:slime_balls"
   },
   "ingredient": {
     "count": 5,

@@ -1,0 +1,9 @@
+{
+  "type": "ragium:resource/extracting",
+  "condition": "#c:is_ocean",
+  "result": {
+    "amount": 4000,
+    "id": "ragium:salt_water"
+  },
+  "time": 200
+}

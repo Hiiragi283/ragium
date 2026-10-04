@@ -31,7 +31,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
             HTBlockItemTagsProvider.forItem(builder(item))
         }.run()
         // Material
-        builder(CommonTagPrefixes.GEM, RagiumMaterial.Gem.ECHO).add(createKey(vanillaId("echo_shard")))
+        builder(CommonTagPrefixes.GEM, RagiumMaterial.Gem.ECHO).add(vanillaId("echo_shard"))
 
         RagiumItems.MATERIAL_ITEMS
             .forEach { (part: HTItemPart, material: RagiumMaterial, item: HTSimpleValueWithKey<Item>) ->
@@ -53,38 +53,30 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         }
 
         builder(RagiumTags.Items.SOOTY_IRON_TOOL_MATERIALS)
-            .addTag(CommonTagPrefixes.INGOT.itemTagKey(RagiumMaterial.Metal.SOOTY_IRON))
+            .addTag(CommonTagPrefixes.INGOT.itemTagKey(RagiumMaterial.Alloy.SOOTY_IRON))
         // Other
-        builder(ItemTags.SLABS)
-            .add(RagiumBlocks.FLUORITE_SLAB)
-            .add(RagiumBlocks.CRYOLITE_SLAB)
-        builder(ItemTags.STAIRS)
-            .add(RagiumBlocks.FLUORITE_STAIRS)
-            .add(RagiumBlocks.CRYOLITE_STAIRS)
-
         builder(ItemTags.PLANKS).add(RagiumItems.PARTICLE_BOARD)
 
         builder(Tags.Items.FEATHERS).add(RagiumItems.SYNTHETIC_FEATHER)
         builder(Tags.Items.LEATHERS).add(RagiumItems.SYNTHETIC_LEATHER)
         builder(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
+        builder(Tags.Items.SLIME_BALLS).add(RagiumItems.STICKY_BALL)
 
         builder(HTCommonTags.Items.COAL_COKE).add(RagiumItems.COAL_COKE)
-        builder(HTCommonTags.Items.PAPER).add(createKey(vanillaId("paper")))
+        builder(HTCommonTags.Items.PAPER).add(vanillaId("paper"))
         builder(HTCommonTags.Items.PITCH_COKE).add(RagiumItems.PITCH_COKE)
         builder(HTCommonTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
         builder(HTCommonTags.Items.SILICON).add(RagiumItems.CRUDE_SILICON)
-        builder(HTCommonTags.Items.STICKY_BALLS).addTag(Tags.Items.SLIME_BALLS)
 
         builder(RagiumTags.Items.COALS)
             .add(RagiumItems.BAMBOO_CHARCOAL)
-            .add(createKey(vanillaId("charcoal")))
-            .add(createKey(vanillaId("coal")))
+            .add(vanillaId("charcoal"))
+            .add(vanillaId("coal"))
         builder(RagiumTags.Items.COKES)
             .addTag(HTCommonTags.Items.COAL_COKE)
             .addTag(HTCommonTags.Items.PITCH_COKE)
         builder(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)
-            .add(RagiumBlocks.TANK)
-            .add(RagiumBlocks.VOID_TANK)
-            .add(RagiumBlocks.CREATIVE_TANK)
+            .add(RagiumBlocks.FLUID_OUTPUT_BUS)
+            .apply { RagiumBlocks.TANKS.forEach { add(it) } }
     }
 }

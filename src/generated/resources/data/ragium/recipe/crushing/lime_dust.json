@@ -1,0 +1,15 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": [
+      "minecraft:calcite",
+      "minecraft:dripstone_block"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:lime_dust"
+  },
+  "time": 200
+}

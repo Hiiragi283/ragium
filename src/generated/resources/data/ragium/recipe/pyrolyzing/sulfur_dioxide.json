@@ -1,0 +1,12 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 1000,
+    "id": "ragium:sulfur_dioxide"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "#c:dusts/sulfur"
+  },
+  "time": 200
+}

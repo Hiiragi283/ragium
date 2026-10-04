@@ -24,7 +24,7 @@ class HTItemAndFluidToItemRecipeCategory(
         recipe: HTItemAndFluidToRecipe.BasicItem,
         focuses: IFocusGroup
     ) {
-        // input
+        // inputs
         builder
             .addInputSlot(getPosition(0), getPosition(0))
             .add(recipe.fluidIngredient)

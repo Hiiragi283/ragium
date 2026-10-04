@@ -44,8 +44,10 @@ sealed class HTFluidContent(
     /**
      * 新しい[FluidStackTemplate]のインスタンスを作成します。
      */
-    override fun toTemplate(amount: Int, patch: DataComponentPatch): FluidStackTemplate? =
-        sourceHolder.getOrNull()?.let { FluidStackTemplate(it, amount, patch) }
+    override fun toTemplate(amount: Int, patch: DataComponentPatch): FluidStackTemplate? = when {
+        sourceHolder.isEmpty -> null
+        else -> sourceHolder.asEither().map { FluidStackTemplate(it, amount, patch) }.getOrNull()
+    }
 
     /**
      * 新しい[FluidStack]のインスタンスを作成します。

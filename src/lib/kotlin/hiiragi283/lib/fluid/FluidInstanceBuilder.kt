@@ -4,7 +4,6 @@ package hiiragi283.lib.fluid
 
 import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.data.buildDataPatch
-import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.isEmpty
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
@@ -74,10 +73,6 @@ class FluidInstanceBuilder : HolderAcceptor.FluidAcceptor {
 
     override operator fun Holder<Fluid>.unaryPlus() {
         fluid = this
-    }
-
-    operator fun HTFluidContent.unaryPlus() {
-        +this.sourceHolder
     }
 
     operator fun DataComponentPatch.unaryPlus() {

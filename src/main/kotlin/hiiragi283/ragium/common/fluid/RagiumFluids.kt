@@ -8,7 +8,6 @@ import hiiragi283.lib.resource.toId
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.Identity
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.item.HTOreSlurryBucketItem
 import hiiragi283.ragium.common.item.HTPotionBucketItem
 import hiiragi283.ragium.common.item.component.RagiumConsumables
 import net.minecraft.core.component.DataComponents
@@ -131,6 +130,9 @@ data object RagiumFluids {
 
     // 3rd
     @JvmField
+    val NITROGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("nitrogen") { properties = gaseous() }
+
+    @JvmField
     val OXYGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("oxygen") { properties = gaseous() }
 
     // 4th
@@ -147,6 +149,12 @@ data object RagiumFluids {
 
     @JvmField
     val COAL_TAR: HTFluidContent.Virtual = REGISTER.registerVirtual("coal_tar") { properties = liquid() }
+
+    @JvmField
+    val ALCOHOL: HTFluidContent.Virtual = REGISTER.registerVirtual("alcohol") { properties = liquid() }
+
+    @JvmField
+    val ALDEHYDE: HTFluidContent.Virtual = REGISTER.registerVirtual("aldehyde") { properties = liquid() }
 
     @JvmField
     val AROMATIC_COMPOUND: HTFluidContent.Flowing = REGISTER.registerFlowing("aromatic_compound") {
@@ -183,6 +191,9 @@ data object RagiumFluids {
     val ANTI_RUST_OIL: HTFluidContent.Virtual = REGISTER.registerVirtual("anti_rust_oil") { properties = liquid() }
 
     @JvmField
+    val MOLTEN_PLASTIC: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_plastic") { properties = molten() }
+
+    @JvmField
     val SYNTHETIC_RESIN: HTFluidContent.Virtual = REGISTER.registerVirtual("synthetic_resin") { properties = liquid() }
 
     // N
@@ -207,6 +218,9 @@ data object RagiumFluids {
     }
 
     // Na
+    @JvmField
+    val SALT_WATER: HTFluidContent.Flowing = REGISTER.registerFlowing("salt_water") { properties = liquid() }
+
     @JvmField
     val NAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("sodium_hydroxide_solution") {
         properties = liquid()
@@ -244,12 +258,4 @@ data object RagiumFluids {
 
     @JvmField
     val BLEACH: HTFluidContent.Virtual = REGISTER.registerVirtual("bleach") { properties = liquid() }
-
-    // Other
-    @JvmField
-    val ORE_SLURRY: HTFluidContent.Virtual = REGISTER.registerVirtual("ore_slurry") {
-        properties = liquid()
-        typeFactory = ::HTOreSlurryFluidType
-        bucketFactory = ::HTOreSlurryBucketItem
-    }
 }

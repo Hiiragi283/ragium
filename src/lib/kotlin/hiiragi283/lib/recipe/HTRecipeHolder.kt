@@ -3,9 +3,7 @@ package hiiragi283.lib.recipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.resource.HTValueWithId
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.util.Ior
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -17,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeHolder
  * @since 26.1.0
  */
 @JvmRecord
-data class HTRecipeHolder<out RECIPE : Any>(val key: RecipeKey, val recipe: RECIPE) : HTValueWithId<RECIPE> {
+data class HTRecipeHolder<out RECIPE : Any>(val key: RecipeKey, val recipe: RECIPE) {
     companion object {
         @JvmStatic
         fun <RECIPE : Any> codec(recipeCodec: MapCodec<RECIPE>): Codec<HTRecipeHolder<RECIPE>> =
@@ -45,8 +43,6 @@ data class HTRecipeHolder<out RECIPE : Any>(val key: RecipeKey, val recipe: RECI
     }
 
     inline fun <reified U : Any> castAs(): HTRecipeHolder<U>? = mapNotNull { it as? U }
-
-    override fun unwrapWithId(): Ior<Identifier, RECIPE> = Ior.Both(this.id, this.recipe)
 }
 
 //    Extensions    //

@@ -2,6 +2,8 @@
 
 package hiiragi283.lib.util
 
+import hiiragi283.lib.collection.Nel
+import hiiragi283.lib.collection.nel
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -214,3 +216,52 @@ sealed class Ior<out A, out B> {
      */
     data class Both<A, B>(val leftValue: A, val rightValue: B) : Ior<A, B>()
 }
+
+//    Extensions    //
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.8
+ */
+inline fun <A, B> Ior<A, B>.getOrElse(default: (A) -> B): B {
+    contract {
+        callsInPlace(default, InvocationKind.AT_MOST_ONCE)
+    }
+    return when (this) {
+        is Ior.Both<A, B> -> this.rightValue
+        is Ior.Left<A> -> default(this.value)
+        is Ior.Right<B> -> this.value
+    }
+}
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.8
+ */
+fun <A, B> Pair<A, B>.bothIor(): Ior<A, B> = Ior.Both(this.first, this.second)
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.8
+ */
+fun <A> A.leftIor(): Ior<A, Nothing> = Ior.Left(this)
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.8
+ */
+fun <A> A.rightIor(): Ior<Nothing, A> = Ior.Right(this)
+
+// IorNel
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.8
+ */
+typealias IorNel<E, A> = Ior<Nel<E>, A>
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.8
+ */
+fun <A, B> Ior<A, B>.toIorNel(): IorNel<A, B> = this.mapLeft { it.nel() }

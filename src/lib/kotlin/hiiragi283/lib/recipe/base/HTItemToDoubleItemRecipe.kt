@@ -44,7 +44,7 @@ interface HTItemToDoubleItemRecipe :
      */
     open class Basic(
         val ingredient: HTItemIngredient,
-        val result: Nel<HTItemResult>,
+        val results: Nel<HTItemResult>,
         override val progressData: HTProgressData
     ) : HTItemToDoubleItemRecipe,
         HTProgressRecipe.Simple<SingleRecipeInput> {
@@ -56,7 +56,7 @@ interface HTItemToDoubleItemRecipe :
                         HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
                         HTItemResult.CODEC
                             .compactNelFieldOf(HTConstants.RESULT, HTConstants.RESULTS, 2)
-                            .forGetter(Basic::result),
+                            .forGetter(Basic::results),
                         HTProgressData.CODEC.forGetter(Basic::progressData)
                     ).apply(instance, factory::create)
                 }
@@ -71,7 +71,7 @@ interface HTItemToDoubleItemRecipe :
                 HTItemIngredient.STREAM_CODEC,
                 Basic::ingredient,
                 HTItemResult.STREAM_CODEC.nelOf(),
-                Basic::result,
+                Basic::results,
                 HTProgressData.STREAM_CODEC,
                 Basic::progressData,
                 factory::create
@@ -83,6 +83,6 @@ interface HTItemToDoubleItemRecipe :
         override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
 
         override fun apply(input: ItemInstance): Pair<ItemStack, ItemStack> =
-            result.head.create() to result.getOrNull(1).createOrEmpty()
+            results.head.create() to results.getOrNull(1).createOrEmpty()
     }
 }

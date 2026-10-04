@@ -1,0 +1,22 @@
+{
+  "type": "ragium:washing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": {
+    "count": 4,
+    "items": "#c:sands/red"
+  },
+  "results": [
+    {
+      "count": 3,
+      "id": "ragium:quartz_dust"
+    },
+    {
+      "count": 1,
+      "id": "ragium:bauxite_dust"
+    }
+  ],
+  "time": 200
+}

@@ -1,16 +1,16 @@
 {
   "type": "ragium:refining",
   "fluid_result": {
-    "amount": 750,
-    "id": "ragium:naphtha"
+    "amount": 500,
+    "id": "ragium:fuel"
   },
   "ingredient": {
     "amount": 1000,
-    "fluids": "#c:crude_oil"
+    "fluids": "#c:naphtha"
   },
   "item_result": {
     "count": 1,
-    "id": "ragium:tar"
+    "id": "ragium:sulfur_dust"
   },
   "time": 200
 }

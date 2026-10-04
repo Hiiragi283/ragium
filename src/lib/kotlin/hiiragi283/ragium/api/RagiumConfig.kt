@@ -114,15 +114,15 @@ data object RagiumConfig {
 
             @JvmField
             val melter: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.MELTER)
+                HTEnergyConfig.createMachine(builder, RagiumConstants.MELTER, 64)
 
             @JvmField
             val pyrolyzer: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.PYROLYZER)
+                HTEnergyConfig.createMachine(builder, RagiumConstants.PYROLYZER, 32)
 
             @JvmField
             val refinery: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.REFINERY)
+                HTEnergyConfig.createMachine(builder, RagiumConstants.REFINERY, 32)
 
             @JvmField
             val smelter: HTEnergyConfig =
@@ -138,10 +138,6 @@ data object RagiumConfig {
                 HTEnergyConfig.createMachine(builder, RagiumConstants.CHEMICAL_REACTOR)
 
             @JvmField
-            val electrolyzer: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.ELECTROLYZER)
-
-            @JvmField
             val mixer: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.MIXER)
 
@@ -155,6 +151,10 @@ data object RagiumConfig {
                 HTEnergyConfig.createMachine(builder, RagiumConstants.PLANTER)
 
             // Electronics
+            @JvmField
+            val electrolyzer: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.ELECTROLYZER, 64)
+
             @JvmField
             val precisionAssembler: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.PRECISION_ASSEMBLER, 64)

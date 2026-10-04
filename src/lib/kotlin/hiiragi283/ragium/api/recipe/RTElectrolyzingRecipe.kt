@@ -3,52 +3,41 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTRecipeFactories
 import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.ingredient.test
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
-import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.nelOf
-import hiiragi283.lib.util.fold
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.ItemInstance
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.Optional
 
 @JvmRecord
 data class RTElectrolyzingRecipe(
-    val itemIngredient: Optional<HTItemIngredient>,
-    val fluidIngredient: HTFluidIngredient,
+    val ingredient: HTFluidIngredient,
     val results: Nel<HTFluidResult>,
     override val progressData: HTProgressData
-) : HTRecipePredicates.ItemAndFluid,
-    HTRecipeFactories.ItemAndFluid<Triple<FluidStack, FluidStack, FluidStack>>,
-    HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
-    HTSerializableRecipe<HTItemAndFluidRecipeInput> {
+) : HTRecipePredicates.SingleFluid,
+    HTRecipeFactories.SingleFluidTo<RTElectrolyzingRecipe.ElectrolyzedResult>,
+    HTProgressRecipe.Simple<HTSingleFluidRecipeInput>,
+    HTSerializableRecipe<HTSingleFluidRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTElectrolyzingRecipe> = HTCodecs.recordMap { instance ->
             instance.group(
-                HTItemIngredient.CODEC
-                    .optionalFieldOf(HTConstants.ITEM_INGREDIENT)
-                    .forGetter(RTElectrolyzingRecipe::itemIngredient),
                 HTFluidIngredient.CODEC
-                    .fieldOf(HTConstants.FLUID_INGREDIENT)
-                    .forGetter(RTElectrolyzingRecipe::fluidIngredient),
+                    .fieldOf(HTConstants.INGREDIENT)
+                    .forGetter(RTElectrolyzingRecipe::ingredient),
                 HTFluidResult.CODEC
                     .compactNelFieldOf(HTConstants.RESULT, HTConstants.RESULTS, 3)
                     .forGetter(RTElectrolyzingRecipe::results),
@@ -58,10 +47,8 @@ data class RTElectrolyzingRecipe(
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, RTElectrolyzingRecipe> = StreamCodec.composite(
-            HTStreamCodecs.optional(HTItemIngredient.STREAM_CODEC),
-            RTElectrolyzingRecipe::itemIngredient,
             HTFluidIngredient.STREAM_CODEC,
-            RTElectrolyzingRecipe::fluidIngredient,
+            RTElectrolyzingRecipe::ingredient,
             HTFluidResult.STREAM_CODEC.nelOf(),
             RTElectrolyzingRecipe::results,
             HTProgressData.STREAM_CODEC,
@@ -73,15 +60,11 @@ data class RTElectrolyzingRecipe(
         val SERIALIZER: RecipeSerializer<RTElectrolyzingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(first: ItemInstance, second: FluidInstance): Boolean =
-        itemIngredient.test(first) && fluidIngredient.test(second)
+    override fun test(input: FluidInstance): Boolean = ingredient.test(input)
 
-    override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> = Pair(
-        itemIngredient.fold(ItemStack::EMPTY) { it.getMatchingStack(first) },
-        fluidIngredient.getMatchingStack(second)
-    )
+    override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
 
-    override fun apply(first: ItemInstance, second: FluidInstance): Triple<FluidStack, FluidStack, FluidStack> = Triple(
+    override fun apply(input: FluidInstance): ElectrolyzedResult = ElectrolyzedResult(
         results.head.create(),
         results.getOrNull(1).createOrEmpty(),
         results.getOrNull(2).createOrEmpty()
@@ -89,5 +72,8 @@ data class RTElectrolyzingRecipe(
 
     override fun getSerializer(): RecipeSerializer<RTElectrolyzingRecipe> = RagiumRecipeSerializers.ELECTROLYZING
 
-    override fun getType(): HTRecipeType<RTElectrolyzingRecipe> = RagiumRecipeTypes.ELECTROLYZING
+    override fun getType(): RecipeType<RTElectrolyzingRecipe> = RagiumRecipeTypes.ELECTROLYZING
+
+    @JvmRecord
+    data class ElectrolyzedResult(val right: FluidStack, val left: FluidStack, val main: FluidStack)
 }

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:alloying",
+  "extra": {
+    "count": 1,
+    "items": "#c:sands"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:amethyst_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:quartz_glass"
+  },
+  "time": 200
+}

@@ -3,11 +3,10 @@ package hiiragi283.ragium.data.model
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.data.model.HTModelTemplates
-import hiiragi283.lib.data.model.createBlock
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
-import hiiragi283.lib.resource.HTValueWithId
+import hiiragi283.lib.resource.HTSimpleValueWithKey
 import hiiragi283.lib.resource.blockId
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
@@ -23,6 +22,7 @@ import net.minecraft.client.data.models.blockstates.PropertyDispatch
 import net.minecraft.client.data.models.model.ModelTemplates
 import net.minecraft.client.data.models.model.TextureMapping
 import net.minecraft.client.data.models.model.TextureSlot
+import net.minecraft.client.data.models.model.TexturedModel
 import net.minecraft.client.resources.model.sprite.Material
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
@@ -44,10 +44,9 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             add(RagiumFluids.WOOD_TAR)
             add(RagiumFluids.COAL_TAR)
             add(RagiumFluids.CRUDE_OIL)
+            add(RagiumFluids.MOLTEN_PLASTIC)
             add(RagiumFluids.SYNTHETIC_RESIN)
             add(RagiumFluids.SULFURIC_ACID)
-
-            add(RagiumFluids.ORE_SLURRY)
         }
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             // Item
@@ -69,20 +68,14 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             yieldAll(RagiumBlocks.MATERIAL_BLOCKS.values)
             yield(RagiumBlocks.ECHO_BLOCK)
             yield(RagiumBlocks.FLUORITE_BLOCK)
-            yield(RagiumBlocks.CRYOLITE_BLOCK)
+            // yield(RagiumBlocks.CRYOLITE_BLOCK)
 
             yield(RagiumBlocks.CREATIVE_BATTERY) // TODO
 
             yield(RagiumBlocks.MACHINE_CASING)
         }.forEach { generators.createTrivialCube(it.getOrThrow()) }
 
-        // Slab
-        generators.createSlab(RagiumBlocks.FLUORITE_SLAB, RagiumBlocks.FLUORITE_BLOCK)
-        generators.createSlab(RagiumBlocks.CRYOLITE_SLAB, RagiumBlocks.CRYOLITE_BLOCK)
-
-        // Stairs
-        generators.createStairs(RagiumBlocks.FLUORITE_STAIRS, RagiumBlocks.FLUORITE_BLOCK)
-        generators.createStairs(RagiumBlocks.CRYOLITE_STAIRS, RagiumBlocks.CRYOLITE_BLOCK)
+        RagiumBlocks.ALL_DECORATIONS.forEach { generators.createDecoration(it) }
 
         // Machine
         val inactiveModels: Map<HTMachineType, Identifier> = HTMachineType.entries
@@ -97,44 +90,45 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         RagiumBlocks.MACHINES
             .entries
             .forEach { (machineType: HTMachineType, blockItems: List<HTSimpleDeferredBlockAndItem>) ->
-                val inactiveModel: Identifier = inactiveModels[machineType]!!
                 for (blockItem: HTSimpleDeferredBlockAndItem in blockItems) {
+                    val (inactive: Identifier, active: Identifier) = when (blockItem) {
+                        RagiumBlocks.FREEZER -> {
+                            RagiumAPI.id(HTConstants.BLOCK, "machine", "cryo") to blockItem.idOrThrow.blockId
+                        }
+
+                        else -> inactiveModels[machineType]!! to machineModel(generators, machineType, blockItem)
+                    }
                     generators.blockStateOutput.accept(
                         MultiVariantGenerator.dispatch(blockItem.getOrThrow())
                             .with(
                                 PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
-                                    .select(false, BlockModelGenerators.plainVariant(inactiveModel))
-                                    .select(
-                                        true,
-                                        BlockModelGenerators.plainVariant(
-                                            machineModel(generators, machineType, blockItem)
-                                        )
-                                    )
+                                    .select(false, BlockModelGenerators.plainVariant(inactive))
+                                    .select(true, BlockModelGenerators.plainVariant(active))
                             ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
                     )
                 }
             }
         // Decoration
+        generators.createGlassBlocks(
+            RagiumBlocks.QUARTZ_GLASS.getOrThrow(),
+            RagiumBlocks.QUARTZ_GLASS_PANE.getOrThrow()
+        )
+
         for ((machineType: HTMachineType, block: HTSimpleDeferredBlockAndItem) in RagiumBlocks.MACHINE_CASINGS) {
-            generators.createSimple(
-                block.getOrThrow(),
-                ModelTemplates.CUBE_TOP.createBlock(
-                    block,
-                    textureMapping(machineType),
-                    generators.modelOutput
-                )
-            )
+            generators.createSimple(block, ModelTemplates.CUBE_TOP, textureMapping(machineType))
         }
+        // Bus
+        generators.createTrivialBlock(RagiumBlocks.FLUID_OUTPUT_BUS.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
         // Storage
-        generators.createTrivialBlock(RagiumBlocks.TANK.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
-        generators.createTrivialBlock(RagiumBlocks.VOID_TANK.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
-        generators.createTrivialBlock(RagiumBlocks.CREATIVE_TANK.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
+        for (blockItem: HTSimpleDeferredBlockAndItem in RagiumBlocks.TANKS) {
+            generators.createTrivialBlock(blockItem.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
+        }
     }
 
     private fun machineModel(
         generators: BlockModelGenerators,
         machineType: HTMachineType,
-        block: HTValueWithId<Block>
+        block: HTSimpleValueWithKey<Block>
     ): Identifier {
         val blockId: Identifier = block.idOrThrow.blockId
         return ModelTemplates.CUBE_ORIENTABLE.create(

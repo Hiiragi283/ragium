@@ -1,7 +1,5 @@
 package hiiragi283.lib.registry
 
-import hiiragi283.lib.text.HTHasText
-import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.lib.text.Text
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
@@ -21,10 +19,7 @@ typealias HTSimpleDeferredFluidType = HTDeferredFluidType<FluidType>
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTDeferredFluidType<out TYPE : FluidType> :
-    HTDeferredHolder<FluidType, TYPE>,
-    HTHasTranslationKey,
-    HTHasText {
+class HTDeferredFluidType<out TYPE : FluidType> : HTDeferredHolder.Translatable<FluidType, TYPE> {
     constructor(key: ResourceKey<FluidType>) : super(key)
 
     constructor(id: Identifier) : super(NeoForgeRegistries.Keys.FLUID_TYPES, id)

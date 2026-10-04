@@ -1,6 +1,7 @@
 package hiiragi283.lib.data.loot
 
-import hiiragi283.lib.resource.HTValueWithId
+import hiiragi283.lib.resource.HTSimpleValueWithKey
+import hiiragi283.lib.resource.HTValueWithKey
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.loot.BlockLootSubProvider
@@ -19,11 +20,11 @@ import net.minecraft.world.level.storage.loot.LootTable
 abstract class HTBlockLootTableProvider(
     registries: HolderLookup.Provider,
     protected val modId: String,
-    private val rawBlocks: Sequence<HTValueWithId<Block>>
+    private val rawBlocks: Sequence<HTSimpleValueWithKey<Block>>
 ) : BlockLootSubProvider(emptySet(), FeatureFlags.REGISTRY.allFlags(), registries) {
     final override fun getKnownBlocks(): Iterable<Block> = rawBlocks
-        .filter { block: HTValueWithId<Block> -> block.idOrNull?.namespace == modId }
-        .mapNotNull(HTValueWithId<Block>::getOrNull)
+        .filter { block: HTSimpleValueWithKey<Block> -> block.idOrNull?.namespace == modId }
+        .mapNotNull(HTSimpleValueWithKey<Block>::getOrNull)
         .filter { block: Block -> block.lootTable.isPresent }
         .toList()
 
@@ -34,16 +35,16 @@ abstract class HTBlockLootTableProvider(
      */
     val fortune: Holder<Enchantment> by lazy { registries.holderOrThrow(Enchantments.FORTUNE) }
 
-    protected fun dropSelf(like: HTValueWithId<Block>) {
+    protected fun dropSelf(like: HTSimpleValueWithKey<Block>) {
         dropSelf(like.getOrThrow())
     }
 
-    protected fun add(like: HTValueWithId<Block>, table: LootTable.Builder) {
+    protected fun add(like: HTSimpleValueWithKey<Block>, table: LootTable.Builder) {
         add(like.getOrThrow(), table)
     }
 
-    protected inline fun <BLOCK : Block> add(like: HTValueWithId<BLOCK>, factory: (BLOCK) -> LootTable.Builder) {
-        val block: BLOCK = like.getOrThrow()
+    protected inline fun <T : Block> add(like: HTValueWithKey<Block, T>, factory: (T) -> LootTable.Builder) {
+        val block: T = like.getOrThrow()
         add(block, factory(block))
     }
 }

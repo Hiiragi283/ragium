@@ -1,6 +1,7 @@
 package hiiragi283.lib.recipe.result
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.fluid.HTFlowingFluidHelper
@@ -150,7 +151,14 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
         companion object {
             @JvmField
             val CODEC: MapCodec<PotionEntry> =
-                MapCodec.assumeMapUnsafe(PotionContents.CODEC).xmap(::PotionEntry, PotionEntry::contents)
+                MapCodec.assumeMapUnsafe(
+                    PotionContents.CODEC.validate { contents: PotionContents ->
+                        when (HTPotionHelper.isEmpty(contents)) {
+                            true -> DataResult.error { "Could not create fluid result with empty potion contents" }
+                            false -> DataResult.success(contents)
+                        }
+                    }
+                ).xmap(::PotionEntry, PotionEntry::contents)
 
             @JvmField
             val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, PotionEntry> =
@@ -162,7 +170,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
 
         override fun type(): HTFluidResultType<*> = TYPE
 
-        override fun create(amount: Int): FluidStack = HTPotionHelper.createFluid(contents, amount)
+        override fun create(amount: Int): FluidStack = HTPotionHelper.createFluid(contents, amount) ?: FluidStack.EMPTY
 
         override fun getId(): Identifier? = HTPotionHelper.getPotionId(contents)
     }

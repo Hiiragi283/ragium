@@ -1,0 +1,11 @@
+{
+  "type": "ragium:compound",
+  "composition": [
+    {
+      "element": "ragium:sodium"
+    },
+    {
+      "chemical": "ragium:hydroxide"
+    }
+  ]
+}

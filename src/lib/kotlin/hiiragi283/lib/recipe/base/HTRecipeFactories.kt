@@ -4,11 +4,13 @@ import com.mojang.datafixers.util.Function3
 import hiiragi283.lib.recipe.HTRecipeFactory
 import hiiragi283.lib.recipe.input.HTFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTLocationRecipeInput
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.lib.recipe.input.getItemOrEmpty
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.level.block.state.pattern.BlockInWorld
 import net.neoforged.neoforge.fluids.FluidInstance
 import java.util.function.BiFunction
 import java.util.function.Function
@@ -44,6 +46,17 @@ data object HTRecipeFactories {
      */
     interface SingleItemTo<OUTPUT : Any> : SingleInput<SingleRecipeInput, ItemInstance, OUTPUT> {
         override fun produce(input: SingleRecipeInput): OUTPUT = apply(input.item())
+    }
+
+    /**
+     * @since 26.1.8
+     */
+    interface Located<OUTPUT : Any> : SingleInput<HTLocationRecipeInput, BlockInWorld, OUTPUT> {
+        override fun produce(input: HTLocationRecipeInput): OUTPUT = apply(input.blockInWorld)
+
+        @Suppress("DeprecatedCallableAddReplaceWith")
+        @Deprecated("Not used", level = DeprecationLevel.ERROR)
+        override fun getMatchingStack(input: BlockInWorld): BlockInWorld = input
     }
 
     //    Double Input    //

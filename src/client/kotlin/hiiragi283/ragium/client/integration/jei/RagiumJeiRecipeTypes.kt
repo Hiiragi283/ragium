@@ -2,17 +2,17 @@ package hiiragi283.ragium.client.integration.jei
 
 import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
 import hiiragi283.lib.integration.jei.HTJeiRecipeType
+import hiiragi283.lib.recipe.base.HTFluidToDoubleFluidRecipe
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
-import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
-import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RTResourceExtractingRecipe
+import hiiragi283.ragium.api.recipe.RTWashingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
 
@@ -35,7 +35,7 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField
-    val DRAINING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> =
+    val DRAINING: HTHolderJeiRecipeType<HTItemToRecipe.BasicItemAndFluid> =
         HTJeiRecipeType(RagiumRecipeTypes.DRAINING, RagiumBlocks.MACHINE_CASING)
 
     @JvmField
@@ -56,11 +56,11 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
-    val PYROLYZING: HTHolderJeiRecipeType<HTItemToItemAndFluidRecipe.Basic> =
+    val PYROLYZING: HTHolderJeiRecipeType<HTItemToRecipe.BasicItemAndFluid> =
         HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
 
     @JvmField
-    val REFINING: HTHolderJeiRecipeType<RTRefiningRecipe> =
+    val REFINING: HTHolderJeiRecipeType<HTFluidToRecipe.BasicItemAndFluid> =
         HTJeiRecipeType(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
     // Chemical
@@ -69,8 +69,8 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
 
     @JvmField
-    val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
+    val CENTRIFUGING: HTHolderJeiRecipeType<HTFluidToDoubleFluidRecipe.Basic> =
+        HTJeiRecipeType(RagiumRecipeTypes.CENTRIFUGING, RagiumBlocks.CHEMICAL_BATH)
 
     @JvmField
     val MIXING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> =
@@ -79,6 +79,10 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val REACTING: HTHolderJeiRecipeType<RTReactingRecipe.Basic> =
         HTJeiRecipeType(RagiumRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)
+
+    @JvmField
+    val WASHING: HTHolderJeiRecipeType<RTWashingRecipe> =
+        HTJeiRecipeType(RagiumRecipeTypes.WASHING, RagiumBlocks.MACHINE_CASING)
 
     // Bio
     @JvmField
@@ -90,6 +94,10 @@ data object RagiumJeiRecipeTypes {
         HTJeiRecipeType(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     // Electronics
+    @JvmField
+    val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =
+        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
+
     @JvmField
     val RESOURCE_EXTRACTING: HTHolderJeiRecipeType<RTResourceExtractingRecipe> =
         HTJeiRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, RagiumBlocks.MACHINE_CASING)

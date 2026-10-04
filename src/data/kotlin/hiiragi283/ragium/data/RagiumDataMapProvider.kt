@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -8,6 +9,9 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
@@ -17,6 +21,8 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     DataMapProvider(packOutput, lookupProvider) {
     override fun gather(provider: HolderLookup.Provider) {
         furnaceFuel()
+
+        mortarRepair()
     }
 
     private fun furnaceFuel() {
@@ -41,4 +47,22 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             }
         }
     }
+
+    private fun mortarRepair() {
+        builder(RagiumDataMaps.MORTAR_REPAIR)
+            .add(Blocks.CRACKED_DEEPSLATE_BRICKS, Blocks.DEEPSLATE_BRICKS)
+            .add(Blocks.CRACKED_DEEPSLATE_TILES, Blocks.DEEPSLATE_TILES)
+            .add(Blocks.CRACKED_NETHER_BRICKS, Blocks.NETHER_BRICKS)
+            .add(Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS, Blocks.POLISHED_BLACKSTONE_BRICKS)
+            .add(Blocks.CRACKED_STONE_BRICKS, Blocks.STONE_BRICKS)
+            .add(Blocks.INFESTED_CRACKED_STONE_BRICKS, Blocks.INFESTED_STONE_BRICKS)
+    }
+
+    @Suppress("DEPRECATION")
+    private fun <T : Any> Builder<T, Block>.add(
+        block: Block,
+        value: T,
+        replace: Boolean = false,
+        conditions: List<ICondition> = listOf()
+    ): Builder<T, Block> = this.add(block.builtInRegistryHolder(), value, replace, *conditions.toTypedArray())
 }

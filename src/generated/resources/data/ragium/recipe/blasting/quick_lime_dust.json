@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.15,
+  "ingredient": "#c:dusts/lime",
+  "result": {
+    "id": "ragium:quick_lime_dust"
+  }
+}

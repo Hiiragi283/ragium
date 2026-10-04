@@ -7,14 +7,27 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.level.biome.Biomes
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
 class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
+        electrolyzing()
         resourceExtracting()
+    }
+
+    private fun electrolyzing() {
+        // 2x H2O -> 2x H2 + O2
+        RagiumRecipeBuilders.electrolyzing {
+            ingredient { +waterSet() }
+            result { +RagiumFluids.HYDROGEN }
+            result {
+                +RagiumFluids.OXYGEN
+                amount /= 2
+            }
+            recipeId suffix "_from_water"
+        }.save(exporter)
     }
 
     private fun resourceExtracting() {
@@ -22,7 +35,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         RagiumRecipeBuilders.resourceExtracting {
             biomes { +holderSet(Tags.Biomes.IS_OCEAN) }
             result {
-                +Fluids.WATER
+                +RagiumFluids.SALT_WATER
                 amount *= 4
             }
             recipeId suffix "_at_ocean"
@@ -30,14 +43,14 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         RagiumRecipeBuilders.resourceExtracting {
             biomes { +holderSet(Tags.Biomes.IS_RIVER) }
             result {
-                +Fluids.WATER
+                water()
                 amount *= 2
             }
             recipeId suffix "_at_river"
         }.save(exporter)
         RagiumRecipeBuilders.resourceExtracting {
             biomes { +holderSet(Tags.Biomes.IS_WET) }
-            result { +Fluids.WATER }
+            result { water() }
             recipeId suffix "_at_wet_biomes"
         }.save(exporter)
 
@@ -45,7 +58,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         RagiumRecipeBuilders.resourceExtracting {
             biomes { +holderSet(Tags.Biomes.IS_NETHER) }
             result {
-                +Fluids.LAVA
+                lava()
                 amount /= 4
             }
             recipeId suffix "_at_nether"

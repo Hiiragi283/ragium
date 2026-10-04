@@ -1,21 +1,16 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
-import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
+import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.result.HTFluidResult
-import hiiragi283.lib.recipe.result.HTItemResult
+import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
-class RTDrainingRecipe(
-    ingredient: HTItemIngredient,
-    itemResult: HTItemResult,
-    fluidResult: HTFluidResult,
-    progressData: HTProgressData
-) : HTItemToItemAndFluidRecipe.Basic(ingredient, itemResult, fluidResult, progressData),
+class RTDrainingRecipe(ingredient: HTItemIngredient, result: HTItemOrFluidResult, progressData: HTProgressData) :
+    HTItemToRecipe.BasicItemAndFluid(ingredient, result, progressData),
     HTSerializableRecipe<SingleRecipeInput> {
     companion object {
         @JvmField
@@ -25,5 +20,5 @@ class RTDrainingRecipe(
 
     override fun getSerializer(): RecipeSerializer<RTDrainingRecipe> = RagiumRecipeSerializers.DRAINING
 
-    override fun getType(): HTRecipeType<RTDrainingRecipe> = RagiumRecipeTypes.DRAINING
+    override fun getType(): RecipeType<RTDrainingRecipe> = RagiumRecipeTypes.DRAINING
 }

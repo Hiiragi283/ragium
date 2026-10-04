@@ -1,0 +1,22 @@
+{
+  "type": "ragium:alloying",
+  "extra": {
+    "count": 1,
+    "items": "#c:sands"
+  },
+  "ingredient": {
+    "count": 4,
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/amethyst",
+        "c:gems/amethyst"
+      ]
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:quartz_glass"
+  },
+  "time": 200
+}

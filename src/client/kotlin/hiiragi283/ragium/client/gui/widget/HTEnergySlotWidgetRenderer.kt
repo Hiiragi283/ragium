@@ -32,9 +32,7 @@ class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) :
 
     override fun shouldRender(): Boolean = !widget.isEmpty
 
-    override fun getSprite(): TextureAtlasSprite = getSprite(AtlasIds.BLOCKS, SPRITE)
-
-    override fun getColor(): Int = -1
+    override fun getSpriteAndColor(): Pair<TextureAtlasSprite, Int> = getSprite(AtlasIds.BLOCKS, SPRITE) to -1
 
     override fun getLevel(): Float = widget.filledLevel
 

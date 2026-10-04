@@ -36,15 +36,19 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
 
         RagiumBlocks.STORAGE_BLOCKS.values.forEach(::dropSelf)
 
-        add(RagiumBlocks.FLUORITE_SLAB, ::createSlabItemTable)
-        add(RagiumBlocks.CRYOLITE_SLAB, ::createSlabItemTable)
+        RagiumBlocks.ALL_DECORATIONS.forEach { add(it.slab, ::createSlabItemTable) }
         // Machine
         for (machine: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINES.values.flatten()) {
             add(machine, ::copyComponent)
         }
         // Storage
-        for (tank: HTSimpleDeferredBlockAndItem in listOf(RagiumBlocks.TANK, RagiumBlocks.CREATIVE_TANK)) {
-            add(tank) { block: Block -> copyComponent(block) { include(RagiumDataComponents.FLUID) } }
+        listOf(
+            RagiumBlocks.FLUID_OUTPUT_BUS,
+            RagiumBlocks.TANK,
+            RagiumBlocks.POTION_TANK,
+            RagiumBlocks.CREATIVE_TANK
+        ).forEach { blockItem: HTSimpleDeferredBlockAndItem ->
+            add(blockItem) { block: Block -> copyComponent(block) { include(RagiumDataComponents.FLUID) } }
         }
     }
 

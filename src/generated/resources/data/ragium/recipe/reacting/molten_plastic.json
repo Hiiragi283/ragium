@@ -1,0 +1,16 @@
+{
+  "type": "ragium:reacting",
+  "fluid_result": {
+    "amount": 180,
+    "id": "ragium:molten_plastic"
+  },
+  "primary_ingredient": {
+    "amount": 500,
+    "fluids": "#c:naphtha"
+  },
+  "secondary_ingredient": {
+    "amount": 250,
+    "fluids": "#c:oxygen"
+  },
+  "time": 200
+}

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "front": "ragium:block/freezer_front",
-    "side": "ragium:block/machine/heat_side",
-    "top": "ragium:block/machine_casing"
-  }
-}

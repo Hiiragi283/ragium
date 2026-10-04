@@ -16,6 +16,21 @@ import net.minecraft.world.level.material.Fluid
  * @since 26.1.0
  */
 data object HTCommonTags {
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.8
+     */
+    data object BlockItems {
+        @JvmField
+        val GLASS_BLOCKS_QUARTZ: BlockItemTag = create("glass_blocks", "quartz")
+
+        @JvmField
+        val GLASS_PANES_QUARTZ: BlockItemTag = create("glass_panes", "quartz")
+
+        @JvmStatic
+        private fun create(vararg path: String): BlockItemTag = BlockItemTag(HTConstants.COMMON.toId(*path))
+    }
+
     data object Blocks {
         @JvmStatic
         private fun create(vararg path: String): TagKey<Block> = BlockTags.create(HTConstants.COMMON.toId(*path))
@@ -56,9 +71,6 @@ data object HTCommonTags {
 
         @JvmField
         val SILICON: TagKey<Item> = create("silicon")
-
-        @JvmField
-        val STICKY_BALLS: TagKey<Item> = create("sticky_balls")
 
         @JvmStatic
         private fun create(vararg path: String): TagKey<Item> = ItemTags.create(HTConstants.COMMON.toId(*path))

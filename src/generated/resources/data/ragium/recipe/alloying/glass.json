@@ -1,0 +1,16 @@
+{
+  "type": "ragium:alloying",
+  "extra": {
+    "count": 1,
+    "items": "#c:dusts/soda_ash"
+  },
+  "ingredient": {
+    "count": 2,
+    "items": "#c:dusts/quartz"
+  },
+  "result": {
+    "count": 6,
+    "id": "minecraft:glass"
+  },
+  "time": 200
+}

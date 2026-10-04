@@ -4,7 +4,8 @@ import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.oreSlurry.RagiumOreSlurryData
+import hiiragi283.ragium.api.data.chemical.RagiumChemicals
+import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
@@ -34,15 +35,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addAdvancement(RagiumAdvancementKeys.FREEZER, "私の消費電力は53万です", "冷凍機を手に入れる")
         addAdvancement(RagiumAdvancementKeys.MELTER, "融けてしまいそう", "溶融炉を手に入れる")
         // Block
-        add(RagiumBlocks.ECHO_BLOCK, "残響ブロック")
-
-        add(RagiumBlocks.FLUORITE_BLOCK, "蛍石ブロック")
-        add(RagiumBlocks.FLUORITE_SLAB, "蛍石のハーフブロック")
-        add(RagiumBlocks.FLUORITE_STAIRS, "蛍石の階段")
-
-        add(RagiumBlocks.CRYOLITE_BLOCK, "氷晶石ブロック")
-        add(RagiumBlocks.CRYOLITE_SLAB, "氷晶石のハーフブロック")
-        add(RagiumBlocks.CRYOLITE_STAIRS, "氷晶石の階段")
+        add(RagiumBlocks.QUARTZ_GLASS, "クォーツガラス")
+        add(RagiumBlocks.QUARTZ_GLASS_PANE, "クォーツガラス板")
 
         add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.CRUSHER, "破砕機")
@@ -58,18 +52,21 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.CHEMICAL_BATH, "化学浴槽")
         add(RagiumBlocks.CHEMICAL_REACTOR, "化学反応槽")
-        add(RagiumBlocks.ELECTROLYZER, "電解機")
         add(RagiumBlocks.MIXER, "混合機")
 
         add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.PLANTER, "栽培機")
 
+        add(RagiumBlocks.ELECTROLYZER, "電解機")
         add(RagiumBlocks.PRECISION_ASSEMBLER, "精密組立機")
         add(RagiumBlocks.SCANNER, "レーザースキャナ")
 
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
 
+        add(RagiumBlocks.FLUID_OUTPUT_BUS, "液体搬出バス")
+
         add(RagiumBlocks.TANK, "可変タンク")
+        add(RagiumBlocks.POTION_TANK, "ポーションタンク")
         add(RagiumBlocks.VOID_TANK, "廃棄タンク")
         add(RagiumBlocks.CREATIVE_BATTERY, "クリエイティブ用バッテリー")
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブ用タンク")
@@ -90,21 +87,26 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
 
         addFluid(RagiumFluids.HYDROGEN, "水素")
+        addFluid(RagiumFluids.NITROGEN, "窒素")
         addFluid(RagiumFluids.OXYGEN, "酸素")
         addFluid(RagiumFluids.CHLORINE, "塩素")
 
         addFluid(RagiumFluids.WOOD_TAR, "木タール")
         addFluid(RagiumFluids.COAL_TAR, "石炭タール")
+        addFluid(RagiumFluids.ALCOHOL, "アルコール")
+        addFluid(RagiumFluids.ALDEHYDE, "アルデヒド")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "芳香族化合物")
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
         addFluid(RagiumFluids.FUEL, "燃料油")
         addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
+        addFluid(RagiumFluids.MOLTEN_PLASTIC, "溶融プラスチック")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "合成樹脂")
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "液体爆薬")
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "フッ化水素")
         addFluid(RagiumFluids.HYDROFLUORIC_ACID, "フッ化水素酸")
+        addFluid(RagiumFluids.SALT_WATER, "塩水")
         addFluid(RagiumFluids.NAOH_SOLUTION, "水酸化ナトリウム水溶液")
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "アルミナ水溶液")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "二酸化硫黄")
@@ -113,23 +115,26 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
         addFluid(RagiumFluids.BLEACH, "漂白剤")
-
-        add(RagiumFluids.ORE_SLURRY.getFluidType().descriptionId, "無効な鉱石泥")
-        add(RagiumFluids.ORE_SLURRY.bucketHolder, $$"%1$s入りバケツ")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
-        add(RagiumItems.TAR, "タール")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
+        add(RagiumItems.CEMENT, "セメント")
+        add(RagiumItems.MORTAR, "モルタル")
+        add(RagiumItems.TAR, "タール")
+        add(RagiumItems.STICKY_BALL, "粘着質な塊")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
-        add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
+        add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
+        add(RagiumItems.CARBON_FIBER, "炭素繊維")
+        add(RagiumItems.CFRP_PLATE, "炭素繊維強化プラスチック板")
+        // add(RagiumItems.ALCLAD_PLATE, "アルクラッド板")
         add(RagiumItems.BEESWAX, "密猟")
         add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
         add(RagiumItems.LINGERING_BOTTLE, "残留瓶")
         add(RagiumItems.CRUDE_SILICON, "粗製シリコン")
         add(RagiumItems.SILICON_WAFER, "シリコンウェハ")
-        add(RagiumItems.CIRCUIT_CHIP, "回路チップ")
+        add(RagiumItems.SILICON_CHIP, "シリコンチップ")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
@@ -141,12 +146,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "凍傷")
         add(RagiumMobEffects.CHEMICAL_BURN, "化学火傷")
-
-        // Ore Slurry
-        addOreSlurry(RagiumOreSlurryData.COPPER, "銅の鉱石泥")
-        addOreSlurry(RagiumOreSlurryData.IRON, "鉄の鉱石泥")
-        addOreSlurry(RagiumOreSlurryData.GOLD, "金の鉱石泥")
-        addOreSlurry(RagiumOreSlurryData.NETHERITE_SCRAP, "古代の鉱石泥")
 
         // Potion
         addPotion(RagiumPotions.FROSTBITE, "凍傷")
@@ -161,30 +160,32 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addCustomPotion("enchanted_golden_apple", "エンチャントされた金リンゴ")
 
         // Recipe Type
-        add(RagiumRecipeTypes.ASSEMBLING, "組立")
-        add(RagiumRecipeTypes.COMPRESSING, "圧縮")
-        add(RagiumRecipeTypes.CRUSHING, "粉砕")
-        add(RagiumRecipeTypes.CUTTING, "切断")
-        add(RagiumRecipeTypes.DRAINING, "排出")
-        add(RagiumRecipeTypes.FILLING, "封入")
+        addRecipeType(RagiumRecipeTypes.ASSEMBLING, "組立")
+        addRecipeType(RagiumRecipeTypes.COMPRESSING, "圧縮")
+        addRecipeType(RagiumRecipeTypes.CRUSHING, "粉砕")
+        addRecipeType(RagiumRecipeTypes.CUTTING, "切断")
+        addRecipeType(RagiumRecipeTypes.DRAINING, "排出")
+        addRecipeType(RagiumRecipeTypes.FILLING, "封入")
 
-        add(RagiumRecipeTypes.ALLOYING, "合金")
-        add(RagiumRecipeTypes.FREEZING, "冷凍")
-        add(RagiumRecipeTypes.MELTING, "溶融")
-        add(RagiumRecipeTypes.PYROLYZING, "熱分解")
-        add(RagiumRecipeTypes.REFINING, "蒸留")
+        addRecipeType(RagiumRecipeTypes.ALLOYING, "合金")
+        addRecipeType(RagiumRecipeTypes.FREEZING, "冷凍")
+        addRecipeType(RagiumRecipeTypes.MELTING, "溶融")
+        addRecipeType(RagiumRecipeTypes.PYROLYZING, "熱分解")
+        addRecipeType(RagiumRecipeTypes.REFINING, "蒸留")
 
-        add(RagiumRecipeTypes.BATHING, "化学洗浄")
-        add(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
-        add(RagiumRecipeTypes.MIXING, "混合")
-        add(RagiumRecipeTypes.REACTING, "化学反応")
+        addRecipeType(RagiumRecipeTypes.BATHING, "化学洗浄")
+        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "遠心分離")
+        addRecipeType(RagiumRecipeTypes.MIXING, "混合")
+        addRecipeType(RagiumRecipeTypes.REACTING, "化学反応")
+        addRecipeType(RagiumRecipeTypes.WASHING, "洗浄")
 
-        add(RagiumRecipeTypes.BREWING, "醸造")
-        add(RagiumRecipeTypes.PLANTING, "栽培")
+        addRecipeType(RagiumRecipeTypes.BREWING, "醸造")
+        addRecipeType(RagiumRecipeTypes.PLANTING, "栽培")
 
-        add(RagiumRecipeTypes.RESOURCE_EXTRACTING, "資源採集")
+        addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
+        addRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, "資源採集")
 
-        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
+        addRecipeType(RagiumRecipeTypes.ENCHANTING, "エンチャント")
 
         // Text - Lib
         add(HTCommonTranslation.ERROR, "エラー")
@@ -219,5 +220,73 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"スキャン済み: %1$s")
+
+        addDataTranslations()
+    }
+
+    private fun addDataTranslations() {
+        // Chemical
+        addFromKey(RagiumChemicals.HYDROGEN, "水素")
+
+        addFromKey(RagiumChemicals.CARBON, "炭素")
+        addFromKey(RagiumChemicals.DIAMOND, "ダイヤモンド")
+        addFromKey(RagiumChemicals.NITROGEN, "窒素")
+        addFromKey(RagiumChemicals.OXYGEN, "酸素")
+
+        addFromKey(RagiumChemicals.ALUMINUM, "アルミニウム")
+        addFromKey(RagiumChemicals.SILICON, "ケイ素")
+        addFromKey(RagiumChemicals.SULFUR, "硫黄")
+        addFromKey(RagiumChemicals.CHLORINE, "塩素")
+
+        addFromKey(RagiumChemicals.IRON, "鉄")
+        addFromKey(RagiumChemicals.COPPER, "銅")
+        addFromKey(RagiumChemicals.GOLD, "金")
+
+        addFromKey(RagiumChemicals.HYDROXIDE, "水酸化物")
+        addFromKey(RagiumChemicals.WATER, "水")
+
+        addFromKey(RagiumChemicals.CARBONATE, "炭酸塩")
+        addFromKey(RagiumChemicals.NITRATE, "硝酸塩")
+        addFromKey(RagiumChemicals.NITRIC_ACID, "硝酸")
+        addFromKey(RagiumChemicals.HYDROGEN_FLUORIDE, "フッ化水素")
+        addFromKey(RagiumChemicals.FLUORITE, "蛍石")
+        addFromKey(RagiumChemicals.CRYOLITE, "氷晶石")
+
+        addFromKey(RagiumChemicals.SODIUM_HYDROXIDE, "水酸化ナトリウム")
+        addFromKey(RagiumChemicals.SODIUM_CARBONATE, "炭酸ナトリウム")
+        addFromKey(RagiumChemicals.SODIUM_CHLORIDE, "塩化ナトリウム")
+        addFromKey(RagiumChemicals.ALUMINUM_OXIDE, "酸化アルミニウム")
+        addFromKey(RagiumChemicals.ALUMINUM_FLUORIDE, "フッ化アルミニウム")
+        addFromKey(RagiumChemicals.SILICON_DIOXIDE, "二酸化ケイ素")
+        addFromKey(RagiumChemicals.SULFUR_DIOXIDE, "二酸化硫黄")
+        addFromKey(RagiumChemicals.SULFUR_TRIOXIDE, "三酸化硫黄")
+        addFromKey(RagiumChemicals.SULFATE, "硫酸塩")
+        addFromKey(RagiumChemicals.SULFURIC_ACID, "硫酸")
+        addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "塩化水素")
+
+        addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "硝酸カリウム")
+        addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "炭酸カルシウム")
+        addFromKey(RagiumChemicals.CALCIUM_OXIDE, "酸化カルシウム")
+        addFromKey(RagiumChemicals.CALCIUM_SULFATE, "硫酸カルシウム")
+        // Element
+        addFromKey(RagiumElements.HYDROGEN, "水素")
+
+        addFromKey(RagiumElements.CARBON, "炭素")
+        addFromKey(RagiumElements.NITROGEN, "窒素")
+        addFromKey(RagiumElements.OXYGEN, "酸素")
+        addFromKey(RagiumElements.FLUORINE, "フッ素")
+
+        addFromKey(RagiumElements.SODIUM, "ナトリウム")
+        addFromKey(RagiumElements.ALUMINUM, "アルミニウム")
+        addFromKey(RagiumElements.SILICON, "ケイ素")
+        addFromKey(RagiumElements.SULFUR, "硫黄")
+        addFromKey(RagiumElements.CHLORINE, "塩素")
+
+        addFromKey(RagiumElements.POTASSIUM, "カリウム")
+        addFromKey(RagiumElements.CALCIUM, "カルシウム")
+        addFromKey(RagiumElements.IRON, "鉄")
+        addFromKey(RagiumElements.COPPER, "銅")
+
+        addFromKey(RagiumElements.GOLD, "金")
     }
 }

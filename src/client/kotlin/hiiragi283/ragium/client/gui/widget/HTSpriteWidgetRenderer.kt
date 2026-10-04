@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.gui.widget
 
 import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.HTGuiAccess
+import hiiragi283.lib.gui.HTGuiRenderHelper
 import hiiragi283.lib.gui.widget.HTAbstractWidgetRenderer
 import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.text.Text
@@ -15,7 +16,6 @@ import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.TooltipFlag
-import net.neoforged.neoforge.client.ClientTooltipFlag
 import java.util.function.Consumer
 
 abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widget: WIDGET) :
@@ -38,9 +38,11 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
             graphics.setTooltipForNextFrame(
                 font,
                 buildList {
-                    collectTooltips({ text: Text ->
-                        this.add(text.visualOrderText)
-                    }, Item.TooltipContext.EMPTY, getTooltipFlag())
+                    collectTooltips(
+                        { text: Text -> this.add(text.visualOrderText) },
+                        HTGuiRenderHelper.getTooltipContext(),
+                        HTGuiRenderHelper.getTooltipFlag()
+                    )
                 },
                 mouseX,
                 mouseY
@@ -50,8 +52,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
 
     private fun renderSprite(bounds: HTBounds, graphics: GuiGraphicsExtractor) {
         if (!shouldRender()) return
-        val sprite: TextureAtlasSprite = getSprite() ?: return
-        val color: Int = getColor()
+        val (sprite: TextureAtlasSprite, color: Int) = getSpriteAndColor() ?: return
         val fillLevel: Int = getScaledLevel().toInt()
 
         val spriteContents: SpriteContents = sprite.contents()
@@ -81,26 +82,17 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
         graphics.disableScissor()
     }
 
-    protected fun getTooltipFlag(): TooltipFlag = ClientTooltipFlag.of(
-        when (Minecraft.getInstance().options.advancedItemTooltips) {
-            true -> TooltipFlag.ADVANCED
-            false -> TooltipFlag.NORMAL
-        }
-    )
-
     protected abstract fun renderBackground(bounds: HTBounds, graphics: GuiGraphicsExtractor)
 
     protected abstract fun shouldRender(): Boolean
 
-    protected abstract fun getSprite(): TextureAtlasSprite?
+    protected abstract fun getSpriteAndColor(): Pair<TextureAtlasSprite, Int>?
 
     protected fun getSprite(atlasId: Identifier, id: Identifier): TextureAtlasSprite = Minecraft
         .getInstance()
         .atlasManager
         .getAtlasOrThrow(atlasId)
         .getSprite(id)
-
-    protected abstract fun getColor(): Int
 
     protected open fun getScaledLevel(): Float = getLevel() * (widget.bounds.height - 2)
 

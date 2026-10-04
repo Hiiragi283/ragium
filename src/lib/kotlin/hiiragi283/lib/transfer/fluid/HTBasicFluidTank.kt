@@ -36,9 +36,13 @@ open class HTBasicFluidTank(
             listener: Runnable?,
             canInsert: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
             filter: Predicate<FluidResource> = canInsert
-        ): HTBasicFluidTank = create(capacity, listener, HTTransferPredicates.notExternal(), { resource, _ ->
-            canInsert.test(resource)
-        }, filter)
+        ): HTBasicFluidTank = create(
+            capacity,
+            listener,
+            HTTransferPredicates.notExternal(),
+            { resource: FluidResource, _ -> canInsert.test(resource) },
+            filter
+        )
 
         @JvmStatic
         fun output(capacity: Int, listener: Runnable?): HTBasicFluidTank =

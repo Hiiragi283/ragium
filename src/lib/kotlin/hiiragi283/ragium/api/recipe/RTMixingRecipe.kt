@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.lib.recipe.HTRecipeType
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
@@ -9,6 +8,7 @@ import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 
 class RTMixingRecipe(
     itemIngredient: HTItemIngredient,
@@ -25,5 +25,5 @@ class RTMixingRecipe(
 
     override fun getSerializer(): RecipeSerializer<RTMixingRecipe> = RagiumRecipeSerializers.MIXING
 
-    override fun getType(): HTRecipeType<RTMixingRecipe> = RagiumRecipeTypes.MIXING
+    override fun getType(): RecipeType<RTMixingRecipe> = RagiumRecipeTypes.MIXING
 }

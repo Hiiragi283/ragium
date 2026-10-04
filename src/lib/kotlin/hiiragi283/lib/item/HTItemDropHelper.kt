@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.transfer.item.ItemUtil
@@ -43,6 +44,16 @@ data object HTItemDropHelper {
             }
         }
     }
+
+    /**
+     * アイテムをインベントリに入れます。
+     * @param player インベントリの所有者
+     * @param template インベントリに入れられるアイテム
+     * @return 正常にアイテムを移動できた場合は`true`
+     * @since 26.1.8
+     */
+    @JvmStatic
+    fun giveStackTo(player: Player, template: ItemStackTemplate): Boolean = giveStackTo(player, template.create())
 
     /**
      * アイテムをインベントリに入れます。

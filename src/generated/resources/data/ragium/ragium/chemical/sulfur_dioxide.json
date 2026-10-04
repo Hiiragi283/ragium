@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compound",
+  "composition": [
+    {
+      "element": "ragium:sulfur"
+    },
+    {
+      "element": "ragium:oxygen",
+      "weight": 2
+    }
+  ]
+}

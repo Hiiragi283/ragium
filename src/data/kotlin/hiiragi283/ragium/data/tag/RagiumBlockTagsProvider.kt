@@ -26,28 +26,18 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yieldAll(RagiumBlocks.MATERIAL_ORES.values)
             yieldAll(RagiumBlocks.STORAGE_BLOCKS.values)
             yield(RagiumBlocks.ECHO_BLOCK)
-            yield(RagiumBlocks.FLUORITE_BLOCK)
-            yield(RagiumBlocks.FLUORITE_SLAB)
-            yield(RagiumBlocks.FLUORITE_STAIRS)
-            yield(RagiumBlocks.CRYOLITE_BLOCK)
-            yield(RagiumBlocks.CRYOLITE_SLAB)
-            yield(RagiumBlocks.CRYOLITE_STAIRS)
+            yield(RagiumBlocks.QUARTZ_GLASS)
+            yield(RagiumBlocks.QUARTZ_GLASS_PANE)
+            yieldAll(RagiumBlocks.ALL_DECORATIONS.flatMap { it.all })
 
             yieldAll(RagiumBlocks.MACHINES.values.flatten())
             yield(RagiumBlocks.MACHINE_CASING)
             yieldAll(RagiumBlocks.MACHINE_CASINGS.values)
 
-            yield(RagiumBlocks.TANK)
-            yield(RagiumBlocks.VOID_TANK)
+            yield(RagiumBlocks.FLUID_OUTPUT_BUS)
+
+            yieldAll(RagiumBlocks.TANKS)
             yield(RagiumBlocks.CREATIVE_BATTERY)
-            yield(RagiumBlocks.CREATIVE_TANK)
         }.forEach(pickaxe::add)
-        // Other
-        builder(BlockTags.SLABS)
-            .add(RagiumBlocks.FLUORITE_SLAB)
-            .add(RagiumBlocks.CRYOLITE_SLAB)
-        builder(BlockTags.STAIRS)
-            .add(RagiumBlocks.FLUORITE_STAIRS)
-            .add(RagiumBlocks.CRYOLITE_STAIRS)
     }
 }

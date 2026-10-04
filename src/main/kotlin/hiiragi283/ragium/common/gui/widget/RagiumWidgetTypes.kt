@@ -1,28 +1,30 @@
 package hiiragi283.ragium.common.gui.widget
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetType
+import hiiragi283.lib.registry.HTDeferredHolder
+import hiiragi283.lib.registry.HTDeferredRegister
 import hiiragi283.ragium.api.RagiumAPI
-import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet
+import hiiragi283.ragium.api.RagiumRegistries
 
 data object RagiumWidgetTypes {
-    @JvmStatic
-    val allTypes: Set<HTWidgetType<*>> field: MutableSet<HTWidgetType<*>> = ObjectLinkedOpenHashSet()
-
-    @JvmStatic
-    private fun <T : HTWidget> create(name: String): HTWidgetType<T> =
-        HTWidgetType<T>(RagiumAPI.id(name)).also(allTypes::add)
+    @JvmField
+    val REGISTER: HTDeferredRegister<HTWidgetType<*>> =
+        HTDeferredRegister(RagiumRegistries.Keys.WIDGET_TYPE, RagiumAPI.MOD_ID)
 
     @JvmField
-    val ENERGY: HTWidgetType<HTEnergySlotWidget> = create(HTConstants.ENERGY)
+    val ENERGY: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTEnergySlotWidget>> =
+        REGISTER.register(HTConstants.ENERGY, HTWidgetType.Companion::simple)
 
     @JvmField
-    val FLUID: HTWidgetType<HTFluidWidget> = create(HTConstants.FLUID)
+    val FLUID: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTFluidWidget>> =
+        REGISTER.register(HTConstants.FLUID, HTWidgetType.Companion::simple)
 
     @JvmField
-    val ITEM: HTWidgetType<HTItemWidget> = create(HTConstants.ITEM)
+    val ITEM: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTItemWidget>> =
+        REGISTER.register(HTConstants.ITEM, HTWidgetType.Companion::simple)
 
     @JvmField
-    val PROGRESS: HTWidgetType<HTProgressWidget> = create("progress")
+    val PROGRESS: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTProgressWidget>> =
+        REGISTER.register("progress", HTWidgetType.Companion::simple)
 }

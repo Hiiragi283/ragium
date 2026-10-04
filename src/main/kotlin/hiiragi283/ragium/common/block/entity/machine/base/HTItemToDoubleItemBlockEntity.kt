@@ -79,7 +79,7 @@ abstract class HTItemToDoubleItemBlockEntity(
                     when {
                         inputSlot.use(inputConsume, transaction).failed -> false
                         primarySlot.take(output.first, transaction) != HTOutputSlot.TakeResult.FULL -> false
-                        else -> secondarySlot.take(output.second, transaction) == HTOutputSlot.TakeResult.FULL
+                        else -> secondarySlot.take(output.second, transaction).fullOrNoneTaken
                     }
                 }
 

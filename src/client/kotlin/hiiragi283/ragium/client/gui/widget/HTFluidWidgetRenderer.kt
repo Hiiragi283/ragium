@@ -27,9 +27,8 @@ class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) :
 
     override fun shouldRender(): Boolean = !widget.isEmpty
 
-    override fun getSprite(): TextureAtlasSprite? = HTGuiRenderHelper.getSprite(widget.resource)
-
-    override fun getColor(): Int = HTGuiRenderHelper.getColor(widget.getFluidStack())
+    override fun getSpriteAndColor(): Pair<TextureAtlasSprite, Int>? =
+        HTGuiRenderHelper.getSpriteAndColor(widget.getFluidStack())
 
     override fun getLevel(): Float = when (widget) {
         is HTFluidWidget.Slot -> 1f
@@ -37,6 +36,6 @@ class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) :
     }.coerceAtMost(1f)
 
     override fun collectTooltips(consumer: Consumer<Text>, context: Item.TooltipContext, flag: TooltipFlag) {
-        HTStorageHelper.addFluidTooltip(widget.getFluidStack(), consumer, context, null, flag, false)
+        HTStorageHelper.addFluidTooltip(widget.getFluidStack(), consumer, context, flag, false)
     }
 }

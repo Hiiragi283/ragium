@@ -8,6 +8,7 @@ import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
+import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.lib.util.Ior
@@ -20,10 +21,10 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe.Basic>(RagiumConstants.REACTING) {
-    override fun getRecipeId(): Identifier? = results.map(HTItemResult::getId, HTFluidResult::getId)
+    override fun getRecipeId(): Identifier? = result.getId()
 
     override fun createRecipe(): RTReactingRecipe.Basic =
-        RTReactingRecipe.Basic(primaryIngredient, secondaryIngredient, results, progressData)
+        RTReactingRecipe.Basic(primaryIngredient, secondaryIngredient, result, progressData)
 
     // Ingredient
     var primaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
@@ -45,13 +46,13 @@ class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe.Basic>(
     }
 
     // Result
-    @PublishedApi internal var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
+    var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
 
-    @PublishedApi internal var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
+    var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
 
-    private val results: Ior<HTItemResult, HTFluidResult> by lazy {
-        Ior.fromNullable(itemResult, fluidResult).orElseThrow { error("Either item or fluid result required") }
-    }
+    val result: HTItemOrFluidResult get() = Ior.fromNullable(itemResult, fluidResult)
+        .map(::HTItemOrFluidResult)
+        .orElseThrow { error("Either item or fluid result required") }
 
     operator fun HTItemResult.unaryPlus() {
         itemResult = Optional.of(this)
