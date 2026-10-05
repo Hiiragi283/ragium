@@ -4,7 +4,9 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.integration.jei.category.HTHolderRecipeCategory
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.client.integration.jei.RagiumJeiRecipeTypes
+import hiiragi283.ragium.common.block.RagiumBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -13,8 +15,9 @@ import mezz.jei.api.recipe.IFocusGroup
 
 class RTMixingRecipeCategory(guiHelper: IGuiHelper) :
     HTHolderRecipeCategory<RTMixingRecipe>(
-        guiHelper,
         RagiumJeiRecipeTypes.MIXING,
+        RagiumRecipeTypes.MIXING,
+        guiHelper.createDrawableItemLike(RagiumBlocks.MIXER),
         18 * 9,
         18 * 1,
         RTMixingRecipe.CODEC

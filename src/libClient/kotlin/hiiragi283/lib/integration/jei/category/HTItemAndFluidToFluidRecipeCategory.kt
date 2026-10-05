@@ -1,20 +1,23 @@
 package hiiragi283.lib.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
-import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
+import hiiragi283.lib.integration.jei.HTRecipeHolderType
 import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
+import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
-import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
+import net.minecraft.world.item.crafting.RecipeType
 
 class HTItemAndFluidToFluidRecipeCategory(
-    guiHelper: IGuiHelper,
-    recipeType: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid>
+    recipeType: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicFluid>,
+    recipeType1: RecipeType<*>,
+    icon: IDrawable
 ) : HTHolderRecipeCategory<HTItemAndFluidToRecipe.BasicFluid>(
-    guiHelper,
     recipeType,
+    recipeType1,
+    icon,
     18 * 6,
     18 * 1,
     HTItemAndFluidToRecipe.BasicFluid.SIMPLE_CODEC

@@ -6,7 +6,9 @@ import hiiragi283.lib.integration.jei.category.HTHolderRecipeCategory
 import hiiragi283.lib.recipe.ingredient.HTBiomeCondition
 import hiiragi283.lib.recipe.ingredient.HTStackPreview
 import hiiragi283.ragium.api.recipe.RTResourceExtractingRecipe
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.client.integration.jei.RagiumJeiRecipeTypes
+import hiiragi283.ragium.common.block.RagiumBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
@@ -23,8 +25,9 @@ import net.minecraft.world.level.biome.Biome
 
 class RTResourceExtractingRecipeCategory(guiHelper: IGuiHelper) :
     HTHolderRecipeCategory<RTResourceExtractingRecipe>(
-        guiHelper,
         RagiumJeiRecipeTypes.RESOURCE_EXTRACTING,
+        RagiumRecipeTypes.RESOURCE_EXTRACTING,
+        guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING),
         18 * 4,
         18 * 1,
         RTResourceExtractingRecipe.CODEC

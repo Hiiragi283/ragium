@@ -1,21 +1,24 @@
 package hiiragi283.lib.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
-import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
+import hiiragi283.lib.integration.jei.HTRecipeHolderType
 import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
+import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
-import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
+import net.minecraft.world.item.crafting.RecipeType
 
 class HTItemToDoubleItemRecipeCategory(
-    guiHelper: IGuiHelper,
-    recipeType: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic>
+    recipeType: HTRecipeHolderType<HTItemToDoubleItemRecipe.Basic>,
+    recipeType1: RecipeType<*>,
+    icon: IDrawable
 ) : HTHolderRecipeCategory<HTItemToDoubleItemRecipe.Basic>(
-    guiHelper,
     recipeType,
+    recipeType1,
+    icon,
     18 * 6,
     18 * 1,
     HTItemToDoubleItemRecipe.Basic.SIMPLE_CODEC

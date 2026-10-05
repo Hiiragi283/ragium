@@ -2,25 +2,27 @@ package hiiragi283.lib.integration.jei.category
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.gui.HTBackgroundType
-import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
+import hiiragi283.lib.integration.jei.HTRecipeHolderType
 import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
+import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
-import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
+import net.minecraft.world.item.crafting.RecipeType
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.7
  */
 abstract class HTTripleItemToRecipeCategory<RECIPE : HTProgressRecipe.Simple<*>>(
-    guiHelper: IGuiHelper,
-    recipeType: HTHolderJeiRecipeType<RECIPE>,
+    recipeType: HTRecipeHolderType<RECIPE>,
+    recipeType1: RecipeType<*>,
+    icon: IDrawable,
     codec: MapCodec<RECIPE>
-) : HTHolderRecipeCategory<RECIPE>(guiHelper, recipeType, 18 * 7, 18 * 1, codec) {
+) : HTHolderRecipeCategory<RECIPE>(recipeType, recipeType1, icon, 18 * 7, 18 * 1, codec) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RECIPE, focuses: IFocusGroup) {
         // inputs
         setPrimaryInput(
@@ -65,12 +67,16 @@ abstract class HTTripleItemToRecipeCategory<RECIPE : HTProgressRecipe.Simple<*>>
 
     //    Basic    //
 
-    class Basic(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTTripleItemToItemRecipe.Basic>) :
-        HTTripleItemToRecipeCategory<HTTripleItemToItemRecipe.Basic>(
-            guiHelper,
-            recipeType,
-            HTTripleItemToItemRecipe.Basic.SIMPLE_CODEC
-        ) {
+    class Basic(
+        recipeType: HTRecipeHolderType<HTTripleItemToItemRecipe.Basic>,
+        recipeType1: RecipeType<*>,
+        icon: IDrawable
+    ) : HTTripleItemToRecipeCategory<HTTripleItemToItemRecipe.Basic>(
+        recipeType,
+        recipeType1,
+        icon,
+        HTTripleItemToItemRecipe.Basic.SIMPLE_CODEC
+    ) {
         override fun setPrimaryInput(builder: IRecipeSlotBuilder, recipe: HTTripleItemToItemRecipe.Basic) {
             builder.add(recipe.ingredient)
         }

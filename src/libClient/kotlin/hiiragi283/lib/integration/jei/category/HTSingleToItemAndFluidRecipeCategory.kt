@@ -2,7 +2,7 @@ package hiiragi283.lib.integration.jei.category
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.gui.HTBackgroundType
-import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
+import hiiragi283.lib.integration.jei.HTRecipeHolderType
 import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.recipe.base.HTBasicSingleRecipe
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
@@ -10,19 +10,21 @@ import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
+import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
-import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
+import net.minecraft.world.item.crafting.RecipeType
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.8
  */
 abstract class HTSingleToItemAndFluidRecipeCategory<RECIPE : HTBasicSingleRecipe<*, *, HTItemOrFluidResult>>(
-    guiHelper: IGuiHelper,
-    recipeType: HTHolderJeiRecipeType<RECIPE>,
+    recipeType: HTRecipeHolderType<RECIPE>,
+    recipeType1: RecipeType<*>,
+    icon: IDrawable,
     codec: MapCodec<RECIPE>
-) : HTHolderRecipeCategory<RECIPE>(guiHelper, recipeType, 18 * 6, 18 * 1, codec) {
+) : HTHolderRecipeCategory<RECIPE>(recipeType, recipeType1, icon, 18 * 6, 18 * 1, codec) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RECIPE, focuses: IFocusGroup) {
         // input
         setInput(
@@ -54,12 +56,16 @@ abstract class HTSingleToItemAndFluidRecipeCategory<RECIPE : HTBasicSingleRecipe
      * @author Hiiragi Tsubasa
      * @since 26.1.8
      */
-    class FluidTo(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTFluidToRecipe.BasicItemAndFluid>) :
-        HTSingleToItemAndFluidRecipeCategory<HTFluidToRecipe.BasicItemAndFluid>(
-            guiHelper,
-            recipeType,
-            HTFluidToRecipe.BasicItemAndFluid.SIMPLE_CODEC
-        ) {
+    class FluidTo(
+        recipeType: HTRecipeHolderType<HTFluidToRecipe.BasicItemAndFluid>,
+        recipeType1: RecipeType<*>,
+        icon: IDrawable
+    ) : HTSingleToItemAndFluidRecipeCategory<HTFluidToRecipe.BasicItemAndFluid>(
+        recipeType,
+        recipeType1,
+        icon,
+        HTFluidToRecipe.BasicItemAndFluid.SIMPLE_CODEC
+    ) {
         override fun setInput(builder: IRecipeSlotBuilder, recipe: HTFluidToRecipe.BasicItemAndFluid) {
             builder.add(recipe.ingredient)
         }
@@ -71,12 +77,16 @@ abstract class HTSingleToItemAndFluidRecipeCategory<RECIPE : HTBasicSingleRecipe
      * @author Hiiragi Tsubasa
      * @since 26.1.8
      */
-    class ItemTo(guiHelper: IGuiHelper, recipeType: HTHolderJeiRecipeType<HTItemToRecipe.BasicItemAndFluid>) :
-        HTSingleToItemAndFluidRecipeCategory<HTItemToRecipe.BasicItemAndFluid>(
-            guiHelper,
-            recipeType,
-            HTItemToRecipe.BasicItemAndFluid.SIMPLE_CODEC
-        ) {
+    class ItemTo(
+        recipeType: HTRecipeHolderType<HTItemToRecipe.BasicItemAndFluid>,
+        recipeType1: RecipeType<*>,
+        icon: IDrawable
+    ) : HTSingleToItemAndFluidRecipeCategory<HTItemToRecipe.BasicItemAndFluid>(
+        recipeType,
+        recipeType1,
+        icon,
+        HTItemToRecipe.BasicItemAndFluid.SIMPLE_CODEC
+    ) {
         override fun setInput(builder: IRecipeSlotBuilder, recipe: HTItemToRecipe.BasicItemAndFluid) {
             builder.add(recipe.ingredient)
         }

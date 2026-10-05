@@ -3,27 +3,27 @@ package hiiragi283.lib.integration.jei.category
 import com.mojang.serialization.Codec
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.HTJeiDrawables
-import hiiragi283.lib.integration.jei.HTJeiRecipeType
 import hiiragi283.lib.integration.jei.ingredient.HTFluidSlotRenderer
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
+import hiiragi283.lib.registry.getKeyOrThrow
+import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.Text
-import hiiragi283.lib.util.Either
-import mezz.jei.api.constants.VanillaTypes
+import hiiragi283.lib.text.translatableText
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IDrawableWidget
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.ICodecHelper
-import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.neoforge.NeoForgeTypes
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.category.IRecipeCategory
 import mezz.jei.api.recipe.types.IRecipeType
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.Identifier
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeType
 
 /**
  * Hiiragi Seriesで使用される[IRecipeCategory]の拡張クラスです。
@@ -33,26 +33,22 @@ import net.minecraft.world.item.ItemStack
  * @since 26.1.0
  */
 abstract class HTBasicRecipeCategory<RECIPE : Any>(
-    private val guiHelper: IGuiHelper,
     private val recipeType: IRecipeType<RECIPE>,
     private val title: Text,
     private val icon: IDrawable,
     private val width: Int,
     private val height: Int
 ) : IRecipeCategory<RECIPE> {
-    companion object {
-        @JvmStatic
-        protected fun createIcon(guiHelper: IGuiHelper, icon: Either<Identifier, ItemStack>): IDrawable = icon.fold(
-            { id: Identifier -> guiHelper.drawableBuilder(id, 0, 0, 18, 18).setTextureSize(18, 18).build() },
-            { stack: ItemStack -> guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, stack) }
-        )
-    }
-
-    constructor(guiHelper: IGuiHelper, recipeType: HTJeiRecipeType<RECIPE>, width: Int, height: Int) : this(
-        guiHelper,
+    constructor(
+        recipeType: IRecipeType<RECIPE>,
+        recipeType1: RecipeType<*>,
+        icon: IDrawable,
+        width: Int,
+        height: Int
+    ) : this(
         recipeType,
-        recipeType.getText(),
-        createIcon(guiHelper, recipeType.icon),
+        translatableText(BuiltInRegistries.RECIPE_TYPE.wrapAsHolder(recipeType1).getKeyOrThrow().toLanguageKey()),
+        icon,
         width,
         height
     )
@@ -94,7 +90,7 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
 
     // IRecipeSlotBuilder
     protected fun IRecipeSlotBuilder.setSlotBackground(type: HTBackgroundType): IRecipeSlotBuilder = this
-        .setBackground(HTJeiDrawables.getSlot(type, guiHelper), -1, -1)
+        .setBackground(HTJeiDrawables.getSlot(type), -1, -1)
         .setSlotName(type.name)
         .setCustomRenderer(NeoForgeTypes.FLUID_STACK, HTFluidSlotRenderer)
 

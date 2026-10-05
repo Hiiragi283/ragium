@@ -5,7 +5,9 @@ import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.integration.jei.category.HTHolderRecipeCategory
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.client.integration.jei.RagiumJeiRecipeTypes
+import hiiragi283.ragium.common.block.RagiumBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -14,8 +16,9 @@ import mezz.jei.api.recipe.IFocusGroup
 
 class RTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) :
     HTHolderRecipeCategory<RTElectrolyzingRecipe>(
-        guiHelper,
         RagiumJeiRecipeTypes.ELECTROLYZING,
+        RagiumRecipeTypes.ELECTROLYZING,
+        guiHelper.createDrawableItemLike(RagiumBlocks.ELECTROLYZER),
         18 * 6,
         18 * 1,
         RTElectrolyzingRecipe.CODEC

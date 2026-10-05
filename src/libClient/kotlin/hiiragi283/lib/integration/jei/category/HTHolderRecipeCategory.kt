@@ -2,15 +2,16 @@ package hiiragi283.lib.integration.jei.category
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
-import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
+import hiiragi283.lib.integration.jei.HTRecipeHolderType
 import hiiragi283.lib.recipe.HTRecipeHolder
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
+import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.ICodecHelper
-import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.crafting.RecipeType
 
 /**
  * [HTRecipeHolder]に基づいた[HTBasicRecipeCategory]の拡張クラスです。
@@ -18,21 +19,24 @@ import net.minecraft.resources.Identifier
  * @since 26.1.0
  */
 abstract class HTHolderRecipeCategory<RECIPE : Any>(
-    guiHelper: IGuiHelper,
-    recipeType: HTHolderJeiRecipeType<RECIPE>,
+    recipeType: HTRecipeHolderType<RECIPE>,
+    recipeType1: RecipeType<*>,
+    icon: IDrawable,
     width: Int,
     height: Int,
     private val codec: Codec<HTRecipeHolder<RECIPE>>
-) : HTBasicRecipeCategory<HTRecipeHolder<RECIPE>>(guiHelper, recipeType, width, height) {
+) : HTBasicRecipeCategory<HTRecipeHolder<RECIPE>>(recipeType, recipeType1, icon, width, height) {
     constructor(
-        guiHelper: IGuiHelper,
-        recipeType: HTHolderJeiRecipeType<RECIPE>,
+        recipeType: HTRecipeHolderType<RECIPE>,
+        recipeType1: RecipeType<*>,
+        icon: IDrawable,
         width: Int,
         height: Int,
         codec: MapCodec<RECIPE>
     ) : this(
-        guiHelper,
         recipeType,
+        recipeType1,
+        icon,
         width,
         height,
         HTRecipeHolder.codec(codec)
