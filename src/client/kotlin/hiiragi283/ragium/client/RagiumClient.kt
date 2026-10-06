@@ -13,6 +13,7 @@ import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.chemical.HTClientChemicalHelper
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
@@ -45,6 +46,7 @@ import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactori
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.fluid.FluidTintSources
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent
+import net.neoforged.neoforge.common.tooltip.TooltipAppender
 import net.neoforged.neoforge.common.tooltip.TooltipLocation
 import net.neoforged.neoforge.event.RegisterTooltipAppendersEvent
 import net.neoforged.neoforge.fluids.FluidStack
@@ -294,5 +296,10 @@ data object RagiumClient : HTClientMod() {
         ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
             HTClientChemicalHelper.addToTooltip(stack, builder::accept)
         }
+
+        event.registerAppender(
+            TooltipLocation.PRE_ITEM_INFO,
+            TooltipAppender.createComponentAppender(RagiumDataComponents.ITEM_TOOLTIP)
+        )
     }
 }

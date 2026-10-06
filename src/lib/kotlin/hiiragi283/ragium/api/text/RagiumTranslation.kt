@@ -18,6 +18,11 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     CONFIG_ENERGY_RATE("config", "energy_rate"),
 
     // Tooltips
+    TOOLTIPS_SULFUR(HTConstants.TOOLTIP, "sulfur"),
+    TOOLTIPS_CINNABAR(HTConstants.TOOLTIP, "cinnabar"),
+    TOOLTIPS_FLUORITE(HTConstants.TOOLTIP, "fluorite"),
+    TOOLTIPS_CARBON(HTConstants.TOOLTIP, "carbon"),
+
     TOOLTIPS_MEMORY_DISC_DATA(HTConstants.TOOLTIP, "memory_disc_data")
     ;
 

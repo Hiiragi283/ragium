@@ -511,8 +511,12 @@
   "tag.item.c.buckets.sulfuric_acid": "硫酸入りバケツ",
   "tag.item.c.buckets.synthetic_resin": "合成樹脂入りバケツ",
   "tag.item.c.buckets.wood_tar": "木タール入りバケツ",
+  "tooltip.ragium.carbon": "ダイヤモンド鉱石からドロップします",
+  "tooltip.ragium.cinnabar": "レッドストーン鉱石からドロップします",
+  "tooltip.ragium.fluorite": "ラピスラズリ鉱石からドロップします",
   "tooltip.ragium.intrinsic_enchantment": "常に少なくとも%1$sがあります",
   "tooltip.ragium.memory_disc_data": "スキャン済み: %1$s",
   "tooltip.ragium.show_description": "シフトキーを押して説明を表示",
-  "tooltip.ragium.show_details": "シフトキーを押して詳細を表示"
+  "tooltip.ragium.show_details": "シフトキーを押して詳細を表示",
+  "tooltip.ragium.sulfur": "石炭鉱石からドロップします"
 }

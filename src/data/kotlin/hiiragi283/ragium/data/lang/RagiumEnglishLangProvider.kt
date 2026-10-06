@@ -227,6 +227,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
 
+        add(RagiumTranslation.TOOLTIPS_SULFUR, "Dropped from Coal Ores")
+        add(RagiumTranslation.TOOLTIPS_CINNABAR, "Dropped from Redstone Ores")
+        add(RagiumTranslation.TOOLTIPS_FLUORITE, "Dropped from Lapis Lazuri Ores")
+        add(RagiumTranslation.TOOLTIPS_CARBON, "Dropped from Diamond Ores")
+
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"Scanned Item: %1$s")
 
         addDataTranslations()
