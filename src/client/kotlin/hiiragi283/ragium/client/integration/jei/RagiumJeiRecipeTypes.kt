@@ -1,109 +1,96 @@
 package hiiragi283.ragium.client.integration.jei
 
-import hiiragi283.lib.integration.jei.HTHolderJeiRecipeType
-import hiiragi283.lib.integration.jei.HTJeiRecipeType
+import hiiragi283.lib.integration.jei.HTRecipeHolderType
+import hiiragi283.lib.integration.jei.IRecipeType
+import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.base.HTFluidToDoubleFluidRecipe
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.RTFreezingRecipe
+import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTResourceExtractingRecipe
 import hiiragi283.ragium.api.recipe.RTWashingRecipe
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.common.block.RagiumBlocks
 
 data object RagiumJeiRecipeTypes {
+    @JvmStatic
+    private inline fun <reified T : Any> create(name: String): HTRecipeHolderType<T> =
+        IRecipeType<HTRecipeHolder<T>>(RagiumAPI.id(name))
+
     // Mechanical
     @JvmField
-    val ASSEMBLING: HTHolderJeiRecipeType<HTTripleItemToItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER)
+    val ASSEMBLING: HTRecipeHolderType<HTTripleItemToItemRecipe.Basic> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
-    val COMPRESSING: HTHolderJeiRecipeType<HTItemToRecipe.BasicItem> =
-        HTJeiRecipeType(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
+    val COMPRESSING: HTRecipeHolderType<HTItemToRecipe.BasicItem> = create(RagiumConstants.COMPRESSING)
 
     @JvmField
-    val CRUSHING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
+    val CRUSHING: HTRecipeHolderType<HTItemToDoubleItemRecipe.Basic> = create(RagiumConstants.CRUSHING)
 
     @JvmField
-    val CUTTING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
+    val CUTTING: HTRecipeHolderType<HTItemToDoubleItemRecipe.Basic> = create(RagiumConstants.CUTTING)
 
     @JvmField
-    val DRAINING: HTHolderJeiRecipeType<HTItemToRecipe.BasicItemAndFluid> =
-        HTJeiRecipeType(RagiumRecipeTypes.DRAINING, RagiumBlocks.MACHINE_CASING)
+    val DRAINING: HTRecipeHolderType<HTItemToRecipe.BasicItemAndFluid> = create(RagiumConstants.DRAINING)
 
     @JvmField
-    val FILLING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> =
-        HTJeiRecipeType(RagiumRecipeTypes.FILLING, RagiumBlocks.MACHINE_CASING)
+    val FILLING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicItem> = create(RagiumConstants.FILLING)
 
     // Heat
     @JvmField
-    val ALLOYING: HTHolderJeiRecipeType<HTTripleItemToItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
+    val ALLOYING: HTRecipeHolderType<HTTripleItemToItemRecipe.Basic> = create(RagiumConstants.ALLOYING)
 
     @JvmField
-    val FREEZING: HTHolderJeiRecipeType<HTFluidToRecipe.BasicItem> =
-        HTJeiRecipeType(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
+    val FREEZING: HTRecipeHolderType<RTFreezingRecipe> = create(RagiumConstants.FREEZING)
 
     @JvmField
-    val MELTING: HTHolderJeiRecipeType<HTItemToRecipe.BasicFluid> =
-        HTJeiRecipeType(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
+    val MELTING: HTRecipeHolderType<HTItemToRecipe.BasicFluid> = create(RagiumConstants.MELTING)
 
     @JvmField
-    val PYROLYZING: HTHolderJeiRecipeType<HTItemToRecipe.BasicItemAndFluid> =
-        HTJeiRecipeType(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
+    val PYROLYZING: HTRecipeHolderType<HTItemToRecipe.BasicItemAndFluid> = create(RagiumConstants.PYROLYZING)
 
     @JvmField
-    val REFINING: HTHolderJeiRecipeType<HTFluidToRecipe.BasicItemAndFluid> =
-        HTJeiRecipeType(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
+    val REFINING: HTRecipeHolderType<HTFluidToRecipe.BasicItemAndFluid> = create(RagiumConstants.REFINING)
 
     // Chemical
     @JvmField
-    val BATHING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicItem> =
-        HTJeiRecipeType(RagiumRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
+    val BATHING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicItem> = create(RagiumConstants.BATHING)
 
     @JvmField
-    val CENTRIFUGING: HTHolderJeiRecipeType<HTFluidToDoubleFluidRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.CENTRIFUGING, RagiumBlocks.CHEMICAL_BATH)
+    val CENTRIFUGING: HTRecipeHolderType<HTFluidToDoubleFluidRecipe.Basic> = create(RagiumConstants.CENTRIFUGING)
 
     @JvmField
-    val MIXING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> =
-        HTJeiRecipeType(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
+    val MIXING: HTRecipeHolderType<RTMixingRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
-    val REACTING: HTHolderJeiRecipeType<RTReactingRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)
+    val REACTING: HTRecipeHolderType<RTReactingRecipe.Basic> = create(RagiumConstants.REACTING)
 
     @JvmField
-    val WASHING: HTHolderJeiRecipeType<RTWashingRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.WASHING, RagiumBlocks.MACHINE_CASING)
+    val WASHING: HTRecipeHolderType<RTWashingRecipe> = create(RagiumConstants.WASHING)
 
     // Bio
     @JvmField
-    val BREWING: HTHolderJeiRecipeType<HTItemAndFluidToRecipe.BasicFluid> =
-        HTJeiRecipeType(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
+    val BREWING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicFluid> = create(RagiumConstants.BREWING)
 
     @JvmField
-    val PLANTING: HTHolderJeiRecipeType<HTItemToDoubleItemRecipe.Basic> =
-        HTJeiRecipeType(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
+    val PLANTING: HTRecipeHolderType<HTItemToDoubleItemRecipe.Basic> = create(RagiumConstants.PLANTING)
 
     // Electronics
     @JvmField
-    val ELECTROLYZING: HTHolderJeiRecipeType<RTElectrolyzingRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
+    val ELECTROLYZING: HTRecipeHolderType<RTElectrolyzingRecipe> = create(RagiumConstants.ELECTROLYZING)
 
     @JvmField
-    val RESOURCE_EXTRACTING: HTHolderJeiRecipeType<RTResourceExtractingRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, RagiumBlocks.MACHINE_CASING)
+    val RESOURCE_EXTRACTING: HTRecipeHolderType<RTResourceExtractingRecipe> =
+        create(RagiumConstants.RESOURCE_EXTRACTING)
 
     // Arcane
     @JvmField
-    val ENCHANTING: HTHolderJeiRecipeType<RTEnchantingRecipe> =
-        HTJeiRecipeType(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
+    val ENCHANTING: HTRecipeHolderType<RTEnchantingRecipe> = create(RagiumConstants.ENCHANTING)
 }

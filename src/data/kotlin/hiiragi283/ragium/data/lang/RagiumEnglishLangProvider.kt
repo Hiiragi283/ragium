@@ -145,6 +145,10 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
 
+        add(RagiumItems.BLANK_MOLD, "Blank Mold")
+        add(RagiumItems.BALL_MOLD, "Ball Mold")
+        add(RagiumItems.BLOCK_MOLD, "Block Mold")
+        add(RagiumItems.PLATE_MOLD, "Plate Mold")
         add(RagiumItems.MEMORY_DISC, "Memory Disc")
 
         // Mob Effect
@@ -222,6 +226,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
+
+        add(RagiumTranslation.TOOLTIPS_SULFUR, "Dropped from Coal Ores")
+        add(RagiumTranslation.TOOLTIPS_CINNABAR, "Dropped from Redstone Ores")
+        add(RagiumTranslation.TOOLTIPS_FLUORITE, "Dropped from Lapis Lazuri Ores")
+        add(RagiumTranslation.TOOLTIPS_CARBON, "Dropped from Diamond Ores")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"Scanned Item: %1$s")
 

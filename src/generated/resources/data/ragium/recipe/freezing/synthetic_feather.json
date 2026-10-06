@@ -1,0 +1,13 @@
+{
+  "type": "ragium:freezing",
+  "catalyst": "#c:feathers",
+  "ingredient": {
+    "amount": 90,
+    "fluids": "#c:molten_plastic"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:synthetic_feather"
+  },
+  "time": 200
+}

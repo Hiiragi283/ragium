@@ -4,7 +4,6 @@ package hiiragi283.ragium.api.data.recipe.builder
 
 import hiiragi283.lib.data.recipe.builder.HTFluidToDoubleFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTFluidToItemAndFluidRecipeBuilder
-import hiiragi283.lib.data.recipe.builder.HTFluidToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
@@ -24,9 +23,7 @@ import hiiragi283.ragium.api.recipe.RTCuttingRecipe
 import hiiragi283.ragium.api.recipe.RTDrainingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTFillingRecipe
-import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
-import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
@@ -113,13 +110,11 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun freezing(
-        builderAction: HTFluidToItemRecipeBuilder<RTFreezingRecipe>.() -> Unit
-    ): HTFluidToItemRecipeBuilder<RTFreezingRecipe> {
+    inline fun freezing(builderAction: RTFreezingRecipeBuilder.() -> Unit): RTFreezingRecipeBuilder {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSingleRecipeBuilder(RagiumConstants.FREEZING, ::RTFreezingRecipe).apply(builderAction)
+        return RTFreezingRecipeBuilder().apply(builderAction)
     }
 
     @JvmStatic
@@ -175,13 +170,11 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun mixing(
-        builderAction: HTItemAndFluidToRecipeBuilder.ToFluid<RTMixingRecipe>.() -> Unit
-    ): HTItemAndFluidToRecipeBuilder.ToFluid<RTMixingRecipe> {
+    inline fun mixing(builderAction: RTMixingRecipeBuilder.() -> Unit): RTMixingRecipeBuilder {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemAndFluidToRecipeBuilder.ToFluid(RagiumConstants.MIXING, ::RTMixingRecipe).apply(builderAction)
+        return RTMixingRecipeBuilder().apply(builderAction)
     }
 
     @JvmStatic

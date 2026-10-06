@@ -1,0 +1,13 @@
+{
+  "type": "ragium:freezing",
+  "catalyst": "ragium:ball_mold",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:water"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:snowball"
+  },
+  "time": 200
+}

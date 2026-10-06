@@ -4,13 +4,13 @@
     "amount": 250,
     "fluids": "#c:water"
   },
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:yellow_dye"
+  },
   "item_ingredient": {
     "count": 1,
     "items": "#c:dyes/yellow"
   },
-  "result": {
-    "amount": 250,
-    "id": "ragium:yellow_dye"
-  },
-  "time": 200
+  "time": 100
 }

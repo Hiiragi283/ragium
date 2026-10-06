@@ -9,6 +9,7 @@ import hiiragi283.lib.resource.HTSimpleValueWithKey
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
+import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -75,6 +76,12 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(RagiumTags.Items.COKES)
             .addTag(HTCommonTags.Items.COAL_COKE)
             .addTag(HTCommonTags.Items.PITCH_COKE)
+        RagiumItems.MOLDS.forEach(builder(RagiumTags.Items.MOLDS)::add)
+        for (gem: RagiumMaterial.Gem in setOf(RagiumMaterial.Gem.CINNABAR, RagiumMaterial.Gem.FLUORITE)) {
+            for (prefix: HTTagPrefix in setOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM)) {
+                builder(RagiumTags.Items.SMELTING_FLUXES).addTag(prefix.itemTagKey(gem))
+            }
+        }
         builder(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)
             .add(RagiumBlocks.FLUID_OUTPUT_BUS)
             .apply { RagiumBlocks.TANKS.forEach { add(it) } }

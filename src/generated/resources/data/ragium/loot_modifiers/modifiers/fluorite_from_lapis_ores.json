@@ -1,0 +1,11 @@
+{
+  "type": "neoforge:add_table",
+  "conditions": [
+    {
+      "blocks": "#minecraft:lapis_ores",
+      "condition": "ragium:block_set"
+    }
+  ],
+  "priority": 0,
+  "table": "ragium:modifiers/fluorite_from_lapis_ores"
+}

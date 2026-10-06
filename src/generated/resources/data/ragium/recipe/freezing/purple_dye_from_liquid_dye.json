@@ -1,5 +1,6 @@
 {
   "type": "ragium:freezing",
+  "catalyst": "ragium:ball_mold",
   "ingredient": {
     "amount": 250,
     "fluids": "#c:dyes/purple"
@@ -8,5 +9,5 @@
     "count": 1,
     "id": "minecraft:purple_dye"
   },
-  "time": 200
+  "time": 50
 }

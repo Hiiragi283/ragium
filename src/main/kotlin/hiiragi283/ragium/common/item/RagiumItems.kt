@@ -9,12 +9,15 @@ import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.registry.HTDeferredItemRegister
 import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.HTMachineType
+import hiiragi283.ragium.api.text.HTItemTooltip
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
 import net.minecraft.core.Holder
@@ -75,6 +78,7 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Gem.EMERALD, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Gem.ECHO, HTItemPart.DUST)
                 putAll(RagiumMaterial.Gem.PRISMARINE, HTItemPart.DUST)
+                putAll(RagiumMaterial.Gem.CINNABAR, HTItemPart.DUST, HTItemPart.GEM)
                 putAll(RagiumMaterial.Gem.FLUORITE, HTItemPart.DUST, HTItemPart.GEM)
                 // putAll(RagiumMaterial.Gem.CRYOLITE, HTItemPart.DUST, HTItemPart.GEM)
                 // Metal
@@ -222,6 +226,20 @@ data object RagiumItems {
     // Mechanical
 
     // Heat
+    @JvmField
+    val BLANK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_mold") { it.stacksTo(1) }
+
+    @JvmField
+    val BALL_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ball_mold") { it.stacksTo(1) }
+
+    @JvmField
+    val BLOCK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("block_mold") { it.stacksTo(1) }
+
+    @JvmField
+    val PLATE_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plate_mold") { it.stacksTo(1) }
+
+    @JvmField
+    val MOLDS: Set<HTSimpleDeferredItem> = setOf(BLANK_MOLD, BALL_MOLD, BLOCK_MOLD, PLATE_MOLD)
 
     // Chemical
 
@@ -258,12 +276,19 @@ data object RagiumItems {
 
     @JvmStatic
     private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
+        fun <T : Any> set(item: ItemLike, type: DataComponentType<T>, value: T) {
+            event.modify(item) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
+                builder.set(type, value)
+            }
+        }
+
+        // Chemical
         fun <T : Any> setHolder(item: ItemLike, type: DataComponentType<Holder<T>>, key: ResourceKey<T>) {
             event.modify(item) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
                 builder.set(type, provider.getOrThrow(key))
             }
         }
-        // Chemical
+
         setHolder(Items.COAL_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
         setHolder(Items.COAL, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
         setHolder(Items.CHARCOAL, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
@@ -294,5 +319,14 @@ data object RagiumItems {
 
         setHolder(Items.QUARTZ_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
         setHolder(Items.QUARTZ, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
+        // Tooltip
+        fun setTooltip(item: ItemLike, delegate: HTHasTranslationKey) {
+            set(item, RagiumDataComponents.ITEM_TOOLTIP, HTItemTooltip.wrap(delegate))
+        }
+
+        setTooltip(getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR), RagiumTranslation.TOOLTIPS_SULFUR)
+        setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CINNABAR), RagiumTranslation.TOOLTIPS_CINNABAR)
+        setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE), RagiumTranslation.TOOLTIPS_FLUORITE)
+        setTooltip(getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CARBON), RagiumTranslation.TOOLTIPS_CARBON)
     }
 }

@@ -52,7 +52,8 @@ data object RagiumDataGen {
 
         event.createLootTables(
             ::RagiumBlockLootTableProvider to LootContextParamSets.BLOCK,
-            RagiumGlobalLootTableProvider::EntityProvider to LootContextParamSets.ENTITY
+            RagiumGlobalLootTableProvider::ForBlock to LootContextParamSets.BLOCK,
+            RagiumGlobalLootTableProvider::ForEntity to LootContextParamSets.ENTITY
         )
         event.createProvider(::RagiumGlobalLootModifierProvider)
 

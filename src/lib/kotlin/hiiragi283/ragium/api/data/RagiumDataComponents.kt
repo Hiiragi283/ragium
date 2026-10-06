@@ -4,6 +4,7 @@ import hiiragi283.lib.data.DataComponentType
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.ragium.api.data.chemical.HTChemical
+import hiiragi283.ragium.api.text.HTItemTooltip
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.codec.ByteBufCodecs
@@ -25,21 +26,28 @@ data object RagiumDataComponents {
         DataComponentType(HTChemical.HOLDER_CODEC, HTChemical.HOLDER_STREAM_CODEC)
 
     @JvmField
-    val ENERGY: DataComponentType<Int> = DataComponentType(HTCodecs.NON_NEGATIVE_INT, ByteBufCodecs.VAR_INT)
+    val ENERGY: DataComponentType<Int> =
+        DataComponentType(HTCodecs.NON_NEGATIVE_INT, ByteBufCodecs.VAR_INT)
 
     @JvmField
     val FLUID: DataComponentType<SimpleFluidContent> =
         DataComponentType(SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
 
+    /**
+     * @since 26.1.8
+     */
     @JvmField
-    val MEMORY_DISC_DATA: DataComponentType<ItemStackTemplate> = DataComponentType(
-        ItemStackTemplate.CODEC,
-        ItemStackTemplate.STREAM_CODEC
-    )
+    val ITEM_TOOLTIP: DataComponentType<HTItemTooltip> =
+        DataComponentType(HTItemTooltip.CODEC, HTItemTooltip.STREAM_CODEC)
+
+    @JvmField
+    val MEMORY_DISC_DATA: DataComponentType<ItemStackTemplate> =
+        DataComponentType(ItemStackTemplate.CODEC, ItemStackTemplate.STREAM_CODEC)
 
     /**
      * @since 26.1.7
      */
     @JvmField
-    val OWNER_ID: DataComponentType<UUID> = DataComponentType(HTCodecs.UUID, HTStreamCodecs.UUID)
+    val OWNER_ID: DataComponentType<UUID> =
+        DataComponentType(HTCodecs.UUID, HTStreamCodecs.UUID)
 }

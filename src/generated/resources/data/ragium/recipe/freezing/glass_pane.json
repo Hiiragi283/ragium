@@ -1,0 +1,13 @@
+{
+  "type": "ragium:freezing",
+  "catalyst": "ragium:plate_mold",
+  "ingredient": {
+    "amount": 375,
+    "fluids": "#c:molten_glass"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:glass_pane"
+  },
+  "time": 200
+}

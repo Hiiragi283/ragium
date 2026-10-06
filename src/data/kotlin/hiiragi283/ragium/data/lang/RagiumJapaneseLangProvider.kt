@@ -141,6 +141,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")
 
+        add(RagiumItems.BLANK_MOLD, "空の鋳型")
+        add(RagiumItems.BALL_MOLD, "ボールの鋳型")
+        add(RagiumItems.BLOCK_MOLD, "ブロックの鋳型")
+        add(RagiumItems.PLATE_MOLD, "板の鋳型")
         add(RagiumItems.MEMORY_DISC, "メモリーディスク")
 
         // Mob Effect
@@ -218,6 +222,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
+
+        add(RagiumTranslation.TOOLTIPS_SULFUR, "石炭鉱石からドロップします")
+        add(RagiumTranslation.TOOLTIPS_CINNABAR, "レッドストーン鉱石からドロップします")
+        add(RagiumTranslation.TOOLTIPS_FLUORITE, "ラピスラズリ鉱石からドロップします")
+        add(RagiumTranslation.TOOLTIPS_CARBON, "ダイヤモンド鉱石からドロップします")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"スキャン済み: %1$s")
 

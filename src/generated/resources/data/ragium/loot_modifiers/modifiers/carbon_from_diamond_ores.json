@@ -1,0 +1,11 @@
+{
+  "type": "neoforge:add_table",
+  "conditions": [
+    {
+      "blocks": "#minecraft:diamond_ores",
+      "condition": "ragium:block_set"
+    }
+  ],
+  "priority": 0,
+  "table": "ragium:modifiers/carbon_from_diamond_ores"
+}

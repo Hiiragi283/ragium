@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.data.loot.predicates.HTBlockSetLootCondition
 import hiiragi283.lib.gui.sync.HTFluidSyncPayload
 import hiiragi283.lib.gui.sync.HTIntSyncPayload
 import hiiragi283.lib.gui.sync.HTItemSyncPayload
@@ -107,6 +108,9 @@ data object Ragium : HTCommonMod() {
         }
         event.register(Registries.RECIPE_TYPE) { helper ->
             RagiumRecipeTypes.allTypes.forEach(helper::register)
+        }
+        event.register(Registries.LOOT_CONDITION_TYPE) { helper ->
+            helper.register(RagiumAPI.id("block_set"), HTBlockSetLootCondition.CODEC)
         }
 
         event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES) { helper ->

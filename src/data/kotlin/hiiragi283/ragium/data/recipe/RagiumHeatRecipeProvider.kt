@@ -112,19 +112,31 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
     }
 
     private fun freezing() {
+        // Water -> Snowball
+        RagiumRecipeBuilders.freezing {
+            ingredient {
+                +waterSet()
+                amount /= 4
+            }
+            catalyst { items { +RagiumItems.BALL_MOLD } }
+            result { +Items.SNOWBALL }
+        }.save(exporter)
         // Water -> Snow Block
         RagiumRecipeBuilders.freezing {
             ingredient { +waterSet() }
+            catalyst { items { +RagiumItems.BLOCK_MOLD } }
             result { +Items.SNOW_BLOCK }
         }.save(exporter)
         // Lava -> Obsidian
         RagiumRecipeBuilders.freezing {
             ingredient { +lavaSet() }
+            catalyst { items { +RagiumItems.BLOCK_MOLD } }
             result { +Items.OBSIDIAN }
         }.save(exporter)
         // Honey
         RagiumRecipeBuilders.freezing {
             ingredient { +holderSet(RagiumFluids.HONEY) }
+            catalyst { items { +RagiumItems.BLOCK_MOLD } }
             result { +Items.HONEY_BLOCK }
         }.save(exporter)
 
@@ -134,6 +146,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +holderSet(RagiumTags.Fluids.RESINS)
                 amount /= 4
             }
+            catalyst { items { +RagiumItems.BALL_MOLD } }
             result { +RagiumItems.STICKY_BALL }
         }.save(exporter)
     }

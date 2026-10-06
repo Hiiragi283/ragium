@@ -1,0 +1,13 @@
+{
+  "type": "ragium:freezing",
+  "catalyst": "#c:strings",
+  "ingredient": {
+    "amount": 90,
+    "fluids": "#c:molten_plastic"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:synthetic_fiber"
+  },
+  "time": 200
+}

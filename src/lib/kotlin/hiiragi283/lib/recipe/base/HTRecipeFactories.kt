@@ -109,6 +109,16 @@ data object HTRecipeFactories {
     }
 
     /**
+     * 2種類のアイテムと1種類の液体から完成品を作る[TripleInput]の拡張インターフェースです。
+     * @since 26.1.8
+     */
+    interface DoubleItemAndFluid<OUTPUT : Any> :
+        TripleInput<HTFluidRecipeInput, ItemInstance, ItemInstance, FluidInstance, OUTPUT> {
+        override fun produce(input: HTFluidRecipeInput): OUTPUT =
+            apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getFluidOrEmpty(0))
+    }
+
+    /**
      * 3種類のアイテムから完成品を作る[TripleInput]の拡張インターフェースです。
      */
     interface TripleItem<OUTPUT : Any> : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance, OUTPUT> {

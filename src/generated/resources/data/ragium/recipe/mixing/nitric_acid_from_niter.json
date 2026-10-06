@@ -4,13 +4,13 @@
     "amount": 500,
     "fluids": "#c:sulfuric_acid"
   },
+  "fluid_result": {
+    "amount": 1000,
+    "id": "ragium:nitric_acid"
+  },
   "item_ingredient": {
     "count": 1,
     "items": "#c:dusts/niter"
-  },
-  "result": {
-    "amount": 1000,
-    "id": "ragium:nitric_acid"
   },
   "time": 200
 }

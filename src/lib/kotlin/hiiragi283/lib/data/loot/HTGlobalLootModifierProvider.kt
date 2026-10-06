@@ -32,6 +32,17 @@ abstract class HTGlobalLootModifierProvider(
     /**
      * GLMを追加します。
      * @param key 参照するルートテーブルの[ResourceKey]
+     * @param condition [key]のルートテーブルを適応するかどうかの条件
+     * @param priority GLMの優先度
+     * @since 26.1.8
+     */
+    protected fun add(key: ResourceKey<LootTable>, condition: LootItemCondition, priority: Int = 0) {
+        add(key.identifier().path, AddTableLootModifier(arrayOf(condition), priority, key))
+    }
+
+    /**
+     * GLMを追加します。
+     * @param key 参照するルートテーブルの[ResourceKey]
      * @param conditions [key]のルートテーブルを適応するかどうかの条件の一覧
      * @param priority GLMの優先度
      */

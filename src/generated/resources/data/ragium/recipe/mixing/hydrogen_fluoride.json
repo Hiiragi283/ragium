@@ -4,6 +4,10 @@
     "amount": 1000,
     "fluids": "#c:sulfuric_acid"
   },
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:hydrogen_fluoride"
+  },
   "item_ingredient": {
     "count": 1,
     "items": {
@@ -13,10 +17,6 @@
         "c:gems/fluorite"
       ]
     }
-  },
-  "result": {
-    "amount": 2000,
-    "id": "ragium:hydrogen_fluoride"
   },
   "time": 200
 }

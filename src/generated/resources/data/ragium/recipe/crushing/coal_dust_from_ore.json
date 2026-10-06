@@ -4,15 +4,9 @@
     "count": 1,
     "items": "#c:ores/coal"
   },
-  "results": [
-    {
-      "count": 2,
-      "id": "ragium:coal_dust"
-    },
-    {
-      "count": 3,
-      "id": "ragium:tiny_coal"
-    }
-  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:coal_dust"
+  },
   "time": 200
 }

@@ -215,6 +215,7 @@
     "arcane_machine_parts",
     "aromatic_compound_bucket",
     "assembler",
+    "ball_mold",
     "bamboo_charcoal",
     "bauxite_dust",
     "beeswax",
@@ -224,7 +225,9 @@
     "black_steel_block",
     "black_steel_ingot",
     "black_steel_nugget",
+    "blank_mold",
     "bleach_bucket",
+    "block_mold",
     "blue_dye_bucket",
     "borax_dust",
     "brewery",
@@ -240,6 +243,8 @@
     "chemical_machine_parts",
     "chemical_reactor",
     "chlorine_bucket",
+    "cinnabar",
+    "cinnabar_dust",
     "circuit_board",
     "coal_coke",
     "coal_coke_block",
@@ -335,6 +340,7 @@
     "pitch_coke_block",
     "planter",
     "plastic_plate",
+    "plate_mold",
     "potion_bucket",
     "potion_tank",
     "precision_assembler",
@@ -394,6 +400,9 @@
     "wood_gear",
     "wood_tar_bucket",
     "yellow_dye_bucket"
+  ],
+  "minecraft:loot_condition_type": [
+    "block_set"
   ],
   "minecraft:menu": [
     "block"
@@ -457,23 +466,13 @@
     "washing"
   ],
   "minecraft:worldgen/configured_feature": [
-    "lake/crude_oil",
-    "ore/niter",
-    "ore/sulfur"
+    "lake/crude_oil"
   ],
   "minecraft:worldgen/placed_feature": [
-    "lake/crude_oil",
-    "nether_ore/niter",
-    "nether_ore/sulfur",
-    "ore/niter",
-    "ore/sulfur"
+    "lake/crude_oil"
   ],
   "neoforge:biome_modifier": [
-    "lake/crude_oil",
-    "nether_ore/niter",
-    "nether_ore/sulfur",
-    "ore/niter",
-    "ore/sulfur"
+    "lake/crude_oil"
   ],
   "neoforge:fluid_ingredient_type": [
     "potion"

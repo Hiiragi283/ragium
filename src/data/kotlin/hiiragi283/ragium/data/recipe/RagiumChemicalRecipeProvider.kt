@@ -134,43 +134,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             recipeId suffix "_from_debris"
         }.save(exporter)
-        // Raw XX -> XX Dust
-        RagiumRecipeBuilders.washing {
-            itemIngredient { +holderSet(CommonTagPrefixes.RAW_MATERIALS, RagiumMaterial.Metal.COPPER) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.SULFURIC_ACID)
-                amount /= 4
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.COPPER)
-                count = 2
-            }
-            recipeId suffix "_from_raw"
-        }.save(exporter)
-        RagiumRecipeBuilders.washing {
-            itemIngredient { +holderSet(CommonTagPrefixes.RAW_MATERIALS, RagiumMaterial.Metal.IRON) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.SULFURIC_ACID)
-                amount /= 4
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.IRON)
-                count = 2
-            }
-            recipeId suffix "_from_raw"
-        }.save(exporter)
-        RagiumRecipeBuilders.washing {
-            itemIngredient { +holderSet(CommonTagPrefixes.RAW_MATERIALS, RagiumMaterial.Metal.GOLD) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.NITRIC_ACID)
-                amount /= 4
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.GOLD)
-                count = 2
-            }
-            recipeId suffix "_from_raw"
-        }.save(exporter)
     }
 
     override fun getName(): String = "Chemical Recipes"

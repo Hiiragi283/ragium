@@ -419,7 +419,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     private fun crushing() {
         crushMaterial()
         crushWood()
-        crushOre()
         dyes()
 
         // XX Block -> XX
@@ -605,127 +604,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             recipeId suffix "_from_boats"
         }.save(exporter)
-    }
-
-    private fun crushOre() {
-        // XX Ore -> XX Dust
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Fuel.COAL) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.COAL)
-                count = 2
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.TINY, RagiumMaterial.Fuel.COAL)
-                count = 3
-            }
-            recipeId suffix "_from_ore"
-        }.save(exporter)
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Mineral.REDSTONE) }
-            result {
-                +Items.REDSTONE
-                count = 6
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.RAGINITE)
-            }
-            recipeId suffix "_from_ore"
-        }.save(exporter)
-
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.LAPIS) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.LAPIS)
-                count = 6
-            }
-            recipeId suffix "_from_ore"
-        }.save(exporter)
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.QUARTZ) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ)
-                count = 4
-            }
-            result {
-                +Items.GOLD_NUGGET
-            }
-            recipeId suffix "_from_ore"
-        }.save(exporter)
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.DIAMOND) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.DIAMOND)
-                count = 2
-            }
-            recipeId suffix "_from_ore"
-        }.save(exporter)
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.EMERALD) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.EMERALD)
-                count = 2
-            }
-            recipeId suffix "_from_ore"
-        }.save(exporter)
-
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Metal.COPPER) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.COPPER)
-                count = 3
-            }
-            result {
-                +Items.GOLD_NUGGET
-                count = 3
-            }
-            recipeId suffix "_from_ore"
-        }.save(exporter)
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Metal.IRON) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.IRON)
-                count = 2
-            }
-            result { +Items.FLINT }
-            recipeId suffix "_from_ore"
-        }.save(exporter)
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Metal.GOLD) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.GOLD)
-                count = 2
-            }
-            recipeId suffix "_from_ore"
-        }.save(exporter)
-        // Raw XX -> XX Dust
-        for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
-            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
-            RagiumRecipeBuilders.crushing {
-                ingredient {
-                    +holderSet(CommonTagPrefixes.RAW_MATERIALS, metal)
-                    count = 3
-                }
-                result {
-                    +dust
-                    count = 4
-                }
-                recipeId suffix "_from_raw"
-                condition { itemTagPresent(CommonTagPrefixes.RAW_MATERIALS, metal) }
-            }.save(exporter)
-        }
-
-        // Ragium
-        for (mineral: RagiumMaterial.Mineral in setOf(RagiumMaterial.Mineral.SULFUR, RagiumMaterial.Mineral.NITER)) {
-            RagiumRecipeBuilders.crushing {
-                ingredient { +holderSet(CommonTagPrefixes.ORE, mineral) }
-                result {
-                    +RagiumItems.getOrThrow(HTItemPart.DUST, mineral)
-                    count = 6
-                }
-                recipeId suffix "_from_ore"
-            }.save(exporter)
-        }
     }
 
     private fun dyes() {

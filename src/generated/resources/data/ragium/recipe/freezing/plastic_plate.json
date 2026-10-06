@@ -1,5 +1,6 @@
 {
   "type": "ragium:freezing",
+  "catalyst": "ragium:plate_mold",
   "ingredient": {
     "amount": 90,
     "fluids": "#c:molten_plastic"

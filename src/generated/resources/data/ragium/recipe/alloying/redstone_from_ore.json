@@ -1,0 +1,16 @@
+{
+  "type": "ragium:alloying",
+  "extra": {
+    "count": 1,
+    "items": "#ragium:smelting_fluxes"
+  },
+  "ingredient": {
+    "count": 1,
+    "items": "#c:ores/redstone"
+  },
+  "result": {
+    "count": 9,
+    "id": "minecraft:redstone"
+  },
+  "time": 200
+}

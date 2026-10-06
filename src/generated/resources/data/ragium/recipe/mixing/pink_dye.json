@@ -4,13 +4,13 @@
     "amount": 250,
     "fluids": "#c:water"
   },
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:pink_dye"
+  },
   "item_ingredient": {
     "count": 1,
     "items": "#c:dyes/pink"
   },
-  "result": {
-    "amount": 250,
-    "id": "ragium:pink_dye"
-  },
-  "time": 200
+  "time": 100
 }

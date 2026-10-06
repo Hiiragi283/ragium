@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:gems/cinnabar"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:cinnabar_dust"
+  },
+  "time": 200
+}

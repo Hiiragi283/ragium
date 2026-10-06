@@ -3,14 +3,17 @@ package hiiragi283.ragium.client.integration.jei.category
 import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.integration.jei.category.HTDoubleItemToRecipeCategory
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.client.integration.jei.RagiumJeiRecipeTypes
+import hiiragi283.ragium.common.block.RagiumBlocks
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.helpers.IGuiHelper
 
 class RTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
     HTDoubleItemToRecipeCategory<RTEnchantingRecipe>(
-        guiHelper,
         RagiumJeiRecipeTypes.ENCHANTING,
+        RagiumRecipeTypes.ENCHANTING,
+        guiHelper.createDrawableItemLike(RagiumBlocks.ENCHANTER),
         RTEnchantingRecipe.CODEC
     ) {
     override fun setPrimaryInput(builder: IRecipeSlotBuilder, recipe: RTEnchantingRecipe) {

@@ -49,7 +49,7 @@ class HTTripleItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
     }
 
     // Extras
-    @PublishedApi internal var extras: MutableList<HTItemIngredient> = ObjectArrayList()
+    @PublishedApi internal val extras: MutableList<HTItemIngredient> = ObjectArrayList()
 
     inline fun extra(builderAction: HTItemIngredientBuilder.() -> Unit) {
         contract {
