@@ -2,11 +2,14 @@
 
 package hiiragi283.ragium.api.data.recipe.builder
 
+import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
+import hiiragi283.lib.data.recipe.ingredient.IngredientBuilder
 import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -14,38 +17,53 @@ import hiiragi283.lib.util.HTDelegates
 import hiiragi283.lib.util.Ior
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.crafting.Ingredient
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe.Basic>(RagiumConstants.REACTING) {
+class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe>(RagiumConstants.REACTING) {
     override fun getRecipeId(): Identifier? = result.getId()
 
-    override fun createRecipe(): RTReactingRecipe.Basic =
-        RTReactingRecipe.Basic(primaryIngredient, secondaryIngredient, result, progressData)
+    override fun createRecipe(): RTReactingRecipe =
+        RTReactingRecipe(fluidIngredients.toNel(), catalyst, result, progressData)
 
-    // Ingredient
-    var primaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
+    // Ingredients
+    private val fluidIngredients: MutableList<HTFluidIngredient> = ObjectArrayList()
 
-    var secondaryIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
+    operator fun HTFluidIngredient.unaryPlus() {
+        fluidIngredients += this
+    }
 
-    inline fun primaryIngredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
+    inline fun ingredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        primaryIngredient = HTFluidIngredientBuilder.build(builderAction)
+        +HTFluidIngredientBuilder.build(builderAction)
     }
 
-    inline fun secondaryIngredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
+    // Catalyst
+    var catalyst: HTItemCatalyst by HTDelegates.onceInitialize(HTItemCatalyst::EMPTY)
+
+    operator fun HTItemCatalyst.unaryPlus() {
+        catalyst = this
+    }
+
+    operator fun Ingredient.unaryPlus() {
+        +HTItemCatalyst(this)
+    }
+
+    inline fun catalyst(builderAction: IngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        secondaryIngredient = HTFluidIngredientBuilder.build(builderAction)
+        +IngredientBuilder.build(builderAction)
     }
 
-    // Result
+    // Results
     var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
 
     var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()

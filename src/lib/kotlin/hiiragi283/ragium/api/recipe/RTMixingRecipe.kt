@@ -11,8 +11,8 @@ import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTRecipeFactories
 import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.ingredient.testOrEmpty
 import hiiragi283.lib.recipe.input.HTFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
@@ -116,14 +116,8 @@ data class RTMixingRecipe(
 
     override fun test(first: ItemInstance, second: ItemInstance, third: FluidInstance): Boolean = when {
         !fluidIngredient.test(third) -> false
-
-        itemIngredients.head.test(first) ->
-            itemIngredients.getOrNull(1)?.test(second) ?: HTIngredientHelper.isEmpty(second)
-
-        itemIngredients.head.test(second) ->
-            itemIngredients.getOrNull(1)?.test(first) ?: HTIngredientHelper.isEmpty(first)
-
-        else -> false
+        itemIngredients.head.test(first) && itemIngredients.getOrNull(1).testOrEmpty(second) -> true
+        else -> itemIngredients.head.test(second) && itemIngredients.getOrNull(1).testOrEmpty(first)
     }
 
     override fun apply(first: ItemInstance, second: ItemInstance, third: FluidInstance): HTItemAndFluidStack =

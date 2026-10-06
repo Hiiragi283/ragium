@@ -3,7 +3,6 @@ package hiiragi283.lib.recipe.ingredient
 import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.util.fold
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -15,6 +14,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.display.DisplayContentsFactory
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * [Item]向けの[HTIngredient]の実装クラスです。
@@ -71,5 +71,11 @@ data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun Optional<HTItemIngredient>.test(instance: ItemInstance): Boolean =
-    this.fold({ HTIngredientHelper.isEmpty(instance) }, { it.test(instance) })
+fun Optional<HTItemIngredient>.test(instance: ItemInstance): Boolean = this.getOrNull().testOrEmpty(instance)
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.9
+ */
+fun HTItemIngredient?.testOrEmpty(instance: ItemInstance): Boolean =
+    this?.test(instance) ?: HTIngredientHelper.isEmpty(instance)

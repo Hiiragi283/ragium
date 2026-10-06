@@ -120,6 +120,15 @@ data object HTRecipePredicates {
     }
 
     /**
+     * 1種類のアイテムと2種類の液体を判定する[TripleInput]の拡張インターフェースです。
+     * @since 26.1.9
+     */
+    fun interface ItemAndDoubleFluid : TripleInput<HTFluidRecipeInput, ItemInstance, FluidInstance, FluidInstance> {
+        override fun matches(input: HTFluidRecipeInput): Boolean =
+            test(input.getItemOrEmpty(0), input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
+    }
+
+    /**
      * 3種類のアイテムを判定する[TripleInput]の拡張インターフェースです。
      */
     fun interface TripleItem : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance> {

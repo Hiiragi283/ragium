@@ -70,7 +70,7 @@ data object RagiumJeiRecipeTypes {
     val MIXING: HTRecipeHolderType<RTMixingRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
-    val REACTING: HTRecipeHolderType<RTReactingRecipe.Basic> = create(RagiumConstants.REACTING)
+    val REACTING: HTRecipeHolderType<RTReactingRecipe> = create(RagiumConstants.REACTING)
 
     @JvmField
     val WASHING: HTRecipeHolderType<RTWashingRecipe> = create(RagiumConstants.WASHING)

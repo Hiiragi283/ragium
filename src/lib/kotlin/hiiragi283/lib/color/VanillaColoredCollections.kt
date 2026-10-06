@@ -33,6 +33,9 @@ data object VanillaColoredCollections {
     val DYE: HTColoredCollection<HTSimpleDeferredItem> = item("%s_dye")
 
     @JvmField
+    val HARNESS: HTColoredCollection<HTSimpleDeferredItem> = item("%s_harness")
+
+    @JvmField
     val GLAZED_TERRACOTTA: HTColoredCollection<HTSimpleDeferredBlockAndItem> = block("%s_glazed_terracotta")
 
     @JvmField
