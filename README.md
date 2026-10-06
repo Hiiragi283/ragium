@@ -43,7 +43,7 @@ This mod is licensed under [MPL-2.0](./LICENSE)
 
 ## Maven Repository
 
-[![Maven Central Version](https://img.shields.io/maven-central/v/io.github.hiiragi283/ragium?style=for-the-badge)](https://search.maven.org/artifact/io.github.hiiragi283/hiiragi-core)
+[![Maven Central Version](https://img.shields.io/maven-central/v/io.github.hiiragi283/ragium?style=for-the-badge)](https://search.maven.org/artifact/io.github.hiiragi283/ragium)
 
 ![Modrinth Version](https://img.shields.io/modrinth/v/ragium?style=for-the-badge)
 
