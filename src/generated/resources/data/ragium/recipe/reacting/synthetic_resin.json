@@ -4,13 +4,15 @@
     "amount": 2000,
     "id": "ragium:synthetic_resin"
   },
-  "primary_ingredient": {
-    "amount": 1000,
-    "fluids": "#c:aromatic_compound"
-  },
-  "secondary_ingredient": {
-    "amount": 1000,
-    "fluids": "#ragium:aldehydes"
-  },
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:aromatic_compound"
+    },
+    {
+      "amount": 1000,
+      "fluids": "#ragium:aldehydes"
+    }
+  ],
   "time": 200
 }

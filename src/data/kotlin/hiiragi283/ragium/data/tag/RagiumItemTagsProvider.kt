@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.tag
 
 import hiiragi283.lib.collection.forEach
+import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.tag.HTBlockItemTagsProvider
 import hiiragi283.lib.data.tag.HTItemTagsProvider
 import hiiragi283.lib.item.component.HTToolType
@@ -21,6 +22,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
@@ -62,6 +64,9 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(Tags.Items.LEATHERS).add(RagiumItems.SYNTHETIC_LEATHER)
         builder(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
         builder(Tags.Items.SLIME_BALLS).add(RagiumItems.STICKY_BALL)
+        for (color: DyeColor in DyeColor.entries) {
+            builder(color.dyedTag).add(VanillaColoredCollections.HARNESS[color])
+        }
 
         builder(HTCommonTags.Items.COAL_COKE).add(RagiumItems.COAL_COKE)
         builder(HTCommonTags.Items.PAPER).add(vanillaId("paper"))

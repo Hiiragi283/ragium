@@ -4,13 +4,15 @@
     "amount": 1000,
     "id": "ragium:hydrofluoric_acid"
   },
-  "primary_ingredient": {
-    "amount": 1000,
-    "fluids": "#c:hydrogen_fluoride"
-  },
-  "secondary_ingredient": {
-    "amount": 1000,
-    "fluids": "#c:water"
-  },
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:hydrogen_fluoride"
+    },
+    {
+      "amount": 1000,
+      "fluids": "#c:water"
+    }
+  ],
   "time": 200
 }

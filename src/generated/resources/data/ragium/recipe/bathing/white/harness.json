@@ -1,0 +1,30 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 125,
+    "fluids": "#c:bleach"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:or",
+          "values": [
+            "#minecraft:harnesses"
+          ]
+        },
+        {
+          "type": "neoforge:not",
+          "value": "#c:dyed/white"
+        }
+      ]
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:white_harness"
+  },
+  "time": 200
+}

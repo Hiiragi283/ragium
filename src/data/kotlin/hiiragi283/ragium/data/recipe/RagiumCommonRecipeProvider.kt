@@ -3,14 +3,12 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.forEach
 import hiiragi283.lib.collection.nelOf
-import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
-import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
@@ -27,13 +25,9 @@ import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.DifferenceIngredient
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.concurrent.CompletableFuture
 
@@ -355,11 +349,11 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     private fun plastic() {
         // Naphtha + O2 -> Molten Plastic
         RagiumRecipeBuilders.reacting {
-            primaryIngredient {
+            ingredient {
                 +holderSet(RagiumFluids.NAPHTHA)
                 amount /= 2
             }
-            secondaryIngredient {
+            ingredient {
                 +holderSet(RagiumFluids.OXYGEN)
                 amount /= 4
             }
@@ -406,8 +400,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // Aromatic Compound + Aldehyde -> Synthetic Resin
         RagiumRecipeBuilders.reacting {
-            primaryIngredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
-            secondaryIngredient { +holderSet(RagiumTags.Fluids.ALDEHYDES) }
+            ingredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
+            ingredient { +holderSet(RagiumTags.Fluids.ALDEHYDES) }
             fluidResult {
                 +RagiumFluids.SYNTHETIC_RESIN
                 amount *= 2
@@ -429,8 +423,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     //    Chemical    //
 
     private fun chemical() {
-        colored()
-
         nitrogen()
         explosive()
         fluorine()
@@ -442,81 +434,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         chlorine()
 
         calcium()
-    }
-
-    private fun colored() {
-        for (color: DyeColor in DyeColor.entries) {
-            val dyeContent: HTFluidContent = RagiumFluids.DYES[color]
-            // Water + Solid Dye -> Liquid Dye
-            RagiumRecipeBuilders.mixing {
-                itemIngredient { +holderSet(color.tag) }
-                fluidIngredient {
-                    +waterSet()
-                    amount /= 4
-                }
-                fluidResult {
-                    +dyeContent
-                    amount /= 4
-                }
-                time /= 2
-            }.save(exporter)
-            // Liquid Dye -> Solid Dye
-            RagiumRecipeBuilders.freezing {
-                ingredient {
-                    +holderSet(dyeContent)
-                    amount /= 4
-                }
-                catalyst { items { +RagiumItems.BALL_MOLD } }
-                result { +VanillaColoredCollections.DYE[color] }
-                time /= 4
-                recipeId suffix "_from_liquid_dye"
-            }.save(exporter)
-            // Sand + Gravel + Liquid Dye -> XX Concrete
-            RagiumRecipeBuilders.mixing {
-                itemIngredient { +holderSet(Tags.Items.SANDS) }
-                itemIngredient { +holderSet(Tags.Items.GRAVELS) }
-                fluidIngredient {
-                    +holderSet(dyeContent)
-                    amount /= 4
-                }
-                itemResult {
-                    +VanillaColoredCollections.CONCRETE[color]
-                    count = 2
-                }
-                time /= 2
-            }.save(exporter)
-        }
-
-        // Lapis + Resin -> Blue Dye
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.LAPIS) }
-            fluidIngredient {
-                +holderSet(RagiumTags.Fluids.RESINS)
-                amount /= 4
-            }
-            result { +Items.BLUE_DYE }
-            recipeId suffix "_from_lapis"
-        }.save(exporter)
-        // Bauxite + Resin -> Blue Dye
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.BAUXITE) }
-            fluidIngredient {
-                +holderSet(RagiumTags.Fluids.RESINS)
-                amount /= 4
-            }
-            result { +Items.BROWN_DYE }
-            recipeId suffix "_from_bauxite"
-        }.save(exporter)
-        // Carbon + Resin -> Black Dye
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.CARBON) }
-            fluidIngredient {
-                +holderSet(RagiumTags.Fluids.RESINS)
-                amount /= 4
-            }
-            result { +Items.BLACK_DYE }
-            recipeId suffix "_from_carbon"
-        }.save(exporter)
     }
 
     private fun nitrogen() {
@@ -535,8 +452,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     private fun explosive() {
         // Aromatic Compound + HNO3 -> Liquid Explosive
         RagiumRecipeBuilders.reacting {
-            primaryIngredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
-            secondaryIngredient { +holderSet(RagiumFluids.NITRIC_ACID) }
+            ingredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
+            ingredient { +holderSet(RagiumFluids.NITRIC_ACID) }
             fluidResult { +RagiumFluids.LIQUID_EXPLOSIVE }
         }.save(exporter)
 
@@ -567,8 +484,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // HF + H2O -> HF(aq)
         RagiumRecipeBuilders.reacting {
-            primaryIngredient { +holderSet(RagiumFluids.HYDROGEN_FLUORIDE) }
-            secondaryIngredient { +waterSet() }
+            ingredient { +holderSet(RagiumFluids.HYDROGEN_FLUORIDE) }
+            ingredient { +waterSet() }
             fluidResult { +RagiumFluids.HYDROFLUORIC_ACID }
         }.save(exporter)
     }
@@ -773,8 +690,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // SO2 + 1/2 O2 -> SO3
         RagiumRecipeBuilders.reacting {
-            primaryIngredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
-            secondaryIngredient {
+            ingredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
+            ingredient {
                 +holderSet(RagiumFluids.OXYGEN)
                 amount /= 2
             }
@@ -787,8 +704,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // SO3 + H2O -> H2SO4
         RagiumRecipeBuilders.reacting {
-            primaryIngredient { +holderSet(RagiumFluids.SULFUR_TRIOXIDE) }
-            secondaryIngredient { +waterSet() }
+            ingredient { +holderSet(RagiumFluids.SULFUR_TRIOXIDE) }
+            ingredient { +waterSet() }
             fluidResult { +RagiumFluids.SULFURIC_ACID }
         }.save(exporter)
     }
@@ -829,8 +746,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
         // H2 + Cl2 -> 2x HCl
         RagiumRecipeBuilders.reacting {
-            primaryIngredient { +holderSet(RagiumFluids.HYDROGEN) }
-            secondaryIngredient { +holderSet(RagiumFluids.CHLORINE) }
+            ingredient { +holderSet(RagiumFluids.HYDROGEN) }
+            ingredient { +holderSet(RagiumFluids.CHLORINE) }
             fluidResult {
                 +RagiumFluids.HYDROGEN_CHLORIDE
                 amount *= 2
@@ -838,35 +755,12 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // HCl + H2O -> HCl(aq)
         RagiumRecipeBuilders.reacting {
-            primaryIngredient { +holderSet(RagiumFluids.HYDROGEN_CHLORIDE) }
-            secondaryIngredient { +waterSet() }
+            ingredient { +holderSet(RagiumFluids.HYDROGEN_CHLORIDE) }
+            ingredient { +waterSet() }
             fluidResult { +RagiumFluids.HYDROCHLORIC_ACID }
         }.save(exporter)
 
         // Cl2 + 2x NaOH(aq) -> 2x NaClO(aq) + H2
-
-        bleaching()
-    }
-
-    private fun bleaching() {
-        setOf(
-            ItemTags.BANNERS to Items.WHITE_BANNER,
-            ItemTags.BEDS to Items.WHITE_BED,
-            ItemTags.HARNESSES to Items.WHITE_HARNESS,
-            ItemTags.SHULKER_BOXES to Items.WHITE_SHULKER_BOX,
-            ItemTags.WOOL to Items.WHITE_WOOL,
-            ItemTags.WOOL_CARPETS to Items.WHITE_CARPET
-        ).forEach { (input: TagKey<Item>, bleached: Item) ->
-            RagiumRecipeBuilders.bathing {
-                itemIngredient { +DifferenceIngredient.of(Ingredient.of(holderSet(input)), Ingredient.of(bleached)) }
-                fluidIngredient {
-                    +holderSet(RagiumFluids.BLEACH)
-                    amount /= 8
-                }
-                result { +bleached }
-                recipeId prefix "bleaching/"
-            }.save(exporter)
-        }
     }
 
     private fun calcium() {

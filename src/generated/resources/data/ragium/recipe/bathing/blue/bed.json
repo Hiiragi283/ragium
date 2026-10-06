@@ -1,0 +1,22 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 125,
+    "fluids": "#c:dyes/blue"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": {
+      "type": "neoforge:and",
+      "values": [
+        "#minecraft:beds",
+        "#c:dyed/white"
+      ]
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:blue_bed"
+  },
+  "time": 50
+}

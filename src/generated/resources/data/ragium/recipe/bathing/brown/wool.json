@@ -1,0 +1,22 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 125,
+    "fluids": "#c:dyes/brown"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": {
+      "type": "neoforge:and",
+      "values": [
+        "#minecraft:wool",
+        "#c:dyed/white"
+      ]
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:brown_wool"
+  },
+  "time": 50
+}

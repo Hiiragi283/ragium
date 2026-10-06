@@ -4,13 +4,15 @@
     "amount": 2000,
     "id": "ragium:hydrogen_chloride"
   },
-  "primary_ingredient": {
-    "amount": 1000,
-    "fluids": "#c:hydrogen"
-  },
-  "secondary_ingredient": {
-    "amount": 1000,
-    "fluids": "#c:chlorine"
-  },
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:hydrogen"
+    },
+    {
+      "amount": 1000,
+      "fluids": "#c:chlorine"
+    }
+  ],
   "time": 200
 }
