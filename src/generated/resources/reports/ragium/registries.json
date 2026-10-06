@@ -466,23 +466,13 @@
     "washing"
   ],
   "minecraft:worldgen/configured_feature": [
-    "lake/crude_oil",
-    "ore/niter",
-    "ore/sulfur"
+    "lake/crude_oil"
   ],
   "minecraft:worldgen/placed_feature": [
-    "lake/crude_oil",
-    "nether_ore/niter",
-    "nether_ore/sulfur",
-    "ore/niter",
-    "ore/sulfur"
+    "lake/crude_oil"
   ],
   "neoforge:biome_modifier": [
-    "lake/crude_oil",
-    "nether_ore/niter",
-    "nether_ore/sulfur",
-    "ore/niter",
-    "ore/sulfur"
+    "lake/crude_oil"
   ],
   "neoforge:fluid_ingredient_type": [
     "potion"
