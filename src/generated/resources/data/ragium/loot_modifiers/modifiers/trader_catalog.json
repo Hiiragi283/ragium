@@ -7,5 +7,5 @@
     }
   ],
   "priority": 0,
-  "table": "ragium:drop_trader_catalog"
+  "table": "ragium:modifiers/trader_catalog"
 }

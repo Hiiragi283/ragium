@@ -23,5 +23,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:drop_elder_heart"
+  "random_sequence": "ragium:modifiers/elder_heart"
 }

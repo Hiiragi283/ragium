@@ -75,6 +75,7 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Gem.EMERALD, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Gem.ECHO, HTItemPart.DUST)
                 putAll(RagiumMaterial.Gem.PRISMARINE, HTItemPart.DUST)
+                putAll(RagiumMaterial.Gem.CINNABAR, HTItemPart.DUST, HTItemPart.GEM)
                 putAll(RagiumMaterial.Gem.FLUORITE, HTItemPart.DUST, HTItemPart.GEM)
                 // putAll(RagiumMaterial.Gem.CRYOLITE, HTItemPart.DUST, HTItemPart.GEM)
                 // Metal

@@ -7,5 +7,5 @@
     }
   ],
   "priority": 0,
-  "table": "ragium:drop_elder_heart"
+  "table": "ragium:modifiers/elder_heart"
 }

@@ -85,11 +85,6 @@ sealed interface RagiumMaterial :
          */
         GYPSUM("Gypsum", "石膏", RagiumChemicals.CALCIUM_SULFATE),
 
-        /**
-         * @since 26.1.8
-         */
-        CINNABAR("Cinnabar", "辰砂"),
-
         // Ragium
         RAGINITE("Raginite", "ラギナイト")
         ;
@@ -160,6 +155,11 @@ sealed interface RagiumMaterial :
         PRISMARINE("Prismarine", "プリズマリン"),
 
         // Common
+
+        /**
+         * @since 26.1.8
+         */
+        CINNABAR("Cinnabar", "辰砂"),
 
         /**
          * @since 26.1.7

@@ -71,32 +71,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +Items.REDSTONE
                 count = 6
             }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.CINNABAR)
-            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.CINNABAR) }
             recipeId suffix "_from_ore"
         }.save(exporter)
-        for (mineral: RagiumMaterial.Mineral in setOf(RagiumMaterial.Mineral.SULFUR, RagiumMaterial.Mineral.NITER)) {
-            // Crushing
-            RagiumRecipeBuilders.crushing {
-                ingredient { +holderSet(CommonTagPrefixes.ORE, mineral) }
-                result {
-                    +RagiumItems.getOrThrow(HTItemPart.DUST, mineral)
-                    count = 6
-                }
-                recipeId suffix "_from_ore"
-            }.save(exporter)
-            // Alloying
-            RagiumRecipeBuilders.alloying {
-                ingredient { +holderSet(CommonTagPrefixes.ORE, mineral) }
-                extra { +holderSet(RagiumTags.Items.SMELTING_FLUXES) }
-                result {
-                    +RagiumItems.getOrThrow(HTItemPart.DUST, mineral)
-                    count = 9
-                }
-                recipeId suffix "_from_ore"
-            }.save(exporter)
-        }
 
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.LAPIS) }
@@ -104,7 +81,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.LAPIS)
                 count = 6
             }
-            result { +Items.PRISMARINE_SHARD }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.FLUORITE) }
             recipeId suffix "_from_ore"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
@@ -113,9 +90,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ)
                 count = 4
             }
-            result {
-                +Items.GOLD_NUGGET
-            }
+            result { +Items.GOLD_NUGGET }
             recipeId suffix "_from_ore"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
