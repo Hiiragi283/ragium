@@ -254,6 +254,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.IRON, "Iron")
         addFromKey(RagiumChemicals.COPPER, "Copper")
         addFromKey(RagiumChemicals.GOLD, "Gold")
+        addFromKey(RagiumChemicals.MERCURY, "Mercury")
 
         addFromKey(RagiumChemicals.HYDROXIDE, "Hydroxide")
         addFromKey(RagiumChemicals.WATER, "Water")
@@ -277,10 +278,13 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.SULFURIC_ACID, "Sulfuric Acid")
         addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "Hydrogen chloride")
 
+        addFromKey(RagiumChemicals.POTASSIUM_CARBONATE, "Potassium Carbonate")
         addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "Potassium Nitrate")
         addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "Calcium Carbonate")
         addFromKey(RagiumChemicals.CALCIUM_OXIDE, "Calcium Oxide")
         addFromKey(RagiumChemicals.CALCIUM_SULFATE, "Calcium Sulfate")
+
+        addFromKey(RagiumChemicals.MERCURY_SULFIDE, "Mercury Sulfide")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "Hydrogen")
 
@@ -301,5 +305,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumElements.COPPER, "Copper")
 
         addFromKey(RagiumElements.GOLD, "Gold")
+        addFromKey(RagiumElements.MERCURY, "Mercury")
     }
 }

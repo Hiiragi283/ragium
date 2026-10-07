@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compound",
+  "composition": [
+    {
+      "element": "ragium:potassium",
+      "weight": 2
+    },
+    {
+      "chemical": "ragium:carbonate"
+    }
+  ]
+}

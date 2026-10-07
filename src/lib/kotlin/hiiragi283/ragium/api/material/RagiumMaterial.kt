@@ -124,6 +124,11 @@ sealed interface RagiumMaterial :
         SILICON("Silicon", "シリコン", RagiumChemicals.SILICON),
 
         /**
+         * @since 26.1.9
+         */
+        ASH("Ash", "灰", RagiumChemicals.POTASSIUM_CARBONATE),
+
+        /**
          * @since 26.1.8
          */
         LIME("Lime", "石灰", RagiumChemicals.CALCIUM_CARBONATE),
@@ -159,7 +164,7 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.8
          */
-        CINNABAR("Cinnabar", "辰砂"),
+        CINNABAR("Cinnabar", "辰砂", RagiumChemicals.MERCURY_SULFIDE),
 
         /**
          * @since 26.1.7

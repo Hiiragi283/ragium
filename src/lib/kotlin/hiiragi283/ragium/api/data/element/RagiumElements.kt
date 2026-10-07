@@ -62,6 +62,9 @@ data object RagiumElements {
     @JvmField
     val GOLD: ResourceKey<HTElement> = create("gold")
 
+    @JvmField
+    val MERCURY: ResourceKey<HTElement> = create("mercury")
+
     @JvmStatic
     private fun create(name: String): ResourceKey<HTElement> =
         RagiumRegistries.Keys.ELEMENT.createKey(RagiumAPI.id(name))
@@ -91,5 +94,6 @@ data object RagiumElements {
         register(COPPER, "Cu")
 
         register(GOLD, "Au")
+        register(MERCURY, "Hg")
     }
 }

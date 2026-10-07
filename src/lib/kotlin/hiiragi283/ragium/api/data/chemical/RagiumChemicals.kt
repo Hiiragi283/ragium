@@ -58,6 +58,9 @@ data object RagiumChemicals {
     @JvmField
     val GOLD: ResourceKey<HTChemical> = create("gold")
 
+    @JvmField
+    val MERCURY: ResourceKey<HTChemical> = create("mercury")
+
     //    Compounds    //
 
     // 1st Period
@@ -122,6 +125,9 @@ data object RagiumChemicals {
 
     // 4th Period
     @JvmField
+    val POTASSIUM_CARBONATE: ResourceKey<HTChemical> = create("potassium_carbonate")
+
+    @JvmField
     val POTASSIUM_NITRATE: ResourceKey<HTChemical> = create("potassium_nitrate")
 
     @JvmField
@@ -132,6 +138,10 @@ data object RagiumChemicals {
 
     @JvmField
     val CALCIUM_SULFATE: ResourceKey<HTChemical> = create("calcium_sulfate")
+
+    // 6th Period
+    @JvmField
+    val MERCURY_SULFIDE: ResourceKey<HTChemical> = create("mercury_sulfide")
 
     //    Mixtures    //
 
@@ -159,6 +169,7 @@ data object RagiumChemicals {
         context.register(COPPER, HTSimpleChemical(getter.getOrThrow(RagiumElements.COPPER), 1))
 
         context.register(GOLD, HTSimpleChemical(getter.getOrThrow(RagiumElements.GOLD), 1))
+        context.register(MERCURY, HTSimpleChemical(getter.getOrThrow(RagiumElements.MERCURY), 1))
 
         // Compounds
         context.register(
@@ -299,6 +310,13 @@ data object RagiumChemicals {
         )
 
         context.register(
+            POTASSIUM_CARBONATE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.POTASSIUM, 2)
+                add(CARBONATE, 1)
+            }
+        )
+        context.register(
             POTASSIUM_NITRATE,
             HTCompoundChemical.build(context) {
                 add(RagiumElements.POTASSIUM, 1)
@@ -324,6 +342,14 @@ data object RagiumChemicals {
             HTCompoundChemical.build(context) {
                 add(RagiumElements.CALCIUM, 1)
                 add(SULFATE, 1)
+            }
+        )
+
+        context.register(
+            MERCURY_SULFIDE,
+            HTCompoundChemical.build(context) {
+                add(RagiumElements.MERCURY, 1)
+                add(RagiumElements.SULFUR, 1)
             }
         )
     }

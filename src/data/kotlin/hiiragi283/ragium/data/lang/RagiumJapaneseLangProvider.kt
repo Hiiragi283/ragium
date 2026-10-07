@@ -250,6 +250,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.IRON, "鉄")
         addFromKey(RagiumChemicals.COPPER, "銅")
         addFromKey(RagiumChemicals.GOLD, "金")
+        addFromKey(RagiumChemicals.MERCURY, "水銀")
 
         addFromKey(RagiumChemicals.HYDROXIDE, "水酸化物")
         addFromKey(RagiumChemicals.WATER, "水")
@@ -273,10 +274,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.SULFURIC_ACID, "硫酸")
         addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "塩化水素")
 
+        addFromKey(RagiumChemicals.POTASSIUM_CARBONATE, "炭酸カリウム")
         addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "硝酸カリウム")
         addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "炭酸カルシウム")
         addFromKey(RagiumChemicals.CALCIUM_OXIDE, "酸化カルシウム")
         addFromKey(RagiumChemicals.CALCIUM_SULFATE, "硫酸カルシウム")
+
+        addFromKey(RagiumChemicals.MERCURY_SULFIDE, "硫化水銀")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "水素")
 
@@ -297,5 +301,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumElements.COPPER, "銅")
 
         addFromKey(RagiumElements.GOLD, "金")
+        addFromKey(RagiumElements.MERCURY, "水銀")
     }
 }
