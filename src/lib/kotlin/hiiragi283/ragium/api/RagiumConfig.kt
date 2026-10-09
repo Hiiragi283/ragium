@@ -141,11 +141,7 @@ data object RagiumConfig {
             val mixer: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.MIXER)
 
-            // Bio
-            @JvmField
-            val brewery: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.BREWERY)
-
+            // Resource
             @JvmField
             val planter: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.PLANTER)

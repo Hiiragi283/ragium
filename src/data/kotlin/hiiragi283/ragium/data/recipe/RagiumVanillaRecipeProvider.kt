@@ -401,9 +401,8 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Chemical
         chemical(RagiumBlocks.CHEMICAL_BATH) { items { +Items.CAULDRON } }
         chemical(RagiumBlocks.MIXER) { +holderSet(Tags.Items.BUCKETS_EMPTY) }
-        // Bio
-        bio(RagiumBlocks.BREWERY) { items { +Items.BREWING_STAND } }
-        bio(RagiumBlocks.PLANTER) { items { +Items.FLOWER_POT } }
+        // Resource
+        resource(RagiumBlocks.PLANTER) { items { +Items.FLOWER_POT } }
         // Electronics
         electronics(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
         electronics(RagiumBlocks.PRECISION_ASSEMBLER) { items { +RagiumBlocks.ASSEMBLER } }
@@ -486,9 +485,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         )
     }
 
-    private inline fun bio(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun resource(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
-            HTMachineType.BIO,
+            HTMachineType.RESOURCE,
             RagiumMaterial.Alloy.BLACK_STEEL,
             RagiumMaterial.Gem.EMERALD,
             result,

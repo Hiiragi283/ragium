@@ -139,8 +139,8 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
         RagiumRecipeLookups.CENTRIFUGING.fromRecipeType(RagiumRecipeTypes.CENTRIFUGING, identity())
         RagiumRecipeLookups.EXCHANGING.fromRecipeType(RagiumRecipeTypes.EXCHANGING, identity())
+        RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING, identity())
 
-        RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
         RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
         // runtime recipes
         RagiumRecipeLookups.DRAINING.addRecipes(
@@ -214,7 +214,7 @@ internal data object RagiumCommon {
                 }
         }
 
-        RagiumRecipeLookups.BREWING.addSubLookup { _ ->
+        RagiumRecipeLookups.MIXING.addSubLookup { _ ->
             val mixes: List<PotionBrewing.Mix<Potion>> = HTPhysicalSideHelper.getPotionBrewing()
                 ?.let(PotionBrewing::potionMixes)
                 ?: return@addSubLookup sequenceOf()
@@ -233,7 +233,7 @@ internal data object RagiumCommon {
                     RagiumRecipeBuilders.brewing {
                         itemIngredient { +CompoundIngredient(ingredients) }
                         fluidIngredient { +HTPotionFluidIngredient(potionFrom) }
-                        result { +potionTo }
+                        fluidResult { +potionTo }
                         recipeId replace potionTo.getKeyOrThrow()
                             .identifier()
                             .modifyPath { "${it}_from_${potionFrom.getKeyOrThrow().identifier().toDebugFileName()}" }

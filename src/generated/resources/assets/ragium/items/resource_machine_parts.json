@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "ragium:block/bio_machine_casing"
+    "model": "ragium:item/resource_machine_parts"
   }
 }

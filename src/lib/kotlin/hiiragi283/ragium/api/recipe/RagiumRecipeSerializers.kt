@@ -107,11 +107,7 @@ data object RagiumRecipeSerializers {
     val WASHING: RecipeSerializer<RTWashingRecipe> =
         register(RagiumConstants.WASHING, RTWashingRecipe.SERIALIZER)
 
-    // Bio
-    @JvmField
-    val BREWING: RecipeSerializer<RTBrewingRecipe> =
-        register(RagiumConstants.BREWING, RTBrewingRecipe.SERIALIZER)
-
+    // Resource
     @JvmField
     val PLANTING: RecipeSerializer<RTPlantingRecipe> =
         register(RagiumConstants.PLANTING, RTPlantingRecipe.SERIALIZER)

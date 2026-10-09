@@ -29,8 +29,7 @@ data object RagiumConstants {
     const val MIXER = "mixer"
     const val WASHER = "washer"
 
-    // Bio
-    const val BREWERY = "brewery"
+    // Resource
     const val PLANTER = "planter"
 
     // Electronics
@@ -68,7 +67,7 @@ data object RagiumConstants {
     const val REACTING = "reacting"
     const val WASHING = "washing"
 
-    // Bio
+    // Resource
     const val BREWING = "brewing"
     const val PLANTING = "planting"
 

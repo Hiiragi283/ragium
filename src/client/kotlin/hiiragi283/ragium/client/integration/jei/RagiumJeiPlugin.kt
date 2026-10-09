@@ -4,7 +4,6 @@ import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.integration.jei.HTJeiDrawables
 import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
-import hiiragi283.lib.integration.jei.category.HTItemAndFluidToFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
@@ -175,12 +174,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RTMixingRecipeCategory(guiHelper),
             RTReactingRecipeCategory(guiHelper),
             RTWashingRecipeCategory(guiHelper),
-            // Bio
-            HTItemAndFluidToFluidRecipeCategory(
-                RagiumJeiRecipeTypes.BREWING,
-                RagiumRecipeTypes.BREWING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.BREWERY)
-            ),
+            // Resource
             HTItemToDoubleItemRecipeCategory(
                 RagiumJeiRecipeTypes.PLANTING,
                 RagiumRecipeTypes.PLANTING,
@@ -212,8 +206,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.REACTING, RagiumRecipeLookups.REACTING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.WASHING, RagiumRecipeLookups.WASHING)
-        // Bio
-        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.BREWING, RagiumRecipeLookups.BREWING)
+        // Resource
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.PLANTING, RagiumRecipeLookups.PLANTING)
         // Electronics
         HTJeiRecipeHelper.addRecipes(
@@ -302,8 +295,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RagiumJeiRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
         registration.addCraftingStation(RagiumJeiRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)
         registration.addCraftingStation(RagiumJeiRecipeTypes.MIXING, RagiumBlocks.MIXER)
-        // Bio
-        registration.addCraftingStation(RagiumJeiRecipeTypes.BREWING, RagiumBlocks.BREWERY)
+        // Resource
         registration.addCraftingStation(RagiumJeiRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
         // Electronics
         registration.addCraftingStation(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)

@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.recipe
 
 import hiiragi283.lib.recipe.base.HTFluidToDoubleFluidRecipe
 import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
-import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
@@ -80,7 +79,7 @@ data object RagiumRecipeLookups {
     val EXCHANGING: HTCompoundRecipeLookup<HTItemOrFluidRecipe> = create(RagiumConstants.EXCHANGING)
 
     @JvmField
-    val MIXING: HTRecipeLookup<RTMixingRecipe> = create(RagiumRecipeTypes.MIXING)
+    val MIXING: HTCompoundRecipeLookup<RTMixingRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
     val REACTING: HTRecipeLookup<RTReactingRecipe> = create(RagiumRecipeTypes.REACTING)
@@ -88,10 +87,7 @@ data object RagiumRecipeLookups {
     @JvmField
     val WASHING: HTRecipeLookup<RTWashingRecipe> = create(RagiumRecipeTypes.WASHING)
 
-    // Bio
-    @JvmField
-    val BREWING: HTCompoundRecipeLookup<HTItemAndFluidToFluidRecipe> = create(RagiumConstants.BREWING)
-
+    // Resource
     @JvmField
     val PLANTING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.PLANTING)
 

@@ -1,5 +1,5 @@
 {
-  "type": "ragium:brewing",
+  "type": "ragium:mixing",
   "fluid_ingredient": {
     "amount": 1000,
     "fluids": {
@@ -7,11 +7,7 @@
       "potions": "minecraft:thick"
     }
   },
-  "item_ingredient": {
-    "count": 1,
-    "items": "minecraft:golden_apple"
-  },
-  "result": {
+  "fluid_result": {
     "type": "ragium:potion",
     "amount": 1000,
     "custom_color": 16750848,
@@ -29,6 +25,10 @@
       }
     ],
     "custom_name": "golden_apple"
+  },
+  "item_ingredient": {
+    "count": 1,
+    "items": "minecraft:golden_apple"
   },
   "time": 200
 }

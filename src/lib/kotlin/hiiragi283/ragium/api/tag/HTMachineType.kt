@@ -16,7 +16,7 @@ enum class HTMachineType(langName: HTLangName) :
     MECHANICAL("Mechanical", "機械加工"),
     HEAT("Heat", "熱"),
     CHEMICAL("Chemical", "化学"),
-    BIO("Bio", "生体"),
+    RESOURCE("Resource", "資源"),
     ELECTRONICS("Electronics", "電子"),
     ARCANE("Arcane", "神秘")
     ;

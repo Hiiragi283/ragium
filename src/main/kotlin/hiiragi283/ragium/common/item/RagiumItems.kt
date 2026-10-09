@@ -46,6 +46,7 @@ data object RagiumItems {
         REGISTER.addAlias("steel_nugget", "sooty_iron_nugget")
         REGISTER.addAlias("coal_coke_dust", "carbon_dust")
         REGISTER.addAlias("circuit_chip", "silicon_chip")
+        REGISTER.addAlias("bio_machine_parts", "resource_machine_parts")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -174,7 +175,7 @@ data object RagiumItems {
 
     // val ALCLAD_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alclad_plate")
 
-    // Bio
+    // Resource
     @JvmField
     val BEESWAX: HTSimpleDeferredItem = REGISTER.registerItem("beeswax", ::HoneycombItem)
 
@@ -243,7 +244,7 @@ data object RagiumItems {
 
     // Chemical
 
-    // Bio
+    // Resource
 
     // Electronics
     @JvmField

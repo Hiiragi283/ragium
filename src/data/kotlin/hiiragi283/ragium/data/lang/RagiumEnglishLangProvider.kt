@@ -58,7 +58,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.CHEMICAL_REACTOR, "Chemical Reactor")
         add(RagiumBlocks.MIXER, "Mixer")
 
-        add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.PLANTER, "Planter")
 
         add(RagiumBlocks.ELECTROLYZER, "Electrolyzer")
@@ -188,7 +187,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.REACTING, "Chemical Reacting")
         addRecipeType(RagiumRecipeTypes.WASHING, "Washing")
 
-        addRecipeType(RagiumRecipeTypes.BREWING, "Brewing")
         addRecipeType(RagiumRecipeTypes.PLANTING, "Planting")
 
         addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")

@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:bio_machine_casing"
+          "name": "ragium:resource_machine_casing"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/bio_machine_casing"
+  "random_sequence": "ragium:blocks/resource_machine_casing"
 }
