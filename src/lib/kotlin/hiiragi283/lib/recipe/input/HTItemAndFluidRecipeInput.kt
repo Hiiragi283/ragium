@@ -14,6 +14,11 @@ data class HTItemAndFluidRecipeInput(val item: ItemStack, val fluid: FluidStack)
 
     override fun getFluid(index: Int): FluidStack = fluid
 
+    override val isFluidEmpty: Boolean
+        get() = fluid.isEmpty
+
+    override fun asFluidList(): List<FluidStack> = listOf(fluid)
+
     override fun getItem(index: Int): ItemStack = item
 
     override fun size(): Int = 1

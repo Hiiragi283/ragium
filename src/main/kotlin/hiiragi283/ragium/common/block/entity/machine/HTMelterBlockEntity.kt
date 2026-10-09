@@ -65,7 +65,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
                 input: SingleRecipeInput,
                 output: FluidStack
             ): Boolean = useTransaction { transaction: Transaction ->
-                val inputConsume: ItemInstance = recipe.getMatchingStack(input.item())
+                val inputConsume: ItemInstance = recipe.getMatchingStack(input)
                 when {
                     inputSlot.use(inputConsume, transaction).failed -> false
                     else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
@@ -74,7 +74,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun onComplete(recipe: HTItemToFluidRecipe, input: SingleRecipeInput, output: FluidStack) {
                 useTransaction { transaction: Transaction ->
-                    inputSlot.use(recipe.getMatchingStack(input.item()), transaction)
+                    inputSlot.use(recipe.getMatchingStack(input), transaction)
                     outputSlot.take(output, transaction)
                     transaction.commit()
                 }

@@ -70,7 +70,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
                 input: HTItemAndFluidRecipeInput,
                 output: ItemStack
             ): Boolean = useTransaction { transaction: Transaction ->
-                val (_, inputConsume: FluidInstance) = recipe.getMatchingStack(input.item, input.fluid)
+                val (_, inputConsume: FluidInstance) = recipe.getMatchingStack(input)
                 when {
                     inputTank.use(inputConsume, transaction).failed -> false
                     else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
@@ -79,7 +79,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun onComplete(recipe: RTFreezingRecipe, input: HTItemAndFluidRecipeInput, output: ItemStack) {
                 useTransaction { transaction: Transaction ->
-                    val (_, fluidInput: FluidInstance) = recipe.getMatchingStack(input.item, input.fluid)
+                    val (_, fluidInput: FluidInstance) = recipe.getMatchingStack(input)
                     inputTank.use(fluidInput, transaction)
                     outputSlot.take(output, transaction)
                     transaction.commit()

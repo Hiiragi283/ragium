@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTBlenderBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
@@ -113,6 +114,10 @@ data object RagiumBlockEntityTypes {
 
     // Electronics
     @JvmField
+    val BLENDER: HTDeferredBlockEntityType<HTBlenderBlockEntity> =
+        registerTick(RagiumConstants.BLENDER, ::HTBlenderBlockEntity)
+
+    @JvmField
     val ELECTROLYZER: HTDeferredBlockEntityType<HTElectrolyzerBlockEntity> =
         registerTick(RagiumConstants.ELECTROLYZER, ::HTElectrolyzerBlockEntity)
 
@@ -195,6 +200,7 @@ data object RagiumBlockEntityTypes {
 
         registerProcessor(PLANTER.get())
 
+        registerProcessor(BLENDER.get())
         registerProcessor(ELECTROLYZER.get())
         registerProcessor(PRECISION_ASSEMBLER.get())
 

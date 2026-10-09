@@ -1,7 +1,6 @@
 package hiiragi283.lib.recipe.lookup
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.HTRecipePredicate
 import hiiragi283.lib.recipe.RecipeKey
@@ -28,14 +27,6 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(
     private val lookup: HTRecipeLookup<RECIPE>
 ) : ValueIOSerializable {
     private var lastRecipe: Either<RecipeKey, HTRecipeHolder<RECIPE>>? = null
-
-    /**
-     * レシピを取得します。
-     * @param input レシピの入力
-     * @return [input]に一致する最初のレシピ
-     * @since 26.1.1
-     */
-    fun findFirstRecipe(input: INPUT): RECIPE? = findFirstRecipe(input, HTPhysicalSideHelper.createLookupContext())
 
     /**
      * レシピを取得します。

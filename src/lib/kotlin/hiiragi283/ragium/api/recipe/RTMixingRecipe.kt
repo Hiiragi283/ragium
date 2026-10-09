@@ -116,8 +116,7 @@ data class RTMixingRecipe(
 
     override fun test(first: ItemInstance, second: ItemInstance, third: FluidInstance): Boolean = when {
         !fluidIngredient.test(third) -> false
-        itemIngredients.head.test(first) && itemIngredients.getOrNull(1).testOrEmpty(second) -> true
-        else -> itemIngredients.head.test(second) && itemIngredients.getOrNull(1).testOrEmpty(first)
+        else -> itemIngredients.head.test(first) && itemIngredients.getOrNull(1).testOrEmpty(second)
     }
 
     override fun apply(first: ItemInstance, second: ItemInstance, third: FluidInstance): HTItemAndFluidStack =
@@ -127,26 +126,37 @@ data class RTMixingRecipe(
         first: ItemInstance,
         second: ItemInstance,
         third: FluidInstance
-    ): Triple<ItemInstance, ItemInstance, FluidInstance> {
-        val fluid: FluidInstance = fluidIngredient.getMatchingStack(third)
-        return when {
-            itemIngredients.head.test(first) -> Triple(
-                itemIngredients.head.getMatchingStack(first),
-                itemIngredients.getOrNull(1)?.getMatchingStack(second) ?: ItemStack.EMPTY,
-                fluid
-            )
-
-            itemIngredients.head.test(second) -> Triple(
-                itemIngredients.head.getMatchingStack(second),
-                itemIngredients.getOrNull(1)?.getMatchingStack(first) ?: ItemStack.EMPTY,
-                fluid
-            )
-
-            else -> Triple(ItemStack.EMPTY, ItemStack.EMPTY, fluid)
-        }
-    }
+    ): Triple<ItemInstance, ItemInstance, FluidInstance> = Triple(
+        itemIngredients.head.getMatchingStack(first),
+        itemIngredients.getOrNull(1)?.getMatchingStack(second) ?: ItemStack.EMPTY,
+        fluidIngredient.getMatchingStack(third)
+    )
 
     override fun getSerializer(): RecipeSerializer<RTMixingRecipe> = RagiumRecipeSerializers.MIXING
 
     override fun getType(): RecipeType<RTMixingRecipe> = RagiumRecipeTypes.MIXING
+
+    @JvmRecord
+    data class Input(val firstItem: ItemStack, val secondItem: ItemStack, val fluid: FluidStack) : HTFluidRecipeInput {
+        override val fluidSize: Int
+            get() = 1
+
+        override fun getFluid(index: Int): FluidStack = when (index) {
+            0 -> fluid
+            else -> error("No fluid for index: $index")
+        }
+
+        override val isFluidEmpty: Boolean
+            get() = fluid.isEmpty
+
+        override fun asFluidList(): List<FluidStack> = listOf(fluid)
+
+        override fun getItem(index: Int): ItemStack = when (index) {
+            0 -> firstItem
+            1 -> secondItem
+            else -> error("No item for index: $index")
+        }
+
+        override fun size(): Int = 2
+    }
 }

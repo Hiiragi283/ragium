@@ -7,6 +7,7 @@
     "assembler",
     "black_dye",
     "black_steel_block",
+    "blender",
     "blue_dye",
     "brown_dye",
     "charcoal_block",
@@ -84,6 +85,7 @@
   "minecraft:block_entity_type": [
     "alloy_smelter",
     "assembler",
+    "blender",
     "chemical_bath",
     "compressor",
     "creative_battery",
@@ -224,6 +226,7 @@
     "black_steel_nugget",
     "blank_mold",
     "bleach_bucket",
+    "blender",
     "block_mold",
     "blue_dye_bucket",
     "borax_dust",

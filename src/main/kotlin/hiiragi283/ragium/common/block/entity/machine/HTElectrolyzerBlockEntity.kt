@@ -80,7 +80,7 @@ class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
                 output: RTElectrolyzingRecipe.ElectrolyzedResult
             ): Boolean =
                 rightOutputTank != null && leftOutputTank != null && useTransaction { transaction: Transaction ->
-                    val inputConsume: FluidInstance = recipe.getMatchingStack(input.fluid)
+                    val inputConsume: FluidInstance = recipe.getMatchingStack(input)
                     when {
                         inputTank.use(inputConsume, transaction).failed -> false
 
@@ -101,7 +101,7 @@ class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
                 output: RTElectrolyzingRecipe.ElectrolyzedResult
             ) {
                 useTransaction { transaction: Transaction ->
-                    val inputConsume: FluidInstance = recipe.getMatchingStack(input.fluid)
+                    val inputConsume: FluidInstance = recipe.getMatchingStack(input)
                     inputTank.use(inputConsume, transaction)
                     val (right: FluidStack, left: FluidStack, main: FluidStack) = output
                     outputTank.take(main, transaction)

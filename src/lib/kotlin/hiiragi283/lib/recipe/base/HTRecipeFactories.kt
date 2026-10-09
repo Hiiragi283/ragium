@@ -32,27 +32,43 @@ data object HTRecipeFactories {
          * 消費される入力を取得します。
          */
         fun getMatchingStack(input: INPUT_A): INPUT_A
+
+        /**
+         * @since 26.1.9
+         */
+        fun unwrapInput(input: INPUT): INPUT_A
+
+        /**
+         * @since 26.1.9
+         */
+        override fun produce(input: INPUT): OUTPUT = unwrapInput(input).let(::apply)
+
+        /**
+         * 消費される入力を取得します。
+         * @since 26.1.9
+         */
+        fun getMatchingStack(input: INPUT): INPUT_A = unwrapInput(input).let(::getMatchingStack)
     }
 
     /**
      * 1種類の液体から完成品を作る[SingleInput]の拡張インターフェースです。
      */
     interface SingleFluidTo<OUTPUT : Any> : SingleInput<HTSingleFluidRecipeInput, FluidInstance, OUTPUT> {
-        override fun produce(input: HTSingleFluidRecipeInput): OUTPUT = apply(input.fluid)
+        override fun unwrapInput(input: HTSingleFluidRecipeInput): FluidInstance = input.fluid
     }
 
     /**
      * 1種類のアイテムから完成品を作る[SingleInput]の拡張インターフェースです。
      */
     interface SingleItemTo<OUTPUT : Any> : SingleInput<SingleRecipeInput, ItemInstance, OUTPUT> {
-        override fun produce(input: SingleRecipeInput): OUTPUT = apply(input.item())
+        override fun unwrapInput(input: SingleRecipeInput): ItemInstance = input.item()
     }
 
     /**
      * @since 26.1.8
      */
     interface Located<OUTPUT : Any> : SingleInput<HTLocationRecipeInput, BlockInWorld, OUTPUT> {
-        override fun produce(input: HTLocationRecipeInput): OUTPUT = apply(input.blockInWorld)
+        override fun unwrapInput(input: HTLocationRecipeInput): BlockInWorld = input.blockInWorld
 
         @Suppress("DeprecatedCallableAddReplaceWith")
         @Deprecated("Not used", level = DeprecationLevel.ERROR)
@@ -70,6 +86,12 @@ data object HTRecipeFactories {
          * 消費される入力を取得します。
          */
         fun getMatchingStack(first: INPUT_A, second: INPUT_B): Pair<INPUT_A, INPUT_B>
+
+        /**
+         * 消費される入力を取得します。
+         * @since 26.1.9
+         */
+        fun getMatchingStack(input: INPUT): Pair<INPUT_A, INPUT_B>
     }
 
     /**
@@ -77,6 +99,9 @@ data object HTRecipeFactories {
      */
     interface ItemAndFluid<OUTPUT : Any> : DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance, OUTPUT> {
         override fun produce(input: HTItemAndFluidRecipeInput): OUTPUT = apply(input.item, input.fluid)
+
+        override fun getMatchingStack(input: HTItemAndFluidRecipeInput): Pair<ItemInstance, FluidInstance> =
+            getMatchingStack(input.item, input.fluid)
     }
 
     /**
@@ -84,6 +109,9 @@ data object HTRecipeFactories {
      */
     interface DoubleItem<OUTPUT : Any> : DoubleInput<RecipeInput, ItemInstance, ItemInstance, OUTPUT> {
         override fun produce(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
+
+        override fun getMatchingStack(input: RecipeInput): Pair<ItemInstance, ItemInstance> =
+            getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
     }
 
     /**
@@ -93,6 +121,9 @@ data object HTRecipeFactories {
     interface DoubleFluid<OUTPUT : Any> : DoubleInput<HTFluidRecipeInput, FluidInstance, FluidInstance, OUTPUT> {
         override fun produce(input: HTFluidRecipeInput): OUTPUT =
             apply(input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
+
+        override fun getMatchingStack(input: HTFluidRecipeInput): Pair<FluidInstance, FluidInstance> =
+            getMatchingStack(input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
     }
 
     //    Triple Input    //
@@ -106,6 +137,12 @@ data object HTRecipeFactories {
          * 消費される入力を取得します。
          */
         fun getMatchingStack(first: INPUT_A, second: INPUT_B, third: INPUT_C): Triple<INPUT_A, INPUT_B, INPUT_C>
+
+        /**
+         * 消費される入力を取得します。
+         * @since 26.1.9
+         */
+        fun getMatchingStack(input: INPUT): Triple<INPUT_A, INPUT_B, INPUT_C>
     }
 
     /**
@@ -116,6 +153,9 @@ data object HTRecipeFactories {
         TripleInput<HTFluidRecipeInput, ItemInstance, ItemInstance, FluidInstance, OUTPUT> {
         override fun produce(input: HTFluidRecipeInput): OUTPUT =
             apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getFluidOrEmpty(0))
+
+        override fun getMatchingStack(input: HTFluidRecipeInput): Triple<ItemInstance, ItemInstance, FluidInstance> =
+            getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getFluidOrEmpty(0))
     }
 
     /**
@@ -126,6 +166,9 @@ data object HTRecipeFactories {
         TripleInput<HTFluidRecipeInput, ItemInstance, FluidInstance, FluidInstance, OUTPUT> {
         override fun produce(input: HTFluidRecipeInput): OUTPUT =
             apply(input.getItemOrEmpty(0), input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
+
+        override fun getMatchingStack(input: HTFluidRecipeInput): Triple<ItemInstance, FluidInstance, FluidInstance> =
+            getMatchingStack(input.getItemOrEmpty(0), input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
     }
 
     /**
@@ -134,5 +177,8 @@ data object HTRecipeFactories {
     interface TripleItem<OUTPUT : Any> : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance, OUTPUT> {
         override fun produce(input: RecipeInput): OUTPUT =
             apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
+
+        override fun getMatchingStack(input: RecipeInput): Triple<ItemInstance, ItemInstance, ItemInstance> =
+            getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
     }
 }

@@ -19,4 +19,9 @@ data class HTSingleFluidRecipeInput(val fluid: FluidStack) : HTFluidRecipeInput 
     override fun getItem(index: Int): ItemStack = ItemStack.EMPTY
 
     override fun size(): Int = 0
+
+    override val isFluidEmpty: Boolean
+        get() = fluid.isEmpty
+
+    override fun asFluidList(): List<FluidStack> = listOf(fluid)
 }

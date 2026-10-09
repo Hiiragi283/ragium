@@ -304,6 +304,10 @@ data object RagiumBlocks {
 
     // Electronics
     @JvmField
+    val BLENDER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.BLENDER)
+
+    @JvmField
     val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.ELECTROLYZER)
 
@@ -343,6 +347,7 @@ data object RagiumBlocks {
 
                 put(HTMachineType.RESOURCE, PLANTER)
 
+                put(HTMachineType.ELECTRONICS, BLENDER)
                 put(HTMachineType.ELECTRONICS, ELECTROLYZER)
                 put(HTMachineType.ELECTRONICS, PRECISION_ASSEMBLER)
                 put(HTMachineType.ELECTRONICS, SCANNER)

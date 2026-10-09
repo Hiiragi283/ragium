@@ -60,6 +60,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.PLANTER, "Planter")
 
+        add(RagiumBlocks.BLENDER, "Blender")
         add(RagiumBlocks.ELECTROLYZER, "Electrolyzer")
         add(RagiumBlocks.PRECISION_ASSEMBLER, "Precision Assembler")
         add(RagiumBlocks.SCANNER, "Laser Scanner")

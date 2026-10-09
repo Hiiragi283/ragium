@@ -9,7 +9,6 @@ import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.input.HTItemListRecipeInput
-import hiiragi283.lib.recipe.input.getItemOrEmpty
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
@@ -81,7 +80,7 @@ abstract class HTTripleItemToItemBlockEntity(
 
             override fun canComplete(recipe: HTTripleItemToItemRecipe, input: RecipeInput, output: ItemStack): Boolean {
                 val (firstInput: ItemInstance, secondInput: ItemInstance, thirdInput: ItemInstance) =
-                    recipe.getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
+                    recipe.getMatchingStack(input)
                 return useTransaction { transaction: Transaction ->
                     when {
                         primarySlot.use(firstInput, transaction).failed -> false
@@ -94,7 +93,7 @@ abstract class HTTripleItemToItemBlockEntity(
 
             override fun onComplete(recipe: HTTripleItemToItemRecipe, input: RecipeInput, output: ItemStack) {
                 val (firstInput: ItemInstance, secondInput: ItemInstance, thirdInput: ItemInstance) =
-                    recipe.getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
+                    recipe.getMatchingStack(input)
                 useTransaction { transaction: Transaction ->
                     primarySlot.use(firstInput, transaction)
                     secondarySlot.use(secondInput, transaction)

@@ -404,6 +404,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Resource
         resource(RagiumBlocks.PLANTER) { items { +Items.FLOWER_POT } }
         // Electronics
+        electronics(RagiumBlocks.BLENDER) { items { +RagiumBlocks.MIXER } }
         electronics(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
         electronics(RagiumBlocks.PRECISION_ASSEMBLER) { items { +RagiumBlocks.ASSEMBLER } }
         // Arcane

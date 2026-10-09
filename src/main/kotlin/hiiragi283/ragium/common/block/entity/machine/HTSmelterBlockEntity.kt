@@ -96,7 +96,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun canComplete(recipe: HTItemToItemRecipe, input: SingleRecipeInput, output: ItemStack): Boolean =
                 useTransaction { transaction: Transaction ->
-                    val inputConsume: ItemInstance = recipe.getMatchingStack(input.item())
+                    val inputConsume: ItemInstance = recipe.getMatchingStack(input)
                     when {
                         inputSlot.use(inputConsume, transaction).failed -> false
                         else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
@@ -105,7 +105,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun onComplete(recipe: HTItemToItemRecipe, input: SingleRecipeInput, output: ItemStack) {
                 useTransaction { transaction: Transaction ->
-                    inputSlot.use(recipe.getMatchingStack(input.item()), transaction)
+                    inputSlot.use(recipe.getMatchingStack(input), transaction)
                     outputSlot.take(output, transaction)
                     transaction.commit()
                 }
