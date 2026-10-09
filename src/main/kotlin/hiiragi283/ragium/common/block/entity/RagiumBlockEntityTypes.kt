@@ -27,6 +27,8 @@ import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPrecisionAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
@@ -93,6 +95,14 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> =
         registerTick(RagiumConstants.MELTER, ::HTMelterBlockEntity)
+
+    @JvmField
+    val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> =
+        registerTick(RagiumConstants.PYROLYZER, ::HTPyrolyzerBlockEntity)
+
+    @JvmField
+    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> =
+        registerTick(RagiumConstants.REFINERY, ::HTRefineryBlockEntity)
 
     @JvmField
     val SMELTER: HTDeferredBlockEntityType<HTSmelterBlockEntity> =
@@ -193,6 +203,8 @@ data object RagiumBlockEntityTypes {
         registerProcessor(ALLOY_SMELTER.get())
         registerProcessor(FREEZER.get())
         registerProcessor(MELTER.get())
+        registerProcessor(PYROLYZER.get())
+        registerProcessor(REFINERY.get())
         registerProcessor(SMELTER.get())
 
         registerProcessor(CHEMICAL_BATH.get())

@@ -274,11 +274,11 @@ data object RagiumBlocks {
 
     @JvmField
     val PYROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerFakeMachine(RagiumConstants.PYROLYZER)
+        registerMachine(RagiumBlockEntityTypes.PYROLYZER)
 
     @JvmField
     val REFINERY: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerFakeMachine(RagiumConstants.REFINERY)
+        registerMachine(RagiumBlockEntityTypes.REFINERY)
 
     @JvmField
     val SMELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =

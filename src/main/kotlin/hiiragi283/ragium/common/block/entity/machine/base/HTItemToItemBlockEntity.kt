@@ -99,7 +99,7 @@ abstract class HTItemToItemBlockEntity(
         addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
         // progress
         addProgressBar(widgetHolder)
-        // inputs
+        // input
         widgetHolder += HTItemWidget.Container(
             inputSlot,
             0,
