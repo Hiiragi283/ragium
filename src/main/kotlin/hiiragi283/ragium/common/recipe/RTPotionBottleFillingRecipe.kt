@@ -29,7 +29,7 @@ data class RTPotionBottleFillingRecipe(val bottleType: HTBottleType, override va
     }
 
     override fun apply(first: ItemInstance, second: FluidInstance): ItemStack =
-        bottleType.filledItem.toStack(patch = HTPotionHelper.createPotionPatch(second))
+        bottleType.filledItem.asStackOrEmpty(patch = HTPotionHelper.createPotionPatch(second))
 
     override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> = Pair(
         HTIngredientHelper.copyWithCount(first, 1),

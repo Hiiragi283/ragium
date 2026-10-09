@@ -102,7 +102,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             NeoForgeTypes.FLUID_STACK,
             listPotions()
                 .filter { !it.`is`(Potions.WATER) }
-                .map(HTPotionHelper::createFluid)
+                .mapNotNull { HTPotionHelper.createFluid(it).getOrNull()?.create() }
                 .toList()
         )
     }
@@ -241,10 +241,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                     HTBottleType.entries.map { bottleType: HTBottleType ->
                         RagiumRecipeBuilders.draining {
                             +HTJeiRecipeHelper.fakeItem(
-                                bottleType.filledItem.toStack(patch = HTPotionHelper.createPotionPatch(potion))
+                                bottleType.filledItem.asStackOrEmpty(patch = HTPotionHelper.createPotionPatch(potion))
                             )
                             itemResult { +bottleType.emptyItem }
-                            fluidResult { from(HTPotionHelper.createFluid(potion, HTPotionHelper.BOTTLE_AMOUNT)) }
+                            fluidResult {
+                                from(HTPotionHelper.createFluid(potion, HTPotionHelper.BOTTLE_AMOUNT).getOrThrow())
+                            }
                             progressData = RTPotionBottleDrainingRecipe.PROGRESS_DATA
                             recipeId replace potion.getKeyOrThrow()
                                 .identifier()
@@ -265,7 +267,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                                 amount = HTPotionHelper.BOTTLE_AMOUNT
                             }
                             result {
-                                from(bottleType.filledItem.toStack(patch = HTPotionHelper.createPotionPatch(potion)))
+                                bottleType.filledItem
+                                    .asTemplate(patch = HTPotionHelper.createPotionPatch(potion))
+                                    .getOrThrow()
+                                    .let(::from)
                             }
                             progressData = RTPotionBottleFillingRecipe.PROGRESS_DATA
                             recipeId replace potion.getKeyOrThrow()

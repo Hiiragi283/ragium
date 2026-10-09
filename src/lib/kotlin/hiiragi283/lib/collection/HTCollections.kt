@@ -33,3 +33,14 @@ fun <A, B, CA : MutableCollection<in A>, CB : MutableCollection<in B>> Iterable<
     destinationB: CB
 ): Pair<CA, CB> =
     this.mapNotNullTo(destinationA) { it.leftOrNull() } to this.mapNotNullTo(destinationB) { it.getOrNull() }
+
+fun <A, B> Sequence<Either<A, B>>.separateEither(): Pair<List<A>, List<B>> =
+    this.separateEitherTo(mutableListOf(), mutableListOf())
+
+fun <A, B, CA : MutableCollection<in A>, CB : MutableCollection<in B>> Sequence<Either<A, B>>.separateEitherTo(
+    destinationA: CA,
+    destinationB: CB
+): Pair<CA, CB> {
+    this.forEach { either: Either<A, B> -> either.onLeft(destinationA::add).onRight(destinationB::add) }
+    return destinationA to destinationB
+}

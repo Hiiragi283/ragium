@@ -85,7 +85,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @since 26.1.8
      */
     fun BlockModelGenerators.createDecoration(content: HTDecorationContent) {
-        val fullBlockId: Identifier = content.base.idOrThrow.blockId
+        val fullBlockId: Identifier = content.base.id().blockId
         val texture = Material(fullBlockId)
 
         this.createSlab(content.slab, fullBlockId, texture, texture, texture)
@@ -190,7 +190,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      */
     fun ItemModelGenerators.generateFlatItem(
         item: HTSimpleValueWithKey<Item>,
-        layer: Identifier = item.idOrThrow.itemId,
+        layer: Identifier = item.id().itemId,
         template: ModelTemplate = ModelTemplates.FLAT_ITEM
     ) {
         this.itemModelOutput.accept(
@@ -231,7 +231,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      */
     fun ItemModelGenerators.createFlatItemModel(
         item: HTSimpleValueWithKey<*>,
-        layer: Identifier = item.idOrThrow.itemId,
+        layer: Identifier = item.id().itemId,
         template: ModelTemplate = ModelTemplates.FLAT_ITEM
     ): Identifier = template.createItem(item, TextureMapping.layer0(Material(layer)), this.modelOutput)
 

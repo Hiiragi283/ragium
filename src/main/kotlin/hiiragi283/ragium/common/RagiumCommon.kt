@@ -34,12 +34,14 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionBrewing
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -81,7 +83,7 @@ internal data object RagiumCommon {
     private fun initFluidComponents() {
         fun setChemical(content: HTFluidContent, key: ResourceKey<HTChemical>) {
             BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.add(
-                content.keyOrThrow
+                content.key()
             ) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
                 builder.set(RagiumDataComponents.CHEMICAL, provider.getOrThrow(key))
             }
@@ -91,6 +93,12 @@ internal data object RagiumCommon {
             Registries.FLUID.createKey(vanillaId("water"))
         ) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
             builder.set(RagiumDataComponents.CHEMICAL, provider.getOrThrow(RagiumChemicals.WATER))
+        }
+
+        BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.add(
+            RagiumFluids.POTION.key()
+        ) { builder: DataComponentMap.Builder, _, _ ->
+            builder.set(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
         }
 
         setChemical(RagiumFluids.MOLTEN_GLASS, RagiumChemicals.SILICON_DIOXIDE)

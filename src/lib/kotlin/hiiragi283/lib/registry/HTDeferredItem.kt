@@ -7,7 +7,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.level.ItemLike
 
@@ -34,17 +33,12 @@ class HTDeferredItem<out ITEM : Item> :
 
     override val translationKey: String get() = get().descriptionId
 
-    override fun getText(): Text = this.toStack().itemName
+    override fun getText(): Text = this.asStackOrEmpty().itemName
 
     override fun asItem(): ITEM = get()
 
-    override fun toTemplate(count: Int, patch: DataComponentPatch): ItemStackTemplate? = when {
-        this.isAir -> null
-        else -> asEither().map { ItemStackTemplate(it, count, patch) }.getOrNull()
-    }
-
-    override fun toStack(count: Int, patch: DataComponentPatch): ItemStack = when {
-        this.isBound -> ItemStack(this, count, patch)
-        else -> ItemStack.EMPTY
+    override fun asTemplate(count: Int, patch: DataComponentPatch): Result<ItemStackTemplate> = when {
+        this.isAir -> Result.failure(IllegalStateException("Could not create ItemStackTemplate with air item"))
+        else -> asResult().map { ItemStackTemplate(it, count, patch) }
     }
 }

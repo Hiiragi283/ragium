@@ -17,11 +17,12 @@ class HTDyedFluidType(private val color: DyeColor, properties: Properties) : HTF
 
     override fun onVaporize(entity: LivingEntity?, level: Level, pos: BlockPos, stack: FluidStack) {
         super.onVaporize(entity, level, pos, stack)
-        val dye: ItemStack = VanillaColoredCollections.DYE[color].toStack(4)
-        if (entity != null) {
-            HTItemDropHelper.giveOrDropStack(entity, dye)
-        } else {
-            HTItemDropHelper.dropStackAt(level, Vec3.atCenterOf(pos), dye)
+        VanillaColoredCollections.DYE[color].asStack(4).onSuccess { stack: ItemStack ->
+            if (entity != null) {
+                HTItemDropHelper.giveOrDropStack(entity, stack)
+            } else {
+                HTItemDropHelper.dropStackAt(level, Vec3.atCenterOf(pos), stack)
+            }
         }
     }
 }

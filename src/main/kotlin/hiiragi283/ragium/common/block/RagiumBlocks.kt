@@ -94,7 +94,7 @@ data object RagiumBlocks {
         factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> BLOCK,
         properties: BlockBehaviour.Properties = machine()
     ): HTBasicDeferredBlockAndItem<BLOCK> =
-        REGISTER.registerSimple(type.idOrThrow.path, { factory(type, properties.setId(it)) })
+        REGISTER.registerSimple(type.id.path, { factory(type, properties.setId(it)) })
 
     @JvmStatic
     private fun <BLOCK : Block, ITEM : Item> registerMachine(
@@ -103,7 +103,7 @@ data object RagiumBlocks {
         itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
         properties: BlockBehaviour.Properties = machine()
     ): HTDeferredBlockAndItem<BLOCK, ITEM> =
-        REGISTER.register(type.idOrThrow.path, { factory(type, properties.setId(it)) }, itemFactory)
+        REGISTER.register(type.id.path, { factory(type, properties.setId(it)) }, itemFactory)
 
     @JvmStatic
     private fun registerMachine(

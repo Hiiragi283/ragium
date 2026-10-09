@@ -1,5 +1,6 @@
 package hiiragi283.lib.resource
 
+import hiiragi283.lib.util.Either
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 
@@ -21,34 +22,32 @@ typealias HTSimpleValueWithKey<R> = HTValueWithKey<R, R>
 interface HTValueWithKey<R : Any, out T : R> {
     /**
      * [ID][ResourceKey]を取得します。
+     * @throws IllegalStateException 戻り値が`null`の場合
      */
-    val keyOrNull: ResourceKey<R>?
-
-    /**
-     * [ID][ResourceKey]を取得します。
-     * @throws IllegalStateException [keyOrNull]が`null`の場合
-     */
-    val keyOrThrow: ResourceKey<R> get() = keyOrNull ?: error("Unregistered value for ${getOrThrow()}")
+    fun key(): ResourceKey<R>
 
     /**
      * [ID][Identifier]を取得します。
+     * @throws IllegalStateException 戻り値が`null`の場合
      */
-    val idOrNull: Identifier? get() = keyOrNull?.identifier()
-
-    /**
-     * [ID][Identifier]を取得します。
-     * @throws IllegalStateException [idOrNull]が`null`の場合
-     */
-    val idOrThrow: Identifier get() = idOrNull ?: error("Unknown id for ${getOrThrow()}")
+    fun id(): Identifier = key().identifier()
 
     /**
      * 値を取得します。
      */
-    fun getOrNull(): T?
+    fun asEither(): Either<String, T> = TODO()
+
+    fun asResult(): Result<T>
 
     /**
      * 値を取得します。
-     * @throws IllegalStateException [getOrNull]が`null`の場合
+     * @return [asResult]の戻り値が[Result.isFailure]の場合`null`
      */
-    fun getOrThrow(): T = getOrNull() ?: error("Unknown value for $idOrThrow")
+    fun getOrNull(): T? = asResult().getOrNull()
+
+    /**
+     * 値を取得します。
+     * @throws IllegalStateException [asResult]の戻り値が[Result.isFailure]の場合
+     */
+    fun getOrThrow(): T = asResult().getOrThrow()
 }

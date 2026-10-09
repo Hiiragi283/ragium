@@ -3,6 +3,8 @@ package hiiragi283.lib.recipe.lookup
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.util.Either
+import hiiragi283.lib.util.left
+import hiiragi283.lib.util.right
 import hiiragi283.lib.util.unwrap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.Recipe
@@ -41,7 +43,7 @@ class HTVanillaRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(val reci
             { key: RecipeKey -> recipeManager.getRecipeFor(recipeType, input, level, key) },
             { holder: RecipeHolder<RECIPE> -> recipeManager.getRecipeFor(recipeType, input, level, holder) }
         ) ?: recipeManager.getRecipeFor(recipeType, input, level)
-        foundRecipe.ifPresentOrElse({ lastRecipe = Either.Right(it) }, { lastRecipe = null })
+        lastRecipe = foundRecipe.map { it.right() }.getOrNull()
         return foundRecipe.getOrNull()
     }
 
@@ -50,7 +52,7 @@ class HTVanillaRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(val reci
     }
 
     override fun deserialize(input: ValueInput) {
-        input.read(HTConstants.ID, Recipe.KEY_CODEC).ifPresent { lastRecipe = Either.Left(it) }
+        input.read(HTConstants.ID, Recipe.KEY_CODEC).ifPresent { lastRecipe = it.left() }
     }
 
     private fun getRecipeKey(): RecipeKey? = lastRecipe?.map(RecipeHolder<*>::id)?.unwrap()

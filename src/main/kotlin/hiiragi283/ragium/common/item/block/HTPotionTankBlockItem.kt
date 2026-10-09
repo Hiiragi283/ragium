@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.item.block
 
+import hiiragi283.lib.fluid.createOrEmpty
 import hiiragi283.lib.item.HTSubCreativeTabContents
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.RagiumConfig
@@ -25,10 +26,9 @@ class HTPotionTankBlockItem(block: Block, properties: Properties) :
         for (potion: Holder<Potion> in parameters.filteredElements(Registries.POTION)) {
             if (potion == Potions.WATER) continue
             val stack = ItemStack(baseItem)
-            HTStorageHelper.updateFluid(
-                stack,
-                HTPotionHelper.createFluid(potion, amount = RagiumConfig.SERVER.tankCapacity.asInt)
-            )
+            HTPotionHelper
+                .createFluid(potion, amount = RagiumConfig.SERVER.tankCapacity.asInt)
+                .onSuccess { HTStorageHelper.updateFluid(stack, it.createOrEmpty()) }
             output.accept(stack)
         }
     }

@@ -325,7 +325,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 +content.slab
                 count = 6
             }
-            group = content.slab.idOrThrow.path
+            group = content.slab.id().path
         }.save(exporter)
         VanillaRecipeBuilders.stonecutting {
             ingredient(stonecutterInput)
@@ -333,7 +333,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 +slab
                 count = 2
             }
-            group = slab.idOrThrow.path
+            group = slab.id().path
         }.save(exporter)
         // Stairs
         if (stairs != null) {
@@ -346,12 +346,12 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                     +stairs
                     count = 4
                 }
-                group = stairs.idOrThrow.path
+                group = stairs.id().path
             }.save(exporter)
             VanillaRecipeBuilders.stonecutting {
                 ingredient(stonecutterInput)
                 result { +stairs }
-                group = stairs.idOrThrow.path
+                group = stairs.id().path
             }.save(exporter)
         }
         // Wall
@@ -364,12 +364,12 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                     +wall
                     count = 6
                 }
-                group = wall.idOrThrow.path
+                group = wall.id().path
             }.save(exporter)
             VanillaRecipeBuilders.stonecutting {
                 ingredient(stonecutterInput)
                 result { +wall }
-                group = wall.idOrThrow.path
+                group = wall.id().path
             }.save(exporter)
         }
     }
@@ -674,7 +674,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('A') { +holderSet(CommonTagPrefixes.GEM, material) }
             result { +block }
             category = RecipeCategory.BUILDING_BLOCKS
-            group = block.idOrThrow.path
+            group = block.id().path
         }.save(exporter)
     }
 

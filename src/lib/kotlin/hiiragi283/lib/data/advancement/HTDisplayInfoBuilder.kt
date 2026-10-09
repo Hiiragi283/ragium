@@ -63,7 +63,7 @@ class HTDisplayInfoBuilder {
     )
 
     operator fun HTItemInstanceLike.unaryPlus() {
-        this.toTemplate()?.let { icon = it }
+        icon = this.asTemplate().getOrThrow()
     }
 
     inline fun icon(builderAction: ItemInstanceBuilder.() -> Unit) {

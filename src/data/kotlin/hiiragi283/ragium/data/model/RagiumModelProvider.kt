@@ -93,7 +93,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
                 for (blockItem: HTSimpleDeferredBlockAndItem in blockItems) {
                     val (inactive: Identifier, active: Identifier) = when (blockItem) {
                         RagiumBlocks.FREEZER -> {
-                            RagiumAPI.id(HTConstants.BLOCK, "machine", "cryo") to blockItem.idOrThrow.blockId
+                            RagiumAPI.id(HTConstants.BLOCK, "machine", "cryo") to blockItem.id().blockId
                         }
 
                         else -> inactiveModels[machineType]!! to machineModel(generators, machineType, blockItem)
@@ -130,7 +130,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         machineType: HTMachineType,
         block: HTSimpleValueWithKey<Block>
     ): Identifier {
-        val blockId: Identifier = block.idOrThrow.blockId
+        val blockId: Identifier = block.id().blockId
         return ModelTemplates.CUBE_ORIENTABLE.create(
             blockId,
             textureMapping(machineType).put(TextureSlot.FRONT, Material(blockId.withSuffix("_front"))),
@@ -139,7 +139,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun textureMapping(machineType: HTMachineType): TextureMapping = TextureMapping()
-        .put(TextureSlot.TOP, Material(RagiumBlocks.MACHINE_CASING.idOrThrow.blockId))
+        .put(TextureSlot.TOP, Material(RagiumBlocks.MACHINE_CASING.id().blockId))
         .put(
             TextureSlot.SIDE,
             Material(RagiumAPI.id(HTConstants.BLOCK, "machine", "${machineType.materialName}_side"))

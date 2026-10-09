@@ -3,7 +3,6 @@ package hiiragi283.lib.registry
 import hiiragi283.lib.resource.HTValueWithKey
 import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.HTHasText
-import hiiragi283.lib.util.Either
 import net.minecraft.core.TypedInstance
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
@@ -35,20 +34,16 @@ open class HTDeferredHolder<R : Any, out T : R> :
      */
     fun isOf(instance: TypedInstance<R>): Boolean = this.isBound && instance.`is`(this)
 
-    /**
-     * @since 26.1.8
-     */
-    fun asEither(): Either<String, T> = when {
-        this.isBound -> Either.Right(this.get())
-        else -> Either.Left("Trying to access unbound value: $key")
-    }
+    final override fun key(): ResourceKey<R> = this.key
 
-    final override val keyOrNull: ResourceKey<R> get() = this.key
+    final override fun asResult(): Result<T> = runCatching { get() }
 
     final override fun getOrNull(): T? = when (this.isBound) {
         true -> get()
         false -> null
     }
+
+    final override fun getOrThrow(): T = get()
 
     /**
      * @param R レジストリの要素のクラス

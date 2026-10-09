@@ -108,7 +108,7 @@ abstract class ExporterDataProvider<R : Any>(
 
     protected fun getHasName(id: Identifier): String = "has_${id.debugPath}"
 
-    protected fun getHasName(value: HTSimpleValueWithKey<*>): String = getHasName(value.idOrThrow)
+    protected fun getHasName(value: HTSimpleValueWithKey<*>): String = getHasName(value.id())
 
     protected fun getHasName(tagKey: TagKey<*>): String = getHasName(tagKey.location())
 

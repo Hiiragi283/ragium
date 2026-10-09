@@ -22,6 +22,6 @@ class HTPotionBucketItem(properties: Properties) : HTPotionBasedItem(properties)
 
     class BucketHandler(itemAccess: ItemAccess) : HTCustomBucketItemHandler(itemAccess) {
         override fun getResourceFrom(accessResource: ItemResource, index: Int): FluidResource =
-            HTPotionHelper.createFluid(accessResource)?.let(FluidResource::of) ?: FluidResource.EMPTY
+            HTPotionHelper.createFluid(accessResource).fold(FluidResource::of) { FluidResource.EMPTY }
     }
 }

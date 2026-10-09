@@ -9,7 +9,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.LiquidBlock
 import net.minecraft.world.level.material.FlowingFluid
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
 
@@ -41,20 +40,11 @@ sealed class HTFluidContent(
      */
     fun isOf(instance: TypedInstance<Fluid>): Boolean = sourceHolder.isOf(instance)
 
-    /**
-     * 新しい[FluidStackTemplate]のインスタンスを作成します。
-     */
-    override fun toTemplate(amount: Int, patch: DataComponentPatch): FluidStackTemplate? = when {
-        sourceHolder.isEmpty -> null
-        else -> sourceHolder.asEither().map { FluidStackTemplate(it, amount, patch) }.getOrNull()
-    }
+    override fun asTemplate(amount: Int, patch: DataComponentPatch): Result<FluidStackTemplate> = when {
+        sourceHolder.isEmpty ->
+            Result.failure(IllegalStateException("Could not create FluidStackTemplate with empty fluid"))
 
-    /**
-     * 新しい[FluidStack]のインスタンスを作成します。
-     */
-    override fun toStack(amount: Int, patch: DataComponentPatch): FluidStack = when {
-        sourceHolder.isBound -> FluidStack(sourceHolder, amount, patch)
-        else -> FluidStack.EMPTY
+        else -> sourceHolder.asResult().map { FluidStackTemplate(it, amount, patch) }
     }
 
     /**

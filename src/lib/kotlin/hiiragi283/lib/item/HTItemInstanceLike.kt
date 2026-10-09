@@ -13,10 +13,18 @@ interface HTItemInstanceLike {
     /**
      * 新しい[ItemStackTemplate]のインスタンスを作成します。
      */
-    fun toTemplate(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): ItemStackTemplate?
+    fun asTemplate(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): Result<ItemStackTemplate>
 
     /**
      * 新しい[ItemStack]のインスタンスを作成します。
      */
-    fun toStack(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): ItemStack
+    fun asStack(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): Result<ItemStack> =
+        asTemplate(count, patch).map(ItemStackTemplate::create)
+
+    /**
+     * 新しい[ItemStack]のインスタンスを作成します。
+     * @return [ItemStack]のインスタンスを作成できなかった場合は[ItemStack.EMPTY]
+     */
+    fun asStackOrEmpty(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): ItemStack =
+        asStack(count, patch).getOrElse { ItemStack.EMPTY }
 }
