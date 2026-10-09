@@ -4,6 +4,7 @@ import hiiragi283.lib.recipe.base.HTFluidToDoubleFluidRecipe
 import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
+import hiiragi283.lib.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
@@ -74,6 +75,9 @@ data object RagiumRecipeLookups {
 
     @JvmField
     val CENTRIFUGING: HTCompoundRecipeLookup<HTFluidToDoubleFluidRecipe> = create(RagiumConstants.CENTRIFUGING)
+
+    @JvmField
+    val EXCHANGING: HTCompoundRecipeLookup<HTItemOrFluidRecipe> = create(RagiumConstants.EXCHANGING)
 
     @JvmField
     val MIXING: HTRecipeLookup<RTMixingRecipe> = create(RagiumRecipeTypes.MIXING)

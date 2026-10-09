@@ -77,6 +77,9 @@ data object RagiumRecipeTypes {
     val CENTRIFUGING: RecipeType<RTCentrifugingRecipe> = create(RagiumConstants.CENTRIFUGING)
 
     @JvmField
+    val EXCHANGING: RecipeType<RTExchangingRecipe> = create(RagiumConstants.EXCHANGING)
+
+    @JvmField
     val MIXING: RecipeType<RTMixingRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
