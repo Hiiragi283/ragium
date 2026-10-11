@@ -6,7 +6,6 @@ import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
 import hiiragi283.lib.recipe.handler.HTFluidInputTank
-import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
@@ -52,7 +51,11 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
-        recipeHandler = object: EnergizedHandler<HTSingleFluidRecipeInput, HTItemAndFluidStack, HTFluidToItemAndFluidRecipe>() {
+        recipeHandler = object : EnergizedHandler<
+            HTSingleFluidRecipeInput,
+            HTItemAndFluidStack,
+            HTFluidToItemAndFluidRecipe
+            >() {
             private val inputTank: HTFluidInputTank by lazy { HTFluidInputTank(this@HTRefineryBlockEntity.inputTank) }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTRefineryBlockEntity.outputSlot)
@@ -60,7 +63,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
             private val outputTank: HTOutputSlot<FluidStack> by lazy {
                 HTOutputSlotHelper.forFluid(this@HTRefineryBlockEntity.outputTank)
             }
-            
+
             override fun createInput(): HTSingleFluidRecipeInput = HTSingleFluidRecipeInput(inputTank.getStoredInput())
 
             override fun findRecipe(level: ServerLevel, input: HTSingleFluidRecipeInput): HTFluidToItemAndFluidRecipe? =
@@ -105,7 +108,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         inputTank = builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(getTankCapacity(), listener))
         outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(getTankCapacity(), listener))
     }
-    
+
     private lateinit var outputSlot: HTBasicItemSlot
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {
@@ -145,6 +148,6 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         )
         widgetHolder.track(outputTank)
     }
-    
+
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.refinery
 }

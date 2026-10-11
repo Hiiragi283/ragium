@@ -42,7 +42,7 @@ data class RTReactingRecipe(
                     .compactNelFieldOf(HTConstants.INGREDIENT, HTConstants.INGREDIENTS, 2)
                     .forGetter(RTReactingRecipe::fluidIngredients),
                 HTItemCatalyst.CODEC.forGetter(RTReactingRecipe::catalyst),
-                HTItemOrFluidResult.CODEC.forGetter(RTReactingRecipe::result),
+                HTItemOrFluidResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(RTReactingRecipe::result),
                 HTProgressData.CODEC.forGetter(RTReactingRecipe::progressData)
             ).apply(instance, ::RTReactingRecipe)
         }

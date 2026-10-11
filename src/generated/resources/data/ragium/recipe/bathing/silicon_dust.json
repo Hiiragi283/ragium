@@ -1,12 +1,14 @@
 {
   "type": "ragium:bathing",
-  "fluid_ingredient": {
-    "amount": 125,
-    "fluids": "#c:hydrochloric_acid"
-  },
-  "item_ingredient": {
-    "count": 1,
-    "items": "#c:silicon"
+  "ingredient": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:hydrochloric_acid"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:silicon"
+    }
   },
   "result": {
     "count": 1,

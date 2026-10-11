@@ -18,7 +18,7 @@ import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.codec.nelOrElement
+import hiiragi283.lib.serialization.codec.compactNelFieldOf
 import hiiragi283.lib.serialization.network.nelOf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -43,14 +43,11 @@ data class RTMixingRecipe(
         @JvmField
         val CODEC: MapCodec<RTMixingRecipe> = HTCodecs.recordMap { instance ->
             instance.group(
-                HTItemIngredient.CODEC
-                    .nelOrElement(2)
-                    .fieldOf(HTConstants.ITEM_INGREDIENT)
-                    .forGetter(RTMixingRecipe::itemIngredients),
-                HTFluidIngredient.CODEC
-                    .fieldOf(HTConstants.FLUID_INGREDIENT)
-                    .forGetter(RTMixingRecipe::fluidIngredient),
-                HTItemOrFluidResult.CODEC.forGetter(RTMixingRecipe::result),
+                HTCodecs.mapPair(
+                    HTItemIngredient.CODEC.compactNelFieldOf(HTConstants.ITEM, HTConstants.ITEMS, 2),
+                    HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID)
+                ).fieldOf(HTConstants.INGREDIENT).forGetter { it.itemIngredients to it.fluidIngredient },
+                HTItemOrFluidResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(RTMixingRecipe::result),
                 HTProgressData.CODEC.forGetter(RTMixingRecipe::progressData)
             ).apply(instance, ::RTMixingRecipe)
         }
@@ -71,6 +68,17 @@ data class RTMixingRecipe(
         @JvmField
         val SERIALIZER: RecipeSerializer<RTMixingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
+
+    constructor(
+        ingredient: Pair<Nel<HTItemIngredient>, HTFluidIngredient>,
+        result: HTItemOrFluidResult,
+        progressData: HTProgressData
+    ) : this(
+        ingredient.first,
+        ingredient.second,
+        result,
+        progressData
+    )
 
     fun toItemAndFluidToFluid(): HTItemAndFluidToFluidRecipe? = when {
         itemIngredients.size > 1 -> null

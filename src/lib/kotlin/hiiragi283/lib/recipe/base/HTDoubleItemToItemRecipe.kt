@@ -38,8 +38,8 @@ interface HTDoubleItemToItemRecipe :
             fun <RECIPE : Basic> codec(factory: HTDoubleItemToItemRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> =
                 HTCodecs.recordMap { instance ->
                     instance.group(
-                        HTItemIngredient.CODEC.fieldOf(HTConstants.PRIMARY_INGREDIENT).forGetter(Basic::primary),
-                        HTItemIngredient.CODEC.fieldOf(HTConstants.SECONDARY_INGREDIENT).forGetter(Basic::secondary),
+                        HTItemIngredient.CODEC.fieldOf("primary_ingredient").forGetter(Basic::primary),
+                        HTItemIngredient.CODEC.fieldOf("secondary_ingredient").forGetter(Basic::secondary),
                         HTItemResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
                         HTProgressData.CODEC.forGetter(Basic::progressData)
                     ).apply(instance, factory::create)

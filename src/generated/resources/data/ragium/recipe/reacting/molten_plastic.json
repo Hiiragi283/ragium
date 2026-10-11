@@ -1,9 +1,5 @@
 {
   "type": "ragium:reacting",
-  "fluid_result": {
-    "amount": 180,
-    "id": "ragium:molten_plastic"
-  },
   "ingredients": [
     {
       "amount": 500,
@@ -14,5 +10,11 @@
       "fluids": "#c:oxygen"
     }
   ],
+  "result": {
+    "fluid": {
+      "amount": 180,
+      "id": "ragium:molten_plastic"
+    }
+  },
   "time": 200
 }

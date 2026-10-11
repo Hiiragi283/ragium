@@ -36,12 +36,10 @@ data class RTWashingRecipe(
         @JvmField
         val CODEC: MapCodec<RTWashingRecipe> = HTCodecs.recordMap { instance ->
             instance.group(
-                HTItemIngredient.CODEC
-                    .fieldOf(HTConstants.ITEM_INGREDIENT)
-                    .forGetter(RTWashingRecipe::itemIngredient),
-                HTFluidIngredient.CODEC
-                    .fieldOf(HTConstants.FLUID_INGREDIENT)
-                    .forGetter(RTWashingRecipe::fluidIngredient),
+                HTCodecs.mapPair(
+                    HTItemIngredient.CODEC.fieldOf(HTConstants.ITEM),
+                    HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID)
+                ).fieldOf(HTConstants.INGREDIENT).forGetter { it.itemIngredient to it.fluidIngredient },
                 HTItemResult.CODEC
                     .compactNelFieldOf(HTConstants.RESULT, HTConstants.RESULTS, 2)
                     .forGetter(RTWashingRecipe::results),
@@ -65,6 +63,17 @@ data class RTWashingRecipe(
         @JvmField
         val SERIALIZER: RecipeSerializer<RTWashingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
+
+    constructor(
+        ingredient: Pair<HTItemIngredient, HTFluidIngredient>,
+        results: Nel<HTItemResult>,
+        progressData: HTProgressData
+    ) : this(
+        ingredient.first,
+        ingredient.second,
+        results,
+        progressData
+    )
 
     override fun test(first: ItemInstance, second: FluidInstance): Boolean =
         itemIngredient.test(first) && fluidIngredient.test(second)

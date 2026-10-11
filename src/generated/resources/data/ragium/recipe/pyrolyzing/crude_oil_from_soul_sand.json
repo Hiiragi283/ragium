@@ -1,16 +1,18 @@
 {
   "type": "ragium:pyrolyzing",
-  "fluid_result": {
-    "amount": 250,
-    "id": "ragium:crude_oil"
-  },
   "ingredient": {
     "count": 1,
     "items": "minecraft:soul_sand"
   },
-  "item_result": {
-    "count": 1,
-    "id": "minecraft:sand"
+  "result": {
+    "fluid": {
+      "amount": 250,
+      "id": "ragium:crude_oil"
+    },
+    "item": {
+      "count": 1,
+      "id": "minecraft:sand"
+    }
   },
   "time": 200
 }

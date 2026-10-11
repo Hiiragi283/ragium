@@ -117,5 +117,11 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
             result: RESULT,
             progressData: HTProgressData
         ): RECIPE
+
+        fun create(
+            ingredient: Pair<HTItemIngredient, HTFluidIngredient>,
+            result: RESULT,
+            progressData: HTProgressData
+        ): RECIPE = create(ingredient.first, ingredient.second, result, progressData)
     }
 }

@@ -1,16 +1,20 @@
 {
   "type": "ragium:mixing",
-  "fluid_ingredient": {
-    "amount": 250,
-    "fluids": "#c:water"
+  "ingredient": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:dyes/lime"
+    }
   },
-  "fluid_result": {
-    "amount": 250,
-    "id": "ragium:lime_dye"
-  },
-  "item_ingredient": {
-    "count": 1,
-    "items": "#c:dyes/lime"
+  "result": {
+    "fluid": {
+      "amount": 250,
+      "id": "ragium:lime_dye"
+    }
   },
   "time": 100
 }

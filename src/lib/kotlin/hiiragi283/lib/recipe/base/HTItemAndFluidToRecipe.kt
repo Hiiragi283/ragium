@@ -69,30 +69,11 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
                 factory: HTItemAndFluidToRecipeBuilder.Factory<RESULT, RECIPE>
             ): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
                 instance.group(
-                    HTItemIngredient.CODEC
-                        .fieldOf(HTConstants.ITEM_INGREDIENT)
-                        .forGetter(Basic<OUTPUT, RESULT>::itemIngredient),
-                    HTFluidIngredient.CODEC
-                        .fieldOf(HTConstants.FLUID_INGREDIENT)
-                        .forGetter(Basic<OUTPUT, RESULT>::fluidIngredient),
+                    HTCodecs.mapPair(
+                        HTItemIngredient.CODEC.fieldOf(HTConstants.ITEM),
+                        HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID)
+                    ).fieldOf(HTConstants.INGREDIENT).forGetter { it.itemIngredient to it.fluidIngredient },
                     resultCodec.fieldOf(HTConstants.RESULT).forGetter(Basic<OUTPUT, RESULT>::result),
-                    HTProgressData.CODEC.forGetter(Basic<OUTPUT, RESULT>::progressData)
-                ).apply(instance, factory::create)
-            }
-
-            @JvmStatic
-            fun <OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>, RECIPE : Basic<OUTPUT, RESULT>> codec(
-                resultCodec: MapCodec<RESULT>,
-                factory: HTItemAndFluidToRecipeBuilder.Factory<RESULT, RECIPE>
-            ): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
-                instance.group(
-                    HTItemIngredient.CODEC
-                        .fieldOf(HTConstants.ITEM_INGREDIENT)
-                        .forGetter(Basic<OUTPUT, RESULT>::itemIngredient),
-                    HTFluidIngredient.CODEC
-                        .fieldOf(HTConstants.FLUID_INGREDIENT)
-                        .forGetter(Basic<OUTPUT, RESULT>::fluidIngredient),
-                    resultCodec.forGetter(Basic<OUTPUT, RESULT>::result),
                     HTProgressData.CODEC.forGetter(Basic<OUTPUT, RESULT>::progressData)
                 ).apply(instance, factory::create)
             }

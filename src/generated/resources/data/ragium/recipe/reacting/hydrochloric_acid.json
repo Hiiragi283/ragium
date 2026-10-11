@@ -1,9 +1,5 @@
 {
   "type": "ragium:reacting",
-  "fluid_result": {
-    "amount": 1000,
-    "id": "ragium:hydrochloric_acid"
-  },
   "ingredients": [
     {
       "amount": 1000,
@@ -14,5 +10,11 @@
       "fluids": "#c:water"
     }
   ],
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:hydrochloric_acid"
+    }
+  },
   "time": 200
 }

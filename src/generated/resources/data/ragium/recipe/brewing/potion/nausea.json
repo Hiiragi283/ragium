@@ -1,27 +1,31 @@
 {
   "type": "ragium:mixing",
-  "fluid_ingredient": {
-    "amount": 1000,
-    "fluids": {
-      "neoforge:ingredient_type": "ragium:potion",
-      "potions": "minecraft:thick"
+  "ingredient": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": {
+        "neoforge:ingredient_type": "ragium:potion",
+        "potions": "minecraft:thick"
+      }
+    },
+    "item": {
+      "count": 1,
+      "items": "minecraft:pufferfish"
     }
   },
-  "fluid_result": {
-    "type": "ragium:potion",
-    "amount": 1000,
-    "custom_effects": [
-      {
-        "duration": 900,
-        "id": "minecraft:nausea",
-        "show_icon": true
-      }
-    ],
-    "custom_name": "nausea"
-  },
-  "item_ingredient": {
-    "count": 1,
-    "items": "minecraft:pufferfish"
+  "result": {
+    "fluid": {
+      "type": "ragium:potion",
+      "amount": 1000,
+      "custom_effects": [
+        {
+          "duration": 900,
+          "id": "minecraft:nausea",
+          "show_icon": true
+        }
+      ],
+      "custom_name": "nausea"
+    }
   },
   "time": 200
 }

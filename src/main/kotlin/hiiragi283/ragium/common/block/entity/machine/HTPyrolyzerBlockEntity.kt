@@ -51,7 +51,11 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
-        recipeHandler = object: EnergizedHandler<SingleRecipeInput, HTItemAndFluidStack, HTItemToItemAndFluidRecipe>() {
+        recipeHandler = object : EnergizedHandler<
+            SingleRecipeInput,
+            HTItemAndFluidStack,
+            HTItemToItemAndFluidRecipe
+            >() {
             private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTPyrolyzerBlockEntity.inputSlot) }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTPyrolyzerBlockEntity.outputSlot)
@@ -59,7 +63,7 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
             private val outputTank: HTOutputSlot<FluidStack> by lazy {
                 HTOutputSlotHelper.forFluid(this@HTPyrolyzerBlockEntity.outputTank)
             }
-            
+
             override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStoredInput())
 
             override fun findRecipe(level: ServerLevel, input: SingleRecipeInput): HTItemToItemAndFluidRecipe? =
@@ -144,6 +148,6 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
         )
         widgetHolder.track(outputTank)
     }
-    
+
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.pyrolyzer
 }

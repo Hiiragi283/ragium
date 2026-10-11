@@ -1,17 +1,19 @@
 {
   "type": "ragium:bathing",
-  "fluid_ingredient": {
-    "amount": 125,
-    "fluids": "#c:dyes/lime"
-  },
-  "item_ingredient": {
-    "count": 1,
-    "items": {
-      "type": "neoforge:and",
-      "values": [
-        "#minecraft:beds",
-        "#c:dyed/white"
-      ]
+  "ingredient": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:dyes/lime"
+    },
+    "item": {
+      "count": 1,
+      "items": {
+        "type": "neoforge:and",
+        "values": [
+          "#minecraft:beds",
+          "#c:dyed/white"
+        ]
+      }
     }
   },
   "result": {

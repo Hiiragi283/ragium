@@ -1,9 +1,5 @@
 {
   "type": "ragium:reacting",
-  "fluid_result": {
-    "amount": 2000,
-    "id": "ragium:synthetic_resin"
-  },
   "ingredients": [
     {
       "amount": 1000,
@@ -14,5 +10,11 @@
       "fluids": "#ragium:aldehydes"
     }
   ],
+  "result": {
+    "fluid": {
+      "amount": 2000,
+      "id": "ragium:synthetic_resin"
+    }
+  },
   "time": 200
 }

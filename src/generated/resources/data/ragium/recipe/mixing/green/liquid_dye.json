@@ -1,16 +1,20 @@
 {
   "type": "ragium:mixing",
-  "fluid_ingredient": {
-    "amount": 250,
-    "fluids": "#c:water"
+  "ingredient": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:dyes/green"
+    }
   },
-  "fluid_result": {
-    "amount": 250,
-    "id": "ragium:green_dye"
-  },
-  "item_ingredient": {
-    "count": 1,
-    "items": "#c:dyes/green"
+  "result": {
+    "fluid": {
+      "amount": 250,
+      "id": "ragium:green_dye"
+    }
   },
   "time": 100
 }

@@ -1,9 +1,5 @@
 {
   "type": "ragium:reacting",
-  "fluid_result": {
-    "amount": 1000,
-    "id": "ragium:liquid_explosive"
-  },
   "ingredients": [
     {
       "amount": 1000,
@@ -14,5 +10,11 @@
       "fluids": "#c:nitric_acid"
     }
   ],
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:liquid_explosive"
+    }
+  },
   "time": 200
 }
