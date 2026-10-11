@@ -119,7 +119,8 @@
     "energy",
     "fluid",
     "memory_disc_data",
-    "owner_id"
+    "owner_id",
+    "upgrades"
   ],
   "minecraft:fluid": [
     "alcohol",

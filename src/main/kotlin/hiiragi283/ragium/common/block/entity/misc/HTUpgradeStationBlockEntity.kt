@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.misc
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
@@ -12,6 +11,7 @@ import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.ragium.api.data.RagiumDataComponents
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTBlockEntityWithMenu
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -27,7 +27,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
-import net.neoforged.neoforge.transfer.energy.EnergyHandlerUtil
+import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.world.inventory.StackCopySlot
 
 class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockState) :
@@ -59,7 +59,11 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
     lateinit var toolSlot: HTBasicItemSlot
 
     override fun createItemHandler(listener: Runnable): HTResourceSlotHolder<HTItemSlot> {
-        toolSlot = HTBasicItemSlot.create(listener, limit = 1)
+        toolSlot = HTBasicItemSlot.create(
+            listener,
+            limit = 1,
+            filter = { resource: ItemResource -> resource.`is`(RagiumTags.Items.SUPPORT_UPGRADES) }
+        )
         return object : HTResourceSlotHolder<HTItemSlot> {
             override fun getSlots(side: Direction?): List<HTItemSlot> = listOf(toolSlot)
 
@@ -79,11 +83,33 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
         input.readChild(HTConstants.ENERGY, energyHandler)
     }
 
-    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
-        // 液体の搬入
-        // 充電
-        return false // TODO
-    }
+    /*override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean =
+        !toolSlot.isEmpty && useTransaction { transaction: Transaction ->
+            val toolStackIn: ItemStack = toolSlot.getStackCopy()
+            // 液体の搬入
+            val fluidMoved: Int = ResourceHandlerUtil.move(
+                getFluidHandler(null),
+                HTFluidCapabilities.getCapability(toolStackIn),
+                HTTransferPredicates.alwaysTrue(),
+                Int.MAX_VALUE, // TODO,
+                transaction
+            )
+            // 充電
+            val energyMoved: Int = EnergyHandlerUtil.move(
+                this.energyHandler.asForge(),
+                HTEnergyCapabilities.getCapability(toolStackIn),
+                Int.MAX_VALUE, // TODO,
+                transaction
+            )
+            val moved: Boolean = fluidMoved > 0 || energyMoved > 0
+            if (moved) {
+                toolSlot.setStack(toolStackIn)
+                transaction.commit()
+            }
+            moved
+        }*/
+
+    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         // Energy
@@ -115,7 +141,7 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
             )
         }
     }
-    
+
     //    UpgradeSlot    //
 
     inner class UpgradeSlot(slot: Int, x: Int, y: Int) :

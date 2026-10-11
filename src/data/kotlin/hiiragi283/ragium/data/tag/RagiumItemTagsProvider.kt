@@ -14,6 +14,7 @@ import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -90,5 +91,9 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)
             .add(RagiumBlocks.FLUID_OUTPUT_BUS)
             .apply { RagiumBlocks.TANKS.forEach { add(it) } }
+        builder(RagiumTags.Items.SUPPORT_UPGRADES)
+            .add(RagiumBlocks.TANK)
+            .add(RagiumBlocks.POTION_TANK)
+            .addTag(HTMachineType.PREFIX.rawCommonTag.item)
     }
 }
