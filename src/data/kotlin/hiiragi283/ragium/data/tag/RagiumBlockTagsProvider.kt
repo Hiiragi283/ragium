@@ -38,6 +38,8 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
 
             yieldAll(RagiumBlocks.TANKS)
             yield(RagiumBlocks.CREATIVE_BATTERY)
+
+            yield(RagiumBlocks.UPGRADE_STATION)
         }.forEach(pickaxe::add)
     }
 }

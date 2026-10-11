@@ -95,6 +95,7 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
             helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
             helper.register(RagiumAPI.id("owner_id"), RagiumDataComponents.OWNER_ID)
+            helper.register(RagiumAPI.id("upgrades"), RagiumDataComponents.UPGRADES)
         }
         event.register(Registries.MENU) { helper ->
             helper.register(

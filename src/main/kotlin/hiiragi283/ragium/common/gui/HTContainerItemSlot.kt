@@ -21,8 +21,9 @@ class HTContainerItemSlot(
     y: Int,
     private val stackSetter: Consumer<ItemStack>,
     private val manualFilter: BiPredicate<ItemResource, HTTransferAccess>,
-    val slotType: HTBackgroundType
-) : StackCopySlot(index, x, y) {
+    override val slotType: HTBackgroundType
+) : StackCopySlot(index, x, y),
+    HTWidgetSlot {
     companion object {
         @JvmStatic
         fun create(slot: HTBasicItemSlot, index: Int, x: Int, y: Int, slotType: HTBackgroundType): HTContainerItemSlot =
@@ -45,6 +46,8 @@ class HTContainerItemSlot(
 
     override fun mayPlace(itemStack: ItemStack): Boolean =
         !itemStack.isEmpty && manualFilter.test(ItemResource.of(itemStack), HTTransferAccess.MANUAL)
+
+    override fun onQuickCraft(picked: ItemStack, original: ItemStack): Unit = Unit
 
     override fun getMaxStackSize(): Int = slot.currentCapacity
 

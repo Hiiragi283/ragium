@@ -2,8 +2,6 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTSlotHelper
-import hiiragi283.lib.gui.sync.HTIntSyncSlot
-import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.HTRecipeFactory
 import hiiragi283.lib.recipe.base.HTProgressRecipe
@@ -100,7 +98,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
         fun addEnergySlot(widgetHolder: HTWidgetHolder, x: Int, y: Int) {
             widgetHolder += HTEnergySlotWidget(handler, x, y)
-            widgetHolder.track(HTIntSyncSlot.create(handler::amount, handler::setAmount), HTSyncType.S2C)
+            widgetHolder.track(handler)
         }
 
         override fun writeValue(output: ValueOutput) {

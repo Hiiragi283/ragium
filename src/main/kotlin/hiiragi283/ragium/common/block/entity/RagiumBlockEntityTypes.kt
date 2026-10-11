@@ -30,6 +30,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.misc.HTUpgradeStationBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTFluidOutputBusBlockEntity
@@ -148,6 +149,7 @@ data object RagiumBlockEntityTypes {
 
     //    Storage    //
 
+    // Tank
     @JvmField
     val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> =
         registerTick(HTConstants.TANK, ::HTTankBlockEntity)
@@ -157,12 +159,19 @@ data object RagiumBlockEntityTypes {
         registerTick("potion_tank", ::HTPotionTankBlockEntity)
 
     @JvmField
+    val CREATIVE_TANK: HTDeferredBlockEntityType<HTCreativeTankBlockEntity> =
+        registerTick("creative_tank", ::HTCreativeTankBlockEntity)
+
+    // Battery
+    @JvmField
     val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
         registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
 
+    //    Misc    //
+
     @JvmField
-    val CREATIVE_TANK: HTDeferredBlockEntityType<HTCreativeTankBlockEntity> =
-        registerTick("creative_tank", ::HTCreativeTankBlockEntity)
+    val UPGRADE_STATION: HTDeferredBlockEntityType<HTUpgradeStationBlockEntity> =
+        registerTick("upgrade_station", ::HTUpgradeStationBlockEntity)
 
     //    Events    //
 
@@ -222,7 +231,6 @@ data object RagiumBlockEntityTypes {
         // Storage
         registerBlockEntity(TANK.get())
         registerBlockEntity(POTION_TANK.get())
-
         event.registerBlock(
             HTFluidCapabilities.block,
             { _, _, _, _, _ ->
@@ -230,11 +238,17 @@ data object RagiumBlockEntityTypes {
             },
             RagiumBlocks.VOID_TANK.getOrThrow()
         )
+        registerBlockEntity(CREATIVE_TANK.get())
 
         event.registerBlockEntity(
             HTEnergyCapabilities.block,
             CREATIVE_BATTERY.get()
         ) { _, _ -> InfiniteEnergyHandler.INSTANCE }
-        registerBlockEntity(CREATIVE_TANK.get())
+        // Misc
+        registerBlockEntity(UPGRADE_STATION.get())
+        event.registerBlockEntity(
+            HTEnergyCapabilities.block,
+            UPGRADE_STATION.get()
+        ) { blockEntity, _ -> blockEntity.energyHandler.asForge() }
     }
 }

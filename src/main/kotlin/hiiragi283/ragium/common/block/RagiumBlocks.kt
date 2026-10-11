@@ -31,6 +31,7 @@ import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.HTFluidStorageBlock
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock
 import hiiragi283.ragium.common.block.storage.HTPotionTankBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
@@ -367,11 +368,17 @@ data object RagiumBlocks {
     //    Storage    //
 
     // Tank
+    @JvmStatic
+    private val tankProperty: BlockBehaviour.Properties = properties(1.5f, 16f)
+        .mapColor(MapColor.COLOR_BLACK)
+        .sound(SoundType.COPPER)
+        .noOcclusion()
+
     @JvmField
     val TANK: HTBasicDeferredBlockAndItem<HTTankBlock> = registerMachine(
         RagiumBlockEntityTypes.TANK,
         ::HTTankBlock,
-        machine().noOcclusion()
+        tankProperty
     )
 
     @JvmField
@@ -379,13 +386,13 @@ data object RagiumBlocks {
         RagiumBlockEntityTypes.POTION_TANK,
         ::HTPotionTankBlock,
         ::HTPotionTankBlockItem,
-        machine().noOcclusion()
+        tankProperty
     )
 
     @JvmField
     val VOID_TANK: HTBasicDeferredBlockAndItem<HTVoidTankBlock> = REGISTER.registerSimple(
         "void_tank",
-        machine().noOcclusion(),
+        tankProperty,
         ::HTVoidTankBlock
     )
 
@@ -394,7 +401,7 @@ data object RagiumBlocks {
         RagiumBlockEntityTypes.CREATIVE_TANK,
         ::HTTankBlock,
         ::HTCreativeTankBlockItem,
-        machine().noOcclusion()
+        tankProperty
     )
 
     @JvmField
@@ -404,6 +411,12 @@ data object RagiumBlocks {
     @JvmField
     val CREATIVE_BATTERY: HTBasicDeferredBlockAndItem<HTBasicEntityBlock> =
         registerMachine(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBasicEntityBlock)
+
+    //    Misc    //
+
+    @JvmField
+    val UPGRADE_STATION: HTBasicDeferredBlockAndItem<HTUpgradeStationBlock> =
+        registerMachine(RagiumBlockEntityTypes.UPGRADE_STATION, ::HTUpgradeStationBlock)
 
     //    Decoration    //
 

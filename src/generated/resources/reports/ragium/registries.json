@@ -77,6 +77,7 @@
     "sulfur_ore",
     "sulfuric_acid",
     "tank",
+    "upgrade_station",
     "void_metal_block",
     "void_tank",
     "white_dye",
@@ -104,7 +105,8 @@
     "pyrolyzer",
     "refinery",
     "smelter",
-    "tank"
+    "tank",
+    "upgrade_station"
   ],
   "minecraft:creative_mode_tab": [
     "common"
@@ -392,6 +394,7 @@
     "tiny_coal",
     "tiny_coal_coke",
     "tiny_pitch_coke",
+    "upgrade_station",
     "void_metal_block",
     "void_metal_ingot",
     "void_metal_nugget",

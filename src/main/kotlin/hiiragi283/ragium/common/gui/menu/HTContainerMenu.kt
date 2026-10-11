@@ -8,7 +8,7 @@ import hiiragi283.lib.gui.sync.HTSyncableMenu
 import hiiragi283.lib.gui.sync.HTSyncablePayload
 import hiiragi283.lib.gui.sync.HTSyncableSlot
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.gui.HTContainerItemSlot
+import hiiragi283.ragium.common.gui.HTWidgetSlot
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import it.unimi.dsi.fastutil.ints.IntArrayList
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
@@ -90,7 +90,7 @@ abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val i
     private val inventorySlots: MutableList<Int> = IntArrayList()
 
     override fun addSlot(slot: Slot): Slot {
-        if (slot is HTContainerItemSlot) {
+        if (slot is HTWidgetSlot) {
             widgetSlots += slotCount
             val slotType: HTBackgroundType = slot.slotType
             if (slotType.isInput || !slotType.isOutput) {

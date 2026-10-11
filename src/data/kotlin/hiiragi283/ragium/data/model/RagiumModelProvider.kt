@@ -123,6 +123,8 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         for (blockItem: HTSimpleDeferredBlockAndItem in RagiumBlocks.TANKS) {
             generators.createTrivialBlock(blockItem.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
         }
+        // Misc
+        generators.createTrivialBlock(RagiumBlocks.UPGRADE_STATION.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
     }
 
     private fun machineModel(

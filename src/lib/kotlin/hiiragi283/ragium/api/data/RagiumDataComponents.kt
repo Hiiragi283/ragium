@@ -2,12 +2,14 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.lib.data.DataComponentType
 import hiiragi283.lib.serialization.codec.HTCodecs
+import hiiragi283.lib.serialization.codec.listOrElement
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.ragium.api.data.chemical.HTChemical
 import hiiragi283.ragium.api.text.HTItemTooltip
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import java.util.UUID
@@ -50,4 +52,11 @@ data object RagiumDataComponents {
     @JvmField
     val OWNER_ID: DataComponentType<UUID> =
         DataComponentType(HTCodecs.UUID, HTStreamCodecs.UUID)
+
+    /**
+     * @since 26.1.9
+     */
+    @JvmField
+    val UPGRADES: DataComponentType<List<ItemStack>> =
+        DataComponentType(ItemStack.OPTIONAL_CODEC.listOrElement(0, 4), ItemStack.OPTIONAL_LIST_STREAM_CODEC)
 }

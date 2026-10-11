@@ -1,11 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.lib.gui.sync.HTFluidSyncSlot
-import hiiragi283.lib.gui.sync.HTItemSyncSlot
-import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
-import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.HTMachineBlock
@@ -28,14 +23,6 @@ abstract class HTBaseMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
     fun isActive(state: BlockState): Boolean = state.getOptionalValue(HTMachineBlock.IS_ACTIVE).orElseGet { false }
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {}
-
-    protected fun HTWidgetHolder.track(slot: HTBasicFluidTank, syncType: HTSyncType = HTSyncType.S2C) {
-        this.track(HTFluidSyncSlot(slot), syncType)
-    }
-
-    protected fun HTWidgetHolder.track(slot: HTBasicItemSlot, syncType: HTSyncType = HTSyncType.S2C) {
-        this.track(HTItemSyncSlot(slot), syncType)
-    }
 
     //    Ticking    //
 

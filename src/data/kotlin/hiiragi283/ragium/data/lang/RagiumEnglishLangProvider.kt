@@ -72,8 +72,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.TANK, "Variable Tank")
         add(RagiumBlocks.POTION_TANK, "Potion Tank")
         add(RagiumBlocks.VOID_TANK, "Void Tank")
-        add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
+
+        add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")
+
+        add(RagiumBlocks.UPGRADE_STATION, "Upgrade Station")
 
         add(RagiumBlocks.MACHINE_CASING, "Machine Casing")
         // Damage Type
