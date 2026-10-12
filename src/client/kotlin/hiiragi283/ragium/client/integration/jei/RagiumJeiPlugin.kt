@@ -37,6 +37,8 @@ import hiiragi283.ragium.client.integration.jei.category.RTResourceExtractingRec
 import hiiragi283.ragium.client.integration.jei.category.RTWashingRecipeCategory
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
+import hiiragi283.ragium.common.recipe.RTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import mezz.jei.api.JeiPlugin
@@ -274,6 +276,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                         ingredient = HTJeiRecipeHelper.fakeItem(filledBucket)
                         +remainder
                         fluidResult { from(fluid) }
+                        progressData = RTBucketCentrifugingRecipe.progressData
                     }.buildSynthetic { id: Identifier, recipe: RTCentrifugingRecipe.Basic ->
                         // 液体ポーションなどのバリエーションを持つ液体はIDなしで登録する
                         if (fluidHelper.getUid(fluid, UidContext.Recipe) is List<*>) {
@@ -320,6 +323,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                         itemIngredient = HTJeiRecipeHelper.fakeItem(remainder)
                         fluidIngredient = HTJeiRecipeHelper.fakeFluid(fluid)
                         result { from(filledBucket) }
+                        progressData = RTBucketFillingRecipe.progressData
                     }.buildSynthetic { id: Identifier, recipe: RTFillingRecipe ->
                         // 液体ポーションなどのバリエーションを持つ液体はIDなしで登録する
                         if (fluidHelper.getUid(fluid, UidContext.Recipe) is List<*>) {

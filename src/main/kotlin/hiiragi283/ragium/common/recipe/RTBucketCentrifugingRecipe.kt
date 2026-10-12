@@ -13,8 +13,6 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
 data object RTBucketCentrifugingRecipe : RTCentrifugingRecipe, HTProgressRecipe.Simple<SingleRecipeInput> {
-    override val progressData: HTProgressData = HTProgressData.time(60)
-
     override fun test(input: ItemInstance): Boolean = when {
         input.craftingRemainder?.`is`(Tags.Items.BUCKETS_EMPTY) ?: false ->
             HTIngredientHelper.unwrap(input).let(HTFluidCapabilities::getCapability)?.size() == 1
@@ -31,4 +29,6 @@ data object RTBucketCentrifugingRecipe : RTCentrifugingRecipe, HTProgressRecipe.
         test(input) -> HTIngredientHelper.copyWithCount(input, 1)
         else -> ItemStack.EMPTY
     }
+
+    override val progressData: HTProgressData = HTProgressData.time(60)
 }

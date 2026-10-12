@@ -25,6 +25,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
+import hiiragi283.ragium.common.recipe.RTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
@@ -148,15 +149,16 @@ internal data object RagiumCommon {
                     this[RagiumAPI.id("/${RagiumConstants.CENTRIFUGING}/potion_bottle/${bottleType.serializedName}")] =
                         RTPotionBottleCentrifugingRecipe(bottleType)
                 }
-                this[RagiumAPI.id("/${RagiumConstants.CENTRIFUGING}/filled_bucket")] = RTBucketCentrifugingRecipe
+                this[RagiumAPI.id("/${RagiumConstants.CENTRIFUGING}/bucket")] = RTBucketCentrifugingRecipe
             }
         )
         RagiumRecipeLookups.FILLING.addRecipes(
-            HTBottleType.entries.associate { bottleType: HTBottleType ->
-                Pair(
-                    RagiumAPI.id("/${RagiumConstants.FILLING}/potion_bottle/${bottleType.serializedName}"),
-                    RTPotionBottleFillingRecipe(bottleType)
-                )
+            buildMap {
+                HTBottleType.entries.forEach { bottleType: HTBottleType ->
+                    this[RagiumAPI.id("/${RagiumConstants.FILLING}/potion_bottle/${bottleType.serializedName}")] =
+                        RTPotionBottleFillingRecipe(bottleType)
+                }
+                this[RagiumAPI.id("/${RagiumConstants.FILLING}/bucket")] = RTBucketFillingRecipe
             }
         )
 
