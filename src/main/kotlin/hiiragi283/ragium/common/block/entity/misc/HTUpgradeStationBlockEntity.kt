@@ -86,12 +86,11 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
     }
 
     /*override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean =
-        !toolSlot.isEmpty && useTransaction { transaction: Transaction ->
-            val toolStackIn: ItemStack = toolSlot.getStackCopy()
+        useTransaction { transaction: Transaction ->
             // 液体の搬入
-            val fluidMoved: Int = ResourceHandlerUtil.move(
+            val fluidMoved: Int = ResourceHandlerUtil.moveStacking(
                 getFluidHandler(null),
-                HTFluidCapabilities.getCapability(toolStackIn),
+                HTFluidCapabilities.getCapability(itemAccess),
                 HTTransferPredicates.alwaysTrue(),
                 Int.MAX_VALUE, // TODO,
                 transaction
@@ -99,17 +98,30 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
             // 充電
             val energyMoved: Int = EnergyHandlerUtil.move(
                 this.energyHandler.asForge(),
-                HTEnergyCapabilities.getCapability(toolStackIn),
+                HTEnergyCapabilities.getCapability(itemAccess),
                 Int.MAX_VALUE, // TODO,
                 transaction
             )
             val moved: Boolean = fluidMoved > 0 || energyMoved > 0
             if (moved) {
-                toolSlot.setStack(toolStackIn)
                 transaction.commit()
             }
             moved
-        }*/
+        }
+
+    private val itemAccess = ToolItemAccess()
+
+    private inner class ToolItemAccess : ItemAccess {
+        override fun getResource(): ItemResource = toolSlot.resource
+
+        override fun getAmount(): Int = toolSlot.amount
+
+        override fun insert(resource: ItemResource, amount: Int, transaction: TransactionContext): Int =
+            toolSlot.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)
+
+        override fun extract(resource: ItemResource, amount: Int, transaction: TransactionContext): Int =
+            toolSlot.extract(resource, amount, transaction, HTTransferAccess.INTERNAL)
+    }*/
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
 
