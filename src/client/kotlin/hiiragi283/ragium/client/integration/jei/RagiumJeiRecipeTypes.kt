@@ -1,8 +1,8 @@
 package hiiragi283.ragium.client.integration.jei
 
+import hiiragi283.lib.integration.jei.HTJeiRecipeHolder
 import hiiragi283.lib.integration.jei.HTRecipeHolderType
 import hiiragi283.lib.integration.jei.IRecipeType
-import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
@@ -22,7 +22,7 @@ import hiiragi283.ragium.api.recipe.RTWashingRecipe
 data object RagiumJeiRecipeTypes {
     @JvmStatic
     private inline fun <reified T : Any> create(name: String): HTRecipeHolderType<T> =
-        IRecipeType<HTRecipeHolder<T>>(RagiumAPI.id(name))
+        IRecipeType<HTJeiRecipeHolder<T>>(RagiumAPI.id(name))
 
     // Mechanical
     @JvmField

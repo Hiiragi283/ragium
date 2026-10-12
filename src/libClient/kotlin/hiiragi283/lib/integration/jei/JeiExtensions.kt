@@ -1,6 +1,5 @@
 package hiiragi283.lib.integration.jei
 
-import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.ingredient.HTStackPreview
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -18,7 +17,7 @@ import net.neoforged.neoforge.fluids.FluidStack
  * @author Hiiragi Tsubasa
  * @since 26.1.8
  */
-typealias HTRecipeHolderType<T> = IRecipeType<HTRecipeHolder<T>>
+typealias HTRecipeHolderType<T> = IRecipeType<HTJeiRecipeHolder<T>>
 
 /**
  * 新しい[IRecipeType]のインスタンスを作成します。

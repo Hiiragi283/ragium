@@ -33,7 +33,9 @@ interface RTCentrifugingRecipe :
     HTProgressRecipe<SingleRecipeInput> {
 
     @JvmRecord
-    data class Output(val items: List<ItemStack>, val fluid: FluidStack)
+    data class Output(val firstItem: ItemStack, val secondItem: ItemStack, val fluid: FluidStack) {
+        constructor(item: ItemStack, fluid: FluidStack) : this(item, ItemStack.EMPTY, fluid)
+    }
 
     @JvmRecord
     data class Result(val items: Nel<HTItemResult>, val fluid: Optional<HTFluidResult>) {
@@ -42,7 +44,7 @@ interface RTCentrifugingRecipe :
             val CODEC: Codec<Result> = HTCodecs.record { instance ->
                 instance.group(
                     HTItemResult.CODEC
-                        .compactNelFieldOf(HTConstants.ITEM, HTConstants.ITEMS, 4)
+                        .compactNelFieldOf(HTConstants.ITEM, HTConstants.ITEMS, 2)
                         .forGetter(Result::items),
                     HTFluidResult.CODEC.optionalFieldOf(HTConstants.FLUID).forGetter(Result::fluid)
                 ).apply(instance, ::Result)
@@ -58,7 +60,11 @@ interface RTCentrifugingRecipe :
             )
         }
 
-        fun create(): Output = Output(items.map(HTItemResult::create), fluid.createOrEmpty())
+        fun create(): Output = Output(
+            items.head.create(),
+            items.getOrNull(1).createOrEmpty(),
+            fluid.createOrEmpty()
+        )
     }
 
     @JvmRecord

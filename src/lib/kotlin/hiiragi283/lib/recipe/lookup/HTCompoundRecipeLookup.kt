@@ -55,15 +55,8 @@ class HTCompoundRecipeLookup<out RECIPE : Any> private constructor(private val i
     /**
      * レシピの一覧を追加します。
      */
-    fun addRecipes(vararg recipes: Pair<RecipeKey, @UnsafeVariance RECIPE>) {
-        addSubLookup { recipes.asSequence().map(::HTRecipeHolder) }
-    }
-
-    /**
-     * レシピの一覧を追加します。
-     */
-    fun addRecipes(recipes: Map<RecipeKey, @UnsafeVariance RECIPE>) {
-        addSubLookup { recipes.asSequence().map(::HTRecipeHolder) }
+    fun addRecipes(recipes: Map<Identifier, @UnsafeVariance RECIPE>) {
+        addSubLookup { recipes.asSequence().map { (id: Identifier, recipe: RECIPE) -> HTRecipeHolder(id, recipe) } }
     }
 
     /**

@@ -2,7 +2,6 @@ package hiiragi283.lib.integration.jei
 
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.item.toTemplateOrNull
-import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.display.SlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
@@ -134,10 +133,10 @@ data object HTJeiRecipeHelper {
     @JvmStatic
     inline fun <RECIPE_A : Any, reified RECIPE_B : RECIPE_A> addRecipes(
         registration: IRecipeRegistration,
-        recipeType: IRecipeType<HTRecipeHolder<RECIPE_B>>,
+        recipeType: IRecipeType<HTJeiRecipeHolder<RECIPE_B>>,
         lookup: HTRecipeLookup<RECIPE_A>
     ) {
-        val recipes: List<HTRecipeHolder<RECIPE_B>> = getRecipes(lookup)
+        val recipes: List<HTJeiRecipeHolder<RECIPE_B>> = getRecipes(lookup)
         if (recipes.isEmpty()) return
         registration.addRecipes(recipeType, recipes)
     }
@@ -147,11 +146,12 @@ data object HTJeiRecipeHelper {
      * @param RECIPE_A [lookup]が提供するレシピのクラス
      * @param RECIPE_B 変換後のレシピのクラス
      * @param lookup レシピの提供元
-     * @return [RECIPE_B]に対する[HTRecipeHolder]の一覧
+     * @return [RECIPE_B]に対する[HTJeiRecipeHolder]の一覧
      */
     @JvmStatic
     inline fun <RECIPE_A : Any, reified RECIPE_B : RECIPE_A> getRecipes(
         lookup: HTRecipeLookup<RECIPE_A>
-    ): List<HTRecipeHolder<RECIPE_B>> = lookup.getAllRecipes(HTPhysicalSideHelper.createLookupContext())
-        .mapNotNull { holder: HTRecipeHolder<RECIPE_A> -> holder.castAs<RECIPE_B>() }.toList()
+    ): List<HTJeiRecipeHolder<RECIPE_B>> = lookup.getAllRecipes(HTPhysicalSideHelper.createLookupContext())
+        .map(::HTJeiRecipeHolder)
+        .mapNotNull { holder: HTJeiRecipeHolder<RECIPE_A> -> holder.castAs<RECIPE_B>() }.toList()
 }

@@ -27,7 +27,7 @@ data class RTPotionBottleCentrifugingRecipe(val bottleType: HTBottleType, overri
         bottleType.filledItem.isOf(input) && HTPotionHelper.hasAnyEffect(input)
 
     override fun apply(input: ItemInstance): RTCentrifugingRecipe.Output = RTCentrifugingRecipe.Output(
-        bottleType.emptyItem.asStack().fold(::listOf) { listOf() },
+        bottleType.emptyItem.asStackOrEmpty(),
         HTPotionHelper.createFluid(input, HTPotionHelper.BOTTLE_AMOUNT)
             .fold(FluidStackTemplate::create) { FluidStack.EMPTY }
     )

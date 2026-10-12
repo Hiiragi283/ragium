@@ -29,7 +29,7 @@ class RTCentrifugingRecipeBuilder : HTProgressRecipeBuilder<RTCentrifugingRecipe
     )
 
     // Ingredient
-    @PublishedApi internal var ingredient: HTItemIngredient by HTDelegates.onceInitialize()
+    var ingredient: HTItemIngredient by HTDelegates.onceInitialize()
 
     operator fun HTItemIngredient.unaryPlus() {
         ingredient = this

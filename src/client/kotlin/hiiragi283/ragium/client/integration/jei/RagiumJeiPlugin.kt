@@ -1,9 +1,11 @@
 package hiiragi283.ragium.client.integration.jei
 
 import hiiragi283.lib.HTPhysicalSideHelper
+import hiiragi283.lib.fluid.HTFlowingFluidHelper
 import hiiragi283.lib.integration.jei.HTJeiDrawables
 import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
+import hiiragi283.lib.integration.jei.HTJeiRecipeHolder
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
@@ -14,11 +16,14 @@ import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
+import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.registry.asHolderSequence
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
+import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
+import hiiragi283.ragium.api.recipe.RTFillingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
@@ -37,7 +42,10 @@ import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
+import mezz.jei.api.helpers.IJeiHelpers
 import mezz.jei.api.helpers.IPlatformFluidHelper
+import mezz.jei.api.ingredients.IIngredientHelper
+import mezz.jei.api.ingredients.subtypes.UidContext
 import mezz.jei.api.neoforge.NeoForgeTypes
 import mezz.jei.api.registration.IExtraIngredientRegistration
 import mezz.jei.api.registration.IGuiHandlerRegistration
@@ -49,7 +57,9 @@ import mezz.jei.api.registration.ISubtypeRegistration
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.fluids.FluidStack
@@ -57,6 +67,11 @@ import net.neoforged.neoforge.fluids.FluidStack
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     companion object {
+        @JvmStatic
+        private fun listFluidStacks(helper: IJeiHelpers): Iterable<FluidStack> = helper.ingredientManager
+            .getAllIngredients(NeoForgeTypes.FLUID_STACK)
+            .filter(HTFlowingFluidHelper::isSource)
+
         @JvmStatic
         private fun listItems(): Sequence<Holder.Reference<Item>> = HTPhysicalSideHelper
             .filteredLookup(BuiltInRegistries.ITEM)
@@ -223,6 +238,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun registerDynamicRecipes(registration: IRecipeRegistration) {
+        val fluidHelper: IIngredientHelper<FluidStack> =
+            registration.ingredientManager.getIngredientHelper(NeoForgeTypes.FLUID_STACK)
         // Mechanical
         registration.addRecipes(
             RagiumJeiRecipeTypes.CENTRIFUGING,
@@ -243,7 +260,29 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                                 .withPrefix("potion_bottle/${bottleType.serializedName}/")
                         }.buildSynthetic()
                     }
-                }.toList()
+                }.map(::HTJeiRecipeHolder)
+                .toList()
+        )
+        registration.addRecipes(
+            RagiumJeiRecipeTypes.CENTRIFUGING,
+            listFluidStacks(registration.jeiHelpers)
+                .mapNotNull { fluid: FluidStack ->
+                    val filledBucket: ItemStack = fluid.fluidType.getBucket(fluid)
+                    val remainder: HTItemResult =
+                        filledBucket.craftingRemainder?.let(::HTItemResult) ?: return@mapNotNull null
+                    RagiumRecipeBuilders.centrifuging {
+                        ingredient = HTJeiRecipeHelper.fakeItem(filledBucket)
+                        +remainder
+                        fluidResult { from(fluid) }
+                    }.buildSynthetic { id: Identifier, recipe: RTCentrifugingRecipe.Basic ->
+                        // 液体ポーションなどのバリエーションを持つ液体はIDなしで登録する
+                        if (fluidHelper.getUid(fluid, UidContext.Recipe) is List<*>) {
+                            HTJeiRecipeHolder(recipe)
+                        } else {
+                            HTJeiRecipeHolder(id, recipe)
+                        }
+                    }
+                }
         )
         registration.addRecipes(
             RagiumJeiRecipeTypes.FILLING,
@@ -268,7 +307,28 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                                 .withPrefix("potion_bottle/${bottleType.serializedName}/")
                         }.buildSynthetic()
                     }
-                }.toList()
+                }.map(::HTJeiRecipeHolder)
+                .toList()
+        )
+        registration.addRecipes(
+            RagiumJeiRecipeTypes.FILLING,
+            listFluidStacks(registration.jeiHelpers)
+                .mapNotNull { fluid: FluidStack ->
+                    val filledBucket: ItemStack = fluid.fluidType.getBucket(fluid)
+                    val remainder: ItemStack = filledBucket.craftingRemainder?.create() ?: return@mapNotNull null
+                    RagiumRecipeBuilders.filling {
+                        itemIngredient = HTJeiRecipeHelper.fakeItem(remainder)
+                        fluidIngredient = HTJeiRecipeHelper.fakeFluid(fluid)
+                        result { from(filledBucket) }
+                    }.buildSynthetic { id: Identifier, recipe: RTFillingRecipe ->
+                        // 液体ポーションなどのバリエーションを持つ液体はIDなしで登録する
+                        if (fluidHelper.getUid(fluid, UidContext.Recipe) is List<*>) {
+                            HTJeiRecipeHolder(recipe)
+                        } else {
+                            HTJeiRecipeHolder(id, recipe)
+                        }
+                    }
+                }
         )
         // Chemical
     }
