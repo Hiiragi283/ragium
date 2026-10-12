@@ -121,6 +121,8 @@
   "block.ragium.white_dye": "白色の染料",
   "block.ragium.wood_tar": "木タール",
   "block.ragium.yellow_dye": "黄色の染料",
+  "config.jade.plugin_ragium.machine_owner": "Machine Owner",
+  "config.jade.plugin_ragium.machine_upgrade": "Machine Upgrades",
   "config.ragium.energy_capacity": "エネルギー容量",
   "config.ragium.energy_rate": "エネルギー使用速度",
   "constants.ragium.empty": "空",

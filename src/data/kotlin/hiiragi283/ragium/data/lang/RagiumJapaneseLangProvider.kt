@@ -8,6 +8,8 @@ import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.client.integration.jade.HTMachineOwnerProvider
+import hiiragi283.ragium.client.integration.jade.HTMachineUpgradeProvider
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.effect.RagiumMobEffects
@@ -242,6 +244,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.TOOLTIPS_UPGRADE_CAPACITY, $$"エネルギー容量: %1$s")
 
         addDataTranslations()
+
+        // Jade Config
+        addJadeConfig(HTMachineOwnerProvider.ID, "Machine Owner")
+        addJadeConfig(HTMachineUpgradeProvider.ID, "Machine Upgrades")
     }
 
     private fun addDataTranslations() {

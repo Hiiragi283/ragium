@@ -37,7 +37,6 @@ common-compile = []
 common-runtime = [
     "ae2",
     "curios",
-    "jade",
 ]
 
 [plugins]

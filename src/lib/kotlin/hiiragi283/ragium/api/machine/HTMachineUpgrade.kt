@@ -67,6 +67,10 @@ data class HTMachineUpgrade(
         flag: TooltipFlag,
         components: DataComponentGetter
     ) {
+        addToTooltip(consumer)
+    }
+
+    fun addToTooltip(consumer: Consumer<Component>) {
         setOf(
             this.speed to RagiumTranslation.TOOLTIPS_UPGRADE_SPEED,
             this.efficiency to RagiumTranslation.TOOLTIPS_UPGRADE_EFFICIENCY,

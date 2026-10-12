@@ -54,6 +54,10 @@ class HTMachineUpgradeList private constructor(private val stacks: List<ItemStac
         combinedUpgrade.addToTooltip(context, consumer, flag, components)
     }
 
+    fun addToTooltip(consumer: Consumer<Component>) {
+        combinedUpgrade.addToTooltip(consumer)
+    }
+
     @Suppress("DEPRECATION")
     override fun equals(other: Any?): Boolean =
         other is HTMachineUpgradeList && ItemStack.listMatches(this.stacks, other.stacks)

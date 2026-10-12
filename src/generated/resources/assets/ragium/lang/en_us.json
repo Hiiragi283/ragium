@@ -121,6 +121,8 @@
   "block.ragium.white_dye": "White Dye",
   "block.ragium.wood_tar": "Wood Tar",
   "block.ragium.yellow_dye": "Yellow Dye",
+  "config.jade.plugin_ragium.machine_owner": "機械の所有者",
+  "config.jade.plugin_ragium.machine_upgrade": "機械のアップグレード",
   "config.ragium.energy_capacity": "Energy Capacity",
   "config.ragium.energy_rate": "Energy Rate",
   "constants.ragium.empty": "Empty",
