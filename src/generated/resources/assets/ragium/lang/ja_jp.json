@@ -17,6 +17,8 @@
   "advancement.ragium.root.title": "ラギウム",
   "advancement.ragium.sooty_iron.desc": "煤鉄をつくる",
   "advancement.ragium.sooty_iron.title": "黒鉄（くろがね）を手に入れる",
+  "advancement.ragium.upgrade_station.desc": "強化ステーションを手に入れる",
+  "advancement.ragium.upgrade_station.title": "ビルドアップ",
   "block.ragium.alcohol": "アルコール",
   "block.ragium.aldehyde": "アルデヒド",
   "block.ragium.alloy_smelter": "合金炉",

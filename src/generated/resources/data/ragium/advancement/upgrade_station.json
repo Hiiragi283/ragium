@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:sooty_iron",
+  "criteria": {
+    "has_upgrade_station": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:upgrade_station"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.upgrade_station.desc"
+    },
+    "icon": {
+      "id": "ragium:upgrade_station"
+    },
+    "title": {
+      "translate": "advancement.ragium.upgrade_station.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_upgrade_station"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

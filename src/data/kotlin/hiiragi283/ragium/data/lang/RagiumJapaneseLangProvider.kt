@@ -31,6 +31,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addAdvancement(RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS, "機械・加工・機械", "マシンケーシング（機械加工）を作る")
         addAdvancement(RagiumAdvancementKeys.ASSEMBLER, "ラヴェ（ン）ジャーズ，アッセンブル！", "組立機を手に入れる")
         addAdvancement(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "粉砕機を手に入れる")
+        addAdvancement(RagiumAdvancementKeys.UPGRADE_STATION, "ビルドアップ", "強化ステーションを手に入れる")
 
         addAdvancement(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "マシンケーシング（熱）を作る")
         addAdvancement(RagiumAdvancementKeys.BLACK_STEEL, "黒い咆哮", "黒鋼をつくる")

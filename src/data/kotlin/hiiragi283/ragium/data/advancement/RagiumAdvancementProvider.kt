@@ -39,10 +39,18 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         }.save(exporter)
     }
 
-    private fun createSimple(key: AdvancementKey, parentKey: AdvancementKey, item: HTSimpleDeferredBlockAndItem) {
+    private fun createSimple(
+        key: AdvancementKey,
+        parentKey: AdvancementKey,
+        item: HTSimpleDeferredBlockAndItem,
+        type: AdvancementType = AdvancementType.GOAL
+    ) {
         HTAdvancementBuilder.create(key) {
             +parentKey
-            display { +item }
+            display {
+                +item
+                this.type = type
+            }
             inventory(getHasName(item)) { predicate { items { +item } } }
         }.save(exporter)
     }
@@ -96,6 +104,12 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             RagiumAdvancementKeys.CRUSHER,
             RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
             RagiumBlocks.CRUSHER
+        )
+        createSimple(
+            RagiumAdvancementKeys.UPGRADE_STATION,
+            RagiumAdvancementKeys.SOOTY_IRON,
+            RagiumBlocks.UPGRADE_STATION,
+            AdvancementType.GOAL
         )
         // Heat
         createSimple(

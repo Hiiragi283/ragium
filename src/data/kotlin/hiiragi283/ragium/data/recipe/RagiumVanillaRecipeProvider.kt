@@ -560,6 +560,15 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     //    Upgrade    //
 
     private fun upgrade() {
+        // Upgrade Station
+        VanillaRecipeBuilders.shaped {
+            cross8()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
+            define('B') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.IRON) }
+            define('C') { +holderSet(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES) }
+            result { +RagiumBlocks.UPGRADE_STATION }
+        }.save(exporter)
+
         // Basic
         VanillaRecipeBuilders.shaped {
             crossLayered()

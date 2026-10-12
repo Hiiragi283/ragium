@@ -35,6 +35,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         )
         addAdvancement(RagiumAdvancementKeys.ASSEMBLER, "Rava(n)gers, assemble!", "Acquire Assembler")
         addAdvancement(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
+        addAdvancement(RagiumAdvancementKeys.UPGRADE_STATION, "Build Up", "Acquire Upgrade Station")
 
         addAdvancement(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "Craft a Machine Casing (Heat)")
         addAdvancement(RagiumAdvancementKeys.BLACK_STEEL, "Black Roaring", "Craft a Black Steel Ingot")
