@@ -8,6 +8,7 @@ import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
@@ -21,7 +22,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
@@ -30,7 +30,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTItemToItemBlockEntity(
     type: BlockEntityType<*>,
-    private val cache: HTRecipeCache<SingleRecipeInput, HTItemToItemRecipe>,
+    private val cache: HTRecipeCache<HTRecipeInput, HTItemToItemRecipe>,
     pos: BlockPos,
     state: BlockState
 ) : HTProcessorBlockEntity.Energized(type, pos, state) {
@@ -53,18 +53,18 @@ abstract class HTItemToItemBlockEntity(
 
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<SingleRecipeInput, ItemStack, HTItemToItemRecipe>() {
+        recipeHandler = object : EnergizedHandler<HTRecipeInput, ItemStack, HTItemToItemRecipe>() {
             private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTItemToItemBlockEntity.inputSlot) }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTItemToItemBlockEntity.outputSlot)
             }
 
-            override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStoredInput())
+            override fun createInput(): HTRecipeInput = HTRecipeInput(inputSlot.getStoredInput(), customKeys)
 
-            override fun findRecipe(level: ServerLevel, input: SingleRecipeInput): HTItemToItemRecipe? =
+            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): HTItemToItemRecipe? =
                 cache.findFirstRecipe(input, level)
 
-            override fun canComplete(recipe: HTItemToItemRecipe, input: SingleRecipeInput, output: ItemStack): Boolean =
+            override fun canComplete(recipe: HTItemToItemRecipe, input: HTRecipeInput, output: ItemStack): Boolean =
                 useTransaction { transaction: Transaction ->
                     val inputConsume: ItemInstance = recipe.getMatchingStack(input)
                     when {
@@ -73,7 +73,7 @@ abstract class HTItemToItemBlockEntity(
                     }
                 }
 
-            override fun onComplete(recipe: HTItemToItemRecipe, input: SingleRecipeInput, output: ItemStack) {
+            override fun onComplete(recipe: HTItemToItemRecipe, input: HTRecipeInput, output: ItemStack) {
                 useTransaction { transaction: Transaction ->
                     inputSlot.use(recipe.getMatchingStack(input), transaction)
                     outputSlot.take(output, transaction)

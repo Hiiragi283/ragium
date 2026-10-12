@@ -4,13 +4,13 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.builder.HTDoubleItemToItemRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeInput
 
 /**
  * 2種類のアイテムから1種類のアイテムを作成するレシピを表すインターフェースです。
@@ -20,7 +20,7 @@ import net.minecraft.world.item.crafting.RecipeInput
 interface HTDoubleItemToItemRecipe :
     HTRecipePredicates.DoubleItem,
     HTRecipeFactories.DoubleItem<ItemStack>,
-    HTProgressRecipe<RecipeInput> {
+    HTProgressRecipe<HTRecipeInput> {
 
     /**
      * @author Hiiragi Tsubasa
@@ -32,7 +32,7 @@ interface HTDoubleItemToItemRecipe :
         val result: HTItemResult,
         override val progressData: HTProgressData
     ) : HTDoubleItemToItemRecipe,
-        HTProgressRecipe.Simple<RecipeInput> {
+        HTProgressRecipe.Simple<HTRecipeInput> {
         companion object {
             @JvmStatic
             fun <RECIPE : Basic> codec(factory: HTDoubleItemToItemRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> =

@@ -4,8 +4,7 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.recipe.HTSerializableRecipe
-import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
-import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
+import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTRecipeFactories
@@ -13,8 +12,7 @@ import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.ingredient.testOrEmpty
-import hiiragi283.lib.recipe.input.HTFluidRecipeInput
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -27,7 +25,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidInstance
-import net.neoforged.neoforge.fluids.FluidStack
 
 @JvmRecord
 data class RTMixingRecipe(
@@ -37,8 +34,8 @@ data class RTMixingRecipe(
     override val progressData: HTProgressData
 ) : HTRecipePredicates.DoubleItemAndFluid,
     HTRecipeFactories.DoubleItemAndFluid<HTItemAndFluidStack>,
-    HTProgressRecipe.Simple<HTFluidRecipeInput>,
-    HTSerializableRecipe<HTFluidRecipeInput> {
+    HTProgressRecipe.Simple<HTRecipeInput>,
+    HTSerializableRecipe<HTRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTMixingRecipe> = HTCodecs.recordMap { instance ->
@@ -80,45 +77,29 @@ data class RTMixingRecipe(
         progressData
     )
 
-    fun toItemAndFluidToFluid(): HTItemAndFluidToFluidRecipe? = when {
+    fun toItemAndFluidToFluid(): HTItemAndFluidToRecipe.BasicFluid? = when {
         itemIngredients.size > 1 -> null
 
-        !result.content.isRight() -> null
-
-        else -> object : HTItemAndFluidToFluidRecipe {
-            override fun test(first: ItemInstance, second: FluidInstance): Boolean =
-                itemIngredients.head.test(first) && fluidIngredient.test(second)
-
-            override fun apply(first: ItemInstance, second: FluidInstance): FluidStack = result.create().fluid
-
-            override fun getMatchingStack(
-                first: ItemInstance,
-                second: FluidInstance
-            ): Pair<ItemInstance, FluidInstance> =
-                itemIngredients.head.getMatchingStack(first) to fluidIngredient.getMatchingStack(second)
-
-            override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData = progressData
+        else -> this.result.content.getRight()?.let {
+            HTItemAndFluidToRecipe.BasicFluid(
+                this.itemIngredients.head,
+                this.fluidIngredient,
+                it,
+                this.progressData
+            )
         }
     }
 
-    fun toItemAndFluidToItem(): HTItemAndFluidToItemRecipe? = when {
+    fun toItemAndFluidToItem(): HTItemAndFluidToRecipe.BasicItem? = when {
         itemIngredients.size > 1 -> null
 
-        !result.content.isLeft() -> null
-
-        else -> object : HTItemAndFluidToItemRecipe {
-            override fun test(first: ItemInstance, second: FluidInstance): Boolean =
-                itemIngredients.head.test(first) && fluidIngredient.test(second)
-
-            override fun apply(first: ItemInstance, second: FluidInstance): ItemStack = result.create().item
-
-            override fun getMatchingStack(
-                first: ItemInstance,
-                second: FluidInstance
-            ): Pair<ItemInstance, FluidInstance> =
-                itemIngredients.head.getMatchingStack(first) to fluidIngredient.getMatchingStack(second)
-
-            override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData = progressData
+        else -> this.result.content.getLeft()?.let {
+            HTItemAndFluidToRecipe.BasicItem(
+                this.itemIngredients.head,
+                this.fluidIngredient,
+                it,
+                this.progressData
+            )
         }
     }
 
@@ -143,28 +124,4 @@ data class RTMixingRecipe(
     override fun getSerializer(): RecipeSerializer<RTMixingRecipe> = RagiumRecipeSerializers.MIXING
 
     override fun getType(): RecipeType<RTMixingRecipe> = RagiumRecipeTypes.MIXING
-
-    @JvmRecord
-    data class Input(val firstItem: ItemStack, val secondItem: ItemStack, val fluid: FluidStack) : HTFluidRecipeInput {
-        override val fluidSize: Int
-            get() = 1
-
-        override fun getFluid(index: Int): FluidStack = when (index) {
-            0 -> fluid
-            else -> error("No fluid for index: $index")
-        }
-
-        override val isFluidEmpty: Boolean
-            get() = fluid.isEmpty
-
-        override fun asFluidList(): List<FluidStack> = listOf(fluid)
-
-        override fun getItem(index: Int): ItemStack = when (index) {
-            0 -> firstItem
-            1 -> secondItem
-            else -> error("No item for index: $index")
-        }
-
-        override fun size(): Int = 2
-    }
 }

@@ -9,7 +9,7 @@ import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -30,8 +30,8 @@ data class RTWashingRecipe(
     val results: Nel<HTItemResult>,
     override val progressData: HTProgressData
 ) : HTItemAndFluidToRecipe<Pair<ItemStack, ItemStack>>,
-    HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
-    HTSerializableRecipe<HTItemAndFluidRecipeInput> {
+    HTProgressRecipe.Simple<HTRecipeInput>,
+    HTSerializableRecipe<HTRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTWashingRecipe> = HTCodecs.recordMap { instance ->

@@ -11,7 +11,7 @@ import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import hiiragi283.lib.recipe.ingredient.testOrEmpty
-import hiiragi283.lib.recipe.input.HTFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -32,8 +32,8 @@ data class RTReactingRecipe(
     override val progressData: HTProgressData
 ) : HTRecipePredicates.ItemAndDoubleFluid,
     HTRecipeFactories.ItemAndDoubleFluid<HTItemAndFluidStack>,
-    HTProgressRecipe.Simple<HTFluidRecipeInput>,
-    HTSerializableRecipe<HTFluidRecipeInput> {
+    HTProgressRecipe.Simple<HTRecipeInput>,
+    HTSerializableRecipe<HTRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTReactingRecipe> = HTCodecs.recordMap { instance ->

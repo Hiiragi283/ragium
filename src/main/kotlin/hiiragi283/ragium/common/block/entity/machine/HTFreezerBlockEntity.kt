@@ -8,7 +8,7 @@ import hiiragi283.lib.recipe.handler.HTFluidInputTank
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -35,7 +35,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FREEZER.get(), pos, state) {
-    private val cache: HTRecipeCache<HTItemAndFluidRecipeInput, RTFreezingRecipe> =
+    private val cache: HTRecipeCache<HTRecipeInput, RTFreezingRecipe> =
         HTRecipeCache(RagiumRecipeLookups.FREEZING)
 
     override fun writeValue(output: ValueOutput) {
@@ -50,7 +50,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<HTItemAndFluidRecipeInput, ItemStack, RTFreezingRecipe>() {
+        recipeHandler = object : EnergizedHandler<HTRecipeInput, ItemStack, RTFreezingRecipe>() {
             private val inputTank: HTFluidInputTank by lazy { HTFluidInputTank(this@HTFreezerBlockEntity.inputTank) }
             private val catalystSlot: HTItemInputSlot by lazy {
                 HTItemInputSlot(this@HTFreezerBlockEntity.catalystSlot)
@@ -59,25 +59,22 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
                 HTOutputSlotHelper.forItem(this@HTFreezerBlockEntity.outputSlot)
             }
 
-            override fun createInput(): HTItemAndFluidRecipeInput =
-                HTItemAndFluidRecipeInput(catalystSlot.getStoredInput(), inputTank.getStoredInput())
+            override fun createInput(): HTRecipeInput =
+                HTRecipeInput(catalystSlot.getStoredInput(), inputTank.getStoredInput(), customKeys)
 
-            override fun findRecipe(level: ServerLevel, input: HTItemAndFluidRecipeInput): RTFreezingRecipe? =
+            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): RTFreezingRecipe? =
                 cache.findFirstRecipe(input, level)
 
-            override fun canComplete(
-                recipe: RTFreezingRecipe,
-                input: HTItemAndFluidRecipeInput,
-                output: ItemStack
-            ): Boolean = useTransaction { transaction: Transaction ->
-                val (_, inputConsume: FluidInstance) = recipe.getMatchingStack(input)
-                when {
-                    inputTank.use(inputConsume, transaction).failed -> false
-                    else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+            override fun canComplete(recipe: RTFreezingRecipe, input: HTRecipeInput, output: ItemStack): Boolean =
+                useTransaction { transaction: Transaction ->
+                    val (_, inputConsume: FluidInstance) = recipe.getMatchingStack(input)
+                    when {
+                        inputTank.use(inputConsume, transaction).failed -> false
+                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+                    }
                 }
-            }
 
-            override fun onComplete(recipe: RTFreezingRecipe, input: HTItemAndFluidRecipeInput, output: ItemStack) {
+            override fun onComplete(recipe: RTFreezingRecipe, input: HTRecipeInput, output: ItemStack) {
                 useTransaction { transaction: Transaction ->
                     val (_, fluidInput: FluidInstance) = recipe.getMatchingStack(input)
                     inputTank.use(fluidInput, transaction)

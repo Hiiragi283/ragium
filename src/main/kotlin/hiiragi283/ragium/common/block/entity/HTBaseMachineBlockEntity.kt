@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.machine.HTMachineUpgrade
+import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.HTMachineBlock
 import net.minecraft.core.BlockPos
@@ -23,6 +25,16 @@ abstract class HTBaseMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
     fun isActive(state: BlockState): Boolean = state.getOptionalValue(HTMachineBlock.IS_ACTIVE).orElseGet { false }
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {}
+
+    /**
+     * @since 26.1.9
+     */
+    val combinedUpgrade: HTMachineUpgrade get() = HTMachineUpgradeHelper.getCombinedUpgrade(this.components())
+
+    /**
+     * @since 26.1.9
+     */
+    val customKeys: Set<String> = combinedUpgrade.customKeys
 
     //    Ticking    //
 

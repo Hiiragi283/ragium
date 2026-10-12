@@ -8,7 +8,7 @@ import hiiragi283.lib.recipe.handler.HTFluidInputTank
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
-import hiiragi283.lib.recipe.input.HTFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
@@ -39,7 +39,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTBlenderBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.BLENDER.get(), pos, state) {
-    private val cache: HTRecipeCache<HTFluidRecipeInput, RTMixingRecipe> =
+    private val cache: HTRecipeCache<HTRecipeInput, RTMixingRecipe> =
         HTRecipeCache(RagiumRecipeLookups.MIXING)
 
     override fun writeValue(output: ValueOutput) {
@@ -54,7 +54,7 @@ class HTBlenderBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<HTFluidRecipeInput, HTItemAndFluidStack, RTMixingRecipe>() {
+        recipeHandler = object : EnergizedHandler<HTRecipeInput, HTItemAndFluidStack, RTMixingRecipe>() {
             private val topInputSlot: HTItemInputSlot by lazy {
                 HTItemInputSlot(this@HTBlenderBlockEntity.topInputSlot)
             }
@@ -71,18 +71,21 @@ class HTBlenderBlockEntity(pos: BlockPos, state: BlockState) :
                 HTOutputSlotHelper.forFluid(this@HTBlenderBlockEntity.outputTank)
             }
 
-            override fun createInput(): HTFluidRecipeInput = RTMixingRecipe.Input(
-                topInputSlot.getStoredInput(),
-                downInputSlot.getStoredInput(),
-                inputTank.getStoredInput()
+            override fun createInput(): HTRecipeInput = HTRecipeInput(
+                inputTank.getStoredInput(),
+                listOf(
+                    topInputSlot.getStoredInput(),
+                    downInputSlot.getStoredInput()
+                ),
+                customKeys
             )
 
-            override fun findRecipe(level: ServerLevel, input: HTFluidRecipeInput): RTMixingRecipe? =
+            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): RTMixingRecipe? =
                 cache.findFirstRecipe(input, level)
 
             override fun canComplete(
                 recipe: RTMixingRecipe,
-                input: HTFluidRecipeInput,
+                input: HTRecipeInput,
                 output: HTItemAndFluidStack
             ): Boolean = useTransaction { transaction: Transaction ->
                 val (first: ItemInstance, second: ItemInstance, third: FluidInstance) = recipe.getMatchingStack(input)
@@ -96,7 +99,7 @@ class HTBlenderBlockEntity(pos: BlockPos, state: BlockState) :
                 }
             }
 
-            override fun onComplete(recipe: RTMixingRecipe, input: HTFluidRecipeInput, output: HTItemAndFluidStack) {
+            override fun onComplete(recipe: RTMixingRecipe, input: HTRecipeInput, output: HTItemAndFluidStack) {
                 useTransaction { transaction: Transaction ->
                     val (first: ItemInstance, second: ItemInstance, third: FluidInstance) = recipe.getMatchingStack(
                         input

@@ -10,6 +10,7 @@ import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTRecipeFactories
 import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.createOrEmpty
@@ -23,14 +24,13 @@ import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.Optional
 
 interface RTCentrifugingRecipe :
     HTRecipePredicates.SingleItem,
     HTRecipeFactories.SingleItemTo<RTCentrifugingRecipe.Output>,
-    HTProgressRecipe<SingleRecipeInput> {
+    HTProgressRecipe<HTRecipeInput> {
 
     @JvmRecord
     data class Output(val firstItem: ItemStack, val secondItem: ItemStack, val fluid: FluidStack) {
@@ -70,8 +70,8 @@ interface RTCentrifugingRecipe :
     @JvmRecord
     data class Basic(val ingredient: HTItemIngredient, val result: Result, override val progressData: HTProgressData) :
         RTCentrifugingRecipe,
-        HTProgressRecipe.Simple<SingleRecipeInput>,
-        HTSerializableRecipe<SingleRecipeInput> {
+        HTProgressRecipe.Simple<HTRecipeInput>,
+        HTSerializableRecipe<HTRecipeInput> {
         companion object {
             @JvmField
             val CODEC: MapCodec<Basic> = HTCodecs.recordMap { instance ->

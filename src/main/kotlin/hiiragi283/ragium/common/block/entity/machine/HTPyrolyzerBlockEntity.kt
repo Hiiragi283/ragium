@@ -8,6 +8,7 @@ import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
@@ -27,7 +28,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
@@ -36,7 +36,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.PYROLYZER.get(), pos, state) {
-    private val cache: HTRecipeCache<SingleRecipeInput, HTItemToItemAndFluidRecipe> =
+    private val cache: HTRecipeCache<HTRecipeInput, HTItemToItemAndFluidRecipe> =
         HTRecipeCache(RagiumRecipeLookups.PYROLYZING)
 
     override fun writeValue(output: ValueOutput) {
@@ -51,11 +51,7 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<
-            SingleRecipeInput,
-            HTItemAndFluidStack,
-            HTItemToItemAndFluidRecipe
-            >() {
+        recipeHandler = object : EnergizedHandler<HTRecipeInput, HTItemAndFluidStack, HTItemToItemAndFluidRecipe>() {
             private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTPyrolyzerBlockEntity.inputSlot) }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTPyrolyzerBlockEntity.outputSlot)
@@ -64,14 +60,14 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
                 HTOutputSlotHelper.forFluid(this@HTPyrolyzerBlockEntity.outputTank)
             }
 
-            override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStoredInput())
+            override fun createInput(): HTRecipeInput = HTRecipeInput(inputSlot.getStoredInput(), customKeys)
 
-            override fun findRecipe(level: ServerLevel, input: SingleRecipeInput): HTItemToItemAndFluidRecipe? =
+            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): HTItemToItemAndFluidRecipe? =
                 cache.findFirstRecipe(input, level)
 
             override fun canComplete(
                 recipe: HTItemToItemAndFluidRecipe,
-                input: SingleRecipeInput,
+                input: HTRecipeInput,
                 output: HTItemAndFluidStack
             ): Boolean = useTransaction { transaction: Transaction ->
                 val inputConsume: ItemInstance = recipe.getMatchingStack(input)
@@ -85,7 +81,7 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun onComplete(
                 recipe: HTItemToItemAndFluidRecipe,
-                input: SingleRecipeInput,
+                input: HTRecipeInput,
                 output: HTItemAndFluidStack
             ) {
                 useTransaction { transaction: Transaction ->

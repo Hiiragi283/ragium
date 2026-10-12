@@ -8,7 +8,7 @@ import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
 import hiiragi283.lib.recipe.handler.HTFluidInputTank
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
-import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
@@ -36,7 +36,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.REFINERY.get(), pos, state) {
-    private val cache: HTRecipeCache<HTSingleFluidRecipeInput, HTFluidToItemAndFluidRecipe> =
+    private val cache: HTRecipeCache<HTRecipeInput, HTFluidToItemAndFluidRecipe> =
         HTRecipeCache(RagiumRecipeLookups.REFINING)
 
     override fun writeValue(output: ValueOutput) {
@@ -52,7 +52,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
         recipeHandler = object : EnergizedHandler<
-            HTSingleFluidRecipeInput,
+            HTRecipeInput,
             HTItemAndFluidStack,
             HTFluidToItemAndFluidRecipe
             >() {
@@ -64,14 +64,14 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
                 HTOutputSlotHelper.forFluid(this@HTRefineryBlockEntity.outputTank)
             }
 
-            override fun createInput(): HTSingleFluidRecipeInput = HTSingleFluidRecipeInput(inputTank.getStoredInput())
+            override fun createInput(): HTRecipeInput = HTRecipeInput(inputTank.getStoredInput(), customKeys)
 
-            override fun findRecipe(level: ServerLevel, input: HTSingleFluidRecipeInput): HTFluidToItemAndFluidRecipe? =
+            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): HTFluidToItemAndFluidRecipe? =
                 cache.findFirstRecipe(input, level)
 
             override fun canComplete(
                 recipe: HTFluidToItemAndFluidRecipe,
-                input: HTSingleFluidRecipeInput,
+                input: HTRecipeInput,
                 output: HTItemAndFluidStack
             ): Boolean = useTransaction { transaction: Transaction ->
                 val inputConsume: FluidInstance = recipe.getMatchingStack(input)
@@ -85,7 +85,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun onComplete(
                 recipe: HTFluidToItemAndFluidRecipe,
-                input: HTSingleFluidRecipeInput,
+                input: HTRecipeInput,
                 output: HTItemAndFluidStack
             ) {
                 useTransaction { transaction: Transaction ->

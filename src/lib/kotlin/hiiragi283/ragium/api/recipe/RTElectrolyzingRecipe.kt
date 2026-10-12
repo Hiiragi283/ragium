@@ -9,7 +9,7 @@ import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTRecipeFactories
 import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -28,9 +28,9 @@ data class RTElectrolyzingRecipe(
     val results: Nel<HTFluidResult>,
     override val progressData: HTProgressData
 ) : HTRecipePredicates.SingleFluid,
-    HTRecipeFactories.SingleFluidTo<RTElectrolyzingRecipe.ElectrolyzedResult>,
-    HTProgressRecipe.Simple<HTSingleFluidRecipeInput>,
-    HTSerializableRecipe<HTSingleFluidRecipeInput> {
+    HTRecipeFactories.SingleFluidTo<RTElectrolyzingRecipe.Result>,
+    HTProgressRecipe.Simple<HTRecipeInput>,
+    HTSerializableRecipe<HTRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTElectrolyzingRecipe> = HTCodecs.recordMap { instance ->
@@ -64,7 +64,7 @@ data class RTElectrolyzingRecipe(
 
     override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
 
-    override fun apply(input: FluidInstance): ElectrolyzedResult = ElectrolyzedResult(
+    override fun apply(input: FluidInstance): Result = Result(
         results.head.create(),
         results.getOrNull(1).createOrEmpty(),
         results.getOrNull(2).createOrEmpty()
@@ -75,5 +75,5 @@ data class RTElectrolyzingRecipe(
     override fun getType(): RecipeType<RTElectrolyzingRecipe> = RagiumRecipeTypes.ELECTROLYZING
 
     @JvmRecord
-    data class ElectrolyzedResult(val right: FluidStack, val left: FluidStack, val main: FluidStack)
+    data class Result(val right: FluidStack, val left: FluidStack, val main: FluidStack)
 }

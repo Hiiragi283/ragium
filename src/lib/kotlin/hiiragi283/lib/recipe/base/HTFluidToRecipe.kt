@@ -2,7 +2,7 @@ package hiiragi283.lib.recipe.base
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
@@ -42,14 +42,14 @@ typealias HTFluidToItemAndFluidRecipe = HTFluidToRecipe<HTItemAndFluidStack>
 interface HTFluidToRecipe<OUTPUT : Any> :
     HTRecipePredicates.SingleFluid,
     HTRecipeFactories.SingleFluidTo<OUTPUT>,
-    HTProgressRecipe<HTSingleFluidRecipeInput> {
+    HTProgressRecipe<HTRecipeInput> {
 
     /**
      * @author Hiiragi Tsubasa
      * @since 26.1.5
      */
     open class BasicItem(ingredient: HTFluidIngredient, result: HTItemResult, progressData: HTProgressData) :
-        HTBasicSingleRecipe<HTSingleFluidRecipeInput, HTFluidIngredient, HTItemResult>(
+        HTBasicSingleRecipe<HTFluidIngredient, HTItemResult>(
             ingredient,
             result,
             progressData
@@ -83,7 +83,7 @@ interface HTFluidToRecipe<OUTPUT : Any> :
      * @since 26.1.5
      */
     open class BasicFluid(ingredient: HTFluidIngredient, result: HTFluidResult, progressData: HTProgressData) :
-        HTBasicSingleRecipe<HTSingleFluidRecipeInput, HTFluidIngredient, HTFluidResult>(
+        HTBasicSingleRecipe<HTFluidIngredient, HTFluidResult>(
             ingredient,
             result,
             progressData
@@ -120,7 +120,7 @@ interface HTFluidToRecipe<OUTPUT : Any> :
         ingredient: HTFluidIngredient,
         result: HTItemOrFluidResult,
         progressData: HTProgressData
-    ) : HTBasicSingleRecipe<HTSingleFluidRecipeInput, HTFluidIngredient, HTItemOrFluidResult>(
+    ) : HTBasicSingleRecipe<HTFluidIngredient, HTItemOrFluidResult>(
         ingredient,
         result,
         progressData

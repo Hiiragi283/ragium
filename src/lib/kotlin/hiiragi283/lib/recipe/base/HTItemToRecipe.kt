@@ -2,6 +2,7 @@ package hiiragi283.lib.recipe.base
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
@@ -10,7 +11,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
 
 /**
@@ -42,14 +42,14 @@ typealias HTItemToItemAndFluidRecipe = HTItemToRecipe<HTItemAndFluidStack>
 interface HTItemToRecipe<OUTPUT : Any> :
     HTRecipePredicates.SingleItem,
     HTRecipeFactories.SingleItemTo<OUTPUT>,
-    HTProgressRecipe<SingleRecipeInput> {
+    HTProgressRecipe<HTRecipeInput> {
 
     /**
      * @author Hiiragi Tsubasa
      * @since 26.1.5
      */
     open class BasicItem(ingredient: HTItemIngredient, result: HTItemResult, progressData: HTProgressData) :
-        HTBasicSingleRecipe<SingleRecipeInput, HTItemIngredient, HTItemResult>(ingredient, result, progressData),
+        HTBasicSingleRecipe<HTItemIngredient, HTItemResult>(ingredient, result, progressData),
         HTItemToRecipe<ItemStack> {
         companion object {
             @JvmStatic
@@ -78,7 +78,7 @@ interface HTItemToRecipe<OUTPUT : Any> :
      * @since 26.1.5
      */
     open class BasicFluid(ingredient: HTItemIngredient, result: HTFluidResult, progressData: HTProgressData) :
-        HTBasicSingleRecipe<SingleRecipeInput, HTItemIngredient, HTFluidResult>(
+        HTBasicSingleRecipe<HTItemIngredient, HTFluidResult>(
             ingredient,
             result,
             progressData
@@ -115,7 +115,7 @@ interface HTItemToRecipe<OUTPUT : Any> :
         ingredient: HTItemIngredient,
         result: HTItemOrFluidResult,
         progressData: HTProgressData
-    ) : HTBasicSingleRecipe<SingleRecipeInput, HTItemIngredient, HTItemOrFluidResult>(ingredient, result, progressData),
+    ) : HTBasicSingleRecipe<HTItemIngredient, HTItemOrFluidResult>(ingredient, result, progressData),
         HTItemToRecipe<HTItemAndFluidStack> {
         companion object {
             @JvmStatic
