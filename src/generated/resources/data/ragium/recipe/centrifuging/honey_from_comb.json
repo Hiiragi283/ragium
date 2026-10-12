@@ -1,17 +1,17 @@
 {
-  "type": "ragium:draining",
+  "type": "ragium:centrifuging",
   "ingredient": {
     "count": 1,
-    "items": "minecraft:wet_sponge"
+    "items": "minecraft:honeycomb"
   },
   "result": {
     "fluid": {
       "amount": 1000,
-      "id": "minecraft:water"
+      "id": "ragium:honey"
     },
     "item": {
       "count": 1,
-      "id": "minecraft:sponge"
+      "id": "ragium:beeswax"
     }
   },
   "time": 200

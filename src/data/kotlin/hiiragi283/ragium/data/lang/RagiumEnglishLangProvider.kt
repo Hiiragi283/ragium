@@ -179,10 +179,10 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         // Recipe Type
         addRecipeType(RagiumRecipeTypes.ASSEMBLING, "Assembling")
+        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "Centrifuging")
         addRecipeType(RagiumRecipeTypes.COMPRESSING, "Compressing")
         addRecipeType(RagiumRecipeTypes.CRUSHING, "Crushing")
         addRecipeType(RagiumRecipeTypes.CUTTING, "Cutting")
-        addRecipeType(RagiumRecipeTypes.DRAINING, "Draining")
         addRecipeType(RagiumRecipeTypes.FILLING, "Filling")
 
         addRecipeType(RagiumRecipeTypes.ALLOYING, "Alloying")
@@ -192,7 +192,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.REFINING, "Refining")
 
         addRecipeType(RagiumRecipeTypes.BATHING, "Chemical Bathing")
-        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "Centrifuging")
         addRecipeType(RagiumRecipeTypes.EXCHANGING, "Exchanging")
         addRecipeType(RagiumRecipeTypes.MIXING, "Mixing")
         addRecipeType(RagiumRecipeTypes.REACTING, "Chemical Reacting")

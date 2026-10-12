@@ -39,10 +39,11 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
         assembling()
+        centrifuging()
         compressing()
         crushing()
         cutting()
-        draining()
+
         filling()
     }
 
@@ -289,6 +290,33 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { items { +RagiumItems.getParts(HTMachineType.MECHANICAL) } }
             extra { items { +Items.MAGMA_BLOCK } }
             result { +RagiumItems.getParts(HTMachineType.HEAT) }
+        }.save(exporter)
+    }
+
+    private fun centrifuging() {
+        // Honey Bottle -> Glass Bottle + Honey
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { +holderSet(Tags.Items.DRINKS_HONEY) }
+            itemResult { +Items.GLASS_BOTTLE }
+            fluidResult {
+                +RagiumFluids.HONEY
+                amount = 250
+            }
+            recipeId replace id("honey_from_bottle")
+        }.save(exporter)
+        // Wet Sponge -> Sponge + Water
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.WET_SPONGE } }
+            itemResult { +Items.SPONGE }
+            fluidResult { water() }
+        }.save(exporter)
+
+        // Honeycomb -> Beeswax + Honey
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.HONEYCOMB } }
+            itemResult { +RagiumItems.BEESWAX }
+            fluidResult { +RagiumFluids.HONEY }
+            recipeId replace id("honey_from_comb")
         }.save(exporter)
     }
 
@@ -734,33 +762,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.MELON_SLICE
                 count = 9
             }
-        }.save(exporter)
-    }
-
-    private fun draining() {
-        // Honey Bottle -> Glass Bottle + Honey
-        RagiumRecipeBuilders.draining {
-            ingredient { +holderSet(Tags.Items.DRINKS_HONEY) }
-            itemResult { +Items.GLASS_BOTTLE }
-            fluidResult {
-                +RagiumFluids.HONEY
-                amount = 250
-            }
-            recipeId replace id("honey_from_bottle")
-        }.save(exporter)
-        // Wet Sponge -> Sponge + Water
-        RagiumRecipeBuilders.draining {
-            ingredient { items { +Items.WET_SPONGE } }
-            itemResult { +Items.SPONGE }
-            fluidResult { water() }
-        }.save(exporter)
-
-        // Honeycomb -> Beeswax + Honey
-        RagiumRecipeBuilders.draining {
-            ingredient { items { +Items.HONEYCOMB } }
-            itemResult { +RagiumItems.BEESWAX }
-            fluidResult { +RagiumFluids.HONEY }
-            recipeId replace id("honey_from_comb")
         }.save(exporter)
     }
 

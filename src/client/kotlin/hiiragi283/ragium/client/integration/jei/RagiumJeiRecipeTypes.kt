@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.integration.jei
 import hiiragi283.lib.integration.jei.HTRecipeHolderType
 import hiiragi283.lib.integration.jei.IRecipeType
 import hiiragi283.lib.recipe.HTRecipeHolder
-import hiiragi283.lib.recipe.base.HTFluidToDoubleFluidRecipe
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
@@ -11,6 +10,7 @@ import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
+import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
@@ -29,6 +29,9 @@ data object RagiumJeiRecipeTypes {
     val ASSEMBLING: HTRecipeHolderType<HTTripleItemToItemRecipe.Basic> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
+    val CENTRIFUGING: HTRecipeHolderType<RTCentrifugingRecipe.Basic> = create(RagiumConstants.CENTRIFUGING)
+
+    @JvmField
     val COMPRESSING: HTRecipeHolderType<HTItemToRecipe.BasicItem> = create(RagiumConstants.COMPRESSING)
 
     @JvmField
@@ -36,9 +39,6 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val CUTTING: HTRecipeHolderType<HTItemToDoubleItemRecipe.Basic> = create(RagiumConstants.CUTTING)
-
-    @JvmField
-    val DRAINING: HTRecipeHolderType<HTItemToRecipe.BasicItemAndFluid> = create(RagiumConstants.DRAINING)
 
     @JvmField
     val FILLING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicItem> = create(RagiumConstants.FILLING)
@@ -62,9 +62,6 @@ data object RagiumJeiRecipeTypes {
     // Chemical
     @JvmField
     val BATHING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicItem> = create(RagiumConstants.BATHING)
-
-    @JvmField
-    val CENTRIFUGING: HTRecipeHolderType<HTFluidToDoubleFluidRecipe.Basic> = create(RagiumConstants.CENTRIFUGING)
 
     @JvmField
     val MIXING: HTRecipeHolderType<RTMixingRecipe> = create(RagiumConstants.MIXING)

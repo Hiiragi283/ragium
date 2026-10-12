@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.lib.recipe.base.HTFluidToDoubleFluidRecipe
 import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemOrFluidRecipe
@@ -38,6 +37,9 @@ data object RagiumRecipeLookups {
     val ASSEMBLING: HTCompoundRecipeLookup<HTTripleItemToItemRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
+    val CENTRIFUGING: HTCompoundRecipeLookup<RTCentrifugingRecipe> = create(RagiumConstants.CENTRIFUGING)
+
+    @JvmField
     val COMPRESSING: HTCompoundRecipeLookup<HTItemToItemRecipe> = create(RagiumConstants.COMPRESSING)
 
     @JvmField
@@ -45,9 +47,6 @@ data object RagiumRecipeLookups {
 
     @JvmField
     val CUTTING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.CUTTING)
-
-    @JvmField
-    val DRAINING: HTCompoundRecipeLookup<HTItemToItemAndFluidRecipe> = create(RagiumConstants.DRAINING)
 
     @JvmField
     val FILLING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.FILLING)
@@ -71,9 +70,6 @@ data object RagiumRecipeLookups {
     // Chemical
     @JvmField
     val BATHING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.BATHING)
-
-    @JvmField
-    val CENTRIFUGING: HTCompoundRecipeLookup<HTFluidToDoubleFluidRecipe> = create(RagiumConstants.CENTRIFUGING)
 
     @JvmField
     val EXCHANGING: HTCompoundRecipeLookup<HTItemOrFluidRecipe> = create(RagiumConstants.EXCHANGING)

@@ -25,7 +25,7 @@ import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
-import hiiragi283.ragium.common.recipe.RTPotionBottleDrainingRecipe
+import hiiragi283.ragium.common.recipe.RTPotionBottleCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Holder
@@ -125,10 +125,10 @@ internal data object RagiumCommon {
     private fun initRecipeLookups() {
         // from recipe types
         RagiumRecipeLookups.ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING, identity())
+        RagiumRecipeLookups.CENTRIFUGING.fromRecipeType(RagiumRecipeTypes.CENTRIFUGING, identity())
         RagiumRecipeLookups.COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING, identity())
         RagiumRecipeLookups.CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING, identity())
         RagiumRecipeLookups.CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING, identity())
-        RagiumRecipeLookups.DRAINING.fromRecipeType(RagiumRecipeTypes.DRAINING, identity())
         RagiumRecipeLookups.FILLING.fromRecipeType(RagiumRecipeTypes.FILLING, identity())
 
         RagiumRecipeLookups.ALLOYING.fromRecipeType(RagiumRecipeTypes.ALLOYING, identity())
@@ -137,17 +137,18 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.REFINING.fromRecipeType(RagiumRecipeTypes.REFINING, identity())
 
         RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
-        RagiumRecipeLookups.CENTRIFUGING.fromRecipeType(RagiumRecipeTypes.CENTRIFUGING, identity())
         RagiumRecipeLookups.EXCHANGING.fromRecipeType(RagiumRecipeTypes.EXCHANGING, identity())
         RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING, identity())
 
         RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
         // runtime recipes
-        RagiumRecipeLookups.DRAINING.addRecipes(
+        RagiumRecipeLookups.CENTRIFUGING.addRecipes(
             HTBottleType.entries.associate { bottleType: HTBottleType ->
                 Pair(
-                    RecipeKey(RagiumAPI.id("/${RagiumConstants.DRAINING}/potion_bottle/${bottleType.serializedName}")),
-                    RTPotionBottleDrainingRecipe(bottleType)
+                    RecipeKey(
+                        RagiumAPI.id("/${RagiumConstants.CENTRIFUGING}/potion_bottle/${bottleType.serializedName}")
+                    ),
+                    RTPotionBottleCentrifugingRecipe(bottleType)
                 )
             }
         )

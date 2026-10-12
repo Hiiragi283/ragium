@@ -39,6 +39,9 @@ data object RagiumRecipeTypes {
     val ASSEMBLING: RecipeType<RTAssemblingRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
+    val CENTRIFUGING: RecipeType<RTCentrifugingRecipe.Basic> = create(RagiumConstants.CENTRIFUGING)
+
+    @JvmField
     val COMPRESSING: RecipeType<RTCompressingRecipe> = create(RagiumConstants.COMPRESSING)
 
     @JvmField
@@ -46,9 +49,6 @@ data object RagiumRecipeTypes {
 
     @JvmField
     val CUTTING: RecipeType<RTCuttingRecipe> = create(RagiumConstants.CUTTING)
-
-    @JvmField
-    val DRAINING: RecipeType<RTDrainingRecipe> = create(RagiumConstants.DRAINING)
 
     @JvmField
     val FILLING: RecipeType<RTFillingRecipe> = create(RagiumConstants.FILLING)
@@ -72,9 +72,6 @@ data object RagiumRecipeTypes {
     // Chemical
     @JvmField
     val BATHING: RecipeType<RTBathingRecipe> = create(RagiumConstants.BATHING)
-
-    @JvmField
-    val CENTRIFUGING: RecipeType<RTCentrifugingRecipe> = create(RagiumConstants.CENTRIFUGING)
 
     @JvmField
     val EXCHANGING: RecipeType<RTExchangingRecipe> = create(RagiumConstants.EXCHANGING)

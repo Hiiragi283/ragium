@@ -1,8 +1,8 @@
 {
-  "type": "ragium:pyrolyzing",
+  "type": "ragium:centrifuging",
   "ingredient": {
     "count": 1,
-    "items": "minecraft:soul_soil"
+    "items": "minecraft:soul_sand"
   },
   "result": {
     "fluid": {
@@ -11,7 +11,7 @@
     },
     "item": {
       "count": 1,
-      "id": "minecraft:clay"
+      "id": "minecraft:sand"
     }
   },
   "time": 200

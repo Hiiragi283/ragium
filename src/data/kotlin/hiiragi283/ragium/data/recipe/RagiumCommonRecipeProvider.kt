@@ -280,7 +280,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         plastic()
 
         // Soul Sand -> Sand + Crude Oil
-        RagiumRecipeBuilders.pyrolyzing {
+        RagiumRecipeBuilders.centrifuging {
             ingredient { items { +Items.SOUL_SAND } }
             itemResult { +Items.SAND }
             fluidResult {
@@ -290,7 +290,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             recipeId replace id("crude_oil_from_soul_sand")
         }.save(exporter)
         // Soul Soil -> Clay + Crude Oil
-        RagiumRecipeBuilders.pyrolyzing {
+        RagiumRecipeBuilders.centrifuging {
             ingredient { items { +Items.SOUL_SOIL } }
             itemResult { +Items.CLAY }
             fluidResult {

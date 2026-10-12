@@ -2,11 +2,10 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
-import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
-import hiiragi283.lib.recipe.result.HTItemAndFluidStack
+import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -14,8 +13,8 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 
 @JvmRecord
-data class RTPotionBottleDrainingRecipe(val bottleType: HTBottleType, override val progressData: HTProgressData) :
-    HTItemToItemAndFluidRecipe,
+data class RTPotionBottleCentrifugingRecipe(val bottleType: HTBottleType, override val progressData: HTProgressData) :
+    RTCentrifugingRecipe,
     HTProgressRecipe.Simple<SingleRecipeInput> {
     companion object {
         @JvmField
@@ -27,8 +26,8 @@ data class RTPotionBottleDrainingRecipe(val bottleType: HTBottleType, override v
     override fun test(input: ItemInstance): Boolean =
         bottleType.filledItem.isOf(input) && HTPotionHelper.hasAnyEffect(input)
 
-    override fun apply(input: ItemInstance): HTItemAndFluidStack = HTItemAndFluidStack(
-        bottleType.emptyItem.asStackOrEmpty(),
+    override fun apply(input: ItemInstance): RTCentrifugingRecipe.Output = RTCentrifugingRecipe.Output(
+        bottleType.emptyItem.asStack().fold(::listOf) { listOf() },
         HTPotionHelper.createFluid(input, HTPotionHelper.BOTTLE_AMOUNT)
             .fold(FluidStackTemplate::create) { FluidStack.EMPTY }
     )

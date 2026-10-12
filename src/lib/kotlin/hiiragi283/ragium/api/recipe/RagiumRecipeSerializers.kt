@@ -42,6 +42,10 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.ASSEMBLING, RTAssemblingRecipe.SERIALIZER)
 
     @JvmField
+    val CENTRIFUGING: RecipeSerializer<RTCentrifugingRecipe.Basic> =
+        register(RagiumConstants.CENTRIFUGING, RTCentrifugingRecipe.Basic.SERIALIZER)
+
+    @JvmField
     val COMPRESSING: RecipeSerializer<RTCompressingRecipe> =
         register(RagiumConstants.COMPRESSING, RTCompressingRecipe.SERIALIZER)
 
@@ -52,10 +56,6 @@ data object RagiumRecipeSerializers {
     @JvmField
     val CUTTING: RecipeSerializer<RTCuttingRecipe> =
         register(RagiumConstants.CUTTING, RTCuttingRecipe.SERIALIZER)
-
-    @JvmField
-    val DRAINING: RecipeSerializer<RTDrainingRecipe> =
-        register(RagiumConstants.DRAINING, RTDrainingRecipe.SERIALIZER)
 
     @JvmField
     val FILLING: RecipeSerializer<RTFillingRecipe> =
@@ -86,10 +86,6 @@ data object RagiumRecipeSerializers {
     @JvmField
     val BATHING: RecipeSerializer<RTBathingRecipe> =
         register(RagiumConstants.BATHING, RTBathingRecipe.SERIALIZER)
-
-    @JvmField
-    val CENTRIFUGING: RecipeSerializer<RTCentrifugingRecipe> =
-        register(RagiumConstants.CENTRIFUGING, RTCentrifugingRecipe.SERIALIZER)
 
     @JvmField
     val EXCHANGING: RecipeSerializer<RTExchangingRecipe> =

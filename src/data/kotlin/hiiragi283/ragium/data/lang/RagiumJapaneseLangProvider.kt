@@ -175,10 +175,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         // Recipe Type
         addRecipeType(RagiumRecipeTypes.ASSEMBLING, "組立")
+        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "遠心分離")
         addRecipeType(RagiumRecipeTypes.COMPRESSING, "圧縮")
         addRecipeType(RagiumRecipeTypes.CRUSHING, "粉砕")
         addRecipeType(RagiumRecipeTypes.CUTTING, "切断")
-        addRecipeType(RagiumRecipeTypes.DRAINING, "排出")
         addRecipeType(RagiumRecipeTypes.FILLING, "封入")
 
         addRecipeType(RagiumRecipeTypes.ALLOYING, "合金")
@@ -188,7 +188,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.REFINING, "蒸留")
 
         addRecipeType(RagiumRecipeTypes.BATHING, "化学洗浄")
-        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "遠心分離")
         addRecipeType(RagiumRecipeTypes.EXCHANGING, "交換")
         addRecipeType(RagiumRecipeTypes.MIXING, "混合")
         addRecipeType(RagiumRecipeTypes.REACTING, "化学反応")

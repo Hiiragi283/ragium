@@ -22,6 +22,7 @@ import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
+import hiiragi283.ragium.client.integration.jei.category.RTCentrifugingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTElectrolyzingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTEnchantingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.RTFreezingRecipeCategory
@@ -31,7 +32,7 @@ import hiiragi283.ragium.client.integration.jei.category.RTResourceExtractingRec
 import hiiragi283.ragium.client.integration.jei.category.RTWashingRecipeCategory
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
-import hiiragi283.ragium.common.recipe.RTPotionBottleDrainingRecipe
+import hiiragi283.ragium.common.recipe.RTPotionBottleCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
@@ -117,6 +118,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumRecipeTypes.ASSEMBLING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.ASSEMBLER)
             ),
+            RTCentrifugingRecipeCategory(guiHelper),
             HTSingleRecipeCategory.ItemToItem(
                 RagiumJeiRecipeTypes.COMPRESSING,
                 RagiumRecipeTypes.COMPRESSING,
@@ -131,11 +133,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumJeiRecipeTypes.CUTTING,
                 RagiumRecipeTypes.CUTTING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.CUTTING_MACHINE)
-            ),
-            HTSingleToItemAndFluidRecipeCategory.ItemTo(
-                RagiumJeiRecipeTypes.DRAINING,
-                RagiumRecipeTypes.DRAINING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING)
             ),
             HTItemAndFluidToItemRecipeCategory(
                 RagiumJeiRecipeTypes.FILLING,
@@ -190,10 +187,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     override fun registerRecipes(registration: IRecipeRegistration) {
         // Mechanical
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING)
+        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.CENTRIFUGING, RagiumRecipeLookups.CENTRIFUGING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeLookups.CRUSHING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.CUTTING, RagiumRecipeLookups.CUTTING)
-        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.DRAINING, RagiumRecipeLookups.DRAINING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.FILLING, RagiumRecipeLookups.FILLING)
         // Heat
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ALLOYING, RagiumRecipeLookups.ALLOYING)
@@ -228,11 +225,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     private fun registerDynamicRecipes(registration: IRecipeRegistration) {
         // Mechanical
         registration.addRecipes(
-            RagiumJeiRecipeTypes.DRAINING,
+            RagiumJeiRecipeTypes.CENTRIFUGING,
             listPotions()
                 .flatMap { potion: Holder.Reference<Potion> ->
                     HTBottleType.entries.map { bottleType: HTBottleType ->
-                        RagiumRecipeBuilders.draining {
+                        RagiumRecipeBuilders.centrifuging {
                             +HTJeiRecipeHelper.fakeItem(
                                 bottleType.filledItem.asStackOrEmpty(patch = HTPotionHelper.createPotionPatch(potion))
                             )
@@ -240,7 +237,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                             fluidResult {
                                 from(HTPotionHelper.createFluid(potion, HTPotionHelper.BOTTLE_AMOUNT).getOrThrow())
                             }
-                            progressData = RTPotionBottleDrainingRecipe.PROGRESS_DATA
+                            progressData = RTPotionBottleCentrifugingRecipe.PROGRESS_DATA
                             recipeId replace potion.getKeyOrThrow()
                                 .identifier()
                                 .withPrefix("potion_bottle/${bottleType.serializedName}/")

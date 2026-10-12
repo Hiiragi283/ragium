@@ -1,17 +1,17 @@
 {
-  "type": "ragium:draining",
+  "type": "ragium:centrifuging",
   "ingredient": {
     "count": 1,
-    "items": "#c:drinks/honey"
+    "items": "minecraft:soul_soil"
   },
   "result": {
     "fluid": {
       "amount": 250,
-      "id": "ragium:honey"
+      "id": "ragium:crude_oil"
     },
     "item": {
       "count": 1,
-      "id": "minecraft:glass_bottle"
+      "id": "minecraft:clay"
     }
   },
   "time": 200
