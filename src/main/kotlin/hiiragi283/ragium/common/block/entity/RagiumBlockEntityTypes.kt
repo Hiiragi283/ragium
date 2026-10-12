@@ -36,7 +36,6 @@ import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTFluidOutputBusBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTPotionTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
-import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -231,13 +230,6 @@ data object RagiumBlockEntityTypes {
         // Storage
         registerBlockEntity(TANK.get())
         registerBlockEntity(POTION_TANK.get())
-        event.registerBlock(
-            HTFluidCapabilities.block,
-            { _, _, _, _, _ ->
-                HTVoidTankBlock.VOIDING_HANDLER
-            },
-            RagiumBlocks.VOID_TANK.getOrThrow()
-        )
         registerBlockEntity(CREATIVE_TANK.get())
 
         event.registerBlockEntity(

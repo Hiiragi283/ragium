@@ -11,6 +11,8 @@ import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.ragium.api.data.RagiumDataComponents
+import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
+import hiiragi283.ragium.api.machine.HTMachineUpgradeList
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTBlockEntityWithMenu
@@ -147,26 +149,21 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
     inner class UpgradeSlot(slot: Int, x: Int, y: Int) :
         StackCopySlot(slot, x, y),
         HTWidgetSlot {
-        private fun getUpgrades(): List<ItemStack> = this@HTUpgradeStationBlockEntity
+        private fun getUpgrades(): HTMachineUpgradeList = this@HTUpgradeStationBlockEntity
             .toolSlot
             .resource
-            .getOrDefault(RagiumDataComponents.UPGRADES, listOf())
+            .let(HTMachineUpgradeHelper::getUpgrades)
 
-        private fun getUpgrade(index: Int): ItemStack = getUpgrades().getOrNull(index) ?: ItemStack.EMPTY
+        override fun mayPlace(itemStack: ItemStack): Boolean =
+            !this@HTUpgradeStationBlockEntity.toolSlot.isEmpty && itemStack.has(RagiumDataComponents.UPGRADE)
 
-        override fun mayPlace(itemStack: ItemStack): Boolean = !this@HTUpgradeStationBlockEntity.toolSlot.isEmpty
-
-        override fun getStackCopy(): ItemStack = getUpgrade(slotIndex)
+        override fun getStackCopy(): ItemStack = getUpgrades()[slotIndex]
 
         override fun setStackCopy(stack: ItemStack) {
-            val upgrades: MutableList<ItemStack> = MutableList(4) { ItemStack.EMPTY }
-            getUpgrades().forEachIndexed { index: Int, stackIn: ItemStack ->
-                upgrades[index] = stackIn
-            }
-            upgrades[slotIndex] = stack
-
+            val mutable = HTMachineUpgradeList.Mutable(getUpgrades())
+            mutable[slotIndex] = stack
             val toolStack: ItemStack = this@HTUpgradeStationBlockEntity.toolSlot.getStackCopy()
-            toolStack[RagiumDataComponents.UPGRADES] = upgrades
+            HTMachineUpgradeHelper.setUpgrades(toolStack, mutable)
             this@HTUpgradeStationBlockEntity.toolSlot.setStack(toolStack)
         }
 

@@ -10,7 +10,7 @@ import hiiragi283.lib.resource.HTSimpleValueWithKey
 import hiiragi283.lib.resource.blockId
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.HTMachineType
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids

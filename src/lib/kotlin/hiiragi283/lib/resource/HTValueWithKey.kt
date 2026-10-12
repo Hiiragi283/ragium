@@ -1,6 +1,5 @@
 package hiiragi283.lib.resource
 
-import hiiragi283.lib.util.Either
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 
@@ -31,11 +30,6 @@ interface HTValueWithKey<R : Any, out T : R> {
      * @throws IllegalStateException 戻り値が`null`の場合
      */
     fun id(): Identifier = key().identifier()
-
-    /**
-     * 値を取得します。
-     */
-    fun asEither(): Either<String, T> = TODO()
 
     fun asResult(): Result<T>
 

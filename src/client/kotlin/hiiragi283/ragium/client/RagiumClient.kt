@@ -63,6 +63,8 @@ data object RagiumClient : HTClientMod() {
         eventBus.addListener(::registerTooltipAppenders)
 
         configScreen(container)
+
+        RagiumAPI.LOGGER.info("Ragium Client has been initialized!")
     }
 
     override fun clientSetup(event: FMLClientSetupEvent) {
@@ -300,6 +302,14 @@ data object RagiumClient : HTClientMod() {
         event.registerAppender(
             TooltipLocation.PRE_ITEM_INFO,
             TooltipAppender.createComponentAppender(RagiumDataComponents.ITEM_TOOLTIP)
+        )
+        event.registerAppender(
+            TooltipLocation.PRE_ITEM_INFO,
+            TooltipAppender.createComponentAppender(RagiumDataComponents.UPGRADE)
+        )
+        event.registerAppender(
+            TooltipLocation.PRE_ITEM_INFO,
+            TooltipAppender.createComponentAppender(RagiumDataComponents.UPGRADES)
         )
     }
 }

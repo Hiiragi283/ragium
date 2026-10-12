@@ -23,11 +23,11 @@ import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.HTFluidStorageBlock
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -437,6 +437,12 @@ data object RagiumBlocks {
     @JvmStatic
     private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
         // Block
+        event.registerBlock(
+            HTFluidCapabilities.block,
+            { _, _, _, _, _ -> HTVoidTankBlock.VOIDING_HANDLER },
+            VOID_TANK.getOrThrow()
+        )
+        // Item
         event.registerItem(
             HTFluidCapabilities.item,
             { _, access ->

@@ -2,7 +2,7 @@ package hiiragi283.lib.integration.jei
 
 import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.gui.HTBackgroundType
-import hiiragi283.lib.util.HTDelegates
+import hiiragi283.ragium.api.RagiumAPI
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.helpers.IGuiHelper
 
@@ -13,11 +13,11 @@ import mezz.jei.api.helpers.IGuiHelper
  */
 data object HTJeiDrawables {
     @JvmStatic
-    var slots: Map<HTBackgroundType, IDrawable> by HTDelegates.onceInitialize()
+    var slots: Map<HTBackgroundType, IDrawable> = mapOf()
         private set
 
     @JvmStatic
-    var tanks: Map<HTBackgroundType, IDrawable> by HTDelegates.onceInitialize()
+    var tanks: Map<HTBackgroundType, IDrawable> = mapOf()
         private set
 
     @JvmStatic
@@ -34,6 +34,7 @@ data object HTJeiDrawables {
                 .setTextureSize(18, 18)
                 .build()
         }
+        RagiumAPI.LOGGER.info("HTJeiDrawables has been initialized")
     }
 
     /**

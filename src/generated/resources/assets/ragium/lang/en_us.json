@@ -192,6 +192,7 @@
   "item.minecraft.tipped_arrow.effect.hunger": "Arrow of Hunger",
   "item.minecraft.tipped_arrow.effect.nausea": "Arrow of Nausea",
   "item.minecraft.tipped_arrow.effect.wither": "Arrow of Wither",
+  "item.ragium.advanced_upgrade": "Advanced Upgrade",
   "item.ragium.alcohol_bucket": "Alcohol Bucket",
   "item.ragium.aldehyde_bucket": "Aldehyde Bucket",
   "item.ragium.alumina_dust": "Alumina Dust",
@@ -205,6 +206,7 @@
   "item.ragium.ash_dust": "Ash Dust",
   "item.ragium.ball_mold": "Ball Mold",
   "item.ragium.bamboo_charcoal": "Bamboo Charcoal",
+  "item.ragium.basic_upgrade": "Basic Upgrade",
   "item.ragium.bauxite_dust": "Bauxite Dust",
   "item.ragium.beeswax": "Beeswax",
   "item.ragium.black_dye_bucket": "Black Dye Bucket",
@@ -240,6 +242,7 @@
   "item.ragium.elder_heart": "Elder Heart",
   "item.ragium.electric_circuit": "Electric Circuit",
   "item.ragium.electronics_machine_parts": "Machine Parts (Electronics)",
+  "item.ragium.elite_upgrade": "Elite Upgrade",
   "item.ragium.emerald_dust": "Emerald Dust",
   "item.ragium.emerald_gear": "Emerald Gear",
   "item.ragium.fluorite": "Fluorite",
@@ -331,6 +334,7 @@
   "item.ragium.tiny_coal": "Tiny Coal",
   "item.ragium.tiny_coal_coke": "Tiny Coal Coke",
   "item.ragium.tiny_pitch_coke": "Tiny Pitch Coke",
+  "item.ragium.ultimate_upgrade": "Ultimate Upgrade",
   "item.ragium.void_metal_ingot": "Void Metal Ingot",
   "item.ragium.void_metal_nugget": "Void Metal Nugget",
   "item.ragium.white_dye_bucket": "White Dye Bucket",
@@ -524,5 +528,8 @@
   "tooltip.ragium.memory_disc_data": "Scanned Item: %1$s",
   "tooltip.ragium.show_description": "Press Shift to show description",
   "tooltip.ragium.show_details": "Press Ctrl to show details",
-  "tooltip.ragium.sulfur": "Dropped from Coal Ores"
+  "tooltip.ragium.sulfur": "Dropped from Coal Ores",
+  "tooltip.ragium.upgrade.capacity": "Energy Capacity: %1$s",
+  "tooltip.ragium.upgrade.efficiency": "Energy Efficiency: %1$s",
+  "tooltip.ragium.upgrade.speed": "Speed: %1$s"
 }

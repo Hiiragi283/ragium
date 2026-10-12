@@ -55,6 +55,7 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
                         .copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                         .include(DataComponents.CUSTOM_NAME)
                         .include(RagiumDataComponents.OWNER_ID)
+                        .include(RagiumDataComponents.UPGRADES)
                         .apply(builderAction)
                 )
             +ExplosionCondition.survivesExplosion()

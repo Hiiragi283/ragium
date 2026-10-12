@@ -154,6 +154,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.PLATE_MOLD, "Plate Mold")
         add(RagiumItems.MEMORY_DISC, "Memory Disc")
 
+        add(RagiumItems.BASIC_UPGRADE, "Basic Upgrade")
+        add(RagiumItems.ADVANCED_UPGRADE, "Advanced Upgrade")
+        add(RagiumItems.ELITE_UPGRADE, "Elite Upgrade")
+        add(RagiumItems.ULTIMATE_UPGRADE, "Ultimate Upgrade")
+
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "Frostbite")
         add(RagiumMobEffects.CHEMICAL_BURN, "Chemical Burn")
@@ -236,6 +241,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.TOOLTIPS_CARBON, "Dropped from Diamond Ores")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"Scanned Item: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_SPEED, $$"Speed: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_EFFICIENCY, $$"Energy Efficiency: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_CAPACITY, $$"Energy Capacity: %1$s")
 
         addDataTranslations()
     }

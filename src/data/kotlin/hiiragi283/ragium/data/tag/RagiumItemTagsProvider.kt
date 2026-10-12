@@ -12,9 +12,9 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids

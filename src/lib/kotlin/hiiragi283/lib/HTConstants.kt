@@ -107,7 +107,16 @@ data object HTConstants {
     const val TOOLTIP = "tooltip"
 
     const val ITEM_GROUP = "itemGroup"
+
+    //    Upgrades    //
+
     const val UPGRADE = "upgrade"
+    const val UPGRADES = "upgrades"
+
+    const val SPEED = "speed"
+    const val EFFICIENCY = "efficiency"
+
+    //    Keys    //
 
     data object Keys {
         @JvmField

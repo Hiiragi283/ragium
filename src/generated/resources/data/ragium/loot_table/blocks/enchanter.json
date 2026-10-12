@@ -16,7 +16,8 @@
               "function": "minecraft:copy_components",
               "include": [
                 "minecraft:custom_name",
-                "ragium:owner_id"
+                "ragium:owner_id",
+                "ragium:upgrades"
               ],
               "source": "block_entity"
             }

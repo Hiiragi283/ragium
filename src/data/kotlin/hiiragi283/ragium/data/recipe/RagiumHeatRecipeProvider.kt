@@ -7,9 +7,9 @@ import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems

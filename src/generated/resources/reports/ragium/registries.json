@@ -120,6 +120,7 @@
     "fluid",
     "memory_disc_data",
     "owner_id",
+    "upgrade",
     "upgrades"
   ],
   "minecraft:fluid": [
@@ -206,6 +207,7 @@
     "yellow_dye"
   ],
   "minecraft:item": [
+    "advanced_upgrade",
     "alcohol_bucket",
     "aldehyde_bucket",
     "alloy_smelter",
@@ -223,6 +225,7 @@
     "assembler",
     "ball_mold",
     "bamboo_charcoal",
+    "basic_upgrade",
     "bauxite_dust",
     "beeswax",
     "black_dye_bucket",
@@ -275,6 +278,7 @@
     "electrolyzer",
     "electronics_machine_casing",
     "electronics_machine_parts",
+    "elite_upgrade",
     "emerald_dust",
     "emerald_gear",
     "enchanter",
@@ -395,6 +399,7 @@
     "tiny_coal",
     "tiny_coal_coke",
     "tiny_pitch_coke",
+    "ultimate_upgrade",
     "upgrade_station",
     "void_metal_block",
     "void_metal_ingot",

@@ -6,16 +6,20 @@ import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.data.ExporterDataProvider
+import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
+import hiiragi283.lib.data.recipe.builder.vanilla.HTSmithingRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import hiiragi283.ragium.api.material.RagiumMaterial
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import java.util.concurrent.CompletableFuture
@@ -36,12 +40,12 @@ abstract class HTRecipeProvider(
     /**
      * @since 26.1.7
      */
-    fun materialTags(tags: Nel<TagKey<Item>>): HTMaterialTagsIngredient = HTMaterialTagsIngredient(tags)
+    protected fun materialTags(tags: Nel<TagKey<Item>>): HTMaterialTagsIngredient = HTMaterialTagsIngredient(tags)
 
     /**
      * @since 26.1.7
      */
-    fun materialTags(prefixes: Nel<HTTagPrefix>, materials: Nel<HTMaterialLike>): HTMaterialTagsIngredient =
+    protected fun materialTags(prefixes: Nel<HTTagPrefix>, materials: Nel<HTMaterialLike>): HTMaterialTagsIngredient =
         materialTags(
             prefixes
                 .flatMap { prefix: HTTagPrefix -> materials.map(prefix::itemTagKey) }
@@ -52,26 +56,37 @@ abstract class HTRecipeProvider(
     /**
      * @since 26.1.7
      */
-    fun materialTags(prefixes: Nel<HTTagPrefix>, material: HTMaterialLike): HTMaterialTagsIngredient =
+    protected fun materialTags(prefixes: Nel<HTTagPrefix>, material: HTMaterialLike): HTMaterialTagsIngredient =
         materialTags(prefixes.map { it.itemTagKey(material) })
 
     /**
      * @since 26.1.7
      */
-    fun materialTags(prefix: HTTagPrefix, materials: Nel<HTMaterialLike>): HTMaterialTagsIngredient =
+    protected fun materialTags(prefix: HTTagPrefix, materials: Nel<HTMaterialLike>): HTMaterialTagsIngredient =
         materialTags(materials.map(prefix::itemTagKey))
 
     /**
      * @since 26.1.7
      */
-    fun dustOrGem(material: HTMaterialLike): HTMaterialTagsIngredient =
+    protected fun dustOrGem(material: HTMaterialLike): HTMaterialTagsIngredient =
         materialTags(nelOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM), material)
 
     /**
      * @since 26.1.7
      */
-    fun dustOrIngot(material: HTMaterialLike): HTMaterialTagsIngredient =
+    protected fun dustOrIngot(material: HTMaterialLike): HTMaterialTagsIngredient =
         materialTags(nelOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT), material)
+
+    /**
+     * @since 26.1.9
+     */
+    protected inline fun netheriteUpgrading(builderAction: HTSmithingRecipeBuilder.() -> Unit) {
+        VanillaRecipeBuilders.smithing {
+            template { items { +Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE } }
+            addition { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.NETHERITE) }
+            builderAction()
+        }.save(exporter)
+    }
 
     //    Integration    //
 

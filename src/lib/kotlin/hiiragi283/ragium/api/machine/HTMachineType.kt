@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.tag
+package hiiragi283.ragium.api.machine
 
 import hiiragi283.lib.data.lang.HTLangName
 import hiiragi283.lib.tag.HTMaterialLike

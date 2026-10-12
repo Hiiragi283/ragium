@@ -15,10 +15,10 @@ import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -46,6 +46,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         decoration()
         machine()
         storage()
+        upgrade()
         material()
 
         // Bamboo Charcoal
@@ -522,7 +523,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
-    //    Machine    //
+    //    Storage    //
 
     private fun storage() {
         // Tank
@@ -554,6 +555,43 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('B') { +holderSet(Tags.Items.BUCKETS_EMPTY) }
             result { +RagiumBlocks.VOID_TANK }
         }.save(exporter)
+    }
+
+    //    Upgrade    //
+
+    private fun upgrade() {
+        // Basic
+        VanillaRecipeBuilders.shaped {
+            crossLayered()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON) }
+            define('B') { +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP) }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            define('D') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.COPPER) }
+            result { +RagiumItems.BASIC_UPGRADE }
+        }.save(exporter)
+        // Advanced
+        VanillaRecipeBuilders.shaped {
+            crossLayered()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
+            define('B') { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.QUARTZ) }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.IRON) }
+            define('D') { items { +RagiumItems.BASIC_UPGRADE } }
+            result { +RagiumItems.ADVANCED_UPGRADE }
+        }.save(exporter)
+        // Elite
+        VanillaRecipeBuilders.shaped {
+            crossLayered()
+            define('A') { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.DIAMOND) }
+            define('B') { +holderSet(HTCommonTags.BlockItems.GLASS_BLOCKS_QUARTZ.item) }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.GOLD) }
+            define('D') { items { +RagiumItems.ADVANCED_UPGRADE } }
+            result { +RagiumItems.ELITE_UPGRADE }
+        }.save(exporter)
+        // Ultimate
+        netheriteUpgrading {
+            base { items { +RagiumItems.ELITE_UPGRADE } }
+            result { +RagiumItems.ULTIMATE_UPGRADE }
+        }
     }
 
     //    Material    //
@@ -589,12 +627,10 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
         gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD)
         RagiumItems.MATERIAL_ITEMS[HTItemPart.GEAR, RagiumMaterial.Alloy.NETHERITE]?.let {
-            VanillaRecipeBuilders.smithing {
-                template { items { +Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE } }
+            netheriteUpgrading {
                 base { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Gem.DIAMOND) }
-                addition { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.NETHERITE) }
                 result { +it }
-            }.save(exporter)
+            }
         }
         // Dust -> Ingot
         for (metalLike: RagiumMaterial.MetalLike in RagiumMaterial.MetalLike.entries) {

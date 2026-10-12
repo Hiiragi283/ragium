@@ -150,6 +150,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.PLATE_MOLD, "板の鋳型")
         add(RagiumItems.MEMORY_DISC, "メモリーディスク")
 
+        add(RagiumItems.BASIC_UPGRADE, "基本アップグレード")
+        add(RagiumItems.ADVANCED_UPGRADE, "発展アップグレード")
+        add(RagiumItems.ELITE_UPGRADE, "精鋭アップグレード")
+        add(RagiumItems.ULTIMATE_UPGRADE, "究極アップグレード")
+
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "凍傷")
         add(RagiumMobEffects.CHEMICAL_BURN, "化学火傷")
@@ -232,6 +237,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.TOOLTIPS_CARBON, "ダイヤモンド鉱石からドロップします")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"スキャン済み: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_SPEED, $$"処理速度: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_EFFICIENCY, $$"エネルギー効率: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_CAPACITY, $$"エネルギー容量: %1$s")
 
         addDataTranslations()
     }
