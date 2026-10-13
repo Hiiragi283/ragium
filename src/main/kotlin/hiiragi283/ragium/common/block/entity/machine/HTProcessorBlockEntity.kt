@@ -9,7 +9,6 @@ import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTItemSlot
-import hiiragi283.ragium.api.config.HTEnergyConfig
 import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
@@ -17,6 +16,7 @@ import hiiragi283.ragium.common.gui.widget.HTProgressWidget
 import hiiragi283.ragium.common.transfer.energy.HTMachineEnergyHandler
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput

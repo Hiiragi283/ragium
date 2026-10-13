@@ -1,13 +1,13 @@
 package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
-import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.entity.storage.base.HTBaseTankBlockEntity
 import hiiragi283.ragium.common.transfer.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentGetter
 import net.minecraft.core.component.DataComponentMap

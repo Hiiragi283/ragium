@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.config
+package hiiragi283.ragium.config
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.config.definePositiveInt
@@ -13,7 +13,7 @@ import java.util.function.LongSupplier
 /**
  * 機械のエネルギーに関するコンフィグを管理するクラスです。
  * @param capacity エネルギーの容量
- * @author rate エネルギーの生産/消費速度
+ * @param rate エネルギーの生産/消費速度
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

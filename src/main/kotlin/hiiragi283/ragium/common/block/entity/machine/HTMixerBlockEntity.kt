@@ -2,12 +2,12 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.lib.recipe.lookup.mapNotNull
 import hiiragi283.lib.sounds.HTSoundInstance
-import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.config.HTEnergyConfig
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemAndFluidToFluidBlockEntity
+import hiiragi283.ragium.config.HTEnergyConfig
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState

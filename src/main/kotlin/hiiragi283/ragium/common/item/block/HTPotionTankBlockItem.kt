@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.item.block
 import hiiragi283.lib.fluid.createOrEmpty
 import hiiragi283.lib.item.HTSubCreativeTabContents
 import hiiragi283.lib.item.alchemy.HTPotionHelper
-import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.util.HTStorageHelper
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.BlockItem

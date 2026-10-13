@@ -4,9 +4,9 @@ import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
 import hiiragi283.lib.transfer.useTransaction
-import hiiragi283.ragium.api.config.HTEnergyConfig
 import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
+import hiiragi283.ragium.config.HTEnergyConfig
 import java.util.function.Predicate
 
 /**
