@@ -97,6 +97,12 @@ data object RagiumTags {
         @JvmField
         val SOOTY_IRON_TOOL_MATERIALS: TagKey<Item> = create("sooty_iron_tool_materials")
 
+        /**
+         * @since 26.1.9
+         */
+        @JvmField
+        val SUPPORT_UPGRADES: TagKey<Item> = create("support_upgrades")
+
         @JvmStatic
         private fun create(vararg path: String): TagKey<Item> = ItemTags.create(RagiumAPI.id(*path))
     }

@@ -8,7 +8,7 @@ import net.minecraft.network.codec.StreamCodec
 /**
  * [HTSyncableSlot]の同期に使用されるパケットを表すインターフェースです。
  *
- * 参照 : [Mekanism - PropertyData](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/network/to_client/container/property/PropertyData.java)
+ * 参照 : [Mekanism - PropertyData](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/network/to_client/container/property/PropertyData.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

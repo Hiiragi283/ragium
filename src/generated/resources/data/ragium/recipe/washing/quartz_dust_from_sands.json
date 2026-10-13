@@ -1,12 +1,14 @@
 {
   "type": "ragium:washing",
-  "fluid_ingredient": {
-    "amount": 1000,
-    "fluids": "#c:water"
-  },
-  "item_ingredient": {
-    "count": 4,
-    "items": "#c:sands/colorless"
+  "ingredient": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 4,
+      "items": "#c:sands/colorless"
+    }
   },
   "results": [
     {

@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 /**
  * [BlockEntity]に実装されるインターフェースです。
  *
- * 参考 : [Mekanism - ITileWrapper](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/tile/interfaces/ITileWrapper.java)
+ * 参考 : [Mekanism - ITileWrapper](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/tile/interfaces/ITileWrapper.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

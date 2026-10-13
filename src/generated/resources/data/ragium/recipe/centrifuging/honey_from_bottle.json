@@ -1,0 +1,18 @@
+{
+  "type": "ragium:centrifuging",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:drinks/honey"
+  },
+  "result": {
+    "fluid": {
+      "amount": 250,
+      "id": "ragium:honey"
+    },
+    "item": {
+      "count": 1,
+      "id": "minecraft:glass_bottle"
+    }
+  },
+  "time": 200
+}

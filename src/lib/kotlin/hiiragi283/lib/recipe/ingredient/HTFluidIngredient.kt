@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.fluid.HTFlowingFluidHelper
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.util.fold
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -16,11 +15,12 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.display.ForFluidStacks
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * [Fluid]向けの[HTIngredient]の実装クラスです。
  *
- * 参照 : [Mekanism - FluidStackIngredient](https://github.com/mekanism/Mekanism/blob/26.1/src/api/java/mekanism/api/recipes/ingredients/FluidStackIngredient.java)
+ * 参照 : [Mekanism - FluidStackIngredient](https://github.com/mekanism/Mekanism/blob/26.3/src/api/java/mekanism/api/recipes/ingredients/FluidStackIngredient.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
@@ -73,5 +73,11 @@ data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun Optional<HTFluidIngredient>.test(instance: FluidInstance): Boolean =
-    this.fold({ HTIngredientHelper.isEmpty(instance) }, { it.test(instance) })
+fun Optional<HTFluidIngredient>.test(instance: FluidInstance): Boolean = this.getOrNull().testOrEmpty(instance)
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.9
+ */
+fun HTFluidIngredient?.testOrEmpty(instance: FluidInstance): Boolean =
+    this?.test(instance) ?: HTIngredientHelper.isEmpty(instance)

@@ -8,7 +8,7 @@ import kotlin.reflect.KMutableProperty0
 /**
  * [Int]向けの[HTSyncableSlot]の拡張インターフェースです。
  *
- * 参照 : [Mekanism - SyncableInt](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/inventory/container/sync/SyncableInt.java)
+ * 参照 : [Mekanism - SyncableInt](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/inventory/container/sync/SyncableInt.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

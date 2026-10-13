@@ -8,9 +8,9 @@ import hiiragi283.lib.resource.BlockItemKey
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.lib.tag.HTCommonTags
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import net.neoforged.neoforge.common.Tags

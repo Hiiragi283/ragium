@@ -10,6 +10,7 @@ import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.HTHasTranslationKey
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
@@ -137,5 +138,12 @@ abstract class HTLangProvider(output: PackOutput, modId: String, val langType: H
         BuiltInRegistries.RECIPE_TYPE.getResourceKey(recipeType).ifPresent {
             add(it.toLanguageKey(), value)
         }
+    }
+
+    /**
+     * @since 26.1.9
+     */
+    fun addJadeConfig(id: Identifier, value: String) {
+        add("config.jade.plugin_${id.namespace}.${id.path}", value)
     }
 }

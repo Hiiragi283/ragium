@@ -21,34 +21,27 @@ typealias HTSimpleValueWithKey<R> = HTValueWithKey<R, R>
 interface HTValueWithKey<R : Any, out T : R> {
     /**
      * [ID][ResourceKey]を取得します。
+     * @throws IllegalStateException 戻り値が`null`の場合
      */
-    val keyOrNull: ResourceKey<R>?
-
-    /**
-     * [ID][ResourceKey]を取得します。
-     * @throws IllegalStateException [keyOrNull]が`null`の場合
-     */
-    val keyOrThrow: ResourceKey<R> get() = keyOrNull ?: error("Unregistered value for ${getOrThrow()}")
+    fun key(): ResourceKey<R>
 
     /**
      * [ID][Identifier]を取得します。
+     * @throws IllegalStateException 戻り値が`null`の場合
      */
-    val idOrNull: Identifier? get() = keyOrNull?.identifier()
+    fun id(): Identifier = key().identifier()
 
-    /**
-     * [ID][Identifier]を取得します。
-     * @throws IllegalStateException [idOrNull]が`null`の場合
-     */
-    val idOrThrow: Identifier get() = idOrNull ?: error("Unknown id for ${getOrThrow()}")
+    fun asResult(): Result<T>
 
     /**
      * 値を取得します。
+     * @return [asResult]の戻り値が[Result.isFailure]の場合`null`
      */
-    fun getOrNull(): T?
+    fun getOrNull(): T? = asResult().getOrNull()
 
     /**
      * 値を取得します。
-     * @throws IllegalStateException [getOrNull]が`null`の場合
+     * @throws IllegalStateException [asResult]の戻り値が[Result.isFailure]の場合
      */
-    fun getOrThrow(): T = getOrNull() ?: error("Unknown value for $idOrThrow")
+    fun getOrThrow(): T = asResult().getOrThrow()
 }

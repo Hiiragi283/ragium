@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level
 /**
  * シリアライズ可能なレシピを表す，[Recipe]の拡張インターフェースです。
  *
- * 参照 : [Mekanism - MekanismRecipe](https://github.com/mekanism/Mekanism/blob/26.1/src/api/java/mekanism/api/recipes/MekanismRecipe.java)
+ * 参照 : [Mekanism - MekanismRecipe](https://github.com/mekanism/Mekanism/blob/26.3/src/api/java/mekanism/api/recipes/MekanismRecipe.java)
  * @param INPUT レシピの入力となるクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0

@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack
 /**
  * GUIを表すインターフェースです。
  *
- * 参照 : [Mekanism - IGuiWrapper](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/client/gui/IGuiWrapper.java)
+ * 参照 : [Mekanism - IGuiWrapper](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/client/gui/IGuiWrapper.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

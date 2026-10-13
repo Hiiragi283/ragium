@@ -1,16 +1,20 @@
 {
   "type": "ragium:mixing",
-  "fluid_ingredient": {
-    "amount": 1000,
-    "fluids": "#c:naphtha"
+  "ingredient": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:naphtha"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:dusts/redstone"
+    }
   },
-  "fluid_result": {
-    "amount": 1000,
-    "id": "ragium:anti_rust_oil"
-  },
-  "item_ingredient": {
-    "count": 1,
-    "items": "#c:dusts/redstone"
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:anti_rust_oil"
+    }
   },
   "time": 200
 }

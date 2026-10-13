@@ -93,19 +93,11 @@ data object HTConstants {
 
     const val INGREDIENT = "ingredient"
     const val INGREDIENTS = "ingredients"
-    const val PRIMARY_INGREDIENT = "primary_ingredient"
-    const val SECONDARY_INGREDIENT = "secondary_ingredient"
-    const val ITEM_INGREDIENT = "item_ingredient"
-    const val FLUID_INGREDIENT = "fluid_ingredient"
 
     const val CATALYST = "catalyst"
 
     const val RESULT = "result"
     const val RESULTS = "results"
-    const val PRIMARY_RESULT = "primary_result"
-    const val SECONDARY_RESULT = "secondary_result"
-    const val ITEM_RESULT = "item_result"
-    const val FLUID_RESULT = "fluid_result"
 
     //    Text    //
 
@@ -115,7 +107,16 @@ data object HTConstants {
     const val TOOLTIP = "tooltip"
 
     const val ITEM_GROUP = "itemGroup"
+
+    //    Upgrades    //
+
     const val UPGRADE = "upgrade"
+    const val UPGRADES = "upgrades"
+
+    const val SPEED = "speed"
+    const val EFFICIENCY = "efficiency"
+
+    //    Keys    //
 
     data object Keys {
         @JvmField

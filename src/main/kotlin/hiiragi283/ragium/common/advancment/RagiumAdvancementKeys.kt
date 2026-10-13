@@ -27,6 +27,9 @@ data object RagiumAdvancementKeys {
     @JvmField
     val CRUSHER: AdvancementKey = create(RagiumConstants.CRUSHER)
 
+    @JvmField
+    val UPGRADE_STATION: AdvancementKey = create("upgrade_station")
+
     // Heat
     @JvmField
     val HEAT_MACHINE_PARTS: AdvancementKey = create("heat_machine_parts")

@@ -15,7 +15,6 @@ import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.lib.util.Ior
-import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.resources.Identifier
@@ -24,7 +23,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class RTMixingRecipeBuilder : HTProgressRecipeBuilder<RTMixingRecipe>(RagiumConstants.MIXING) {
+class RTMixingRecipeBuilder(prefix: String) : HTProgressRecipeBuilder<RTMixingRecipe>(prefix) {
     override fun getRecipeId(): Identifier? = result.getId()
 
     override fun createRecipe(): RTMixingRecipe =

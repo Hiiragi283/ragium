@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.RagiumAPI
 /**
  * Hiiragi Seriesで使用される[翻訳][HTTranslation]を集めたクラスです。
  *
- * 参照 : [Mekanism - APILang](https://github.com/mekanism/Mekanism/blob/26.1/src/api/java/mekanism/api/text/APILang.java)
- *       [Mekanism - MekanismLang](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/MekanismLang.java)
+ * 参照 : [Mekanism - APILang](https://github.com/mekanism/Mekanism/blob/26.3/src/api/java/mekanism/api/text/APILang.java)
+ *       [Mekanism - MekanismLang](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/MekanismLang.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

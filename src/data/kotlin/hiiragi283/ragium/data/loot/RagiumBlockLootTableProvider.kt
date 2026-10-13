@@ -36,6 +36,8 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
         ).forEach { blockItem: HTSimpleDeferredBlockAndItem ->
             add(blockItem) { block: Block -> copyComponent(block) { include(RagiumDataComponents.FLUID) } }
         }
+        // Misc
+        add(RagiumBlocks.UPGRADE_STATION, ::copyComponent)
     }
 
     private inline fun buildTable(builderAction: HTLootTableBuilder.() -> Unit): LootTable.Builder =
@@ -53,6 +55,7 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
                         .copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                         .include(DataComponents.CUSTOM_NAME)
                         .include(RagiumDataComponents.OWNER_ID)
+                        .include(RagiumDataComponents.UPGRADES)
                         .apply(builderAction)
                 )
             +ExplosionCondition.survivesExplosion()

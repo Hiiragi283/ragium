@@ -1,12 +1,14 @@
 {
   "type": "ragium:filling",
-  "fluid_ingredient": {
-    "amount": 10,
-    "fluids": "#c:water"
-  },
-  "item_ingredient": {
-    "count": 1,
-    "items": "minecraft:gray_concrete_powder"
+  "ingredient": {
+    "fluid": {
+      "amount": 10,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": "minecraft:gray_concrete_powder"
+    }
   },
   "result": {
     "count": 1,

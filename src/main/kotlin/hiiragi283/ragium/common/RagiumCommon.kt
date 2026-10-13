@@ -6,7 +6,6 @@ import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.getOrPut
 import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.item.alchemy.HTBottleType
-import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.registry.HTFluidContent
@@ -25,7 +24,9 @@ import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
-import hiiragi283.ragium.common.recipe.RTPotionBottleDrainingRecipe
+import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
+import hiiragi283.ragium.common.recipe.RTBucketFillingRecipe
+import hiiragi283.ragium.common.recipe.RTPotionBottleCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Holder
@@ -34,12 +35,14 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionBrewing
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -81,7 +84,7 @@ internal data object RagiumCommon {
     private fun initFluidComponents() {
         fun setChemical(content: HTFluidContent, key: ResourceKey<HTChemical>) {
             BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.add(
-                content.keyOrThrow
+                content.key()
             ) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
                 builder.set(RagiumDataComponents.CHEMICAL, provider.getOrThrow(key))
             }
@@ -91,6 +94,12 @@ internal data object RagiumCommon {
             Registries.FLUID.createKey(vanillaId("water"))
         ) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
             builder.set(RagiumDataComponents.CHEMICAL, provider.getOrThrow(RagiumChemicals.WATER))
+        }
+
+        BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.add(
+            RagiumFluids.POTION.key()
+        ) { builder: DataComponentMap.Builder, _, _ ->
+            builder.set(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
         }
 
         setChemical(RagiumFluids.MOLTEN_GLASS, RagiumChemicals.SILICON_DIOXIDE)
@@ -117,10 +126,10 @@ internal data object RagiumCommon {
     private fun initRecipeLookups() {
         // from recipe types
         RagiumRecipeLookups.ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING, identity())
+        RagiumRecipeLookups.CENTRIFUGING.fromRecipeType(RagiumRecipeTypes.CENTRIFUGING, identity())
         RagiumRecipeLookups.COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING, identity())
         RagiumRecipeLookups.CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING, identity())
         RagiumRecipeLookups.CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING, identity())
-        RagiumRecipeLookups.DRAINING.fromRecipeType(RagiumRecipeTypes.DRAINING, identity())
         RagiumRecipeLookups.FILLING.fromRecipeType(RagiumRecipeTypes.FILLING, identity())
 
         RagiumRecipeLookups.ALLOYING.fromRecipeType(RagiumRecipeTypes.ALLOYING, identity())
@@ -129,26 +138,27 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.REFINING.fromRecipeType(RagiumRecipeTypes.REFINING, identity())
 
         RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
-        RagiumRecipeLookups.CENTRIFUGING.fromRecipeType(RagiumRecipeTypes.CENTRIFUGING, identity())
-        RagiumRecipeLookups.REACTING.fromRecipeType(RagiumRecipeTypes.REACTING, identity())
+        RagiumRecipeLookups.EXCHANGING.fromRecipeType(RagiumRecipeTypes.EXCHANGING, identity())
+        RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING, identity())
 
-        RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
         RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
         // runtime recipes
-        RagiumRecipeLookups.DRAINING.addRecipes(
-            HTBottleType.entries.associate { bottleType: HTBottleType ->
-                Pair(
-                    RecipeKey(RagiumAPI.id("/${RagiumConstants.DRAINING}/potion_bottle/${bottleType.serializedName}")),
-                    RTPotionBottleDrainingRecipe(bottleType)
-                )
+        RagiumRecipeLookups.CENTRIFUGING.addRecipes(
+            buildMap {
+                HTBottleType.entries.forEach { bottleType: HTBottleType ->
+                    this[RagiumAPI.id("/${RagiumConstants.CENTRIFUGING}/potion_bottle/${bottleType.serializedName}")] =
+                        RTPotionBottleCentrifugingRecipe(bottleType)
+                }
+                this[RagiumAPI.id("/${RagiumConstants.CENTRIFUGING}/bucket")] = RTBucketCentrifugingRecipe
             }
         )
         RagiumRecipeLookups.FILLING.addRecipes(
-            HTBottleType.entries.associate { bottleType: HTBottleType ->
-                Pair(
-                    RecipeKey(RagiumAPI.id("/${RagiumConstants.FILLING}/potion_bottle/${bottleType.serializedName}")),
-                    RTPotionBottleFillingRecipe(bottleType)
-                )
+            buildMap {
+                HTBottleType.entries.forEach { bottleType: HTBottleType ->
+                    this[RagiumAPI.id("/${RagiumConstants.FILLING}/potion_bottle/${bottleType.serializedName}")] =
+                        RTPotionBottleFillingRecipe(bottleType)
+                }
+                this[RagiumAPI.id("/${RagiumConstants.FILLING}/bucket")] = RTBucketFillingRecipe
             }
         )
 
@@ -206,7 +216,7 @@ internal data object RagiumCommon {
                 }
         }
 
-        RagiumRecipeLookups.BREWING.addSubLookup { _ ->
+        RagiumRecipeLookups.MIXING.addSubLookup { _ ->
             val mixes: List<PotionBrewing.Mix<Potion>> = HTPhysicalSideHelper.getPotionBrewing()
                 ?.let(PotionBrewing::potionMixes)
                 ?: return@addSubLookup sequenceOf()
@@ -225,7 +235,7 @@ internal data object RagiumCommon {
                     RagiumRecipeBuilders.brewing {
                         itemIngredient { +CompoundIngredient(ingredients) }
                         fluidIngredient { +HTPotionFluidIngredient(potionFrom) }
-                        result { +potionTo }
+                        fluidResult { +potionTo }
                         recipeId replace potionTo.getKeyOrThrow()
                             .identifier()
                             .modifyPath { "${it}_from_${potionFrom.getKeyOrThrow().identifier().toDebugFileName()}" }

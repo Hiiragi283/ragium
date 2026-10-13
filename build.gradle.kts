@@ -281,6 +281,7 @@ dependencies {
     "localRuntime"(libs.bundles.common.runtime)
 
     "libClientCompileOnly"(libs.jei.api)
+    "libClientImplementation"(libs.jade)
     "clientRuntimeOnly"(libs.jei)
 }
 

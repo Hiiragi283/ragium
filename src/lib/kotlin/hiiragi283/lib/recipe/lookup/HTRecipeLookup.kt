@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.RecipeType
 /**
  * レシピの一覧を提供するインターフェースです。
  *
- * 参照 : [Mekanism - IMekanismRecipeTypeProvider](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/recipe/IMekanismRecipeTypeProvider.java)
+ * 参照 : [Mekanism - IMekanismRecipeTypeProvider](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/recipe/IMekanismRecipeTypeProvider.java)
  * @param RECIPE レシピのクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0

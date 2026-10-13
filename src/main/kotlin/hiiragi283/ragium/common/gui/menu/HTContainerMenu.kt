@@ -8,7 +8,7 @@ import hiiragi283.lib.gui.sync.HTSyncableMenu
 import hiiragi283.lib.gui.sync.HTSyncablePayload
 import hiiragi283.lib.gui.sync.HTSyncableSlot
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.gui.HTContainerItemSlot
+import hiiragi283.ragium.common.gui.HTWidgetSlot
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import it.unimi.dsi.fastutil.ints.IntArrayList
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
@@ -26,7 +26,7 @@ import net.neoforged.neoforge.world.inventory.StackCopySlot
 /**
  * Hiiragi Seriesで使用される[AbstractContainerMenu]の拡張クラスです。
  *
- * 参照 : [Mekanism - MekanismContainer](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/inventory/container/MekanismContainer.java)
+ * 参照 : [Mekanism - MekanismContainer](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/inventory/container/MekanismContainer.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
@@ -90,7 +90,7 @@ abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val i
     private val inventorySlots: MutableList<Int> = IntArrayList()
 
     override fun addSlot(slot: Slot): Slot {
-        if (slot is HTContainerItemSlot) {
+        if (slot is HTWidgetSlot) {
             widgetSlots += slotCount
             val slotType: HTBackgroundType = slot.slotType
             if (slotType.isInput || !slotType.isOutput) {

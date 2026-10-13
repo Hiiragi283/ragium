@@ -8,6 +8,8 @@ import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.client.integration.jade.HTMachineOwnerProvider
+import hiiragi283.ragium.client.integration.jade.HTMachineUpgradeProvider
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.effect.RagiumMobEffects
@@ -29,6 +31,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addAdvancement(RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS, "機械・加工・機械", "マシンケーシング（機械加工）を作る")
         addAdvancement(RagiumAdvancementKeys.ASSEMBLER, "ラヴェ（ン）ジャーズ，アッセンブル！", "組立機を手に入れる")
         addAdvancement(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "粉砕機を手に入れる")
+        addAdvancement(RagiumAdvancementKeys.UPGRADE_STATION, "ビルドアップ", "強化ステーションを手に入れる")
 
         addAdvancement(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "マシンケーシング（熱）を作る")
         addAdvancement(RagiumAdvancementKeys.BLACK_STEEL, "黒い咆哮", "黒鋼をつくる")
@@ -54,9 +57,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.CHEMICAL_REACTOR, "化学反応槽")
         add(RagiumBlocks.MIXER, "混合機")
 
-        add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.PLANTER, "栽培機")
 
+        add(RagiumBlocks.BLENDER, "大型混合機")
         add(RagiumBlocks.ELECTROLYZER, "電解機")
         add(RagiumBlocks.PRECISION_ASSEMBLER, "精密組立機")
         add(RagiumBlocks.SCANNER, "レーザースキャナ")
@@ -68,8 +71,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.TANK, "可変タンク")
         add(RagiumBlocks.POTION_TANK, "ポーションタンク")
         add(RagiumBlocks.VOID_TANK, "廃棄タンク")
-        add(RagiumBlocks.CREATIVE_BATTERY, "クリエイティブ用バッテリー")
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブ用タンク")
+
+        add(RagiumBlocks.CREATIVE_BATTERY, "クリエイティブ用バッテリー")
+
+        add(RagiumBlocks.UPGRADE_STATION, "強化ステーション")
 
         add(RagiumBlocks.MACHINE_CASING, "機械ケーシング")
         // Damage Type
@@ -147,6 +153,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.PLATE_MOLD, "板の鋳型")
         add(RagiumItems.MEMORY_DISC, "メモリーディスク")
 
+        add(RagiumItems.BASIC_UPGRADE, "基本アップグレード")
+        add(RagiumItems.ADVANCED_UPGRADE, "発展アップグレード")
+        add(RagiumItems.ELITE_UPGRADE, "精鋭アップグレード")
+        add(RagiumItems.ULTIMATE_UPGRADE, "究極アップグレード")
+
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "凍傷")
         add(RagiumMobEffects.CHEMICAL_BURN, "化学火傷")
@@ -165,10 +176,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         // Recipe Type
         addRecipeType(RagiumRecipeTypes.ASSEMBLING, "組立")
+        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "遠心分離")
         addRecipeType(RagiumRecipeTypes.COMPRESSING, "圧縮")
         addRecipeType(RagiumRecipeTypes.CRUSHING, "粉砕")
         addRecipeType(RagiumRecipeTypes.CUTTING, "切断")
-        addRecipeType(RagiumRecipeTypes.DRAINING, "排出")
         addRecipeType(RagiumRecipeTypes.FILLING, "封入")
 
         addRecipeType(RagiumRecipeTypes.ALLOYING, "合金")
@@ -178,12 +189,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.REFINING, "蒸留")
 
         addRecipeType(RagiumRecipeTypes.BATHING, "化学洗浄")
-        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "遠心分離")
+        addRecipeType(RagiumRecipeTypes.EXCHANGING, "交換")
         addRecipeType(RagiumRecipeTypes.MIXING, "混合")
         addRecipeType(RagiumRecipeTypes.REACTING, "化学反応")
         addRecipeType(RagiumRecipeTypes.WASHING, "洗浄")
 
-        addRecipeType(RagiumRecipeTypes.BREWING, "醸造")
         addRecipeType(RagiumRecipeTypes.PLANTING, "栽培")
 
         addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
@@ -229,8 +239,15 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.TOOLTIPS_CARBON, "ダイヤモンド鉱石からドロップします")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"スキャン済み: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_SPEED, $$"処理速度: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_EFFICIENCY, $$"エネルギー効率: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_CAPACITY, $$"エネルギー容量: %1$s")
 
         addDataTranslations()
+
+        // Jade Config
+        addJadeConfig(HTMachineOwnerProvider.ID, "Machine Owner")
+        addJadeConfig(HTMachineUpgradeProvider.ID, "Machine Upgrades")
     }
 
     private fun addDataTranslations() {
@@ -250,6 +267,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.IRON, "鉄")
         addFromKey(RagiumChemicals.COPPER, "銅")
         addFromKey(RagiumChemicals.GOLD, "金")
+        addFromKey(RagiumChemicals.MERCURY, "水銀")
 
         addFromKey(RagiumChemicals.HYDROXIDE, "水酸化物")
         addFromKey(RagiumChemicals.WATER, "水")
@@ -273,10 +291,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.SULFURIC_ACID, "硫酸")
         addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "塩化水素")
 
+        addFromKey(RagiumChemicals.POTASSIUM_CARBONATE, "炭酸カリウム")
         addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "硝酸カリウム")
         addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "炭酸カルシウム")
         addFromKey(RagiumChemicals.CALCIUM_OXIDE, "酸化カルシウム")
         addFromKey(RagiumChemicals.CALCIUM_SULFATE, "硫酸カルシウム")
+
+        addFromKey(RagiumChemicals.MERCURY_SULFIDE, "硫化水銀")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "水素")
 
@@ -297,5 +318,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumElements.COPPER, "銅")
 
         addFromKey(RagiumElements.GOLD, "金")
+        addFromKey(RagiumElements.MERCURY, "水銀")
     }
 }

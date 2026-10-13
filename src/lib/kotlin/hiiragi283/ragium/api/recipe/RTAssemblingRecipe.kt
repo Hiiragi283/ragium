@@ -5,8 +5,8 @@ import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
@@ -16,7 +16,7 @@ class RTAssemblingRecipe(
     result: HTItemResult,
     progressData: HTProgressData
 ) : HTTripleItemToItemRecipe.Basic(ingredient, extras, result, progressData),
-    HTSerializableRecipe<RecipeInput> {
+    HTSerializableRecipe<HTRecipeInput> {
     companion object {
         @JvmField
         val SERIALIZER: RecipeSerializer<RTAssemblingRecipe> =

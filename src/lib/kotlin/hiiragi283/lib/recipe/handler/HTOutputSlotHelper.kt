@@ -32,7 +32,6 @@ data object HTOutputSlotHelper {
             if (stack.isEmpty) return TakeResult.NONE
             val (resource: FluidResource, amount: Int) = stack.toResourcePair()
             return when (tank.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)) {
-                0 -> TakeResult.NONE
                 amount -> TakeResult.FULL
                 else -> TakeResult.PARTIALLY
             }
@@ -54,7 +53,6 @@ data object HTOutputSlotHelper {
             if (stack.isEmpty) return TakeResult.NONE
             val (resource: ItemResource, amount: Int) = stack.toResourcePair()
             return when (slot.insert(resource, amount, transaction, HTTransferAccess.INTERNAL)) {
-                0 -> TakeResult.NONE
                 amount -> TakeResult.FULL
                 else -> TakeResult.PARTIALLY
             }
@@ -79,7 +77,6 @@ data object HTOutputSlotHelper {
                 if (inserted == amount) break
             }
             return when (inserted) {
-                0 -> TakeResult.NONE
                 amount -> TakeResult.FULL
                 else -> TakeResult.PARTIALLY
             }

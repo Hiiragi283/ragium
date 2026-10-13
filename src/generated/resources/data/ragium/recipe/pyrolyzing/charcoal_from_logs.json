@@ -1,16 +1,18 @@
 {
   "type": "ragium:pyrolyzing",
-  "fluid_result": {
-    "amount": 250,
-    "id": "ragium:wood_tar"
-  },
   "ingredient": {
     "count": 1,
     "items": "#minecraft:logs_that_burn"
   },
-  "item_result": {
-    "count": 1,
-    "id": "minecraft:charcoal"
+  "result": {
+    "fluid": {
+      "amount": 250,
+      "id": "ragium:wood_tar"
+    },
+    "item": {
+      "count": 1,
+      "id": "minecraft:charcoal"
+    }
   },
   "time": 100
 }

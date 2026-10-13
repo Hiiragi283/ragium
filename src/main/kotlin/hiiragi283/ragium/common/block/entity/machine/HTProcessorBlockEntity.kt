@@ -2,8 +2,6 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTSlotHelper
-import hiiragi283.lib.gui.sync.HTIntSyncSlot
-import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.HTRecipeFactory
 import hiiragi283.lib.recipe.base.HTProgressRecipe
@@ -12,6 +10,7 @@ import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.ragium.api.config.HTEnergyConfig
+import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.gui.widget.HTProgressWidget
@@ -72,8 +71,6 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
     //    Ticking    //
 
-    fun modifyTime(time: Int): Int = time
-
     final override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean =
         recipeHandler.tick(level)
 
@@ -91,16 +88,9 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
         abstract fun getConfig(): HTEnergyConfig
 
-        fun updateAndGetProgress(time: Int): Int {
-            // if (isCreative()) return 0
-            handler.currentEnergyPerTick = handler.baseEnergyPerTick
-            // modifyValue(HTUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it } TODO
-            return handler.currentEnergyPerTick * modifyTime(time)
-        }
-
         fun addEnergySlot(widgetHolder: HTWidgetHolder, x: Int, y: Int) {
             widgetHolder += HTEnergySlotWidget(handler, x, y)
-            widgetHolder.track(HTIntSyncSlot.create(handler::amount, handler::setAmount), HTSyncType.S2C)
+            widgetHolder.track(handler)
         }
 
         override fun writeValue(output: ValueOutput) {
@@ -119,9 +109,12 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             HTRecipeHandler<INPUT, OUTPUT, RECIPE>()
             where RECIPE : HTRecipeFactory<INPUT, OUTPUT>,
                   RECIPE : HTProgressRecipe<INPUT> {
-            final override fun getMaxProgress(recipe: RECIPE, input: INPUT): Int = recipe.getProgressData(input)
-                .getProcessTime(handler.currentEnergyPerTick)
-                .let(::updateAndGetProgress)
+            final override fun getMaxProgress(recipe: RECIPE, input: INPUT): Int {
+                handler.currentEnergyPerTick =
+                    HTMachineUpgradeHelper.modifyEfficiency(components(), handler.baseEnergyPerTick)
+                val time: Int = recipe.getProgressData(input).getProcessTime(handler.currentEnergyPerTick)
+                return handler.currentEnergyPerTick * HTMachineUpgradeHelper.modifyTime(components(), time)
+            } // TODO
 
             final override fun getProgress(): Int = handler.consume()
         }

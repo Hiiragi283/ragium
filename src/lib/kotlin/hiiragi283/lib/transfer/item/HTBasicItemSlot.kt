@@ -5,6 +5,7 @@ import hiiragi283.lib.transfer.HTStackResourceSlot
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
+import hiiragi283.lib.transfer.access.HTItemSlotItemAccess
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.storage.ValueInput
@@ -13,6 +14,13 @@ import net.neoforged.neoforge.transfer.item.ItemResource
 import java.util.function.BiPredicate
 import java.util.function.Predicate
 
+/**
+ * [アイテム][ItemResource]向けの[HTStackResourceSlot]の実装クラスです。
+ *
+ * 参照 : [Mekanism - BasicInventorySlot](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/inventory/slot/BasicInventorySlot.java)
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 open class HTBasicItemSlot(
     capacity: Int,
     canExtract: BiPredicate<ItemResource, HTTransferAccess>,
@@ -87,6 +95,11 @@ open class HTBasicItemSlot(
         true -> capacity
         false -> minOf(resource.maxStackSize, capacity)
     }
+
+    /**
+     * @since 26.1.9
+     */
+    val itemAccess = HTItemSlotItemAccess(this, HTTransferAccess.INTERNAL)
 
     //    ValueIOSerializable    //
 

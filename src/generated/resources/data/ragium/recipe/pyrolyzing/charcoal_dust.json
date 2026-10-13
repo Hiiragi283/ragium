@@ -1,16 +1,18 @@
 {
   "type": "ragium:pyrolyzing",
-  "fluid_result": {
-    "amount": 250,
-    "id": "ragium:wood_tar"
-  },
   "ingredient": {
     "count": 4,
     "items": "#c:dusts/wood"
   },
-  "item_result": {
-    "count": 1,
-    "id": "ragium:charcoal_dust"
+  "result": {
+    "fluid": {
+      "amount": 250,
+      "id": "ragium:wood_tar"
+    },
+    "item": {
+      "count": 1,
+      "id": "ragium:charcoal_dust"
+    }
   },
   "time": 100
 }

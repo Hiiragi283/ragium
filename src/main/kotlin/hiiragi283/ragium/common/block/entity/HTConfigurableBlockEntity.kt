@@ -15,7 +15,7 @@ import net.minecraft.world.level.storage.ValueOutput
 /**
  * 搬入出の面を制御可能な[HTBlockEntity]の拡張クラスです。
  *
- * 参考 : [Mekanism - TileEntityConfigurableMachine](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/tile/prefab/TileEntityConfigurableMachine.java)
+ * 参考 : [Mekanism - TileEntityConfigurableMachine](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/tile/prefab/TileEntityConfigurableMachine.java)
  */
 abstract class HTConfigurableBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(type, pos, state),

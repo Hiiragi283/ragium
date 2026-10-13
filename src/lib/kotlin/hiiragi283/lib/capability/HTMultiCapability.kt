@@ -17,7 +17,7 @@ import java.util.function.BooleanSupplier
 /**
  * 複数のキャパビリティを束ねるインターフェース
  *
- * 参照 : [Mekanism - IMultiTypeCapability](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/capabilities/IMultiTypeCapability.java)
+ * 参照 : [Mekanism - MultiTypeCapability](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/MultiTypeCapability.java)
  * @param HANDLER キャパビリティのインターフェース
  * @author Hiiragi Tsubasa
  * @since 26.1.0

@@ -6,7 +6,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 /**
  * 液体に対応した[RecipeInput]の拡張インターフェースです。
  *
- * 参照 : [Mekanism - FluidRecipeInput](https://github.com/mekanism/Mekanism/blob/26.1/src/api/java/mekanism/api/recipes/vanilla_input/FluidRecipeInput.java)
+ * 参照 : [Mekanism - FluidRecipeInput](https://github.com/mekanism/Mekanism/blob/26.3/src/api/java/mekanism/api/recipes/vanilla_input/FluidRecipeInput.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

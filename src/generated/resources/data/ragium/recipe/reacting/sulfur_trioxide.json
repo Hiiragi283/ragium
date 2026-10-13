@@ -1,16 +1,20 @@
 {
   "type": "ragium:reacting",
-  "fluid_result": {
-    "amount": 1000,
-    "id": "ragium:sulfur_trioxide"
-  },
-  "primary_ingredient": {
-    "amount": 1000,
-    "fluids": "#c:sulfur_dioxide"
-  },
-  "secondary_ingredient": {
-    "amount": 500,
-    "fluids": "#c:oxygen"
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:sulfur_dioxide"
+    },
+    {
+      "amount": 500,
+      "fluids": "#c:oxygen"
+    }
+  ],
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:sulfur_trioxide"
+    }
   },
   "time": 200
 }

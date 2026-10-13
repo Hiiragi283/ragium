@@ -13,9 +13,10 @@ import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
+import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.HTMachineUpgrade
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.text.HTItemTooltip
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -46,6 +47,7 @@ data object RagiumItems {
         REGISTER.addAlias("steel_nugget", "sooty_iron_nugget")
         REGISTER.addAlias("coal_coke_dust", "carbon_dust")
         REGISTER.addAlias("circuit_chip", "silicon_chip")
+        REGISTER.addAlias("bio_machine_parts", "resource_machine_parts")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -174,7 +176,7 @@ data object RagiumItems {
 
     // val ALCLAD_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alclad_plate")
 
-    // Bio
+    // Resource
     @JvmField
     val BEESWAX: HTSimpleDeferredItem = REGISTER.registerItem("beeswax", ::HoneycombItem)
 
@@ -243,7 +245,7 @@ data object RagiumItems {
 
     // Chemical
 
-    // Bio
+    // Resource
 
     // Electronics
     @JvmField
@@ -259,6 +261,28 @@ data object RagiumItems {
             toolType.createPath(RagiumMaterial.Alloy.SOOTY_IRON),
             { prop: Item.Properties -> toolType.createItem(prop, RagiumToolMaterials.SOOTY_IRON, 6f, -3.1f, -2f, -1f) }
         )
+    }
+
+    //    Upgrades    //
+
+    @JvmField
+    val BASIC_UPGRADE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("basic_upgrade") {
+        it.component(RagiumDataComponents.UPGRADE, HTMachineUpgrade(speed = 25, efficiency = 25, capacity = 25))
+    }
+
+    @JvmField
+    val ADVANCED_UPGRADE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("advanced_upgrade") {
+        it.component(RagiumDataComponents.UPGRADE, HTMachineUpgrade(speed = 50, efficiency = 50, capacity = 50))
+    }
+
+    @JvmField
+    val ELITE_UPGRADE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("elite_upgrade") {
+        it.component(RagiumDataComponents.UPGRADE, HTMachineUpgrade(speed = 75, efficiency = 75, capacity = 75))
+    }
+
+    @JvmField
+    val ULTIMATE_UPGRADE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ultimate_upgrade") {
+        it.component(RagiumDataComponents.UPGRADE, HTMachineUpgrade(speed = 100, efficiency = 100, capacity = 100))
     }
 
     //    Events    //

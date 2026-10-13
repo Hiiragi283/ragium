@@ -10,6 +10,7 @@ data object RagiumConstants {
 
     // Mechanical
     const val ASSEMBLER = "assembler"
+    const val CENTRIFUGE = "centrifuge"
     const val COMPRESSOR = "compressor"
     const val CRUSHER = "crusher"
     const val CUTTING_MACHINE = "cutting_machine"
@@ -23,17 +24,16 @@ data object RagiumConstants {
     const val SMELTER = "smelter"
 
     // Chemical
-    const val CENTRIFUGE = "centrifuge"
     const val CHEMICAL_BATH = "chemical_bath"
     const val CHEMICAL_REACTOR = "chemical_reactor"
     const val MIXER = "mixer"
     const val WASHER = "washer"
 
-    // Bio
-    const val BREWERY = "brewery"
+    // Resource
     const val PLANTER = "planter"
 
     // Electronics
+    const val BLENDER = "blender"
     const val ELECTROLYZER = "electrolyzer"
     const val PRECISION_ASSEMBLER = "precision_assembler"
     const val SCANNER = "scanner"
@@ -47,10 +47,10 @@ data object RagiumConstants {
 
     // Mechanical
     const val ASSEMBLING = "assembling"
+    const val CENTRIFUGING = "centrifuging"
     const val COMPRESSING = "compressing"
     const val CRUSHING = "crushing"
     const val CUTTING = "cutting"
-    const val DRAINING = "draining"
     const val FILLING = "filling"
 
     // Heat
@@ -62,12 +62,12 @@ data object RagiumConstants {
 
     // Chemical
     const val BATHING = "bathing"
-    const val CENTRIFUGING = "centrifuging"
+    const val EXCHANGING = "exchanging"
     const val MIXING = "mixing"
     const val REACTING = "reacting"
     const val WASHING = "washing"
 
-    // Bio
+    // Resource
     const val BREWING = "brewing"
     const val PLANTING = "planting"
 

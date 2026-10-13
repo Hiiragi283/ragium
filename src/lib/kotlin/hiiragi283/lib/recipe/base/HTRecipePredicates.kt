@@ -1,15 +1,9 @@
 package hiiragi283.lib.recipe.base
 
 import hiiragi283.lib.recipe.HTRecipePredicate
-import hiiragi283.lib.recipe.input.HTFluidRecipeInput
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
-import hiiragi283.lib.recipe.input.HTLocationRecipeInput
-import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.input.getItemOrEmpty
 import net.minecraft.world.item.ItemInstance
-import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.SingleRecipeInput
-import net.minecraft.world.level.block.state.pattern.BlockInWorld
 import net.neoforged.neoforge.common.util.TriPredicate
 import net.neoforged.neoforge.fluids.FluidInstance
 import java.util.function.BiPredicate
@@ -25,11 +19,10 @@ data object HTRecipePredicates {
 
     /**
      * 1種類の入力を判定する[HTRecipePredicate]の拡張インターフェースです。
-     * @param INPUT [RecipeInput]を継承したクラス
      * @param INPUT_A 入力を判定するクラス
      */
-    interface SingleInput<INPUT : RecipeInput, INPUT_A : Any> :
-        HTRecipePredicate<INPUT>,
+    interface SingleInput<INPUT_A : Any> :
+        HTRecipePredicate<HTRecipeInput>,
         Predicate<INPUT_A> {
         override fun test(input: INPUT_A): Boolean
     }
@@ -37,34 +30,26 @@ data object HTRecipePredicates {
     /**
      * 1種類の液体を判定する[SingleInput]の拡張インターフェースです。
      */
-    fun interface SingleFluid : SingleInput<HTSingleFluidRecipeInput, FluidInstance> {
-        override fun matches(input: HTSingleFluidRecipeInput): Boolean = test(input.fluid)
+    fun interface SingleFluid : SingleInput<FluidInstance> {
+        override fun matches(input: HTRecipeInput): Boolean = test(input.getFluidOrEmpty(0))
     }
 
     /**
      * 1種類のアイテムを判定する[SingleInput]の拡張インターフェースです。
      */
-    fun interface SingleItem : SingleInput<SingleRecipeInput, ItemInstance> {
-        override fun matches(input: SingleRecipeInput): Boolean = test(input.item())
-    }
-
-    /**
-     * @since 26.1.8
-     */
-    fun interface Located : SingleInput<HTLocationRecipeInput, BlockInWorld> {
-        override fun matches(input: HTLocationRecipeInput): Boolean = test(input.blockInWorld)
+    fun interface SingleItem : SingleInput<ItemInstance> {
+        override fun matches(input: HTRecipeInput): Boolean = test(input.getItemOrEmpty(0))
     }
 
     //    Double Input    //
 
     /**
      * 2種類の入力を判定する[HTRecipePredicate]の拡張インターフェースです。
-     * @param INPUT [RecipeInput]を継承したクラス
      * @param INPUT_A 1番目の入力を判定するクラス
      * @param INPUT_B 2番目の入力を判定するクラス
      */
-    interface DoubleInput<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any> :
-        HTRecipePredicate<INPUT>,
+    interface DoubleInput<INPUT_A : Any, INPUT_B : Any> :
+        HTRecipePredicate<HTRecipeInput>,
         BiPredicate<INPUT_A, INPUT_B> {
         override fun test(first: INPUT_A, second: INPUT_B): Boolean
     }
@@ -72,40 +57,35 @@ data object HTRecipePredicates {
     /**
      * 1種類のアイテムと液体を判定する[DoubleInput]の拡張インターフェースです。
      */
-    fun interface ItemAndFluid : DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance> {
-        override fun matches(input: HTItemAndFluidRecipeInput): Boolean {
-            val (item: ItemInstance, fluid: FluidInstance) = input
-            return test(item, fluid)
-        }
+    fun interface ItemAndFluid : DoubleInput<ItemInstance, FluidInstance> {
+        override fun matches(input: HTRecipeInput): Boolean = test(input.getItemOrEmpty(0), input.getFluidOrEmpty(0))
     }
 
     /**
      * 2種類のアイテムを判定する[DoubleInput]の拡張インターフェースです。
      */
-    fun interface DoubleItem : DoubleInput<RecipeInput, ItemInstance, ItemInstance> {
-        override fun matches(input: RecipeInput): Boolean = test(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
+    fun interface DoubleItem : DoubleInput<ItemInstance, ItemInstance> {
+        override fun matches(input: HTRecipeInput): Boolean = test(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
     }
 
     /**
      * 2種類の液体を判定する[DoubleInput]の拡張インターフェースです。
      * @since 26.1.5
      */
-    fun interface DoubleFluid : DoubleInput<HTFluidRecipeInput, FluidInstance, FluidInstance> {
-        override fun matches(input: HTFluidRecipeInput): Boolean =
-            test(input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
+    fun interface DoubleFluid : DoubleInput<FluidInstance, FluidInstance> {
+        override fun matches(input: HTRecipeInput): Boolean = test(input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
     }
 
     //    Triple Input    //
 
     /**
      * 3種類の入力を判定する[HTRecipePredicate]の拡張インターフェースです。
-     * @param INPUT [RecipeInput]を継承したクラス
      * @param INPUT_A 1番目の入力を判定するクラス
      * @param INPUT_B 2番目の入力を判定するクラス
      * @param INPUT_C 3番目の入力を判定するクラス
      */
-    interface TripleInput<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, INPUT_C : Any> :
-        HTRecipePredicate<INPUT>,
+    interface TripleInput<INPUT_A : Any, INPUT_B : Any, INPUT_C : Any> :
+        HTRecipePredicate<HTRecipeInput>,
         TriPredicate<INPUT_A, INPUT_B, INPUT_C> {
         override fun test(first: INPUT_A, second: INPUT_B, third: INPUT_C): Boolean
     }
@@ -114,16 +94,25 @@ data object HTRecipePredicates {
      * 2種類のアイテムと1種類の液体を判定する[TripleInput]の拡張インターフェースです。
      * @since 26.1.8
      */
-    fun interface DoubleItemAndFluid : TripleInput<HTFluidRecipeInput, ItemInstance, ItemInstance, FluidInstance> {
-        override fun matches(input: HTFluidRecipeInput): Boolean =
+    fun interface DoubleItemAndFluid : TripleInput<ItemInstance, ItemInstance, FluidInstance> {
+        override fun matches(input: HTRecipeInput): Boolean =
             test(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getFluidOrEmpty(0))
+    }
+
+    /**
+     * 1種類のアイテムと2種類の液体を判定する[TripleInput]の拡張インターフェースです。
+     * @since 26.1.9
+     */
+    fun interface ItemAndDoubleFluid : TripleInput<ItemInstance, FluidInstance, FluidInstance> {
+        override fun matches(input: HTRecipeInput): Boolean =
+            test(input.getItemOrEmpty(0), input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
     }
 
     /**
      * 3種類のアイテムを判定する[TripleInput]の拡張インターフェースです。
      */
-    fun interface TripleItem : TripleInput<RecipeInput, ItemInstance, ItemInstance, ItemInstance> {
-        override fun matches(input: RecipeInput): Boolean =
+    fun interface TripleItem : TripleInput<ItemInstance, ItemInstance, ItemInstance> {
+        override fun matches(input: HTRecipeInput): Boolean =
             test(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
     }
 }

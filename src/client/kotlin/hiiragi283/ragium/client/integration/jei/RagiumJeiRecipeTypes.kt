@@ -1,9 +1,8 @@
 package hiiragi283.ragium.client.integration.jei
 
+import hiiragi283.lib.integration.jei.HTJeiRecipeHolder
 import hiiragi283.lib.integration.jei.HTRecipeHolderType
 import hiiragi283.lib.integration.jei.IRecipeType
-import hiiragi283.lib.recipe.HTRecipeHolder
-import hiiragi283.lib.recipe.base.HTFluidToDoubleFluidRecipe
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
@@ -11,6 +10,7 @@ import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
+import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
@@ -22,11 +22,14 @@ import hiiragi283.ragium.api.recipe.RTWashingRecipe
 data object RagiumJeiRecipeTypes {
     @JvmStatic
     private inline fun <reified T : Any> create(name: String): HTRecipeHolderType<T> =
-        IRecipeType<HTRecipeHolder<T>>(RagiumAPI.id(name))
+        IRecipeType<HTJeiRecipeHolder<T>>(RagiumAPI.id(name))
 
     // Mechanical
     @JvmField
     val ASSEMBLING: HTRecipeHolderType<HTTripleItemToItemRecipe.Basic> = create(RagiumConstants.ASSEMBLING)
+
+    @JvmField
+    val CENTRIFUGING: HTRecipeHolderType<RTCentrifugingRecipe.Basic> = create(RagiumConstants.CENTRIFUGING)
 
     @JvmField
     val COMPRESSING: HTRecipeHolderType<HTItemToRecipe.BasicItem> = create(RagiumConstants.COMPRESSING)
@@ -36,9 +39,6 @@ data object RagiumJeiRecipeTypes {
 
     @JvmField
     val CUTTING: HTRecipeHolderType<HTItemToDoubleItemRecipe.Basic> = create(RagiumConstants.CUTTING)
-
-    @JvmField
-    val DRAINING: HTRecipeHolderType<HTItemToRecipe.BasicItemAndFluid> = create(RagiumConstants.DRAINING)
 
     @JvmField
     val FILLING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicItem> = create(RagiumConstants.FILLING)
@@ -64,21 +64,15 @@ data object RagiumJeiRecipeTypes {
     val BATHING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicItem> = create(RagiumConstants.BATHING)
 
     @JvmField
-    val CENTRIFUGING: HTRecipeHolderType<HTFluidToDoubleFluidRecipe.Basic> = create(RagiumConstants.CENTRIFUGING)
-
-    @JvmField
     val MIXING: HTRecipeHolderType<RTMixingRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
-    val REACTING: HTRecipeHolderType<RTReactingRecipe.Basic> = create(RagiumConstants.REACTING)
+    val REACTING: HTRecipeHolderType<RTReactingRecipe> = create(RagiumConstants.REACTING)
 
     @JvmField
     val WASHING: HTRecipeHolderType<RTWashingRecipe> = create(RagiumConstants.WASHING)
 
-    // Bio
-    @JvmField
-    val BREWING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicFluid> = create(RagiumConstants.BREWING)
-
+    // Resource
     @JvmField
     val PLANTING: HTRecipeHolderType<HTItemToDoubleItemRecipe.Basic> = create(RagiumConstants.PLANTING)
 

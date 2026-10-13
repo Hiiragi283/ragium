@@ -42,6 +42,10 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.ASSEMBLING, RTAssemblingRecipe.SERIALIZER)
 
     @JvmField
+    val CENTRIFUGING: RecipeSerializer<RTCentrifugingRecipe.Basic> =
+        register(RagiumConstants.CENTRIFUGING, RTCentrifugingRecipe.Basic.SERIALIZER)
+
+    @JvmField
     val COMPRESSING: RecipeSerializer<RTCompressingRecipe> =
         register(RagiumConstants.COMPRESSING, RTCompressingRecipe.SERIALIZER)
 
@@ -52,10 +56,6 @@ data object RagiumRecipeSerializers {
     @JvmField
     val CUTTING: RecipeSerializer<RTCuttingRecipe> =
         register(RagiumConstants.CUTTING, RTCuttingRecipe.SERIALIZER)
-
-    @JvmField
-    val DRAINING: RecipeSerializer<RTDrainingRecipe> =
-        register(RagiumConstants.DRAINING, RTDrainingRecipe.SERIALIZER)
 
     @JvmField
     val FILLING: RecipeSerializer<RTFillingRecipe> =
@@ -88,26 +88,22 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.BATHING, RTBathingRecipe.SERIALIZER)
 
     @JvmField
-    val CENTRIFUGING: RecipeSerializer<RTCentrifugingRecipe> =
-        register(RagiumConstants.CENTRIFUGING, RTCentrifugingRecipe.SERIALIZER)
+    val EXCHANGING: RecipeSerializer<RTExchangingRecipe> =
+        register(RagiumConstants.EXCHANGING, RTExchangingRecipe.SERIALIZER)
 
     @JvmField
     val MIXING: RecipeSerializer<RTMixingRecipe> =
         register(RagiumConstants.MIXING, RTMixingRecipe.SERIALIZER)
 
     @JvmField
-    val REACTING: RecipeSerializer<RTReactingRecipe.Basic> =
-        register(RagiumConstants.REACTING, RTReactingRecipe.Basic.SERIALIZER)
+    val REACTING: RecipeSerializer<RTReactingRecipe> =
+        register(RagiumConstants.REACTING, RTReactingRecipe.SERIALIZER)
 
     @JvmField
     val WASHING: RecipeSerializer<RTWashingRecipe> =
         register(RagiumConstants.WASHING, RTWashingRecipe.SERIALIZER)
 
-    // Bio
-    @JvmField
-    val BREWING: RecipeSerializer<RTBrewingRecipe> =
-        register(RagiumConstants.BREWING, RTBrewingRecipe.SERIALIZER)
-
+    // Resource
     @JvmField
     val PLANTING: RecipeSerializer<RTPlantingRecipe> =
         register(RagiumConstants.PLANTING, RTPlantingRecipe.SERIALIZER)

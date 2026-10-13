@@ -17,6 +17,7 @@
               "include": [
                 "minecraft:custom_name",
                 "ragium:owner_id",
+                "ragium:upgrades",
                 "ragium:fluid"
               ],
               "source": "block_entity"

@@ -5,6 +5,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.data.recipe.builder.HTTripleItemToItemRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
@@ -13,7 +14,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeInput
 
 /**
  * 2種類または3種類のアイテムから1種類のアイテムを作成するレシピを表すインターフェースです。
@@ -23,7 +23,7 @@ import net.minecraft.world.item.crafting.RecipeInput
 interface HTTripleItemToItemRecipe :
     HTRecipePredicates.TripleItem,
     HTRecipeFactories.TripleItem<ItemStack>,
-    HTProgressRecipe<RecipeInput> {
+    HTProgressRecipe<HTRecipeInput> {
 
     fun asDoubleInput(): HTDoubleItemToItemRecipe? = null
 
@@ -37,7 +37,7 @@ interface HTTripleItemToItemRecipe :
         val result: HTItemResult,
         override val progressData: HTProgressData
     ) : HTTripleItemToItemRecipe,
-        HTProgressRecipe.Simple<RecipeInput> {
+        HTProgressRecipe.Simple<HTRecipeInput> {
         companion object {
             @JvmStatic
             fun <RECIPE : Basic> codec(factory: HTTripleItemToItemRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> =
@@ -72,20 +72,15 @@ interface HTTripleItemToItemRecipe :
         val secondary: HTItemIngredient get() = extras.head
         val tertiary: HTItemIngredient? get() = extras.getOrNull(1)
 
-        override fun asDoubleInput(): HTDoubleItemToItemRecipe? {
-            if (tertiary != null) return null
-            return object : HTDoubleItemToItemRecipe, HTProgressRecipe.Simple<RecipeInput> by this {
-                override fun test(first: ItemInstance, second: ItemInstance): Boolean =
-                    ingredient.test(first) && secondary.test(second)
+        override fun asDoubleInput(): HTDoubleItemToItemRecipe.Basic? = when {
+            tertiary != null -> null
 
-                override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
-
-                override fun getMatchingStack(
-                    first: ItemInstance,
-                    second: ItemInstance
-                ): Pair<ItemInstance, ItemInstance> =
-                    ingredient.getMatchingStack(first) to secondary.getMatchingStack(second)
-            }
+            else -> HTDoubleItemToItemRecipe.Basic(
+                this.ingredient,
+                this.secondary,
+                this.result,
+                this.progressData
+            )
         }
 
         override fun test(first: ItemInstance, second: ItemInstance, third: ItemInstance): Boolean =

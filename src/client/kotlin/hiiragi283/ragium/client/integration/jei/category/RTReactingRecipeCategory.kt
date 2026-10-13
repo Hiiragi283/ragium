@@ -14,41 +14,41 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class RTReactingRecipeCategory(guiHelper: IGuiHelper) :
-    HTHolderRecipeCategory<RTReactingRecipe.Basic>(
+    HTHolderRecipeCategory<RTReactingRecipe>(
         RagiumJeiRecipeTypes.REACTING,
         RagiumRecipeTypes.REACTING,
         guiHelper.createDrawableItemLike(RagiumBlocks.CHEMICAL_REACTOR),
-        18 * 8,
+        18 * 9,
         18 * 1,
-        RTReactingRecipe.Basic.CODEC
+        RTReactingRecipe.CODEC
     ) {
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTReactingRecipe.Basic, focuses: IFocusGroup) {
+    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTReactingRecipe, focuses: IFocusGroup) {
         // inputs
         builder
             .addInputSlot(getPosition(0), getPosition(0))
-            .add(recipe.primary)
+            .add(recipe.fluidIngredients.head)
             .setSlotBackground(HTBackgroundType.INPUT)
-        builder
-            .addInputSlot(getPosition(2), getPosition(0))
-            .add(recipe.secondary)
+        val secondInput: IRecipeSlotBuilder = builder
+            .addInputSlot(getPosition(1), getPosition(0))
             .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
+        recipe.fluidIngredients.getOrNull(1)?.let(secondInput::add)
+        builder
+            .addInputSlot(getPosition(3), getPosition(0))
+            .add(recipe.catalyst)
+            .setSlotBackground(HTBackgroundType.NONE)
         // outputs
-        val fluidOutput: IRecipeSlotBuilder = builder
-            .addOutputSlot(getPosition(5), getPosition(0))
-            .setSlotBackground(HTBackgroundType.OUTPUT)
         val itemOutput: IRecipeSlotBuilder = builder
-            .addOutputSlot(getPosition(7), getPosition(0))
+            .addOutputSlot(getPosition(6), getPosition(0))
+            .setSlotBackground(HTBackgroundType.OUTPUT)
+        val fluidOutput: IRecipeSlotBuilder = builder
+            .addOutputSlot(getPosition(8), getPosition(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
         recipe.result.content.mapLeft(itemOutput::add).mapRight(fluidOutput::add)
     }
 
-    override fun setupRecipeExtras(
-        builder: IRecipeExtrasBuilder,
-        recipe: RTReactingRecipe.Basic,
-        focuses: IFocusGroup
-    ) {
-        builder.addRecipePlus(getPosition(1))
-        builder.addRecipeArrow(recipe).setPosition(getPosition(3.25), getPosition(0))
-        builder.addRecipePlus(getPosition(6))
+    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTReactingRecipe, focuses: IFocusGroup) {
+        builder.addRecipePlus(getPosition(2))
+        builder.addRecipeArrow(recipe).setPosition(getPosition(4.25), getPosition(0))
+        builder.addRecipePlus(getPosition(7))
     }
 }

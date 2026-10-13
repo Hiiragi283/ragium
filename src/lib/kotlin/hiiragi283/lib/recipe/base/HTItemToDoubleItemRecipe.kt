@@ -5,6 +5,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -14,7 +15,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
 
 /**
  * 1種類のアイテムから2種類のアイテムを作成するレシピを表すインターフェースです。
@@ -24,7 +24,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 interface HTItemToDoubleItemRecipe :
     HTRecipePredicates.SingleItem,
     HTRecipeFactories.SingleItemTo<Pair<ItemStack, ItemStack>>,
-    HTProgressRecipe<SingleRecipeInput> {
+    HTProgressRecipe<HTRecipeInput> {
 
     fun asSingleOutput(): HTItemToItemRecipe = object : HTItemToItemRecipe {
         override fun test(input: ItemInstance): Boolean = this@HTItemToDoubleItemRecipe.test(input)
@@ -34,7 +34,7 @@ interface HTItemToDoubleItemRecipe :
 
         override fun apply(input: ItemInstance): ItemStack = this@HTItemToDoubleItemRecipe.apply(input).first
 
-        override fun getProgressData(input: SingleRecipeInput): HTProgressData =
+        override fun getProgressData(input: HTRecipeInput): HTProgressData =
             this@HTItemToDoubleItemRecipe.getProgressData(input)
     }
 
@@ -47,7 +47,7 @@ interface HTItemToDoubleItemRecipe :
         val results: Nel<HTItemResult>,
         override val progressData: HTProgressData
     ) : HTItemToDoubleItemRecipe,
-        HTProgressRecipe.Simple<SingleRecipeInput> {
+        HTProgressRecipe.Simple<HTRecipeInput> {
         companion object {
             @JvmStatic
             fun <RECIPE : Basic> codec(factory: HTItemToDoubleItemRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> =

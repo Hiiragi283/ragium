@@ -19,7 +19,7 @@ fun ModelTemplate.createBlock(
     block: HTSimpleValueWithKey<*>,
     textures: TextureMapping,
     output: BiConsumer<Identifier, ModelInstance>
-): Identifier = this.create(block.idOrThrow.blockId.withSuffix(this.suffix.getOrElse { "" }), textures, output)
+): Identifier = this.create(block.id().blockId.withSuffix(this.suffix.getOrElse { "" }), textures, output)
 
 /**
  * `models/item`配下のモデルJSONを生成します。
@@ -30,4 +30,4 @@ fun ModelTemplate.createItem(
     item: HTSimpleValueWithKey<*>,
     textures: TextureMapping,
     output: BiConsumer<Identifier, ModelInstance>
-): Identifier = this.create(item.idOrThrow.itemId.withSuffix(this.suffix.getOrElse { "" }), textures, output)
+): Identifier = this.create(item.id().itemId.withSuffix(this.suffix.getOrElse { "" }), textures, output)

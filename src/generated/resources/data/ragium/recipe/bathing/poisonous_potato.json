@@ -1,15 +1,17 @@
 {
   "type": "ragium:bathing",
-  "fluid_ingredient": {
-    "amount": 250,
-    "fluids": {
-      "neoforge:ingredient_type": "ragium:potion",
-      "potions": "minecraft:poison"
+  "ingredient": {
+    "fluid": {
+      "amount": 250,
+      "fluids": {
+        "neoforge:ingredient_type": "ragium:potion",
+        "potions": "minecraft:poison"
+      }
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:crops/potato"
     }
-  },
-  "item_ingredient": {
-    "count": 1,
-    "items": "#c:crops/potato"
   },
   "result": {
     "count": 1,

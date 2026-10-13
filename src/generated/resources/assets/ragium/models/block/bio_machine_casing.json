@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_top",
-  "textures": {
-    "side": "ragium:block/machine/bio_side",
-    "top": "ragium:block/machine_casing"
-  }
-}

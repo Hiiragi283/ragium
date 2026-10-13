@@ -14,7 +14,7 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.material.Fluids
-import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
 import kotlin.jvm.optionals.getOrNull
 
@@ -96,48 +96,56 @@ data object HTPotionHelper {
     // Filled Bottle
 
     @JvmStatic
-    fun createFilled(getter: DataComponentGetter, bottleType: HTBottleType): ItemStackTemplate =
+    fun createFilled(getter: DataComponentGetter, bottleType: HTBottleType): Result<ItemStackTemplate> =
         createFilled(getContentsOrEmpty(getter), bottleType)
 
     @JvmStatic
-    fun createFilled(potion: Holder<Potion>, bottleType: HTBottleType): ItemStackTemplate =
+    fun createFilled(potion: Holder<Potion>, bottleType: HTBottleType): Result<ItemStackTemplate> =
         createFilled(PotionContents(potion), bottleType)
 
     @JvmStatic
-    fun createFilled(contents: PotionContents, bottleType: HTBottleType): ItemStackTemplate =
-        bottleType.filledItem.toTemplate(patch = createPotionPatch(contents))!!
+    fun createFilled(contents: PotionContents, bottleType: HTBottleType): Result<ItemStackTemplate> =
+        bottleType.filledItem.asTemplate(patch = createPotionPatch(contents))
 
     // Bucket
 
     @JvmStatic
-    fun createBuket(getter: DataComponentGetter): ItemStackTemplate? = getContentsNotEmpty(getter)?.let(::createBuket)
+    fun createBuket(getter: DataComponentGetter): Result<ItemStackTemplate> =
+        getContentsOrEmpty(getter).let(::createBuket)
 
     @Suppress("DEPRECATION")
     @JvmStatic
-    fun createBuket(potion: Holder<Potion>): ItemStackTemplate = createBuket(PotionContents(potion))!!
+    fun createBuket(potion: Holder<Potion>): Result<ItemStackTemplate> = createBuket(PotionContents(potion))
 
     @JvmStatic
-    fun createBuket(contents: PotionContents): ItemStackTemplate? = when {
-        isEmpty(contents) -> null
-        contents.`is`(Potions.WATER) -> ItemStackTemplate(Items.WATER_BUCKET)
-        else -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.toTemplate(patch = createPotionPatch(contents))
+    fun createBuket(contents: PotionContents): Result<ItemStackTemplate> = when {
+        isEmpty(contents) -> Result.failure(IllegalStateException("Could not create Filled Bucket for empty potion"))
+
+        contents.`is`(Potions.WATER) -> Result.success(ItemStackTemplate(Items.WATER_BUCKET))
+
+        else -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.asTemplate(
+            patch = createPotionPatch(contents)
+        )
     }
 
     //    FluidStack    //
 
     @JvmStatic
-    fun createFluid(getter: DataComponentGetter, amount: Int = FluidType.BUCKET_VOLUME): FluidStack? =
-        getContentsNotEmpty(getter)?.let { createFluid(it, amount) }
+    fun createFluid(getter: DataComponentGetter, amount: Int = FluidType.BUCKET_VOLUME): Result<FluidStackTemplate> =
+        createFluid(getContentsOrEmpty(getter), amount)
 
     @Suppress("DEPRECATION")
     @JvmStatic
-    fun createFluid(potion: Holder<Potion>, amount: Int = FluidType.BUCKET_VOLUME): FluidStack =
-        createFluid(PotionContents(potion), amount)!!
+    fun createFluid(potion: Holder<Potion>, amount: Int = FluidType.BUCKET_VOLUME): Result<FluidStackTemplate> = when {
+        potion.`is`(Potions.WATER) -> Result.success(FluidStackTemplate(Fluids.WATER, amount))
+        else -> HTPotionFluidAccess.INSTANCE.fluidContent.asTemplate(amount, createPotionPatch(potion))
+    }
 
     @JvmStatic
-    fun createFluid(contents: PotionContents, amount: Int = FluidType.BUCKET_VOLUME): FluidStack? = when {
-        isEmpty(contents) -> null
-        contents.`is`(Potions.WATER) -> FluidStack(Fluids.WATER, amount)
-        else -> HTPotionFluidAccess.INSTANCE.fluidContent.toStack(amount, createPotionPatch(contents))
-    }
+    fun createFluid(contents: PotionContents, amount: Int = FluidType.BUCKET_VOLUME): Result<FluidStackTemplate> =
+        when {
+            isEmpty(contents) -> Result.failure(IllegalStateException("Could not create FluidStack for empty potion"))
+            contents.`is`(Potions.WATER) -> Result.success(FluidStackTemplate(Fluids.WATER, amount))
+            else -> HTPotionFluidAccess.INSTANCE.fluidContent.asTemplate(amount, createPotionPatch(contents))
+        }
 }

@@ -107,8 +107,15 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
 
     fun buildSynthetic(): HTRecipeHolder<RECIPE> = build("/$prefix/")
 
-    private fun build(prefix: String): HTRecipeHolder<RECIPE> = HTRecipeHolder(
-        recipeId.defaultId().withPrefix(prefix).let(::RecipeKey),
+    private fun build(prefix: String): HTRecipeHolder<RECIPE> = build(prefix, ::HTRecipeHolder)
+
+    /**
+     * @since 26.1.9
+     */
+    fun <R> buildSynthetic(factory: (Identifier, RECIPE) -> R): R = build("/$prefix/", factory)
+
+    private inline fun <R> build(prefix: String, factory: (Identifier, RECIPE) -> R): R = factory(
+        recipeId.defaultId().withPrefix(prefix),
         createRecipe()
     )
 

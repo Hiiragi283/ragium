@@ -10,7 +10,7 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 /**
  * [HTResourceSlot]向けの[HTProxyHandler]の拡張クラスです。
  *
- * 参照 : [Mekanism - ProxyResourceHandler](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/proxy/ProxyResourceHandler.java)
+ * 参照 : [Mekanism - ProxyResourceHandler](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/proxy/ProxyResourceHandler.java)
  * @param RESOURCE 保持するリソースのクラス
  * @param side 現在の向き
  * @param holder 搬入出の制御

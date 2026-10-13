@@ -5,7 +5,7 @@ import net.minecraft.core.Direction
 /**
  * 搬出入を制御するインターフェースです。
  *
- * 参照 : [Mekanism - IHolder](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/holder/IHolder.java)
+ * 参照 : [Mekanism - IHolder](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/holder/IHolder.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

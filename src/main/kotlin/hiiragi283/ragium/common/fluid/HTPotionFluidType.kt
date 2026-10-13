@@ -5,11 +5,12 @@ import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.text.Text
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTPotionFluidType(properties: Properties) : HTFluidType(properties) {
     override fun getDescription(stack: FluidStack): Text = HTPotionHelper.getPotionName(stack, HTBottleType.DEFAULT)
 
     override fun getBucket(stack: FluidStack): ItemStack =
-        HTPotionHelper.createBuket(stack)?.create() ?: super.getBucket(stack)
+        HTPotionHelper.createBuket(stack).fold(ItemStackTemplate::create) { super.getBucket(stack) }
 }

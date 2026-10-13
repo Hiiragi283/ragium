@@ -28,7 +28,7 @@ import java.util.function.Consumer
 import kotlin.math.roundToInt
 
 /**
- * 参照 : [Mekanism - StorageUtils](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/util/StorageUtils.java)
+ * 参照 : [Mekanism - StorageUtils](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/util/StorageUtils.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
@@ -58,7 +58,7 @@ data object HTStorageHelper {
     }
 
     /**
-     * 参照 : [Mekanism - MekanismUtils.redstoneLevelFromContents](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/util/MekanismUtils.java)
+     * 参照 : [Mekanism - MekanismUtils.redstoneLevelFromContents](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/util/MekanismUtils.java)
      */
     @JvmStatic
     fun calculateRedstoneLevel(amount: Int, capacity: Int): Int =
@@ -70,7 +70,7 @@ data object HTStorageHelper {
 
     @JvmStatic
     fun calculateRedstoneLevel(handler: HTEnergyHandler): Int =
-        Mth.lerpDiscrete(handler.filledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+        Mth.lerpDiscrete(handler.filledLevelAsFloat, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
 
     //    Energy    //
 
@@ -118,7 +118,7 @@ data object HTStorageHelper {
             isCreative -> HTCommonTranslation.STORED_FE.translate(HTCommonTranslation.INFINITE)
 
             else -> HTCommonTranslation.STORED_FE.translate(
-                HTCommonTranslation.FRACTION.translate(handler.amount, handler.capacity)
+                HTCommonTranslation.FRACTION.translate(handler.amountAsInt, handler.amountAsLong)
             )
         }.let(consumer::accept)
     }
@@ -132,8 +132,7 @@ data object HTStorageHelper {
     @JvmStatic
     private fun getEnergyDurability(container: ItemStack): Double {
         val handler: HTEnergyHandler = HTEnergyCapabilities.getHandler(ItemAccess.forStack(container)) ?: return 1.0
-        val bestRatio: Double = handler.filledLevel.toDouble()
-        return 1 - bestRatio
+        return 1 - handler.filledLevelAsDouble
     }
 
     //    Fluid    //

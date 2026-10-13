@@ -8,6 +8,7 @@ import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -25,7 +26,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemInstance
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
@@ -34,7 +34,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER.get(), pos, state) {
-    private val cache: HTRecipeCache<SingleRecipeInput, HTItemToFluidRecipe> =
+    private val cache: HTRecipeCache<HTRecipeInput, HTItemToFluidRecipe> =
         HTRecipeCache(RagiumRecipeLookups.MELTING)
 
     override fun writeValue(output: ValueOutput) {
@@ -49,32 +49,29 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<SingleRecipeInput, FluidStack, HTItemToFluidRecipe>() {
+        recipeHandler = object : EnergizedHandler<HTRecipeInput, FluidStack, HTItemToFluidRecipe>() {
             private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTMelterBlockEntity.inputSlot) }
             private val outputSlot: HTOutputSlot<FluidStack> by lazy {
                 HTOutputSlotHelper.forFluid(this@HTMelterBlockEntity.outputTank)
             }
 
-            override fun createInput(): SingleRecipeInput = SingleRecipeInput(inputSlot.getStoredInput())
+            override fun createInput(): HTRecipeInput = HTRecipeInput(inputSlot.getStoredInput(), customKeys)
 
-            override fun findRecipe(level: ServerLevel, input: SingleRecipeInput): HTItemToFluidRecipe? =
+            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): HTItemToFluidRecipe? =
                 cache.findFirstRecipe(input, level)
 
-            override fun canComplete(
-                recipe: HTItemToFluidRecipe,
-                input: SingleRecipeInput,
-                output: FluidStack
-            ): Boolean = useTransaction { transaction: Transaction ->
-                val inputConsume: ItemInstance = recipe.getMatchingStack(input.item())
-                when {
-                    inputSlot.use(inputConsume, transaction).failed -> false
-                    else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
-                }
-            }
-
-            override fun onComplete(recipe: HTItemToFluidRecipe, input: SingleRecipeInput, output: FluidStack) {
+            override fun canComplete(recipe: HTItemToFluidRecipe, input: HTRecipeInput, output: FluidStack): Boolean =
                 useTransaction { transaction: Transaction ->
-                    inputSlot.use(recipe.getMatchingStack(input.item()), transaction)
+                    val inputConsume: ItemInstance = recipe.getMatchingStack(input)
+                    when {
+                        inputSlot.use(inputConsume, transaction).failed -> false
+                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+                    }
+                }
+
+            override fun onComplete(recipe: HTItemToFluidRecipe, input: HTRecipeInput, output: FluidStack) {
+                useTransaction { transaction: Transaction ->
+                    inputSlot.use(recipe.getMatchingStack(input), transaction)
                     outputSlot.take(output, transaction)
                     transaction.commit()
                 }

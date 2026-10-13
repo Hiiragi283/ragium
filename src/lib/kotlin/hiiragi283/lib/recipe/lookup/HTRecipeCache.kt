@@ -1,11 +1,12 @@
 package hiiragi283.lib.recipe.lookup
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.HTRecipePredicate
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.util.Either
+import hiiragi283.lib.util.left
+import hiiragi283.lib.util.right
 import hiiragi283.lib.util.unwrap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.Recipe
@@ -26,14 +27,6 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(
     private val lookup: HTRecipeLookup<RECIPE>
 ) : ValueIOSerializable {
     private var lastRecipe: Either<RecipeKey, HTRecipeHolder<RECIPE>>? = null
-
-    /**
-     * レシピを取得します。
-     * @param input レシピの入力
-     * @return [input]に一致する最初のレシピ
-     * @since 26.1.1
-     */
-    fun findFirstRecipe(input: INPUT): RECIPE? = findFirstRecipe(input, HTPhysicalSideHelper.createLookupContext())
 
     /**
      * レシピを取得します。
@@ -65,7 +58,7 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(
         lastRecipe?.onLeft { lastKey: RecipeKey ->
             lookup.getAllRecipes(context)
                 .firstOrNull { (key: RecipeKey, _) -> lastKey == key }
-                ?.let { Either.Right(it) }
+                ?.right()
                 .let { lastRecipe = it }
         }
         // 現在のキャッシュがレシピを保持している場合，現在の入力に一致するか判定
@@ -79,7 +72,7 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(
         // キャッシュがない場合，すべてのレシピから検索する
         return lookup.getAllRecipes(context)
             .firstOrNull { (_, recipe: RECIPE) -> recipe.matches(input) }
-            ?.also { lastRecipe = Either.Right(it) }
+            ?.also { lastRecipe = it.right() }
     }
 
     override fun serialize(output: ValueOutput) {
@@ -87,7 +80,7 @@ class HTRecipeCache<INPUT : RecipeInput, RECIPE : HTRecipePredicate<INPUT>>(
     }
 
     override fun deserialize(input: ValueInput) {
-        input.read(HTConstants.ID, Recipe.KEY_CODEC).ifPresent { lastRecipe = Either.Left(it) }
+        input.read(HTConstants.ID, Recipe.KEY_CODEC).ifPresent { lastRecipe = it.left() }
     }
 
     private fun getRecipeKey(): RecipeKey? = lastRecipe?.map(HTRecipeHolder<*>::key)?.unwrap()

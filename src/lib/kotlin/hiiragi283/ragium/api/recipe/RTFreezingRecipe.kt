@@ -8,7 +8,7 @@ import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -26,8 +26,8 @@ data class RTFreezingRecipe(
     val result: HTItemResult,
     override val progressData: HTProgressData
 ) : HTItemAndFluidToItemRecipe,
-    HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
-    HTSerializableRecipe<HTItemAndFluidRecipeInput> {
+    HTProgressRecipe.Simple<HTRecipeInput>,
+    HTSerializableRecipe<HTRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTFreezingRecipe> = HTCodecs.recordMap { instance ->

@@ -30,7 +30,7 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
      * @param type このエントリの依存関係
      */
     fun add(value: HTSimpleValueWithKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> =
-        add(value.keyOrThrow, type)
+        add(value.key(), type)
 
     /**
      * 指定した要素をタグに追加します。

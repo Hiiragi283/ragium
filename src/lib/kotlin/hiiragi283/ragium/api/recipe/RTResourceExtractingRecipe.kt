@@ -2,11 +2,11 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.recipe.HTRecipeFactory
+import hiiragi283.lib.recipe.HTRecipePredicate
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
-import hiiragi283.lib.recipe.base.HTRecipeFactories
-import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTBiomeCondition
 import hiiragi283.lib.recipe.input.HTLocationRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
@@ -22,8 +22,8 @@ class RTResourceExtractingRecipe(
     val condition: HTBiomeCondition,
     val result: HTFluidResult,
     override val progressData: HTProgressData
-) : HTRecipePredicates.Located,
-    HTRecipeFactories.Located<FluidStack>,
+) : HTRecipePredicate<HTLocationRecipeInput>,
+    HTRecipeFactory<HTLocationRecipeInput, FluidStack>,
     HTProgressRecipe.Simple<HTLocationRecipeInput>,
     HTSerializableRecipe<HTLocationRecipeInput> {
     companion object {
@@ -51,9 +51,12 @@ class RTResourceExtractingRecipe(
         val SERIALIZER: RecipeSerializer<RTResourceExtractingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(input: BlockInWorld): Boolean = condition.test(input.level.getBiome(input.pos))
+    override fun matches(input: HTLocationRecipeInput): Boolean {
+        val blockInWorld: BlockInWorld = input.blockInWorld
+        return condition.test(blockInWorld.level.getBiome(blockInWorld.pos))
+    }
 
-    override fun apply(input: BlockInWorld): FluidStack = result.create()
+    override fun produce(input: HTLocationRecipeInput): FluidStack = result.create()
 
     override fun getSerializer(): RecipeSerializer<RTResourceExtractingRecipe> =
         RagiumRecipeSerializers.RESOURCE_EXTRACTING

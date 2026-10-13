@@ -9,7 +9,7 @@ import hiiragi283.lib.recipe.handler.HTFluidInputTank
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
@@ -35,7 +35,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTItemAndFluidToFluidBlockEntity(
     type: BlockEntityType<*>,
-    private val cache: HTRecipeCache<HTItemAndFluidRecipeInput, HTItemAndFluidToFluidRecipe>,
+    private val cache: HTRecipeCache<HTRecipeInput, HTItemAndFluidToFluidRecipe>,
     pos: BlockPos,
     state: BlockState
 ) : HTProcessorBlockEntity.Energized(type, pos, state) {
@@ -59,7 +59,7 @@ abstract class HTItemAndFluidToFluidBlockEntity(
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
         recipeHandler =
-            object : EnergizedHandler<HTItemAndFluidRecipeInput, FluidStack, HTItemAndFluidToFluidRecipe>() {
+            object : EnergizedHandler<HTRecipeInput, FluidStack, HTItemAndFluidToFluidRecipe>() {
                 private val inputTank: HTFluidInputTank by lazy {
                     HTFluidInputTank(this@HTItemAndFluidToFluidBlockEntity.inputTank)
                 }
@@ -70,21 +70,18 @@ abstract class HTItemAndFluidToFluidBlockEntity(
                     HTOutputSlotHelper.forFluid(this@HTItemAndFluidToFluidBlockEntity.outputTank)
                 }
 
-                override fun createInput(): HTItemAndFluidRecipeInput =
-                    HTItemAndFluidRecipeInput(inputSlot.getStoredInput(), inputTank.getStoredInput())
+                override fun createInput(): HTRecipeInput =
+                    HTRecipeInput(inputSlot.getStoredInput(), inputTank.getStoredInput(), customKeys)
 
-                override fun findRecipe(
-                    level: ServerLevel,
-                    input: HTItemAndFluidRecipeInput
-                ): HTItemAndFluidToFluidRecipe? = cache.findFirstRecipe(input, level)
+                override fun findRecipe(level: ServerLevel, input: HTRecipeInput): HTItemAndFluidToFluidRecipe? =
+                    cache.findFirstRecipe(input, level)
 
                 override fun canComplete(
                     recipe: HTItemAndFluidToFluidRecipe,
-                    input: HTItemAndFluidRecipeInput,
+                    input: HTRecipeInput,
                     output: FluidStack
                 ): Boolean = useTransaction { transaction: Transaction ->
-                    val (itemInput: ItemInstance, fluidInput: FluidInstance) =
-                        recipe.getMatchingStack(input.item, input.fluid)
+                    val (itemInput: ItemInstance, fluidInput: FluidInstance) = recipe.getMatchingStack(input)
                     when {
                         inputSlot.use(itemInput, transaction).failed -> false
                         inputTank.use(fluidInput, transaction).failed -> false
@@ -92,14 +89,9 @@ abstract class HTItemAndFluidToFluidBlockEntity(
                     }
                 }
 
-                override fun onComplete(
-                    recipe: HTItemAndFluidToFluidRecipe,
-                    input: HTItemAndFluidRecipeInput,
-                    output: FluidStack
-                ) {
+                override fun onComplete(recipe: HTItemAndFluidToFluidRecipe, input: HTRecipeInput, output: FluidStack) {
                     useTransaction { transaction: Transaction ->
-                        val (itemInput: ItemInstance, fluidInput: FluidInstance) =
-                            recipe.getMatchingStack(input.item, input.fluid)
+                        val (itemInput: ItemInstance, fluidInput: FluidInstance) = recipe.getMatchingStack(input)
                         inputSlot.use(itemInput, transaction)
                         inputTank.use(fluidInput, transaction)
                         outputTank.take(output, transaction)

@@ -23,7 +23,7 @@ abstract class HTBlockLootTableProvider(
     private val rawBlocks: Sequence<HTSimpleValueWithKey<Block>>
 ) : BlockLootSubProvider(emptySet(), FeatureFlags.REGISTRY.allFlags(), registries) {
     final override fun getKnownBlocks(): Iterable<Block> = rawBlocks
-        .filter { block: HTSimpleValueWithKey<Block> -> block.idOrNull?.namespace == modId }
+        .filter { block: HTSimpleValueWithKey<Block> -> block.id().namespace == modId }
         .mapNotNull(HTSimpleValueWithKey<Block>::getOrNull)
         .filter { block: Block -> block.lootTable.isPresent }
         .toList()

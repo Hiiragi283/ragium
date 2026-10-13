@@ -3,9 +3,9 @@ package hiiragi283.lib.recipe.ingredient
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.HTPhysicalSideHelper
-import hiiragi283.lib.fluid.FluidStack
 import hiiragi283.lib.item.alchemy.HTPotionFluidAccess
 import hiiragi283.lib.item.alchemy.HTPotionHelper
+import hiiragi283.lib.recipe.display.SlotDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.fold
@@ -18,7 +18,6 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
@@ -59,16 +58,12 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>) : FluidIngred
         Stream.of(HTPotionFluidAccess.INSTANCE.fluidContent.sourceHolder)
 
     override fun display(): SlotDisplay = potions
-        .stream()
+        .asSequence()
         .filter { it.value().isEnabled(HTPhysicalSideHelper.getFeatureFlags()) }
-        .map { potion: Holder<Potion> ->
-            when (potion) {
-                Potions.WATER -> FluidStack(Fluids.WATER)
-                else -> HTPotionHelper.createFluid(potion)
-            }
-        }.map(::FluidStackSlotDisplay)
-        .toList()
-        .let(SlotDisplay::Composite)
+        .map(HTPotionHelper::createFluid)
+        .mapNotNull { it.getOrNull()?.create() }
+        .map(::FluidStackSlotDisplay)
+        .let(::SlotDisplay)
 
     override fun isSimple(): Boolean = false
 

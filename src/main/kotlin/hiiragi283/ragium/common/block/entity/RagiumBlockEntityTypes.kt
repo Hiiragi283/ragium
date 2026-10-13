@@ -14,7 +14,7 @@ import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTBlenderBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
@@ -27,13 +27,15 @@ import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPrecisionAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.misc.HTUpgradeStationBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTFluidOutputBusBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTPotionTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
-import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -49,6 +51,8 @@ data object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun register(event: IEventBus) {
+        REGISTER.addAlias("brewery", "mixer")
+
         event.addListener(::addSupportedBlocks)
         event.addListener(::registerCapabilities)
 
@@ -93,6 +97,14 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.MELTER, ::HTMelterBlockEntity)
 
     @JvmField
+    val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> =
+        registerTick(RagiumConstants.PYROLYZER, ::HTPyrolyzerBlockEntity)
+
+    @JvmField
+    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> =
+        registerTick(RagiumConstants.REFINERY, ::HTRefineryBlockEntity)
+
+    @JvmField
     val SMELTER: HTDeferredBlockEntityType<HTSmelterBlockEntity> =
         registerTick(RagiumConstants.SMELTER, ::HTSmelterBlockEntity)
 
@@ -105,16 +117,16 @@ data object RagiumBlockEntityTypes {
     val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> =
         registerTick(RagiumConstants.MIXER, ::HTMixerBlockEntity)
 
-    // Bio
-    @JvmField
-    val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> =
-        registerTick(RagiumConstants.BREWERY, ::HTBreweryBlockEntity)
-
+    // Resource
     @JvmField
     val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
         registerTick(RagiumConstants.PLANTER, ::HTPlanterBlockEntity)
 
     // Electronics
+    @JvmField
+    val BLENDER: HTDeferredBlockEntityType<HTBlenderBlockEntity> =
+        registerTick(RagiumConstants.BLENDER, ::HTBlenderBlockEntity)
+
     @JvmField
     val ELECTROLYZER: HTDeferredBlockEntityType<HTElectrolyzerBlockEntity> =
         registerTick(RagiumConstants.ELECTROLYZER, ::HTElectrolyzerBlockEntity)
@@ -136,6 +148,7 @@ data object RagiumBlockEntityTypes {
 
     //    Storage    //
 
+    // Tank
     @JvmField
     val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> =
         registerTick(HTConstants.TANK, ::HTTankBlockEntity)
@@ -145,12 +158,19 @@ data object RagiumBlockEntityTypes {
         registerTick("potion_tank", ::HTPotionTankBlockEntity)
 
     @JvmField
+    val CREATIVE_TANK: HTDeferredBlockEntityType<HTCreativeTankBlockEntity> =
+        registerTick("creative_tank", ::HTCreativeTankBlockEntity)
+
+    // Battery
+    @JvmField
     val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
         registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
 
+    //    Misc    //
+
     @JvmField
-    val CREATIVE_TANK: HTDeferredBlockEntityType<HTCreativeTankBlockEntity> =
-        registerTick("creative_tank", ::HTCreativeTankBlockEntity)
+    val UPGRADE_STATION: HTDeferredBlockEntityType<HTUpgradeStationBlockEntity> =
+        registerTick("upgrade_station", ::HTUpgradeStationBlockEntity)
 
     //    Events    //
 
@@ -178,7 +198,7 @@ data object RagiumBlockEntityTypes {
         fun <BE : HTProcessorBlockEntity.Energized> registerProcessor(type: BlockEntityType<BE>) {
             registerBlockEntity(type)
             event.registerBlockEntity(HTEnergyCapabilities.block, type) { processor: BE, _ ->
-                processor.handler.asForge()
+                processor.handler
             }
         }
 
@@ -191,14 +211,16 @@ data object RagiumBlockEntityTypes {
         registerProcessor(ALLOY_SMELTER.get())
         registerProcessor(FREEZER.get())
         registerProcessor(MELTER.get())
+        registerProcessor(PYROLYZER.get())
+        registerProcessor(REFINERY.get())
         registerProcessor(SMELTER.get())
 
         registerProcessor(CHEMICAL_BATH.get())
         registerProcessor(MIXER.get())
 
-        registerProcessor(BREWERY.get())
         registerProcessor(PLANTER.get())
 
+        registerProcessor(BLENDER.get())
         registerProcessor(ELECTROLYZER.get())
         registerProcessor(PRECISION_ASSEMBLER.get())
 
@@ -208,19 +230,13 @@ data object RagiumBlockEntityTypes {
         // Storage
         registerBlockEntity(TANK.get())
         registerBlockEntity(POTION_TANK.get())
-
-        event.registerBlock(
-            HTFluidCapabilities.block,
-            { _, _, _, _, _ ->
-                HTVoidTankBlock.VOIDING_HANDLER
-            },
-            RagiumBlocks.VOID_TANK.getOrThrow()
-        )
+        registerBlockEntity(CREATIVE_TANK.get())
 
         event.registerBlockEntity(
             HTEnergyCapabilities.block,
             CREATIVE_BATTERY.get()
         ) { _, _ -> InfiniteEnergyHandler.INSTANCE }
-        registerBlockEntity(CREATIVE_TANK.get())
+        // Misc
+        registerBlockEntity(UPGRADE_STATION.get())
     }
 }

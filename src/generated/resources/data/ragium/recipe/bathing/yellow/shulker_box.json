@@ -1,0 +1,24 @@
+{
+  "type": "ragium:bathing",
+  "ingredient": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:dyes/yellow"
+    },
+    "item": {
+      "count": 1,
+      "items": {
+        "type": "neoforge:and",
+        "values": [
+          "#minecraft:shulker_boxes",
+          "#c:dyed/white"
+        ]
+      }
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:yellow_shulker_box"
+  },
+  "time": 50
+}

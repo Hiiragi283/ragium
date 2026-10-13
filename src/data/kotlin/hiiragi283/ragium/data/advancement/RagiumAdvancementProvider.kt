@@ -8,9 +8,9 @@ import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
@@ -27,7 +27,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         key: AdvancementKey,
         parentKey: AdvancementKey,
         item: HTSimpleDeferredItem,
-        type: AdvancementType = AdvancementType.GOAL
+        type: AdvancementType = AdvancementType.TASK
     ) {
         HTAdvancementBuilder.create(key) {
             +parentKey
@@ -39,10 +39,18 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         }.save(exporter)
     }
 
-    private fun createSimple(key: AdvancementKey, parentKey: AdvancementKey, item: HTSimpleDeferredBlockAndItem) {
+    private fun createSimple(
+        key: AdvancementKey,
+        parentKey: AdvancementKey,
+        item: HTSimpleDeferredBlockAndItem,
+        type: AdvancementType = AdvancementType.TASK
+    ) {
         HTAdvancementBuilder.create(key) {
             +parentKey
-            display { +item }
+            display {
+                +item
+                this.type = type
+            }
             inventory(getHasName(item)) { predicate { items { +item } } }
         }.save(exporter)
     }
@@ -96,6 +104,12 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             RagiumAdvancementKeys.CRUSHER,
             RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
             RagiumBlocks.CRUSHER
+        )
+        createSimple(
+            RagiumAdvancementKeys.UPGRADE_STATION,
+            RagiumAdvancementKeys.SOOTY_IRON,
+            RagiumBlocks.UPGRADE_STATION,
+            AdvancementType.GOAL
         )
         // Heat
         createSimple(

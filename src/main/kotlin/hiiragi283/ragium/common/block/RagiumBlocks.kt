@@ -23,14 +23,15 @@ import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.HTFluidStorageBlock
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock
 import hiiragi283.ragium.common.block.storage.HTPotionTankBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
@@ -68,6 +69,8 @@ data object RagiumBlocks {
     @JvmStatic
     fun register(eventBus: IEventBus) {
         REGISTER.addAlias("steel_block", "sooty_iron_block")
+        REGISTER.addAlias("brewery", "mixer")
+        REGISTER.addAlias("bio_machine_casing", "resource_machine_casing")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -94,7 +97,7 @@ data object RagiumBlocks {
         factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> BLOCK,
         properties: BlockBehaviour.Properties = machine()
     ): HTBasicDeferredBlockAndItem<BLOCK> =
-        REGISTER.registerSimple(type.idOrThrow.path, { factory(type, properties.setId(it)) })
+        REGISTER.registerSimple(type.id.path, { factory(type, properties.setId(it)) })
 
     @JvmStatic
     private fun <BLOCK : Block, ITEM : Item> registerMachine(
@@ -103,7 +106,7 @@ data object RagiumBlocks {
         itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
         properties: BlockBehaviour.Properties = machine()
     ): HTDeferredBlockAndItem<BLOCK, ITEM> =
-        REGISTER.register(type.idOrThrow.path, { factory(type, properties.setId(it)) }, itemFactory)
+        REGISTER.register(type.id.path, { factory(type, properties.setId(it)) }, itemFactory)
 
     @JvmStatic
     private fun registerMachine(
@@ -272,11 +275,11 @@ data object RagiumBlocks {
 
     @JvmField
     val PYROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerFakeMachine(RagiumConstants.PYROLYZER)
+        registerMachine(RagiumBlockEntityTypes.PYROLYZER)
 
     @JvmField
     val REFINERY: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerFakeMachine(RagiumConstants.REFINERY)
+        registerMachine(RagiumBlockEntityTypes.REFINERY)
 
     @JvmField
     val SMELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
@@ -295,16 +298,16 @@ data object RagiumBlocks {
     val MIXER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.MIXER)
 
-    // Bio
-    @JvmField
-    val BREWERY: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerMachine(RagiumBlockEntityTypes.BREWERY)
-
+    // Resource
     @JvmField
     val PLANTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.PLANTER)
 
     // Electronics
+    @JvmField
+    val BLENDER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.BLENDER)
+
     @JvmField
     val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.ELECTROLYZER)
@@ -343,9 +346,9 @@ data object RagiumBlocks {
                 put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
                 put(HTMachineType.CHEMICAL, MIXER)
 
-                put(HTMachineType.BIO, BREWERY)
-                put(HTMachineType.BIO, PLANTER)
+                put(HTMachineType.RESOURCE, PLANTER)
 
+                put(HTMachineType.ELECTRONICS, BLENDER)
                 put(HTMachineType.ELECTRONICS, ELECTROLYZER)
                 put(HTMachineType.ELECTRONICS, PRECISION_ASSEMBLER)
                 put(HTMachineType.ELECTRONICS, SCANNER)
@@ -365,11 +368,17 @@ data object RagiumBlocks {
     //    Storage    //
 
     // Tank
+    @JvmStatic
+    private val tankProperty: BlockBehaviour.Properties = properties(1.5f, 16f)
+        .mapColor(MapColor.COLOR_BLACK)
+        .sound(SoundType.COPPER)
+        .noOcclusion()
+
     @JvmField
     val TANK: HTBasicDeferredBlockAndItem<HTTankBlock> = registerMachine(
         RagiumBlockEntityTypes.TANK,
         ::HTTankBlock,
-        machine().noOcclusion()
+        tankProperty
     )
 
     @JvmField
@@ -377,13 +386,13 @@ data object RagiumBlocks {
         RagiumBlockEntityTypes.POTION_TANK,
         ::HTPotionTankBlock,
         ::HTPotionTankBlockItem,
-        machine().noOcclusion()
+        tankProperty
     )
 
     @JvmField
     val VOID_TANK: HTBasicDeferredBlockAndItem<HTVoidTankBlock> = REGISTER.registerSimple(
         "void_tank",
-        machine().noOcclusion(),
+        tankProperty,
         ::HTVoidTankBlock
     )
 
@@ -392,7 +401,7 @@ data object RagiumBlocks {
         RagiumBlockEntityTypes.CREATIVE_TANK,
         ::HTTankBlock,
         ::HTCreativeTankBlockItem,
-        machine().noOcclusion()
+        tankProperty
     )
 
     @JvmField
@@ -402,6 +411,12 @@ data object RagiumBlocks {
     @JvmField
     val CREATIVE_BATTERY: HTBasicDeferredBlockAndItem<HTBasicEntityBlock> =
         registerMachine(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBasicEntityBlock)
+
+    //    Misc    //
+
+    @JvmField
+    val UPGRADE_STATION: HTBasicDeferredBlockAndItem<HTUpgradeStationBlock> =
+        registerMachine(RagiumBlockEntityTypes.UPGRADE_STATION, ::HTUpgradeStationBlock)
 
     //    Decoration    //
 
@@ -422,6 +437,12 @@ data object RagiumBlocks {
     @JvmStatic
     private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
         // Block
+        event.registerBlock(
+            HTFluidCapabilities.block,
+            { _, _, _, _, _ -> HTVoidTankBlock.VOIDING_HANDLER },
+            VOID_TANK.getOrThrow()
+        )
+        // Item
         event.registerItem(
             HTFluidCapabilities.item,
             { _, access ->

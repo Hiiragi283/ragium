@@ -153,6 +153,20 @@ sealed class Either<out A, out B> {
 //    Extension    //
 
 /**
+ * [Either.Left]に変換します。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.9
+ */
+fun <A> A.left(): Either<A, Nothing> = Either.Left(this)
+
+/**
+ * [Either.Right]に変換します。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.9
+ */
+fun <A> A.right(): Either<Nothing, A> = Either.Right(this)
+
+/**
  * 左右の値が同じクラスの場合，値を取り出します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0

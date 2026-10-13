@@ -12,6 +12,7 @@ import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.transfer.access.ItemAccess
+import net.neoforged.neoforge.transfer.energy.DelegatingEnergyHandler
 import net.neoforged.neoforge.transfer.energy.EnergyHandler
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
@@ -31,15 +32,18 @@ data object HTEnergyCapabilities : HTMultiCapability<EnergyHandler> {
     fun unwrap(handler: EnergyHandler): HTEnergyHandler = when (handler) {
         is HTEnergyHandler -> handler
 
-        else -> object : HTEnergyHandler {
-            override val amount: Int get() = handler.amountAsInt
-            override val capacity: Int get() = handler.capacityAsInt
-
+        else -> object : DelegatingEnergyHandler(handler), HTEnergyHandler {
             override fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int =
                 handler.insert(amount, transaction)
 
             override fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int =
                 handler.extract(amount, transaction)
+
+            override fun insert(amount: Int, transaction: TransactionContext): Int =
+                super<DelegatingEnergyHandler>.insert(amount, transaction)
+
+            override fun extract(amount: Int, transaction: TransactionContext): Int =
+                super<DelegatingEnergyHandler>.extract(amount, transaction)
         }
     }
 

@@ -1,10 +1,10 @@
 {
   "values": [
     "#ragium:machines/arcane",
-    "#ragium:machines/bio",
     "#ragium:machines/chemical",
     "#ragium:machines/electronics",
     "#ragium:machines/heat",
-    "#ragium:machines/mechanical"
+    "#ragium:machines/mechanical",
+    "#ragium:machines/resource"
   ]
 }

@@ -7,7 +7,7 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.handler.HTFluidInputTank
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
-import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.useTransaction
@@ -35,7 +35,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.ELECTROLYZER.get(), pos, state) {
-    private val cache: HTRecipeCache<HTSingleFluidRecipeInput, RTElectrolyzingRecipe> =
+    private val cache: HTRecipeCache<HTRecipeInput, RTElectrolyzingRecipe> =
         HTRecipeCache(RagiumRecipeLookups.ELECTROLYZING)
 
     override fun writeValue(output: ValueOutput) {
@@ -51,8 +51,8 @@ class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
         recipeHandler = object : EnergizedHandler<
-            HTSingleFluidRecipeInput,
-            RTElectrolyzingRecipe.ElectrolyzedResult,
+            HTRecipeInput,
+            RTElectrolyzingRecipe.Result,
             RTElectrolyzingRecipe
             >() {
             private val machine: HTElectrolyzerBlockEntity = this@HTElectrolyzerBlockEntity
@@ -69,18 +69,18 @@ class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
                 ?.tank
                 ?.let(HTOutputSlotHelper::forFluid)
 
-            override fun createInput(): HTSingleFluidRecipeInput = HTSingleFluidRecipeInput(inputTank.getStoredInput())
+            override fun createInput(): HTRecipeInput = HTRecipeInput(inputTank.getStoredInput(), customKeys)
 
-            override fun findRecipe(level: ServerLevel, input: HTSingleFluidRecipeInput): RTElectrolyzingRecipe? =
+            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): RTElectrolyzingRecipe? =
                 cache.findFirstRecipe(input, level)
 
             override fun canComplete(
                 recipe: RTElectrolyzingRecipe,
-                input: HTSingleFluidRecipeInput,
-                output: RTElectrolyzingRecipe.ElectrolyzedResult
+                input: HTRecipeInput,
+                output: RTElectrolyzingRecipe.Result
             ): Boolean =
                 rightOutputTank != null && leftOutputTank != null && useTransaction { transaction: Transaction ->
-                    val inputConsume: FluidInstance = recipe.getMatchingStack(input.fluid)
+                    val inputConsume: FluidInstance = recipe.getMatchingStack(input)
                     when {
                         inputTank.use(inputConsume, transaction).failed -> false
 
@@ -97,11 +97,11 @@ class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun onComplete(
                 recipe: RTElectrolyzingRecipe,
-                input: HTSingleFluidRecipeInput,
-                output: RTElectrolyzingRecipe.ElectrolyzedResult
+                input: HTRecipeInput,
+                output: RTElectrolyzingRecipe.Result
             ) {
                 useTransaction { transaction: Transaction ->
-                    val inputConsume: FluidInstance = recipe.getMatchingStack(input.fluid)
+                    val inputConsume: FluidInstance = recipe.getMatchingStack(input)
                     inputTank.use(inputConsume, transaction)
                     val (right: FluidStack, left: FluidStack, main: FluidStack) = output
                     outputTank.take(main, transaction)

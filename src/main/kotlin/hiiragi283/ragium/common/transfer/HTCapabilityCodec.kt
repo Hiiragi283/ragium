@@ -12,7 +12,7 @@ import net.neoforged.neoforge.common.util.ValueIOSerializable
 /**
  * [HTBlockEntity]に対して[CONTAINER]の一覧を読み書きするクラスです。
  *
- * 参照 : [Mekanism - IContainerType](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/component/containers/type/IContainerType.java)
+ * 参照 : [Mekanism - IContainerType](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/component/containers/type/IContainerType.java)
  * @param CONTAINER 保存の対象となるクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0

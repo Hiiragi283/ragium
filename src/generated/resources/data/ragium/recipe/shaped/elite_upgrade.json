@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:gems/diamond",
+    "B": "#c:glass_blocks/quartz",
+    "C": "#c:gears/gold",
+    "D": "ragium:advanced_upgrade"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "id": "ragium:elite_upgrade"
+  }
+}

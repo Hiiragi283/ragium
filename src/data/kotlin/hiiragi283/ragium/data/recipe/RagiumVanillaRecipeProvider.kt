@@ -15,10 +15,10 @@ import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.tag.HTMachineType
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -46,6 +46,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         decoration()
         machine()
         storage()
+        upgrade()
         material()
 
         // Bamboo Charcoal
@@ -325,7 +326,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 +content.slab
                 count = 6
             }
-            group = content.slab.idOrThrow.path
+            group = content.slab.id().path
         }.save(exporter)
         VanillaRecipeBuilders.stonecutting {
             ingredient(stonecutterInput)
@@ -333,7 +334,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 +slab
                 count = 2
             }
-            group = slab.idOrThrow.path
+            group = slab.id().path
         }.save(exporter)
         // Stairs
         if (stairs != null) {
@@ -346,12 +347,12 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                     +stairs
                     count = 4
                 }
-                group = stairs.idOrThrow.path
+                group = stairs.id().path
             }.save(exporter)
             VanillaRecipeBuilders.stonecutting {
                 ingredient(stonecutterInput)
                 result { +stairs }
-                group = stairs.idOrThrow.path
+                group = stairs.id().path
             }.save(exporter)
         }
         // Wall
@@ -364,12 +365,12 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                     +wall
                     count = 6
                 }
-                group = wall.idOrThrow.path
+                group = wall.id().path
             }.save(exporter)
             VanillaRecipeBuilders.stonecutting {
                 ingredient(stonecutterInput)
                 result { +wall }
-                group = wall.idOrThrow.path
+                group = wall.id().path
             }.save(exporter)
         }
     }
@@ -401,10 +402,10 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Chemical
         chemical(RagiumBlocks.CHEMICAL_BATH) { items { +Items.CAULDRON } }
         chemical(RagiumBlocks.MIXER) { +holderSet(Tags.Items.BUCKETS_EMPTY) }
-        // Bio
-        bio(RagiumBlocks.BREWERY) { items { +Items.BREWING_STAND } }
-        bio(RagiumBlocks.PLANTER) { items { +Items.FLOWER_POT } }
+        // Resource
+        resource(RagiumBlocks.PLANTER) { items { +Items.FLOWER_POT } }
         // Electronics
+        electronics(RagiumBlocks.BLENDER) { items { +RagiumBlocks.MIXER } }
         electronics(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
         electronics(RagiumBlocks.PRECISION_ASSEMBLER) { items { +RagiumBlocks.ASSEMBLER } }
         // Arcane
@@ -486,9 +487,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         )
     }
 
-    private inline fun bio(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun resource(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
         machine(
-            HTMachineType.BIO,
+            HTMachineType.RESOURCE,
             RagiumMaterial.Alloy.BLACK_STEEL,
             RagiumMaterial.Gem.EMERALD,
             result,
@@ -522,7 +523,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
     }
 
-    //    Machine    //
+    //    Storage    //
 
     private fun storage() {
         // Tank
@@ -554,6 +555,52 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('B') { +holderSet(Tags.Items.BUCKETS_EMPTY) }
             result { +RagiumBlocks.VOID_TANK }
         }.save(exporter)
+    }
+
+    //    Upgrade    //
+
+    private fun upgrade() {
+        // Upgrade Station
+        VanillaRecipeBuilders.shaped {
+            cross8()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
+            define('B') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.IRON) }
+            define('C') { +holderSet(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES) }
+            result { +RagiumBlocks.UPGRADE_STATION }
+        }.save(exporter)
+
+        // Basic
+        VanillaRecipeBuilders.shaped {
+            crossLayered()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON) }
+            define('B') { +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP) }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            define('D') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.COPPER) }
+            result { +RagiumItems.BASIC_UPGRADE }
+        }.save(exporter)
+        // Advanced
+        VanillaRecipeBuilders.shaped {
+            crossLayered()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
+            define('B') { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.QUARTZ) }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.IRON) }
+            define('D') { items { +RagiumItems.BASIC_UPGRADE } }
+            result { +RagiumItems.ADVANCED_UPGRADE }
+        }.save(exporter)
+        // Elite
+        VanillaRecipeBuilders.shaped {
+            crossLayered()
+            define('A') { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.DIAMOND) }
+            define('B') { +holderSet(HTCommonTags.BlockItems.GLASS_BLOCKS_QUARTZ.item) }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.GOLD) }
+            define('D') { items { +RagiumItems.ADVANCED_UPGRADE } }
+            result { +RagiumItems.ELITE_UPGRADE }
+        }.save(exporter)
+        // Ultimate
+        netheriteUpgrading {
+            base { items { +RagiumItems.ELITE_UPGRADE } }
+            result { +RagiumItems.ULTIMATE_UPGRADE }
+        }
     }
 
     //    Material    //
@@ -589,12 +636,10 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
         gear(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD)
         RagiumItems.MATERIAL_ITEMS[HTItemPart.GEAR, RagiumMaterial.Alloy.NETHERITE]?.let {
-            VanillaRecipeBuilders.smithing {
-                template { items { +Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE } }
+            netheriteUpgrading {
                 base { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Gem.DIAMOND) }
-                addition { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.NETHERITE) }
                 result { +it }
-            }.save(exporter)
+            }
         }
         // Dust -> Ingot
         for (metalLike: RagiumMaterial.MetalLike in RagiumMaterial.MetalLike.entries) {
@@ -674,7 +719,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('A') { +holderSet(CommonTagPrefixes.GEM, material) }
             result { +block }
             category = RecipeCategory.BUILDING_BLOCKS
-            group = block.idOrThrow.path
+            group = block.id().path
         }.save(exporter)
     }
 

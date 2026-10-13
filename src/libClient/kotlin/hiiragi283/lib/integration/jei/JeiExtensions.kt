@@ -1,15 +1,17 @@
 package hiiragi283.lib.integration.jei
 
-import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.ingredient.HTStackPreview
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
+import mezz.jei.api.ingredients.IIngredientType
 import mezz.jei.api.neoforge.NeoForgeTypes
+import mezz.jei.api.recipe.IFocus
 import mezz.jei.api.recipe.types.IRecipeType
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
+import kotlin.jvm.optionals.getOrNull
 
 //    IRecipeType    //
 
@@ -18,7 +20,7 @@ import net.neoforged.neoforge.fluids.FluidStack
  * @author Hiiragi Tsubasa
  * @since 26.1.8
  */
-typealias HTRecipeHolderType<T> = IRecipeType<HTRecipeHolder<T>>
+typealias HTRecipeHolderType<T> = IRecipeType<HTJeiRecipeHolder<T>>
 
 /**
  * 新しい[IRecipeType]のインスタンスを作成します。
@@ -86,3 +88,7 @@ fun IRecipeSlotBuilder.add(ingredient: HTStackPreview<ItemStack>): IRecipeSlotBu
  * @since 26.1.0
  */
 fun IRecipeSlotBuilder.add(result: HTItemResult): IRecipeSlotBuilder = this.add(result.create())
+
+//    IFocus    //
+
+fun <T : Any> IFocus<*>.getIngredient(type: IIngredientType<T>): T? = this.typedValue.getIngredient(type).getOrNull()

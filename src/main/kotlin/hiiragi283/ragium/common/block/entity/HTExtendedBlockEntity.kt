@@ -26,7 +26,7 @@ import org.slf4j.Logger
 /**
  * Hiiragi Seriesで使用される[BlockEntity]の拡張クラスです。
  *
- * 参考 : [Mekanism - TileEntityUpdateable](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/tile/base/TileEntityUpdateable.java)
+ * 参考 : [Mekanism - TileEntityUpdateable](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/tile/base/TileEntityUpdateable.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

@@ -8,6 +8,8 @@ import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.client.integration.jade.HTMachineOwnerProvider
+import hiiragi283.ragium.client.integration.jade.HTMachineUpgradeProvider
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.effect.RagiumMobEffects
@@ -33,6 +35,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         )
         addAdvancement(RagiumAdvancementKeys.ASSEMBLER, "Rava(n)gers, assemble!", "Acquire Assembler")
         addAdvancement(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
+        addAdvancement(RagiumAdvancementKeys.UPGRADE_STATION, "Build Up", "Acquire Upgrade Station")
 
         addAdvancement(RagiumAdvancementKeys.HEAT_MACHINE_PARTS, "Heat And Cool", "Craft a Machine Casing (Heat)")
         addAdvancement(RagiumAdvancementKeys.BLACK_STEEL, "Black Roaring", "Craft a Black Steel Ingot")
@@ -58,9 +61,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.CHEMICAL_REACTOR, "Chemical Reactor")
         add(RagiumBlocks.MIXER, "Mixer")
 
-        add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.PLANTER, "Planter")
 
+        add(RagiumBlocks.BLENDER, "Blender")
         add(RagiumBlocks.ELECTROLYZER, "Electrolyzer")
         add(RagiumBlocks.PRECISION_ASSEMBLER, "Precision Assembler")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
@@ -72,8 +75,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.TANK, "Variable Tank")
         add(RagiumBlocks.POTION_TANK, "Potion Tank")
         add(RagiumBlocks.VOID_TANK, "Void Tank")
-        add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
+
+        add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")
+
+        add(RagiumBlocks.UPGRADE_STATION, "Upgrade Station")
 
         add(RagiumBlocks.MACHINE_CASING, "Machine Casing")
         // Damage Type
@@ -151,6 +157,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.PLATE_MOLD, "Plate Mold")
         add(RagiumItems.MEMORY_DISC, "Memory Disc")
 
+        add(RagiumItems.BASIC_UPGRADE, "Basic Upgrade")
+        add(RagiumItems.ADVANCED_UPGRADE, "Advanced Upgrade")
+        add(RagiumItems.ELITE_UPGRADE, "Elite Upgrade")
+        add(RagiumItems.ULTIMATE_UPGRADE, "Ultimate Upgrade")
+
         // Mob Effect
         add(RagiumMobEffects.FROSTBITE, "Frostbite")
         add(RagiumMobEffects.CHEMICAL_BURN, "Chemical Burn")
@@ -169,10 +180,10 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         // Recipe Type
         addRecipeType(RagiumRecipeTypes.ASSEMBLING, "Assembling")
+        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "Centrifuging")
         addRecipeType(RagiumRecipeTypes.COMPRESSING, "Compressing")
         addRecipeType(RagiumRecipeTypes.CRUSHING, "Crushing")
         addRecipeType(RagiumRecipeTypes.CUTTING, "Cutting")
-        addRecipeType(RagiumRecipeTypes.DRAINING, "Draining")
         addRecipeType(RagiumRecipeTypes.FILLING, "Filling")
 
         addRecipeType(RagiumRecipeTypes.ALLOYING, "Alloying")
@@ -182,12 +193,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.REFINING, "Refining")
 
         addRecipeType(RagiumRecipeTypes.BATHING, "Chemical Bathing")
-        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "Centrifuging")
+        addRecipeType(RagiumRecipeTypes.EXCHANGING, "Exchanging")
         addRecipeType(RagiumRecipeTypes.MIXING, "Mixing")
         addRecipeType(RagiumRecipeTypes.REACTING, "Chemical Reacting")
         addRecipeType(RagiumRecipeTypes.WASHING, "Washing")
 
-        addRecipeType(RagiumRecipeTypes.BREWING, "Brewing")
         addRecipeType(RagiumRecipeTypes.PLANTING, "Planting")
 
         addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
@@ -233,8 +243,15 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.TOOLTIPS_CARBON, "Dropped from Diamond Ores")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"Scanned Item: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_SPEED, $$"Speed: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_EFFICIENCY, $$"Energy Efficiency: %1$s")
+        add(RagiumTranslation.TOOLTIPS_UPGRADE_CAPACITY, $$"Energy Capacity: %1$s")
 
         addDataTranslations()
+
+        // Jade Config
+        addJadeConfig(HTMachineOwnerProvider.ID, "機械の所有者")
+        addJadeConfig(HTMachineUpgradeProvider.ID, "機械のアップグレード")
     }
 
     private fun addDataTranslations() {
@@ -254,6 +271,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.IRON, "Iron")
         addFromKey(RagiumChemicals.COPPER, "Copper")
         addFromKey(RagiumChemicals.GOLD, "Gold")
+        addFromKey(RagiumChemicals.MERCURY, "Mercury")
 
         addFromKey(RagiumChemicals.HYDROXIDE, "Hydroxide")
         addFromKey(RagiumChemicals.WATER, "Water")
@@ -277,10 +295,13 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.SULFURIC_ACID, "Sulfuric Acid")
         addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "Hydrogen chloride")
 
+        addFromKey(RagiumChemicals.POTASSIUM_CARBONATE, "Potassium Carbonate")
         addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "Potassium Nitrate")
         addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "Calcium Carbonate")
         addFromKey(RagiumChemicals.CALCIUM_OXIDE, "Calcium Oxide")
         addFromKey(RagiumChemicals.CALCIUM_SULFATE, "Calcium Sulfate")
+
+        addFromKey(RagiumChemicals.MERCURY_SULFIDE, "Mercury Sulfide")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "Hydrogen")
 
@@ -301,5 +322,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumElements.COPPER, "Copper")
 
         addFromKey(RagiumElements.GOLD, "Gold")
+        addFromKey(RagiumElements.MERCURY, "Mercury")
     }
 }

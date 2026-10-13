@@ -1,5 +1,6 @@
 package hiiragi283.lib.recipe.result
 
+import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -18,10 +19,13 @@ import net.minecraft.resources.Identifier
 data class HTItemOrFluidResult(val content: Ior<HTItemResult, HTFluidResult>) : HTRecipeResult<HTItemAndFluidStack> {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTItemOrFluidResult> = HTCodecs.ior(
-            HTItemResult.CODEC.fieldOf(HTConstants.ITEM_RESULT),
-            HTFluidResult.CODEC.fieldOf(HTConstants.FLUID_RESULT)
+        val MAP_CODEC: MapCodec<HTItemOrFluidResult> = HTCodecs.ior(
+            HTItemResult.CODEC.fieldOf(HTConstants.ITEM),
+            HTFluidResult.CODEC.fieldOf(HTConstants.FLUID)
         ).xmap(::HTItemOrFluidResult, HTItemOrFluidResult::content)
+
+        @JvmField
+        val CODEC: Codec<HTItemOrFluidResult> = Codec.lazyInitialized(MAP_CODEC::codec)
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemOrFluidResult> = HTStreamCodecs

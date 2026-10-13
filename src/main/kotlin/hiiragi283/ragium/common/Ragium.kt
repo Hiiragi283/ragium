@@ -5,6 +5,7 @@ import hiiragi283.lib.data.loot.predicates.HTBlockSetLootCondition
 import hiiragi283.lib.gui.sync.HTFluidSyncPayload
 import hiiragi283.lib.gui.sync.HTIntSyncPayload
 import hiiragi283.lib.gui.sync.HTItemSyncPayload
+import hiiragi283.lib.gui.sync.HTLongSyncPayload
 import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
@@ -62,6 +63,8 @@ data object Ragium : HTCommonMod() {
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
         container.registerConfig(ModConfig.Type.SERVER, RagiumConfig.SERVER_SPEC)
+
+        RagiumAPI.LOGGER.info("Ragium has been initialized!")
     }
 
     private fun register(event: RegisterEvent) {
@@ -95,6 +98,8 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
             helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
             helper.register(RagiumAPI.id("owner_id"), RagiumDataComponents.OWNER_ID)
+            helper.register(RagiumAPI.id(HTConstants.UPGRADE), RagiumDataComponents.UPGRADE)
+            helper.register(RagiumAPI.id(HTConstants.UPGRADES), RagiumDataComponents.UPGRADES)
         }
         event.register(Registries.MENU) { helper ->
             helper.register(
@@ -137,6 +142,7 @@ data object Ragium : HTCommonMod() {
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
             helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)
+            helper.register(RagiumAPI.id("long"), HTLongSyncPayload.TYPE)
             helper.register(RagiumAPI.id(HTConstants.ITEM), HTItemSyncPayload.TYPE)
             helper.register(RagiumAPI.id(HTConstants.FLUID), HTFluidSyncPayload.TYPE)
         }

@@ -28,7 +28,7 @@ import net.minecraft.world.item.crafting.RecipeType
 /**
  * Hiiragi Seriesで使用される[IRecipeCategory]の拡張クラスです。
  *
- * 参照 : [Mekanism - BaseRecipeCategory](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/client/recipe_viewer/jei/BaseRecipeCategory.java)
+ * 参照 : [Mekanism - BaseRecipeCategory](https://github.com/mekanism/Mekanism/blob/26.3/src/integration/jei/main/java/mekanism/client/recipe_viewer/jei/BaseRecipeCategory.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
@@ -68,6 +68,9 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
     abstract override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: RECIPE, focuses: IFocusGroup)
 
     abstract override fun getIdentifier(recipe: RECIPE): Identifier?
+
+    override fun getSourceRecipeIds(recipe: RECIPE): List<Identifier> =
+        getIdentifier(recipe)?.takeUnless { it.path.startsWith("/") }.let(::listOfNotNull)
 
     abstract override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<RECIPE>
 

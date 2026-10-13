@@ -28,7 +28,7 @@ interface HTWidgetHolder : Iterable<HTWidget> {
     /**
      * 指定した[slot]を追加します。
      *
-     * 参照 : [Mekanism - MekanismContainer.track](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/inventory/container/MekanismContainer.java)
+     * 参照 : [Mekanism - MekanismContainer.track](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/inventory/container/MekanismContainer.java)
      * @param type 同期の方向
      */
     fun track(slot: HTSyncableSlot, type: HTSyncType)

@@ -1,0 +1,32 @@
+{
+  "type": "ragium:bathing",
+  "ingredient": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:bleach"
+    },
+    "item": {
+      "count": 1,
+      "items": {
+        "type": "neoforge:and",
+        "values": [
+          {
+            "type": "neoforge:or",
+            "values": [
+              "#minecraft:wool_carpets"
+            ]
+          },
+          {
+            "type": "neoforge:not",
+            "value": "#c:dyed/white"
+          }
+        ]
+      }
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:white_carpet"
+  },
+  "time": 200
+}

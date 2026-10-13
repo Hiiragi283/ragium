@@ -8,8 +8,7 @@ import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
-import hiiragi283.lib.recipe.input.HTItemListRecipeInput
-import hiiragi283.lib.recipe.input.getItemOrEmpty
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
@@ -23,7 +22,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
@@ -33,7 +31,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTTripleItemToItemBlockEntity(
     type: BlockEntityType<*>,
-    private val cache: HTRecipeCache<RecipeInput, HTTripleItemToItemRecipe>,
+    private val cache: HTRecipeCache<HTRecipeInput, HTTripleItemToItemRecipe>,
     pos: BlockPos,
     state: BlockState
 ) : HTProcessorBlockEntity.Energized(type, pos, state) {
@@ -56,7 +54,7 @@ abstract class HTTripleItemToItemBlockEntity(
 
     override fun initializeVariables(listener: Runnable) {
         super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<RecipeInput, ItemStack, HTTripleItemToItemRecipe>() {
+        recipeHandler = object : EnergizedHandler<HTRecipeInput, ItemStack, HTTripleItemToItemRecipe>() {
             private val primarySlot: HTItemInputSlot by lazy {
                 HTItemInputSlot(this@HTTripleItemToItemBlockEntity.primarySlot)
             }
@@ -70,18 +68,26 @@ abstract class HTTripleItemToItemBlockEntity(
                 HTOutputSlotHelper.forItem(this@HTTripleItemToItemBlockEntity.outputSlot)
             }
 
-            override fun createInput(): RecipeInput = HTItemListRecipeInput(
-                primarySlot.getStoredInput(),
-                secondarySlot.getStoredInput(),
-                tertiarySlot.getStoredInput()
+            override fun createInput(): HTRecipeInput = HTRecipeInput(
+                listOf(
+                    primarySlot.getStoredInput(),
+                    secondarySlot.getStoredInput(),
+                    tertiarySlot.getStoredInput()
+                ),
+                listOf(),
+                customKeys
             )
 
-            override fun findRecipe(level: ServerLevel, input: RecipeInput): HTTripleItemToItemRecipe? =
+            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): HTTripleItemToItemRecipe? =
                 cache.findFirstRecipe(input, level)
 
-            override fun canComplete(recipe: HTTripleItemToItemRecipe, input: RecipeInput, output: ItemStack): Boolean {
+            override fun canComplete(
+                recipe: HTTripleItemToItemRecipe,
+                input: HTRecipeInput,
+                output: ItemStack
+            ): Boolean {
                 val (firstInput: ItemInstance, secondInput: ItemInstance, thirdInput: ItemInstance) =
-                    recipe.getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
+                    recipe.getMatchingStack(input)
                 return useTransaction { transaction: Transaction ->
                     when {
                         primarySlot.use(firstInput, transaction).failed -> false
@@ -92,9 +98,9 @@ abstract class HTTripleItemToItemBlockEntity(
                 }
             }
 
-            override fun onComplete(recipe: HTTripleItemToItemRecipe, input: RecipeInput, output: ItemStack) {
+            override fun onComplete(recipe: HTTripleItemToItemRecipe, input: HTRecipeInput, output: ItemStack) {
                 val (firstInput: ItemInstance, secondInput: ItemInstance, thirdInput: ItemInstance) =
-                    recipe.getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
+                    recipe.getMatchingStack(input)
                 useTransaction { transaction: Transaction ->
                     primarySlot.use(firstInput, transaction)
                     secondarySlot.use(secondInput, transaction)

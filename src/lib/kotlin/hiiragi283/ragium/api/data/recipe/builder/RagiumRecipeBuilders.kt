@@ -2,9 +2,9 @@
 
 package hiiragi283.ragium.api.data.recipe.builder
 
-import hiiragi283.lib.data.recipe.builder.HTFluidToDoubleFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTFluidToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemOrFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
@@ -15,13 +15,11 @@ import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
-import hiiragi283.ragium.api.recipe.RTBrewingRecipe
-import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
-import hiiragi283.ragium.api.recipe.RTDrainingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.RTExchangingRecipe
 import hiiragi283.ragium.api.recipe.RTFillingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
@@ -79,13 +77,11 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun draining(
-        builderAction: HTItemToItemAndFluidRecipeBuilder<RTDrainingRecipe>.() -> Unit
-    ): HTItemToItemAndFluidRecipeBuilder<RTDrainingRecipe> {
+    inline fun centrifuging(builderAction: RTCentrifugingRecipeBuilder.() -> Unit): RTCentrifugingRecipeBuilder {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToItemAndFluidRecipeBuilder(RagiumConstants.DRAINING, ::RTDrainingRecipe).apply(builderAction)
+        return RTCentrifugingRecipeBuilder().apply(builderAction)
     }
 
     @JvmStatic
@@ -159,14 +155,13 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun centrifuging(
-        builderAction: HTFluidToDoubleFluidRecipeBuilder<RTCentrifugingRecipe>.() -> Unit
-    ): HTFluidToDoubleFluidRecipeBuilder<RTCentrifugingRecipe> {
+    inline fun exchanging(
+        builderAction: HTItemOrFluidRecipeBuilder<RTExchangingRecipe>.() -> Unit
+    ): HTItemOrFluidRecipeBuilder<RTExchangingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTFluidToDoubleFluidRecipeBuilder(RagiumConstants.CENTRIFUGING, ::RTCentrifugingRecipe)
-            .apply(builderAction)
+        return HTItemOrFluidRecipeBuilder(RagiumConstants.EXCHANGING, ::RTExchangingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -174,7 +169,15 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTMixingRecipeBuilder().apply(builderAction)
+        return RTMixingRecipeBuilder(RagiumConstants.MIXING).apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun brewing(builderAction: RTMixingRecipeBuilder.() -> Unit): RTMixingRecipeBuilder {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return RTMixingRecipeBuilder(RagiumConstants.BREWING).apply(builderAction)
     }
 
     @JvmStatic
@@ -193,17 +196,7 @@ data object RagiumRecipeBuilders {
         return RTWashingRecipeBuilder().apply(builderAction)
     }
 
-    // Bio
-    @JvmStatic
-    inline fun brewing(
-        builderAction: HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe>.() -> Unit
-    ): HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe> {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTItemAndFluidToRecipeBuilder.ToFluid(RagiumConstants.BREWING, ::RTBrewingRecipe).apply(builderAction)
-    }
-
+    // Resource
     @JvmStatic
     inline fun planting(
         builderAction: HTItemToDoubleItemRecipeBuilder<RTPlantingRecipe>.() -> Unit

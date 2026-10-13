@@ -1,12 +1,14 @@
 {
   "type": "ragium:bathing",
-  "fluid_ingredient": {
-    "amount": 250,
-    "fluids": "#ragium:resins"
-  },
-  "item_ingredient": {
-    "count": 1,
-    "items": "ragium:carbon_fiber"
+  "ingredient": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#ragium:resins"
+    },
+    "item": {
+      "count": 1,
+      "items": "ragium:carbon_fiber"
+    }
   },
   "result": {
     "count": 1,

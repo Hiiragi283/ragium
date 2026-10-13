@@ -6,7 +6,7 @@ import net.minecraft.core.Direction
 /**
  * 任意のCapabilityのラッパーとなる抽象クラス
  *
- * 参照 : [Mekanism - ProxyHandler](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/proxy/ProxyHandler.java)
+ * 参照 : [Mekanism - ProxyHandler](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/proxy/ProxyHandler.java)
  * @param side 現在の向き
  * @param holder 搬入出の制御
  * @author Hiiragi Tsubasa

@@ -141,16 +141,16 @@ data object RagiumConfig {
             val mixer: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.MIXER)
 
-            // Bio
-            @JvmField
-            val brewery: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.BREWERY)
-
+            // Resource
             @JvmField
             val planter: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.PLANTER)
 
             // Electronics
+            @JvmField
+            val blender: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.BLENDER, 64)
+
             @JvmField
             val electrolyzer: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.ELECTROLYZER, 64)

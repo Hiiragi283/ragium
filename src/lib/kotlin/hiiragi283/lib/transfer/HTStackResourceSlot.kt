@@ -7,21 +7,49 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 import java.util.function.BiPredicate
 import java.util.function.Predicate
 
+/**
+ * スタックに基づいた[HTResourceSlot]の抽象クラスです。
+ * @param S リソースと量を束ねたクラス
+ * @param T 保持するリソースのクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 abstract class HTStackResourceSlot<S : Any, T : Resource> :
     SnapshotJournal<S>(),
     HTResourceSlot<T> {
+    /**
+     * 保持しているスタックのコピーを取得します。
+     */
     abstract fun getStackCopy(): S
 
+    /**
+     * 保持しているスタックを置き換えます。
+     */
     abstract fun setStack(stack: S)
 
+    /**
+     * 保持しているスタックを置き換えます。
+     */
     protected abstract fun setStackInternal(stack: S)
 
+    /**
+     * スタックをリソースに変換します。
+     */
     protected abstract fun getResourceFrom(stack: S): T
 
+    /**
+     * スタックから数量を取得します。
+     */
     protected abstract fun getAmountFrom(stack: S): Int
 
+    /**
+     * 指定したスタックとリソースが等しいかどうか判定します。
+     */
     protected abstract fun isSame(stack: S, resource: T): Boolean
 
+    /**
+     * リソースと数量からスタックを作成します。
+     */
     protected abstract fun createStack(resource: T, amount: Int): S
 
     /**

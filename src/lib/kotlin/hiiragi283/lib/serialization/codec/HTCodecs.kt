@@ -128,25 +128,28 @@ data object HTCodecs {
 
             val bothResult: DataResult<Ior<A, B>> =
                 leftResult.flatMap { leftIn: A -> rightResult.map { rightIn: B -> Ior.Both(leftIn, rightIn) } }
-            if (bothResult.isSuccess) return bothResult
-            if (leftResult.isSuccess) {
-                return when {
-                    rightResult.isSuccess -> leftResult.flatMap { leftIn: A ->
-                        rightResult.map { rightIn: B -> Ior.Both(leftIn, rightIn) }
+            return when {
+                bothResult.isSuccess -> bothResult
+
+                leftResult.isSuccess ->
+                    when {
+                        rightResult.isSuccess -> leftResult.flatMap { leftIn: A ->
+                            rightResult.map { rightIn: B -> Ior.Both(leftIn, rightIn) }
+                        }
+
+                        else -> leftResult.map { Ior.Left(it) }
                     }
 
-                    else -> leftResult.map { Ior.Left(it) }
-                }
-            } else {
-                return when {
-                    rightResult.isSuccess -> rightResult.map { Ior.Right(it) }
+                else ->
+                    when {
+                        rightResult.isSuccess -> rightResult.map { Ior.Right(it) }
 
-                    else -> DataResult.error {
-                        val leftError: String = leftResult.error().orElseThrow().message()
-                        val rightError: String = rightResult.error().orElseThrow().message()
-                        "Failed to parse ior. Left: $leftError; Right: $rightError;"
+                        else -> DataResult.error {
+                            val leftError: String = leftResult.error().orElseThrow().message()
+                            val rightError: String = rightResult.error().orElseThrow().message()
+                            "Failed to parse ior. Left: $leftError; Right: $rightError;"
+                        }
                     }
-                }
             }
         }
 

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.transfer.item
 
+import hiiragi283.lib.fluid.createBucket
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
@@ -34,7 +35,7 @@ abstract class HTCustomBucketItemHandler(itemAccess: ItemAccess) :
     }
 
     protected open fun update(accessResource: ItemResource, newStack: FluidStack): ItemResource =
-        ItemResource.of(newStack.fluidType.getBucket(newStack))
+        ItemResource.of(newStack.createBucket())
 
     override fun getCapacity(index: Int, resource: FluidResource): Int {
         Objects.checkIndex(index, size)

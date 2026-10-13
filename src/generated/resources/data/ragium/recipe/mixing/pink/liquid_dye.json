@@ -1,0 +1,20 @@
+{
+  "type": "ragium:mixing",
+  "ingredient": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:dyes/pink"
+    }
+  },
+  "result": {
+    "fluid": {
+      "amount": 250,
+      "id": "ragium:pink_dye"
+    }
+  },
+  "time": 100
+}

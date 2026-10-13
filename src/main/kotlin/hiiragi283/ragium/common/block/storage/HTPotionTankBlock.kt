@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
@@ -40,9 +40,11 @@ class HTPotionTankBlock(type: HTDeferredBlockEntityType<*>, properties: Properti
             // ポーション瓶 -> 液体ポーション + 瓶
             val emptyBottle: HTSimpleDeferredItem? = HTBottleType.getFromFilled(itemStack)?.emptyItem
             if (emptyBottle != null) {
-                val potionFluid: FluidStack? = HTPotionHelper.createFluid(itemStack, HTPotionHelper.BOTTLE_AMOUNT)
-                if (potionFluid != null) {
-                    val (resource: FluidResource, amount: Int) = potionFluid.toResourcePair()
+                HTPotionHelper.createFluid(
+                    itemStack,
+                    HTPotionHelper.BOTTLE_AMOUNT
+                ).onSuccess { template: FluidStackTemplate ->
+                    val (resource: FluidResource, amount: Int) = template.toResourcePair()
                     if (tank.insert(resource, amount, transaction, HTTransferAccess.EXTERNAL) == amount) {
                         val newStack: ItemStack = itemStack.transmuteCopy(emptyBottle, 1)
                         newStack.remove(DataComponents.POTION_CONTENTS)
@@ -59,7 +61,9 @@ class HTPotionTankBlock(type: HTDeferredBlockEntityType<*>, properties: Properti
             val filledBottle: HTBottleType = HTBottleType.getFromEmpty(itemStack) ?: return false
             val bottleAmount: Int = HTPotionHelper.BOTTLE_AMOUNT
             if (tank.extract(resourceIn, bottleAmount, transaction, HTTransferAccess.EXTERNAL) == bottleAmount) {
-                HTItemDropHelper.giveStackTo(player, HTPotionHelper.createFilled(resourceIn, filledBottle))
+                HTPotionHelper.createFilled(resourceIn, filledBottle).onSuccess {
+                    HTItemDropHelper.giveStackTo(player, it)
+                }
                 itemStack.shrink(1)
                 transaction.commit()
                 return true

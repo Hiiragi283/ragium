@@ -7,7 +7,7 @@ import net.minecraft.resources.Identifier
 /**
  * Hiiragi Seriesで使用される[IModPlugin]の抽象クラスです。
  *
- * 参照 : [Mekanism - MekanismJEI](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/client/recipe_viewer/jei/MekanismJEI.java)
+ * 参照 : [Mekanism - MekanismJEI](https://github.com/mekanism/Mekanism/blob/26.3/src/integration/jei/main/java/mekanism/client/recipe_viewer/jei/MekanismJEI.java)
  * @param modId 対象のMOD ID
  * @author Hiiragi Tsubasa
  * @since 26.1.0

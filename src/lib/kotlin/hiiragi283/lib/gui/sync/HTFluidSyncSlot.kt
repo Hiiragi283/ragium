@@ -13,7 +13,7 @@ import kotlin.reflect.KProperty
 /**
  * [FluidStack]向けの[HTSyncableSlot]の拡張インターフェースです。
  *
- * 参照 : [Mekanism - SyncableFluidStack](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/inventory/container/sync/SyncableFluidStack.java)
+ * 参照 : [Mekanism - SyncableFluidStack](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/inventory/container/sync/SyncableFluidStack.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

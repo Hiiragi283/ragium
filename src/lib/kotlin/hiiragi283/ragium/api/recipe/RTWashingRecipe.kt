@@ -9,7 +9,7 @@ import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -30,18 +30,16 @@ data class RTWashingRecipe(
     val results: Nel<HTItemResult>,
     override val progressData: HTProgressData
 ) : HTItemAndFluidToRecipe<Pair<ItemStack, ItemStack>>,
-    HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
-    HTSerializableRecipe<HTItemAndFluidRecipeInput> {
+    HTProgressRecipe.Simple<HTRecipeInput>,
+    HTSerializableRecipe<HTRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTWashingRecipe> = HTCodecs.recordMap { instance ->
             instance.group(
-                HTItemIngredient.CODEC
-                    .fieldOf(HTConstants.ITEM_INGREDIENT)
-                    .forGetter(RTWashingRecipe::itemIngredient),
-                HTFluidIngredient.CODEC
-                    .fieldOf(HTConstants.FLUID_INGREDIENT)
-                    .forGetter(RTWashingRecipe::fluidIngredient),
+                HTCodecs.mapPair(
+                    HTItemIngredient.CODEC.fieldOf(HTConstants.ITEM),
+                    HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID)
+                ).fieldOf(HTConstants.INGREDIENT).forGetter { it.itemIngredient to it.fluidIngredient },
                 HTItemResult.CODEC
                     .compactNelFieldOf(HTConstants.RESULT, HTConstants.RESULTS, 2)
                     .forGetter(RTWashingRecipe::results),
@@ -65,6 +63,17 @@ data class RTWashingRecipe(
         @JvmField
         val SERIALIZER: RecipeSerializer<RTWashingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
+
+    constructor(
+        ingredient: Pair<HTItemIngredient, HTFluidIngredient>,
+        results: Nel<HTItemResult>,
+        progressData: HTProgressData
+    ) : this(
+        ingredient.first,
+        ingredient.second,
+        results,
+        progressData
+    )
 
     override fun test(first: ItemInstance, second: FluidInstance): Boolean =
         itemIngredient.test(first) && fluidIngredient.test(second)

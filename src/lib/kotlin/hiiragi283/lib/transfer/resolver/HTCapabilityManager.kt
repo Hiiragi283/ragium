@@ -5,8 +5,8 @@ import net.minecraft.core.Direction
 /**
  * 向きに応じたキャパビリティを取得するインターフェース
  *
- * 参照 : [Mekanism - ICapabilityHandlerManager](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/resolver/manager/ICapabilityHandlerManager.java)
- *       [Mekanism - ICapabilityResolver](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/resolver/ICapabilityResolver.java)
+ * 参照 : [Mekanism - ICapabilityHandlerManager](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/resolver/manager/ICapabilityHandlerManager.java)
+ *       [Mekanism - ICapabilityResolver](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/resolver/ICapabilityResolver.java)
  * @param SLOT 要素を保持するクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0

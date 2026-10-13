@@ -1,8 +1,21 @@
 package hiiragi283.lib.transfer
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 data object HTTransferValidators {
     @JvmStatic
     fun validateCapacity(capacity: Int): Int {
+        check(capacity >= 0) { "Capacity must be non negative" }
+        return capacity
+    }
+
+    /**
+     * @since 26.1.9
+     */
+    @JvmStatic
+    fun validateCapacity(capacity: Long): Long {
         check(capacity >= 0) { "Capacity must be non negative" }
         return capacity
     }

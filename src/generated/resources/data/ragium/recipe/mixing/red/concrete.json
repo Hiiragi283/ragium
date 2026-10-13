@@ -1,0 +1,26 @@
+{
+  "type": "ragium:mixing",
+  "ingredient": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:dyes/red"
+    },
+    "items": [
+      {
+        "count": 1,
+        "items": "#c:sands"
+      },
+      {
+        "count": 1,
+        "items": "#c:gravels"
+      }
+    ]
+  },
+  "result": {
+    "item": {
+      "count": 2,
+      "id": "minecraft:red_concrete"
+    }
+  },
+  "time": 100
+}
