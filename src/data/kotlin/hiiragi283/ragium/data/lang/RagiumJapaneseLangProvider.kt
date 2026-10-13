@@ -42,6 +42,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.QUARTZ_GLASS_PANE, "クォーツガラス板")
 
         add(RagiumBlocks.ASSEMBLER, "組立機")
+        add(RagiumBlocks.CENTRIFUGE, "遠心分離機")
         add(RagiumBlocks.CRUSHER, "破砕機")
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CUTTING_MACHINE, "裁断機")

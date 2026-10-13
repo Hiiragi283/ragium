@@ -17,7 +17,7 @@ class RTCentrifugingRecipeCategory(guiHelper: IGuiHelper) :
     HTHolderRecipeCategory<RTCentrifugingRecipe.Basic>(
         RagiumJeiRecipeTypes.CENTRIFUGING,
         RagiumRecipeTypes.CENTRIFUGING,
-        guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING),
+        guiHelper.createDrawableItemLike(RagiumBlocks.CENTRIFUGE),
         18 * 7,
         18 * 1,
         RTCentrifugingRecipe.Basic.CODEC

@@ -46,6 +46,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.QUARTZ_GLASS_PANE, "Quartz Glass Pane")
 
         add(RagiumBlocks.ASSEMBLER, "Assembler")
+        add(RagiumBlocks.CENTRIFUGE, "Centrifuge")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")

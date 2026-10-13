@@ -249,6 +249,10 @@ data object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.ASSEMBLER)
 
     @JvmField
+    val CENTRIFUGE: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.CENTRIFUGE)
+
+    @JvmField
     val CRUSHER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.CRUSHER)
 
@@ -331,6 +335,7 @@ data object RagiumBlocks {
             sortedMapOf(),
             {
                 put(HTMachineType.MECHANICAL, ASSEMBLER)
+                put(HTMachineType.MECHANICAL, CENTRIFUGE)
                 put(HTMachineType.MECHANICAL, CRUSHER)
                 put(HTMachineType.MECHANICAL, COMPRESSOR)
                 put(HTMachineType.MECHANICAL, CUTTING_MACHINE)

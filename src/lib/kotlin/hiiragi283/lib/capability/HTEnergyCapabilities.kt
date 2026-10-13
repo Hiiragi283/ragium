@@ -34,10 +34,10 @@ data object HTEnergyCapabilities : HTMultiCapability<EnergyHandler> {
 
         else -> object : DelegatingEnergyHandler(handler), HTEnergyHandler {
             override fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int =
-                handler.insert(amount, transaction)
+                this.insert(amount, transaction)
 
             override fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int =
-                handler.extract(amount, transaction)
+                this.extract(amount, transaction)
 
             override fun insert(amount: Int, transaction: TransactionContext): Int =
                 super<DelegatingEnergyHandler>.insert(amount, transaction)
