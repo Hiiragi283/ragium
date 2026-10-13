@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.integration.jade
+package hiiragi283.ragium.integration.jade
 
 import hiiragi283.lib.block.entity.HTOwnedBlockEntity
 import hiiragi283.lib.text.HTTextUtil

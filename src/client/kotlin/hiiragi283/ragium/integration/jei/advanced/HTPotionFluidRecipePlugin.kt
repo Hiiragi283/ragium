@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.integration.jei.advanced
+package hiiragi283.ragium.integration.jei.advanced
 
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
 import hiiragi283.lib.integration.jei.HTJeiRecipeHolder
@@ -6,9 +6,9 @@ import hiiragi283.lib.integration.jei.getIngredient
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
-import hiiragi283.ragium.client.integration.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.common.recipe.RTPotionBottleCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
+import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
 import mezz.jei.api.neoforge.NeoForgeTypes
 import mezz.jei.api.recipe.IFocus
 import mezz.jei.api.recipe.RecipeIngredientRole

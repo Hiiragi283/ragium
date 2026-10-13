@@ -1,12 +1,12 @@
-package hiiragi283.ragium.client.integration.jei.category
+package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.integration.jei.category.HTHolderRecipeCategory
 import hiiragi283.ragium.api.recipe.RTWashingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.client.integration.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder

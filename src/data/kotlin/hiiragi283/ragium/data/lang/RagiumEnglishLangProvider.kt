@@ -8,14 +8,14 @@ import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.client.integration.jade.HTMachineOwnerProvider
-import hiiragi283.ragium.client.integration.jade.HTMachineUpgradeProvider
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.effect.RagiumMobEffects
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
+import hiiragi283.ragium.integration.jade.HTMachineOwnerProvider
+import hiiragi283.ragium.integration.jade.HTMachineUpgradeProvider
 import net.minecraft.data.PackOutput
 
 class RagiumEnglishLangProvider(output: PackOutput) :

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.integration.jei
+package hiiragi283.ragium.integration.jei
 
 import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.bounds
