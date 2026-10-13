@@ -25,26 +25,19 @@ data object HTMachineUpgradeHelper {
 
     @JvmStatic
     fun modifySpeed(getter: DataComponentGetter, base: Int): Int {
-        val multiplier: Long = minOf(1, 100L + getCombinedUpgrade(getter).speed)
+        val multiplier: Long = maxOf(1, 100L + getCombinedUpgrade(getter).speed)
         return Ints.saturatedCast(base * multiplier / 100)
     }
 
     @JvmStatic
-    fun modifyTime(getter: DataComponentGetter, base: Int): Int {
-        val multiplier: Long = minOf(1, 100L + getCombinedUpgrade(getter).speed)
+    fun modifyEnergy(getter: DataComponentGetter, base: Int): Int {
+        val multiplier: Long = maxOf(1, 100L + getCombinedUpgrade(getter).efficiency)
         return Ints.saturatedCast(base * 100 / multiplier)
     }
 
     @JvmStatic
-    fun modifyEfficiency(getter: DataComponentGetter, base: Int): Int {
-        val multiplier: Long = minOf(1, 100L + getCombinedUpgrade(getter).speed)
-        val multiplier1: Long = minOf(1, 100L + getCombinedUpgrade(getter).efficiency)
-        return Ints.saturatedCast(base * multiplier / multiplier1)
-    }
-
-    @JvmStatic
     fun modifyCapacity(getter: DataComponentGetter, base: Int): Int {
-        val multiplier: Long = minOf(1, 100L + getCombinedUpgrade(getter).capacity)
+        val multiplier: Long = maxOf(1, 100L + getCombinedUpgrade(getter).capacity)
         return Ints.saturatedCast(base * multiplier / 100)
     }
 }

@@ -1,9 +1,9 @@
-package hiiragi283.ragium.api
+package hiiragi283.ragium.config
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.config.definePositiveInt
-import hiiragi283.ragium.api.config.HTEnergyConfig
-import net.minecraft.resources.Identifier
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConstants
 import net.neoforged.neoforge.common.ModConfigSpec
 
 data object RagiumConfig {
@@ -31,16 +31,6 @@ data object RagiumConfig {
     class Common(builder: ModConfigSpec.Builder)
 
     class Server(builder: ModConfigSpec.Builder) {
-        @JvmField
-        val modIdComparator: Comparator<Identifier> = Comparator
-            .comparingInt { id: Identifier ->
-                val modIds: List<String> = tagOutputPriority.get()
-                when (val priority: Int = modIds.indexOf(id.namespace)) {
-                    -1 -> modIds.size
-                    else -> priority
-                }
-            }.thenBy(Identifier::getNamespace)
-
         @JvmField
         val tagOutputPriority: ModConfigSpec.ConfigValue<List<String>> =
             builder
@@ -90,6 +80,10 @@ data object RagiumConfig {
             @JvmField
             val assembler: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.ASSEMBLER)
+
+            @JvmField
+            val centrifuge: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.CENTRIFUGE)
 
             @JvmField
             val crusher: HTEnergyConfig =

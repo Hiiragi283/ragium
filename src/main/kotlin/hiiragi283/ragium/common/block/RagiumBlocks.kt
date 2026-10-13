@@ -19,7 +19,6 @@ import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.ItemWithContextFactory
 import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
@@ -37,6 +36,7 @@ import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import hiiragi283.ragium.common.item.block.HTCreativeTankBlockItem
 import hiiragi283.ragium.common.item.block.HTPotionTankBlockItem
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
 import net.minecraft.util.valueproviders.UniformInt
@@ -249,6 +249,10 @@ data object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.ASSEMBLER)
 
     @JvmField
+    val CENTRIFUGE: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.CENTRIFUGE)
+
+    @JvmField
     val CRUSHER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.CRUSHER)
 
@@ -331,6 +335,7 @@ data object RagiumBlocks {
             sortedMapOf(),
             {
                 put(HTMachineType.MECHANICAL, ASSEMBLER)
+                put(HTMachineType.MECHANICAL, CENTRIFUGE)
                 put(HTMachineType.MECHANICAL, CRUSHER)
                 put(HTMachineType.MECHANICAL, COMPRESSOR)
                 put(HTMachineType.MECHANICAL, CUTTING_MACHINE)

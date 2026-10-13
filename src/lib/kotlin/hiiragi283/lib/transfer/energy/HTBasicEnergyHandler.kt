@@ -13,25 +13,25 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 import java.util.function.Predicate
 
 open class HTBasicEnergyHandler(
-    val capacity: Long,
+    private val capacity: Int,
     protected val canExtract: Predicate<HTTransferAccess>,
     protected val canInsert: Predicate<HTTransferAccess>,
     private val listener: Runnable?
-) : SnapshotJournal<Long>(),
+) : SnapshotJournal<Int>(),
     HTEnergyHandler,
     ValueIOSerializable {
     companion object {
         @JvmStatic
-        fun input(capacity: Long, listener: Runnable?): HTBasicEnergyHandler =
+        fun input(capacity: Int, listener: Runnable?): HTBasicEnergyHandler =
             create(capacity, listener, HTTransferAccess.NOT_EXTERNAL, HTTransferPredicates.alwaysTrue())
 
         @JvmStatic
-        fun output(capacity: Long, listener: Runnable?): HTBasicEnergyHandler =
+        fun output(capacity: Int, listener: Runnable?): HTBasicEnergyHandler =
             create(capacity, listener, HTTransferPredicates.alwaysTrue(), HTTransferAccess.INTERNAL_ONLY)
 
         @JvmStatic
         fun create(
-            capacity: Long,
+            capacity: Int,
             listener: Runnable?,
             canExtract: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue(),
             canInsert: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue()
@@ -39,23 +39,29 @@ open class HTBasicEnergyHandler(
             HTBasicEnergyHandler(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, listener)
     }
 
-    private var amountIn: Long = 0
+    private var amountIn: Int = 0
 
-    override fun getAmountAsLong(): Long = amountIn
+    override fun getAmountAsLong(): Long = amountAsInt.toLong()
 
-    override fun getCapacityAsLong(): Long = capacity
+    @Suppress("NonExtendableApiUsage")
+    override fun getAmountAsInt(): Int = amountIn
 
-    fun setAmount(amount: Long) {
+    override fun getCapacityAsLong(): Long = capacityAsInt.toLong()
+
+    @Suppress("NonExtendableApiUsage")
+    override fun getCapacityAsInt(): Int = capacity
+
+    fun setAmount(amount: Int) {
         setAmountUnchecked(amount, true)
     }
 
-    protected fun setAmountInternal(amount: Long) {
+    protected fun setAmountInternal(amount: Int) {
         setAmountUnchecked(amount, false)
     }
 
-    protected fun setAmountUnchecked(amount: Long, validate: Boolean) {
-        if (amount == 0L) {
-            if (this.amountIn == 0L) return
+    protected fun setAmountUnchecked(amount: Int, validate: Boolean) {
+        if (amount == 0) {
+            if (this.amountIn == 0) return
             this.amountIn = 0
         } else if (!validate || amount > 0) {
             this.amountIn = amount.coerceIn(0, capacity)
@@ -80,7 +86,7 @@ open class HTBasicEnergyHandler(
     override fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
         TransferPreconditions.checkNonNegative(amount)
         if (!this.canExtract.test(access)) return 0
-        val extracted: Int = minOf(this.amountAsInt, amount)
+        val extracted: Int = minOf(this.amountIn, amount)
         if (extracted > 0) {
             this.updateSnapshots(transaction)
             amountIn -= extracted
@@ -92,22 +98,22 @@ open class HTBasicEnergyHandler(
     //    ValueIOSerializable    //
 
     override fun serialize(output: ValueOutput) {
-        output.putLong(HTConstants.AMOUNT, amountIn)
+        output.putInt(HTConstants.AMOUNT, amountIn)
     }
 
     override fun deserialize(input: ValueInput) {
-        input.getLong(HTConstants.AMOUNT).ifPresent(::setAmountInternal)
+        input.getInt(HTConstants.AMOUNT).ifPresent(::setAmountInternal)
     }
 
     //    SnapshotJournal    //
 
-    override fun createSnapshot(): Long = amountIn
+    override fun createSnapshot(): Int = amountIn
 
-    override fun revertToSnapshot(snapshot: Long) {
+    override fun revertToSnapshot(snapshot: Int) {
         this.amountIn = snapshot
     }
 
-    override fun onRootCommit(originalState: Long) {
+    override fun onRootCommit(originalState: Int) {
         listener?.run()
     }
 

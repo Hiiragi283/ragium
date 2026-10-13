@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.integration.jei
+package hiiragi283.ragium.integration.jei
 
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.integration.jei.HTJeiDrawables
@@ -18,18 +18,18 @@ import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
-import hiiragi283.ragium.client.integration.jei.advanced.HTFluidBucketRecipePlugin
-import hiiragi283.ragium.client.integration.jei.advanced.HTPotionFluidRecipePlugin
-import hiiragi283.ragium.client.integration.jei.category.RTCentrifugingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.RTElectrolyzingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.RTEnchantingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.RTFreezingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.RTMixingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.RTReactingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.RTResourceExtractingRecipeCategory
-import hiiragi283.ragium.client.integration.jei.category.RTWashingRecipeCategory
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.integration.jei.advanced.HTFluidBucketRecipePlugin
+import hiiragi283.ragium.integration.jei.advanced.HTPotionFluidRecipePlugin
+import hiiragi283.ragium.integration.jei.category.RTCentrifugingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTElectrolyzingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTEnchantingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTFreezingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTMixingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTReactingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTResourceExtractingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTWashingRecipeCategory
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
@@ -316,6 +316,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
         // Mechanical
         registration.addCraftingStation(RagiumJeiRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.CENTRIFUGING, RagiumBlocks.CENTRIFUGE)
         registration.addCraftingStation(RagiumJeiRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
         registration.addCraftingStation(RagiumJeiRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)

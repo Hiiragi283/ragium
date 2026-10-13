@@ -15,7 +15,7 @@ import hiiragi283.lib.util.DFUEither
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.fold
 import hiiragi283.lib.util.unwrap
-import hiiragi283.ragium.api.RagiumConfig
+import hiiragi283.ragium.api.RagiumConfigAccess
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -187,7 +187,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
              */
             @JvmField
             val HOLDER_COMPARATOR: Comparator<Holder<Item>> = run {
-                compareBy(RagiumConfig.SERVER.modIdComparator, ResourceKey<Item>::identifier)
+                compareBy(RagiumConfigAccess.INSTANCE.modIdComparator, ResourceKey<Item>::identifier)
                     .let(Comparators::emptiesLast)
                     .let { compareBy(it, Holder<Item>::unwrapKey) }
             }

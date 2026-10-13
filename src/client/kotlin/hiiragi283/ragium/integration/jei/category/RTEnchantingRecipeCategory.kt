@@ -1,11 +1,11 @@
-package hiiragi283.ragium.client.integration.jei.category
+package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.integration.jei.category.HTDoubleItemToRecipeCategory
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.client.integration.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.helpers.IGuiHelper
 

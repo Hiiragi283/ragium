@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBlenderBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCentrifugeBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
@@ -70,6 +71,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val ASSEMBLER: HTDeferredBlockEntityType<HTAssemblerBlockEntity> =
         registerTick(RagiumConstants.ASSEMBLER, ::HTAssemblerBlockEntity)
+
+    @JvmField
+    val CENTRIFUGE: HTDeferredBlockEntityType<HTCentrifugeBlockEntity> =
+        registerTick(RagiumConstants.CENTRIFUGE, ::HTCentrifugeBlockEntity)
 
     @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
@@ -204,6 +209,7 @@ data object RagiumBlockEntityTypes {
 
         // Machine
         registerProcessor(ASSEMBLER.get())
+        registerProcessor(CENTRIFUGE.get())
         registerProcessor(CRUSHER.get())
         registerProcessor(COMPRESSOR.get())
         registerProcessor(CUTTING_MACHINE.get())

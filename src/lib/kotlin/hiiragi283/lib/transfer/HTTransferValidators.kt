@@ -11,15 +11,6 @@ data object HTTransferValidators {
         return capacity
     }
 
-    /**
-     * @since 26.1.9
-     */
-    @JvmStatic
-    fun validateCapacity(capacity: Long): Long {
-        check(capacity >= 0) { "Capacity must be non negative" }
-        return capacity
-    }
-
     @JvmStatic
     fun validateLimit(limit: Int): Int {
         check(limit >= 0) { "Limit must be non negative" }

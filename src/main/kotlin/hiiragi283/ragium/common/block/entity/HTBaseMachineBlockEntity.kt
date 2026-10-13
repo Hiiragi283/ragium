@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.machine.HTMachineUpgrade
 import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.common.block.HTMachineBlock
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel

@@ -16,12 +16,12 @@ import hiiragi283.lib.recipe.input.getItemOrNull
 import hiiragi283.lib.recipe.lookup.HTVanillaRecipeCache
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
-import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.config.HTEnergyConfig
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.gui.widget.HTItemWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
+import hiiragi283.ragium.config.HTEnergyConfig
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents

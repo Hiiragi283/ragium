@@ -33,8 +33,8 @@ interface RTCentrifugingRecipe :
     HTProgressRecipe<HTRecipeInput> {
 
     @JvmRecord
-    data class Output(val firstItem: ItemStack, val secondItem: ItemStack, val fluid: FluidStack) {
-        constructor(item: ItemStack, fluid: FluidStack) : this(item, ItemStack.EMPTY, fluid)
+    data class Output(val items: List<ItemStack>, val fluid: FluidStack) {
+        constructor(item: ItemStack, fluid: FluidStack) : this(listOf(item), fluid)
     }
 
     @JvmRecord
@@ -60,11 +60,7 @@ interface RTCentrifugingRecipe :
             )
         }
 
-        fun create(): Output = Output(
-            items.head.create(),
-            items.getOrNull(1).createOrEmpty(),
-            fluid.createOrEmpty()
-        )
+        fun create(): Output = Output(items.map(HTItemResult::create), fluid.createOrEmpty())
     }
 
     @JvmRecord

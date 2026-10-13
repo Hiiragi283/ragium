@@ -1,6 +1,7 @@
 {
   "values": [
     "ragium:assembler",
+    "ragium:centrifuge",
     "ragium:compressor",
     "ragium:crusher",
     "ragium:cutting_machine"

@@ -1,33 +1,31 @@
-package hiiragi283.ragium.api.config
+package hiiragi283.ragium.config
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.config.definePositiveInt
-import hiiragi283.lib.config.definePositiveLong
 import hiiragi283.lib.config.translation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.text.RagiumTranslation
 import net.neoforged.neoforge.common.ModConfigSpec
 import java.util.function.IntSupplier
-import java.util.function.LongSupplier
 
 /**
  * 機械のエネルギーに関するコンフィグを管理するクラスです。
  * @param capacity エネルギーの容量
- * @author rate エネルギーの生産/消費速度
+ * @param rate エネルギーの生産/消費速度
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
 @JvmRecord
-data class HTEnergyConfig(private val capacity: LongSupplier, private val rate: IntSupplier) {
-    fun getCapacity(): Long = capacity.asLong
+data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: IntSupplier) {
+    fun getCapacity(): Int = capacity.asInt
 
     fun getUsage(): Int = rate.asInt
 
     companion object {
         @JvmStatic
-        private fun energyCapacity(builder: ModConfigSpec.Builder, value: Long): ModConfigSpec.LongValue = builder
+        private fun energyCapacity(builder: ModConfigSpec.Builder, value: Int): ModConfigSpec.IntValue = builder
             .translation(RagiumTranslation.CONFIG_ENERGY_CAPACITY)
-            .definePositiveLong("energy_capacity", value)
+            .definePositiveInt("energy_capacity", value)
 
         @JvmStatic
         private fun energyRate(builder: ModConfigSpec.Builder, value: Int): ModConfigSpec.IntValue = builder
@@ -39,15 +37,15 @@ data class HTEnergyConfig(private val capacity: LongSupplier, private val rate: 
             builder,
             name,
             rate,
-            rate * 20 * 10 * 10L
+            rate * 20 * 10 * 10
         )
 
         @JvmStatic
-        fun createBlock(builder: ModConfigSpec.Builder, name: String, usage: Int, capacity: Long): HTEnergyConfig =
+        fun createBlock(builder: ModConfigSpec.Builder, name: String, usage: Int, capacity: Int): HTEnergyConfig =
             create(builder, "${HTConstants.BLOCK}.${RagiumAPI.MOD_ID}.$name", name, usage, capacity)
 
         @JvmStatic
-        fun createItem(builder: ModConfigSpec.Builder, name: String, usage: Int, capacity: Long): HTEnergyConfig =
+        fun createItem(builder: ModConfigSpec.Builder, name: String, usage: Int, capacity: Int): HTEnergyConfig =
             create(builder, "${HTConstants.ITEM}.${RagiumAPI.MOD_ID}.$name", name, usage, capacity)
 
         @JvmStatic
@@ -56,7 +54,7 @@ data class HTEnergyConfig(private val capacity: LongSupplier, private val rate: 
             translationKey: String,
             name: String,
             usage: Int,
-            capacity: Long
+            capacity: Int
         ): HTEnergyConfig {
             builder.translation(translationKey).push(name)
             val config = HTEnergyConfig(energyCapacity(builder, capacity), energyRate(builder, usage))

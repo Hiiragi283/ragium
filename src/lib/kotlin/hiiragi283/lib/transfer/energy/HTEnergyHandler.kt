@@ -31,9 +31,9 @@ interface HTEnergyHandler : EnergyHandler {
 
     val isEmpty: Boolean get() = amountAsLong == 0L
 
-    val neededAsLong: Long get() = capacityAsLong - capacityAsLong
-    val filledLevelAsDouble: Double get() = fixedFraction(capacityAsLong, capacityAsLong)
+    val neededAsLong: Long get() = capacityAsLong - amountAsLong
+    val filledLevelAsDouble: Double get() = fixedFraction(amountAsLong, capacityAsLong)
 
-    val neededAsInt: Int get() = capacityAsInt - capacityAsInt
-    val filledLevelAsFloat: Float get() = fixedFraction(capacityAsInt, capacityAsInt)
+    val neededAsInt: Int get() = capacityAsInt - amountAsInt
+    val filledLevelAsFloat: Float get() = fixedFraction(amountAsInt, capacityAsInt)
 }

@@ -81,7 +81,7 @@ data class HTMachineUpgrade(
     }
 
     private fun getText(value: Int): Text? = when {
-        value < 0 -> HTCommonTranslation.PERCENTAGE.translateColored(ChatFormatting.RED, "-$value")
+        value < 0 -> HTCommonTranslation.PERCENTAGE.translateColored(ChatFormatting.RED, value)
         value > 0 -> HTCommonTranslation.PERCENTAGE.translateColored(ChatFormatting.GREEN, "+$value")
         else -> null
     }
