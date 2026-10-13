@@ -238,9 +238,5 @@ data object RagiumBlockEntityTypes {
         ) { _, _ -> InfiniteEnergyHandler.INSTANCE }
         // Misc
         registerBlockEntity(UPGRADE_STATION.get())
-        event.registerBlockEntity(
-            HTEnergyCapabilities.block,
-            UPGRADE_STATION.get()
-        ) { blockEntity, _ -> blockEntity.energyHandler }
     }
 }

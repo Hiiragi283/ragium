@@ -31,16 +31,24 @@ class HTEnergyItemSlot(
 ) : HTBasicItemSlot(Item.ABSOLUTE_MAX_STACK_SIZE, canExtract, canInsert, filter, listener) {
     companion object {
         @JvmStatic
-        fun fill(handler: HTEnergyHandler, listener: Runnable?): HTEnergyItemSlot = HTEnergyItemSlot(
+        fun fill(
+            handler: HTEnergyHandler,
+            listener: Runnable?,
+            filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue()
+        ): HTEnergyItemSlot = HTEnergyItemSlot(
             handler,
             HTTransferPredicates.notExternal<ItemResource>().or { resource: ItemResource, _ -> !canFill(resource) },
             HTTransferPredicates.internalOnly<ItemResource>().or { resource: ItemResource, _ -> canFill(resource) },
-            HTTransferPredicates.alwaysTrue(),
+            filter,
             listener
         )
 
         @JvmStatic
-        fun drain(handler: HTEnergyHandler, listener: Runnable?): HTEnergyItemSlot = HTEnergyItemSlot(
+        fun drain(
+            handler: HTEnergyHandler,
+            listener: Runnable?,
+            filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue()
+        ): HTEnergyItemSlot = HTEnergyItemSlot(
             handler,
             HTTransferPredicates.notExternal<ItemResource>().or { resource: ItemResource, _ ->
                 !canDrain(handler, resource)
@@ -48,7 +56,7 @@ class HTEnergyItemSlot(
             HTTransferPredicates.internalOnly<ItemResource>().or { resource: ItemResource, _ ->
                 canDrain(handler, resource)
             },
-            HTTransferPredicates.alwaysTrue(),
+            filter,
             listener
         )
 
