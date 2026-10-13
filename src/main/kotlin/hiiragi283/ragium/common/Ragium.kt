@@ -5,6 +5,7 @@ import hiiragi283.lib.data.loot.predicates.HTBlockSetLootCondition
 import hiiragi283.lib.gui.sync.HTFluidSyncPayload
 import hiiragi283.lib.gui.sync.HTIntSyncPayload
 import hiiragi283.lib.gui.sync.HTItemSyncPayload
+import hiiragi283.lib.gui.sync.HTLongSyncPayload
 import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
@@ -141,6 +142,7 @@ data object Ragium : HTCommonMod() {
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
             helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)
+            helper.register(RagiumAPI.id("long"), HTLongSyncPayload.TYPE)
             helper.register(RagiumAPI.id(HTConstants.ITEM), HTItemSyncPayload.TYPE)
             helper.register(RagiumAPI.id(HTConstants.FLUID), HTFluidSyncPayload.TYPE)
         }

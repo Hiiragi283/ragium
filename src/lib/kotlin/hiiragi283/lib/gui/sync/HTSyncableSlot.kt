@@ -5,7 +5,7 @@ import net.minecraft.core.RegistryAccess
 /**
  * 任意の値をサーバーからクライアントへ同期可能なオブジェクトを表すインターフェースです。
  *
- * 参照 : [Mekanism - ISyncableData](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/inventory/container/sync/ISyncableData.java)
+ * 参照 : [Mekanism - ISyncableData](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/inventory/container/sync/ISyncableData.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

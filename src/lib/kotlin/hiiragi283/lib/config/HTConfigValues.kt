@@ -19,6 +19,13 @@ fun ModConfigSpec.Builder.definePositiveInt(path: String, defaultValue: Int, min
 
 /**
  * @author Hiiragi Tsubasa
+ * @since 26.1.9
+ */
+fun ModConfigSpec.Builder.definePositiveLong(path: String, defaultValue: Long, min: Long = 1): ModConfigSpec.LongValue =
+    defineInRange(path, defaultValue, min, Long.MAX_VALUE)
+
+/**
+ * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
 fun ModConfigSpec.Builder.definePositiveDouble(

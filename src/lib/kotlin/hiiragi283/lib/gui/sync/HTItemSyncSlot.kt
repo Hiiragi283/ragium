@@ -13,7 +13,7 @@ import kotlin.reflect.KProperty
 /**
  * [ItemStack]向けの[HTSyncableSlot]の拡張インターフェースです。
  *
- * 参照 : [Mekanism - SyncableItemStack](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/common/inventory/container/sync/SyncableItemStack.java)
+ * 参照 : [Mekanism - SyncableItemStack](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/inventory/container/sync/SyncableItemStack.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

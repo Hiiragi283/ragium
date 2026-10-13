@@ -13,7 +13,7 @@ import java.util.function.Predicate
  * 参考 : [Mekanism - MachineEnergyContainer](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/energy/MachineEnergyContainer.java)
  */
 sealed class HTMachineEnergyHandler<BE : HTBaseMachineBlockEntity>(
-    capacity: Int,
+    capacity: Long,
     val baseEnergyPerTick: Int,
     val blockEntity: BE,
     canExtract: Predicate<HTTransferAccess>,

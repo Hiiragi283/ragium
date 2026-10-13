@@ -34,7 +34,7 @@ class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) :
 
     override fun getSpriteAndColor(): Pair<TextureAtlasSprite, Int> = getSprite(AtlasIds.BLOCKS, SPRITE) to -1
 
-    override fun getLevel(): Float = widget.filledLevel
+    override fun getLevel(): Float = widget.filledLevelAsFloat
 
     override fun collectTooltips(consumer: Consumer<Text>, context: Item.TooltipContext, flag: TooltipFlag) {
         HTStorageHelper.addEnergyTooltip(widget, consumer, flag.isCreative)

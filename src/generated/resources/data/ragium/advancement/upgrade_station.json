@@ -16,6 +16,7 @@
     "description": {
       "translate": "advancement.ragium.upgrade_station.desc"
     },
+    "frame": "goal",
     "icon": {
       "id": "ragium:upgrade_station"
     },

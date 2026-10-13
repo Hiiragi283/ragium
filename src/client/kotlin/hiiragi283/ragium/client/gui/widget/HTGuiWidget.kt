@@ -13,7 +13,7 @@ import net.minecraft.client.input.MouseButtonEvent
 import net.minecraft.world.item.ItemStack
 
 /**
- * 参照 : [Mekanism - GuiElement](https://github.com/mekanism/Mekanism/blob/1.21.x/src/main/java/mekanism/client/gui/element/GuiElement.java)
+ * 参照 : [Mekanism - GuiElement](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/client/gui/element/GuiElement.java)
  */
 class HTGuiWidget<WIDGET : HTWidget>(private val gui: HTGuiAccess, val widget: WIDGET) :
     AbstractWidget(

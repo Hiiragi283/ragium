@@ -198,7 +198,7 @@ data object RagiumBlockEntityTypes {
         fun <BE : HTProcessorBlockEntity.Energized> registerProcessor(type: BlockEntityType<BE>) {
             registerBlockEntity(type)
             event.registerBlockEntity(HTEnergyCapabilities.block, type) { processor: BE, _ ->
-                processor.handler.asForge()
+                processor.handler
             }
         }
 
@@ -241,6 +241,6 @@ data object RagiumBlockEntityTypes {
         event.registerBlockEntity(
             HTEnergyCapabilities.block,
             UPGRADE_STATION.get()
-        ) { blockEntity, _ -> blockEntity.energyHandler.asForge() }
+        ) { blockEntity, _ -> blockEntity.energyHandler }
     }
 }

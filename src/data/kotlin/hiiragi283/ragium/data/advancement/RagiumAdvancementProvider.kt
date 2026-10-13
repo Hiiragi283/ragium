@@ -27,7 +27,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         key: AdvancementKey,
         parentKey: AdvancementKey,
         item: HTSimpleDeferredItem,
-        type: AdvancementType = AdvancementType.GOAL
+        type: AdvancementType = AdvancementType.TASK
     ) {
         HTAdvancementBuilder.create(key) {
             +parentKey
@@ -43,7 +43,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         key: AdvancementKey,
         parentKey: AdvancementKey,
         item: HTSimpleDeferredBlockAndItem,
-        type: AdvancementType = AdvancementType.GOAL
+        type: AdvancementType = AdvancementType.TASK
     ) {
         HTAdvancementBuilder.create(key) {
             +parentKey

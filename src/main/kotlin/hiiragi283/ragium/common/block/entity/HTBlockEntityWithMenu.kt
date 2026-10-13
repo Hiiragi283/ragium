@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.lib.gui.sync.HTFluidSyncSlot
-import hiiragi283.lib.gui.sync.HTIntSyncSlot
 import hiiragi283.lib.gui.sync.HTItemSyncSlot
+import hiiragi283.lib.gui.sync.HTLongSyncSlot
 import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
@@ -21,6 +21,6 @@ fun interface HTBlockEntityWithMenu {
     }
 
     fun HTWidgetHolder.track(handler: HTBasicEnergyHandler, syncType: HTSyncType = HTSyncType.S2C) {
-        this.track(HTIntSyncSlot.create(handler::amount, handler::setAmount), syncType)
+        this.track(HTLongSyncSlot.create(handler::getAmountAsLong, handler::setAmount), syncType)
     }
 }

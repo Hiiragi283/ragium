@@ -620,7 +620,8 @@
   "ragium:syncable_payload_type": [
     "fluid",
     "integer",
-    "item"
+    "item",
+    "long"
   ],
   "ragium:widget_type": [
     "energy",

@@ -12,11 +12,19 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 interface ExtendedResourceHandler<T : Resource> : ResourceHandler<T> {
     fun insert(index: Int, resource: T, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int
 
+    @Deprecated(
+        "Use 'insert(Int, T, Int, TransactionContext, HTTransferAccess)' instead",
+        ReplaceWith("this.insert(index, resource, amount, transaction, HTTransferAccess.EXTERNAL)")
+    )
     override fun insert(index: Int, resource: T, amount: Int, transaction: TransactionContext): Int =
         insert(index, resource, amount, transaction, HTTransferAccess.EXTERNAL)
 
     fun extract(index: Int, resource: T, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int
 
+    @Deprecated(
+        "Use 'extract(Int, T, Int, TransactionContext, HTTransferAccess)' instead",
+        ReplaceWith("this.extract(index, resource, amount, transaction, HTTransferAccess.EXTERNAL)")
+    )
     override fun extract(index: Int, resource: T, amount: Int, transaction: TransactionContext): Int =
         extract(index, resource, amount, transaction, HTTransferAccess.EXTERNAL)
 }
