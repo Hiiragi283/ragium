@@ -20,7 +20,7 @@ import kotlin.jvm.optionals.getOrNull
 /**
  * [Fluid]向けの[HTIngredient]の実装クラスです。
  *
- * 参照 : [Mekanism - FluidStackIngredient](https://github.com/mekanism/Mekanism/blob/26.1/src/api/java/mekanism/api/recipes/ingredients/FluidStackIngredient.java)
+ * 参照 : [Mekanism - FluidStackIngredient](https://github.com/mekanism/Mekanism/blob/26.3/src/api/java/mekanism/api/recipes/ingredients/FluidStackIngredient.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

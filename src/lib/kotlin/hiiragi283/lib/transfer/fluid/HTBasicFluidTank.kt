@@ -12,6 +12,13 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource
 import java.util.function.BiPredicate
 import java.util.function.Predicate
 
+/**
+ * [液体][FluidResource]向けの[HTStackResourceSlot]の実装クラスです。
+ *
+ * 参照 : [Mekanism - BasicFluidTank](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/fluid/BasicFluidTank.java)
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 open class HTBasicFluidTank(
     capacity: Int,
     canExtract: BiPredicate<FluidResource, HTTransferAccess>,

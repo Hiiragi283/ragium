@@ -27,8 +27,8 @@ import java.text.NumberFormat
 /**
  * [テキスト][Text]に関するメソッドを集めたクラスです。
  *
- * 参照 : [Mekanism - TextComponentUtil](https://github.com/mekanism/Mekanism/blob/26.1/src/api/java/mekanism/api/text/TextComponentUtil.java)
- *       [Mekanism - TextUtils](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/util/text/TextUtils.java)
+ * 参照 : [Mekanism - TextComponentUtil](https://github.com/mekanism/Mekanism/blob/26.3/src/api/java/mekanism/api/text/TextComponentUtil.java)
+ *       [Mekanism - TextUtils](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/util/text/TextUtils.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

@@ -7,8 +7,8 @@ import net.minecraft.core.Direction
 /**
  * [HTCapabilityManager]の実装クラスです。
  *
- * 参照 : [Mekanism - CapabilityHandlerManager](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/resolver/manager/CapabilityHandlerManager.java)
- *       [Mekanism - BasicCapabilityResolver](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/resolver/BasicCapabilityResolver.java)
+ * 参照 : [Mekanism - CapabilityHandlerManager](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/resolver/manager/CapabilityHandlerManager.java)
+ *       [Mekanism - BasicCapabilityResolver](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/resolver/BasicCapabilityResolver.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

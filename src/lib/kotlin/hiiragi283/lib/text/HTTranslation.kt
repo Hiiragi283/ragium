@@ -5,7 +5,7 @@ import net.minecraft.ChatFormatting
 /**
  * 翻訳を保持するインターフェースです。
  *
- * 参照 : [Mekanism - ILangEntry](https://github.com/mekanism/Mekanism/blob/26.1/src/api/java/mekanism/api/text/ILangEntry.java)
+ * 参照 : [Mekanism - ILangEntry](https://github.com/mekanism/Mekanism/blob/26.3/src/api/java/mekanism/api/text/ILangEntry.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

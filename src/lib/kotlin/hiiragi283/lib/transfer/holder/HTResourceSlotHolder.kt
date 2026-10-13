@@ -6,7 +6,7 @@ import net.minecraft.core.Direction
 /**
  * [HTResourceSlot]向けの[HTCapabilityHolder]の拡張インターフェースです。
  *
- * 参照 : [Mekanism - IContainerHolder](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/holder/IContainerHolder.java)
+ * 参照 : [Mekanism - IContainerHolder](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/holder/IContainerHolder.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

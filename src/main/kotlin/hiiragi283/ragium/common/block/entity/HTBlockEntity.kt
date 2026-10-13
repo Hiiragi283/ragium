@@ -35,7 +35,7 @@ import java.util.UUID
 /**
  * [HTExtendedBlockEntity]の拡張クラスです。
  *
- * 参考 : [Mekanism - TileEntityMekanism](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/tile/base/TileEntityMekanism.java)
+ * 参考 : [Mekanism - TileEntityMekanism](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/tile/base/TileEntityMekanism.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

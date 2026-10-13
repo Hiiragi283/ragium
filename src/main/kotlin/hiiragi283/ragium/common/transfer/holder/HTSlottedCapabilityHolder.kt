@@ -6,7 +6,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Direction
 
 /**
- * 参考 : [Mekanism - ConfigHolder](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/holder/ConfigHolder.java)
+ * 参考 : [Mekanism - ConfigHolder](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/holder/ConfigHolder.java)
  */
 abstract class HTSlottedCapabilityHolder<SLOT : Any>(
     configGetter: HTSlotInfoProvider?,

@@ -5,7 +5,7 @@ import java.util.function.Predicate
 /**
  * スロットへのアクセスの種類を表すクラスです。
  *
- * 参照 : [Mekanism - AutomationType](https://github.com/mekanism/Mekanism/blob/26.1/src/api/java/mekanism/api/AutomationType.java)
+ * 参照 : [Mekanism - AutomationType](https://github.com/mekanism/Mekanism/blob/26.3/src/api/java/mekanism/api/AutomationType.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 /**
  * [SE][SoundEvent]を再生可能な[BlockEntity]に実装するインターフェースです。
  *
- * 参考 : [Mekanism - ITileSound](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/tile/interfaces/ITileSound.java)
+ * 参考 : [Mekanism - ITileSound](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/tile/interfaces/ITileSound.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

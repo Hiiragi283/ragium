@@ -11,7 +11,7 @@ import net.neoforged.neoforge.transfer.resource.Resource
 /**
  * [ResourceHandler]向けの[HTCapabilityManagerImpl]の実装クラスです。
  *
- * 参照 : [Mekanism - ResourceHandlerManager](https://github.com/mekanism/Mekanism/blob/26.1/src/main/java/mekanism/common/capabilities/resolver/manager/ResourceHandlerManager.java)
+ * 参照 : [Mekanism - ResourceHandlerManager](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/resolver/manager/ResourceHandlerManager.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  **/

@@ -6,7 +6,7 @@ import java.util.function.Predicate
 /**
  * ストレージ周りで使用する条件をまとめたクラスです。
  *
- * 参照 : [Mekanism - AutomationType](https://github.com/mekanism/Mekanism/blob/26.1/src/api/java/mekanism/api/functions/ConstantPredicates.java)
+ * 参照 : [Mekanism - AutomationType](https://github.com/mekanism/Mekanism/blob/26.3/src/api/java/mekanism/api/functions/ConstantPredicates.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */

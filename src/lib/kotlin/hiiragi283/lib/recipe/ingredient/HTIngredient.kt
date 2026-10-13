@@ -6,7 +6,7 @@ import java.util.function.Predicate
 /**
  * Hiiragi Seriesで使用される，レシピの材料を判定するインターフェースです。
  *
- * 参照 : [Mekanism - InputIngredient](https://github.com/mekanism/Mekanism/blob/26.1/src/api/java/mekanism/api/recipes/ingredients/InputIngredient.java)
+ * 参照 : [Mekanism - InputIngredient](https://github.com/mekanism/Mekanism/blob/26.3/src/api/java/mekanism/api/recipes/ingredients/InputIngredient.java)
  * @param TYPE 材料の種類のクラス
  * @param INSTANCE 材料の種類を保持するインスタンスのクラス
  * @author Hiiragi Tsubasa
