@@ -2,6 +2,7 @@ package hiiragi283.lib.fluid
 
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
@@ -77,3 +78,10 @@ fun FluidStack.transmuteCopy(newFluid: Fluid, newAmount: Int = this.amount()): F
     newFluid == Fluids.EMPTY -> FluidStack.EMPTY
     else -> FluidStack(newFluid, newAmount, this.componentsPatch)
 }
+
+/**
+ * この[FluidStack][this]から液体入りバケツの[ItemStack]を作成します。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.9
+ */
+fun FluidStack.createBucket(): ItemStack = this.fluidType.getBucket(this)

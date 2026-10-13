@@ -69,6 +69,9 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
 
     abstract override fun getIdentifier(recipe: RECIPE): Identifier?
 
+    override fun getSourceRecipeIds(recipe: RECIPE): List<Identifier> =
+        getIdentifier(recipe)?.takeUnless { it.path.startsWith("/") }.let(::listOfNotNull)
+
     abstract override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<RECIPE>
 
     //    Extensions    //
