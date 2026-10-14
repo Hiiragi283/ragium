@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.item.component.PotionContents
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
+import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -92,7 +93,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         // Unluck
         // Darkness
         RagiumRecipeBuilders.brewing {
-            itemIngredient { +dustOrGem(RagiumMaterial.Gem.ECHO) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.ECHO) }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
             fluidResult {
                 +PotionContents(

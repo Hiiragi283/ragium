@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.recipe
 
-import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.ingredient.IngredientBuilder
@@ -177,7 +176,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Gunpowder
         VanillaRecipeBuilders.shapeless {
             ingredient {
-                +materialTags(CommonTagPrefixes.DUST, nelOf(RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL))
+                +setOf(RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL)
+                    .map(CommonTagPrefixes.DUST::itemTagKey)
+                    .let(::holderSet)
             }
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
@@ -692,7 +693,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         VanillaRecipeBuilders.shaped {
             hollow8()
             define('A') {
-                +materialTags(CommonTagPrefixes.TINY, nelOf(RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL))
+                +setOf(RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL)
+                    .map(CommonTagPrefixes.TINY::itemTagKey)
+                    .let(::holderSet)
             }
             define('B') { +ironIngot }
             result { +sootyIronIngot }
@@ -701,10 +704,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         VanillaRecipeBuilders.shaped {
             hollow4()
             define('A') {
-                +materialTags(
-                    CommonTagPrefixes.TINY,
-                    nelOf(RagiumMaterial.Fuel.COAL_COKE, RagiumMaterial.Fuel.PITCH_COKE)
-                )
+                +setOf(RagiumMaterial.Fuel.COAL_COKE, RagiumMaterial.Fuel.PITCH_COKE)
+                    .map(CommonTagPrefixes.TINY::itemTagKey)
+                    .let(::holderSet)
             }
             define('B') { +ironIngot }
             result { +sootyIronIngot }

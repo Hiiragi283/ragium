@@ -5,11 +5,11 @@
     "items": "#c:sands"
   },
   "ingredient": {
-    "count": 1,
-    "items": "minecraft:amethyst_block"
+    "chemicals": "ragium:silicon_dioxide",
+    "scale": 1.0
   },
   "result": {
-    "count": 1,
+    "count": 2,
     "id": "ragium:quartz_glass"
   },
   "time": 200

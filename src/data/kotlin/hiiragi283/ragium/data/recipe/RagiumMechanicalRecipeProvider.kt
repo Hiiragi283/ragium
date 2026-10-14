@@ -155,9 +155,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 items { +Items.REDSTONE_TORCH }
                 count = 3
             }
-            extra {
-                +dustOrGem(RagiumMaterial.Gem.QUARTZ)
-            }
+            extra { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.QUARTZ) }
             result {
                 +Items.COMPARATOR
                 count = 2

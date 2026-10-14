@@ -155,12 +155,14 @@ abstract class ExporterDataProvider<R : Any>(
     /**
      * @since 26.1.11
      */
+    @JvmName("chemicalHolderSet")
     protected fun holderSet(chemical: ResourceKey<HTChemical>): HolderSet<HTChemical> =
         HolderSet.direct(registries.getOrThrow(chemical))
 
     /**
      * @since 26.1.11
      */
+    @JvmName("chemicalHolderSet")
     protected fun holderSet(vararg chemicals: ResourceKey<HTChemical>): HolderSet<HTChemical> =
         HolderSet.direct(chemicals.map(registries::getOrThrow))
 }

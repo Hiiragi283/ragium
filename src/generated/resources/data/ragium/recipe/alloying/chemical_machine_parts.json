@@ -1,14 +1,8 @@
 {
   "type": "ragium:alloying",
   "extra": {
-    "count": 1,
-    "items": {
-      "neoforge:ingredient_type": "ragium:material_tags",
-      "tags": [
-        "c:dusts/gold",
-        "c:ingots/gold"
-      ]
-    }
+    "chemicals": "ragium:gold",
+    "scale": 1.0
   },
   "ingredient": {
     "count": 2,

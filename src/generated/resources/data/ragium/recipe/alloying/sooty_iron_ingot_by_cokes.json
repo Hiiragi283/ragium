@@ -5,14 +5,8 @@
     "items": "#ragium:cokes"
   },
   "ingredient": {
-    "count": 2,
-    "items": {
-      "neoforge:ingredient_type": "ragium:material_tags",
-      "tags": [
-        "c:dusts/iron",
-        "c:ingots/iron"
-      ]
-    }
+    "chemicals": "ragium:iron",
+    "scale": 2.0
   },
   "result": {
     "count": 2,

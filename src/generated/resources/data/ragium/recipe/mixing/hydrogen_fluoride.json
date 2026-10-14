@@ -7,13 +7,7 @@
     },
     "item": {
       "count": 1,
-      "items": {
-        "neoforge:ingredient_type": "ragium:material_tags",
-        "tags": [
-          "c:dusts/fluorite",
-          "c:gems/fluorite"
-        ]
-      }
+      "items": "#c:dusts/fluorite"
     }
   },
   "result": {

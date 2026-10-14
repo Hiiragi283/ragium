@@ -544,9 +544,6 @@
     "wood_tar",
     "yellow_dye"
   ],
-  "neoforge:ingredient_serializer": [
-    "material_tags"
-  ],
   "ragium:chemical": [
     "aluminum",
     "aluminum_fluoride",

@@ -475,7 +475,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     private fun fluorine() {
         // CaF2 + H2SO4 -> 2x HF + CaSO4
         RagiumRecipeBuilders.mixing {
-            itemIngredient { +dustOrGem(RagiumMaterial.Gem.FLUORITE) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.FLUORITE) }
             fluidIngredient { +holderSet(RagiumFluids.SULFURIC_ACID) }
             fluidResult {
                 +RagiumFluids.HYDROGEN_FLUORIDE
@@ -660,25 +660,25 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // SiO2 + Sand -> Quartz Glass
         RagiumRecipeBuilders.alloying {
-            ingredient { +dustOrGem(RagiumMaterial.Gem.QUARTZ) }
+            ingredient = HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 1)
             extra { +holderSet(Tags.Items.SANDS) }
-            result { +RagiumBlocks.QUARTZ_GLASS }
-            recipeId suffix "_from_quartz"
+            result {
+                +RagiumBlocks.QUARTZ_GLASS
+                count = 2
+            }
         }.save(exporter)
         RagiumRecipeBuilders.alloying {
-            ingredient {
-                +dustOrGem(RagiumMaterial.Gem.AMETHYST)
+            ingredient = HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 4)
+            extra {
+                +holderSet(Tags.Items.SANDS)
                 count = 4
             }
-            extra { +holderSet(Tags.Items.SANDS) }
-            result { +RagiumBlocks.QUARTZ_GLASS }
-            recipeId suffix "_from_amethyst"
-        }.save(exporter)
-        RagiumRecipeBuilders.alloying {
-            ingredient { items { +Items.AMETHYST_BLOCK } }
-            extra { +holderSet(Tags.Items.SANDS) }
-            result { +RagiumBlocks.QUARTZ_GLASS }
-            recipeId suffix "_from_amethyst_block"
+            result {
+                +RagiumBlocks.QUARTZ_GLASS
+                count = 8
+            }
+            time += 4
+            recipeId prefix "4x_"
         }.save(exporter)
     }
 
@@ -844,7 +844,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         // Plastic + Gold Dust -> Circuit Board
         RagiumRecipeBuilders.alloying {
             ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
-            extra { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
+            extras += HTItemIngredient(holderSet(RagiumChemicals.GOLD), 1)
             result { +RagiumItems.CIRCUIT_BOARD }
         }.save(exporter)
         // Silicon Chip + Circuit Board -> Electric Circuit

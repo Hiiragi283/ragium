@@ -3,10 +3,10 @@
   "category": "misc",
   "ingredients": [
     {
-      "neoforge:ingredient_type": "ragium:material_tags",
-      "tags": [
-        "c:dusts/coal",
-        "c:dusts/charcoal"
+      "type": "neoforge:or",
+      "values": [
+        "#c:dusts/charcoal",
+        "#c:dusts/coal"
       ]
     },
     "#c:dusts/sulfur",
