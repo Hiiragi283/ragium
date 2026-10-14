@@ -41,6 +41,14 @@ data object HTRecipePredicates {
         override fun matches(input: HTRecipeInput): Boolean = test(input.getItemOrEmpty(0))
     }
 
+    /**
+     * 複数のアイテムを判定する[SingleInput]の拡張インターフェースです。
+     * @since 26.1.11
+     */
+    fun interface MultiItem : SingleInput<List<ItemInstance>> {
+        override fun matches(input: HTRecipeInput): Boolean = test(input.items)
+    }
+
     //    Double Input    //
 
     /**

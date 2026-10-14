@@ -10,6 +10,7 @@ import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTSingleRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTSizedShapelessRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTTripleItemToItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
@@ -97,12 +98,12 @@ data object RagiumRecipeBuilders {
     // Heat
     @JvmStatic
     inline fun alloying(
-        builderAction: HTTripleItemToItemRecipeBuilder<RTAlloyingRecipe>.() -> Unit
-    ): HTTripleItemToItemRecipeBuilder<RTAlloyingRecipe> {
+        builderAction: HTSizedShapelessRecipeBuilder<RTAlloyingRecipe>.() -> Unit
+    ): HTSizedShapelessRecipeBuilder<RTAlloyingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTTripleItemToItemRecipeBuilder(RagiumConstants.ALLOYING, ::RTAlloyingRecipe).apply(builderAction)
+        return HTSizedShapelessRecipeBuilder(RagiumConstants.ALLOYING, ::RTAlloyingRecipe).apply(builderAction)
     }
 
     @JvmStatic

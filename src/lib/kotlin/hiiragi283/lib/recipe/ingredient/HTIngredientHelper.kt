@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStackTemplate
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
+import net.neoforged.neoforge.transfer.item.ItemResource
 
 /**
  * [TypedInstance]の変換を補助するクラスです。
@@ -17,6 +18,7 @@ import net.neoforged.neoforge.fluids.FluidStackTemplate
  * @since 26.1.0
  */
 data object HTIngredientHelper {
+
     //    Fluid    //
 
     /**
@@ -46,7 +48,7 @@ data object HTIngredientHelper {
     fun copyWithAmount(instance: FluidInstance, newAmount: Int): FluidInstance = when (instance) {
         is FluidStack -> instance.copyWithAmount(newAmount)
         is FluidStackTemplate -> instance.withAmount(newAmount)
-        else -> FluidStack(instance.typeHolder(), newAmount)
+        else -> FluidStackTemplate(instance.typeHolder(), newAmount)
     }
 
     //    Item    //
@@ -78,6 +80,56 @@ data object HTIngredientHelper {
     fun copyWithCount(instance: ItemInstance, newCount: Int): ItemInstance = when (instance) {
         is ItemStack -> instance.copyWithCount(newCount)
         is ItemStackTemplate -> instance.withCount(newCount)
-        else -> ItemStack(instance.typeHolder(), newCount)
+        else -> ItemStackTemplate(instance.typeHolder(), newCount)
+    }
+
+    /**
+     * @since 26.1.11
+     */
+    @JvmStatic
+    fun matchShapeless(ingredients: Iterable<HTItemIngredient>, inputs: Iterable<ItemInstance>): Boolean {
+        val combined: List<ItemStack> = inputs
+            .fold(mutableMapOf()) { map: MutableMap<ItemResource, Int>, instance: ItemInstance ->
+                val resource: ItemResource = unwrap(instance).let(ItemResource::of)
+                if (!resource.isEmpty) {
+                    map.compute(resource) { _, old: Int? -> (old ?: 0) + instance.count() }
+                }
+                map
+            }.map { (resource: ItemResource, count: Int) -> resource.toStack(count) }
+        ingredient@for (ingredient: HTItemIngredient in ingredients) {
+            for (stack: ItemStack in combined) {
+                if (ingredient.test(stack)) {
+                    stack.count -= ingredient.getMatchingStack(stack).count()
+                    continue@ingredient
+                }
+            }
+            return false
+        }
+        return true
+    }
+
+    @JvmStatic
+    fun getMatchingStacks(ingredients: Iterable<HTItemIngredient>, inputs: Iterable<ItemInstance>): List<ItemInstance> {
+        val combined: List<ItemStack> = inputs
+            .fold(mutableMapOf()) { map: MutableMap<ItemResource, Int>, instance: ItemInstance ->
+                val resource: ItemResource = unwrap(instance).let(ItemResource::of)
+                if (!resource.isEmpty) {
+                    map.compute(resource) { _, old: Int? -> (old ?: 0) + instance.count() }
+                }
+                map
+            }.map { (resource: ItemResource, count: Int) -> resource.toStack(count) }
+        val results: MutableList<ItemInstance> = mutableListOf()
+        ingredient@for (ingredient: HTItemIngredient in ingredients) {
+            for (stack: ItemStack in combined) {
+                if (ingredient.test(stack)) {
+                    val stackMatched: ItemInstance = ingredient.getMatchingStack(stack)
+                    results += stackMatched
+                    stack.count -= stackMatched.count()
+                    continue@ingredient
+                }
+            }
+            return listOf()
+        }
+        return results
     }
 }

@@ -1,16 +1,18 @@
 {
   "type": "ragium:alloying",
-  "extra": {
-    "chemicals": [
-      "ragium:coal",
-      "ragium:charcoal"
-    ],
-    "scale": 1.0
-  },
-  "ingredient": {
-    "chemicals": "ragium:iron",
-    "scale": 1.0
-  },
+  "ingredients": [
+    {
+      "chemicals": "ragium:iron",
+      "scale": 1.0
+    },
+    {
+      "chemicals": [
+        "ragium:coal",
+        "ragium:charcoal"
+      ],
+      "scale": 1.0
+    }
+  ],
   "result": {
     "count": 1,
     "id": "ragium:sooty_iron_ingot"

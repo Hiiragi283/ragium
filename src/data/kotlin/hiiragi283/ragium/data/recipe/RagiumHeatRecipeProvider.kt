@@ -35,8 +35,8 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
     private fun alloying() {
         // Gold + Netherite Scrap -> Netherite
         RagiumRecipeBuilders.alloying {
-            ingredient = HTItemIngredient(holderSet(RagiumChemicals.GOLD), 2)
-            extra {
+            +HTItemIngredient(holderSet(RagiumChemicals.GOLD), 2)
+            ingredient {
                 items { +Items.NETHERITE_SCRAP }
                 count = 2
             }
@@ -45,7 +45,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Clay + Sand -> Brick
         RagiumRecipeBuilders.alloying {
             ingredient { items { +Items.CLAY_BALL } }
-            extra { +holderSet(Tags.Items.SANDS) }
+            ingredient { +holderSet(Tags.Items.SANDS) }
             result {
                 +Items.BRICK
                 count = 2
@@ -54,7 +54,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Netherrack + Soul Sand -> Nether Brick
         RagiumRecipeBuilders.alloying {
             ingredient { +holderSet(Tags.Items.NETHERRACKS) }
-            extra { +holderSet(ItemTags.SOUL_FIRE_BASE_BLOCKS) }
+            ingredient { +holderSet(ItemTags.SOUL_FIRE_BASE_BLOCKS) }
             result {
                 +Items.NETHER_BRICK
                 count = 2
@@ -67,20 +67,20 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL)
                 count = 2
             }
-            extras += HTItemIngredient(holderSet(RagiumChemicals.GOLD), 1)
+            +HTItemIngredient(holderSet(RagiumChemicals.GOLD), 1)
             result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
         }.save(exporter)
         // Iron + Coals -> Sooty Iron
         RagiumRecipeBuilders.alloying {
-            ingredient = HTItemIngredient(holderSet(RagiumChemicals.IRON), 1)
-            extras += HTItemIngredient(holderSet(RagiumChemicals.COAL, RagiumChemicals.CHARCOAL), 1)
+            +HTItemIngredient(holderSet(RagiumChemicals.IRON), 1)
+            +HTItemIngredient(holderSet(RagiumChemicals.COAL, RagiumChemicals.CHARCOAL), 1)
             result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             recipeId suffix "_by_coals"
         }.save(exporter)
         // 2x Iron + Cokes -> 2x Sooty Iron
         RagiumRecipeBuilders.alloying {
-            ingredient = HTItemIngredient(holderSet(RagiumChemicals.IRON), 2)
-            extra { +holderSet(RagiumTags.Items.COKES) }
+            +HTItemIngredient(holderSet(RagiumChemicals.IRON), 2)
+            ingredient { +holderSet(RagiumTags.Items.COKES) }
             result {
                 +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON)
                 count = 2
@@ -90,7 +90,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Sooty Iron + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {
             ingredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            extra {
+            ingredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN)
                 count = 2
             }

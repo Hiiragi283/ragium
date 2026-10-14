@@ -1,13 +1,15 @@
 {
   "type": "ragium:alloying",
-  "extra": {
-    "count": 1,
-    "items": "#c:sands"
-  },
-  "ingredient": {
-    "chemicals": "ragium:silicon_dioxide",
-    "scale": 1.0
-  },
+  "ingredients": [
+    {
+      "chemicals": "ragium:silicon_dioxide",
+      "scale": 1.0
+    },
+    {
+      "count": 1,
+      "items": "#c:sands"
+    }
+  ],
   "result": {
     "count": 2,
     "id": "ragium:quartz_glass"

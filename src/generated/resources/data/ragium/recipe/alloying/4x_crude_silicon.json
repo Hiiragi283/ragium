@@ -1,13 +1,15 @@
 {
   "type": "ragium:alloying",
-  "extra": {
-    "chemicals": "ragium:carbon",
-    "scale": 4.0
-  },
-  "ingredient": {
-    "chemicals": "ragium:silicon_dioxide",
-    "scale": 4.0
-  },
+  "ingredients": [
+    {
+      "chemicals": "ragium:silicon_dioxide",
+      "scale": 4.0
+    },
+    {
+      "chemicals": "ragium:carbon",
+      "scale": 4.0
+    }
+  ],
   "result": {
     "count": 4,
     "id": "ragium:crude_silicon"

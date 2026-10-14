@@ -1,13 +1,15 @@
 {
   "type": "ragium:alloying",
-  "extra": {
-    "count": 2,
-    "items": "#c:dusts/obsidian"
-  },
-  "ingredient": {
-    "count": 1,
-    "items": "#c:ingots/sooty_iron"
-  },
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "#c:ingots/sooty_iron"
+    },
+    {
+      "count": 2,
+      "items": "#c:dusts/obsidian"
+    }
+  ],
   "result": {
     "count": 1,
     "id": "ragium:black_steel_ingot"

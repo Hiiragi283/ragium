@@ -1,13 +1,15 @@
 {
   "type": "ragium:alloying",
-  "extra": {
-    "count": 1,
-    "items": "#ragium:smelting_fluxes"
-  },
-  "ingredient": {
-    "count": 1,
-    "items": "#c:ores/gold"
-  },
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "#c:ores/gold"
+    },
+    {
+      "count": 1,
+      "items": "#ragium:smelting_fluxes"
+    }
+  ],
   "result": {
     "count": 3,
     "id": "minecraft:gold_ingot"

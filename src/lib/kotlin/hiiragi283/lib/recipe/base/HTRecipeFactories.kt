@@ -51,6 +51,16 @@ data object HTRecipeFactories {
         override fun getMatchingStack(input: HTRecipeInput): ItemInstance = getMatchingStack(input.getItemOrEmpty(0))
     }
 
+    /**
+     * 複数のアイテムから完成品を作る[SingleInput]の拡張インターフェースです。
+     * @since 26.1.11
+     */
+    interface MultiItemTo<OUTPUT : Any> : SingleInput<List<ItemInstance>, OUTPUT> {
+        override fun produce(input: HTRecipeInput): OUTPUT = apply(input.items)
+
+        override fun getMatchingStack(input: HTRecipeInput): List<ItemInstance> = getMatchingStack(input.items)
+    }
+
     //    Double Input    //
 
     interface DoubleInput<INPUT_A : Any, INPUT_B : Any, OUTPUT : Any> :

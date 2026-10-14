@@ -150,7 +150,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.forEach { (material: HTMaterialLike, result: Item, count: Int) ->
             RagiumRecipeBuilders.alloying {
                 ingredient { +holderSet(CommonTagPrefixes.ORE, material) }
-                extra { +holderSet(RagiumTags.Items.SMELTING_FLUXES) }
+                ingredient { +holderSet(RagiumTags.Items.SMELTING_FLUXES) }
                 result {
                     +result
                     this.count = count
@@ -513,7 +513,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.QUARTZ)
                 count = 2
             }
-            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SODA_ASH) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SODA_ASH) }
             result {
                 +Items.GLASS
                 count = 6
@@ -660,16 +660,16 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // SiO2 + Sand -> Quartz Glass
         RagiumRecipeBuilders.alloying {
-            ingredient = HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 1)
-            extra { +holderSet(Tags.Items.SANDS) }
+            +HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 1)
+            ingredient { +holderSet(Tags.Items.SANDS) }
             result {
                 +RagiumBlocks.QUARTZ_GLASS
                 count = 2
             }
         }.save(exporter)
         RagiumRecipeBuilders.alloying {
-            ingredient = HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 4)
-            extra {
+            +HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 4)
+            ingredient {
                 +holderSet(Tags.Items.SANDS)
                 count = 4
             }
@@ -799,13 +799,13 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     private fun silicon() {
         // SiO2 + C -> Si + CO2
         RagiumRecipeBuilders.alloying {
-            ingredient = HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 1)
-            extras += HTItemIngredient(holderSet(RagiumChemicals.CARBON), 1)
+            +HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 1)
+            +HTItemIngredient(holderSet(RagiumChemicals.CARBON), 1)
             result { +RagiumItems.CRUDE_SILICON }
         }.save(exporter)
         RagiumRecipeBuilders.alloying {
-            ingredient = HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 4)
-            extras += HTItemIngredient(holderSet(RagiumChemicals.CARBON), 4)
+            +HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 4)
+            +HTItemIngredient(holderSet(RagiumChemicals.CARBON), 4)
             result {
                 +RagiumItems.CRUDE_SILICON
                 count = 4
@@ -829,7 +829,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICON)
                 count = 8
             }
-            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.RAGINITE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.RAGINITE) }
             result { +RagiumItems.SILICON_WAFER }
         }.save(exporter)
         // Silicon Wafer -> Circuit Chip
@@ -844,7 +844,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         // Plastic + Gold Dust -> Circuit Board
         RagiumRecipeBuilders.alloying {
             ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
-            extras += HTItemIngredient(holderSet(RagiumChemicals.GOLD), 1)
+            +HTItemIngredient(holderSet(RagiumChemicals.GOLD), 1)
             result { +RagiumItems.CIRCUIT_BOARD }
         }.save(exporter)
         // Silicon Chip + Circuit Board -> Electric Circuit

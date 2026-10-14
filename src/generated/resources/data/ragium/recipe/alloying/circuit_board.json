@@ -1,13 +1,15 @@
 {
   "type": "ragium:alloying",
-  "extra": {
-    "chemicals": "ragium:gold",
-    "scale": 1.0
-  },
-  "ingredient": {
-    "count": 1,
-    "items": "#c:plastics"
-  },
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "#c:plastics"
+    },
+    {
+      "chemicals": "ragium:gold",
+      "scale": 1.0
+    }
+  ],
   "result": {
     "count": 1,
     "id": "ragium:circuit_board"

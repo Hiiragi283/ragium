@@ -1,6 +1,5 @@
 package hiiragi283.lib.recipe.handler
 
-import hiiragi283.lib.recipe.ingredient.HTIngredient
 import hiiragi283.lib.transfer.HTResourceSlot
 import hiiragi283.lib.transfer.HTTransferAccess
 import net.minecraft.core.TypedInstance
@@ -40,22 +39,22 @@ abstract class HTResourceInputSlot<
      */
     protected abstract fun asResource(instance: INSTANCE): RESOURCE
 
-    final override fun getRequiredInput(ingredient: HTIngredient<TYPE, INSTANCE>): INSTANCE {
+    /*final override fun getRequiredInput(ingredient: HTIngredient<TYPE, INSTANCE>): INSTANCE {
         if (slot.isEmpty) {
             return getEmptyStack()
         }
         return ingredient.getMatchingStack(getStoredInput())
-    }
+    }*/
 
-    final override fun use(input: INSTANCE?, transaction: TransactionContext): HTInputSlot.UseResult {
+    final override fun use(input: INSTANCE?, transaction: TransactionContext): HTInputHandler.UseResult {
         if (input == null || isEmpty(input)) {
-            return HTInputSlot.UseResult.EMPTY
+            return HTInputHandler.UseResult.EMPTY
         }
         val amount: Int = getAmount(input)
         val extracted: Int = slot.extract(asResource(input), amount, transaction, HTTransferAccess.INTERNAL)
         return when {
-            extracted == amount -> HTInputSlot.UseResult.CONSUMED
-            else -> HTInputSlot.UseResult.NOT_CONSUMED
+            extracted == amount -> HTInputHandler.UseResult.CONSUMED
+            else -> HTInputHandler.UseResult.NOT_CONSUMED
         }
     }
 }

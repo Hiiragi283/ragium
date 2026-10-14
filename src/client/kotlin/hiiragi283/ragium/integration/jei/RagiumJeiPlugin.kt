@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.integration.jei.advanced.HTFluidBucketRecipePlugin
 import hiiragi283.ragium.integration.jei.advanced.HTPotionFluidRecipePlugin
+import hiiragi283.ragium.integration.jei.category.RTAlloyingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTCentrifugingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTElectrolyzingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTEnchantingRecipeCategory
@@ -133,11 +134,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING)
             ),
             // Heat
-            HTTripleItemToRecipeCategory.Basic(
-                RagiumJeiRecipeTypes.ALLOYING,
-                RagiumRecipeTypes.ALLOYING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.ALLOY_SMELTER)
-            ),
+            RTAlloyingRecipeCategory(guiHelper),
             RTFreezingRecipeCategory(guiHelper),
             HTSingleRecipeCategory.ItemToFluid(
                 RagiumJeiRecipeTypes.MELTING,

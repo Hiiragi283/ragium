@@ -1,13 +1,15 @@
 {
   "type": "ragium:alloying",
-  "extra": {
-    "count": 2,
-    "items": "minecraft:netherite_scrap"
-  },
-  "ingredient": {
-    "chemicals": "ragium:gold",
-    "scale": 2.0
-  },
+  "ingredients": [
+    {
+      "chemicals": "ragium:gold",
+      "scale": 2.0
+    },
+    {
+      "count": 2,
+      "items": "minecraft:netherite_scrap"
+    }
+  ],
   "result": {
     "count": 1,
     "id": "minecraft:netherite_ingot"

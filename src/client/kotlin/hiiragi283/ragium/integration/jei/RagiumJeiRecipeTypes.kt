@@ -7,6 +7,7 @@ import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
+import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
@@ -45,7 +46,7 @@ data object RagiumJeiRecipeTypes {
 
     // Heat
     @JvmField
-    val ALLOYING: HTRecipeHolderType<HTTripleItemToItemRecipe.Basic> = create(RagiumConstants.ALLOYING)
+    val ALLOYING: HTRecipeHolderType<HTSizedShapelessRecipe.Basic> = create(RagiumConstants.ALLOYING)
 
     @JvmField
     val FREEZING: HTRecipeHolderType<RTFreezingRecipe> = create(RagiumConstants.FREEZING)
