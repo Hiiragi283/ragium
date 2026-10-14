@@ -16,9 +16,9 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
+import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.nelOf
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
@@ -54,7 +54,7 @@ interface RTCentrifugingRecipe :
             val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Result> = StreamCodec.composite(
                 HTItemResult.STREAM_CODEC.nelOf(),
                 Result::items,
-                ByteBufCodecs.optional(HTFluidResult.STREAM_CODEC),
+                HTStreamCodecs.optional(HTFluidResult.STREAM_CODEC),
                 Result::fluid,
                 ::Result
             )

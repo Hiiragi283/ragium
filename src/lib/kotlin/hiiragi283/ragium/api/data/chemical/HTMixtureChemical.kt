@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data.chemical
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.collection.Nel
+import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
 import hiiragi283.lib.serialization.network.nelOf
 import hiiragi283.ragium.api.data.element.HTElement
@@ -29,6 +30,8 @@ data class HTMixtureChemical(val elements: Nel<Holder<HTElement>>) : HTChemical 
         @JvmField
         val TYPE: HTChemical.Type<HTMixtureChemical> = HTChemical.Type(CODEC, STREAM_CODEC)
     }
+
+    constructor(element: Holder<HTElement>, vararg elements: Holder<HTElement>) : this(nelOf(element, *elements))
 
     override fun type(): HTChemical.Type<out HTChemical> = TYPE
 

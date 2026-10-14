@@ -12,7 +12,6 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineUpgrade
 import hiiragi283.ragium.api.material.HTItemPart
@@ -21,14 +20,11 @@ import hiiragi283.ragium.api.text.HTItemTooltip
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.HoneycombItem
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
@@ -112,9 +108,6 @@ data object RagiumItems {
                         if (material == RagiumMaterial.Alloy.NETHERITE) {
                             properties.fireResistant()
                         }
-                        material.chemicalKey?.let {
-                            properties.delayedHolderComponent(RagiumDataComponents.CHEMICAL, it)
-                        }
                         properties
                     }
                 )
@@ -140,17 +133,13 @@ data object RagiumItems {
 
     // Heat
     @JvmField
-    val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.COAL_COKE.materialName) {
-        it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
-    }
+    val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.COAL_COKE.materialName)
 
     @JvmField
     val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
 
     @JvmField
-    val PITCH_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.PITCH_COKE.materialName) {
-        it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
-    }
+    val PITCH_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.PITCH_COKE.materialName)
 
     @JvmField
     val STICKY_BALL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("sticky_ball")
@@ -188,9 +177,7 @@ data object RagiumItems {
 
     // Electronics
     @JvmField
-    val CRUDE_SILICON: HTSimpleDeferredItem = REGISTER.registerSimpleItem("crude_silicon") {
-        it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON)
-    }
+    val CRUDE_SILICON: HTSimpleDeferredItem = REGISTER.registerSimpleItem("crude_silicon")
 
     @JvmField
     val SILICON_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_wafer")
@@ -306,43 +293,6 @@ data object RagiumItems {
             }
         }
 
-        // Chemical
-        fun <T : Any> setHolder(item: ItemLike, type: DataComponentType<Holder<T>>, key: ResourceKey<T>) {
-            event.modify(item) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
-                builder.set(type, provider.getOrThrow(key))
-            }
-        }
-
-        setHolder(Items.COAL_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
-        setHolder(Items.COAL, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
-        setHolder(Items.CHARCOAL, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
-
-        setHolder(Items.DIAMOND_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.DIAMOND)
-        setHolder(Items.DIAMOND, RagiumDataComponents.CHEMICAL, RagiumChemicals.DIAMOND)
-
-        setHolder(Items.IRON_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.IRON)
-        setHolder(Items.IRON_INGOT, RagiumDataComponents.CHEMICAL, RagiumChemicals.IRON)
-        setHolder(Items.IRON_NUGGET, RagiumDataComponents.CHEMICAL, RagiumChemicals.IRON)
-
-        setHolder(Items.COPPER_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.COPPER)
-        setHolder(Items.COPPER_INGOT, RagiumDataComponents.CHEMICAL, RagiumChemicals.COPPER)
-        setHolder(Items.COPPER_NUGGET, RagiumDataComponents.CHEMICAL, RagiumChemicals.COPPER)
-
-        setHolder(Items.GOLD_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
-        setHolder(Items.GOLD_INGOT, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
-        setHolder(Items.GOLD_NUGGET, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
-
-        setHolder(Items.SNOWBALL, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
-        setHolder(Items.SNOW_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
-        setHolder(Items.ICE, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
-        setHolder(Items.PACKED_ICE, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
-        setHolder(Items.BLUE_ICE, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
-
-        setHolder(Items.AMETHYST_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
-        setHolder(Items.AMETHYST_SHARD, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
-
-        setHolder(Items.QUARTZ_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
-        setHolder(Items.QUARTZ, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
         // Tooltip
         fun setTooltip(item: ItemLike, delegate: HTHasTranslationKey) {
             set(item, RagiumDataComponents.ITEM_TOOLTIP, HTItemTooltip.wrap(delegate))

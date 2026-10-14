@@ -2,18 +2,18 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.forEach
-import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
+import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
@@ -797,48 +797,21 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun silicon() {
-        val dustOrCoke: HTMaterialTagsIngredient = materialTags(
-            nelOf(
-                CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL_COKE),
-                CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.PITCH_COKE),
-                RagiumTags.Items.COKES
-            )
-        )
-        // Quartz + Coal Coke -> Crude Si
+        // SiO2 + C -> Si + CO2
         RagiumRecipeBuilders.alloying {
-            ingredient { +dustOrGem(RagiumMaterial.Gem.QUARTZ) }
-            extra { +dustOrCoke }
+            ingredient = HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 1)
+            extras += HTItemIngredient(holderSet(RagiumChemicals.CARBON), 1)
             result { +RagiumItems.CRUDE_SILICON }
-            recipeId suffix "_from_quartz"
         }.save(exporter)
         RagiumRecipeBuilders.alloying {
-            ingredient { +holderSet(RagiumTags.BlockItems.QUARTZ_BLOCKS.item) }
-            extra {
-                +dustOrCoke
-                count = 4
-            }
+            ingredient = HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 4)
+            extras += HTItemIngredient(holderSet(RagiumChemicals.CARBON), 4)
             result {
                 +RagiumItems.CRUDE_SILICON
                 count = 4
             }
             time *= 4
-            recipeId suffix "_from_quartz_block"
-        }.save(exporter)
-        // Amethyst + Coal Coke -> Crude Si
-        RagiumRecipeBuilders.alloying {
-            ingredient {
-                +dustOrGem(RagiumMaterial.Gem.AMETHYST)
-                count = 4
-            }
-            extra { +dustOrCoke }
-            result { +RagiumItems.CRUDE_SILICON }
-            recipeId suffix "_from_amethyst"
-        }.save(exporter)
-        RagiumRecipeBuilders.alloying {
-            ingredient { items { +Items.AMETHYST_BLOCK } }
-            extra { +dustOrCoke }
-            result { +RagiumItems.CRUDE_SILICON }
-            recipeId suffix "_from_amethyst_block"
+            recipeId prefix "4x_"
         }.save(exporter)
 
         // Crude Si + HCl -> Si Dust

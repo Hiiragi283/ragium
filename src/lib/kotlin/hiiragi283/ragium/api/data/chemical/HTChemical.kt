@@ -9,6 +9,7 @@ import hiiragi283.lib.text.MutableText
 import hiiragi283.lib.text.toText
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -28,12 +29,20 @@ interface HTChemical : HTHasText {
         val HOLDER_CODEC: Codec<Holder<HTChemical>> = HTCodecs.holder(RagiumRegistries.Keys.CHEMICAL, DISPATCH_CODEC)
 
         @JvmField
+        val HOLDER_SET_CODEC: Codec<HolderSet<HTChemical>> =
+            HTCodecs.holderSet(RagiumRegistries.Keys.CHEMICAL, DISPATCH_CODEC)
+
+        @JvmField
         val DISPATCH_STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTChemical> =
             ByteBufCodecs.registry(RagiumRegistries.Keys.CHEMICAL_TYPE).dispatch(HTChemical::type, Type<*>::streamCodec)
 
         @JvmField
         val HOLDER_STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Holder<HTChemical>> =
             HTStreamCodecs.holder(RagiumRegistries.Keys.CHEMICAL, DISPATCH_STREAM_CODEC)
+
+        @JvmField
+        val HOLDER_SET_STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HolderSet<HTChemical>> =
+            HTStreamCodecs.holderSet(RagiumRegistries.Keys.CHEMICAL)
 
         @JvmField
         val WEIGHT_CODEC: MapCodec<Int> = Codec.intRange(1, 99).optionalFieldOf("weight", 1)

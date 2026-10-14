@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.element.HTElement
 import hiiragi283.ragium.api.data.element.RagiumElements
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
@@ -144,6 +145,13 @@ data object RagiumChemicals {
     val MERCURY_SULFIDE: ResourceKey<HTChemical> = create("mercury_sulfide")
 
     //    Mixtures    //
+
+    // 2nd Period
+    @JvmField
+    val COAL: ResourceKey<HTChemical> = create("coal")
+
+    @JvmField
+    val CHARCOAL: ResourceKey<HTChemical> = create("charcoal")
 
     @JvmStatic
     private fun create(name: String): ResourceKey<HTChemical> =
@@ -352,5 +360,13 @@ data object RagiumChemicals {
                 add(RagiumElements.SULFUR, 1)
             }
         )
+
+        // Mixtures
+        val hydrogen: Holder<HTElement> = getter.getOrThrow(RagiumElements.HYDROGEN)
+        val carbon: Holder<HTElement> = getter.getOrThrow(RagiumElements.CARBON)
+        val oxygen: Holder<HTElement> = getter.getOrThrow(RagiumElements.OXYGEN)
+        val organic = HTMixtureChemical(hydrogen, carbon, oxygen)
+        context.register(COAL, organic)
+        context.register(CHARCOAL, organic)
     }
 }

@@ -35,7 +35,7 @@ class HTTripleItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
     )
 
     // Ingredient
-    @PublishedApi internal var ingredient: HTItemIngredient by HTDelegates.onceInitialize()
+    var ingredient: HTItemIngredient by HTDelegates.onceInitialize()
 
     operator fun HTItemIngredient.unaryPlus() {
         ingredient = this
@@ -49,7 +49,7 @@ class HTTripleItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
     }
 
     // Extras
-    @PublishedApi internal val extras: MutableList<HTItemIngredient> = ObjectArrayList()
+    val extras: MutableList<HTItemIngredient> = ObjectArrayList()
 
     inline fun extra(builderAction: HTItemIngredientBuilder.() -> Unit) {
         contract {
@@ -59,7 +59,7 @@ class HTTripleItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
     }
 
     // Result
-    @PublishedApi internal var result: HTItemResult by HTDelegates.onceInitialize()
+    var result: HTItemResult by HTDelegates.onceInitialize()
 
     operator fun HTItemResult.unaryPlus() {
         result = this

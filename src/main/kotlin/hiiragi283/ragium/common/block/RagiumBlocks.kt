@@ -20,8 +20,6 @@ import hiiragi283.lib.registry.ItemWithContextFactory
 import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
-import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTOreBlockPart
@@ -145,11 +143,7 @@ data object RagiumBlocks {
                 material,
                 REGISTER.registerSimple(
                     part.createName(material),
-                    blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), properties.setId(it)) },
-                    itemProp = { prop: Item.Properties ->
-                        material.chemicalKey?.let { prop.delayedHolderComponent(RagiumDataComponents.CHEMICAL, it) }
-                        prop
-                    }
+                    { DropExperienceBlock(UniformInt.of(0, 2), properties.setId(it)) }
                 )
             )
         }
@@ -199,8 +193,7 @@ data object RagiumBlocks {
     @JvmField
     val FLUORITE_BLOCK: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple(
         "fluorite_block",
-        copyOf(Blocks.QUARTZ_BLOCK).mapColor(MapColor.COLOR_GREEN),
-        itemProp = { it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.FLUORITE) }
+        copyOf(Blocks.QUARTZ_BLOCK).mapColor(MapColor.COLOR_GREEN)
     )
 
     @JvmField

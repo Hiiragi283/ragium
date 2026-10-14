@@ -1,14 +1,13 @@
 package hiiragi283.lib.recipe.base
 
+import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.text.Text
-import hiiragi283.lib.util.Either
-import hiiragi283.lib.util.unwrap
+import hiiragi283.lib.util.DFUEither
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -21,26 +20,29 @@ import net.minecraft.network.codec.StreamCodec
 sealed interface HTProgressData : HTHasText {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTProgressData> = HTCodecs
+        val CODEC: MapCodec<HTProgressData> = Codec
             .mapEither(Time.CODEC, Energy.CODEC)
-            .xmap(Either<Time, Energy>::unwrap) { progressData: HTProgressData ->
-                when (progressData) {
-                    is Energy -> Either.Right(progressData)
-                    is Time -> Either.Left(progressData)
+            .xmap(
+                { DFUEither.unwrap(it) },
+                { progressData: HTProgressData ->
+                    when (progressData) {
+                        is Energy -> DFUEither.right(progressData)
+                        is Time -> DFUEither.left(progressData)
+                    }
                 }
-            }
+            )
 
         @JvmField
-        val STREAM_CODEC: StreamCodec<ByteBuf, HTProgressData> = HTStreamCodecs.either(
+        val STREAM_CODEC: StreamCodec<ByteBuf, HTProgressData> = ByteBufCodecs.either(
             Time.STREAM_CODEC,
             Energy.STREAM_CODEC
         )
             .map(
-                { it.unwrap() },
-                { progressData ->
+                { DFUEither.unwrap(it) },
+                { progressData: HTProgressData ->
                     when (progressData) {
-                        is Energy -> Either.Right(progressData)
-                        is Time -> Either.Left(progressData)
+                        is Energy -> DFUEither.right(progressData)
+                        is Time -> DFUEither.left(progressData)
                     }
                 }
             )

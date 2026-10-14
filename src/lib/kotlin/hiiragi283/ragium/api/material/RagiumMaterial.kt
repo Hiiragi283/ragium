@@ -24,25 +24,26 @@ sealed interface RagiumMaterial :
 
     val chemicalKey: ResourceKey<HTChemical>?
 
-    enum class Fuel(langName: HTLangName) :
+    enum class Fuel(langName: HTLangName, override val chemicalKey: ResourceKey<HTChemical>) :
         RagiumMaterial,
         HTLangName by langName {
         // Minecraft
-        COAL("Coal", "石炭"),
-        CHARCOAL("Charcoal", "木炭"),
+        COAL("Coal", "石炭", RagiumChemicals.COAL),
+        CHARCOAL("Charcoal", "木炭", RagiumChemicals.CHARCOAL),
 
         // Common
-        COAL_COKE("Coal Coke", "石炭コークス"),
+        COAL_COKE("Coal Coke", "石炭コークス", RagiumChemicals.CARBON),
 
         /**
          * @since 26.1.7
          */
-        PITCH_COKE("Pitch Coke", "ピッチコークス")
+        PITCH_COKE("Pitch Coke", "ピッチコークス", RagiumChemicals.CARBON)
         ;
 
-        constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
-
-        override val chemicalKey: ResourceKey<HTChemical> = RagiumChemicals.CARBON
+        constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>) : this(
+            HTLangName(enName, jaName),
+            chemicalKey
+        )
 
         override val materialName: String = name.lowercase()
     }
