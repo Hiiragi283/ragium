@@ -313,7 +313,10 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         RagiumRecipeBuilders.centrifuging {
             ingredient { items { +Items.HONEYCOMB } }
             itemResult { +RagiumItems.BEESWAX }
-            fluidResult { +RagiumFluids.HONEY }
+            fluidResult {
+                +RagiumFluids.HONEY
+                amount = 250
+            }
             recipeId replace id("honey_from_comb")
         }.save(exporter)
     }

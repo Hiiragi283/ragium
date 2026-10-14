@@ -303,6 +303,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.CALCIUM_SULFATE, "Calcium Sulfate")
 
         addFromKey(RagiumChemicals.MERCURY_SULFIDE, "Mercury Sulfide")
+
+        addFromKey(RagiumChemicals.COAL, "Coal")
+        addFromKey(RagiumChemicals.CHARCOAL, "Char Coal")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "Hydrogen")
 

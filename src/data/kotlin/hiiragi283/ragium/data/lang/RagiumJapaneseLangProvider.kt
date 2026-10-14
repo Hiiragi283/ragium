@@ -299,6 +299,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.CALCIUM_SULFATE, "硫酸カルシウム")
 
         addFromKey(RagiumChemicals.MERCURY_SULFIDE, "硫化水銀")
+
+        addFromKey(RagiumChemicals.COAL, "石炭")
+        addFromKey(RagiumChemicals.CHARCOAL, "木炭")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "水素")
 

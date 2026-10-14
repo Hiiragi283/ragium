@@ -59,10 +59,10 @@ abstract class HTItemToDoubleItemBlockEntity(
                     HTItemInputSlot(this@HTItemToDoubleItemBlockEntity.inputSlot)
                 }
                 private val primarySlot: HTOutputSlot<ItemStack> by lazy {
-                    HTOutputSlotHelper.forItem(this@HTItemToDoubleItemBlockEntity.primarySlot)
+                    HTOutputSlotHelper.forItems(this@HTItemToDoubleItemBlockEntity.primarySlot)
                 }
                 private val secondarySlot: HTOutputSlot<ItemStack> by lazy {
-                    HTOutputSlotHelper.forItem(this@HTItemToDoubleItemBlockEntity.secondarySlot)
+                    HTOutputSlotHelper.forItems(this@HTItemToDoubleItemBlockEntity.secondarySlot)
                 }
 
                 override fun createInput(): HTRecipeInput = HTRecipeInput(inputSlot.getStoredInput(), customKeys)
@@ -102,45 +102,49 @@ abstract class HTItemToDoubleItemBlockEntity(
     protected abstract fun getCompletedSound(): HTSoundInstance
 
     private lateinit var inputSlot: HTBasicItemSlot
-    private lateinit var primarySlot: HTBasicItemSlot
-    private lateinit var secondarySlot: HTBasicItemSlot
+    private lateinit var primarySlot: List<HTBasicItemSlot>
+    private lateinit var secondarySlot: List<HTBasicItemSlot>
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
-        primarySlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
-        secondarySlot = builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, HTBasicItemSlot.output(listener))
+        primarySlot = List(4) { builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener)) }
+        secondarySlot = List(2) { builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, HTBasicItemSlot.output(listener)) }
     }
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1.5))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(1.5))
         // progress
-        addProgressBar(widgetHolder)
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(2.75))
         // input
         widgetHolder += HTItemWidget.Container(
             inputSlot,
             0,
-            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosX(1),
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.INPUT
         )
         widgetHolder.track(inputSlot)
         // outputs
-        widgetHolder += HTItemWidget.Container(
-            primarySlot,
-            1,
-            HTSlotHelper.getSlotPosX(6),
-            HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT
-        )
-        widgetHolder.track(primarySlot)
-        widgetHolder += HTItemWidget.Container(
-            secondarySlot,
-            2,
-            HTSlotHelper.getSlotPosX(7),
-            HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.EXTRA_OUTPUT
-        )
-        widgetHolder.track(secondarySlot)
+        primarySlot.forEachIndexed { index: Int, slot: HTBasicItemSlot ->
+            widgetHolder += HTItemWidget.Container(
+                slot,
+                1 + index,
+                HTSlotHelper.getSlotPosX(5 + index % 2),
+                HTSlotHelper.getSlotPosY(0.5 + index / 2),
+                HTBackgroundType.OUTPUT
+            )
+            widgetHolder.track(slot)
+        }
+        secondarySlot.forEachIndexed { index: Int, slot: HTBasicItemSlot ->
+            widgetHolder += HTItemWidget.Container(
+                slot,
+                5 + index,
+                HTSlotHelper.getSlotPosX(7.5),
+                HTSlotHelper.getSlotPosY(0.5 + index % 2),
+                HTBackgroundType.EXTRA_OUTPUT
+            )
+            widgetHolder.track(slot)
+        }
     }
 }

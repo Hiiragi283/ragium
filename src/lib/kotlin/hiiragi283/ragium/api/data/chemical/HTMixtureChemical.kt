@@ -35,5 +35,6 @@ data class HTMixtureChemical(val elements: Nel<Holder<HTElement>>) : HTChemical 
 
     override fun type(): HTChemical.Type<out HTChemical> = TYPE
 
-    override fun getChemicalFormula(): String = elements.joinToString(prefix = "(", postfix = ")")
+    override fun getChemicalFormula(): String =
+        elements.joinToString(prefix = "(", postfix = ")", transform = { it.value().symbol })
 }
