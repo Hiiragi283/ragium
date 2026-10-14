@@ -629,6 +629,7 @@
     "energy",
     "fluid",
     "item",
-    "progress"
+    "progress",
+    "texture"
   ]
 }

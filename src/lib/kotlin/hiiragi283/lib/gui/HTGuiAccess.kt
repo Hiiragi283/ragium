@@ -18,20 +18,20 @@ interface HTGuiAccess {
     /**
      * このGUIの始点のx座標を取得します。
      */
-    fun getGuiLeft(): Int
+    fun getLeftPos(): Int
 
     /**
      * このGUIの始点のy座標を取得します。
      */
-    fun getGuiTop(): Int
+    fun getTopPos(): Int
 
     /**
      * このGUIの幅を取得します。
      */
-    fun getXSize(): Int
+    fun getImageWidth(): Int
 
     /**
      * このGUIの高さを取得します。
      */
-    fun getYSize(): Int
+    fun getImageHeight(): Int
 }

@@ -14,8 +14,10 @@ import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTItemWidget
+import hiiragi283.ragium.common.gui.widget.HTTextureWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
@@ -127,6 +129,13 @@ abstract class HTDoubleItemToItemBlockEntity(
             HTBackgroundType.INPUT
         )
         widgetHolder.track(primarySlot)
+        widgetHolder += HTTextureWidget(
+            RagiumAPI.id(HTConstants.TEXTURES, HTConstants.GUI, "plus"),
+            HTSlotHelper.getSlotPosX(1.5),
+            HTSlotHelper.getSlotPosY(0.5),
+            18,
+            18
+        )
         widgetHolder += HTItemWidget.Container(
             secondarySlot,
             1,

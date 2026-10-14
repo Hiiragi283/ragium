@@ -5,6 +5,7 @@ import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.event.HTRegisterWidgetRendererEvent
 import hiiragi283.lib.fluid.FluidStackTintSource
 import hiiragi283.lib.fluid.HTFluidModelRegister
+import hiiragi283.lib.gui.HTGuiAccess
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.mod.HTClientMod
 import hiiragi283.lib.network.HTPayloadHandlers
@@ -24,14 +25,18 @@ import hiiragi283.ragium.client.gui.widget.HTItemWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTProgressWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTWidgetRendererManager
 import hiiragi283.ragium.client.renderer.HTTankBlockEntityRenderer
+import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
+import hiiragi283.ragium.common.gui.widget.HTTextureWidget
 import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import net.minecraft.ChatFormatting
+import net.minecraft.client.gui.GuiGraphicsExtractor
+import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.resources.model.sprite.Material
 import net.minecraft.util.ARGB
 import net.minecraft.world.item.DyeColor
@@ -81,6 +86,19 @@ data object RagiumClient : HTClientMod() {
         event.register(RagiumWidgetTypes.FLUID.get(), ::HTFluidWidgetRenderer)
         event.register(RagiumWidgetTypes.ITEM.get(), ::HTItemWidgetRenderer)
         event.register(RagiumWidgetTypes.PROGRESS.get(), ::HTProgressWidgetRenderer)
+        event.register(RagiumWidgetTypes.TEXTURE.get()) { gui: HTGuiAccess, widget: HTTextureWidget ->
+            Renderable { graphics: GuiGraphicsExtractor, _, _, _ ->
+                val (x: Int, y: Int, width: Int, height: Int) = widget.bounds
+                HTSpriteRenderHelper.blit(
+                    graphics,
+                    widget.textureId,
+                    gui.getLeftPos() + x - 1,
+                    gui.getTopPos() + y - 1,
+                    width,
+                    height
+                )
+            }
+        }
     }
 
     override fun registerFluidModels(register: HTFluidModelRegister) {

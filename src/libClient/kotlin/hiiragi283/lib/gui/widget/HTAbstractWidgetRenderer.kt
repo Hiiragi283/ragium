@@ -15,7 +15,7 @@ abstract class HTAbstractWidgetRenderer<WIDGET : HTWidget>(
     protected val widget: WIDGET
 ) : Renderable {
     final override fun extractRenderState(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, a: Float) {
-        val bounds: HTBounds = widget.bounds.offset(gui.getGuiLeft(), gui.getGuiTop())
+        val bounds: HTBounds = widget.bounds.offset(gui.getLeftPos(), gui.getTopPos())
         render(bounds, graphics, mouseX, mouseY, a)
     }
 
