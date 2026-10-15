@@ -2,11 +2,11 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "items": "#c:gems/quartz"
+    "items": "minecraft:amethyst_block"
   },
   "result": {
     "count": 1,
-    "id": "ragium:quartz_dust"
+    "id": "ragium:silica_dust"
   },
   "time": 200
 }

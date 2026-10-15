@@ -6,8 +6,8 @@
       "items": "#c:plastics"
     },
     {
-      "chemicals": "ragium:gold",
-      "scale": 1.0
+      "count": 1,
+      "items": "#c:dusts/silica"
     }
   ],
   "result": {

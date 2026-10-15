@@ -96,9 +96,10 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             recipeId suffix "_by_cokes"
         }.save(exporter)
-        // Sooty Iron + Obsidian Dust -> Black Steel
+        // Sooty Iron + Nickel + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {
             ingredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
+            +HTItemIngredient(holderSet(RagiumChemicals.NICKEL), 1)
             ingredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN)
                 count = 2

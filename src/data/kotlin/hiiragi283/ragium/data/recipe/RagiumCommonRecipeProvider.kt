@@ -80,7 +80,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.QUARTZ) }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
                 count = 4
             }
             result { +Items.GOLD_NUGGET }
@@ -504,7 +504,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         // SiO2 + Na2CO3 -> Glass
         RagiumRecipeBuilders.alloying {
             ingredient {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.QUARTZ)
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICA)
                 count = 2
             }
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SODA_ASH) }
@@ -612,9 +612,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     private fun silica() {
         // Glass -> Molten Glass
         RagiumRecipeBuilders.melting {
-            ingredient {
-                +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP, CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Other.GLASS))
-            }
+            ingredient { +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP) }
             result { +RagiumFluids.MOLTEN_GLASS }
             recipeId suffix "_from_block"
         }.save(exporter)
@@ -654,25 +652,12 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // SiO2 + Sand -> Quartz Glass
         RagiumRecipeBuilders.alloying {
-            +HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 1)
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICA) }
             ingredient { +holderSet(Tags.Items.SANDS) }
             result {
                 +RagiumBlocks.QUARTZ_GLASS
                 count = 2
             }
-        }.save(exporter)
-        RagiumRecipeBuilders.alloying {
-            +HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 4)
-            ingredient {
-                +holderSet(Tags.Items.SANDS)
-                count = 4
-            }
-            result {
-                +RagiumBlocks.QUARTZ_GLASS
-                count = 8
-            }
-            time += 4
-            recipeId prefix "4x_"
         }.save(exporter)
     }
 
@@ -794,21 +779,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     private fun silicon() {
         // SiO2 + C -> Si + CO2
         RagiumRecipeBuilders.alloying {
-            +HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 1)
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICA) }
             +HTItemIngredient(holderSet(RagiumChemicals.CARBON), 1)
             result { +RagiumItems.CRUDE_SILICON }
         }.save(exporter)
-        RagiumRecipeBuilders.alloying {
-            +HTItemIngredient(holderSet(RagiumChemicals.SILICON_DIOXIDE), 4)
-            +HTItemIngredient(holderSet(RagiumChemicals.CARBON), 4)
-            result {
-                +RagiumItems.CRUDE_SILICON
-                count = 4
-            }
-            time *= 4
-            recipeId prefix "4x_"
-        }.save(exporter)
-
         // Crude Si + HCl -> Si Dust
         RagiumRecipeBuilders.bathing {
             itemIngredient { +holderSet(HTCommonTags.Items.SILICON) }
@@ -836,34 +810,52 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
 
-        // Plastic + Gold Dust -> Circuit Board
+        // Plastic + SiO2 Dust -> Circuit Board
         RagiumRecipeBuilders.alloying {
             ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
-            +HTItemIngredient(holderSet(RagiumChemicals.GOLD), 1)
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICA) }
             result { +RagiumItems.CIRCUIT_BOARD }
         }.save(exporter)
-        // Silicon Chip + Circuit Board -> Electric Circuit
+        // Circuit Board + Wiring Metal + Silicon Chip -> Electric Circuit
         RagiumRecipeBuilders.assembling {
-            ingredient {
-                items { +RagiumItems.SILICON_CHIP }
-                count = 2
-            }
             ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
-            result { +RagiumItems.ELECTRIC_CIRCUIT }
-            recipeId suffix "_with_board"
-        }.save(exporter)
-        // Plastic + Silicon Chip + Gold Nugget -> Electric Circuit
-        RagiumRecipeBuilders.assembling {
-            ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
             ingredient {
-                items { +RagiumItems.SILICON_CHIP }
-                count = 2
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.COPPER)
+                count = 9
             }
+            ingredient { items { +RagiumItems.SILICON_CHIP } }
+            result { +RagiumItems.ELECTRIC_CIRCUIT }
+            recipeId suffix "_with_copper"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
             ingredient {
                 +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.GOLD)
+                count = 6
+            }
+            ingredient { items { +RagiumItems.SILICON_CHIP } }
+            result { +RagiumItems.ELECTRIC_CIRCUIT }
+            recipeId suffix "_with_gold"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SILVER)
                 count = 3
             }
+            ingredient { items { +RagiumItems.SILICON_CHIP } }
             result { +RagiumItems.ELECTRIC_CIRCUIT }
+            recipeId suffix "_with_silver"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.ALUMINUM)
+                count = 3
+            }
+            ingredient { items { +RagiumItems.SILICON_CHIP } }
+            result { +RagiumItems.ELECTRIC_CIRCUIT }
+            recipeId suffix "_with_aluminum"
         }.save(exporter)
     }
 }

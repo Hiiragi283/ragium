@@ -2,12 +2,16 @@
   "type": "ragium:assembling",
   "ingredients": [
     {
-      "count": 2,
-      "items": "ragium:silicon_chip"
+      "count": 1,
+      "items": "ragium:circuit_board"
+    },
+    {
+      "count": 6,
+      "items": "#c:nuggets/gold"
     },
     {
       "count": 1,
-      "items": "ragium:circuit_board"
+      "items": "ragium:silicon_chip"
     }
   ],
   "result": {

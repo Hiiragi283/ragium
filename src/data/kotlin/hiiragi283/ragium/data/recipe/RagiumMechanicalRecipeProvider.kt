@@ -154,7 +154,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 items { +Items.REDSTONE_TORCH }
                 count = 3
             }
-            ingredient { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.QUARTZ) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICA) }
             result {
                 +Items.COMPARATOR
                 count = 2
@@ -541,21 +541,32 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
 
+        val silicaDust: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(Tags.Items.GLASS_BLOCKS) }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.GLASS) }
-            recipeId suffix "_from_block"
+            ingredient { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.QUARTZ) }
+            result { +silicaDust }
+            recipeId suffix "_from_quartz"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(RagiumTags.BlockItems.QUARTZ_BLOCKS.item) }
+            result {
+                +silicaDust
+                count = 4
+            }
+            recipeId suffix "_from_quartz_block"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient {
-                +holderSet(Tags.Items.GLASS_PANES)
-                count = 8
+                +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.AMETHYST)
+                count = 4
             }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.GLASS)
-                count = 3
-            }
-            recipeId suffix "_from_pane"
+            result { +silicaDust }
+            recipeId suffix "_from_amethyst"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient { items { +Items.AMETHYST_BLOCK } }
+            result { +silicaDust }
+            recipeId suffix "_from_amethyst_block"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
@@ -767,7 +778,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         RagiumRecipeBuilders.cutting {
             ingredient { +holderSet(RagiumTags.BlockItems.QUARTZ_BLOCKS.item) }
             result { +RagiumItems.QUARTZ_LENS }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ) }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA) }
         }.save(exporter)
         RagiumRecipeBuilders.cutting {
             ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Gem.DIAMOND) }

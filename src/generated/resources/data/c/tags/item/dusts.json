@@ -1,7 +1,6 @@
 {
   "values": [
     "#c:dusts/alumina",
-    "#c:dusts/amethyst",
     "#c:dusts/ash",
     "#c:dusts/bauxite",
     "#c:dusts/borax",
@@ -15,7 +14,6 @@
     "#c:dusts/echo",
     "#c:dusts/emerald",
     "#c:dusts/fluorite",
-    "#c:dusts/glass",
     "#c:dusts/gold",
     "#c:dusts/gypsum",
     "#c:dusts/iron",
@@ -27,10 +25,10 @@
     "#c:dusts/obsidian",
     "#c:dusts/paper",
     "#c:dusts/prismarine",
-    "#c:dusts/quartz",
     "#c:dusts/quick_lime",
     "#c:dusts/raginite",
     "#c:dusts/salt",
+    "#c:dusts/silica",
     "#c:dusts/silicon",
     "#c:dusts/silver",
     "#c:dusts/soda_ash",

@@ -2,8 +2,8 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "chemicals": "ragium:silicon_dioxide",
-      "scale": 1.0
+      "count": 1,
+      "items": "#c:dusts/silica"
     },
     {
       "count": 1,

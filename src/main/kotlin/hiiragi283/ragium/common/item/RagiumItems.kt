@@ -48,6 +48,8 @@ data object RagiumItems {
         REGISTER.addAlias("void_metal_nugget", "shadow_steel_nugget")
         REGISTER.addAlias("carbon_fiber", "synthetic_fiber")
         REGISTER.addAlias("cfrp_plate", "plastic_plate")
+        REGISTER.addAlias("quartz_dust", "silica_dust")
+        REGISTER.addAlias("amethyst_dust", "silica_dust")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -74,8 +76,6 @@ data object RagiumItems {
                 }
                 // Gem
                 putAll(RagiumMaterial.Gem.LAPIS, HTItemPart.DUST)
-                putAll(RagiumMaterial.Gem.QUARTZ, HTItemPart.DUST)
-                putAll(RagiumMaterial.Gem.AMETHYST, HTItemPart.DUST)
                 putAll(RagiumMaterial.Gem.DIAMOND, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Gem.EMERALD, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Gem.ECHO, HTItemPart.DUST)

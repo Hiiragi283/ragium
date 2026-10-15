@@ -3,15 +3,15 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "#c:plastics"
+      "items": "ragium:circuit_board"
     },
     {
-      "count": 2,
+      "count": 9,
+      "items": "#c:nuggets/copper"
+    },
+    {
+      "count": 1,
       "items": "ragium:silicon_chip"
-    },
-    {
-      "count": 3,
-      "items": "#c:nuggets/gold"
     }
   ],
   "result": {

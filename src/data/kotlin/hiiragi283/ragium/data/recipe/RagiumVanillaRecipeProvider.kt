@@ -202,7 +202,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Blaze Rod
         VanillaRecipeBuilders.shaped {
             layered()
-            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            define('A') { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.AMETHYST) }
             define('B') { items { +Items.MAGMA_BLOCK } }
             define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
             result { +Items.BLAZE_ROD }
@@ -210,7 +210,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Breeze Rod
         VanillaRecipeBuilders.shaped {
             layered()
-            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.AMETHYST) }
+            define('A') { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.AMETHYST) }
             define('B') { items { +Items.ICE } }
             define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
             result { +Items.BREEZE_ROD }
@@ -728,13 +728,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 recipeId suffix "_from_dust"
             }
         }
-        // Dust -> Base
-        VanillaRecipeBuilders.smelting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLASS) }
-            result { +Items.GLASS }
-            group = "glass"
-            recipeId suffix "_from_dust"
-        }.save(exporter)
 
         // Fuel
         for (fuel: RagiumMaterial.Fuel in RagiumMaterial.Fuel.entries) {

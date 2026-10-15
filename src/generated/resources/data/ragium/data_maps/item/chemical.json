@@ -52,10 +52,6 @@
       "chemical": "ragium:fluorite",
       "scale": 1.0
     },
-    "#c:dusts/glass": {
-      "chemical": "ragium:silicon_dioxide",
-      "scale": 1.0
-    },
     "#c:dusts/gold": {
       "chemical": "ragium:gold",
       "scale": 1.0
@@ -94,6 +90,10 @@
     },
     "#c:dusts/salt": {
       "chemical": "ragium:sodium_chloride",
+      "scale": 1.0
+    },
+    "#c:dusts/silica": {
+      "chemical": "ragium:silicon_dioxide",
       "scale": 1.0
     },
     "#c:dusts/silicon": {
@@ -164,10 +164,6 @@
       "chemical": "ragium:fluorite",
       "scale": 4.0
     },
-    "#c:gears/glass": {
-      "chemical": "ragium:silicon_dioxide",
-      "scale": 4.0
-    },
     "#c:gears/gold": {
       "chemical": "ragium:gold",
       "scale": 4.0
@@ -206,6 +202,10 @@
     },
     "#c:gears/salt": {
       "chemical": "ragium:sodium_chloride",
+      "scale": 4.0
+    },
+    "#c:gears/silica": {
+      "chemical": "ragium:silicon_dioxide",
       "scale": 4.0
     },
     "#c:gears/silicon": {
@@ -276,10 +276,6 @@
       "chemical": "ragium:fluorite",
       "scale": 1.0
     },
-    "#c:gems/glass": {
-      "chemical": "ragium:silicon_dioxide",
-      "scale": 1.0
-    },
     "#c:gems/gold": {
       "chemical": "ragium:gold",
       "scale": 1.0
@@ -318,6 +314,10 @@
     },
     "#c:gems/salt": {
       "chemical": "ragium:sodium_chloride",
+      "scale": 1.0
+    },
+    "#c:gems/silica": {
+      "chemical": "ragium:silicon_dioxide",
       "scale": 1.0
     },
     "#c:gems/silicon": {
@@ -388,10 +388,6 @@
       "chemical": "ragium:fluorite",
       "scale": 1.0
     },
-    "#c:ingots/glass": {
-      "chemical": "ragium:silicon_dioxide",
-      "scale": 1.0
-    },
     "#c:ingots/gold": {
       "chemical": "ragium:gold",
       "scale": 1.0
@@ -430,6 +426,10 @@
     },
     "#c:ingots/salt": {
       "chemical": "ragium:sodium_chloride",
+      "scale": 1.0
+    },
+    "#c:ingots/silica": {
+      "chemical": "ragium:silicon_dioxide",
       "scale": 1.0
     },
     "#c:ingots/silicon": {
@@ -500,10 +500,6 @@
       "chemical": "ragium:fluorite",
       "scale": 0.111
     },
-    "#c:nuggets/glass": {
-      "chemical": "ragium:silicon_dioxide",
-      "scale": 0.111
-    },
     "#c:nuggets/gold": {
       "chemical": "ragium:gold",
       "scale": 0.111
@@ -542,6 +538,10 @@
     },
     "#c:nuggets/salt": {
       "chemical": "ragium:sodium_chloride",
+      "scale": 0.111
+    },
+    "#c:nuggets/silica": {
+      "chemical": "ragium:silicon_dioxide",
       "scale": 0.111
     },
     "#c:nuggets/silicon": {
@@ -652,10 +652,6 @@
       "chemical": "ragium:fluorite",
       "scale": 0.125
     },
-    "#c:tiny/glass": {
-      "chemical": "ragium:silicon_dioxide",
-      "scale": 0.125
-    },
     "#c:tiny/gold": {
       "chemical": "ragium:gold",
       "scale": 0.125
@@ -694,6 +690,10 @@
     },
     "#c:tiny/salt": {
       "chemical": "ragium:sodium_chloride",
+      "scale": 0.125
+    },
+    "#c:tiny/silica": {
+      "chemical": "ragium:silicon_dioxide",
       "scale": 0.125
     },
     "#c:tiny/silicon": {

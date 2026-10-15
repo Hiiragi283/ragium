@@ -125,6 +125,11 @@ sealed interface RagiumMaterial :
         SILICON("Silicon", "シリコン", RagiumChemicals.SILICON),
 
         /**
+         * @since 26.1.11
+         */
+        SILICA("Silica", "シリカ", RagiumChemicals.SILICON_DIOXIDE),
+
+        /**
          * @since 26.1.9
          */
         ASH("Ash", "灰", RagiumChemicals.POTASSIUM_CARBONATE),
@@ -274,7 +279,6 @@ sealed interface RagiumMaterial :
         WOOD("Wood", "木") {
             override val isPulp: Boolean = true
         },
-        GLASS("Glass", "ガラス", RagiumChemicals.SILICON_DIOXIDE),
         OBSIDIAN("Obsidian", "黒曜石"),
         PAPER("Paper", "紙") {
             override val isPulp: Boolean = true

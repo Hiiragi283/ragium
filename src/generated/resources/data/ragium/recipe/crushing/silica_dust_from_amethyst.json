@@ -1,12 +1,12 @@
 {
   "type": "ragium:crushing",
   "ingredient": {
-    "count": 1,
-    "items": "#c:glass_blocks"
+    "count": 4,
+    "items": "#c:gems/amethyst"
   },
   "result": {
     "count": 1,
-    "id": "ragium:glass_dust"
+    "id": "ragium:silica_dust"
   },
   "time": 200
 }

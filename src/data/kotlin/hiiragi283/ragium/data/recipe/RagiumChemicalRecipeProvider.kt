@@ -86,7 +86,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             fluidIngredient { +waterSet() }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
                 count = 3
             }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.BORAX) }
@@ -100,7 +100,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             fluidIngredient { +waterSet() }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
                 count = 3
             }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.BAUXITE) }
@@ -115,7 +115,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 count = 2
             }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
                 count = 2
             }
             recipeId suffix "_from_clay"

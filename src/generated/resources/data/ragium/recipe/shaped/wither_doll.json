@@ -3,14 +3,12 @@
   "category": "misc",
   "key": {
     "A": "minecraft:wither_skeleton_skull",
-    "B": "#minecraft:soul_fire_base_blocks",
-    "C": "#minecraft:swords",
-    "D": "#c:tools/bow"
+    "B": "#minecraft:soul_fire_base_blocks"
   },
   "pattern": [
     "AAA",
     "BBB",
-    "CBD"
+    " B "
   ],
   "result": {
     "id": "ragium:wither_doll"
