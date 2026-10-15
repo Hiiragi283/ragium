@@ -9,6 +9,7 @@ import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.input.HTRecipeInput
@@ -62,13 +63,14 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    override fun initializeVariables(listener: Runnable) {
-        super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<HTRecipeInput, ItemStack, HTItemToItemRecipe>() {
+    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> =
+        object : HTRecipeHandler<HTRecipeInput, ItemStack, HTItemToItemRecipe>() {
             private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTSmelterBlockEntity.inputSlot) }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTSmelterBlockEntity.outputSlot)
             }
+
+            override fun createProgressor(): Progressor<HTRecipeInput, HTItemToItemRecipe> = EnergizedProgressor()
 
             override fun createInput(): HTRecipeInput = HTRecipeInput(inputSlot.getStoredInput(), customKeys)
 
@@ -115,7 +117,6 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
                 playSound(SoundEvents.FIRE_EXTINGUISH)
             }
         }
-    }
 
     private lateinit var inputSlot: HTBasicItemSlot
     private lateinit var typeSlot: HTBasicItemSlot

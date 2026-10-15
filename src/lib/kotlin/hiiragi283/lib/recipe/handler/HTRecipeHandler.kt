@@ -9,9 +9,13 @@ import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.common.util.ValueIOSerializable
 
 abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRecipeFactory<INPUT, OUTPUT>> :
-    ValueIOSerializable {
+    ValueIOSerializable,
+    Runnable {
     private var progress: Int = 0
     private var maxProgress: Int = 0
+    private val progressor: Progressor<INPUT, RECIPE> = createProgressor()
+
+    protected abstract fun createProgressor(): Progressor<INPUT, RECIPE>
 
     val progression: Float get() = fixedFraction(progress, maxProgress)
 
@@ -26,11 +30,10 @@ abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRec
     private var inputCache: INPUT? = null
     private var outputCache: OUTPUT? = null
 
-    fun createListener(listener: Runnable): Runnable = Runnable {
+    override fun run() {
         shouldCheck = true
         inputCache = null
         outputCache = null
-        listener.run()
     }
 
     fun tick(level: ServerLevel): Boolean {
@@ -56,13 +59,13 @@ abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRec
             }
         }
         // レシピの最大進捗量を更新する
-        val maxProgress: Int = getMaxProgress(recipe, input)
+        val maxProgress: Int = progressor.getMaxProgress(recipe, input)
         if (this.maxProgress != maxProgress) {
             updateProgress(maxProgress)
         }
         // 進捗を更新する
         if (progress < maxProgress) {
-            progress += getProgress()
+            progress += progressor.getProgress()
         }
         // 進捗が最大量を超えたらレシピを実行する
         if (progress >= maxProgress) {
@@ -81,10 +84,6 @@ abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRec
 
     protected abstract fun canComplete(recipe: RECIPE, input: INPUT, output: OUTPUT): Boolean
 
-    protected abstract fun getMaxProgress(recipe: RECIPE, input: INPUT): Int
-
-    protected abstract fun getProgress(): Int
-
     protected abstract fun onComplete(recipe: RECIPE, input: INPUT, output: OUTPUT)
 
     override fun serialize(output: ValueOutput) {
@@ -99,5 +98,11 @@ abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRec
                 this.progress = progress
             }
         }
+    }
+
+    interface Progressor<INPUT : Any, RECIPE : Any> {
+        fun getMaxProgress(recipe: RECIPE, input: INPUT): Int
+
+        fun getProgress(): Int
     }
 }

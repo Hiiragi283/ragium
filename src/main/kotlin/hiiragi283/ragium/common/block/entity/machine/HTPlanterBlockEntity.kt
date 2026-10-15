@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -11,8 +12,11 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToDoubleItemBlockEntity(RagiumBlockEntityTypes.PLANTER.get(), RagiumRecipeLookups.PLANTING, pos, state) {
-    override fun getCompletedSound(): HTSoundInstance = HTSoundInstance(SoundEvents.BONE_MEAL_USE)
+    HTItemToDoubleItemBlockEntity(RagiumBlockEntityTypes.PLANTER.get(), pos, state) {
+    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+        RagiumRecipeLookups.PLANTING,
+        HTSoundInstance(SoundEvents.BONE_MEAL_USE)
+    )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.planter
 }

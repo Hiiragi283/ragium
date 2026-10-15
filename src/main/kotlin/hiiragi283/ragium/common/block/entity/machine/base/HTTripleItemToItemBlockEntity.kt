@@ -8,6 +8,7 @@ import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
@@ -52,9 +53,8 @@ abstract class HTTripleItemToItemBlockEntity(
         input.readChild(HTConstants.LAST_RECIPE, cache)
     }
 
-    override fun initializeVariables(listener: Runnable) {
-        super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<HTRecipeInput, ItemStack, HTTripleItemToItemRecipe>() {
+    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> =
+        object : HTRecipeHandler<HTRecipeInput, ItemStack, HTTripleItemToItemRecipe>() {
             private val primarySlot: HTItemInputSlot by lazy {
                 HTItemInputSlot(this@HTTripleItemToItemBlockEntity.primarySlot)
             }
@@ -67,6 +67,8 @@ abstract class HTTripleItemToItemBlockEntity(
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTTripleItemToItemBlockEntity.outputSlot)
             }
+
+            override fun createProgressor(): Progressor<HTRecipeInput, HTTripleItemToItemRecipe> = EnergizedProgressor()
 
             override fun createInput(): HTRecipeInput = HTRecipeInput(
                 listOf(
@@ -111,7 +113,6 @@ abstract class HTTripleItemToItemBlockEntity(
                 playSound(getCompletedSound())
             }
         }
-    }
 
     protected abstract fun getCompletedSound(): HTSoundInstance
 

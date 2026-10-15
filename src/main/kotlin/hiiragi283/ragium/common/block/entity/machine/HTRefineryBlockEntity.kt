@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
@@ -8,8 +7,8 @@ import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
 import hiiragi283.lib.recipe.handler.HTFluidInputTank
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.input.HTRecipeInput
-import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -24,38 +23,19 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.REFINERY.get(), pos, state) {
-    private val cache: HTRecipeCache<HTRecipeInput, HTFluidToItemAndFluidRecipe> =
-        HTRecipeCache(RagiumRecipeLookups.REFINING)
-
-    override fun writeValue(output: ValueOutput) {
-        super.writeValue(output)
-        output.putChild(HTConstants.LAST_RECIPE, cache)
-    }
-
-    override fun readValue(input: ValueInput) {
-        super.readValue(input)
-        input.readChild(HTConstants.LAST_RECIPE, cache)
-    }
-
-    override fun initializeVariables(listener: Runnable) {
-        super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<
-            HTRecipeInput,
-            HTItemAndFluidStack,
-            HTFluidToItemAndFluidRecipe
-            >() {
+    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> =
+        object : SimpleRecipeHandler<HTRecipeInput, HTItemAndFluidStack, HTFluidToItemAndFluidRecipe>(
+            RagiumRecipeLookups.REFINING
+        ) {
             private val inputTank: HTFluidInputTank by lazy { HTFluidInputTank(this@HTRefineryBlockEntity.inputTank) }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTRefineryBlockEntity.outputSlot)
@@ -64,10 +44,10 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
                 HTOutputSlotHelper.forFluid(this@HTRefineryBlockEntity.outputTank)
             }
 
-            override fun createInput(): HTRecipeInput = HTRecipeInput(inputTank.getStoredInput(), customKeys)
+            override fun createProgressor(): Progressor<HTRecipeInput, HTFluidToItemAndFluidRecipe> =
+                EnergizedProgressor()
 
-            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): HTFluidToItemAndFluidRecipe? =
-                cache.findFirstRecipe(input, level)
+            override fun createInput(): HTRecipeInput = HTRecipeInput(inputTank.getStoredInput(), customKeys)
 
             override fun canComplete(
                 recipe: HTFluidToItemAndFluidRecipe,
@@ -99,7 +79,6 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
                 playSound(SoundEvents.FIRE_EXTINGUISH)
             }
         }
-    }
 
     private lateinit var inputTank: HTVariableFluidTank
     private lateinit var outputTank: HTVariableFluidTank

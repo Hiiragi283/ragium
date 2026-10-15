@@ -8,8 +8,8 @@ import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.handler.HTItemInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.input.HTRecipeInput
-import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
@@ -21,41 +21,19 @@ import hiiragi283.ragium.common.gui.widget.HTTextureWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
-abstract class HTDoubleItemToItemBlockEntity(
-    type: BlockEntityType<*>,
-    private val cache: HTRecipeCache<HTRecipeInput, HTDoubleItemToItemRecipe>,
-    pos: BlockPos,
-    state: BlockState
-) : HTProcessorBlockEntity.Energized(type, pos, state) {
-    constructor(
-        type: BlockEntityType<*>,
+abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
+    HTProcessorBlockEntity.Energized(type, pos, state) {
+    protected fun createRecipeHandler(
         lookup: HTRecipeLookup<HTDoubleItemToItemRecipe>,
-        pos: BlockPos,
-        state: BlockState
-    ) : this(type, HTRecipeCache(lookup), pos, state)
-
-    override fun writeValue(output: ValueOutput) {
-        super.writeValue(output)
-        output.putChild(HTConstants.LAST_RECIPE, cache)
-    }
-
-    override fun readValue(input: ValueInput) {
-        super.readValue(input)
-        input.readChild(HTConstants.LAST_RECIPE, cache)
-    }
-
-    override fun initializeVariables(listener: Runnable) {
-        super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<HTRecipeInput, ItemStack, HTDoubleItemToItemRecipe>() {
+        sound: HTSoundInstance
+    ): HTRecipeHandler<*, *, *> =
+        object : SimpleRecipeHandler<HTRecipeInput, ItemStack, HTDoubleItemToItemRecipe>(lookup) {
             private val primarySlot: HTItemInputSlot by lazy {
                 HTItemInputSlot(this@HTDoubleItemToItemBlockEntity.primarySlot)
             }
@@ -66,14 +44,13 @@ abstract class HTDoubleItemToItemBlockEntity(
                 HTOutputSlotHelper.forItem(this@HTDoubleItemToItemBlockEntity.outputSlot)
             }
 
+            override fun createProgressor(): Progressor<HTRecipeInput, HTDoubleItemToItemRecipe> = EnergizedProgressor()
+
             override fun createInput(): HTRecipeInput = HTRecipeInput(
                 listOf(primarySlot.getStoredInput(), secondarySlot.getStoredInput()),
                 listOf(),
                 customKeys
             )
-
-            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): HTDoubleItemToItemRecipe? =
-                cache.findFirstRecipe(input, level)
 
             override fun canComplete(
                 recipe: HTDoubleItemToItemRecipe,
@@ -98,12 +75,9 @@ abstract class HTDoubleItemToItemBlockEntity(
                     outputSlot.take(output, transaction)
                     transaction.commit()
                 }
-                playSound(getCompletedSound())
+                playSound(sound)
             }
         }
-    }
-
-    protected abstract fun getCompletedSound(): HTSoundInstance
 
     private lateinit var primarySlot: HTBasicItemSlot
     private lateinit var secondarySlot: HTBasicItemSlot

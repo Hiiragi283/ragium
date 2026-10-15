@@ -1,14 +1,13 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.handler.HTFluidInputTank
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.input.HTRecipeInput
-import hiiragi283.lib.recipe.lookup.HTRecipeCache
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.lib.world.getTypedBlockEntity
@@ -24,37 +23,18 @@ import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.ELECTROLYZER.get(), pos, state) {
-    private val cache: HTRecipeCache<HTRecipeInput, RTElectrolyzingRecipe> =
-        HTRecipeCache(RagiumRecipeLookups.ELECTROLYZING)
-
-    override fun writeValue(output: ValueOutput) {
-        super.writeValue(output)
-        output.putChild(HTConstants.LAST_RECIPE, cache)
-    }
-
-    override fun readValue(input: ValueInput) {
-        super.readValue(input)
-        input.readChild(HTConstants.LAST_RECIPE, cache)
-    }
-
-    override fun initializeVariables(listener: Runnable) {
-        super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<
-            HTRecipeInput,
-            RTElectrolyzingRecipe.Result,
-            RTElectrolyzingRecipe
-            >() {
+    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> =
+        object : SimpleRecipeHandler<HTRecipeInput, RTElectrolyzingRecipe.Result, RTElectrolyzingRecipe>(
+            RagiumRecipeLookups.ELECTROLYZING
+        ) {
             private val machine: HTElectrolyzerBlockEntity = this@HTElectrolyzerBlockEntity
             private val front: Direction get() = machine.getFront()
             private val inputTank: HTFluidInputTank by lazy { HTFluidInputTank(machine.inputTank) }
@@ -69,10 +49,9 @@ class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
                 ?.tank
                 ?.let(HTOutputSlotHelper::forFluid)
 
-            override fun createInput(): HTRecipeInput = HTRecipeInput(inputTank.getStoredInput(), customKeys)
+            override fun createProgressor(): Progressor<HTRecipeInput, RTElectrolyzingRecipe> = EnergizedProgressor()
 
-            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): RTElectrolyzingRecipe? =
-                cache.findFirstRecipe(input, level)
+            override fun createInput(): HTRecipeInput = HTRecipeInput(inputTank.getStoredInput(), customKeys)
 
             override fun canComplete(
                 recipe: RTElectrolyzingRecipe,
@@ -112,7 +91,6 @@ class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
                 playSound(SoundEvents.FIREWORK_ROCKET_TWINKLE)
             }
         }
-    }
 
     private lateinit var inputTank: HTBasicFluidTank
     private lateinit var outputTank: HTBasicFluidTank
