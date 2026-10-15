@@ -1,6 +1,8 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.builder.ingredient
+import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.item.component.PotionContents
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
@@ -139,13 +141,13 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
     private fun planting() {
         // Plant with seed
         setOf(
-            Triple(Tags.Items.SEEDS_BEETROOT, Items.BEETROOT, Items.BEETROOT_SEEDS),
-            Triple(Tags.Items.SEEDS_MELON, Items.MELON, Items.MELON_SEEDS),
-            Triple(Tags.Items.SEEDS_PITCHER_PLANT, Items.PITCHER_PLANT, Items.PITCHER_POD),
-            Triple(Tags.Items.SEEDS_PUMPKIN, Items.PUMPKIN, Items.PUMPKIN_SEEDS),
-            Triple(Tags.Items.SEEDS_TORCHFLOWER, Items.TORCHFLOWER, Items.TORCHFLOWER_SEEDS),
-            Triple(Tags.Items.SEEDS_WHEAT, Items.WHEAT, Items.WHEAT_SEEDS)
-        ).forEach { (seedIn: TagKey<Item>, crop: Item, seedOut: Item) ->
+            Pair(Tags.Items.SEEDS_BEETROOT, Items.BEETROOT),
+            Pair(Tags.Items.SEEDS_MELON, Items.MELON),
+            Pair(Tags.Items.SEEDS_PITCHER_PLANT, Items.PITCHER_PLANT),
+            Pair(Tags.Items.SEEDS_PUMPKIN, Items.PUMPKIN),
+            Pair(Tags.Items.SEEDS_TORCHFLOWER, Items.TORCHFLOWER),
+            Pair(Tags.Items.SEEDS_WHEAT, Items.WHEAT)
+        ).forEach { (seedIn: TagKey<Item>, crop: Item) ->
             RagiumRecipeBuilders.planting {
                 ingredient {
                     +holderSet(seedIn)
@@ -153,10 +155,6 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                 }
                 result {
                     +crop
-                    count = 12
-                }
-                result {
-                    +seedOut
                     count = 12
                 }
             }.save(exporter)
@@ -221,10 +219,6 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                 result {
                     +log
                     count = 48
-                }
-                result {
-                    +sapling
-                    count = 12
                 }
             }.save(exporter)
         }

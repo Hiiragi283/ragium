@@ -35,7 +35,7 @@ class RTCentrifugingRecipeCategory(guiHelper: IGuiHelper) :
             .setSlotBackground(HTBackgroundType.OUTPUT)
         val itemOutput: IRecipeSlotBuilder = builder
             .addOutputSlot(getPosition(4), getPosition(0))
-            .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
+            .setSlotBackground(HTBackgroundType.OUTPUT)
         recipe.result.items.getOrNull(1)?.let(itemOutput::add)
         val fluidOutput: IRecipeSlotBuilder = builder
             .addOutputSlot(getPosition(6), getPosition(0))

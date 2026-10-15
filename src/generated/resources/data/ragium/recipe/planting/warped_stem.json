@@ -4,15 +4,9 @@
     "count": 8,
     "items": "minecraft:warped_fungus"
   },
-  "results": [
-    {
-      "count": 48,
-      "id": "minecraft:warped_stem"
-    },
-    {
-      "count": 12,
-      "id": "minecraft:warped_fungus"
-    }
-  ],
+  "result": {
+    "count": 48,
+    "id": "minecraft:warped_stem"
+  },
   "time": 200
 }

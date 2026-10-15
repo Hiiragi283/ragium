@@ -14,7 +14,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -25,7 +24,7 @@ abstract class HTSizedShapelessBlockEntity(type: BlockEntityType<*>, pos: BlockP
     HTProcessorBlockEntity.Energized(type, pos, state) {
     fun createRecipeHandler(lookup: HTRecipeLookup<HTSizedShapelessRecipe>, sound: HTSoundInstance) =
         object : SimpleRecipeHandler<HTRecipeInput, ItemStack, HTSizedShapelessRecipe>(lookup) {
-            private val inputSlots: HTInputHandler<Item, ItemInstance> by lazy {
+            private val inputSlots: HTInputHandler<ItemInstance> by lazy {
                 HTInputHandlerHelper.forItems(this@HTSizedShapelessBlockEntity.inputSlots)
             }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {

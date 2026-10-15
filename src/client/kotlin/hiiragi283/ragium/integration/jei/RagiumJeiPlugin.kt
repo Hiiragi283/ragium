@@ -28,6 +28,7 @@ import hiiragi283.ragium.integration.jei.category.RTElectrolyzingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTEnchantingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTFreezingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTMixingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTPlantingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTReactingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTResourceExtractingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTWashingRecipeCategory
@@ -158,11 +159,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RTReactingRecipeCategory(guiHelper),
             RTWashingRecipeCategory(guiHelper),
             // Resource
-            HTItemToDoubleItemRecipeCategory(
-                RagiumJeiRecipeTypes.PLANTING,
-                RagiumRecipeTypes.PLANTING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.PLANTER)
-            ),
+            RTPlantingRecipeCategory(guiHelper),
             // Electronics
             RTResourceExtractingRecipeCategory(guiHelper),
             // Arcane

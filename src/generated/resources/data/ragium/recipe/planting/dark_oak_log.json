@@ -4,15 +4,9 @@
     "count": 8,
     "items": "minecraft:dark_oak_sapling"
   },
-  "results": [
-    {
-      "count": 48,
-      "id": "minecraft:dark_oak_log"
-    },
-    {
-      "count": 12,
-      "id": "minecraft:dark_oak_sapling"
-    }
-  ],
+  "result": {
+    "count": 48,
+    "id": "minecraft:dark_oak_log"
+  },
   "time": 200
 }

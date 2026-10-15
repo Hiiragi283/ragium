@@ -199,12 +199,12 @@ data object RagiumRecipeBuilders {
     // Resource
     @JvmStatic
     inline fun planting(
-        builderAction: HTItemToDoubleItemRecipeBuilder<RTPlantingRecipe>.() -> Unit
-    ): HTItemToDoubleItemRecipeBuilder<RTPlantingRecipe> {
+        builderAction: HTItemToItemRecipeBuilder<RTPlantingRecipe>.() -> Unit
+    ): HTItemToItemRecipeBuilder<RTPlantingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToDoubleItemRecipeBuilder(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
+        return HTItemToItemRecipeBuilder(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
     }
 
     // Electronics

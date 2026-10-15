@@ -4,15 +4,9 @@
     "count": 8,
     "items": "#c:seeds/melon"
   },
-  "results": [
-    {
-      "count": 12,
-      "id": "minecraft:melon"
-    },
-    {
-      "count": 12,
-      "id": "minecraft:melon_seeds"
-    }
-  ],
+  "result": {
+    "count": 12,
+    "id": "minecraft:melon"
+  },
   "time": 200
 }

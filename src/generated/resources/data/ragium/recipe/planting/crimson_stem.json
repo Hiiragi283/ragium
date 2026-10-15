@@ -4,15 +4,9 @@
     "count": 8,
     "items": "minecraft:crimson_fungus"
   },
-  "results": [
-    {
-      "count": 48,
-      "id": "minecraft:crimson_stem"
-    },
-    {
-      "count": 12,
-      "id": "minecraft:crimson_fungus"
-    }
-  ],
+  "result": {
+    "count": 48,
+    "id": "minecraft:crimson_stem"
+  },
   "time": 200
 }

@@ -53,11 +53,12 @@ interface HTItemToRecipe<OUTPUT : Any> :
         HTItemToRecipe<ItemStack> {
         companion object {
             @JvmStatic
-            fun <RECIPE : BasicItem> codec(factory: Factory<HTItemIngredient, HTItemResult, RECIPE>): MapCodec<RECIPE> =
-                codec(HTItemIngredient.CODEC, HTItemResult.CODEC, factory)
+            fun <RECIPE : HTBasicSingleRecipe<HTItemIngredient, HTItemResult>> codec(
+                factory: Factory<HTItemIngredient, HTItemResult, RECIPE>
+            ): MapCodec<RECIPE> = codec(HTItemIngredient.CODEC, HTItemResult.CODEC, factory)
 
             @JvmStatic
-            fun <RECIPE : BasicItem> streamCodec(
+            fun <RECIPE : HTBasicSingleRecipe<HTItemIngredient, HTItemResult>> streamCodec(
                 factory: Factory<HTItemIngredient, HTItemResult, RECIPE>
             ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> =
                 streamCodec(HTItemIngredient.STREAM_CODEC, HTItemResult.STREAM_CODEC, factory)

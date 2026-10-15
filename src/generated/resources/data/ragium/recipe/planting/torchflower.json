@@ -4,15 +4,9 @@
     "count": 8,
     "items": "#c:seeds/torchflower"
   },
-  "results": [
-    {
-      "count": 12,
-      "id": "minecraft:torchflower"
-    },
-    {
-      "count": 12,
-      "id": "minecraft:torchflower_seeds"
-    }
-  ],
+  "result": {
+    "count": 12,
+    "id": "minecraft:torchflower"
+  },
   "time": 200
 }

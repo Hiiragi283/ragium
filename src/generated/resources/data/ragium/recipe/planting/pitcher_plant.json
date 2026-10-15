@@ -4,15 +4,9 @@
     "count": 8,
     "items": "#c:seeds/pitcher_plant"
   },
-  "results": [
-    {
-      "count": 12,
-      "id": "minecraft:pitcher_plant"
-    },
-    {
-      "count": 12,
-      "id": "minecraft:pitcher_pod"
-    }
-  ],
+  "result": {
+    "count": 12,
+    "id": "minecraft:pitcher_plant"
+  },
   "time": 200
 }
