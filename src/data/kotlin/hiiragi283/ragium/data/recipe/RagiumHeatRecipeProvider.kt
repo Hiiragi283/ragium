@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
@@ -8,7 +9,6 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
@@ -61,15 +61,24 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
         }.save(exporter)
 
-        // Machine Casing
-        RagiumRecipeBuilders.alloying {
-            ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL)
+        // Copper + Nickel -> Constantan
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.COPPER) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.NICKEL) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Alloy.CONSTANTAN)
                 count = 2
             }
-            +HTItemIngredient(holderSet(RagiumChemicals.GOLD), 1)
-            result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
         }.save(exporter)
+        RagiumRecipeBuilders.alloying {
+            +HTItemIngredient(holderSet(RagiumChemicals.COPPER), 1)
+            +HTItemIngredient(holderSet(RagiumChemicals.NICKEL), 1)
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.CONSTANTAN)
+                count = 2
+            }
+        }.save(exporter)
+
         // Iron + Coals -> Sooty Iron
         RagiumRecipeBuilders.alloying {
             +HTItemIngredient(holderSet(RagiumChemicals.IRON), 1)

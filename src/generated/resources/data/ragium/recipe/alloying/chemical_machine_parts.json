@@ -2,12 +2,16 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "count": 2,
-      "items": "#c:ingots/black_steel"
+      "count": 1,
+      "items": "ragium:heat_machine_parts"
     },
     {
       "chemicals": "ragium:gold",
       "scale": 1.0
+    },
+    {
+      "count": 1,
+      "items": "#c:dusts/glowstone"
     }
   ],
   "result": {

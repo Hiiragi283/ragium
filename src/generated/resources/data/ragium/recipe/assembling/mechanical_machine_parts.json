@@ -3,16 +3,16 @@
   "ingredients": [
     {
       "count": 2,
-      "items": "#c:ingots/black_steel"
+      "items": "#c:ingots/sooty_iron"
     },
     {
       "count": 1,
-      "items": "ragium:electric_circuit"
+      "items": "#c:dusts/redstone"
     }
   ],
   "result": {
     "count": 1,
-    "id": "ragium:electronics_machine_parts"
+    "id": "ragium:mechanical_machine_parts"
   },
   "time": 200
 }

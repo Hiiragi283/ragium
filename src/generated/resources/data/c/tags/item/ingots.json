@@ -2,7 +2,9 @@
   "values": [
     "#c:ingots/aluminum",
     "#c:ingots/black_steel",
+    "#c:ingots/constantan",
     "#c:ingots/shadow_steel",
+    "#c:ingots/silver",
     "#c:ingots/sooty_iron"
   ]
 }

@@ -134,8 +134,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
-        add(RagiumItems.CARBON_FIBER, "炭素繊維")
-        add(RagiumItems.CFRP_PLATE, "炭素繊維強化プラスチック板")
         // add(RagiumItems.ALCLAD_PLATE, "アルクラッド板")
         add(RagiumItems.BEESWAX, "密猟")
         add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
@@ -149,6 +147,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")
 
+        add(RagiumItems.HEATING_COIL, "加熱コイル")
         add(RagiumItems.BLANK_MOLD, "空の鋳型")
         add(RagiumItems.BALL_MOLD, "ボールの鋳型")
         add(RagiumItems.BLOCK_MOLD, "ブロックの鋳型")
@@ -272,6 +271,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         addFromKey(RagiumChemicals.IRON, "鉄")
         addFromKey(RagiumChemicals.COPPER, "銅")
+        addFromKey(RagiumChemicals.NICKEL, "ニッケル")
+        addFromKey(RagiumChemicals.SILVER, "銀")
         addFromKey(RagiumChemicals.GOLD, "金")
         addFromKey(RagiumChemicals.MERCURY, "水銀")
 
@@ -325,6 +326,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFromKey(RagiumElements.CALCIUM, "カルシウム")
         addFromKey(RagiumElements.IRON, "鉄")
         addFromKey(RagiumElements.COPPER, "銅")
+        addFromKey(RagiumElements.NICKEL, "ニッケル")
+
+        addFromKey(RagiumElements.SILVER, "銀")
 
         addFromKey(RagiumElements.GOLD, "金")
         addFromKey(RagiumElements.MERCURY, "水銀")

@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:raw_materials/silver"
+      }
+    }
+  ],
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 3,
+    "items": "#c:raw_materials/silver"
+  },
+  "result": {
+    "count": 4,
+    "id": "ragium:silver_dust"
+  },
+  "time": 200
+}

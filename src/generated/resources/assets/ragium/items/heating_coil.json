@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "ragium:item/carbon_fiber"
+    "model": "ragium:item/heating_coil"
   }
 }

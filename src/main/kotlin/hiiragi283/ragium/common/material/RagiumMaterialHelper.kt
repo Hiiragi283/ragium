@@ -35,12 +35,12 @@ data object RagiumMaterialHelper {
     }
 
     @JvmStatic
-    fun getIngot(metalLike: RagiumMaterial.MetalLike): HTSimpleDeferredItem = when (metalLike) {
+    fun getIngot(metalLike: RagiumMaterial.MetalLike): HTSimpleDeferredItem? = when (metalLike) {
         RagiumMaterial.Metal.COPPER -> HTSimpleDeferredItem(vanillaId("copper_ingot"))
         RagiumMaterial.Metal.IRON -> HTSimpleDeferredItem(vanillaId("iron_ingot"))
         RagiumMaterial.Metal.GOLD -> HTSimpleDeferredItem(vanillaId("gold_ingot"))
         RagiumMaterial.Alloy.NETHERITE -> HTSimpleDeferredItem(vanillaId("netherite_ingot"))
-        else -> RagiumItems.getOrThrow(HTItemPart.INGOT, metalLike)
+        else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, metalLike]
     }
 
     @JvmStatic

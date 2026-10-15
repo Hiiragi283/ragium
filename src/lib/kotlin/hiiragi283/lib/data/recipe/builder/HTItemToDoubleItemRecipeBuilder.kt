@@ -46,6 +46,10 @@ class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
     // Result
     @PublishedApi internal val results: MutableList<HTItemResult> = ObjectArrayList()
 
+    operator fun HTItemResult.unaryPlus() {
+        results += this
+    }
+
     inline fun result(builderAction: HTItemResultBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:ingots/constantan"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:constantan_dust"
+  },
+  "time": 200
+}

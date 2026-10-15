@@ -9,6 +9,7 @@
     "#c:dusts/charcoal",
     "#c:dusts/cinnabar",
     "#c:dusts/coal",
+    "#c:dusts/constantan",
     "#c:dusts/copper",
     "#c:dusts/diamond",
     "#c:dusts/echo",
@@ -21,6 +22,7 @@
     "#c:dusts/lapis",
     "#c:dusts/lime",
     "#c:dusts/netherite",
+    "#c:dusts/nickel",
     "#c:dusts/niter",
     "#c:dusts/obsidian",
     "#c:dusts/paper",
@@ -30,6 +32,7 @@
     "#c:dusts/raginite",
     "#c:dusts/salt",
     "#c:dusts/silicon",
+    "#c:dusts/silver",
     "#c:dusts/soda_ash",
     "#c:dusts/sulfur",
     "#c:dusts/wood"

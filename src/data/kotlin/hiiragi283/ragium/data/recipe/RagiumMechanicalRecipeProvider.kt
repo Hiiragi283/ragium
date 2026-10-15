@@ -12,7 +12,6 @@ import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
@@ -281,13 +280,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             result { +Items.ENCHANTED_GOLDEN_APPLE }
             time *= 8
-        }.save(exporter)
-
-        // Machine Casing
-        RagiumRecipeBuilders.assembling {
-            ingredient { items { +RagiumItems.getParts(HTMachineType.MECHANICAL) } }
-            ingredient { items { +Items.MAGMA_BLOCK } }
-            result { +RagiumItems.getParts(HTMachineType.HEAT) }
         }.save(exporter)
     }
 

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "silver_nugget",
+  "ingredients": [
+    "#c:ingots/silver"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:silver_nugget"
+  }
+}

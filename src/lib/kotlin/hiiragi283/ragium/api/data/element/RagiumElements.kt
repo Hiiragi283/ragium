@@ -58,6 +58,13 @@ data object RagiumElements {
     @JvmField
     val COPPER: ResourceKey<HTElement> = create("copper")
 
+    @JvmField
+    val NICKEL: ResourceKey<HTElement> = create("nickel")
+
+    // 5th Period
+    @JvmField
+    val SILVER: ResourceKey<HTElement> = create("silver")
+
     // 6th Period
     @JvmField
     val GOLD: ResourceKey<HTElement> = create("gold")
@@ -92,6 +99,9 @@ data object RagiumElements {
         register(CALCIUM, "Ca")
         register(IRON, "Fe")
         register(COPPER, "Cu")
+        register(NICKEL, "Ni")
+
+        register(SILVER, "Ag")
 
         register(GOLD, "Au")
         register(MERCURY, "Hg")

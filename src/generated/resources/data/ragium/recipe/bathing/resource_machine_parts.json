@@ -2,17 +2,17 @@
   "type": "ragium:bathing",
   "ingredient": {
     "fluid": {
-      "amount": 250,
-      "fluids": "#ragium:resins"
+      "amount": 180,
+      "fluids": "#c:molten_plastic"
     },
     "item": {
       "count": 1,
-      "items": "ragium:carbon_fiber"
+      "items": "ragium:chemical_machine_parts"
     }
   },
   "result": {
     "count": 1,
-    "id": "ragium:cfrp_plate"
+    "id": "ragium:resource_machine_parts"
   },
   "time": 200
 }

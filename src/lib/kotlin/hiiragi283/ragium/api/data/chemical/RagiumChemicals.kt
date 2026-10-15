@@ -55,6 +55,13 @@ data object RagiumChemicals {
     @JvmField
     val COPPER: ResourceKey<HTChemical> = create("copper")
 
+    @JvmField
+    val NICKEL: ResourceKey<HTChemical> = create("nickel")
+
+    // 5th Period
+    @JvmField
+    val SILVER: ResourceKey<HTChemical> = create("silver")
+
     // 6th Period
     @JvmField
     val GOLD: ResourceKey<HTChemical> = create("gold")
@@ -175,6 +182,9 @@ data object RagiumChemicals {
 
         context.register(IRON, HTSimpleChemical(getter.getOrThrow(RagiumElements.IRON), 1))
         context.register(COPPER, HTSimpleChemical(getter.getOrThrow(RagiumElements.COPPER), 1))
+        context.register(NICKEL, HTSimpleChemical(getter.getOrThrow(RagiumElements.NICKEL), 1))
+
+        context.register(SILVER, HTSimpleChemical(getter.getOrThrow(RagiumElements.SILVER), 1))
 
         context.register(GOLD, HTSimpleChemical(getter.getOrThrow(RagiumElements.GOLD), 1))
         context.register(MERCURY, HTSimpleChemical(getter.getOrThrow(RagiumElements.MERCURY), 1))

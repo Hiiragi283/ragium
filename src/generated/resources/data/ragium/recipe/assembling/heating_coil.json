@@ -1,0 +1,18 @@
+{
+  "type": "ragium:assembling",
+  "ingredients": [
+    {
+      "count": 4,
+      "items": "#c:ingots/constantan"
+    },
+    {
+      "count": 1,
+      "items": "#c:ingots/sooty_iron"
+    }
+  ],
+  "result": {
+    "count": 6,
+    "id": "ragium:heating_coil"
+  },
+  "time": 200
+}

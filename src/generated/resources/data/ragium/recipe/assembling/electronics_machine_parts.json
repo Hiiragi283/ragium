@@ -3,15 +3,11 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "ragium:cfrp_plate"
+      "items": "ragium:resource_machine_parts"
     },
     {
       "count": 2,
-      "items": "ragium:silicon_chip"
-    },
-    {
-      "count": 3,
-      "items": "#c:nuggets/gold"
+      "items": "ragium:electric_circuit"
     }
   ],
   "result": {

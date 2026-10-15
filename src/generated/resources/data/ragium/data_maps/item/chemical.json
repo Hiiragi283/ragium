@@ -72,6 +72,10 @@
       "chemical": "ragium:calcium_carbonate",
       "scale": 1.0
     },
+    "#c:dusts/nickel": {
+      "chemical": "ragium:nickel",
+      "scale": 1.0
+    },
     "#c:dusts/niter": {
       "chemical": "ragium:potassium_nitrate",
       "scale": 1.0
@@ -94,6 +98,10 @@
     },
     "#c:dusts/silicon": {
       "chemical": "ragium:silicon",
+      "scale": 1.0
+    },
+    "#c:dusts/silver": {
+      "chemical": "ragium:silver",
       "scale": 1.0
     },
     "#c:dusts/soda_ash": {
@@ -176,6 +184,10 @@
       "chemical": "ragium:calcium_carbonate",
       "scale": 4.0
     },
+    "#c:gears/nickel": {
+      "chemical": "ragium:nickel",
+      "scale": 4.0
+    },
     "#c:gears/niter": {
       "chemical": "ragium:potassium_nitrate",
       "scale": 4.0
@@ -198,6 +210,10 @@
     },
     "#c:gears/silicon": {
       "chemical": "ragium:silicon",
+      "scale": 4.0
+    },
+    "#c:gears/silver": {
+      "chemical": "ragium:silver",
       "scale": 4.0
     },
     "#c:gears/soda_ash": {
@@ -280,6 +296,10 @@
       "chemical": "ragium:calcium_carbonate",
       "scale": 1.0
     },
+    "#c:gems/nickel": {
+      "chemical": "ragium:nickel",
+      "scale": 1.0
+    },
     "#c:gems/niter": {
       "chemical": "ragium:potassium_nitrate",
       "scale": 1.0
@@ -302,6 +322,10 @@
     },
     "#c:gems/silicon": {
       "chemical": "ragium:silicon",
+      "scale": 1.0
+    },
+    "#c:gems/silver": {
+      "chemical": "ragium:silver",
       "scale": 1.0
     },
     "#c:gems/soda_ash": {
@@ -384,6 +408,10 @@
       "chemical": "ragium:calcium_carbonate",
       "scale": 1.0
     },
+    "#c:ingots/nickel": {
+      "chemical": "ragium:nickel",
+      "scale": 1.0
+    },
     "#c:ingots/niter": {
       "chemical": "ragium:potassium_nitrate",
       "scale": 1.0
@@ -406,6 +434,10 @@
     },
     "#c:ingots/silicon": {
       "chemical": "ragium:silicon",
+      "scale": 1.0
+    },
+    "#c:ingots/silver": {
+      "chemical": "ragium:silver",
       "scale": 1.0
     },
     "#c:ingots/soda_ash": {
@@ -488,6 +520,10 @@
       "chemical": "ragium:calcium_carbonate",
       "scale": 0.111
     },
+    "#c:nuggets/nickel": {
+      "chemical": "ragium:nickel",
+      "scale": 0.111
+    },
     "#c:nuggets/niter": {
       "chemical": "ragium:potassium_nitrate",
       "scale": 0.111
@@ -510,6 +546,10 @@
     },
     "#c:nuggets/silicon": {
       "chemical": "ragium:silicon",
+      "scale": 0.111
+    },
+    "#c:nuggets/silver": {
+      "chemical": "ragium:silver",
       "scale": 0.111
     },
     "#c:nuggets/soda_ash": {
@@ -554,6 +594,10 @@
     },
     "#c:storage_blocks/pitch_coke": {
       "chemical": "ragium:carbon",
+      "scale": 9.0
+    },
+    "#c:storage_blocks/silver": {
+      "chemical": "ragium:silver",
       "scale": 9.0
     },
     "#c:tiny/alumina": {
@@ -628,6 +672,10 @@
       "chemical": "ragium:calcium_carbonate",
       "scale": 0.125
     },
+    "#c:tiny/nickel": {
+      "chemical": "ragium:nickel",
+      "scale": 0.125
+    },
     "#c:tiny/niter": {
       "chemical": "ragium:potassium_nitrate",
       "scale": 0.125
@@ -650,6 +698,10 @@
     },
     "#c:tiny/silicon": {
       "chemical": "ragium:silicon",
+      "scale": 0.125
+    },
+    "#c:tiny/silver": {
+      "chemical": "ragium:silver",
       "scale": 0.125
     },
     "#c:tiny/soda_ash": {

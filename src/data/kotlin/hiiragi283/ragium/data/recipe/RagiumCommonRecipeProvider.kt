@@ -15,7 +15,6 @@ import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
@@ -111,10 +110,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.COPPER)
                 count = 3
             }
-            result {
-                +Items.GOLD_NUGGET
-                count = 3
-            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.NICKEL) }
             recipeId suffix "_from_ore"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
@@ -132,6 +128,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.GOLD)
                 count = 2
             }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.SILVER) }
             recipeId suffix "_from_ore"
         }.save(exporter)
         // Alloying
@@ -164,6 +161,11 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         // Crushing
         for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
+            val extraDust: HTSimpleDeferredItem? = when (metal) {
+                RagiumMaterial.Metal.COPPER -> RagiumMaterial.Metal.NICKEL
+                RagiumMaterial.Metal.GOLD -> RagiumMaterial.Metal.SILVER
+                else -> null
+            }?.let { RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, it] }
             // 3x Raw -> 4x Dust
             RagiumRecipeBuilders.crushing {
                 ingredient {
@@ -174,6 +176,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     +dust
                     count = 4
                 }
+                extraDust?.asTemplate()?.getOrNull()?.let { result { from(it) } }
                 recipeId suffix "_from_raw"
                 condition { itemTagPresent(CommonTagPrefixes.RAW_MATERIALS, metal) }
             }.save(exporter)
@@ -184,6 +187,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     +dust
                     count = 12
                 }
+                extraDust?.asTemplate(3)?.getOrNull()?.let { result { from(it) } }
                 recipeId suffix "_from_raw_block"
                 condition { itemTagPresent(CommonTagPrefixes.RAW_STORAGE_BLOCK, metal) }
             }.save(exporter)
@@ -406,17 +410,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.SYNTHETIC_RESIN
                 amount *= 2
             }
-        }.save(exporter)
-
-        // Synthetic Fiber + Nitrogen -> Carbon Fiber
-        // Carbon Fiber + Resin -> CFRP Plate
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { items { +RagiumItems.CARBON_FIBER } }
-            fluidIngredient {
-                +holderSet(RagiumTags.Fluids.RESINS)
-                amount /= 4
-            }
-            result { +RagiumItems.CFRP_PLATE }
         }.save(exporter)
     }
 
@@ -871,30 +864,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 3
             }
             result { +RagiumItems.ELECTRIC_CIRCUIT }
-        }.save(exporter)
-        // Machine Parts
-        RagiumRecipeBuilders.assembling {
-            ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL)
-                count = 2
-            }
-            ingredient { items { +RagiumItems.ELECTRIC_CIRCUIT } }
-            result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
-            recipeId suffix "_by_black_metal"
-        }.save(exporter)
-        RagiumRecipeBuilders.assembling {
-            ingredient {
-                items { +RagiumItems.CFRP_PLATE }
-            }
-            ingredient {
-                items { +RagiumItems.SILICON_CHIP }
-                count = 2
-            }
-            ingredient {
-                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.GOLD)
-                count = 3
-            }
-            result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
         }.save(exporter)
     }
 }

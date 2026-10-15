@@ -207,7 +207,17 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.7
          */
-        ALUMINUM("Aluminum", "アルミニウム", RagiumChemicals.ALUMINUM)
+        ALUMINUM("Aluminum", "アルミニウム", RagiumChemicals.ALUMINUM),
+
+        /**
+         * @since 26.1.11
+         */
+        NICKEL("Nickel", "ニッケル", RagiumChemicals.NICKEL),
+
+        /**
+         * @since 26.1.11
+         */
+        SILVER("Silver", "銀", RagiumChemicals.SILVER)
         ;
 
         constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>? = null) : this(
@@ -223,6 +233,13 @@ sealed interface RagiumMaterial :
         HTLangName by langName {
         // Minecraft
         NETHERITE("Netherite", "ネザライト"),
+
+        // Common
+
+        /**
+         * @since 26.1.11
+         */
+        CONSTANTAN("Constantan", "コンスタンタン"),
 
         // Ragium
 

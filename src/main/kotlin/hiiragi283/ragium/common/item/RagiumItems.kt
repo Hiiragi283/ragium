@@ -46,6 +46,8 @@ data object RagiumItems {
         REGISTER.addAlias("bio_machine_parts", "resource_machine_parts")
         REGISTER.addAlias("void_metal_ingot", "shadow_steel_ingot")
         REGISTER.addAlias("void_metal_nugget", "shadow_steel_nugget")
+        REGISTER.addAlias("carbon_fiber", "synthetic_fiber")
+        REGISTER.addAlias("cfrp_plate", "plastic_plate")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -86,8 +88,11 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Metal.GOLD, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Metal.NICKEL, HTItemPart.DUST)
+                putAll(RagiumMaterial.Metal.SILVER, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET)
                 // Alloy
                 putAll(RagiumMaterial.Alloy.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Alloy.CONSTANTAN, HTItemPart.DUST, HTItemPart.INGOT)
                 putAll(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.SHADOW_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
@@ -159,12 +164,6 @@ data object RagiumItems {
     @JvmField
     val SYNTHETIC_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("synthetic_fiber")
 
-    @JvmField
-    val CARBON_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("carbon_fiber")
-
-    @JvmField
-    val CFRP_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cfrp_plate")
-
     // val ALCLAD_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alclad_plate")
 
     // Resource
@@ -215,6 +214,8 @@ data object RagiumItems {
     fun getParts(machineType: HTMachineType): HTSimpleDeferredItem = MACHINE_PARTS[machineType]!!
 
     // Mechanical
+    @JvmField
+    val HEATING_COIL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("heating_coil")
 
     // Heat
     @JvmField

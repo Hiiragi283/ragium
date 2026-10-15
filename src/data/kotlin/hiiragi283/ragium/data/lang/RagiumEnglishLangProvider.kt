@@ -138,8 +138,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
-        add(RagiumItems.CARBON_FIBER, "Carbon Fiber")
-        add(RagiumItems.CFRP_PLATE, "CFRP Plate")
         // add(RagiumItems.ALCLAD_PLATE, "Alclad Plate")
         add(RagiumItems.BEESWAX, "Beeswax")
         add(RagiumItems.SPLASH_BOTTLE, "Splash Bottle")
@@ -153,6 +151,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
 
+        add(RagiumItems.HEATING_COIL, "Heating Coil")
         add(RagiumItems.BLANK_MOLD, "Blank Mold")
         add(RagiumItems.BALL_MOLD, "Ball Mold")
         add(RagiumItems.BLOCK_MOLD, "Block Mold")
@@ -276,6 +275,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         addFromKey(RagiumChemicals.IRON, "Iron")
         addFromKey(RagiumChemicals.COPPER, "Copper")
+        addFromKey(RagiumChemicals.NICKEL, "Nickel")
+        addFromKey(RagiumChemicals.SILVER, "Silver")
         addFromKey(RagiumChemicals.GOLD, "Gold")
         addFromKey(RagiumChemicals.MERCURY, "Mercury")
 
@@ -329,6 +330,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumElements.CALCIUM, "Calcium")
         addFromKey(RagiumElements.IRON, "Iron")
         addFromKey(RagiumElements.COPPER, "Copper")
+        addFromKey(RagiumElements.NICKEL, "Nickel")
+
+        addFromKey(RagiumElements.SILVER, "Silver")
 
         addFromKey(RagiumElements.GOLD, "Gold")
         addFromKey(RagiumElements.MERCURY, "Mercury")
