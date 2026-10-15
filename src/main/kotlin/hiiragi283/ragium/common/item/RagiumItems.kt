@@ -192,6 +192,12 @@ data object RagiumItems {
     @JvmField
     val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit")
 
+    @JvmField
+    val DIAMOND_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_wafer")
+
+    @JvmField
+    val DIAMOND_CHIP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_chip")
+
     // Arcane
     @JvmField
     val ELDER_HEART: HTSimpleDeferredItem = REGISTER.registerSimpleItem("elder_heart") { it.rarity(Rarity.UNCOMMON) }

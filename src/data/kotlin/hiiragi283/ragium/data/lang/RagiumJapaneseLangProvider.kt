@@ -143,6 +143,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.SILICON_CHIP, "シリコンチップ")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
+        add(RagiumItems.DIAMOND_WAFER, "ダイヤモンドウェハ")
+        add(RagiumItems.DIAMOND_CHIP, "ダイヤモンドチップ")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")

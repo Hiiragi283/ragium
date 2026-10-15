@@ -147,6 +147,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.SILICON_CHIP, "Silicon Chip")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
+        add(RagiumItems.DIAMOND_WAFER, "Diamond Wafer")
+        add(RagiumItems.DIAMOND_CHIP, "Diamond Chip")
         add(RagiumItems.ELDER_HEART, "Elder Heart")
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")

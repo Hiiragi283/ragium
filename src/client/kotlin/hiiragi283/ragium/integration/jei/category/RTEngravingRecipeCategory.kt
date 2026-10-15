@@ -17,7 +17,7 @@ class RTEngravingRecipeCategory(guiHelper: IGuiHelper) :
         RTEngravingRecipe.CODEC
     ) {
     override fun setInput(builder: IRecipeSlotBuilder, recipe: RTEngravingRecipe) {
-        builder.add(recipe.result)
+        builder.add(recipe.ingredient)
     }
 
     override fun setOutput(builder: IRecipeSlotBuilder, recipe: RTEngravingRecipe) {

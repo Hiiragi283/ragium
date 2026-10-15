@@ -773,6 +773,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun electronics() {
         silicon()
+        diamond()
     }
 
     private fun silicon() {
@@ -809,7 +810,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.RAGINITE) }
             result { +RagiumItems.SILICON_WAFER }
         }.save(exporter)
-        // Silicon Wafer -> Circuit Chip
+        // Silicon Wafer -> Silicon Chip
         RagiumRecipeBuilders.cutting {
             ingredient { items { +RagiumItems.SILICON_WAFER } }
             result {
@@ -833,6 +834,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             ingredient { items { +RagiumItems.SILICON_CHIP } }
             result { +RagiumItems.ELECTRIC_CIRCUIT }
+            recipeId prefix "silicon/"
             recipeId suffix "_with_copper"
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
@@ -843,6 +845,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             ingredient { items { +RagiumItems.SILICON_CHIP } }
             result { +RagiumItems.ELECTRIC_CIRCUIT }
+            recipeId prefix "silicon/"
             recipeId suffix "_with_gold"
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
@@ -853,6 +856,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             ingredient { items { +RagiumItems.SILICON_CHIP } }
             result { +RagiumItems.ELECTRIC_CIRCUIT }
+            recipeId prefix "silicon/"
             recipeId suffix "_with_silver"
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
@@ -863,6 +867,85 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             ingredient { items { +RagiumItems.SILICON_CHIP } }
             result { +RagiumItems.ELECTRIC_CIRCUIT }
+            recipeId prefix "silicon/"
+            recipeId suffix "_with_aluminum"
+        }.save(exporter)
+    }
+
+    private fun diamond() {
+        // Carbon -> Diamond Wafer
+        // TODO: CVD法
+        RagiumRecipeBuilders.engraving {
+            ingredient {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.CARBON)
+                count = 8
+            }
+            catalyst { items { +RagiumItems.DIAMOND_LENS } }
+            result { +RagiumItems.DIAMOND_WAFER }
+        }.save(exporter)
+        // Diamond Wafer -> Diamond Chip
+        RagiumRecipeBuilders.cutting {
+            ingredient { items { +RagiumItems.DIAMOND_WAFER } }
+            result {
+                +RagiumItems.DIAMOND_CHIP
+                count = 8
+            }
+        }.save(exporter)
+        // Circuit Board + Wiring Metal + Silicon Chip -> Electric Circuit
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.COPPER)
+                count = 9
+            }
+            ingredient { items { +RagiumItems.DIAMOND_CHIP } }
+            result {
+                +RagiumItems.ELECTRIC_CIRCUIT
+                count = 2
+            }
+            recipeId prefix "diamond/"
+            recipeId suffix "_with_copper"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.GOLD)
+                count = 6
+            }
+            ingredient { items { +RagiumItems.DIAMOND_CHIP } }
+            result {
+                +RagiumItems.ELECTRIC_CIRCUIT
+                count = 2
+            }
+            recipeId prefix "diamond/"
+            recipeId suffix "_with_gold"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SILVER)
+                count = 3
+            }
+            ingredient { items { +RagiumItems.DIAMOND_CHIP } }
+            result {
+                +RagiumItems.ELECTRIC_CIRCUIT
+                count = 2
+            }
+            recipeId prefix "diamond/"
+            recipeId suffix "_with_silver"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.ALUMINUM)
+                count = 3
+            }
+            ingredient { items { +RagiumItems.DIAMOND_CHIP } }
+            result {
+                +RagiumItems.ELECTRIC_CIRCUIT
+                count = 2
+            }
+            recipeId prefix "diamond/"
             recipeId suffix "_with_aluminum"
         }.save(exporter)
     }

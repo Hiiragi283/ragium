@@ -1,0 +1,13 @@
+{
+  "type": "ragium:engraving",
+  "catalyst": "ragium:diamond_lens",
+  "ingredient": {
+    "count": 8,
+    "items": "#c:dusts/carbon"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:diamond_wafer"
+  },
+  "time": 200
+}
