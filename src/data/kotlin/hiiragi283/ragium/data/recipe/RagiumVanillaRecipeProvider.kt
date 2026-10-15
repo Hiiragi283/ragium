@@ -409,7 +409,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Electronics
         electronics(RagiumBlocks.BLENDER) { items { +RagiumBlocks.MIXER } }
         electronics(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
-        electronics(RagiumBlocks.PRECISION_ASSEMBLER) { items { +RagiumBlocks.ASSEMBLER } }
         // Arcane
         arcane(RagiumBlocks.ENCHANTER) { items { +Items.ENCHANTING_TABLE } }
 

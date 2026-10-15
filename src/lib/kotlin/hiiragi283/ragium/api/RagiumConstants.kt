@@ -35,7 +35,6 @@ data object RagiumConstants {
     // Electronics
     const val BLENDER = "blender"
     const val ELECTROLYZER = "electrolyzer"
-    const val PRECISION_ASSEMBLER = "precision_assembler"
     const val SCANNER = "scanner"
 
     // Arcane

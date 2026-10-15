@@ -69,6 +69,7 @@ data object RagiumBlocks {
         REGISTER.addAlias("steel_block", "sooty_iron_block")
         REGISTER.addAlias("brewery", "mixer")
         REGISTER.addAlias("bio_machine_casing", "resource_machine_casing")
+        REGISTER.addAlias("precision_assembler", "assembler")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -310,10 +311,6 @@ data object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.ELECTROLYZER)
 
     @JvmField
-    val PRECISION_ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerMachine(RagiumBlockEntityTypes.PRECISION_ASSEMBLER)
-
-    @JvmField
     val SCANNER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerFakeMachine(RagiumConstants.SCANNER)
 
@@ -348,7 +345,6 @@ data object RagiumBlocks {
 
                 put(HTMachineType.ELECTRONICS, BLENDER)
                 put(HTMachineType.ELECTRONICS, ELECTROLYZER)
-                put(HTMachineType.ELECTRONICS, PRECISION_ASSEMBLER)
                 put(HTMachineType.ELECTRONICS, SCANNER)
 
                 put(HTMachineType.ARCANE, ENCHANTER)

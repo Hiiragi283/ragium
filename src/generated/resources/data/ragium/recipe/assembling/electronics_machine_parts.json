@@ -1,6 +1,10 @@
 {
   "type": "ragium:assembling",
-  "extras": [
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "ragium:cfrp_plate"
+    },
     {
       "count": 2,
       "items": "ragium:silicon_chip"
@@ -10,10 +14,6 @@
       "items": "#c:nuggets/gold"
     }
   ],
-  "ingredient": {
-    "count": 1,
-    "items": "ragium:cfrp_plate"
-  },
   "result": {
     "count": 1,
     "id": "ragium:electronics_machine_parts"

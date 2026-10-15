@@ -62,7 +62,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.BLENDER, "大型混合機")
         add(RagiumBlocks.ELECTROLYZER, "電解機")
-        add(RagiumBlocks.PRECISION_ASSEMBLER, "精密組立機")
         add(RagiumBlocks.SCANNER, "レーザースキャナ")
 
         add(RagiumBlocks.ENCHANTER, "エンチャンター")

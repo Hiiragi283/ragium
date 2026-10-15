@@ -8,7 +8,6 @@ import hiiragi283.lib.integration.jei.category.HTItemAndFluidToRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToItemAndFluidRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTTripleItemToRecipeCategory
 import hiiragi283.lib.integration.jei.ingredient.HTIngredientTypes
 import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTPotionHelper
@@ -23,6 +22,7 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.integration.jei.advanced.HTFluidBucketRecipePlugin
 import hiiragi283.ragium.integration.jei.advanced.HTPotionFluidRecipePlugin
 import hiiragi283.ragium.integration.jei.category.RTAlloyingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTAssemblingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTCentrifugingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTElectrolyzingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTEnchantingRecipeCategory
@@ -107,11 +107,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         registration.addRecipeCategories(
             // Mechanical
-            HTTripleItemToRecipeCategory.Basic(
-                RagiumJeiRecipeTypes.ASSEMBLING,
-                RagiumRecipeTypes.ASSEMBLING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.ASSEMBLER)
-            ),
+            RTAssemblingRecipeCategory(guiHelper),
             RTCentrifugingRecipeCategory(guiHelper),
             HTSingleRecipeCategory.ItemToItem(
                 RagiumJeiRecipeTypes.COMPRESSING,
@@ -335,7 +331,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RagiumJeiRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
         // Electronics
         registration.addCraftingStation(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
-        registration.addCraftingStation(RagiumJeiRecipeTypes.ASSEMBLING, RagiumBlocks.PRECISION_ASSEMBLER)
         // Arcane
         registration.addCraftingStation(RagiumJeiRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
     }

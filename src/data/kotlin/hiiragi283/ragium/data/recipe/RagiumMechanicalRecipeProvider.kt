@@ -51,7 +51,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Blackstone + Gold -> Gilded Blackstone
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.BLACKSTONE } }
-            extra {
+            ingredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.GOLD)
                 count = 8
             }
@@ -60,7 +60,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Dirt + Leaves -> Podzol
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.DIRT } }
-            extra {
+            ingredient {
                 +holderSet(ItemTags.LEAVES)
                 count = 8
             }
@@ -69,19 +69,19 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Dirt + Mushroom -> Mycelium
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.DIRT } }
-            extra { +holderSet(Tags.Items.MUSHROOMS) }
+            ingredient { +holderSet(Tags.Items.MUSHROOMS) }
             result { +Items.MYCELIUM }
         }.save(exporter)
         // Crimson Nylium
         RagiumRecipeBuilders.assembling {
             ingredient { +holderSet(Tags.Items.NETHERRACKS) }
-            extra { items { +Items.CRIMSON_FUNGUS } }
+            ingredient { items { +Items.CRIMSON_FUNGUS } }
             result { +Items.CRIMSON_NYLIUM }
         }.save(exporter)
         // Warped Nylium
         RagiumRecipeBuilders.assembling {
             ingredient { +holderSet(Tags.Items.NETHERRACKS) }
-            extra { items { +Items.WARPED_FUNGUS } }
+            ingredient { items { +Items.WARPED_FUNGUS } }
             result { +Items.WARPED_NYLIUM }
         }.save(exporter)
         // String + Slime Ball -> Cobweb
@@ -90,7 +90,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +holderSet(Tags.Items.STRINGS)
                 count = 5
             }
-            extra { +holderSet(Tags.Items.SLIME_BALLS) }
+            ingredient { +holderSet(Tags.Items.SLIME_BALLS) }
             result { +Items.COBWEB }
         }.save(exporter)
 
@@ -101,7 +101,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         ).forEach { (metal: RagiumMaterial.Metal, chain: Item) ->
             RagiumRecipeBuilders.assembling {
                 ingredient { +holderSet(CommonTagPrefixes.INGOT, metal) }
-                extra {
+                ingredient {
                     +holderSet(CommonTagPrefixes.NUGGET, metal)
                     count = 3
                 }
@@ -118,7 +118,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         ).forEach { (metal: RagiumMaterial.Metal, lantern: Item) ->
             RagiumRecipeBuilders.assembling {
                 ingredient { +holderSet(CommonTagPrefixes.INGOT, metal) }
-                extra { items { +Items.TORCH } }
+                ingredient { items { +Items.TORCH } }
                 result {
                     +lantern
                     count = 2
@@ -127,7 +127,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
         RagiumRecipeBuilders.assembling {
             ingredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON) }
-            extra { items { +Items.SOUL_TORCH } }
+            ingredient { items { +Items.SOUL_TORCH } }
             result {
                 +Items.SOUL_LANTERN
                 count = 2
@@ -136,11 +136,11 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Repeater
         RagiumRecipeBuilders.assembling {
             ingredient { +holderSet(Tags.Items.STONES) }
-            extra {
+            ingredient {
                 items { +Items.REDSTONE_TORCH }
                 count = 2
             }
-            extra {
+            ingredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE)
             }
             result {
@@ -151,11 +151,11 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Comparator
         RagiumRecipeBuilders.assembling {
             ingredient { +holderSet(Tags.Items.STONES) }
-            extra {
+            ingredient {
                 items { +Items.REDSTONE_TORCH }
                 count = 3
             }
-            extra { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.QUARTZ) }
+            ingredient { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.QUARTZ) }
             result {
                 +Items.COMPARATOR
                 count = 2
@@ -164,16 +164,16 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Dispenser
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.DROPPER } }
-            extra { +holderSet(Tags.Items.TOOLS_BOW) }
+            ingredient { +holderSet(Tags.Items.TOOLS_BOW) }
             result { +Items.DISPENSER }
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.DROPPER } }
-            extra {
+            ingredient {
                 +holderSet(Tags.Items.RODS_WOODEN)
                 count = 3
             }
-            extra {
+            ingredient {
                 +holderSet(Tags.Items.STRINGS)
                 count = 3
             }
@@ -186,7 +186,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
                 count = 6
             }
-            extra { +holderSet(Tags.Items.RODS_WOODEN) }
+            ingredient { +holderSet(Tags.Items.RODS_WOODEN) }
             result {
                 +Items.RAIL
                 count = 24
@@ -197,8 +197,8 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD)
                 count = 6
             }
-            extra { +holderSet(Tags.Items.RODS_WOODEN) }
-            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            ingredient { +holderSet(Tags.Items.RODS_WOODEN) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
             result {
                 +Items.POWERED_RAIL
                 count = 9
@@ -209,8 +209,8 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
                 count = 6
             }
-            extra { +BlockTagIngredient(BlockTags.STONE_PRESSURE_PLATES) }
-            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            ingredient { +BlockTagIngredient(BlockTags.STONE_PRESSURE_PLATES) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
             result {
                 +Items.DETECTOR_RAIL
                 count = 9
@@ -221,8 +221,8 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
                 count = 6
             }
-            extra { +holderSet(Tags.Items.RODS_WOODEN) }
-            extra {
+            ingredient { +holderSet(Tags.Items.RODS_WOODEN) }
+            ingredient {
                 items { +Items.REDSTONE_TORCH }
                 count = 2
             }
@@ -237,7 +237,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +holderSet(Tags.Items.SANDS)
                 count = 4
             }
-            extra {
+            ingredient {
                 +holderSet(Tags.Items.GUNPOWDERS)
                 count = 5
             }
@@ -249,7 +249,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Head
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.SKELETON_SKULL } }
-            extra {
+            ingredient {
                 items { +Items.ROTTEN_FLESH }
                 count = 8
             }
@@ -257,7 +257,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.SKELETON_SKULL } }
-            extra {
+            ingredient {
                 +holderSet(Tags.Items.GUNPOWDERS)
                 count = 8
             }
@@ -265,7 +265,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.SKELETON_SKULL } }
-            extra {
+            ingredient {
                 items { +Items.PORKCHOP }
                 count = 8
             }
@@ -275,7 +275,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Gold Block + Apple -> Enchanted Golden Apple
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.APPLE } }
-            extra {
+            ingredient {
                 +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Metal.GOLD)
                 count = 8
             }
@@ -286,7 +286,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Machine Casing
         RagiumRecipeBuilders.assembling {
             ingredient { items { +RagiumItems.getParts(HTMachineType.MECHANICAL) } }
-            extra { items { +Items.MAGMA_BLOCK } }
+            ingredient { items { +Items.MAGMA_BLOCK } }
             result { +RagiumItems.getParts(HTMachineType.HEAT) }
         }.save(exporter)
     }

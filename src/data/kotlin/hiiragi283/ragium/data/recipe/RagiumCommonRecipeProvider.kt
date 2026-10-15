@@ -853,18 +853,18 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 items { +RagiumItems.SILICON_CHIP }
                 count = 2
             }
-            extra { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
             result { +RagiumItems.ELECTRIC_CIRCUIT }
             recipeId suffix "_with_board"
         }.save(exporter)
         // Plastic + Silicon Chip + Gold Nugget -> Electric Circuit
         RagiumRecipeBuilders.assembling {
             ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
-            extra {
+            ingredient {
                 items { +RagiumItems.SILICON_CHIP }
                 count = 2
             }
-            extra {
+            ingredient {
                 +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.GOLD)
                 count = 3
             }
@@ -876,7 +876,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL)
                 count = 2
             }
-            extra { items { +RagiumItems.ELECTRIC_CIRCUIT } }
+            ingredient { items { +RagiumItems.ELECTRIC_CIRCUIT } }
             result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
             recipeId suffix "_by_black_metal"
         }.save(exporter)
@@ -884,11 +884,11 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             ingredient {
                 items { +RagiumItems.CFRP_PLATE }
             }
-            extra {
+            ingredient {
                 items { +RagiumItems.SILICON_CHIP }
                 count = 2
             }
-            extra {
+            ingredient {
                 +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.GOLD)
                 count = 3
             }

@@ -1,13 +1,15 @@
 {
   "type": "ragium:assembling",
-  "extra": {
-    "count": 8,
-    "items": "#c:storage_blocks/gold"
-  },
-  "ingredient": {
-    "count": 1,
-    "items": "minecraft:apple"
-  },
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "minecraft:apple"
+    },
+    {
+      "count": 8,
+      "items": "#c:storage_blocks/gold"
+    }
+  ],
   "result": {
     "count": 1,
     "id": "minecraft:enchanted_golden_apple"

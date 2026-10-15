@@ -1,13 +1,15 @@
 {
   "type": "ragium:assembling",
-  "extra": {
-    "count": 1,
-    "items": "ragium:circuit_board"
-  },
-  "ingredient": {
-    "count": 2,
-    "items": "ragium:silicon_chip"
-  },
+  "ingredients": [
+    {
+      "count": 2,
+      "items": "ragium:silicon_chip"
+    },
+    {
+      "count": 1,
+      "items": "ragium:circuit_board"
+    }
+  ],
   "result": {
     "count": 1,
     "id": "ragium:electric_circuit"

@@ -8,7 +8,6 @@ import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
-import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.lib.recipe.lookup.HTCompoundRecipeLookup
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.recipe.lookup.HTVanillaRecipeLookup
@@ -35,7 +34,7 @@ data object RagiumRecipeLookups {
 
     // Mechanical
     @JvmField
-    val ASSEMBLING: HTCompoundRecipeLookup<HTTripleItemToItemRecipe> = create(RagiumConstants.ASSEMBLING)
+    val ASSEMBLING: HTCompoundRecipeLookup<HTSizedShapelessRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
     val CENTRIFUGING: HTCompoundRecipeLookup<RTCentrifugingRecipe> = create(RagiumConstants.CENTRIFUGING)

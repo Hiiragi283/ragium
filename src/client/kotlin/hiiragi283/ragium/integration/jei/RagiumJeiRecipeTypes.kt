@@ -8,7 +8,6 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
-import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
@@ -27,7 +26,7 @@ data object RagiumJeiRecipeTypes {
 
     // Mechanical
     @JvmField
-    val ASSEMBLING: HTRecipeHolderType<HTTripleItemToItemRecipe.Basic> = create(RagiumConstants.ASSEMBLING)
+    val ASSEMBLING: HTRecipeHolderType<HTSizedShapelessRecipe.Basic> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
     val CENTRIFUGING: HTRecipeHolderType<RTCentrifugingRecipe.Basic> = create(RagiumConstants.CENTRIFUGING)

@@ -115,12 +115,4 @@ data object HTRecipePredicates {
         override fun matches(input: HTRecipeInput): Boolean =
             test(input.getItemOrEmpty(0), input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
     }
-
-    /**
-     * 3種類のアイテムを判定する[TripleInput]の拡張インターフェースです。
-     */
-    fun interface TripleItem : TripleInput<ItemInstance, ItemInstance, ItemInstance> {
-        override fun matches(input: HTRecipeInput): Boolean =
-            test(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
-    }
 }

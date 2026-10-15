@@ -155,15 +155,4 @@ data object HTRecipeFactories {
         override fun getMatchingStack(input: HTRecipeInput): Triple<ItemInstance, FluidInstance, FluidInstance> =
             getMatchingStack(input.getItemOrEmpty(0), input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
     }
-
-    /**
-     * 3種類のアイテムから完成品を作る[TripleInput]の拡張インターフェースです。
-     */
-    interface TripleItem<OUTPUT : Any> : TripleInput<ItemInstance, ItemInstance, ItemInstance, OUTPUT> {
-        override fun produce(input: HTRecipeInput): OUTPUT =
-            apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
-
-        override fun getMatchingStack(input: HTRecipeInput): Triple<ItemInstance, ItemInstance, ItemInstance> =
-            getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getItemOrEmpty(2))
-    }
 }

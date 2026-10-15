@@ -26,7 +26,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTPrecisionAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
@@ -136,10 +135,6 @@ data object RagiumBlockEntityTypes {
     val ELECTROLYZER: HTDeferredBlockEntityType<HTElectrolyzerBlockEntity> =
         registerTick(RagiumConstants.ELECTROLYZER, ::HTElectrolyzerBlockEntity)
 
-    @JvmField
-    val PRECISION_ASSEMBLER: HTDeferredBlockEntityType<HTPrecisionAssemblerBlockEntity> =
-        registerTick(RagiumConstants.PRECISION_ASSEMBLER, ::HTPrecisionAssemblerBlockEntity)
-
     // Arcane
     @JvmField
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
@@ -228,7 +223,6 @@ data object RagiumBlockEntityTypes {
 
         registerProcessor(BLENDER.get())
         registerProcessor(ELECTROLYZER.get())
-        registerProcessor(PRECISION_ASSEMBLER.get())
 
         registerProcessor(ENCHANTER.get())
         // Bus

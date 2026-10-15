@@ -1,6 +1,10 @@
 {
   "type": "ragium:assembling",
-  "extras": [
+  "ingredients": [
+    {
+      "count": 6,
+      "items": "#c:ingots/iron"
+    },
     {
       "count": 1,
       "items": "#c:rods/wooden"
@@ -10,10 +14,6 @@
       "items": "minecraft:redstone_torch"
     }
   ],
-  "ingredient": {
-    "count": 6,
-    "items": "#c:ingots/iron"
-  },
   "result": {
     "count": 9,
     "id": "minecraft:activator_rail"
