@@ -66,7 +66,7 @@ interface HTSizedShapelessRecipe :
             )
         }
 
-        override fun test(input: List<ItemInstance>): Boolean = HTIngredientHelper.matchShapeless(ingredients, input)
+        override fun test(input: List<ItemInstance>): Boolean = HTIngredientHelper.match(ingredients, input)
 
         override fun getMatchingStack(input: List<ItemInstance>): List<ItemInstance> =
             HTIngredientHelper.getMatchingStacks(ingredients, input)

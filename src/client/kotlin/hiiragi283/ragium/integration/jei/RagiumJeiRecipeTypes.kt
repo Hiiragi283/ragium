@@ -75,6 +75,9 @@ data object RagiumJeiRecipeTypes {
 
     // Resource
     @JvmField
+    val BREWING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicFluid> = create(RagiumConstants.BREWING)
+
+    @JvmField
     val PLANTING: HTRecipeHolderType<RTPlantingRecipe> = create(RagiumConstants.PLANTING)
 
     // Electronics

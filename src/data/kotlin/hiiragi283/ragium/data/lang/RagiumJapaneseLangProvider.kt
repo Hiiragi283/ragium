@@ -58,6 +58,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.CHEMICAL_REACTOR, "化学反応槽")
         add(RagiumBlocks.MIXER, "混合機")
 
+        add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.PLANTER, "栽培機")
 
         add(RagiumBlocks.BLENDER, "大型混合機")
@@ -194,6 +195,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.REACTING, "化学反応")
         addRecipeType(RagiumRecipeTypes.WASHING, "洗浄")
 
+        addRecipeType(RagiumRecipeTypes.BREWING, "醸造")
         addRecipeType(RagiumRecipeTypes.PLANTING, "栽培")
 
         addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "電気分解")

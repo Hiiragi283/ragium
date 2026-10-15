@@ -67,7 +67,6 @@ data object RagiumBlocks {
     @JvmStatic
     fun register(eventBus: IEventBus) {
         REGISTER.addAlias("steel_block", "sooty_iron_block")
-        REGISTER.addAlias("brewery", "mixer")
         REGISTER.addAlias("bio_machine_casing", "resource_machine_casing")
         REGISTER.addAlias("precision_assembler", "assembler")
 
@@ -298,13 +297,17 @@ data object RagiumBlocks {
 
     // Resource
     @JvmField
+    val BREWERY: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.BREWERY)
+
+    @JvmField
     val PLANTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.PLANTER)
 
     // Electronics
     @JvmField
     val BLENDER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerMachine(RagiumBlockEntityTypes.BLENDER)
+        registerFakeMachine(RagiumConstants.BLENDER)
 
     @JvmField
     val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
@@ -341,6 +344,7 @@ data object RagiumBlocks {
                 put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
                 put(HTMachineType.CHEMICAL, MIXER)
 
+                put(HTMachineType.RESOURCE, BREWERY)
                 put(HTMachineType.RESOURCE, PLANTER)
 
                 put(HTMachineType.ELECTRONICS, BLENDER)

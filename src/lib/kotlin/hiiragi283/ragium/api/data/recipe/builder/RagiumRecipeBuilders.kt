@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
+import hiiragi283.ragium.api.recipe.RTBrewingRecipe
 import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
@@ -169,15 +170,7 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTMixingRecipeBuilder(RagiumConstants.MIXING).apply(builderAction)
-    }
-
-    @JvmStatic
-    inline fun brewing(builderAction: RTMixingRecipeBuilder.() -> Unit): RTMixingRecipeBuilder {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return RTMixingRecipeBuilder(RagiumConstants.BREWING).apply(builderAction)
+        return RTMixingRecipeBuilder().apply(builderAction)
     }
 
     @JvmStatic
@@ -197,6 +190,16 @@ data object RagiumRecipeBuilders {
     }
 
     // Resource
+    @JvmStatic
+    inline fun brewing(
+        builderAction: HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe>.() -> Unit
+    ): HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemAndFluidToRecipeBuilder.ToFluid(RagiumConstants.BREWING, ::RTBrewingRecipe).apply(builderAction)
+    }
+
     @JvmStatic
     inline fun planting(
         builderAction: HTItemToItemRecipeBuilder<RTPlantingRecipe>.() -> Unit

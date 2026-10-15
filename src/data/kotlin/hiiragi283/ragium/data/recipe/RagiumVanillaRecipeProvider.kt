@@ -405,6 +405,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         chemical(RagiumBlocks.CHEMICAL_BATH) { items { +Items.CAULDRON } }
         chemical(RagiumBlocks.MIXER) { +holderSet(Tags.Items.BUCKETS_EMPTY) }
         // Resource
+        resource(RagiumBlocks.BREWERY) { items { +Items.BREWING_STAND } }
         resource(RagiumBlocks.PLANTER) { items { +Items.FLOWER_POT } }
         // Electronics
         electronics(RagiumBlocks.BLENDER) { items { +RagiumBlocks.MIXER } }

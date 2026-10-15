@@ -36,7 +36,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.PUFFERFISH } }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
-            fluidResult {
+            result {
                 +PotionContents(
                     customEffects = listOf(MobEffectInstance(MobEffects.NAUSEA, 900)),
                     customName = "nausea"
@@ -49,7 +49,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         RagiumRecipeBuilders.brewing {
             itemIngredient { +holderSet(Tags.Items.GLASS_BLOCKS_TINTED) }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
-            fluidResult {
+            result {
                 +PotionContents(
                     customEffects = listOf(MobEffectInstance(MobEffects.BLINDNESS, 900)),
                     customName = "blindness"
@@ -61,7 +61,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.ROTTEN_FLESH } }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
-            fluidResult {
+            result {
                 +PotionContents(
                     customEffects = listOf(MobEffectInstance(MobEffects.HUNGER, 900)),
                     customName = "hunger"
@@ -78,7 +78,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                 }
             }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
-            fluidResult {
+            result {
                 +PotionContents(
                     customEffects = listOf(MobEffectInstance(MobEffects.WITHER, 900)),
                     customName = "wither"
@@ -97,7 +97,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         RagiumRecipeBuilders.brewing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.ECHO) }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
-            fluidResult {
+            result {
                 +PotionContents(
                     customEffects = listOf(MobEffectInstance(MobEffects.DARKNESS, 900)),
                     customName = "darkness"
@@ -110,7 +110,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.GOLDEN_APPLE } }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
-            fluidResult {
+            result {
                 +PotionContents(
                     customColor = 0xff9900,
                     customEffects = extractEffects(Consumables.GOLDEN_APPLE),
@@ -122,7 +122,7 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.ENCHANTED_GOLDEN_APPLE } }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
-            fluidResult {
+            result {
                 +PotionContents(
                     customColor = 0xff9900,
                     customEffects = extractEffects(Consumables.ENCHANTED_GOLDEN_APPLE),

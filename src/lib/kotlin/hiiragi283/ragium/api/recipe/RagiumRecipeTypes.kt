@@ -87,6 +87,9 @@ data object RagiumRecipeTypes {
 
     // Resource
     @JvmField
+    val BREWING: RecipeType<RTBrewingRecipe> = create(RagiumConstants.BREWING)
+
+    @JvmField
     val PLANTING: RecipeType<RTPlantingRecipe> = create(RagiumConstants.PLANTING)
 
     // Electronics

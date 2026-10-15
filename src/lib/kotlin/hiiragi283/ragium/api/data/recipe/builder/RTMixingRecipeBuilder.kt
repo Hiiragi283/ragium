@@ -2,7 +2,7 @@
 
 package hiiragi283.ragium.api.data.recipe.builder
 
-import hiiragi283.lib.collection.toNel
+import hiiragi283.lib.collection.toNelOrNull
 import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
@@ -15,6 +15,7 @@ import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.lib.util.Ior
+import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.resources.Identifier
@@ -23,22 +24,26 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class RTMixingRecipeBuilder(prefix: String) : HTProgressRecipeBuilder<RTMixingRecipe>(prefix) {
+class RTMixingRecipeBuilder : HTProgressRecipeBuilder<RTMixingRecipe>(RagiumConstants.MIXING) {
     override fun getRecipeId(): Identifier? = result.getId()
 
-    override fun createRecipe(): RTMixingRecipe =
-        RTMixingRecipe(itemIngredients.toNel(), fluidIngredient, result, progressData)
+    override fun createRecipe(): RTMixingRecipe = RTMixingRecipe(
+        Ior.fromNullable(itemIngredients.toNelOrNull(), fluidIngredients.toNelOrNull())
+            ?: error("Either item or fluid ingredient required"),
+        result,
+        progressData
+    )
 
     // Ingredients
     private val itemIngredients: MutableList<HTItemIngredient> = ObjectArrayList()
-    var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
+    private val fluidIngredients: MutableList<HTFluidIngredient> = ObjectArrayList()
 
     operator fun HTItemIngredient.unaryPlus() {
         itemIngredients += this
     }
 
     operator fun HTFluidIngredient.unaryPlus() {
-        fluidIngredient = this
+        fluidIngredients += this
     }
 
     inline fun itemIngredient(builderAction: HTItemIngredientBuilder.() -> Unit) {

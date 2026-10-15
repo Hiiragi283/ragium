@@ -3,9 +3,9 @@
   "category": "misc",
   "key": {
     "A": "#c:nuggets/black_steel",
-    "B": "ragium:electronics_machine_parts",
-    "C": "#c:gears/diamond",
-    "D": "ragium:mixer"
+    "B": "ragium:resource_machine_parts",
+    "C": "#c:gears/emerald",
+    "D": "minecraft:brewing_stand"
   },
   "pattern": [
     "ABA",
@@ -13,6 +13,6 @@
     "ADA"
   ],
   "result": {
-    "id": "ragium:blender"
+    "id": "ragium:brewery"
   }
 }

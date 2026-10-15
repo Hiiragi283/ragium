@@ -445,7 +445,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount /= 2
             }
             fluidResult { +RagiumFluids.NITRIC_ACID }
-            recipeId suffix "_from_niter"
+            recipeId suffix "_from_salt"
         }.save(exporter)
     }
 
@@ -481,11 +481,12 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.HYDROGEN_FLUORIDE
                 amount *= 2
             }
+            recipeId suffix "_from_salt"
         }.save(exporter)
         // HF + H2O -> HF(aq)
-        RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.HYDROGEN_FLUORIDE) }
-            ingredient { +waterSet() }
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.HYDROGEN_FLUORIDE) }
+            fluidIngredient { +waterSet() }
             fluidResult { +RagiumFluids.HYDROFLUORIC_ACID }
         }.save(exporter)
     }
@@ -560,7 +561,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             recipeId replace RagiumFluids.ALUMINA_SOLUTION.id()
         }.save(exporter)
         // Al(OH)3 (aq) + HF (aq) -> AlF3 (aq)
-        RagiumRecipeBuilders.reacting {
+        RagiumRecipeBuilders.mixing {
             primaryIngredient { +holderSet(RagiumFluids.ALUMINA_SOLUTION) }
             secondaryIngredient {
                 +holderSet(RagiumFluids.HYDROFLUORIC_ACID)
@@ -689,9 +690,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.SULFUR_DIOXIDE }
         }.save(exporter)
         // SO2 + 1/2 O2 -> SO3
-        RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
-            ingredient {
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
+            fluidIngredient {
                 +holderSet(RagiumFluids.OXYGEN)
                 amount /= 2
             }
@@ -703,9 +704,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
         }.save(exporter)
         // SO3 + H2O -> H2SO4
-        RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.SULFUR_TRIOXIDE) }
-            ingredient { +waterSet() }
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.SULFUR_TRIOXIDE) }
+            fluidIngredient { +waterSet() }
             fluidResult { +RagiumFluids.SULFURIC_ACID }
         }.save(exporter)
     }
@@ -727,6 +728,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount /= 2
             }
             fluidResult { +RagiumFluids.HYDROGEN_CHLORIDE }
+            recipeId suffix "_from_salt"
         }.save(exporter)
 
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
@@ -745,18 +747,18 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // H2 + Cl2 -> 2x HCl
-        RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.HYDROGEN) }
-            ingredient { +holderSet(RagiumFluids.CHLORINE) }
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.HYDROGEN) }
+            fluidIngredient { +holderSet(RagiumFluids.CHLORINE) }
             fluidResult {
                 +RagiumFluids.HYDROGEN_CHLORIDE
                 amount *= 2
             }
         }.save(exporter)
         // HCl + H2O -> HCl(aq)
-        RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.HYDROGEN_CHLORIDE) }
-            ingredient { +waterSet() }
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.HYDROGEN_CHLORIDE) }
+            fluidIngredient { +waterSet() }
             fluidResult { +RagiumFluids.HYDROCHLORIC_ACID }
         }.save(exporter)
 

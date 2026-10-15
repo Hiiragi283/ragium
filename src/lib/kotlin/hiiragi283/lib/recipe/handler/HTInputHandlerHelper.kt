@@ -5,6 +5,7 @@ import hiiragi283.lib.transfer.HTResourceSlot
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.fluid.getFluidStack
+import hiiragi283.lib.transfer.fluid.toResourcePair
 import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.lib.transfer.item.getItemStack
 import hiiragi283.lib.transfer.item.toResourcePair
@@ -28,7 +29,7 @@ data object HTInputHandlerHelper {
     //    Fluid    //
 
     /**
-     * 単一の[HTFluidTank]を[アイテム][FluidInstance]向けの[HTInputSlot]に変換します。
+     * 単一の[HTFluidTank]を[液体][FluidInstance]向けの[HTInputSlot]に変換します。
      * @since 26.1.7
      */
     @JvmStatic
@@ -49,6 +50,30 @@ data object HTInputHandlerHelper {
         }
 
         override fun getStoredInput(): FluidStack = slot.getFluidStack()
+    }
+
+    /**
+     * 複数の[HTFluidTank]を[液体][FluidInstance]向けの[HTInputHandler]に変換します。
+     * @since 26.1.11
+     */
+    @JvmStatic
+    fun forFluids(tanks: List<HTFluidTank>): HTInputHandler<FluidInstance> = MultiFluids(tanks)
+
+    @JvmRecord
+    private data class MultiFluids(private val tanks: List<HTFluidTank>) : HTInputHandler<FluidInstance> {
+        override fun use(input: FluidInstance?, transaction: TransactionContext): HTInputHandler.UseResult {
+            if (input == null || HTIngredientHelper.isEmpty(input)) return HTInputHandler.UseResult.EMPTY
+            val (resource: FluidResource, amount: Int) = HTIngredientHelper.unwrap(input).toResourcePair()
+            var extracted = 0
+            for (tank: HTFluidTank in tanks) {
+                extracted += tank.extract(resource, amount - extracted, transaction, HTTransferAccess.INTERNAL)
+                if (extracted == amount) break
+            }
+            return when (extracted) {
+                amount -> HTInputHandler.UseResult.CONSUMED
+                else -> HTInputHandler.UseResult.NOT_CONSUMED
+            }
+        }
     }
 
     //    Item    //

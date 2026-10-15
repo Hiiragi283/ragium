@@ -137,6 +137,10 @@ data object RagiumConfig {
 
             // Resource
             @JvmField
+            val brewery: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.BREWERY)
+
+            @JvmField
             val planter: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.PLANTER)
 

@@ -30,6 +30,7 @@ data object RagiumConstants {
     const val WASHER = "washer"
 
     // Resource
+    const val BREWERY = "brewery"
     const val PLANTER = "planter"
 
     // Electronics
