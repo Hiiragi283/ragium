@@ -2,12 +2,24 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "chemicals": "ragium:copper",
-      "scale": 1.0
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/copper",
+          "c:ingots/copper"
+        ]
+      }
     },
     {
-      "chemicals": "ragium:nickel",
-      "scale": 1.0
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/nickel",
+          "c:ingots/nickel"
+        ]
+      }
     }
   ],
   "result": {

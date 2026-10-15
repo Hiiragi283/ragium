@@ -5,7 +5,6 @@ import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.ingredient.IngredientBuilder
 import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
-import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.registry.HTDecorationContent
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
@@ -15,7 +14,6 @@ import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
@@ -457,7 +455,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Chemical
         RagiumRecipeBuilders.alloying {
             ingredient { items { +RagiumItems.getParts(HTMachineType.HEAT) } }
-            +HTItemIngredient(holderSet(RagiumChemicals.GOLD), 1)
+            ingredient { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.GLOWSTONE) }
             result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
         }.save(exporter)

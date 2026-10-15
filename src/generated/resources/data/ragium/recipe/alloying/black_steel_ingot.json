@@ -6,8 +6,14 @@
       "items": "#c:ingots/sooty_iron"
     },
     {
-      "chemicals": "ragium:nickel",
-      "scale": 1.0
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/nickel",
+          "c:ingots/nickel"
+        ]
+      }
     },
     {
       "count": 2,

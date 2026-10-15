@@ -2,18 +2,17 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.forEach
+import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -780,7 +779,16 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         // SiO2 + C -> Si + CO2
         RagiumRecipeBuilders.alloying {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICA) }
-            +HTItemIngredient(holderSet(RagiumChemicals.CARBON), 1)
+            ingredient {
+                +materialTags(
+                    nelOf(
+                        CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL_COKE),
+                        CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.PITCH_COKE),
+                        CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Chemicals.CARBON),
+                        RagiumTags.Items.COKES
+                    )
+                )
+            }
             result { +RagiumItems.CRUDE_SILICON }
         }.save(exporter)
         // Crude Si + HCl -> Si Dust

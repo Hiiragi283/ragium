@@ -2,15 +2,25 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "chemicals": "ragium:iron",
-      "scale": 1.0
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/iron",
+          "c:ingots/iron"
+        ]
+      }
     },
     {
-      "chemicals": [
-        "ragium:coal",
-        "ragium:charcoal"
-      ],
-      "scale": 1.0
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/coal",
+          "c:dusts/charcoal",
+          "ragium:coals"
+        ]
+      }
     }
   ],
   "result": {

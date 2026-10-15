@@ -6,8 +6,14 @@
       "items": "ragium:heat_machine_parts"
     },
     {
-      "chemicals": "ragium:gold",
-      "scale": 1.0
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/gold",
+          "c:ingots/gold"
+        ]
+      }
     },
     {
       "count": 1,
