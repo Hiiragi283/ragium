@@ -4,7 +4,8 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
-import hiiragi283.lib.recipe.handler.HTItemInputSlot
+import hiiragi283.lib.recipe.handler.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.HTInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
@@ -32,7 +33,9 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler<*, *, *> =
         object : SimpleRecipeHandler<HTRecipeInput, FluidStack, HTItemToFluidRecipe>(RagiumRecipeLookups.MELTING) {
-            private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTMelterBlockEntity.inputSlot) }
+            private val inputSlot: HTInputSlot<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItem(this@HTMelterBlockEntity.inputSlot)
+            }
             private val outputSlot: HTOutputSlot<FluidStack> by lazy {
                 HTOutputSlotHelper.forFluid(this@HTMelterBlockEntity.outputTank)
             }

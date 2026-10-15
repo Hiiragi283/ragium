@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.recipe.handler.HTFluidInputTank
-import hiiragi283.lib.recipe.handler.HTItemInputSlot
+import hiiragi283.lib.recipe.handler.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.HTInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
@@ -24,6 +24,7 @@ import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidInstance
@@ -33,9 +34,11 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FREEZER.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler<*, *, *> =
         object : SimpleRecipeHandler<HTRecipeInput, ItemStack, RTFreezingRecipe>(RagiumRecipeLookups.FREEZING) {
-            private val inputTank: HTFluidInputTank by lazy { HTFluidInputTank(this@HTFreezerBlockEntity.inputTank) }
-            private val catalystSlot: HTItemInputSlot by lazy {
-                HTItemInputSlot(this@HTFreezerBlockEntity.catalystSlot)
+            private val inputTank: HTInputSlot<FluidInstance> by lazy {
+                HTInputHandlerHelper.forFluid(this@HTFreezerBlockEntity.inputTank)
+            }
+            private val catalystSlot: HTInputSlot<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItem(this@HTFreezerBlockEntity.catalystSlot)
             }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTFreezerBlockEntity.outputSlot)

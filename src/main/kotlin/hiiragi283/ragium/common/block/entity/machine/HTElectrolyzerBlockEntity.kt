@@ -3,7 +3,8 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.recipe.handler.HTFluidInputTank
+import hiiragi283.lib.recipe.handler.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.HTInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
@@ -37,7 +38,9 @@ class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
         ) {
             private val machine: HTElectrolyzerBlockEntity = this@HTElectrolyzerBlockEntity
             private val front: Direction get() = machine.getFront()
-            private val inputTank: HTFluidInputTank by lazy { HTFluidInputTank(machine.inputTank) }
+            private val inputTank: HTInputSlot<FluidInstance> by lazy {
+                HTInputHandlerHelper.forFluid(machine.inputTank)
+            }
 
             private val outputTank: HTOutputSlot<FluidStack> by lazy { HTOutputSlotHelper.forFluid(machine.outputTank) }
             private val rightOutputTank: HTOutputSlot<FluidStack>? get() = level

@@ -23,7 +23,13 @@ abstract class HTResourceInputSlot<
     INSTANCE : TypedInstance<TYPE>
     >(
     protected val slot: HTResourceSlot<RESOURCE>
-) : HTInputSlot<TYPE, INSTANCE> {
+) : HTInputSlot<INSTANCE> {
+    /**
+     * 指定した入力が空かどうか判定します。
+     * @return 空の場合は`true`
+     */
+    protected abstract fun isEmpty(instance: INSTANCE): Boolean
+
     /**
      * 空の入力を取得します。
      */

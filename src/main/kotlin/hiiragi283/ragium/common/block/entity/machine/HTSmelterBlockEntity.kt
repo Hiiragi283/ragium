@@ -6,7 +6,8 @@ import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
-import hiiragi283.lib.recipe.handler.HTItemInputSlot
+import hiiragi283.lib.recipe.handler.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.HTInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
@@ -65,7 +66,9 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeHandler(): HTRecipeHandler<*, *, *> =
         object : HTRecipeHandler<HTRecipeInput, ItemStack, HTItemToItemRecipe>() {
-            private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTSmelterBlockEntity.inputSlot) }
+            private val inputSlot: HTInputSlot<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItem(this@HTSmelterBlockEntity.inputSlot)
+            }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTSmelterBlockEntity.outputSlot)
             }

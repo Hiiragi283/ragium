@@ -5,7 +5,8 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
-import hiiragi283.lib.recipe.handler.HTItemInputSlot
+import hiiragi283.lib.recipe.handler.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.HTInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
@@ -34,11 +35,11 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
         sound: HTSoundInstance
     ): HTRecipeHandler<*, *, *> =
         object : SimpleRecipeHandler<HTRecipeInput, ItemStack, HTDoubleItemToItemRecipe>(lookup) {
-            private val primarySlot: HTItemInputSlot by lazy {
-                HTItemInputSlot(this@HTDoubleItemToItemBlockEntity.primarySlot)
+            private val primarySlot: HTInputSlot<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItem(this@HTDoubleItemToItemBlockEntity.primarySlot)
             }
-            private val secondarySlot: HTItemInputSlot by lazy {
-                HTItemInputSlot(this@HTDoubleItemToItemBlockEntity.secondarySlot)
+            private val secondarySlot: HTInputSlot<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItem(this@HTDoubleItemToItemBlockEntity.secondarySlot)
             }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTDoubleItemToItemBlockEntity.outputSlot)

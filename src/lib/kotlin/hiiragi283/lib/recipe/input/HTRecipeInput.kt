@@ -1,6 +1,9 @@
 package hiiragi283.lib.recipe.input
 
+import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
+import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 
 /**
@@ -9,21 +12,21 @@ import net.neoforged.neoforge.fluids.FluidStack
  * @since 26.1.9
  */
 @JvmRecord
-data class HTRecipeInput(val items: List<ItemStack>, val fluids: List<FluidStack>, val customKeys: Set<String>) :
+data class HTRecipeInput(val items: List<ItemInstance>, val fluids: List<FluidInstance>, val customKeys: Set<String>) :
     HTFluidRecipeInput {
     constructor(
-        item: ItemStack,
+        item: ItemInstance,
         customKeys: Set<String>
     ) : this(item, listOf(), customKeys)
 
     constructor(
-        item: ItemStack,
-        fluids: List<FluidStack> = listOf(),
+        item: ItemInstance,
+        fluids: List<FluidInstance> = listOf(),
         customKeys: Set<String>
     ) : this(listOf(item), fluids, customKeys)
 
     constructor(
-        fluid: FluidStack,
+        fluid: FluidInstance,
         customKeys: Set<String>
     ) : this(
         fluid,
@@ -32,8 +35,8 @@ data class HTRecipeInput(val items: List<ItemStack>, val fluids: List<FluidStack
     )
 
     constructor(
-        fluid: FluidStack,
-        items: List<ItemStack> = listOf(),
+        fluid: FluidInstance,
+        items: List<ItemInstance> = listOf(),
         customKeys: Set<String>
     ) : this(
         items,
@@ -42,8 +45,8 @@ data class HTRecipeInput(val items: List<ItemStack>, val fluids: List<FluidStack
     )
 
     constructor(
-        item: ItemStack,
-        fluid: FluidStack,
+        item: ItemInstance,
+        fluid: FluidInstance,
         customKeys: Set<String>
     ) : this(
         listOf(item),
@@ -53,11 +56,9 @@ data class HTRecipeInput(val items: List<ItemStack>, val fluids: List<FluidStack
 
     override val fluidSize: Int get() = fluids.size
 
-    override fun getFluid(index: Int): FluidStack = fluids[index]
+    override fun getFluid(index: Int): FluidStack = fluids[index].let(HTIngredientHelper::unwrap)
 
-    override fun asFluidList(): List<FluidStack> = fluids
-
-    override fun getItem(index: Int): ItemStack = items[index]
+    override fun getItem(index: Int): ItemStack = items[index].let(HTIngredientHelper::unwrap)
 
     override fun size(): Int = items.size
 

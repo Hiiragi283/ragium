@@ -4,7 +4,8 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
-import hiiragi283.lib.recipe.handler.HTFluidInputTank
+import hiiragi283.lib.recipe.handler.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.HTInputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlot
 import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
@@ -36,7 +37,9 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         object : SimpleRecipeHandler<HTRecipeInput, HTItemAndFluidStack, HTFluidToItemAndFluidRecipe>(
             RagiumRecipeLookups.REFINING
         ) {
-            private val inputTank: HTFluidInputTank by lazy { HTFluidInputTank(this@HTRefineryBlockEntity.inputTank) }
+            private val inputTank: HTInputSlot<FluidInstance> by lazy {
+                HTInputHandlerHelper.forFluid(this@HTRefineryBlockEntity.inputTank)
+            }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTRefineryBlockEntity.outputSlot)
             }

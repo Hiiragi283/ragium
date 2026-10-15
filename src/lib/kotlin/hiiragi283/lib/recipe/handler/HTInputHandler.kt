@@ -7,12 +7,11 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
  * レシピの入力となるスロットを表すクラスです。
  *
  * 参考 : [Mekanism - IInputHandler](https://github.com/mekanism/Mekanism/blob/26.3/src/api/java/mekanism/api/recipes/inputs/IInputHandler.java)
- * @param TYPE 材料の種類のクラス
  * @param INSTANCE 材料の種類を保持するインスタンスのクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.11
  */
-interface HTInputHandler<TYPE : Any, INSTANCE : TypedInstance<TYPE>> {
+interface HTInputHandler<INSTANCE : TypedInstance<*>> {
     /**
      * 入力を消費します。
      * @param input 消費する入力
