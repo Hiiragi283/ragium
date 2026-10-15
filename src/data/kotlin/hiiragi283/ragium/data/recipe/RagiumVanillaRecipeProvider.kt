@@ -112,6 +112,17 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('B') { items { +RagiumItems.MORTAR } }
             result { +Items.NETHER_BRICKS }
         }.save(exporter)
+        // Wither Doll
+        VanillaRecipeBuilders.shaped {
+            +"AAA"
+            +"BBB"
+            +"CBD"
+            define('A') { items { +Items.WITHER_SKELETON_SKULL } }
+            define('B') { +holderSet(ItemTags.SOUL_FIRE_BASE_BLOCKS) }
+            define('C') { +holderSet(ItemTags.SWORDS) }
+            define('D') { +holderSet(Tags.Items.TOOLS_BOW) }
+            result { +RagiumItems.WITHER_DOLL }
+        }.save(exporter)
 
         // XX Mold
         VanillaRecipeBuilders.shaped {
@@ -500,29 +511,23 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     }
 
     private inline fun electronics(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
-        VanillaRecipeBuilders.shaped {
-            +"ABA"
-            +"BCB"
-            +"ADA"
-            define('A') { +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Alloy.BLACK_STEEL) }
-            define('B') { items { +RagiumItems.getParts(HTMachineType.ELECTRONICS) } }
-            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Gem.DIAMOND) }
-            define('D', builderAction)
-            result { +result }
-        }.save(exporter)
+        machine(
+            HTMachineType.ELECTRONICS,
+            RagiumMaterial.Alloy.BLACK_STEEL,
+            RagiumMaterial.Gem.DIAMOND,
+            result,
+            builderAction
+        )
     }
 
     private inline fun arcane(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
-        VanillaRecipeBuilders.shaped {
-            +"ABA"
-            +"BCB"
-            +"ADA"
-            define('A') { items { +Items.GHAST_TEAR } }
-            define('B') { items { +RagiumItems.getParts(HTMachineType.ARCANE) } }
-            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Alloy.NETHERITE) }
-            define('D', builderAction)
-            result { +result }
-        }.save(exporter)
+        machine(
+            HTMachineType.ARCANE,
+            RagiumMaterial.Alloy.SHADOW_STEEL,
+            RagiumMaterial.Alloy.NETHERITE,
+            result,
+            builderAction
+        )
     }
 
     //    Storage    //
@@ -551,10 +556,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +RagiumBlocks.POTION_TANK }
         }.save(exporter)
         // Void Tank
-        VanillaRecipeBuilders.shaped {
-            hollow8()
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.VOID_METAL) }
-            define('B') { +holderSet(Tags.Items.BUCKETS_EMPTY) }
+        VanillaRecipeBuilders.shapeless {
+            ingredient { items { +RagiumBlocks.TANK } }
+            ingredient { +holderSet(Tags.Items.ENDER_PEARLS) }
             result { +RagiumBlocks.VOID_TANK }
         }.save(exporter)
     }
@@ -616,13 +620,13 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         nineToBlock(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Alloy.BLACK_STEEL, HTItemPart.INGOT)
-        nineToBlock(RagiumMaterial.Alloy.VOID_METAL, HTItemPart.INGOT)
+        nineToBlock(RagiumMaterial.Alloy.SHADOW_STEEL, HTItemPart.INGOT)
         // Ingot <-> Nugget
         ingotToNugget(RagiumMaterial.Metal.ALUMINUM)
         ingotToNugget(RagiumMaterial.Alloy.NETHERITE, ingot = HTSimpleDeferredItem(vanillaId("netherite_ingot")))
         ingotToNugget(RagiumMaterial.Alloy.SOOTY_IRON)
         ingotToNugget(RagiumMaterial.Alloy.BLACK_STEEL)
-        ingotToNugget(RagiumMaterial.Alloy.VOID_METAL)
+        ingotToNugget(RagiumMaterial.Alloy.SHADOW_STEEL)
         // Gear
         RagiumItems.getOrThrow(HTItemPart.GEAR, RagiumMaterial.Other.WOOD).let { gear: HTSimpleDeferredItem ->
             VanillaRecipeBuilders.shaped {

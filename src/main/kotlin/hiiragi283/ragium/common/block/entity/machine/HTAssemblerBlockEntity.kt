@@ -27,7 +27,7 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(1.5), HTSlotHelper.getSlotPosY(2))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(2))
         // progress
         addProgressBar(widgetHolder)
         // inputs
@@ -36,7 +36,7 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
                 slot,
                 index,
                 HTSlotHelper.getSlotPosX(1 + index % 2),
-                HTSlotHelper.getSlotPosY(0 + index / 2),
+                HTSlotHelper.getSlotPosY(0.5 + index / 2),
                 HTBackgroundType.INPUT
             )
             widgetHolder.track(slot)

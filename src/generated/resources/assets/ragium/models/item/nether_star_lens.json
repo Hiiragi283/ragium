@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/void_metal_nugget"
+    "layer0": "ragium:item/nether_star_lens"
   }
 }

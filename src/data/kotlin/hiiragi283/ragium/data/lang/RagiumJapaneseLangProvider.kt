@@ -153,6 +153,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.BALL_MOLD, "ボールの鋳型")
         add(RagiumItems.BLOCK_MOLD, "ブロックの鋳型")
         add(RagiumItems.PLATE_MOLD, "板の鋳型")
+        add(RagiumItems.SHADOW_LENS, "影のレンズ")
+        add(RagiumItems.NETHER_STAR_LENS, "ネザースターのレンズ")
         add(RagiumItems.MEMORY_DISC, "メモリーディスク")
 
         add(RagiumItems.BASIC_UPGRADE, "基本アップグレード")

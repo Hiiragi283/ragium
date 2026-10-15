@@ -1,10 +1,10 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
-  "group": "void_metal_block",
+  "group": "shadow_steel_block",
   "key": {
-    "A": "#c:ingots/void_metal",
-    "B": "ragium:void_metal_ingot"
+    "A": "#c:ingots/shadow_steel",
+    "B": "ragium:shadow_steel_ingot"
   },
   "pattern": [
     "AAA",
@@ -12,6 +12,6 @@
     "AAA"
   ],
   "result": {
-    "id": "ragium:void_metal_block"
+    "id": "ragium:shadow_steel_block"
   }
 }

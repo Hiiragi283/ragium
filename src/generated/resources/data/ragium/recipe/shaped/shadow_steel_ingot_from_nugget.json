@@ -1,10 +1,10 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "group": "void_metal_ingot",
+  "group": "shadow_steel_ingot",
   "key": {
-    "A": "#c:nuggets/void_metal",
-    "B": "ragium:void_metal_nugget"
+    "A": "#c:nuggets/shadow_steel",
+    "B": "ragium:shadow_steel_nugget"
   },
   "pattern": [
     "AAA",
@@ -12,6 +12,6 @@
     "AAA"
   ],
   "result": {
-    "id": "ragium:void_metal_ingot"
+    "id": "ragium:shadow_steel_ingot"
   }
 }

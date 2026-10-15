@@ -44,6 +44,8 @@ data object RagiumItems {
         REGISTER.addAlias("coal_coke_dust", "carbon_dust")
         REGISTER.addAlias("circuit_chip", "silicon_chip")
         REGISTER.addAlias("bio_machine_parts", "resource_machine_parts")
+        REGISTER.addAlias("void_metal_ingot", "shadow_steel_ingot")
+        REGISTER.addAlias("void_metal_nugget", "shadow_steel_nugget")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -88,7 +90,7 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Alloy.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
-                putAll(RagiumMaterial.Alloy.VOID_METAL, HTItemPart.INGOT, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Alloy.SHADOW_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
                 // Other
                 putAll(RagiumMaterial.Other.WOOD, HTItemPart.GEAR)
             },
@@ -102,7 +104,7 @@ data object RagiumItems {
                         when (material) {
                             RagiumMaterial.Mineral.RAGINITE -> Rarity.EPIC
                             RagiumMaterial.Alloy.BLACK_STEEL -> Rarity.UNCOMMON
-                            RagiumMaterial.Alloy.VOID_METAL -> Rarity.RARE
+                            RagiumMaterial.Alloy.SHADOW_STEEL -> Rarity.RARE
                             else -> null
                         }?.let(properties::rarity)
                         if (material == RagiumMaterial.Alloy.NETHERITE) {
@@ -235,6 +237,26 @@ data object RagiumItems {
     // Resource
 
     // Electronics
+    @JvmField
+    val QUARTZ_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("quartz_lens") {
+        it.stacksTo(1)
+    }
+
+    @JvmField
+    val DIAMOND_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_lens") {
+        it.stacksTo(1).rarity(Rarity.UNCOMMON)
+    }
+
+    @JvmField
+    val SHADOW_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("shadow_lens") {
+        it.stacksTo(1).rarity(Rarity.RARE)
+    }
+
+    @JvmField
+    val NETHER_STAR_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("nether_star_lens") {
+        it.stacksTo(1).rarity(Rarity.EPIC)
+    }
+
     @JvmField
     val MEMORY_DISC: HTSimpleDeferredItem = REGISTER.registerItem("memory_disc", ::HTMemoryDiscItem)
 

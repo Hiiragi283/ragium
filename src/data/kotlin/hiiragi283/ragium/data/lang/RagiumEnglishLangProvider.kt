@@ -157,6 +157,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.BALL_MOLD, "Ball Mold")
         add(RagiumItems.BLOCK_MOLD, "Block Mold")
         add(RagiumItems.PLATE_MOLD, "Plate Mold")
+        add(RagiumItems.SHADOW_LENS, "Shadow Lens")
+        add(RagiumItems.NETHER_STAR_LENS, "Nether Star Lens")
         add(RagiumItems.MEMORY_DISC, "Memory Disc")
 
         add(RagiumItems.BASIC_UPGRADE, "Basic Upgrade")

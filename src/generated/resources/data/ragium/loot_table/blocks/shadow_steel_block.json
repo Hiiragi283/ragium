@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:void_metal_block"
+          "name": "ragium:shadow_steel_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/void_metal_block"
+  "random_sequence": "ragium:blocks/shadow_steel_block"
 }

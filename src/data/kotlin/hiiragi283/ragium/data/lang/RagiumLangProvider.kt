@@ -59,6 +59,10 @@ interface RagiumLangProvider {
         provider.add(RagiumItems.COAL_COKE, RagiumMaterial.Fuel.COAL_COKE)
         provider.add(RagiumItems.PITCH_COKE, RagiumMaterial.Fuel.PITCH_COKE)
 
+        val lensPattern = HTLangPatternProvider("%s Lens", "%sのレンズ")
+        provider.add(RagiumItems.QUARTZ_LENS, lensPattern, RagiumMaterial.Gem.QUARTZ)
+        provider.add(RagiumItems.DIAMOND_LENS, lensPattern, RagiumMaterial.Gem.DIAMOND)
+
         val partsPattern = HTLangPatternProvider("Machine Parts (%s)", "機械部品 (%s)")
         for ((machineType: HTLangName, parts: HTHasTranslationKey) in RagiumItems.MACHINE_PARTS) {
             provider.add(parts, partsPattern, machineType)

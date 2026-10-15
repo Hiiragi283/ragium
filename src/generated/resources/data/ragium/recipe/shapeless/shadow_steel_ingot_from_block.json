@@ -1,12 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "group": "void_metal_nugget",
+  "group": "shadow_steel_ingot",
   "ingredients": [
-    "#c:ingots/void_metal"
+    "#c:storage_blocks/shadow_steel"
   ],
   "result": {
     "count": 9,
-    "id": "ragium:void_metal_nugget"
+    "id": "ragium:shadow_steel_ingot"
   }
 }

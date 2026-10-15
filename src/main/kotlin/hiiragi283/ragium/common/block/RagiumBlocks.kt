@@ -69,6 +69,7 @@ data object RagiumBlocks {
         REGISTER.addAlias("steel_block", "sooty_iron_block")
         REGISTER.addAlias("bio_machine_casing", "resource_machine_casing")
         REGISTER.addAlias("precision_assembler", "assembler")
+        REGISTER.addAlias("void_metal_block", "shadow_steel_block")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -157,7 +158,7 @@ data object RagiumBlocks {
         RagiumMaterial.Metal.ALUMINUM to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.COLOR_PINK),
         RagiumMaterial.Alloy.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Alloy.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
-        RagiumMaterial.Alloy.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
+        RagiumMaterial.Alloy.SHADOW_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
     ).associateTo(
         sortedMapOf(RagiumMaterial.COMPARATOR)
     ) { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
@@ -499,7 +500,7 @@ data object RagiumBlocks {
         // Block
         setOf(
             RagiumMaterial.Alloy.BLACK_STEEL to Rarity.UNCOMMON,
-            RagiumMaterial.Alloy.VOID_METAL to Rarity.RARE
+            RagiumMaterial.Alloy.SHADOW_STEEL to Rarity.RARE
         ).forEach { (material: RagiumMaterial, rarity: Rarity) ->
             for (part: HTBlockPart in HTBlockPart.entries) {
                 val block: ItemLike = MATERIAL_BLOCKS[part, material] ?: continue

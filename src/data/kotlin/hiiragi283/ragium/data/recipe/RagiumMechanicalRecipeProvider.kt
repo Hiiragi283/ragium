@@ -569,6 +569,12 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN) }
         }.save(exporter)
+        /*RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(Tags.Items.OBSIDIANS_CRYING) }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN) }
+            result { +RagiumItems.ELDRITCH_TEAR }
+            recipeId suffix "_from_crying"
+        }.save(exporter)*/
         // Gear -> Dust
         for (material: RagiumMaterial in RagiumMaterial.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, material] ?: continue
@@ -763,6 +769,26 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.MELON_SLICE
                 count = 9
             }
+        }.save(exporter)
+
+        // Lens
+        RagiumRecipeBuilders.cutting {
+            ingredient { +holderSet(RagiumTags.BlockItems.QUARTZ_BLOCKS.item) }
+            result { +RagiumItems.QUARTZ_LENS }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ) }
+        }.save(exporter)
+        RagiumRecipeBuilders.cutting {
+            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Gem.DIAMOND) }
+            result { +RagiumItems.DIAMOND_LENS }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.DIAMOND)
+                count = 3
+            }
+        }.save(exporter)
+
+        RagiumRecipeBuilders.cutting {
+            ingredient { +holderSet(Tags.Items.NETHER_STARS) }
+            result { +RagiumItems.NETHER_STAR_LENS }
         }.save(exporter)
     }
 

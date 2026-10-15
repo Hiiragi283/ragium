@@ -237,9 +237,9 @@ sealed interface RagiumMaterial :
         BLACK_STEEL("Black Steel", "黒鋼"),
 
         /**
-         * @since 26.1.4
+         * @since 26.1.11
          */
-        VOID_METAL("Void Metal", "虚金")
+        SHADOW_STEEL("Shadow Steel", "影鋼")
         ;
 
         constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>? = null) : this(

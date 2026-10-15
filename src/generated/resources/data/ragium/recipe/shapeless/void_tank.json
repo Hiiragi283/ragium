@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ragium:tank",
+    "#c:ender_pearls"
+  ],
+  "result": {
+    "id": "ragium:void_tank"
+  }
+}
