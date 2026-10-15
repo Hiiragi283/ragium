@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.RTEngravingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
@@ -83,6 +84,9 @@ data object RagiumJeiRecipeTypes {
     // Electronics
     @JvmField
     val ELECTROLYZING: HTRecipeHolderType<RTElectrolyzingRecipe> = create(RagiumConstants.ELECTROLYZING)
+
+    @JvmField
+    val ENGRAVING: HTRecipeHolderType<RTEngravingRecipe> = create(RagiumConstants.ENGRAVING)
 
     @JvmField
     val RESOURCE_EXTRACTING: HTRecipeHolderType<RTResourceExtractingRecipe> =

@@ -55,7 +55,7 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
                     // Filled Bucket -> Empty Bucket + Fluid
                     RecipeIngredientRole.INPUT if recipeType == RagiumJeiRecipeTypes.CENTRIFUGING ->
                         RagiumRecipeBuilders.centrifuging {
-                            ingredient = HTJeiRecipeHelper.fakeItem(filledBucket)
+                            +HTJeiRecipeHelper.fakeItem(filledBucket)
                             itemResult { from(remainder) }
                             fluidResult { from(fluidIn) }
                             progressData = RTBucketCentrifugingRecipe.progressData
@@ -64,8 +64,8 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
                     // Empty Bucket + Fluid -> Filled Bucket
                     RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.FILLING ->
                         RagiumRecipeBuilders.filling {
-                            itemIngredient = HTJeiRecipeHelper.fakeItem(remainder)
-                            fluidIngredient = HTJeiRecipeHelper.fakeFluid(fluidIn)
+                            +HTJeiRecipeHelper.fakeItem(remainder)
+                            +HTJeiRecipeHelper.fakeFluid(fluidIn)
                             result { from(filledBucket) }
                             progressData = RTBucketFillingRecipe.progressData
                         }.buildSynthetic(::HTJeiRecipeHolder)
@@ -81,15 +81,15 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
         return when (focus.role) {
             RecipeIngredientRole.INPUT if recipeType == RagiumJeiRecipeTypes.FILLING ->
                 RagiumRecipeBuilders.filling {
-                    itemIngredient = HTJeiRecipeHelper.fakeItem(remainder)
-                    fluidIngredient = HTJeiRecipeHelper.fakeFluid(fluid)
+                    +HTJeiRecipeHelper.fakeItem(remainder)
+                    +HTJeiRecipeHelper.fakeFluid(fluid)
                     result { from(bucket) }
                     progressData = RTBucketFillingRecipe.progressData
                 }.buildSynthetic(::HTJeiRecipeHolder)
 
             RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.CENTRIFUGING ->
                 RagiumRecipeBuilders.centrifuging {
-                    ingredient = HTJeiRecipeHelper.fakeItem(bucket)
+                    +HTJeiRecipeHelper.fakeItem(bucket)
                     itemResult { from(remainder) }
                     fluidResult { from(fluid) }
                     progressData = RTBucketCentrifugingRecipe.progressData

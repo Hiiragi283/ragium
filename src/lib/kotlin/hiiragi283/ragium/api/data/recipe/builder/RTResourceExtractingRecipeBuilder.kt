@@ -23,7 +23,7 @@ class RTResourceExtractingRecipeBuilder :
         RTResourceExtractingRecipe(condition, result, progressData)
 
     // Biome Condition
-    var condition: HTBiomeCondition by HTDelegates.onceInitialize()
+    @PublishedApi internal var condition: HTBiomeCondition by HTDelegates.onceInitialize()
 
     operator fun HTBiomeCondition.unaryPlus() {
         condition = this
@@ -37,7 +37,7 @@ class RTResourceExtractingRecipeBuilder :
     }
 
     // Result
-    var result: HTFluidResult by HTDelegates.onceInitialize()
+    @PublishedApi internal var result: HTFluidResult by HTDelegates.onceInitialize()
 
     operator fun HTFluidResult.unaryPlus() {
         result = this

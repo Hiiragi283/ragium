@@ -61,9 +61,9 @@ class RTMixingRecipeBuilder : HTProgressRecipeBuilder<RTMixingRecipe>(RagiumCons
     }
 
     // Results
-    var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
+    @PublishedApi internal var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
 
-    var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
+    @PublishedApi internal var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
 
     val result: HTItemOrFluidResult get() = Ior.fromNullable(itemResult, fluidResult)
         .map(::HTItemOrFluidResult)

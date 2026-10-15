@@ -118,6 +118,10 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.ELECTROLYZING, RTElectrolyzingRecipe.SERIALIZER)
 
     @JvmField
+    val ENGRAVING: RecipeSerializer<RTEngravingRecipe> =
+        register(RagiumConstants.ENGRAVING, RTEngravingRecipe.SERIALIZER)
+
+    @JvmField
     val RESOURCE_EXTRACTING: RecipeSerializer<RTResourceExtractingRecipe> =
         register(RagiumConstants.RESOURCE_EXTRACTING, RTResourceExtractingRecipe.SERIALIZER)
 

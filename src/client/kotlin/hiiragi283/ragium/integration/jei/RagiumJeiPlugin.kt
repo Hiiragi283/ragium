@@ -26,6 +26,7 @@ import hiiragi283.ragium.integration.jei.category.RTAssemblingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTCentrifugingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTElectrolyzingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTEnchantingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTEngravingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTFreezingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTMixingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTPlantingRecipeCategory
@@ -166,6 +167,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             ),
             RTPlantingRecipeCategory(guiHelper),
             // Electronics
+            RTEngravingRecipeCategory(guiHelper),
             RTResourceExtractingRecipeCategory(guiHelper),
             // Arcane
             RTEnchantingRecipeCategory(guiHelper)
@@ -200,6 +202,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.ELECTROLYZING,
             RagiumRecipeLookups.ELECTROLYZING
         )
+        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ENGRAVING, RagiumRecipeLookups.ENGRAVING)
         HTJeiRecipeHelper.addRecipes(
             registration,
             RagiumJeiRecipeTypes.RESOURCE_EXTRACTING,
@@ -334,6 +337,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RagiumJeiRecipeTypes.BREWING, RagiumBlocks.BREWERY)
         registration.addCraftingStation(RagiumJeiRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
         // Electronics
+        registration.addCraftingStation(RagiumJeiRecipeTypes.ENGRAVING, RagiumBlocks.ENGRAVER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
         // Arcane
         registration.addCraftingStation(RagiumJeiRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)

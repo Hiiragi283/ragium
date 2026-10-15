@@ -34,8 +34,9 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
     final override fun createRecipe(): RECIPE = factory.create(itemIngredient, fluidIngredient, result, progressData)
 
     // Ingredients
-    var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()
-    var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
+    @PublishedApi internal var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()
+
+    @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
     operator fun HTItemIngredient.unaryPlus() {
         itemIngredient = this

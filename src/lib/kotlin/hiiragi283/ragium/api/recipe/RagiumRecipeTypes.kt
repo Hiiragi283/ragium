@@ -97,6 +97,9 @@ data object RagiumRecipeTypes {
     val ELECTROLYZING: RecipeType<RTElectrolyzingRecipe> = create(RagiumConstants.ELECTROLYZING)
 
     @JvmField
+    val ENGRAVING: RecipeType<RTEngravingRecipe> = create(RagiumConstants.ENGRAVING)
+
+    @JvmField
     val RESOURCE_EXTRACTING: RecipeType<RTResourceExtractingRecipe> = create(RagiumConstants.RESOURCE_EXTRACTING)
 
     // Arcane

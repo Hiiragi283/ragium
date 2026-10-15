@@ -3,15 +3,16 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
+import hiiragi283.lib.recipe.HTRecipeFactory
+import hiiragi283.lib.recipe.HTRecipePredicate
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
-import hiiragi283.lib.recipe.base.HTRecipeFactories
-import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
-import hiiragi283.lib.recipe.ingredient.testOrEmpty
 import hiiragi283.lib.recipe.input.HTRecipeInput
+import hiiragi283.lib.recipe.input.getItemOrEmpty
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -19,10 +20,8 @@ import hiiragi283.lib.serialization.codec.compactNelFieldOf
 import hiiragi283.lib.serialization.network.nelOf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.neoforge.fluids.FluidInstance
 
 @JvmRecord
 data class RTReactingRecipe(
@@ -30,8 +29,8 @@ data class RTReactingRecipe(
     val catalyst: HTItemCatalyst,
     val result: HTItemOrFluidResult,
     override val progressData: HTProgressData
-) : HTRecipePredicates.ItemAndDoubleFluid,
-    HTRecipeFactories.ItemAndDoubleFluid<HTItemAndFluidStack>,
+) : HTRecipePredicate<HTRecipeInput>,
+    HTRecipeFactory<HTRecipeInput, HTItemAndFluidStack>,
     HTProgressRecipe.Simple<HTRecipeInput>,
     HTSerializableRecipe<HTRecipeInput> {
     companion object {
@@ -64,22 +63,10 @@ data class RTReactingRecipe(
         val SERIALIZER: RecipeSerializer<RTReactingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(first: ItemInstance, second: FluidInstance, third: FluidInstance): Boolean = when {
-        !catalyst.test(first) -> false
-        fluidIngredients.head.test(second) && fluidIngredients.getOrNull(1).testOrEmpty(third) -> true
-        else -> fluidIngredients.head.test(third) && fluidIngredients.getOrNull(1).testOrEmpty(second)
-    }
+    override fun matches(input: HTRecipeInput): Boolean =
+        catalyst.test(input.getItemOrEmpty(0)) && HTIngredientHelper.match(fluidIngredients, input.fluids)
 
-    override fun apply(first: ItemInstance, second: FluidInstance, third: FluidInstance): HTItemAndFluidStack =
-        result.create()
-
-    override fun getMatchingStack(
-        first: ItemInstance,
-        second: FluidInstance,
-        third: FluidInstance
-    ): Triple<ItemInstance, FluidInstance, FluidInstance> {
-        TODO("Not yet implemented")
-    }
+    override fun produce(input: HTRecipeInput): HTItemAndFluidStack = result.create()
 
     override fun getSerializer(): RecipeSerializer<RTReactingRecipe> = RagiumRecipeSerializers.REACTING
 

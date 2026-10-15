@@ -314,6 +314,10 @@ data object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.ELECTROLYZER)
 
     @JvmField
+    val ENGRAVER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerFakeMachine(RagiumConstants.ENGRAVER)
+
+    @JvmField
     val SCANNER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerFakeMachine(RagiumConstants.SCANNER)
 
@@ -349,6 +353,7 @@ data object RagiumBlocks {
 
                 put(HTMachineType.ELECTRONICS, BLENDER)
                 put(HTMachineType.ELECTRONICS, ELECTROLYZER)
+                put(HTMachineType.ELECTRONICS, ENGRAVER)
                 put(HTMachineType.ELECTRONICS, SCANNER)
 
                 put(HTMachineType.ARCANE, ENCHANTER)

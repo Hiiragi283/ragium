@@ -372,23 +372,23 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         val moltenPlastic = HTFluidIngredient(FluidIngredient.of(holderSet(RagiumFluids.MOLTEN_PLASTIC)), 90)
         RagiumRecipeBuilders.freezing {
-            ingredient = moltenPlastic
+            +moltenPlastic
             catalyst { items { +RagiumItems.PLATE_MOLD } }
             result { +RagiumItems.PLASTIC_PLATE }
         }.save(exporter)
         // Plastic -> Synthetic XX
         RagiumRecipeBuilders.freezing {
-            ingredient = moltenPlastic
+            +moltenPlastic
             catalyst { +holderSet(Tags.Items.FEATHERS) }
             result { +RagiumItems.SYNTHETIC_FEATHER }
         }.save(exporter)
         RagiumRecipeBuilders.freezing {
-            ingredient = moltenPlastic
+            +moltenPlastic
             catalyst { +holderSet(Tags.Items.LEATHERS) }
             result { +RagiumItems.SYNTHETIC_LEATHER }
         }.save(exporter)
         RagiumRecipeBuilders.freezing {
-            ingredient = moltenPlastic
+            +moltenPlastic
             catalyst { +holderSet(Tags.Items.STRINGS) }
             result { +RagiumItems.SYNTHETIC_FIBER }
         }.save(exporter)

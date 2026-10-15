@@ -67,6 +67,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.BLENDER, "Blender")
         add(RagiumBlocks.ELECTROLYZER, "Electrolyzer")
+        add(RagiumBlocks.ENGRAVER, "Laser Engraver")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")
@@ -203,6 +204,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.PLANTING, "Planting")
 
         addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
+        addRecipeType(RagiumRecipeTypes.ENGRAVING, "Laser Engraving")
         addRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, "Resource Extracting")
 
         addRecipeType(RagiumRecipeTypes.ENCHANTING, "Enchanting")

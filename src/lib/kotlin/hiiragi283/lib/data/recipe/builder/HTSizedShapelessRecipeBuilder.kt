@@ -30,7 +30,7 @@ class HTSizedShapelessRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, priv
     override fun createRecipe(): RECIPE = factory.create(ingredients.toNel(), result, progressData)
 
     // Ingredients
-    val ingredients: MutableList<HTItemIngredient> = ObjectArrayList()
+    private val ingredients: MutableList<HTItemIngredient> = ObjectArrayList()
 
     operator fun HTItemIngredient.unaryPlus() {
         ingredients += this
@@ -44,7 +44,7 @@ class HTSizedShapelessRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, priv
     }
 
     // Result
-    var result: HTItemResult by HTDelegates.onceInitialize()
+    @PublishedApi internal var result: HTItemResult by HTDelegates.onceInitialize()
 
     operator fun HTItemResult.unaryPlus() {
         result = this

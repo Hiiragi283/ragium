@@ -11,6 +11,9 @@ import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTSingleRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTSizedShapelessRecipeBuilder
+import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
@@ -20,8 +23,10 @@ import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.RTEngravingRecipe
 import hiiragi283.ragium.api.recipe.RTExchangingRecipe
 import hiiragi283.ragium.api.recipe.RTFillingRecipe
+import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
@@ -54,7 +59,7 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSingleRecipeBuilder(RagiumConstants.COMPRESSING, ::RTCompressingRecipe).apply(builderAction)
+        return HTSingleRecipeBuilder.Basic(RagiumConstants.COMPRESSING, ::RTCompressingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -107,11 +112,13 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun freezing(builderAction: RTFreezingRecipeBuilder.() -> Unit): RTFreezingRecipeBuilder {
+    inline fun freezing(
+        builderAction: HTSingleRecipeBuilder.WithCatalyst<HTFluidIngredient, HTItemResult, RTFreezingRecipe>.() -> Unit
+    ): HTSingleRecipeBuilder.WithCatalyst<HTFluidIngredient, HTItemResult, RTFreezingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTFreezingRecipeBuilder().apply(builderAction)
+        return HTSingleRecipeBuilder.WithCatalyst(RagiumConstants.FREEZING, ::RTFreezingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -121,7 +128,7 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSingleRecipeBuilder(RagiumConstants.MELTING, ::RTMeltingRecipe).apply(builderAction)
+        return HTSingleRecipeBuilder.Basic(RagiumConstants.MELTING, ::RTMeltingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -207,7 +214,7 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToItemRecipeBuilder(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
+        return HTSingleRecipeBuilder.Basic(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
     }
 
     // Electronics
@@ -217,6 +224,16 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return RTElectrolyzingRecipeBuilder().apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun engraving(
+        builderAction: HTSingleRecipeBuilder.WithCatalyst<HTItemIngredient, HTItemResult, RTEngravingRecipe>.() -> Unit
+    ): HTSingleRecipeBuilder.WithCatalyst<HTItemIngredient, HTItemResult, RTEngravingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTSingleRecipeBuilder.WithCatalyst(RagiumConstants.ENGRAVING, ::RTEngravingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -237,6 +254,6 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSingleRecipeBuilder(RagiumConstants.ENCHANTING, ::RTEnchantingRecipe).apply(builderAction)
+        return HTSingleRecipeBuilder.Basic(RagiumConstants.ENCHANTING, ::RTEnchantingRecipe).apply(builderAction)
     }
 }

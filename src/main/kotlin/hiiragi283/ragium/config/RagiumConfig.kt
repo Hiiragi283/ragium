@@ -154,6 +154,10 @@ data object RagiumConfig {
                 HTEnergyConfig.createMachine(builder, RagiumConstants.ELECTROLYZER, 64)
 
             @JvmField
+            val engraver: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.ENGRAVER, 64)
+
+            @JvmField
             val scanner: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.SCANNER, 64)
 

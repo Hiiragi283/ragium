@@ -46,7 +46,7 @@ class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe>(Ragium
     }
 
     // Catalyst
-    var catalyst: HTItemCatalyst by HTDelegates.onceInitialize(HTItemCatalyst::EMPTY)
+    @PublishedApi internal var catalyst: HTItemCatalyst by HTDelegates.onceInitialize(HTItemCatalyst::EMPTY)
 
     operator fun HTItemCatalyst.unaryPlus() {
         catalyst = this
@@ -64,9 +64,9 @@ class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe>(Ragium
     }
 
     // Results
-    var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
+    @PublishedApi internal var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
 
-    var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
+    @PublishedApi internal var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
 
     val result: HTItemOrFluidResult get() = Ior.fromNullable(itemResult, fluidResult)
         .map(::HTItemOrFluidResult)

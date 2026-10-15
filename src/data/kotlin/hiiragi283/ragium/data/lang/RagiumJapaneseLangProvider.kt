@@ -63,6 +63,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.BLENDER, "大型混合機")
         add(RagiumBlocks.ELECTROLYZER, "電解機")
+        add(RagiumBlocks.ENGRAVER, "レーザー加工機")
         add(RagiumBlocks.SCANNER, "レーザースキャナ")
 
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
@@ -199,6 +200,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.PLANTING, "栽培")
 
         addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
+        addRecipeType(RagiumRecipeTypes.ENGRAVING, "レーザー加工")
         addRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, "資源採集")
 
         addRecipeType(RagiumRecipeTypes.ENCHANTING, "エンチャント")

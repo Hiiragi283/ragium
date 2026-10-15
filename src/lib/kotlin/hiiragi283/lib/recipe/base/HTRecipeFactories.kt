@@ -1,6 +1,5 @@
 package hiiragi283.lib.recipe.base
 
-import com.mojang.datafixers.util.Function3
 import hiiragi283.lib.recipe.HTRecipeFactory
 import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.input.getItemOrEmpty
@@ -98,61 +97,5 @@ data object HTRecipeFactories {
 
         override fun getMatchingStack(input: HTRecipeInput): Pair<ItemInstance, ItemInstance> =
             getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
-    }
-
-    /**
-     * 2種類の液体から完成品を作る[DoubleInput]の拡張インターフェースです。
-     * @since 26.1.5
-     */
-    interface DoubleFluid<OUTPUT : Any> : DoubleInput<FluidInstance, FluidInstance, OUTPUT> {
-        override fun produce(input: HTRecipeInput): OUTPUT = apply(input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
-
-        override fun getMatchingStack(input: HTRecipeInput): Pair<FluidInstance, FluidInstance> =
-            getMatchingStack(input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
-    }
-
-    //    Triple Input    //
-
-    interface TripleInput<INPUT_A : Any, INPUT_B : Any, INPUT_C : Any, OUTPUT : Any> :
-        HTRecipeFactory<HTRecipeInput, OUTPUT>,
-        Function3<INPUT_A, INPUT_B, INPUT_C, OUTPUT> {
-        override fun apply(first: INPUT_A, second: INPUT_B, third: INPUT_C): OUTPUT
-
-        /**
-         * 消費される入力を取得します。
-         */
-        fun getMatchingStack(first: INPUT_A, second: INPUT_B, third: INPUT_C): Triple<INPUT_A, INPUT_B, INPUT_C>
-
-        /**
-         * 消費される入力を取得します。
-         * @since 26.1.9
-         */
-        fun getMatchingStack(input: HTRecipeInput): Triple<INPUT_A, INPUT_B, INPUT_C>
-    }
-
-    /**
-     * 2種類のアイテムと1種類の液体から完成品を作る[TripleInput]の拡張インターフェースです。
-     * @since 26.1.8
-     */
-    interface DoubleItemAndFluid<OUTPUT : Any> :
-        TripleInput<ItemInstance, ItemInstance, FluidInstance, OUTPUT> {
-        override fun produce(input: HTRecipeInput): OUTPUT =
-            apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getFluidOrEmpty(0))
-
-        override fun getMatchingStack(input: HTRecipeInput): Triple<ItemInstance, ItemInstance, FluidInstance> =
-            getMatchingStack(input.getItemOrEmpty(0), input.getItemOrEmpty(1), input.getFluidOrEmpty(0))
-    }
-
-    /**
-     * 1種類のアイテムと2種類の液体から完成品を作る[TripleInput]の拡張インターフェースです。
-     * @since 26.1.9
-     */
-    interface ItemAndDoubleFluid<OUTPUT : Any> :
-        TripleInput<ItemInstance, FluidInstance, FluidInstance, OUTPUT> {
-        override fun produce(input: HTRecipeInput): OUTPUT =
-            apply(input.getItemOrEmpty(0), input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
-
-        override fun getMatchingStack(input: HTRecipeInput): Triple<ItemInstance, FluidInstance, FluidInstance> =
-            getMatchingStack(input.getItemOrEmpty(0), input.getFluidOrEmpty(0), input.getFluidOrEmpty(1))
     }
 }

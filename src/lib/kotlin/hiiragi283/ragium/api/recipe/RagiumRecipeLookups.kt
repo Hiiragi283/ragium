@@ -96,6 +96,9 @@ data object RagiumRecipeLookups {
     val ELECTROLYZING: HTRecipeLookup<RTElectrolyzingRecipe> = create(RagiumRecipeTypes.ELECTROLYZING)
 
     @JvmField
+    val ENGRAVING: HTRecipeLookup<RTEngravingRecipe> = create(RagiumRecipeTypes.ENGRAVING)
+
+    @JvmField
     val RESOURCE_EXTRACTING: HTRecipeLookup<RTResourceExtractingRecipe> = create(RagiumRecipeTypes.RESOURCE_EXTRACTING)
 
     // Arcane
