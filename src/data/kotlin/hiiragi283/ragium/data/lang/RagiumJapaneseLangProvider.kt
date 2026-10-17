@@ -111,6 +111,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "溶融プラスチック")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "合成樹脂")
+        addFluid(RagiumFluids.AMMONIA, "アンモニア")
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "液体爆薬")
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "フッ化水素")

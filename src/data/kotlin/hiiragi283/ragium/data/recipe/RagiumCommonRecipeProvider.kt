@@ -504,6 +504,31 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun nitrogen() {
+        // 3x H2 + N2 -> 2x NH3
+        RagiumRecipeBuilders.reacting {
+            ingredient {
+                +holderSet(RagiumFluids.HYDROGEN)
+                amount *= 3
+            }
+            ingredient { +holderSet(RagiumFluids.NITROGEN) }
+            catalyst { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.IRON) }
+            fluidResult {
+                +RagiumFluids.AMMONIA
+                amount *= 2
+            }
+        }.save(exporter)
+        // NH3 + O2 -> HNO3
+        RagiumRecipeBuilders.reacting {
+            ingredient {
+                +holderSet(RagiumFluids.AMMONIA)
+                amount /= 2
+            }
+            ingredient { +holderSet(RagiumFluids.OXYGEN) }
+            fluidResult {
+                +RagiumFluids.NITRIC_ACID
+                amount /= 2
+            }
+        }.save(exporter)
         // 1/2 H2SO4 + KNO3 -> HNO3
         RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }

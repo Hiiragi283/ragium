@@ -208,6 +208,10 @@ data object RagiumClient : HTClientMod() {
             molten()
             colorTint(Color(0xff6633))
         }
+        register.register(RagiumFluids.AMMONIA) {
+            transparent()
+            colorTint(Color(0x9999cc))
+        }
         register.register(RagiumFluids.NITRIC_ACID) {
             dull()
             colorTint(Color(0x9999cc))

@@ -274,8 +274,12 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
     }
 
     private fun gasCollecting() {
-        // Overworld -> Air
-
+        // Overworld -> N2
+        RagiumRecipeBuilders.gasCollecting {
+            biomes { +holderSet(Tags.Biomes.IS_OVERWORLD) }
+            result { +RagiumFluids.NITROGEN }
+            time /= 5
+        }.save(exporter)
         // Nether -> SO2
         RagiumRecipeBuilders.gasCollecting {
             biomes { +holderSet(Tags.Biomes.IS_NETHER) }

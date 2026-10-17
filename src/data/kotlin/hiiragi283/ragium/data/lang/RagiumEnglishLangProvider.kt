@@ -115,6 +115,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "Molten Plastic")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "Synthetic Resin")
+        addFluid(RagiumFluids.AMMONIA, "Ammonia")
         addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "Liquid Explosive")
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
