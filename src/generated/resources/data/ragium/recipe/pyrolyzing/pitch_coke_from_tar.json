@@ -5,10 +5,6 @@
     "items": "ragium:tar"
   },
   "result": {
-    "fluid": {
-      "amount": 1000,
-      "id": "ragium:aromatic_compound"
-    },
     "item": {
       "count": 1,
       "id": "ragium:pitch_coke"

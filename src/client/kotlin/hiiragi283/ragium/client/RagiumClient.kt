@@ -184,6 +184,10 @@ data object RagiumClient : HTClientMod() {
             molten()
             colorTint(Color(0x333333))
         }
+        register.register(RagiumFluids.NATURAL_GAS) {
+            transparent()
+            colorTint(Color(0xcccccc))
+        }
         register.register(RagiumFluids.NAPHTHA) {
             transparent()
             colorTint(Color(0xff6600))

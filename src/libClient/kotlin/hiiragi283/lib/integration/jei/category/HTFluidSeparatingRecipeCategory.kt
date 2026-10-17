@@ -36,11 +36,11 @@ class HTFluidSeparatingRecipeCategory(
         recipe.result.item.ifPresent(itemOutput::add)
 
         builder
-            .addOutputSlot(getPosition(4), getPosition(0))
+            .addOutputSlot(getPosition(5), getPosition(0))
             .add(recipe.result.fluids.head)
             .setSlotBackground(HTBackgroundType.OUTPUT)
         val fluidOutput: IRecipeSlotBuilder = builder
-            .addOutputSlot(getPosition(5), getPosition(0))
+            .addOutputSlot(getPosition(6), getPosition(0))
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
         recipe.result.fluids.getOrNull(1)?.let(fluidOutput::add)
     }

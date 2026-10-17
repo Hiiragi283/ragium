@@ -1,0 +1,20 @@
+{
+  "type": "ragium:refining",
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:coal_tar"
+  },
+  "result": {
+    "fluids": [
+      {
+        "amount": 500,
+        "id": "ragium:natural_gas"
+      },
+      {
+        "amount": 500,
+        "id": "ragium:aromatic_compound"
+      }
+    ]
+  },
+  "time": 200
+}

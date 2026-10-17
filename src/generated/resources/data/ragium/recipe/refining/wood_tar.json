@@ -1,0 +1,20 @@
+{
+  "type": "ragium:refining",
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:wood_tar"
+  },
+  "result": {
+    "fluids": [
+      {
+        "amount": 500,
+        "id": "ragium:alcohol"
+      },
+      {
+        "amount": 500,
+        "id": "ragium:aromatic_compound"
+      }
+    ]
+  },
+  "time": 200
+}

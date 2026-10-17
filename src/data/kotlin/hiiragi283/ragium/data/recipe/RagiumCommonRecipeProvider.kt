@@ -234,7 +234,11 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.ALCOHOL
                 amount = 500
             }
-            recipeId suffix "_from_wood_tar"
+            fluidResult {
+                +RagiumFluids.AROMATIC_COMPOUND
+                amount = 500
+            }
+            recipeId replace RagiumFluids.WOOD_TAR.id()
         }.save(exporter)
     }
 
@@ -268,20 +272,24 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             time = time / 2 * 9
         }.save(exporter)
 
-        // Coal Tar -> Aromatic Compound + Pitch Coke
+        // Coal Tar -> Natural Gas + Aromatic Compound
         RagiumRecipeBuilders.refining {
             ingredient { +holderSet(RagiumFluids.COAL_TAR) }
-            itemResult { +RagiumItems.PITCH_COKE }
+            fluidResult {
+                +RagiumFluids.NATURAL_GAS
+                amount = 500
+            }
             fluidResult {
                 +RagiumFluids.AROMATIC_COMPOUND
-                amount = 250
+                amount = 500
             }
-            recipeId suffix "_from_coal_tar"
+            recipeId replace RagiumFluids.COAL_TAR.id()
         }.save(exporter)
     }
 
     private fun oilRefining() {
         plastic()
+        resin()
 
         // Soul Sand -> Sand + Crude Oil
         RagiumRecipeBuilders.centrifuging {
@@ -303,15 +311,19 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             recipeId replace id("crude_oil_from_soul_soil")
         }.save(exporter)
-        // Crude Oil -> Naphtha + Residue Oil
+        // Crude Oil -> Natural Gas + Naphtha + Residue Oil
         RagiumRecipeBuilders.refining {
             ingredient { +holderSet(RagiumFluids.CRUDE_OIL) }
+            fluidResult {
+                +RagiumFluids.NATURAL_GAS
+                amount = 250
+            }
             fluidResult {
                 +RagiumFluids.NAPHTHA
                 amount = 750
             }
             itemResult { +RagiumItems.TAR }
-            recipeId suffix "_from_crude_oil"
+            recipeId replace RagiumFluids.CRUDE_OIL.id()
         }.save(exporter)
 
         // Naphtha -> Fuel + Sulfur
@@ -331,11 +343,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.ANTI_RUST_OIL }
         }.save(exporter)
 
-        // Tar -> Aromatic Compound + Pitch Coke
+        // Tar -> Pitch Coke
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { items { +RagiumItems.TAR } }
             itemResult { +RagiumItems.PITCH_COKE }
-            fluidResult { +RagiumFluids.AROMATIC_COMPOUND }
             recipeId suffix "_from_tar"
         }.save(exporter)
         // Tar + H2 -> Fuel
@@ -351,10 +362,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun plastic() {
-        // Naphtha + O2 -> Molten Plastic
+        // Natural Gas + O2 -> Molten Plastic
         RagiumRecipeBuilders.reacting {
             ingredient {
-                +holderSet(RagiumFluids.NAPHTHA)
+                +holderSet(RagiumFluids.NATURAL_GAS)
                 amount /= 2
             }
             ingredient {
@@ -374,6 +385,21 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount = 90
             }
         }.save(exporter)
+        RagiumRecipeBuilders.melting {
+            ingredient { 
+                items {
+                    +RagiumItems.SYNTHETIC_FEATHER
+                    +RagiumItems.SYNTHETIC_LEATHER
+                    +RagiumItems.SYNTHETIC_FIBER
+                }
+            }
+            result {
+                +RagiumFluids.MOLTEN_PLASTIC
+                amount = 90
+            }
+            recipeId suffix "_from_synthetic_parts"
+        }.save(exporter)
+        
         val moltenPlastic = HTFluidIngredient(FluidIngredient.of(holderSet(RagiumFluids.MOLTEN_PLASTIC)), 90)
         RagiumRecipeBuilders.freezing {
             +moltenPlastic
@@ -396,10 +422,25 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             catalyst { +holderSet(Tags.Items.STRINGS) }
             result { +RagiumItems.SYNTHETIC_FIBER }
         }.save(exporter)
+    }
 
-        // Alcohol -> Aldehyde
-        RagiumRecipeBuilders.refining {
+    private fun resin() {
+        // Natural Gas + H2O -> Alcohol
+        RagiumRecipeBuilders.reacting {
+            ingredient { +holderSet(RagiumFluids.NATURAL_GAS) }
+            ingredient {
+                +waterSet()
+                amount /= 2
+            }
+            fluidResult { +RagiumFluids.ALCOHOL }
+        }.save(exporter)
+        // Alcohol + O2 -> Aldehyde
+        RagiumRecipeBuilders.reacting {
             ingredient { +holderSet(RagiumTags.Fluids.ALCOHOLS) }
+            ingredient {
+                +holderSet(RagiumFluids.OXYGEN)
+                amount /= 2
+            }
             fluidResult { +RagiumFluids.ALDEHYDE }
         }.save(exporter)
         // Aromatic Compound + Aldehyde -> Synthetic Resin
