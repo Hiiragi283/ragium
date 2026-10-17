@@ -7,6 +7,7 @@ import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
 import hiiragi283.lib.integration.jei.category.HTFluidSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTLocationToFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToItemAndFluidRecipeCategory
 import hiiragi283.lib.integration.jei.ingredient.HTIngredientTypes
@@ -31,7 +32,6 @@ import hiiragi283.ragium.integration.jei.category.RTFreezingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTMixingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTPlantingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTReactingRecipeCategory
-import hiiragi283.ragium.integration.jei.category.RTResourceExtractingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTWashingRecipeCategory
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
@@ -155,11 +155,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumRecipeTypes.BATHING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.CHEMICAL_BATH)
             ),
-            HTFluidSeparatingRecipeCategory(
-                RagiumJeiRecipeTypes.ELECTROLYZING,
-                RagiumRecipeTypes.ELECTROLYZING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.ELECTROLYZER)
-            ),
             RTMixingRecipeCategory(guiHelper),
             RTReactingRecipeCategory(guiHelper),
             RTWashingRecipeCategory(guiHelper),
@@ -170,9 +165,23 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 guiHelper.createDrawableItemLike(RagiumBlocks.BREWERY)
             ),
             RTPlantingRecipeCategory(guiHelper),
+            HTLocationToFluidRecipeCategory(
+                RagiumJeiRecipeTypes.COLLECTING,
+                RagiumRecipeTypes.COLLECTING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.GAS_COLLECTOR)
+            ),
+            HTLocationToFluidRecipeCategory(
+                RagiumJeiRecipeTypes.RESOURCE_PUMPING,
+                RagiumRecipeTypes.RESOURCE_PUMPING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.RESOURCE_PUMP)
+            ),
             // Electronics
+            HTFluidSeparatingRecipeCategory(
+                RagiumJeiRecipeTypes.ELECTROLYZING,
+                RagiumRecipeTypes.ELECTROLYZING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.ELECTROLYZER)
+            ),
             RTEngravingRecipeCategory(guiHelper),
-            RTResourceExtractingRecipeCategory(guiHelper),
             // Arcane
             RTEnchantingRecipeCategory(guiHelper)
         )
@@ -207,10 +216,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeLookups.ELECTROLYZING
         )
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ENGRAVING, RagiumRecipeLookups.ENGRAVING)
+        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.COLLECTING, RagiumRecipeLookups.COLLECTING)
         HTJeiRecipeHelper.addRecipes(
             registration,
-            RagiumJeiRecipeTypes.RESOURCE_EXTRACTING,
-            RagiumRecipeLookups.RESOURCE_EXTRACTING
+            RagiumJeiRecipeTypes.RESOURCE_PUMPING,
+            RagiumRecipeLookups.RESOURCE_PUMPING
         )
         // Arcane
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ENCHANTING, RagiumRecipeLookups.ENCHANTING)
@@ -340,6 +350,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Resource
         registration.addCraftingStation(RagiumJeiRecipeTypes.BREWING, RagiumBlocks.BREWERY)
         registration.addCraftingStation(RagiumJeiRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.COLLECTING, RagiumBlocks.GAS_COLLECTOR)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.RESOURCE_PUMPING, RagiumBlocks.RESOURCE_PUMP)
         // Electronics
         registration.addCraftingStation(RagiumJeiRecipeTypes.ENGRAVING, RagiumBlocks.ENGRAVER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)

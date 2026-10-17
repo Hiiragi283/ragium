@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.gui.widget.HTTextureWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -33,52 +34,47 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
     protected fun createRecipeHandler(
         lookup: HTRecipeLookup<HTDoubleItemToItemRecipe>,
         sound: HTSoundInstance
-    ): HTRecipeHandler<*, *, *> =
-        object : SimpleRecipeHandler<HTRecipeInput, ItemStack, HTDoubleItemToItemRecipe>(lookup) {
-            private val primarySlot: HTInputSlot<ItemInstance> by lazy {
-                HTInputHandlerHelper.forItem(this@HTDoubleItemToItemBlockEntity.primarySlot)
-            }
-            private val secondarySlot: HTInputSlot<ItemInstance> by lazy {
-                HTInputHandlerHelper.forItem(this@HTDoubleItemToItemBlockEntity.secondarySlot)
-            }
-            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-                HTOutputSlotHelper.forItem(this@HTDoubleItemToItemBlockEntity.outputSlot)
-            }
+    ): HTRecipeHandler<*, *, *> = object : CachedHandler<HTRecipeInput, ItemStack, HTDoubleItemToItemRecipe>(lookup) {
+        private val primarySlot: HTInputSlot<ItemInstance> by lazy {
+            HTInputHandlerHelper.forItem(this@HTDoubleItemToItemBlockEntity.primarySlot)
+        }
+        private val secondarySlot: HTInputSlot<ItemInstance> by lazy {
+            HTInputHandlerHelper.forItem(this@HTDoubleItemToItemBlockEntity.secondarySlot)
+        }
+        private val outputSlot: HTOutputSlot<ItemStack> by lazy {
+            HTOutputSlotHelper.forItem(this@HTDoubleItemToItemBlockEntity.outputSlot)
+        }
 
-            override fun createProgressor(): Progressor<HTRecipeInput, HTDoubleItemToItemRecipe> = EnergizedProgressor()
+        override fun createProgressor(): Progressor<HTRecipeInput, HTDoubleItemToItemRecipe> = EnergizedProgressor()
 
-            override fun createInput(): HTRecipeInput = HTRecipeInput(
-                listOf(primarySlot.getStoredInput(), secondarySlot.getStoredInput()),
-                listOf(),
-                customKeys
-            )
+        override fun createInput(level: ServerLevel): HTRecipeInput = HTRecipeInput(
+            listOf(primarySlot.getStoredInput(), secondarySlot.getStoredInput()),
+            listOf(),
+            customKeys
+        )
 
-            override fun canComplete(
-                recipe: HTDoubleItemToItemRecipe,
-                input: HTRecipeInput,
-                output: ItemStack
-            ): Boolean {
-                val (firstConsume: ItemInstance, secondConsume: ItemInstance) = recipe.getMatchingStack(input)
-                return useTransaction { transaction: Transaction ->
-                    when {
-                        primarySlot.use(firstConsume, transaction).failed -> false
-                        secondarySlot.use(secondConsume, transaction).failed -> false
-                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
-                    }
+        override fun canComplete(recipe: HTDoubleItemToItemRecipe, input: HTRecipeInput, output: ItemStack): Boolean {
+            val (firstConsume: ItemInstance, secondConsume: ItemInstance) = recipe.getMatchingStack(input)
+            return useTransaction { transaction: Transaction ->
+                when {
+                    primarySlot.use(firstConsume, transaction).failed -> false
+                    secondarySlot.use(secondConsume, transaction).failed -> false
+                    else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
                 }
-            }
-
-            override fun onComplete(recipe: HTDoubleItemToItemRecipe, input: HTRecipeInput, output: ItemStack) {
-                val (firstConsume: ItemInstance, secondConsume: ItemInstance) = recipe.getMatchingStack(input)
-                useTransaction { transaction: Transaction ->
-                    primarySlot.use(firstConsume, transaction)
-                    secondarySlot.use(secondConsume, transaction)
-                    outputSlot.take(output, transaction)
-                    transaction.commit()
-                }
-                playSound(sound)
             }
         }
+
+        override fun onComplete(recipe: HTDoubleItemToItemRecipe, input: HTRecipeInput, output: ItemStack) {
+            val (firstConsume: ItemInstance, secondConsume: ItemInstance) = recipe.getMatchingStack(input)
+            useTransaction { transaction: Transaction ->
+                primarySlot.use(firstConsume, transaction)
+                secondarySlot.use(secondConsume, transaction)
+                outputSlot.take(output, transaction)
+                transaction.commit()
+            }
+            playSound(sound)
+        }
+    }
 
     private lateinit var primarySlot: HTBasicItemSlot
     private lateinit var secondarySlot: HTBasicItemSlot

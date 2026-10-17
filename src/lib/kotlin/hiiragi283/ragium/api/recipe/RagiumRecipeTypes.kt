@@ -92,15 +92,18 @@ data object RagiumRecipeTypes {
     @JvmField
     val PLANTING: RecipeType<RTPlantingRecipe> = create(RagiumConstants.PLANTING)
 
+    @JvmField
+    val COLLECTING: RecipeType<RTCollectingRecipe> = create(RagiumConstants.COLLECTING)
+
+    @JvmField
+    val RESOURCE_PUMPING: RecipeType<RTResourcePumpingRecipe> = create(RagiumConstants.RESOURCE_PUMPING)
+
     // Electronics
     @JvmField
     val ELECTROLYZING: RecipeType<RTElectrolyzingRecipe> = create(RagiumConstants.ELECTROLYZING)
 
     @JvmField
     val ENGRAVING: RecipeType<RTEngravingRecipe> = create(RagiumConstants.ENGRAVING)
-
-    @JvmField
-    val RESOURCE_EXTRACTING: RecipeType<RTResourceExtractingRecipe> = create(RagiumConstants.RESOURCE_EXTRACTING)
 
     // Arcane
     @JvmField

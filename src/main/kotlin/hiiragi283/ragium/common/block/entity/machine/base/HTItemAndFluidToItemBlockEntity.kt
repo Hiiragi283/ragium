@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -34,7 +35,7 @@ abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, pos: Bl
     fun createRecipeHandler(
         lookup: HTRecipeLookup<HTItemAndFluidToItemRecipe>,
         sound: HTSoundInstance
-    ): HTRecipeHandler<*, *, *> = object : SimpleRecipeHandler<
+    ): HTRecipeHandler<*, *, *> = object : CachedHandler<
         HTRecipeInput,
         ItemStack,
         HTItemAndFluidToItemRecipe
@@ -51,7 +52,7 @@ abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, pos: Bl
 
         override fun createProgressor(): Progressor<HTRecipeInput, HTItemAndFluidToItemRecipe> = EnergizedProgressor()
 
-        override fun createInput(): HTRecipeInput =
+        override fun createInput(level: ServerLevel): HTRecipeInput =
             HTRecipeInput(inputSlot.getStoredInput(), inputTank.getStoredInput(), customKeys)
 
         override fun canComplete(recipe: HTItemAndFluidToItemRecipe, input: HTRecipeInput, output: ItemStack): Boolean =

@@ -122,7 +122,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
         //    SimpleRecipeHandler    //
 
-        abstract class SimpleRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE>(
+        abstract class CachedHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE>(
             private val cache: HTRecipeCache<INPUT, RECIPE>
         ) : HTRecipeHandler<INPUT, OUTPUT, RECIPE>()
             where RECIPE : HTRecipePredicate<INPUT>,

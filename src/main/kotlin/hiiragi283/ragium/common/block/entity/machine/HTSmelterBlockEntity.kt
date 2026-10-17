@@ -75,7 +75,8 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun createProgressor(): Progressor<HTRecipeInput, HTItemToItemRecipe> = EnergizedProgressor()
 
-            override fun createInput(): HTRecipeInput = HTRecipeInput(inputSlot.getStoredInput(), customKeys)
+            override fun createInput(level: ServerLevel): HTRecipeInput =
+                HTRecipeInput(inputSlot.getStoredInput(), customKeys)
 
             override fun findRecipe(level: ServerLevel, input: HTRecipeInput): HTItemToItemRecipe? {
                 val stackIn: ItemStack = typeSlot.getStackCopy()

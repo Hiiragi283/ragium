@@ -60,6 +60,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.PLANTER, "栽培機")
+        add(RagiumBlocks.GAS_COLLECTOR, "ガス収集機")
+        add(RagiumBlocks.RESOURCE_PUMP, "資源ポンプ")
 
         add(RagiumBlocks.BLENDER, "大型混合機")
         add(RagiumBlocks.ELECTROLYZER, "電解機")
@@ -201,10 +203,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         addRecipeType(RagiumRecipeTypes.BREWING, "醸造")
         addRecipeType(RagiumRecipeTypes.PLANTING, "栽培")
+        addRecipeType(RagiumRecipeTypes.COLLECTING, "ガス収集")
+        addRecipeType(RagiumRecipeTypes.RESOURCE_PUMPING, "資源汲み上げ")
 
         addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
         addRecipeType(RagiumRecipeTypes.ENGRAVING, "レーザー加工")
-        addRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, "資源採集")
 
         addRecipeType(RagiumRecipeTypes.ENCHANTING, "エンチャント")
 

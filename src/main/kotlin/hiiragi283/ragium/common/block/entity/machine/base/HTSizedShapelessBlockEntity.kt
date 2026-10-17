@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -23,7 +24,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 abstract class HTSizedShapelessBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
     fun createRecipeHandler(lookup: HTRecipeLookup<HTSizedShapelessRecipe>, sound: HTSoundInstance) =
-        object : SimpleRecipeHandler<HTRecipeInput, ItemStack, HTSizedShapelessRecipe>(lookup) {
+        object : CachedHandler<HTRecipeInput, ItemStack, HTSizedShapelessRecipe>(lookup) {
             private val inputSlots: HTInputHandler<ItemInstance> by lazy {
                 HTInputHandlerHelper.forItems(this@HTSizedShapelessBlockEntity.inputSlots)
             }
@@ -33,7 +34,7 @@ abstract class HTSizedShapelessBlockEntity(type: BlockEntityType<*>, pos: BlockP
 
             override fun createProgressor(): Progressor<HTRecipeInput, HTSizedShapelessRecipe> = EnergizedProgressor()
 
-            override fun createInput(): HTRecipeInput = HTRecipeInput(
+            override fun createInput(level: ServerLevel): HTRecipeInput = HTRecipeInput(
                 this@HTSizedShapelessBlockEntity.inputSlots.map(HTBasicItemSlot::getStackCopy),
                 listOf(),
                 customKeys

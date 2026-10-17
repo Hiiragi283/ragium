@@ -23,6 +23,7 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
@@ -33,7 +34,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FREEZER.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler<*, *, *> =
-        object : SimpleRecipeHandler<HTRecipeInput, ItemStack, RTFreezingRecipe>(RagiumRecipeLookups.FREEZING) {
+        object : CachedHandler<HTRecipeInput, ItemStack, RTFreezingRecipe>(RagiumRecipeLookups.FREEZING) {
             private val inputTank: HTInputSlot<FluidInstance> by lazy {
                 HTInputHandlerHelper.forFluid(this@HTFreezerBlockEntity.inputTank)
             }
@@ -46,7 +47,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun createProgressor(): Progressor<HTRecipeInput, RTFreezingRecipe> = EnergizedProgressor()
 
-            override fun createInput(): HTRecipeInput =
+            override fun createInput(level: ServerLevel): HTRecipeInput =
                 HTRecipeInput(catalystSlot.getStoredInput(), inputTank.getStoredInput(), customKeys)
 
             override fun canComplete(recipe: RTFreezingRecipe, input: HTRecipeInput, output: ItemStack): Boolean =

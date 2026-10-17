@@ -39,7 +39,7 @@ abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRec
     fun tick(level: ServerLevel): Boolean {
         if (!shouldCheck) return false
         // インプットに一致するレシピを探索する
-        val input: INPUT = createInput()
+        val input: INPUT = createInput(level)
         inputCache = input
         val recipe: RECIPE = findRecipe(level, input) ?: return run {
             shouldCheck = false
@@ -78,7 +78,7 @@ abstract class HTRecipeHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE : HTRec
         return true
     }
 
-    protected abstract fun createInput(): INPUT
+    protected abstract fun createInput(level: ServerLevel): INPUT
 
     protected abstract fun findRecipe(level: ServerLevel, input: INPUT): RECIPE?
 

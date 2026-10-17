@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "ragium:block/gas_collector_front",
+    "side": "ragium:block/machine/resource_side",
+    "top": "ragium:block/machine_casing"
+  }
+}

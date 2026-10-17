@@ -9,6 +9,7 @@ import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTLocationToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTSingleRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTSizedShapelessRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
@@ -19,6 +20,7 @@ import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
 import hiiragi283.ragium.api.recipe.RTBrewingRecipe
+import hiiragi283.ragium.api.recipe.RTCollectingRecipe
 import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
@@ -32,6 +34,7 @@ import hiiragi283.ragium.api.recipe.RTMeltingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
+import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -218,6 +221,28 @@ data object RagiumRecipeBuilders {
         return HTSingleRecipeBuilder.Basic(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
     }
 
+    @JvmStatic
+    inline fun gasCollecting(
+        builderAction: HTLocationToFluidRecipeBuilder<RTCollectingRecipe>.() -> Unit
+    ): HTLocationToFluidRecipeBuilder<RTCollectingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTLocationToFluidRecipeBuilder(RagiumConstants.COLLECTING, ::RTCollectingRecipe)
+            .apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun resourcePumping(
+        builderAction: HTLocationToFluidRecipeBuilder<RTResourcePumpingRecipe>.() -> Unit
+    ): HTLocationToFluidRecipeBuilder<RTResourcePumpingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTLocationToFluidRecipeBuilder(RagiumConstants.RESOURCE_PUMPING, ::RTResourcePumpingRecipe)
+            .apply(builderAction)
+    }
+
     // Electronics
     @JvmStatic
     inline fun electrolyzing(
@@ -240,16 +265,6 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTSingleRecipeBuilder.WithCatalyst(RagiumConstants.ENGRAVING, ::RTEngravingRecipe).apply(builderAction)
-    }
-
-    @JvmStatic
-    inline fun resourceExtracting(
-        builderAction: RTResourceExtractingRecipeBuilder.() -> Unit
-    ): RTResourceExtractingRecipeBuilder {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return RTResourceExtractingRecipeBuilder().apply(builderAction)
     }
 
     // Arcane

@@ -23,6 +23,7 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
@@ -32,7 +33,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 class HTCentrifugeBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.CENTRIFUGE.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler<*, *, *> =
-        object : SimpleRecipeHandler<HTRecipeInput, RTCentrifugingRecipe.Output, RTCentrifugingRecipe>(
+        object : CachedHandler<HTRecipeInput, RTCentrifugingRecipe.Output, RTCentrifugingRecipe>(
             RagiumRecipeLookups.CENTRIFUGING
         ) {
             private val inputSlot: HTInputSlot<ItemInstance> by lazy {
@@ -47,7 +48,8 @@ class HTCentrifugeBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun createProgressor(): Progressor<HTRecipeInput, RTCentrifugingRecipe> = EnergizedProgressor()
 
-            override fun createInput(): HTRecipeInput = HTRecipeInput(inputSlot.getStoredInput(), customKeys)
+            override fun createInput(level: ServerLevel): HTRecipeInput =
+                HTRecipeInput(inputSlot.getStoredInput(), customKeys)
 
             override fun canComplete(
                 recipe: RTCentrifugingRecipe,

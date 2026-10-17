@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.gui.widget.HTItemWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -31,7 +32,7 @@ abstract class HTItemToDoubleItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
         lookup: HTRecipeLookup<HTItemToDoubleItemRecipe>,
         sound: HTSoundInstance
     ): HTRecipeHandler<*, *, *> =
-        object : SimpleRecipeHandler<HTRecipeInput, Pair<ItemStack, ItemStack>, HTItemToDoubleItemRecipe>(lookup) {
+        object : CachedHandler<HTRecipeInput, Pair<ItemStack, ItemStack>, HTItemToDoubleItemRecipe>(lookup) {
             private val inputSlot: HTInputSlot<ItemInstance> by lazy {
                 HTInputHandlerHelper.forItem(this@HTItemToDoubleItemBlockEntity.inputSlot)
             }
@@ -44,7 +45,8 @@ abstract class HTItemToDoubleItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
 
             override fun createProgressor(): Progressor<HTRecipeInput, HTItemToDoubleItemRecipe> = EnergizedProgressor()
 
-            override fun createInput(): HTRecipeInput = HTRecipeInput(inputSlot.getStoredInput(), customKeys)
+            override fun createInput(level: ServerLevel): HTRecipeInput =
+                HTRecipeInput(inputSlot.getStoredInput(), customKeys)
 
             override fun canComplete(
                 recipe: HTItemToDoubleItemRecipe,

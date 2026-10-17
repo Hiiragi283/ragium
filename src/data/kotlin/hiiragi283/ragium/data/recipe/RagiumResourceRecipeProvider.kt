@@ -9,6 +9,7 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.common.fluid.RagiumFluids
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey
@@ -20,14 +21,18 @@ import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.component.Consumable
 import net.minecraft.world.item.component.Consumables
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect
+import net.minecraft.world.level.biome.Biomes
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
-class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
+class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
         brewing()
         planting()
+
+        resourcePumping()
+        gasCollecting()
     }
 
     private fun brewing() {
@@ -222,6 +227,62 @@ class RagiumBioRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
                 }
             }.save(exporter)
         }
+    }
+
+    private fun resourcePumping() {
+        // XX -> Water
+        RagiumRecipeBuilders.resourcePumping {
+            biomes { +holderSet(Tags.Biomes.IS_OCEAN) }
+            result {
+                +RagiumFluids.SALT_WATER
+                amount *= 4
+            }
+            recipeId suffix "_at_ocean"
+        }.save(exporter)
+        RagiumRecipeBuilders.resourcePumping {
+            biomes { +holderSet(Tags.Biomes.IS_RIVER) }
+            result {
+                water()
+                amount *= 2
+            }
+            recipeId suffix "_at_river"
+        }.save(exporter)
+        RagiumRecipeBuilders.resourcePumping {
+            biomes { +holderSet(Tags.Biomes.IS_WET) }
+            result { water() }
+            recipeId suffix "_at_wet_biomes"
+        }.save(exporter)
+
+        // Nether -> Lava
+        RagiumRecipeBuilders.resourcePumping {
+            biomes { +holderSet(Tags.Biomes.IS_NETHER) }
+            result {
+                lava()
+                amount /= 4
+            }
+            recipeId suffix "_at_nether"
+        }.save(exporter)
+        // Soul Sand Valley -> Crude Oil
+        RagiumRecipeBuilders.resourcePumping {
+            biomes { biomes { +registries.getOrThrow(Biomes.SOUL_SAND_VALLEY) } }
+            result {
+                +RagiumFluids.CRUDE_OIL
+                amount /= 4
+            }
+            recipeId suffix "_at_soul_sand_valley"
+        }.save(exporter)
+    }
+
+    private fun gasCollecting() {
+        // Overworld -> Air
+
+        // Nether -> SO2
+        RagiumRecipeBuilders.gasCollecting {
+            biomes { +holderSet(Tags.Biomes.IS_NETHER) }
+            result { +RagiumFluids.SULFUR_DIOXIDE }
+            time /= 5
+        }.save(exporter)
+        // The End -> He
     }
 
     override fun getName(): String = "Bio Recipes"

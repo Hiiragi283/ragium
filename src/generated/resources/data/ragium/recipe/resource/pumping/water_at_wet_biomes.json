@@ -1,5 +1,5 @@
 {
-  "type": "ragium:resource/extracting",
+  "type": "ragium:resource/pumping",
   "condition": "#c:is_wet",
   "result": {
     "amount": 1000,

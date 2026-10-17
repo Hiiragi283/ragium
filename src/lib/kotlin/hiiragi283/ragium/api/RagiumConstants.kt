@@ -33,6 +33,10 @@ data object RagiumConstants {
     const val BREWERY = "brewery"
     const val PLANTER = "planter"
 
+    const val RESOURCE_MINER = "resource_miner"
+    const val RESOURCE_PUMP = "resource_pump"
+    const val GAS_COLLECTOR = "gas_collector"
+
     // Electronics
     const val BLENDER = "blender"
     const val ELECTROLYZER = "electrolyzer"
@@ -72,12 +76,14 @@ data object RagiumConstants {
     const val BREWING = "brewing"
     const val PLANTING = "planting"
 
+    const val RESOURCE_MINING = "resource/mining"
+    const val RESOURCE_PUMPING = "resource/pumping"
+    const val COLLECTING = "collecting"
+
     // Electronics
     const val ELECTROLYZING = "electrolyzing"
     const val ENGRAVING = "engraving"
     const val PRINTING = "printing"
-
-    const val RESOURCE_EXTRACTING = "resource/extracting"
 
     // Arcane
     const val ENCHANTING = "enchanting"

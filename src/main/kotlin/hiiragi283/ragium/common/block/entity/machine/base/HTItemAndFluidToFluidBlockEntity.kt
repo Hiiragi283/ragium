@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -35,7 +36,7 @@ abstract class HTItemAndFluidToFluidBlockEntity(type: BlockEntityType<*>, pos: B
         lookup: HTRecipeLookup<HTItemAndFluidToFluidRecipe>,
         sound: HTSoundInstance
     ): HTRecipeHandler<*, *, *> =
-        object : SimpleRecipeHandler<HTRecipeInput, FluidStack, HTItemAndFluidToFluidRecipe>(lookup) {
+        object : CachedHandler<HTRecipeInput, FluidStack, HTItemAndFluidToFluidRecipe>(lookup) {
             private val inputTank: HTInputSlot<FluidInstance> by lazy {
                 HTInputHandlerHelper.forFluid(this@HTItemAndFluidToFluidBlockEntity.inputTank)
             }
@@ -49,7 +50,7 @@ abstract class HTItemAndFluidToFluidBlockEntity(type: BlockEntityType<*>, pos: B
             override fun createProgressor(): Progressor<HTRecipeInput, HTItemAndFluidToFluidRecipe> =
                 EnergizedProgressor()
 
-            override fun createInput(): HTRecipeInput =
+            override fun createInput(level: ServerLevel): HTRecipeInput =
                 HTRecipeInput(inputSlot.getStoredInput(), inputTank.getStoredInput(), customKeys)
 
             override fun canComplete(

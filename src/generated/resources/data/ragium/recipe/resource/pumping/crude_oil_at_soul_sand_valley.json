@@ -1,5 +1,5 @@
 {
-  "type": "ragium:resource/extracting",
+  "type": "ragium:resource/pumping",
   "condition": "minecraft:soul_sand_valley",
   "result": {
     "amount": 250,

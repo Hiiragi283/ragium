@@ -17,4 +17,6 @@ data class HTLocationRecipeInput(val blockInWorld: BlockInWorld) : RecipeInput {
     override fun getItem(index: Int): ItemStack = error("No item for index: $index")
 
     override fun size(): Int = 0
+
+    override fun isEmpty(): Boolean = false
 }

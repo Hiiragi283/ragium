@@ -7,6 +7,7 @@ import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
+import hiiragi283.lib.recipe.base.HTLocationToRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
@@ -17,7 +18,6 @@ import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
-import hiiragi283.ragium.api.recipe.RTResourceExtractingRecipe
 import hiiragi283.ragium.api.recipe.RTWashingRecipe
 
 data object RagiumJeiRecipeTypes {
@@ -80,16 +80,18 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val PLANTING: HTRecipeHolderType<RTPlantingRecipe> = create(RagiumConstants.PLANTING)
 
+    @JvmField
+    val COLLECTING: HTRecipeHolderType<HTLocationToRecipe.BasicFluid> = create(RagiumConstants.COLLECTING)
+
+    @JvmField
+    val RESOURCE_PUMPING: HTRecipeHolderType<HTLocationToRecipe.BasicFluid> = create(RagiumConstants.RESOURCE_PUMPING)
+
     // Electronics
     @JvmField
     val ELECTROLYZING: HTRecipeHolderType<HTFluidSeparatingRecipe> = create(RagiumConstants.ELECTROLYZING)
 
     @JvmField
     val ENGRAVING: HTRecipeHolderType<RTEngravingRecipe> = create(RagiumConstants.ENGRAVING)
-
-    @JvmField
-    val RESOURCE_EXTRACTING: HTRecipeHolderType<RTResourceExtractingRecipe> =
-        create(RagiumConstants.RESOURCE_EXTRACTING)
 
     // Arcane
     @JvmField

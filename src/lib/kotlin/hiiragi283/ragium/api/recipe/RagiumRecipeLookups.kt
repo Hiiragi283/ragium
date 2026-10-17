@@ -91,15 +91,18 @@ data object RagiumRecipeLookups {
     @JvmField
     val PLANTING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.PLANTING)
 
+    @JvmField
+    val COLLECTING: HTRecipeLookup<RTCollectingRecipe> = create(RagiumRecipeTypes.COLLECTING)
+
+    @JvmField
+    val RESOURCE_PUMPING: HTRecipeLookup<RTResourcePumpingRecipe> = create(RagiumRecipeTypes.RESOURCE_PUMPING)
+
     // Electronics
     @JvmField
     val ELECTROLYZING: HTCompoundRecipeLookup<HTFluidSeparatingRecipe> = create(RagiumConstants.ELECTROLYZING)
 
     @JvmField
     val ENGRAVING: HTRecipeLookup<RTEngravingRecipe> = create(RagiumRecipeTypes.ENGRAVING)
-
-    @JvmField
-    val RESOURCE_EXTRACTING: HTRecipeLookup<RTResourceExtractingRecipe> = create(RagiumRecipeTypes.RESOURCE_EXTRACTING)
 
     // Arcane
     @JvmField

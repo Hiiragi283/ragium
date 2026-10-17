@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,is_active=false": {
+      "model": "ragium:block/machine/resource",
+      "y": 90
+    },
+    "facing=east,is_active=true": {
+      "model": "ragium:block/gas_collector",
+      "y": 90
+    },
+    "facing=north,is_active=false": {
+      "model": "ragium:block/machine/resource"
+    },
+    "facing=north,is_active=true": {
+      "model": "ragium:block/gas_collector"
+    },
+    "facing=south,is_active=false": {
+      "model": "ragium:block/machine/resource",
+      "y": 180
+    },
+    "facing=south,is_active=true": {
+      "model": "ragium:block/gas_collector",
+      "y": 180
+    },
+    "facing=west,is_active=false": {
+      "model": "ragium:block/machine/resource",
+      "y": 270
+    },
+    "facing=west,is_active=true": {
+      "model": "ragium:block/gas_collector",
+      "y": 270
+    }
+  }
+}

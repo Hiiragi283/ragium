@@ -305,6 +305,14 @@ data object RagiumBlocks {
     val PLANTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.PLANTER)
 
+    @JvmField
+    val GAS_COLLECTOR: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.GAS_COLLECTOR)
+
+    @JvmField
+    val RESOURCE_PUMP: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.RESOURCE_PUMP)
+
     // Electronics
     @JvmField
     val BLENDER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
@@ -350,6 +358,8 @@ data object RagiumBlocks {
 
                 put(HTMachineType.RESOURCE, BREWERY)
                 put(HTMachineType.RESOURCE, PLANTER)
+                put(HTMachineType.RESOURCE, GAS_COLLECTOR)
+                put(HTMachineType.RESOURCE, RESOURCE_PUMP)
 
                 put(HTMachineType.ELECTRONICS, BLENDER)
                 put(HTMachineType.ELECTRONICS, ELECTROLYZER)

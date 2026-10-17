@@ -1,26 +1,29 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.ragium.api.data.recipe.builder
+package hiiragi283.lib.data.recipe.builder
 
-import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.lib.data.recipe.ingredient.HTBiomeConditionBuilder
 import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
+import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTBiomeCondition
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.util.HTDelegates
-import hiiragi283.ragium.api.RagiumConstants
-import hiiragi283.ragium.api.recipe.RTResourceExtractingRecipe
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.crafting.Recipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class RTResourceExtractingRecipeBuilder :
-    HTProgressRecipeBuilder<RTResourceExtractingRecipe>(RagiumConstants.RESOURCE_EXTRACTING) {
+/**
+ * @param RECIPE 生成するレシピのクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.11
+ */
+class HTLocationToFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
+    HTProgressRecipeBuilder<RECIPE>(prefix) {
     override fun getRecipeId(): Identifier? = result.getId()
 
-    override fun createRecipe(): RTResourceExtractingRecipe =
-        RTResourceExtractingRecipe(condition, result, progressData)
+    override fun createRecipe(): RECIPE = factory.create(condition, result, progressData)
 
     // Biome Condition
     @PublishedApi internal var condition: HTBiomeCondition by HTDelegates.onceInitialize()
@@ -48,5 +51,16 @@ class RTResourceExtractingRecipeBuilder :
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         +HTFluidResultBuilder.build(builderAction)
+    }
+
+    //    Factory    //
+
+    /**
+     * @param RECIPE 生成するレシピのクラス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.11
+     */
+    fun interface Factory<out RECIPE : Any> {
+        fun create(condition: HTBiomeCondition, result: HTFluidResult, progressData: HTProgressData): RECIPE
     }
 }

@@ -12,11 +12,11 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.block.state.pattern.BlockInWorld
 import java.util.function.Predicate
 
 /**
@@ -49,20 +49,18 @@ data class HTBiomeCondition(val biomes: HolderSet<Biome>) : Predicate<Holder<Bio
 
     val isEmpty: Boolean get() = this@HTBiomeCondition.biomes.size() == 0
 
+    fun test(blockInWorld: BlockInWorld): Boolean = test(blockInWorld.level.getBiome(blockInWorld.pos))
+
     override fun test(biome: Holder<Biome>): Boolean = biome in this@HTBiomeCondition.biomes
 
     /**
      * 一致するバイオームのプレビュー
      */
-    val display: SlotDisplay get() = this@HTBiomeCondition.biomes.unwrap().map(
-        { tagKey: TagKey<Biome> -> createDisplay("#${tagKey.location()}") },
-        { holders: Iterable<Holder<Biome>> ->
-            holders
-                .mapNotNull { it.key?.identifier()?.toString() }
-                .map(::createDisplay)
-                .let(::SlotDisplay)
-        }
-    )
+    val display: SlotDisplay get() = this@HTBiomeCondition.biomes
+        .asSequence()
+        .mapNotNull { it.key?.identifier()?.toString() }
+        .map(::createDisplay)
+        .let(::SlotDisplay)
 
     private fun createDisplay(biomeKey: String): SlotDisplay = biomeKey
         .toText()

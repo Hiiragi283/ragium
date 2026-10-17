@@ -23,6 +23,7 @@ import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -36,68 +37,64 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
     fun createRecipeHandler(
         lookup: HTRecipeLookup<HTFluidSeparatingRecipe>,
         sound: HTSoundInstance
-    ): HTRecipeHandler<*, *, *> = object : SimpleRecipeHandler<
-        HTRecipeInput,
-        HTFluidSeparatingRecipe.Output,
-        HTFluidSeparatingRecipe
-        >(
-        lookup
-    ) {
-        private val inputTank: HTInputSlot<FluidInstance> by lazy {
-            HTInputHandlerHelper.forFluid(this@HTFluidSeparatingBlockEntity.inputTank)
-        }
+    ): HTRecipeHandler<*, *, *> =
+        object : CachedHandler<HTRecipeInput, HTFluidSeparatingRecipe.Output, HTFluidSeparatingRecipe>(lookup) {
+            private val inputTank: HTInputSlot<FluidInstance> by lazy {
+                HTInputHandlerHelper.forFluid(this@HTFluidSeparatingBlockEntity.inputTank)
+            }
 
-        private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-            HTOutputSlotHelper.forItem(this@HTFluidSeparatingBlockEntity.outputSlot)
-        }
-        private val leftOutputTank: HTOutputSlot<FluidStack> by lazy {
-            HTOutputSlotHelper.forFluid(this@HTFluidSeparatingBlockEntity.leftOutputTank)
-        }
-        private val rightOutputTank: HTOutputSlot<FluidStack> by lazy {
-            HTOutputSlotHelper.forFluid(this@HTFluidSeparatingBlockEntity.rightOutputTank)
-        }
+            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
+                HTOutputSlotHelper.forItem(this@HTFluidSeparatingBlockEntity.outputSlot)
+            }
+            private val leftOutputTank: HTOutputSlot<FluidStack> by lazy {
+                HTOutputSlotHelper.forFluid(this@HTFluidSeparatingBlockEntity.leftOutputTank)
+            }
+            private val rightOutputTank: HTOutputSlot<FluidStack> by lazy {
+                HTOutputSlotHelper.forFluid(this@HTFluidSeparatingBlockEntity.rightOutputTank)
+            }
 
-        override fun createProgressor(): Progressor<HTRecipeInput, HTFluidSeparatingRecipe> = EnergizedProgressor()
+            override fun createProgressor(): Progressor<HTRecipeInput, HTFluidSeparatingRecipe> = EnergizedProgressor()
 
-        override fun createInput(): HTRecipeInput = HTRecipeInput(inputTank.getStoredInput(), customKeys)
+            override fun createInput(level: ServerLevel): HTRecipeInput =
+                HTRecipeInput(inputTank.getStoredInput(), customKeys)
 
-        override fun canComplete(
-            recipe: HTFluidSeparatingRecipe,
-            input: HTRecipeInput,
-            output: HTFluidSeparatingRecipe.Output
-        ): Boolean = useTransaction { transaction: Transaction ->
-            val inputConsume: FluidInstance = recipe.getMatchingStack(input)
-            when {
-                inputTank.use(inputConsume, transaction).failed -> false
+            override fun canComplete(
+                recipe: HTFluidSeparatingRecipe,
+                input: HTRecipeInput,
+                output: HTFluidSeparatingRecipe.Output
+            ): Boolean = useTransaction { transaction: Transaction ->
+                val inputConsume: FluidInstance = recipe.getMatchingStack(input)
+                when {
+                    inputTank.use(inputConsume, transaction).failed -> false
 
-                else -> {
-                    val (left: FluidStack, right: FluidStack, item: ItemStack) = output
-                    when {
-                        leftOutputTank.take(right, transaction) != HTOutputSlot.TakeResult.FULL -> false
-                        rightOutputTank.take(left, transaction) != HTOutputSlot.TakeResult.FULL -> false
-                        else -> outputSlot.take(item, transaction).fullOrNoneTaken
+                    else -> {
+                        val (left: FluidStack, right: FluidStack, item: ItemStack) = output
+                        when {
+                            leftOutputTank.take(right, transaction) != HTOutputSlot.TakeResult.FULL -> false
+                            rightOutputTank.take(left, transaction) != HTOutputSlot.TakeResult.FULL -> false
+                            else -> outputSlot.take(item, transaction).fullOrNoneTaken
+                        }
                     }
                 }
             }
-        }
 
-        override fun onComplete(
-            recipe: HTFluidSeparatingRecipe,
-            input: HTRecipeInput,
-            output: HTFluidSeparatingRecipe.Output
-        ) {
-            useTransaction { transaction: Transaction ->
-                val inputConsume: FluidInstance = recipe.getMatchingStack(input)
-                inputTank.use(inputConsume, transaction)
-                val (left: FluidStack, right: FluidStack, item: ItemStack) = output
-                outputSlot.take(item, transaction)
-                leftOutputTank.take(right, transaction)
-                rightOutputTank.take(left, transaction)
-                transaction.commit()
+            override fun onComplete(
+                recipe: HTFluidSeparatingRecipe,
+                input: HTRecipeInput,
+                output: HTFluidSeparatingRecipe.Output
+            ) {
+                useTransaction { transaction: Transaction ->
+                    val inputConsume: FluidInstance = recipe.getMatchingStack(input)
+                    inputTank.use(inputConsume, transaction)
+                    val (left: FluidStack, right: FluidStack, item: ItemStack) = output
+                    outputSlot.take(item, transaction)
+                    leftOutputTank.take(right, transaction)
+                    rightOutputTank.take(left, transaction)
+                    transaction.commit()
+                }
+                playSound(sound)
             }
-            playSound(sound)
         }
-    }
 
     private lateinit var inputTank: HTBasicFluidTank
     private lateinit var leftOutputTank: HTBasicFluidTank

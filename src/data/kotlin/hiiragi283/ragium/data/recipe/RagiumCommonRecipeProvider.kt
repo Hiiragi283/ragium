@@ -386,7 +386,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
         RagiumRecipeBuilders.melting {
-            ingredient { 
+            ingredient {
                 items {
                     +RagiumItems.SYNTHETIC_FEATHER
                     +RagiumItems.SYNTHETIC_LEATHER
@@ -399,7 +399,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             recipeId suffix "_from_synthetic_parts"
         }.save(exporter)
-        
+
         val moltenPlastic = HTFluidIngredient(FluidIngredient.of(holderSet(RagiumFluids.MOLTEN_PLASTIC)), 90)
         RagiumRecipeBuilders.freezing {
             +moltenPlastic
