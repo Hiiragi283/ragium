@@ -448,7 +448,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
 
         heat(RagiumBlocks.ALLOY_SMELTER) { items { +Items.BLAST_FURNACE } }
-        heat(RagiumBlocks.FREEZER) { +holderSet(Tags.Items.BUCKETS_WATER) }
         heat(RagiumBlocks.MELTER) { +holderSet(Tags.Items.BUCKETS_LAVA) }
 
         heat(RagiumBlocks.SMELTER) { items { +Items.FURNACE } }
@@ -488,6 +487,14 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         electronics(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
         // Arcane
         arcane(RagiumBlocks.ENCHANTER) { items { +Items.ENCHANTING_TABLE } }
+        // Other
+        VanillaRecipeBuilders.shaped {
+            cross8()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
+            define('B') { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Metal.COPPER) }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.IRON) }
+            result { +RagiumBlocks.FREEZER }
+        }.save(exporter)
 
         // Bus
         VanillaRecipeBuilders.shapeless {

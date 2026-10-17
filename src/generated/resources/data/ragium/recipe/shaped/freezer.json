@@ -2,15 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "#c:nuggets/sooty_iron",
-    "B": "ragium:heat_machine_parts",
-    "C": "#c:gears/iron",
-    "D": "#c:buckets/water"
+    "A": "#c:nuggets/black_steel",
+    "B": "#c:storage_blocks/copper",
+    "C": "#c:gears/iron"
   },
   "pattern": [
     "ABA",
     "BCB",
-    "ADA"
+    "ABA"
   ],
   "result": {
     "id": "ragium:freezer"

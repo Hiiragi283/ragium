@@ -5,6 +5,7 @@
     "#ragium:machines/electronics",
     "#ragium:machines/heat",
     "#ragium:machines/mechanical",
-    "#ragium:machines/resource"
+    "#ragium:machines/resource",
+    "ragium:freezer"
   ]
 }

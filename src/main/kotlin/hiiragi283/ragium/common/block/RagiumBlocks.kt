@@ -340,7 +340,6 @@ data object RagiumBlocks {
                 put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
 
                 put(HTMachineType.HEAT, ALLOY_SMELTER)
-                put(HTMachineType.HEAT, FREEZER)
                 put(HTMachineType.HEAT, MELTER)
                 put(HTMachineType.HEAT, PYROLYZER)
                 put(HTMachineType.HEAT, REFINERY)

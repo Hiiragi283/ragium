@@ -4,8 +4,6 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.data.model.HTModelTemplates
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
-import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.HTSimpleValueWithKey
 import hiiragi283.lib.resource.blockId
 import hiiragi283.lib.resource.vanillaId
@@ -26,6 +24,7 @@ import net.minecraft.client.data.models.model.TexturedModel
 import net.minecraft.client.resources.model.sprite.Material
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 
 class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAPI.MOD_ID) {
@@ -89,42 +88,57 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             }
         RagiumBlocks.MACHINES
             .entries
-            .forEach { (machineType: HTMachineType, blockItems: List<HTSimpleDeferredBlockAndItem>) ->
-                for (blockItem: HTSimpleDeferredBlockAndItem in blockItems) {
-                    val (inactive: Identifier, active: Identifier) = when (blockItem) {
-                        RagiumBlocks.FREEZER -> {
-                            RagiumAPI.id(HTConstants.BLOCK, "machine", "cryo") to blockItem.id().blockId
-                        }
-
-                        else -> inactiveModels[machineType]!! to machineModel(generators, machineType, blockItem)
-                    }
-                    generators.blockStateOutput.accept(
-                        MultiVariantGenerator.dispatch(blockItem.getOrThrow())
-                            .with(
-                                PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
-                                    .select(false, BlockModelGenerators.plainVariant(inactive))
-                                    .select(true, BlockModelGenerators.plainVariant(active))
-                            ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+            .forEach { (machineType: HTMachineType, blockItems: List<HTSimpleValueWithKey<Block>>) ->
+                val inactive: Identifier = inactiveModels[machineType]!!
+                for (blockItem: HTSimpleValueWithKey<Block> in blockItems) {
+                    createMachineBlock(
+                        generators,
+                        blockItem,
+                        inactive,
+                        machineModel(generators, machineType, blockItem)
                     )
                 }
             }
+        createMachineBlock(
+            generators,
+            RagiumBlocks.FREEZER,
+            RagiumAPI.id(HTConstants.BLOCK, "machine", "cryo"),
+            RagiumBlocks.FREEZER.id().blockId
+        )
+
         // Decoration
         generators.createGlassBlocks(
             RagiumBlocks.QUARTZ_GLASS.getOrThrow(),
             RagiumBlocks.QUARTZ_GLASS_PANE.getOrThrow()
         )
 
-        for ((machineType: HTMachineType, block: HTSimpleDeferredBlockAndItem) in RagiumBlocks.MACHINE_CASINGS) {
+        for ((machineType: HTMachineType, block: HTSimpleValueWithKey<Block>) in RagiumBlocks.MACHINE_CASINGS) {
             generators.createSimple(block, ModelTemplates.CUBE_TOP, textureMapping(machineType))
         }
         // Bus
         generators.createTrivialBlock(RagiumBlocks.FLUID_OUTPUT_BUS.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
         // Storage
-        for (blockItem: HTSimpleDeferredBlockAndItem in RagiumBlocks.TANKS) {
+        for (blockItem: HTSimpleValueWithKey<Block> in RagiumBlocks.TANKS) {
             generators.createTrivialBlock(blockItem.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
         }
         // Misc
         generators.createTrivialBlock(RagiumBlocks.UPGRADE_STATION.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
+    }
+
+    private fun createMachineBlock(
+        generators: BlockModelGenerators,
+        block: HTSimpleValueWithKey<Block>,
+        inactive: Identifier,
+        active: Identifier
+    ) {
+        generators.blockStateOutput.accept(
+            MultiVariantGenerator.dispatch(block.getOrThrow())
+                .with(
+                    PropertyDispatch.initial(HTMachineBlock.IS_ACTIVE)
+                        .select(false, BlockModelGenerators.plainVariant(inactive))
+                        .select(true, BlockModelGenerators.plainVariant(active))
+                ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        )
     }
 
     private fun machineModel(
@@ -148,7 +162,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         )
 
     private fun registerItemModels(generators: ItemModelGenerators) {
-        val handheld: Set<HTSimpleDeferredItem> = buildSet {
+        val handheld: Set<HTSimpleValueWithKey<Item>> = buildSet {
             add(RagiumItems.BAMBOO_CHARCOAL)
             add(RagiumItems.WITHER_DOLL)
 
@@ -177,7 +191,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         )
         generators.generateFlatItem(RagiumItems.MEMORY_DISC, template = ModelTemplates.MUSIC_DISC)
 
-        for ((machineType: HTMachineType, parts: HTSimpleDeferredItem) in RagiumItems.MACHINE_PARTS) {
+        for ((machineType: HTMachineType, parts: HTSimpleValueWithKey<Item>) in RagiumItems.MACHINE_PARTS) {
             generators.generateFlatItem(
                 parts,
                 layer = RagiumAPI.id(HTConstants.ITEM, "parts", machineType.materialName)

@@ -31,6 +31,7 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yieldAll(RagiumBlocks.ALL_DECORATIONS.flatMap { it.all })
 
             yieldAll(RagiumBlocks.MACHINES.values.flatten())
+            yield(RagiumBlocks.FREEZER)
             yield(RagiumBlocks.MACHINE_CASING)
             yieldAll(RagiumBlocks.MACHINE_CASINGS.values)
 

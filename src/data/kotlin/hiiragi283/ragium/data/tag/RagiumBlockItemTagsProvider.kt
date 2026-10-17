@@ -43,6 +43,7 @@ class RagiumBlockItemTagsProvider(factory: (BlockItemTag) -> HTBlockItemTagBuild
                 builder(HTMachineType.PREFIX, machineType).add(block)
             }
         }
+        builder(HTMachineType.PREFIX.rawCommonTag).add(RagiumBlocks.FREEZER)
         // Storage
         builder(RagiumTags.BlockItems.STORAGES_CREATIVE)
             .add(RagiumBlocks.CREATIVE_BATTERY)
