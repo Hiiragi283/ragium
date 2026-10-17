@@ -8,6 +8,7 @@ import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
@@ -20,6 +21,7 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
@@ -428,6 +430,38 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         calcium()
     }
 
+    private fun saltAndSolution(fluid: HTFluidContent, item: Holder<Item>) {
+        // Salt + Water -> Salt (aq)
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { items { +item } }
+            fluidIngredient { +waterSet() }
+            fluidResult { +fluid }
+        }.save(exporter)
+        // Salt (aq) -> Salt + Water
+        RagiumRecipeBuilders.refining {
+            ingredient { +holderSet(fluid) }
+            fluidResult { water() }
+            itemResult { +item }
+            recipeId suffix "_frm_solution"
+        }.save(exporter)
+    }
+
+    private fun saltAndSolution(fluid: HTFluidContent, material: RagiumMaterial) {
+        // Salt + Water -> Salt (aq)
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, material) }
+            fluidIngredient { +waterSet() }
+            fluidResult { +fluid }
+        }.save(exporter)
+        // Salt (aq) -> Salt + Water
+        RagiumRecipeBuilders.refining {
+            ingredient { +holderSet(fluid) }
+            fluidResult { water() }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, material) }
+            recipeId suffix "_frm_solution"
+        }.save(exporter)
+    }
+
     private fun nitrogen() {
         // 1/2 H2SO4 + KNO3 -> HNO3
         RagiumRecipeBuilders.mixing {
@@ -484,6 +518,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun sodium() {
+        // NaOH (aq)
+        saltAndSolution(RagiumFluids.NAOH_SOLUTION, RagiumItems.SODIUM_HYDROXIDE)
+
         // Dried Kelp -> Na2CO3
         VanillaRecipeBuilders.smeltingAndBlasting(exporter) {
             ingredient { items { +Items.DRIED_KELP } }
@@ -689,13 +726,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun chlorine() {
-        // NaCl(aq) -> H2O + NaCl
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.SALT_WATER) }
-            fluidResult { water() }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SALT) }
-            recipeId replace RagiumFluids.SALT_WATER.id()
-        }.save(exporter)
+        // NaCl(aq)
+        saltAndSolution(RagiumFluids.SALT_WATER, RagiumMaterial.Mineral.SALT)
 
         // 2x NaCl + H2SO4 -> 2x HCl + Na2SO4
         RagiumRecipeBuilders.mixing {
@@ -740,6 +772,14 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // Cl2 + 2x NaOH(aq) -> 2x NaClO(aq) + H2
+        RagiumRecipeBuilders.reacting { 
+            ingredient { 
+                +holderSet(RagiumFluids.CHLORINE)
+                amount /= 2
+            }
+            ingredient { +holderSet(RagiumFluids.NAOH_SOLUTION) }
+            fluidResult { +RagiumFluids.BLEACH }
+        }.save(exporter)
     }
 
     private fun calcium() {

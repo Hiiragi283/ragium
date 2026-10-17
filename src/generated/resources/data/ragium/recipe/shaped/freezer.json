@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "#c:nuggets/black_steel",
+    "A": "#c:ingots/black_steel",
     "B": "#c:storage_blocks/copper",
     "C": "#c:gears/iron"
   },

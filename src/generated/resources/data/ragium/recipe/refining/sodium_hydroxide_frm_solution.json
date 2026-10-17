@@ -1,0 +1,18 @@
+{
+  "type": "ragium:refining",
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:sodium_hydroxide_solution"
+  },
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "minecraft:water"
+    },
+    "item": {
+      "count": 1,
+      "id": "ragium:sodium_hydroxide"
+    }
+  },
+  "time": 200
+}

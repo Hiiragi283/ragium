@@ -157,7 +157,7 @@ data object RagiumClient : HTClientMod() {
         }
         register.register(RagiumFluids.CHLORINE) {
             transparent()
-            colorTint(Color(0x99cc33))
+            colorTint(Color(0x66cc33))
         }
 
         register.register(RagiumFluids.WOOD_TAR) {
@@ -247,11 +247,11 @@ data object RagiumClient : HTClientMod() {
         }
         register.register(RagiumFluids.HYDROGEN_CHLORIDE) {
             transparent()
-            colorTint(Color(0x66cc33))
+            colorTint(Color(0x99cc66))
         }
         register.register(RagiumFluids.HYDROCHLORIC_ACID) {
             dull()
-            colorTint(Color(0x66cc33))
+            colorTint(Color(0x99cc66))
         }
         register.register(RagiumFluids.BLEACH) {
             dull()

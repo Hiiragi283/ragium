@@ -763,6 +763,10 @@
     "ragium:pitch_coke": {
       "chemical": "ragium:carbon",
       "scale": 1.0
+    },
+    "ragium:sodium_hydroxide": {
+      "chemical": "ragium:sodium_hydroxide",
+      "scale": 1.0
     }
   }
 }

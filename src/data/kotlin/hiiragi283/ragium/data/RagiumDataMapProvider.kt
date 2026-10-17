@@ -126,6 +126,10 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
                 RagiumItems.CRUDE_SILICON,
                 HTChemicalData(getter.getOrThrow(RagiumChemicals.SILICON), 1),
                 false
+            ).add(
+                RagiumItems.SODIUM_HYDROXIDE,
+                HTChemicalData(getter.getOrThrow(RagiumChemicals.SODIUM_HYDROXIDE), 1),
+                false
             )
 
         RagiumBlocks.MATERIAL_BLOCKS.forEach { (part: HTBlockPart, material: RagiumMaterial, _) ->
