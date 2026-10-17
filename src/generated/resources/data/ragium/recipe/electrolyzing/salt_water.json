@@ -5,17 +5,19 @@
     "fluids": "#c:salt_water"
   },
   "result": {
+    "fluids": [
+      {
+        "amount": 500,
+        "id": "ragium:hydrogen"
+      },
+      {
+        "amount": 500,
+        "id": "ragium:chlorine"
+      }
+    ],
     "item": {
       "count": 1,
       "id": "ragium:sodium_hydroxide"
-    },
-    "left": {
-      "amount": 500,
-      "id": "ragium:hydrogen"
-    },
-    "right": {
-      "amount": 500,
-      "id": "ragium:chlorine"
     }
   },
   "time": 200

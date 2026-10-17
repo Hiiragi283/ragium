@@ -1,42 +1,42 @@
 @file:OptIn(ExperimentalContracts::class)
 
-package hiiragi283.ragium.api.data.recipe.builder
+package hiiragi283.lib.data.recipe.builder
 
-import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
+import hiiragi283.lib.collection.Nel
+import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
 import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
+import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
+import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
-import hiiragi283.ragium.api.RagiumConstants
-import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.crafting.Recipe
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class RTElectrolyzingRecipeBuilder : HTProgressRecipeBuilder<RTElectrolyzingRecipe>(RagiumConstants.ELECTROLYZING) {
-    override fun getRecipeId(): Identifier? = null
+class HTFluidSeparatingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
+    HTProgressRecipeBuilder<RECIPE>(prefix) {
+    override fun getRecipeId(): Identifier? = fluidResults.first().getId()
 
-    override fun createRecipe(): RTElectrolyzingRecipe = RTElectrolyzingRecipe(
-        fluidIngredient,
-        RTElectrolyzingRecipe.Result(
-            fluidResults[0],
-            fluidResults[1],
-            itemResult
-        ),
+    override fun createRecipe(): RECIPE = factory.create(
+        ingredient,
+        fluidResults.toNel(),
+        itemResult,
         progressData
     )
 
     // Ingredient
-    @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
+    @PublishedApi internal var ingredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
     operator fun HTFluidIngredient.unaryPlus() {
-        fluidIngredient = this
+        ingredient = this
     }
 
     inline fun ingredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
@@ -71,5 +71,31 @@ class RTElectrolyzingRecipeBuilder : HTProgressRecipeBuilder<RTElectrolyzingReci
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         +HTFluidResultBuilder.build(builderAction)
+    }
+
+    //    Factory    //
+
+    /**
+     * @param RECIPE 生成するレシピのクラス
+     * @author Hiiragi Tsubasa
+     * @since 26.1.11
+     */
+    fun interface Factory<out RECIPE : Any> {
+        fun create(
+            ingredient: HTFluidIngredient,
+            fluids: Nel<HTFluidResult>,
+            item: Optional<HTItemResult>,
+            progressData: HTProgressData
+        ): RECIPE = create(
+            ingredient,
+            HTFluidSeparatingRecipe.Result(fluids, item),
+            progressData
+        )
+
+        fun create(
+            ingredient: HTFluidIngredient,
+            result: HTFluidSeparatingRecipe.Result,
+            progressData: HTProgressData
+        ): RECIPE
     }
 }

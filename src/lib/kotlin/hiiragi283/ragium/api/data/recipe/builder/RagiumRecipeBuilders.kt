@@ -2,7 +2,7 @@
 
 package hiiragi283.ragium.api.data.recipe.builder
 
-import hiiragi283.lib.data.recipe.builder.HTFluidToItemAndFluidRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTFluidSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemOrFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
@@ -22,6 +22,7 @@ import hiiragi283.ragium.api.recipe.RTBrewingRecipe
 import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
+import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTEngravingRecipe
 import hiiragi283.ragium.api.recipe.RTExchangingRecipe
@@ -143,12 +144,12 @@ data object RagiumRecipeBuilders {
 
     @JvmStatic
     inline fun refining(
-        builderAction: HTFluidToItemAndFluidRecipeBuilder<RTRefiningRecipe>.() -> Unit
-    ): HTFluidToItemAndFluidRecipeBuilder<RTRefiningRecipe> {
+        builderAction: HTFluidSeparatingRecipeBuilder<RTRefiningRecipe>.() -> Unit
+    ): HTFluidSeparatingRecipeBuilder<RTRefiningRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTFluidToItemAndFluidRecipeBuilder(RagiumConstants.REFINING, ::RTRefiningRecipe).apply(builderAction)
+        return HTFluidSeparatingRecipeBuilder(RagiumConstants.REFINING, ::RTRefiningRecipe).apply(builderAction)
     }
 
     // Chemical
@@ -219,11 +220,16 @@ data object RagiumRecipeBuilders {
 
     // Electronics
     @JvmStatic
-    inline fun electrolyzing(builderAction: RTElectrolyzingRecipeBuilder.() -> Unit): RTElectrolyzingRecipeBuilder {
+    inline fun electrolyzing(
+        builderAction: HTFluidSeparatingRecipeBuilder<RTElectrolyzingRecipe>.() -> Unit
+    ): HTFluidSeparatingRecipeBuilder<RTElectrolyzingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTElectrolyzingRecipeBuilder().apply(builderAction)
+        return HTFluidSeparatingRecipeBuilder(
+            RagiumConstants.ELECTROLYZING,
+            ::RTElectrolyzingRecipe
+        ).apply(builderAction)
     }
 
     @JvmStatic

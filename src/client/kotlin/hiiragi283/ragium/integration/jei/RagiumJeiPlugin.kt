@@ -4,6 +4,7 @@ import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.integration.jei.HTJeiDrawables
 import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
+import hiiragi283.lib.integration.jei.category.HTFluidSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
@@ -24,7 +25,6 @@ import hiiragi283.ragium.integration.jei.advanced.HTPotionFluidRecipePlugin
 import hiiragi283.ragium.integration.jei.category.RTAlloyingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTAssemblingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTCentrifugingRecipeCategory
-import hiiragi283.ragium.integration.jei.category.RTElectrolyzingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTEnchantingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTEngravingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTFreezingRecipeCategory
@@ -144,7 +144,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumRecipeTypes.PYROLYZING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.PYROLYZER)
             ),
-            HTSingleToItemAndFluidRecipeCategory.FluidTo(
+            HTFluidSeparatingRecipeCategory(
                 RagiumJeiRecipeTypes.REFINING,
                 RagiumRecipeTypes.REFINING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.REFINERY)
@@ -155,7 +155,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumRecipeTypes.BATHING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.CHEMICAL_BATH)
             ),
-            RTElectrolyzingRecipeCategory(guiHelper),
+            HTFluidSeparatingRecipeCategory(
+                RagiumJeiRecipeTypes.ELECTROLYZING,
+                RagiumRecipeTypes.ELECTROLYZING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.ELECTROLYZER)
+            ),
             RTMixingRecipeCategory(guiHelper),
             RTReactingRecipeCategory(guiHelper),
             RTWashingRecipeCategory(guiHelper),

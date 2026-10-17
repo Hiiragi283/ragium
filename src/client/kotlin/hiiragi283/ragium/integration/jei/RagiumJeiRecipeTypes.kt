@@ -3,7 +3,7 @@ package hiiragi283.ragium.integration.jei
 import hiiragi283.lib.integration.jei.HTJeiRecipeHolder
 import hiiragi283.lib.integration.jei.HTRecipeHolderType
 import hiiragi283.lib.integration.jei.IRecipeType
-import hiiragi283.lib.recipe.base.HTFluidToRecipe
+import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
@@ -11,7 +11,6 @@ import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
-import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTEngravingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
@@ -59,7 +58,7 @@ data object RagiumJeiRecipeTypes {
     val PYROLYZING: HTRecipeHolderType<HTItemToRecipe.BasicItemAndFluid> = create(RagiumConstants.PYROLYZING)
 
     @JvmField
-    val REFINING: HTRecipeHolderType<HTFluidToRecipe.BasicItemAndFluid> = create(RagiumConstants.REFINING)
+    val REFINING: HTRecipeHolderType<HTFluidSeparatingRecipe> = create(RagiumConstants.REFINING)
 
     // Chemical
     @JvmField
@@ -83,7 +82,7 @@ data object RagiumJeiRecipeTypes {
 
     // Electronics
     @JvmField
-    val ELECTROLYZING: HTRecipeHolderType<RTElectrolyzingRecipe> = create(RagiumConstants.ELECTROLYZING)
+    val ELECTROLYZING: HTRecipeHolderType<HTFluidSeparatingRecipe> = create(RagiumConstants.ELECTROLYZING)
 
     @JvmField
     val ENGRAVING: HTRecipeHolderType<RTEngravingRecipe> = create(RagiumConstants.ENGRAVING)

@@ -21,7 +21,6 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
@@ -235,7 +234,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.ALCOHOL
                 amount = 500
             }
-            recipeId replace RagiumFluids.WOOD_TAR.id()
+            recipeId suffix "_from_wood_tar"
         }.save(exporter)
     }
 
@@ -277,7 +276,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.AROMATIC_COMPOUND
                 amount = 250
             }
-            recipeId replace RagiumFluids.COAL_TAR.id()
+            recipeId suffix "_from_coal_tar"
         }.save(exporter)
     }
 
@@ -312,7 +311,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount = 750
             }
             itemResult { +RagiumItems.TAR }
-            recipeId replace RagiumFluids.CRUDE_OIL.id()
+            recipeId suffix "_from_crude_oil"
         }.save(exporter)
 
         // Naphtha -> Fuel + Sulfur
@@ -323,7 +322,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.FUEL
                 amount = 500
             }
-            recipeId replace RagiumFluids.NAPHTHA.id()
+            recipeId suffix "_from_naphtha"
         }.save(exporter)
         // Naphtha + Redstone -> Anti-rust Oil
         RagiumRecipeBuilders.mixing {
@@ -430,7 +429,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         calcium()
     }
 
-    private fun saltAndSolution(fluid: HTFluidContent, item: Holder<Item>) {
+    private fun saltAndSolution(fluid: HTFluidContent, item: HTSimpleDeferredItem) {
         // Salt + Water -> Salt (aq)
         RagiumRecipeBuilders.mixing {
             itemIngredient { items { +item } }
@@ -442,7 +441,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             ingredient { +holderSet(fluid) }
             fluidResult { water() }
             itemResult { +item }
-            recipeId suffix "_frm_solution"
+            recipeId replace item.id.withSuffix("_from_solution")
         }.save(exporter)
     }
 
@@ -454,11 +453,12 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +fluid }
         }.save(exporter)
         // Salt (aq) -> Salt + Water
+        val item: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, material)
         RagiumRecipeBuilders.refining {
             ingredient { +holderSet(fluid) }
             fluidResult { water() }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, material) }
-            recipeId suffix "_frm_solution"
+            itemResult { +item }
+            recipeId replace item.id.withSuffix("_from_solution")
         }.save(exporter)
     }
 
@@ -535,7 +535,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount *= 2
             }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SODA_ASH) }
-            recipeId replace RagiumFluids.NAOH_SOLUTION.id()
+            recipeId replace id("soda_ash_dust")
         }.save(exporter)
         // SiO2 + Na2CO3 -> Glass
         RagiumRecipeBuilders.alloying {

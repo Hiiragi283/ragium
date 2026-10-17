@@ -5,14 +5,16 @@
     "fluids": "#c:water"
   },
   "result": {
-    "left": {
-      "amount": 1000,
-      "id": "ragium:hydrogen"
-    },
-    "right": {
-      "amount": 500,
-      "id": "ragium:oxygen"
-    }
+    "fluids": [
+      {
+        "amount": 1000,
+        "id": "ragium:hydrogen"
+      },
+      {
+        "amount": 500,
+        "id": "ragium:oxygen"
+      }
+    ]
   },
   "time": 200
 }
