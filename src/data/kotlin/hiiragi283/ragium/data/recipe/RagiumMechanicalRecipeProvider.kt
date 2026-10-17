@@ -418,6 +418,15 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 result { +item }
             }.save(exporter)
         }
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.CARBON)
+                count = 64
+            }
+            result { +Items.DIAMOND }
+            time *= 4
+            recipeId suffix "_from_carbon"
+        }.save(exporter)
 
         // 4x Blaze Powder -> Blaze Rod
         RagiumRecipeBuilders.compressing {
