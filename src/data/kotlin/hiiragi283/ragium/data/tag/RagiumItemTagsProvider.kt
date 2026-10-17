@@ -88,9 +88,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
                 builder(RagiumTags.Items.SMELTING_FLUXES).addTag(prefix.itemTagKey(gem))
             }
         }
-        builder(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)
-            .add(RagiumBlocks.FLUID_OUTPUT_BUS)
-            .apply { RagiumBlocks.TANKS.forEach { add(it) } }
+        RagiumBlocks.TANKS.forEach { builder(RagiumTags.Items.SHOW_FLUID_TOOLTIPS).add(it) }
         builder(RagiumTags.Items.SUPPORT_UPGRADES)
             .add(RagiumBlocks.TANK)
             .add(RagiumBlocks.POTION_TANK)

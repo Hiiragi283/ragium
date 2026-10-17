@@ -26,7 +26,6 @@ import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.util.HTStorageHelper
-import hiiragi283.ragium.common.block.entity.HTFluidStorageBlock
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock
 import hiiragi283.ragium.common.block.storage.HTPotionTankBlock
@@ -361,14 +360,6 @@ data object RagiumBlocks {
             }
         )
 
-    //    Bus    //
-
-    @JvmField
-    val FLUID_OUTPUT_BUS: HTBasicDeferredBlockAndItem<HTFluidStorageBlock> = registerMachine(
-        RagiumBlockEntityTypes.FLUID_OUTPUT_BUS,
-        ::HTFluidStorageBlock
-    )
-
     //    Storage    //
 
     // Tank
@@ -447,14 +438,6 @@ data object RagiumBlocks {
             VOID_TANK.getOrThrow()
         )
         // Item
-        event.registerItem(
-            HTFluidCapabilities.item,
-            { _, access ->
-                HTItemAccessFluidHandler.output(access, RagiumConfig.SERVER.tankCapacity.asInt)
-            },
-            FLUID_OUTPUT_BUS
-        )
-
         event.registerItem(
             HTFluidCapabilities.item,
             { _, access ->

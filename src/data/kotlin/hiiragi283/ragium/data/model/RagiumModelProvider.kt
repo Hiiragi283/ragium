@@ -115,8 +115,6 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         for ((machineType: HTMachineType, block: HTSimpleValueWithKey<Block>) in RagiumBlocks.MACHINE_CASINGS) {
             generators.createSimple(block, ModelTemplates.CUBE_TOP, textureMapping(machineType))
         }
-        // Bus
-        generators.createTrivialBlock(RagiumBlocks.FLUID_OUTPUT_BUS.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
         // Storage
         for (blockItem: HTSimpleValueWithKey<Block> in RagiumBlocks.TANKS) {
             generators.createTrivialBlock(blockItem.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)

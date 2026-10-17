@@ -496,12 +496,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +RagiumBlocks.FREEZER }
         }.save(exporter)
 
-        // Bus
-        VanillaRecipeBuilders.shapeless {
-            ingredient { items { +RagiumBlocks.MACHINE_CASING } }
-            ingredient { items { +RagiumBlocks.TANK } }
-            result { +RagiumBlocks.FLUID_OUTPUT_BUS }
-        }.save(exporter)
         // Decoration
         VanillaRecipeBuilders.shaped {
             +"ABA"

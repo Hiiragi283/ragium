@@ -30,7 +30,6 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
         add(RagiumBlocks.FREEZER, ::copyComponent)
         // Storage
         listOf(
-            RagiumBlocks.FLUID_OUTPUT_BUS,
             RagiumBlocks.TANK,
             RagiumBlocks.POTION_TANK,
             RagiumBlocks.CREATIVE_TANK

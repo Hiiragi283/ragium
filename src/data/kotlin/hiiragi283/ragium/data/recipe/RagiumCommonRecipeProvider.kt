@@ -743,16 +743,16 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
         RagiumRecipeBuilders.electrolyzing {
             ingredient { +holderSet(RagiumFluids.SALT_WATER) }
-            result {
+            fluidResult {
                 +RagiumFluids.HYDROGEN
                 amount /= 2
             }
-            result {
+            fluidResult {
                 +RagiumFluids.CHLORINE
                 amount /= 2
             }
-            result { +RagiumFluids.NAOH_SOLUTION }
-            recipeId suffix "_from_salt_water"
+            itemResult { +RagiumItems.SODIUM_HYDROXIDE }
+            recipeId replace id("salt_water")
         }.save(exporter)
 
         // H2 + Cl2 -> 2x HCl
@@ -772,8 +772,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // Cl2 + 2x NaOH(aq) -> 2x NaClO(aq) + H2
-        RagiumRecipeBuilders.reacting { 
-            ingredient { 
+        RagiumRecipeBuilders.reacting {
+            ingredient {
                 +holderSet(RagiumFluids.CHLORINE)
                 amount /= 2
             }

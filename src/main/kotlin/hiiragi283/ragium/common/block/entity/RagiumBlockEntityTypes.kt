@@ -33,7 +33,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTUpgradeStationBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTFluidOutputBusBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTPotionTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import net.minecraft.core.Direction
@@ -140,12 +139,6 @@ data object RagiumBlockEntityTypes {
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
         registerTick(RagiumConstants.ENCHANTER, ::HTEnchanterBlockEntity)
 
-    //    Bus    //
-
-    @JvmField
-    val FLUID_OUTPUT_BUS: HTDeferredBlockEntityType<HTFluidOutputBusBlockEntity> =
-        registerTick("fluid_output_bus", ::HTFluidOutputBusBlockEntity)
-
     //    Storage    //
 
     // Tank
@@ -225,8 +218,6 @@ data object RagiumBlockEntityTypes {
         registerProcessor(ELECTROLYZER.get())
 
         registerProcessor(ENCHANTER.get())
-        // Bus
-        registerBlockEntity(FLUID_OUTPUT_BUS.get())
         // Storage
         registerBlockEntity(TANK.get())
         registerBlockEntity(POTION_TANK.get())

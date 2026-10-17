@@ -17,7 +17,7 @@ class RTFreezingRecipeCategory(guiHelper: IGuiHelper) :
         RTFreezingRecipe.CODEC
     ) {
     override fun setInput(builder: IRecipeSlotBuilder, recipe: RTFreezingRecipe) {
-        builder.add(recipe.result)
+        builder.add(recipe.ingredient)
     }
 
     override fun setOutput(builder: IRecipeSlotBuilder, recipe: RTFreezingRecipe) {

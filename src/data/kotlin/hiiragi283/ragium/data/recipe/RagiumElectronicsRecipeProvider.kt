@@ -21,12 +21,12 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         // 2x H2O -> 2x H2 + O2
         RagiumRecipeBuilders.electrolyzing {
             ingredient { +waterSet() }
-            result { +RagiumFluids.HYDROGEN }
-            result {
+            fluidResult { +RagiumFluids.HYDROGEN }
+            fluidResult {
                 +RagiumFluids.OXYGEN
                 amount /= 2
             }
-            recipeId suffix "_from_water"
+            recipeId replace id("water")
         }.save(exporter)
     }
 

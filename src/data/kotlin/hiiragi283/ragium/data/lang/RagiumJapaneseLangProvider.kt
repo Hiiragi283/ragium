@@ -68,8 +68,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
 
-        add(RagiumBlocks.FLUID_OUTPUT_BUS, "液体搬出バス")
-
         add(RagiumBlocks.TANK, "可変タンク")
         add(RagiumBlocks.POTION_TANK, "ポーションタンク")
         add(RagiumBlocks.VOID_TANK, "廃棄タンク")
