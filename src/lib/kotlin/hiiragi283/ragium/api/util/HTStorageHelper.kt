@@ -24,7 +24,6 @@ import net.minecraft.world.level.redstone.Redstone
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.transfer.access.ItemAccess
-import java.util.function.Consumer
 import kotlin.math.roundToInt
 
 /**
@@ -107,10 +106,10 @@ data object HTStorageHelper {
     }
 
     @JvmStatic
-    fun addEnergyTooltip(handler: HTEnergyHandler, consumer: Consumer<Text>, isCreative: Boolean) {
+    inline fun addEnergyTooltip(handler: HTEnergyHandler, consumer: (Text) -> Unit, isCreative: Boolean) {
         // Empty name if amount is not positive
         if (handler.isEmpty) {
-            consumer.accept(HTCommonTranslation.EMPTY.translate())
+            consumer(HTCommonTranslation.EMPTY.translate())
             return
         }
         // Fluid Name and Amount
@@ -118,9 +117,9 @@ data object HTStorageHelper {
             isCreative -> HTCommonTranslation.STORED_FE.translate(HTCommonTranslation.INFINITE)
 
             else -> HTCommonTranslation.STORED_FE.translate(
-                HTCommonTranslation.FRACTION.translate(handler.amountAsInt, handler.amountAsLong)
+                HTCommonTranslation.FRACTION.translate(handler.amountAsInt, handler.capacityAsLong)
             )
-        }.let(consumer::accept)
+        }.let(consumer)
     }
 
     @JvmStatic
@@ -174,16 +173,16 @@ data object HTStorageHelper {
     }
 
     @JvmStatic
-    fun addFluidTooltip(
+    inline fun addFluidTooltip(
         stack: FluidStack,
-        consumer: Consumer<Text>,
+        consumer: (Text) -> Unit,
         context: Item.TooltipContext,
         flag: TooltipFlag,
         isCreative: Boolean
     ) {
         // Empty name if stack is empty
         if (stack.isEmpty) {
-            consumer.accept(HTCommonTranslation.EMPTY.translate())
+            consumer(HTCommonTranslation.EMPTY.translate())
             return
         }
         // Fluid Name and Amount
@@ -191,7 +190,7 @@ data object HTStorageHelper {
             HTCommonTranslation.STORED.translate(stack, HTCommonTranslation.INFINITE)
         } else {
             HTCommonTranslation.STORED_MB.translate(stack, stack.amount)
-        }.let(consumer::accept)
+        }.let(consumer)
         // Default Fluid Tooltips
         val tooltips: MutableList<Text> = stack.getTooltipLines(context, context.player(), flag)
         tooltips.removeFirst() // remove fluid name
@@ -204,7 +203,7 @@ data object HTStorageHelper {
             .let(HTTextUtil::getModNameText)
             .withStyle(ChatFormatting.BLUE)
             .withStyle(ChatFormatting.ITALIC)
-            .let(consumer::accept)
+            .let(consumer)
     }
 
     @JvmStatic

@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.gui.widget
 
 import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.widget.HTAbstractWidget
+import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetType
 import net.minecraft.resources.Identifier
 
@@ -14,6 +15,10 @@ class HTTextureWidget : HTAbstractWidget {
 
     constructor(textureId: Identifier, bounds: HTBounds) : super(bounds) {
         this.textureId = textureId
+    }
+
+    override fun onInit(access: HTWidget.Access) {
+        access.isActive = false
     }
 
     override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.TEXTURE.get()

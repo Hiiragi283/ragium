@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.gui.widget
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.widget.HTAbstractWidget
+import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.resources.Identifier
@@ -39,6 +40,10 @@ class HTProgressWidget : HTAbstractWidget {
     fun setDirection(direction: HTFillDirection): HTProgressWidget = apply { this.fillDirection = direction }
 
     fun getProgress(): Float = progressGetter()
+
+    override fun onInit(access: HTWidget.Access) {
+        access.isActive = false
+    }
 
     override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.PROGRESS.get()
 
