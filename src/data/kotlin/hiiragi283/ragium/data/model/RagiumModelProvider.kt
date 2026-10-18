@@ -175,7 +175,6 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
             remove(RagiumItems.MEMORY_DISC)
 
-            removeAll(RagiumItems.MACHINE_PARTS.values)
             removeAll(handheld)
         }.forEach { generators.generateFlatItem(it) }
 
@@ -188,12 +187,5 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             layer = vanillaId(HTConstants.ITEM, "lingering_potion")
         )
         generators.generateFlatItem(RagiumItems.MEMORY_DISC, template = ModelTemplates.MUSIC_DISC)
-
-        for ((machineType: HTMachineType, parts: HTSimpleValueWithKey<Item>) in RagiumItems.MACHINE_PARTS) {
-            generators.generateFlatItem(
-                parts,
-                layer = RagiumAPI.id(HTConstants.ITEM, "parts", machineType.materialName)
-            )
-        }
     }
 }

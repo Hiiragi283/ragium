@@ -50,6 +50,14 @@ data object RagiumItems {
         REGISTER.addAlias("cfrp_plate", "plastic_plate")
         REGISTER.addAlias("quartz_dust", "silica_dust")
         REGISTER.addAlias("amethyst_dust", "silica_dust")
+        REGISTER.addAlias("blank_mold", "mold/blank")
+        REGISTER.addAlias("ball_mold", "mold/ball")
+        REGISTER.addAlias("block_mold", "mold/block")
+        REGISTER.addAlias("plate_mold", "mold/plate")
+        HTMachineType.entries.forEach { machineType: HTMachineType ->
+            val name: String = machineType.materialName
+            REGISTER.addAlias("${name}_machine_parts", "machine_parts/$name")
+        }
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -216,7 +224,7 @@ data object RagiumItems {
     @JvmField
     val MACHINE_PARTS: Map<HTMachineType, HTSimpleDeferredItem> = HTMachineType.entries
         .associateWithTo(mutableEnumMapOf()) { machineType: HTMachineType ->
-            REGISTER.registerSimpleItem("${machineType.materialName}_machine_parts")
+            REGISTER.registerSimpleItem("machine_parts/${machineType.materialName}")
         }
 
     @JvmStatic
@@ -228,16 +236,16 @@ data object RagiumItems {
 
     // Heat
     @JvmField
-    val BLANK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_mold") { it.stacksTo(1) }
+    val BLANK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("mold/blank") { it.stacksTo(1) }
 
     @JvmField
-    val BALL_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ball_mold") { it.stacksTo(1) }
+    val BALL_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("mold/ball") { it.stacksTo(1) }
 
     @JvmField
-    val BLOCK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("block_mold") { it.stacksTo(1) }
+    val BLOCK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("mold/block") { it.stacksTo(1) }
 
     @JvmField
-    val PLATE_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plate_mold") { it.stacksTo(1) }
+    val PLATE_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("mold/plate") { it.stacksTo(1) }
 
     @JvmField
     val MOLDS: Set<HTSimpleDeferredItem> = setOf(BLANK_MOLD, BALL_MOLD, BLOCK_MOLD, PLATE_MOLD)

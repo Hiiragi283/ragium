@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "ragium:item/machine_parts/heat"
+  }
+}

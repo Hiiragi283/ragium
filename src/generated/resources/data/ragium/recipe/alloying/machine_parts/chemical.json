@@ -1,0 +1,28 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "ragium:machine_parts/heat"
+    },
+    {
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/gold",
+          "c:ingots/gold"
+        ]
+      }
+    },
+    {
+      "count": 1,
+      "items": "#c:dusts/glowstone"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:machine_parts/chemical"
+  },
+  "time": 200
+}
