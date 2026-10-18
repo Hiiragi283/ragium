@@ -1,7 +1,6 @@
 {
   "values": [
     "ragium:brewery",
-    "ragium:gas_collector",
     "ragium:planter",
     "ragium:resource_pump"
   ]

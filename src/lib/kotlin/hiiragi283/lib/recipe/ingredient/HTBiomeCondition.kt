@@ -6,6 +6,7 @@ import hiiragi283.lib.recipe.display.SlotDisplay
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.toText
+import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponents
@@ -15,8 +16,8 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.display.SlotDisplay
+import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.biome.Biome
-import net.minecraft.world.level.block.state.pattern.BlockInWorld
 import java.util.function.Predicate
 
 /**
@@ -49,7 +50,7 @@ data class HTBiomeCondition(val biomes: HolderSet<Biome>) : Predicate<Holder<Bio
 
     val isEmpty: Boolean get() = this@HTBiomeCondition.biomes.size() == 0
 
-    fun test(blockInWorld: BlockInWorld): Boolean = test(blockInWorld.level.getBiome(blockInWorld.pos))
+    fun test(level: LevelReader, pos: BlockPos): Boolean = test(level.getBiome(pos))
 
     override fun test(biome: Holder<Biome>): Boolean = biome in this@HTBiomeCondition.biomes
 

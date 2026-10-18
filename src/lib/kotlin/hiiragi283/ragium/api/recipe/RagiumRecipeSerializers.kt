@@ -113,10 +113,6 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.PLANTING, RTPlantingRecipe.SERIALIZER)
 
     @JvmField
-    val COLLECTING: RecipeSerializer<RTCollectingRecipe> =
-        register(RagiumConstants.COLLECTING, RTCollectingRecipe.SERIALIZER)
-
-    @JvmField
     val RESOURCE_PUMPING: RecipeSerializer<RTResourcePumpingRecipe> =
         register(RagiumConstants.RESOURCE_PUMPING, RTResourcePumpingRecipe.SERIALIZER)
 

@@ -92,9 +92,6 @@ data object RagiumRecipeLookups {
     val PLANTING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.PLANTING)
 
     @JvmField
-    val COLLECTING: HTRecipeLookup<RTCollectingRecipe> = create(RagiumRecipeTypes.COLLECTING)
-
-    @JvmField
     val RESOURCE_PUMPING: HTRecipeLookup<RTResourcePumpingRecipe> = create(RagiumRecipeTypes.RESOURCE_PUMPING)
 
     // Electronics

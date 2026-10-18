@@ -32,7 +32,6 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
         planting()
 
         resourcePumping()
-        gasCollecting()
     }
 
     private fun brewing() {
@@ -271,22 +270,6 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             recipeId suffix "_at_soul_sand_valley"
         }.save(exporter)
-    }
-
-    private fun gasCollecting() {
-        // Overworld -> N2
-        RagiumRecipeBuilders.gasCollecting {
-            biomes { +holderSet(Tags.Biomes.IS_OVERWORLD) }
-            result { +RagiumFluids.NITROGEN }
-            time /= 5
-        }.save(exporter)
-        // Nether -> SO2
-        RagiumRecipeBuilders.gasCollecting {
-            biomes { +holderSet(Tags.Biomes.IS_NETHER) }
-            result { +RagiumFluids.SULFUR_DIOXIDE }
-            time /= 5
-        }.save(exporter)
-        // The End -> He
     }
 
     override fun getName(): String = "Bio Recipes"

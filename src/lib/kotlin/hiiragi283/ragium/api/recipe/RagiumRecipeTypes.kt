@@ -93,9 +93,6 @@ data object RagiumRecipeTypes {
     val PLANTING: RecipeType<RTPlantingRecipe> = create(RagiumConstants.PLANTING)
 
     @JvmField
-    val COLLECTING: RecipeType<RTCollectingRecipe> = create(RagiumConstants.COLLECTING)
-
-    @JvmField
     val RESOURCE_PUMPING: RecipeType<RTResourcePumpingRecipe> = create(RagiumConstants.RESOURCE_PUMPING)
 
     // Electronics

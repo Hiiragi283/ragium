@@ -20,7 +20,6 @@ import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
 import hiiragi283.ragium.api.recipe.RTBrewingRecipe
-import hiiragi283.ragium.api.recipe.RTCollectingRecipe
 import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
@@ -219,17 +218,6 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTSingleRecipeBuilder.Basic(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
-    }
-
-    @JvmStatic
-    inline fun gasCollecting(
-        builderAction: HTLocationToFluidRecipeBuilder<RTCollectingRecipe>.() -> Unit
-    ): HTLocationToFluidRecipeBuilder<RTCollectingRecipe> {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTLocationToFluidRecipeBuilder(RagiumConstants.COLLECTING, ::RTCollectingRecipe)
-            .apply(builderAction)
     }
 
     @JvmStatic

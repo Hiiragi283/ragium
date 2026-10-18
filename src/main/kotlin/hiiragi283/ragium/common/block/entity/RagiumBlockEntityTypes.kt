@@ -23,7 +23,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTElectrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTGasCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
@@ -132,10 +131,6 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.PLANTER, ::HTPlanterBlockEntity)
 
     @JvmField
-    val GAS_COLLECTOR: HTDeferredBlockEntityType<HTGasCollectorBlockEntity> =
-        registerTick(RagiumConstants.GAS_COLLECTOR, ::HTGasCollectorBlockEntity)
-
-    @JvmField
     val RESOURCE_PUMP: HTDeferredBlockEntityType<HTResourcePumpBlockEntity> =
         registerTick(RagiumConstants.RESOURCE_PUMP, ::HTResourcePumpBlockEntity)
 
@@ -224,7 +219,6 @@ data object RagiumBlockEntityTypes {
 
         registerProcessor(BREWERY.get())
         registerProcessor(PLANTER.get())
-        registerProcessor(GAS_COLLECTOR.get())
         registerProcessor(RESOURCE_PUMP.get())
 
         registerProcessor(ELECTROLYZER.get())

@@ -81,9 +81,6 @@ data object RagiumJeiRecipeTypes {
     val PLANTING: HTRecipeHolderType<RTPlantingRecipe> = create(RagiumConstants.PLANTING)
 
     @JvmField
-    val COLLECTING: HTRecipeHolderType<HTLocationToRecipe.BasicFluid> = create(RagiumConstants.COLLECTING)
-
-    @JvmField
     val RESOURCE_PUMPING: HTRecipeHolderType<HTLocationToRecipe.BasicFluid> = create(RagiumConstants.RESOURCE_PUMPING)
 
     // Electronics

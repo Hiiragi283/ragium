@@ -35,7 +35,6 @@ data object RagiumConstants {
 
     const val RESOURCE_MINER = "resource_miner"
     const val RESOURCE_PUMP = "resource_pump"
-    const val GAS_COLLECTOR = "gas_collector"
 
     // Electronics
     const val BLENDER = "blender"
@@ -78,7 +77,6 @@ data object RagiumConstants {
 
     const val RESOURCE_MINING = "resource/mining"
     const val RESOURCE_PUMPING = "resource/pumping"
-    const val COLLECTING = "collecting"
 
     // Electronics
     const val ELECTROLYZING = "electrolyzing"

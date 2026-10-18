@@ -1,9 +1,0 @@
-{
-  "type": "ragium:collecting",
-  "condition": "#c:is_overworld",
-  "result": {
-    "amount": 1000,
-    "id": "ragium:nitrogen"
-  },
-  "time": 40
-}

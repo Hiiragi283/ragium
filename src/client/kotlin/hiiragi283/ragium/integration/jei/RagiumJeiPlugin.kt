@@ -166,11 +166,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             ),
             RTPlantingRecipeCategory(guiHelper),
             HTLocationToFluidRecipeCategory(
-                RagiumJeiRecipeTypes.COLLECTING,
-                RagiumRecipeTypes.COLLECTING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.GAS_COLLECTOR)
-            ),
-            HTLocationToFluidRecipeCategory(
                 RagiumJeiRecipeTypes.RESOURCE_PUMPING,
                 RagiumRecipeTypes.RESOURCE_PUMPING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.RESOURCE_PUMP)
@@ -216,7 +211,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeLookups.ELECTROLYZING
         )
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ENGRAVING, RagiumRecipeLookups.ENGRAVING)
-        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.COLLECTING, RagiumRecipeLookups.COLLECTING)
         HTJeiRecipeHelper.addRecipes(
             registration,
             RagiumJeiRecipeTypes.RESOURCE_PUMPING,
@@ -350,7 +344,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Resource
         registration.addCraftingStation(RagiumJeiRecipeTypes.BREWING, RagiumBlocks.BREWERY)
         registration.addCraftingStation(RagiumJeiRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
-        registration.addCraftingStation(RagiumJeiRecipeTypes.COLLECTING, RagiumBlocks.GAS_COLLECTOR)
         registration.addCraftingStation(RagiumJeiRecipeTypes.RESOURCE_PUMPING, RagiumBlocks.RESOURCE_PUMP)
         // Electronics
         registration.addCraftingStation(RagiumJeiRecipeTypes.ENGRAVING, RagiumBlocks.ENGRAVER)

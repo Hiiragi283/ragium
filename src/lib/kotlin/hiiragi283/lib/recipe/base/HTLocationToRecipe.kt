@@ -19,6 +19,12 @@ import java.util.function.BiFunction
  * @author Hiiragi Tsubasa
  * @since 26.1.11
  */
+typealias HTLocationToFluidRecipe = HTLocationToRecipe<FluidStack>
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.11
+ */
 interface HTLocationToRecipe<OUTPUT : Any> :
     HTRecipePredicates.DoubleInput<HTLocationRecipeInput, ServerLevel, BlockPos>,
     HTRecipeFactory<HTLocationRecipeInput, OUTPUT>,
@@ -65,7 +71,7 @@ interface HTLocationToRecipe<OUTPUT : Any> :
 
         override fun matches(input: HTLocationRecipeInput): Boolean = test(input.level, input.pos)
 
-        override fun test(first: ServerLevel, second: BlockPos): Boolean = condition.test(first.getBiome(second))
+        override fun test(first: ServerLevel, second: BlockPos): Boolean = condition.test(first, second)
 
         override fun produce(input: HTLocationRecipeInput): FluidStack = result.create()
 

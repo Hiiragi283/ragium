@@ -152,10 +152,6 @@ data object RagiumConfig {
             val resourcePump: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.RESOURCE_PUMP, 32)
 
-            @JvmField
-            val gasCollector: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.GAS_COLLECTOR)
-
             // Electronics
             @JvmField
             val blender: HTEnergyConfig =

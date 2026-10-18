@@ -1,9 +1,0 @@
-{
-  "type": "ragium:collecting",
-  "condition": "#c:is_nether",
-  "result": {
-    "amount": 1000,
-    "id": "ragium:sulfur_dioxide"
-  },
-  "time": 40
-}

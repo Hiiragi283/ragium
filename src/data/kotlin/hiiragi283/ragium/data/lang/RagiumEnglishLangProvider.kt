@@ -64,7 +64,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.PLANTER, "Planter")
-        add(RagiumBlocks.GAS_COLLECTOR, "Gas Collector")
         add(RagiumBlocks.RESOURCE_PUMP, "Resource Pump")
 
         add(RagiumBlocks.BLENDER, "Blender")
@@ -208,7 +207,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         addRecipeType(RagiumRecipeTypes.BREWING, "Brewing")
         addRecipeType(RagiumRecipeTypes.PLANTING, "Planting")
-        addRecipeType(RagiumRecipeTypes.COLLECTING, "Gas Collecting")
         addRecipeType(RagiumRecipeTypes.RESOURCE_PUMPING, "Resource Pumping")
 
         addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
