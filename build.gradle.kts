@@ -127,14 +127,13 @@ repositories {
     maven(url = "https://maven.shadowsoffire.dev/releases") // HNN
     maven(url = "https://maven.su5ed.dev/releases") // FFAPI
     maven(url = "https://maven.tamaized.com/releases") // Twilight
-    maven(url = "https://maven.teamresourceful.com/repository/maven-public/") // Athena
+    maven(url = "https://maven.teamresourceful.com/repository/maven-public/") // Athena, KFF
     maven(url = "https://maven.terraformersmc.com/") // EMI
     maven(url = "https://maven.theillusivec4.top/") // Curios
     maven(url = "https://maven.wispforest.io/releases") // Accessories
     maven(url = "https://modmaven.dev/") // AU, Mekanism, MI, PnC, Oritech
     maven(url = "https://mvn.devos.one/snapshots") // Registrate
     maven(url = "https://registry.somethingcatchy.net/repository/maven-releases/") // Moonlight
-    maven(url = "https://thedarkcolour.github.io/KotlinForForge/") // KFF
 
     maven(url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/") {
         content { includeGroup("software.bernie.geckolib") } // GeckoLib
