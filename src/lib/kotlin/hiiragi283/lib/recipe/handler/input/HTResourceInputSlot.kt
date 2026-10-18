@@ -1,4 +1,4 @@
-package hiiragi283.lib.recipe.handler
+package hiiragi283.lib.recipe.handler.input
 
 import hiiragi283.lib.transfer.HTResourceSlot
 import hiiragi283.lib.transfer.HTTransferAccess

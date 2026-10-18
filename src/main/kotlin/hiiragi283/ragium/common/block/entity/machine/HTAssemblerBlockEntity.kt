@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
     HTSizedShapelessBlockEntity(RagiumBlockEntityTypes.ASSEMBLER.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.ASSEMBLING,
         HTSoundInstance(SoundEvents.CRAFTER_CRAFT)
     )

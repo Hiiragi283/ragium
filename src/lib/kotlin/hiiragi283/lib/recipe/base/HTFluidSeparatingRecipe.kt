@@ -6,7 +6,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.data.recipe.builder.HTFluidSeparatingRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.input.HTRecipeInput
+import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.createOrEmpty
@@ -27,7 +27,7 @@ open class HTFluidSeparatingRecipe(
     override val progressData: HTProgressData
 ) : HTRecipePredicates.SingleFluid,
     HTRecipeFactories.SingleFluidTo<HTFluidSeparatingRecipe.Output>,
-    HTProgressRecipe.Simple<HTRecipeInput> {
+    HTProgressRecipe.Simple<HTSingleFluidRecipeInput> {
     companion object {
         @JvmStatic
         fun <RECIPE : HTFluidSeparatingRecipe> codec(

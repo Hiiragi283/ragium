@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTResourcePumpBlockEntity(pos: BlockPos, state: BlockState) :
     HTLocationToFluidBlockEntity(RagiumBlockEntityTypes.RESOURCE_PUMP.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.RESOURCE_PUMPING,
         HTSoundInstance(SoundEvents.BUCKET_FILL)
     )

@@ -7,7 +7,6 @@ import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -16,6 +15,7 @@ import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
@@ -25,8 +25,8 @@ data class RTEnchantingRecipe(
     val result: HTItemResult,
     override val progressData: HTProgressData
 ) : HTDoubleItemToItemRecipe,
-    HTProgressRecipe.Simple<HTRecipeInput>,
-    HTSerializableRecipe<HTRecipeInput> {
+    HTProgressRecipe.Simple<RecipeInput>,
+    HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField
         val BOOK_INGREDIENT = HTItemIngredient(Ingredient.of(Items.BOOK), 1)

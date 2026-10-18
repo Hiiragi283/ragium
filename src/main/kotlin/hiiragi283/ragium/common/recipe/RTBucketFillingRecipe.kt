@@ -5,14 +5,14 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
-import hiiragi283.lib.recipe.input.HTRecipeInput
+import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 
-data object RTBucketFillingRecipe : HTItemAndFluidToItemRecipe, HTProgressRecipe.Simple<HTRecipeInput> {
+data object RTBucketFillingRecipe : HTItemAndFluidToItemRecipe, HTProgressRecipe.Simple<HTItemAndFluidRecipeInput> {
     private fun getBucket(instance: FluidInstance): ItemStack = HTIngredientHelper.unwrap(instance).createBucket()
 
     override fun test(first: ItemInstance, second: FluidInstance): Boolean {

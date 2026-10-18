@@ -4,14 +4,14 @@ import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.crafting.SingleRecipeInput
 
 class RTMeltingRecipe(ingredient: HTItemIngredient, result: HTFluidResult, progressData: HTProgressData) :
     HTItemToRecipe.BasicFluid(ingredient, result, progressData),
-    HTSerializableRecipe<HTRecipeInput> {
+    HTSerializableRecipe<SingleRecipeInput> {
     companion object {
         @JvmField
         val SERIALIZER: RecipeSerializer<RTMeltingRecipe> =

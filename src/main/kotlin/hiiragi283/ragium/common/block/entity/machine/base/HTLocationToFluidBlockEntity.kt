@@ -4,10 +4,10 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTLocationToRecipe
-import hiiragi283.lib.recipe.handler.HTOutputSlot
-import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
-import hiiragi283.lib.recipe.input.HTLocationRecipeInput
+import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
+import hiiragi283.lib.recipe.handler.output.HTOutputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.lib.transfer.useTransaction
@@ -28,35 +28,62 @@ abstract class HTLocationToFluidBlockEntity(type: BlockEntityType<*>, pos: Block
     fun createRecipeHandler(
         lookup: HTRecipeLookup<HTLocationToRecipe<FluidStack>>,
         sound: HTSoundInstance
-    ): HTRecipeHandler<*, *, *> =
-        object : CachedHandler<HTLocationRecipeInput, FluidStack, HTLocationToRecipe<FluidStack>>(lookup) {
-            private val outputTank: HTOutputSlot<FluidStack> by lazy {
-                HTOutputSlotHelper.forFluid(this@HTLocationToFluidBlockEntity.outputTank)
+    ): HTRecipeHandler = object : HTRecipeHandler() {
+        private val cache: HTRecipeCacheHelper.Located<HTLocationToRecipe<FluidStack>> =
+            HTRecipeCacheHelper.Located(lookup)
+        private val outputTank: HTOutputSlot<FluidStack> by lazy {
+            HTOutputSlotHelper.forFluid(this@HTLocationToFluidBlockEntity.outputTank)
+        }
+
+        private var outputCache: FluidStack? = null
+
+        override fun run() {
+            super.run()
+            outputCache = null
+        }
+
+        override fun tick(level: ServerLevel): Boolean {
+            if (!shouldCheck) return false
+            // インプットに一致するレシピを探索する
+            val recipe: HTLocationToRecipe<FluidStack> =
+                cache.findFirstRecipe(level, blockPos, level) ?: return run {
+                    shouldCheck = false
+                    updateProgress(-1)
+                    false
+                }
+            // アウトプットに完成品を搬出できるか判定する
+            val output: FluidStack = recipe.apply(level, blockPos)
+            outputCache = output
+            if (!canProgress) {
+                if (useTransaction { outputTank.take(output, it) == HTOutputSlot.TakeResult.FULL }) {
+                    canProgress = true
+                } else {
+                    return false
+                }
             }
-
-            override fun createProgressor(): Progressor<HTLocationRecipeInput, HTLocationToRecipe<FluidStack>> =
-                EnergizedProgressor()
-
-            override fun createInput(level: ServerLevel): HTLocationRecipeInput = HTLocationRecipeInput(level, blockPos)
-
-            override fun canComplete(
-                recipe: HTLocationToRecipe<FluidStack>,
-                input: HTLocationRecipeInput,
-                output: FluidStack
-            ): Boolean = useTransaction { outputTank.take(output, it) == HTOutputSlot.TakeResult.FULL }
-
-            override fun onComplete(
-                recipe: HTLocationToRecipe<FluidStack>,
-                input: HTLocationRecipeInput,
-                output: FluidStack
-            ) {
+            // レシピの最大進捗量を更新する
+            /*val maxProgress: Int = progressor.getMaxProgress(recipe, level, blockPos)
+            if (this.maxProgress != maxProgress) {
+                updateProgress(maxProgress)
+            }
+            // 進捗を更新する
+            if (progress < maxProgress) {
+                progress += progressor.getProgress()
+            }*/
+            // 進捗が最大量を超えたらレシピを実行する
+            if (progress >= maxProgress) {
+                progress -= maxProgress
+                canProgress = false
                 useTransaction {
                     outputTank.take(output, it)
                     it.commit()
                 }
                 playSound(sound)
+                outputCache = null
             }
+            return true
         }
+    }
 
     private lateinit var outputTank: HTVariableFluidTank
 

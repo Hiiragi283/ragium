@@ -5,15 +5,15 @@ import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
-import hiiragi283.lib.recipe.base.HTSingleWithCatalystRecipe
+import hiiragi283.lib.recipe.base.HTSingleAndCatalystRecipe
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
@@ -22,10 +22,10 @@ class RTEngravingRecipe(
     catalyst: HTItemCatalyst,
     result: HTItemResult,
     progressData: HTProgressData
-) : HTSingleWithCatalystRecipe<HTItemIngredient, HTItemResult>(ingredient, catalyst, result, progressData),
+) : HTSingleAndCatalystRecipe<RecipeInput, HTItemIngredient, HTItemResult>(ingredient, catalyst, result, progressData),
     HTDoubleItemToItemRecipe,
-    HTProgressRecipe.Simple<HTRecipeInput>,
-    HTSerializableRecipe<HTRecipeInput> {
+    HTProgressRecipe.Simple<RecipeInput>,
+    HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTEngravingRecipe> = codec(HTItemIngredient.CODEC, HTItemResult.CODEC, ::RTEngravingRecipe)

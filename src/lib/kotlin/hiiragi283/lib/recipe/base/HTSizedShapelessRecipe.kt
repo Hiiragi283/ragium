@@ -5,7 +5,6 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
@@ -14,6 +13,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeInput
 
 /**
  * 複数のアイテムから1種類のアイテムを作成するレシピを表すインターフェースです。
@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack
 interface HTSizedShapelessRecipe :
     HTRecipePredicates.MultiItem,
     HTRecipeFactories.MultiItemTo<ItemStack>,
-    HTProgressRecipe<HTRecipeInput> {
+    HTProgressRecipe<RecipeInput> {
 
     /**
      * @author Hiiragi Tsubasa
@@ -34,7 +34,7 @@ interface HTSizedShapelessRecipe :
         val result: HTItemResult,
         override val progressData: HTProgressData
     ) : HTSizedShapelessRecipe,
-        HTProgressRecipe.Simple<HTRecipeInput> {
+        HTProgressRecipe.Simple<RecipeInput> {
         companion object {
             @JvmStatic
             fun <RECIPE : Basic> codec(

@@ -1,4 +1,4 @@
-package hiiragi283.lib.recipe.handler
+package hiiragi283.lib.recipe.handler.output
 
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.fluid.HTFluidTank

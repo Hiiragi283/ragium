@@ -4,12 +4,13 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
-import hiiragi283.lib.recipe.handler.HTInputHandlerHelper
-import hiiragi283.lib.recipe.handler.HTInputSlot
-import hiiragi283.lib.recipe.handler.HTOutputSlot
-import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
-import hiiragi283.lib.recipe.input.HTRecipeInput
+import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
+import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
+import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.input.HTInputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
@@ -23,7 +24,6 @@ import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -34,11 +34,13 @@ import java.util.function.IntSupplier
 
 abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    fun createRecipeHandler(
+    protected fun createRecipeHandler(
         lookup: HTRecipeLookup<HTFluidSeparatingRecipe>,
         sound: HTSoundInstance
-    ): HTRecipeHandler<*, *, *> =
-        object : CachedHandler<HTRecipeInput, HTFluidSeparatingRecipe.Output, HTFluidSeparatingRecipe>(lookup) {
+    ): HTRecipeHandler =
+        object : HTSingleRecipeHandler.Cached<FluidInstance, HTFluidSeparatingRecipe.Output, HTFluidSeparatingRecipe>(
+            HTRecipeCacheHelper.SingleFluid(lookup)
+        ) {
             private val inputTank: HTInputSlot<FluidInstance> by lazy {
                 HTInputHandlerHelper.forFluid(this@HTFluidSeparatingBlockEntity.inputTank)
             }
@@ -53,19 +55,19 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
                 HTOutputSlotHelper.forFluid(this@HTFluidSeparatingBlockEntity.rightOutputTank)
             }
 
-            override fun createProgressor(): Progressor<HTRecipeInput, HTFluidSeparatingRecipe> = EnergizedProgressor()
+            override fun createProgressor(): Progressor<FluidInstance, HTFluidSeparatingRecipe> {
+                TODO("Not yet implemented")
+            }
 
-            override fun createInput(level: ServerLevel): HTRecipeInput =
-                HTRecipeInput(inputTank.getStoredInput(), customKeys)
+            override fun getInput(): FluidInstance = inputTank.getStoredInput()
 
             override fun canComplete(
                 recipe: HTFluidSeparatingRecipe,
-                input: HTRecipeInput,
+                input: FluidInstance,
                 output: HTFluidSeparatingRecipe.Output
             ): Boolean = useTransaction { transaction: Transaction ->
-                val inputConsume: FluidInstance = recipe.getMatchingStack(input)
                 when {
-                    inputTank.use(inputConsume, transaction).failed -> false
+                    inputTank.use(recipe.getMatchingStack(input), transaction).failed -> false
 
                     else -> {
                         val (left: FluidStack, right: FluidStack, item: ItemStack) = output
@@ -80,12 +82,11 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
 
             override fun onComplete(
                 recipe: HTFluidSeparatingRecipe,
-                input: HTRecipeInput,
+                input: FluidInstance,
                 output: HTFluidSeparatingRecipe.Output
             ) {
                 useTransaction { transaction: Transaction ->
-                    val inputConsume: FluidInstance = recipe.getMatchingStack(input)
-                    inputTank.use(inputConsume, transaction)
+                    inputTank.use(recipe.getMatchingStack(input), transaction)
                     val (left: FluidStack, right: FluidStack, item: ItemStack) = output
                     outputSlot.take(item, transaction)
                     leftOutputTank.take(right, transaction)

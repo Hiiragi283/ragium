@@ -6,7 +6,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTRecipeInput
+import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
@@ -49,7 +49,7 @@ typealias HTItemOrFluidRecipe = HTItemAndFluidToRecipe<HTItemAndFluidStack>
 interface HTItemAndFluidToRecipe<OUTPUT : Any> :
     HTRecipePredicates.ItemAndFluid,
     HTRecipeFactories.ItemAndFluid<OUTPUT>,
-    HTProgressRecipe<HTRecipeInput> {
+    HTProgressRecipe<HTItemAndFluidRecipeInput> {
 
     /**
      * @author Hiiragi Tsubasa
@@ -61,7 +61,7 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
         val result: RESULT,
         override val progressData: HTProgressData
     ) : HTItemAndFluidToRecipe<OUTPUT>,
-        HTProgressRecipe.Simple<HTRecipeInput> {
+        HTProgressRecipe.Simple<HTItemAndFluidRecipeInput> {
         companion object {
             @JvmStatic
             fun <OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>, RECIPE : Basic<OUTPUT, RESULT>> codec(

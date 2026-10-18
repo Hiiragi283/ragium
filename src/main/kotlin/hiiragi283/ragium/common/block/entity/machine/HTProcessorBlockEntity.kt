@@ -3,18 +3,11 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.recipe.HTRecipeFactory
-import hiiragi283.lib.recipe.HTRecipePredicate
-import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
-import hiiragi283.lib.recipe.lookup.HTRecipeCache
-import hiiragi283.lib.recipe.lookup.HTRecipeLookup
-import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTItemSlot
-import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
@@ -24,18 +17,16 @@ import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
-import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBaseMachineBlockEntity(type, pos, state) {
-    protected val recipeHandler: HTRecipeHandler<*, *, *> by lazy(::createRecipeHandler)
+    protected val recipeHandler: HTRecipeHandler by lazy(::createRecipeHandler)
 
-    protected abstract fun createRecipeHandler(): HTRecipeHandler<*, *, *>
+    protected abstract fun createRecipeHandler(): HTRecipeHandler
 
     final override fun createFluidHandler(listener: Runnable): HTResourceSlotHolder<HTFluidTank>? {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
@@ -120,32 +111,9 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             input.readChild(HTConstants.ENERGY, handler)
         }
 
-        //    SimpleRecipeHandler    //
-
-        abstract class CachedHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE>(
-            private val cache: HTRecipeCache<INPUT, RECIPE>
-        ) : HTRecipeHandler<INPUT, OUTPUT, RECIPE>()
-            where RECIPE : HTRecipePredicate<INPUT>,
-                  RECIPE : HTRecipeFactory<INPUT, OUTPUT> {
-            constructor(lookup: HTRecipeLookup<RECIPE>) : this(HTRecipeCache(lookup))
-
-            final override fun findRecipe(level: ServerLevel, input: INPUT): RECIPE? =
-                cache.findFirstRecipe(input, level)
-
-            override fun serialize(output: ValueOutput) {
-                super.serialize(output)
-                output.putChild(HTConstants.LAST_RECIPE, cache)
-            }
-
-            override fun deserialize(input: ValueInput) {
-                super.deserialize(input)
-                input.readChild(HTConstants.LAST_RECIPE, cache)
-            }
-        }
-
         //    EnergizedProgressor    //
 
-        protected inner class EnergizedProgressor<INPUT : RecipeInput, RECIPE : HTProgressRecipe<INPUT>> :
+        /*protected inner class EnergizedProgressor<INPUT : RecipeInput, RECIPE : HTProgressRecipe<INPUT>> :
             HTRecipeHandler.Progressor<INPUT, RECIPE> {
             private val baseEnergyPerTick: Int = getConfig().getUsage()
             private val currentEnergyPerTick: Int
@@ -163,6 +131,6 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
                 }
                 extracted
             }
-        }
+        }*/
     }
 }

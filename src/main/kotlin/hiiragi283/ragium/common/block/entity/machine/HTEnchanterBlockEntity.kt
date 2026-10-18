@@ -17,8 +17,10 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state
     ) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> =
-        createRecipeHandler(RagiumRecipeLookups.ENCHANTING, HTSoundInstance(SoundEvents.ENCHANTMENT_TABLE_USE))
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
+        RagiumRecipeLookups.ENCHANTING,
+        HTSoundInstance(SoundEvents.ENCHANTMENT_TABLE_USE)
+    )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.enchanter
 }

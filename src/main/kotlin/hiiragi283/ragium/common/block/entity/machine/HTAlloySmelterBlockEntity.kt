@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTSizedShapelessBlockEntity(RagiumBlockEntityTypes.ALLOY_SMELTER.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.ALLOYING,
         HTSoundInstance(SoundEvents.FIRE_EXTINGUISH)
     )

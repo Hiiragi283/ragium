@@ -19,7 +19,7 @@ import net.minecraft.world.item.crafting.RecipeType
  * @author Hiiragi Tsubasa
  * @since 26.1.8
  */
-abstract class HTSingleToItemAndFluidRecipeCategory<RECIPE : HTBasicSingleRecipe<*, HTItemOrFluidResult>>(
+abstract class HTSingleToItemAndFluidRecipeCategory<RECIPE : HTBasicSingleRecipe<*, *, HTItemOrFluidResult>>(
     recipeType: HTRecipeHolderType<RECIPE>,
     recipeType1: RecipeType<*>,
     icon: IDrawable,

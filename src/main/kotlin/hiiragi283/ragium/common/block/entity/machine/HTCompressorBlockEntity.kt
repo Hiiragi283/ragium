@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemToItemBlockEntity(RagiumBlockEntityTypes.COMPRESSOR.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.COMPRESSING,
         HTSoundInstance(SoundEvents.ANVIL_LAND)
     )

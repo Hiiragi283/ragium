@@ -8,7 +8,6 @@ import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -16,11 +15,12 @@ import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.crafting.SingleRecipeInput
 
 class RTPlantingRecipe(ingredient: HTItemIngredient, result: HTItemResult, progressData: HTProgressData) :
-    HTBasicSingleRecipe<HTItemIngredient, HTItemResult>(ingredient, result, progressData),
+    HTBasicSingleRecipe<SingleRecipeInput, HTItemIngredient, HTItemResult>(ingredient, result, progressData),
     HTItemToDoubleItemRecipe,
-    HTSerializableRecipe<HTRecipeInput> {
+    HTSerializableRecipe<SingleRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTPlantingRecipe> = HTItemToRecipe.BasicItem.codec(::RTPlantingRecipe)

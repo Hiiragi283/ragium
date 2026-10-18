@@ -5,12 +5,13 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
-import hiiragi283.lib.recipe.handler.HTInputHandlerHelper
-import hiiragi283.lib.recipe.handler.HTInputSlot
-import hiiragi283.lib.recipe.handler.HTOutputSlot
-import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
-import hiiragi283.lib.recipe.input.HTRecipeInput
+import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
+import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.input.HTInputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
@@ -22,7 +23,6 @@ import hiiragi283.ragium.common.gui.widget.HTTextureWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -34,47 +34,58 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
     protected fun createRecipeHandler(
         lookup: HTRecipeLookup<HTDoubleItemToItemRecipe>,
         sound: HTSoundInstance
-    ): HTRecipeHandler<*, *, *> = object : CachedHandler<HTRecipeInput, ItemStack, HTDoubleItemToItemRecipe>(lookup) {
-        private val primarySlot: HTInputSlot<ItemInstance> by lazy {
-            HTInputHandlerHelper.forItem(this@HTDoubleItemToItemBlockEntity.primarySlot)
-        }
-        private val secondarySlot: HTInputSlot<ItemInstance> by lazy {
-            HTInputHandlerHelper.forItem(this@HTDoubleItemToItemBlockEntity.secondarySlot)
-        }
-        private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-            HTOutputSlotHelper.forItem(this@HTDoubleItemToItemBlockEntity.outputSlot)
-        }
+    ): HTRecipeHandler =
+        object : HTDoubleRecipeHandler.Cached<ItemInstance, ItemInstance, ItemStack, HTDoubleItemToItemRecipe>(
+            HTRecipeCacheHelper.DoubleItem(lookup, true)
+        ) {
+            private val primarySlot: HTInputSlot<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItem(this@HTDoubleItemToItemBlockEntity.primarySlot)
+            }
+            private val secondarySlot: HTInputSlot<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItem(this@HTDoubleItemToItemBlockEntity.secondarySlot)
+            }
+            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
+                HTOutputSlotHelper.forItem(this@HTDoubleItemToItemBlockEntity.outputSlot)
+            }
 
-        override fun createProgressor(): Progressor<HTRecipeInput, HTDoubleItemToItemRecipe> = EnergizedProgressor()
+            override fun createProgressor(): Progressor<ItemInstance, ItemInstance, HTDoubleItemToItemRecipe> {
+                TODO("Not yet implemented")
+            }
 
-        override fun createInput(level: ServerLevel): HTRecipeInput = HTRecipeInput(
-            listOf(primarySlot.getStoredInput(), secondarySlot.getStoredInput()),
-            listOf(),
-            customKeys
-        )
+            override fun getFirstInput(): ItemInstance = primarySlot.getStoredInput()
 
-        override fun canComplete(recipe: HTDoubleItemToItemRecipe, input: HTRecipeInput, output: ItemStack): Boolean {
-            val (firstConsume: ItemInstance, secondConsume: ItemInstance) = recipe.getMatchingStack(input)
-            return useTransaction { transaction: Transaction ->
+            override fun getSecondInput(): ItemInstance = secondarySlot.getStoredInput()
+
+            override fun canComplete(
+                recipe: HTDoubleItemToItemRecipe,
+                first: ItemInstance,
+                second: ItemInstance,
+                output: ItemStack
+            ): Boolean = useTransaction { transaction: Transaction ->
+                val (firstConsume: ItemInstance, secondConsume: ItemInstance) = recipe.getMatchingStack(first, second)
                 when {
                     primarySlot.use(firstConsume, transaction).failed -> false
                     secondarySlot.use(secondConsume, transaction).failed -> false
                     else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
                 }
             }
-        }
 
-        override fun onComplete(recipe: HTDoubleItemToItemRecipe, input: HTRecipeInput, output: ItemStack) {
-            val (firstConsume: ItemInstance, secondConsume: ItemInstance) = recipe.getMatchingStack(input)
-            useTransaction { transaction: Transaction ->
-                primarySlot.use(firstConsume, transaction)
-                secondarySlot.use(secondConsume, transaction)
-                outputSlot.take(output, transaction)
-                transaction.commit()
+            override fun onComplete(
+                recipe: HTDoubleItemToItemRecipe,
+                first: ItemInstance,
+                second: ItemInstance,
+                output: ItemStack
+            ) {
+                val (firstConsume: ItemInstance, secondConsume: ItemInstance) = recipe.getMatchingStack(first, second)
+                useTransaction { transaction: Transaction ->
+                    primarySlot.use(firstConsume, transaction)
+                    secondarySlot.use(secondConsume, transaction)
+                    outputSlot.take(output, transaction)
+                    transaction.commit()
+                }
+                playSound(sound)
             }
-            playSound(sound)
         }
-    }
 
     private lateinit var primarySlot: HTBasicItemSlot
     private lateinit var secondarySlot: HTBasicItemSlot

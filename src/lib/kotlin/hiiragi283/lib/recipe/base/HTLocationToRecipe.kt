@@ -9,9 +9,13 @@ import hiiragi283.lib.recipe.ingredient.HTBiomeCondition
 import hiiragi283.lib.recipe.input.HTLocationRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.serialization.codec.HTCodecs
+import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.server.level.ServerLevel
 import net.neoforged.neoforge.fluids.FluidStack
+import java.util.function.BiFunction
+import java.util.function.BiPredicate
 
 /**
  * @author Hiiragi Tsubasa
@@ -20,7 +24,9 @@ import net.neoforged.neoforge.fluids.FluidStack
 interface HTLocationToRecipe<OUTPUT : Any> :
     HTRecipePredicate<HTLocationRecipeInput>,
     HTRecipeFactory<HTLocationRecipeInput, OUTPUT>,
-    HTProgressRecipe<HTLocationRecipeInput> {
+    HTProgressRecipe<HTLocationRecipeInput>,
+    BiPredicate<ServerLevel, BlockPos>,
+    BiFunction<ServerLevel, BlockPos, OUTPUT> {
 
     /**
      * @author Hiiragi Tsubasa
@@ -62,6 +68,10 @@ interface HTLocationToRecipe<OUTPUT : Any> :
 
         override fun matches(input: HTLocationRecipeInput): Boolean = condition.test(input.blockInWorld)
 
+        override fun test(level: ServerLevel, pos: BlockPos): Boolean = condition.test(level.getBiome(pos))
+
         override fun produce(input: HTLocationRecipeInput): FluidStack = result.create()
+
+        override fun apply(level: ServerLevel, pos: BlockPos): FluidStack = result.create()
     }
 }

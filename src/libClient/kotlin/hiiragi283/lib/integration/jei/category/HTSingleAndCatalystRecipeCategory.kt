@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.HTRecipeHolderType
 import hiiragi283.lib.integration.jei.add
-import hiiragi283.lib.recipe.base.HTSingleWithCatalystRecipe
+import hiiragi283.lib.recipe.base.HTSingleAndCatalystRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.drawable.IDrawable
@@ -12,7 +12,7 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.recipe.IFocusGroup
 import net.minecraft.world.item.crafting.RecipeType
 
-abstract class HTSingleAndCatalystRecipeCategory<RECIPE : HTSingleWithCatalystRecipe<*, *>>(
+abstract class HTSingleAndCatalystRecipeCategory<RECIPE : HTSingleAndCatalystRecipe<*, *, *>>(
     recipeType: HTRecipeHolderType<RECIPE>,
     recipeType1: RecipeType<*>,
     icon: IDrawable,

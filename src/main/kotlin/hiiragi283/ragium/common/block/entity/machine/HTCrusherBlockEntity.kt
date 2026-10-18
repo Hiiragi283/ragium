@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemToDoubleItemBlockEntity(RagiumBlockEntityTypes.CRUSHER.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.CRUSHING,
         HTSoundInstance(SoundEvents.GRINDSTONE_USE)
     )

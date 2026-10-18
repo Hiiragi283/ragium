@@ -1,4 +1,4 @@
-package hiiragi283.lib.recipe.handler
+package hiiragi283.lib.recipe.handler.output
 
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 

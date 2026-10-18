@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemToDoubleItemBlockEntity(RagiumBlockEntityTypes.PLANTER.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.PLANTING,
         HTSoundInstance(SoundEvents.BONE_MEAL_USE)
     )

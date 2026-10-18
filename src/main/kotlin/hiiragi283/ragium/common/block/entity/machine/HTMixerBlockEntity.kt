@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.MIXER.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.MIXING.mapNotNull(RTMixingRecipe::asSimple),
         HTSoundInstance(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE)
     )

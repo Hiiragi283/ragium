@@ -29,3 +29,16 @@ fun RecipeInput.getItemOrNull(index: Int): ItemStack? = if (index in indices) ge
  * @since 26.1.0
  */
 fun RecipeInput.getItemOrEmpty(index: Int): ItemStack = this.getItemOrNull(index) ?: ItemStack.EMPTY
+
+/**
+ * 液体の[List]に変換します。
+ * @author Hiiragi Tsubasa
+ * @since 26.1.11
+ */
+fun RecipeInput.asList(): List<ItemStack> = object : AbstractList<ItemStack>() {
+    override val size: Int get() = this@asList.size()
+
+    override fun get(index: Int): ItemStack = this@asList.getItem(index)
+
+    override fun isEmpty(): Boolean = this@asList.isEmpty
+}

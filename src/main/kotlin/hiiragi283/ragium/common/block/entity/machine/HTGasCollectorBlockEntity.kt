@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTGasCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTLocationToFluidBlockEntity(RagiumBlockEntityTypes.GAS_COLLECTOR.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.COLLECTING,
         HTSoundInstance(SoundEvents.BUCKET_FILL)
     )

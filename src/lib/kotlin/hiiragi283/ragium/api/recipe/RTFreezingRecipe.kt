@@ -5,10 +5,10 @@ import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
-import hiiragi283.lib.recipe.base.HTSingleWithCatalystRecipe
+import hiiragi283.lib.recipe.base.HTSingleAndCatalystRecipe
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
-import hiiragi283.lib.recipe.input.HTRecipeInput
+import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -23,10 +23,15 @@ class RTFreezingRecipe(
     catalyst: HTItemCatalyst,
     result: HTItemResult,
     progressData: HTProgressData
-) : HTSingleWithCatalystRecipe<HTFluidIngredient, HTItemResult>(ingredient, catalyst, result, progressData),
+) : HTSingleAndCatalystRecipe<HTItemAndFluidRecipeInput, HTFluidIngredient, HTItemResult>(
+    ingredient,
+    catalyst,
+    result,
+    progressData
+),
     HTItemAndFluidToItemRecipe,
-    HTProgressRecipe.Simple<HTRecipeInput>,
-    HTSerializableRecipe<HTRecipeInput> {
+    HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
+    HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTFreezingRecipe> = codec(HTFluidIngredient.CODEC, HTItemResult.CODEC, ::RTFreezingRecipe)

@@ -8,7 +8,7 @@ import hiiragi283.lib.data.recipe.ingredient.IngredientBuilder
 import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.base.HTBasicSingleRecipe
-import hiiragi283.lib.recipe.base.HTSingleWithCatalystRecipe
+import hiiragi283.lib.recipe.base.HTSingleAndCatalystRecipe
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
@@ -66,7 +66,7 @@ abstract class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeRes
      */
     class WithCatalyst<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
         prefix: String,
-        private val factory: HTSingleWithCatalystRecipe.Factory<ING, RES, RECIPE>
+        private val factory: HTSingleAndCatalystRecipe.Factory<ING, RES, RECIPE>
     ) : HTSingleRecipeBuilder<ING, RES, RECIPE>(prefix) {
         override fun createRecipe(): RECIPE = factory.create(ingredient, catalyst, result, progressData)
 

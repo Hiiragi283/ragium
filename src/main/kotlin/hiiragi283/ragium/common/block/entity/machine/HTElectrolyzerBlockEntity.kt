@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSeparatingBlockEntity(RagiumBlockEntityTypes.ELECTROLYZER.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.ELECTROLYZING,
         HTSoundInstance(SoundEvents.FIREWORK_ROCKET_TWINKLE)
     )

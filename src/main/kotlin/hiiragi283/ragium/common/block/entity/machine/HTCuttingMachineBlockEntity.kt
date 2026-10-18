@@ -12,12 +12,8 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToDoubleItemBlockEntity(
-        RagiumBlockEntityTypes.CUTTING_MACHINE.get(),
-        pos,
-        state
-    ) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    HTItemToDoubleItemBlockEntity(RagiumBlockEntityTypes.CUTTING_MACHINE.get(), pos, state) {
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.CUTTING,
         HTSoundInstance(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
     )

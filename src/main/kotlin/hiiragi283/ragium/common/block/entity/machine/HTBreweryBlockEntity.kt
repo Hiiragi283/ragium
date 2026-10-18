@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemAndFluidToFluidBlockEntity(RagiumBlockEntityTypes.BREWERY.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.BREWING,
         HTSoundInstance(SoundEvents.BREWING_STAND_BREW)
     )

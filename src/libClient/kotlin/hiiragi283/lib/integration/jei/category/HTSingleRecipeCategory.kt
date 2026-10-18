@@ -18,7 +18,7 @@ import net.minecraft.world.item.crafting.RecipeType
  * @author Hiiragi Tsubasa
  * @since 26.1.6
  */
-abstract class HTSingleRecipeCategory<RECIPE : HTBasicSingleRecipe<*, *>>(
+abstract class HTSingleRecipeCategory<RECIPE : HTBasicSingleRecipe<*, *, *>>(
     recipeType: HTRecipeHolderType<RECIPE>,
     recipeType1: RecipeType<*>,
     icon: IDrawable,

@@ -12,12 +12,8 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTChemicalBathBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemAndFluidToItemBlockEntity(
-        RagiumBlockEntityTypes.CHEMICAL_BATH.get(),
-        pos,
-        state
-    ) {
-    override fun createRecipeHandler(): HTRecipeHandler<*, *, *> = createRecipeHandler(
+    HTItemAndFluidToItemBlockEntity(RagiumBlockEntityTypes.CHEMICAL_BATH.get(), pos, state) {
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.BATHING,
         HTSoundInstance(SoundEvents.SPONGE_ABSORB)
     )
