@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.gui.widget
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTGuiAccess
+import hiiragi283.lib.gui.widget.HTSpriteWidgetRenderer
 import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.HTStorageHelper

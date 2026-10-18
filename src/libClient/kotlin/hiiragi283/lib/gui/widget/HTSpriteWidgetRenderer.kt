@@ -1,11 +1,9 @@
-package hiiragi283.ragium.client.gui.widget
+package hiiragi283.lib.gui.widget
 
 import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.HTGuiAccess
-import hiiragi283.lib.gui.widget.HTAbstractWidgetRenderer
-import hiiragi283.lib.gui.widget.HTWidget
+import hiiragi283.lib.gui.HTSpriteRenderHelper
 import hiiragi283.lib.text.Text
-import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.resources.Identifier

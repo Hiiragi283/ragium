@@ -3,10 +3,10 @@ package hiiragi283.ragium.client.gui.widget
 import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.gui.HTGuiAccess
 import hiiragi283.lib.gui.HTGuiRenderHelper
+import hiiragi283.lib.gui.HTSpriteRenderHelper
 import hiiragi283.lib.gui.widget.HTAbstractWidgetRenderer
 import hiiragi283.lib.transfer.fluid.getFluidStack
 import hiiragi283.ragium.api.util.HTStorageHelper
-import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.renderer.RenderPipelines

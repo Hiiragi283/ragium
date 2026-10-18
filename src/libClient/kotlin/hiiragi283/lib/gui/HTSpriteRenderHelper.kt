@@ -1,11 +1,14 @@
-package hiiragi283.ragium.client.util
+package hiiragi283.lib.gui
 
-import hiiragi283.lib.gui.HTBounds
 import hiiragi283.lib.resource.modifyPath
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.resources.Identifier
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.0
+ */
 object HTSpriteRenderHelper {
     @JvmStatic
     fun fixTextureId(id: Identifier): Identifier = id.modifyPath { path: String ->
