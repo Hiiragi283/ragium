@@ -6,13 +6,13 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.registry.HTFluidContent
+import hiiragi283.lib.registry.and
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -21,8 +21,6 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.holdersets.AndHolderSet
-import net.neoforged.neoforge.registries.holdersets.NotHolderSet
 import java.util.concurrent.CompletableFuture
 
 class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
@@ -122,16 +120,11 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
     /**
      * 白色のアイテムのみを判定します。
      */
-    fun ColoredContents.onlyWhites(): HolderSet<Item> = AndHolderSet(
-        holderSet(this.allTag),
-        holderSet(Tags.Items.DYED_WHITE)
-    )
+    fun ColoredContents.onlyWhites(): HolderSet<Item> = holderSet(this.allTag) and holderSet(Tags.Items.DYED_WHITE)
 
     /**
      * 白色以外のアイテムを判定します。
      */
-    fun ColoredContents.excludeWhites(): HolderSet<Item> = AndHolderSet(
-        holderSet(this.allTag),
-        NotHolderSet(registries.lookupOrThrow(Registries.ITEM), holderSet(Tags.Items.DYED_WHITE))
-    )
+    fun ColoredContents.excludeWhites(): HolderSet<Item> =
+        holderSet(this.allTag) and notHolderSet(Tags.Items.DYED_WHITE)
 }

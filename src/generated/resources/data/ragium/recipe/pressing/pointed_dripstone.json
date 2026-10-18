@@ -1,5 +1,6 @@
 {
-  "type": "ragium:crushing",
+  "type": "ragium:pressing",
+  "catalyst": "ragium:press_die/unpacking",
   "ingredient": {
     "count": 1,
     "items": "minecraft:dripstone_block"

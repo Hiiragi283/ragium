@@ -26,6 +26,8 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.WithConditions
+import net.neoforged.neoforge.registries.holdersets.AnyHolderSet
+import net.neoforged.neoforge.registries.holdersets.NotHolderSet
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 
@@ -130,6 +132,27 @@ abstract class ExporterDataProvider<R : Any>(
     }
 
     protected fun <T : Any> holderSet(vararg tagKeys: TagKey<T>): HolderSet<T> = holderSet(tagKeys.toSet())
+
+    /**
+     * @since 26.1.11
+     */
+    protected fun <T : Any> notHolderSet(tagKey: TagKey<T>): HolderSet<T> =
+        NotHolderSet(this.registries.lookupOrThrow(tagKey.registry()), holderSet(tagKey))
+
+    /**
+     * @since 26.1.11
+     */
+    protected fun <T : Any> notHolderSet(tagKeys: Iterable<TagKey<T>>): HolderSet<T> = when (tagKeys.count()) {
+        0 -> HolderSet.empty()
+        1 -> notHolderSet(tagKeys.first())
+        else -> NotHolderSet(this.registries.lookupOrThrow(tagKeys.first().registry()), holderSet(tagKeys))
+    }
+
+    /**
+     * @since 26.1.11
+     */
+    protected fun <T : Any> anyHolderSet(registryKey: RegistryKey<T>): HolderSet<T> =
+        AnyHolderSet(this.registries.lookupOrThrow(registryKey))
 
     /**
      * [HolderSet]を取得します。

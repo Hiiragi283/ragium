@@ -2,11 +2,14 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.color.HTColoredCollection
 import hiiragi283.lib.color.VanillaColoredCollections
+import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
 import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.registry.and
+import hiiragi283.lib.registry.or
 import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
@@ -42,6 +45,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         compressing()
         crushing()
         cutting()
+        pressing()
 
         filling()
     }
@@ -453,33 +457,8 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         // XX Block -> XX
         setOf(
-            Items.AMETHYST_BLOCK to Items.AMETHYST_SHARD,
-            Items.BRICKS to Items.BRICK,
-            Items.CLAY to Items.CLAY_BALL,
-            Items.DRIPSTONE_BLOCK to Items.POINTED_DRIPSTONE,
-            Items.GLOWSTONE to Items.GLOWSTONE_DUST,
-            Items.HONEYCOMB_BLOCK to Items.HONEYCOMB,
-            Items.MAGMA_BLOCK to Items.MAGMA_CREAM,
-            Items.NETHER_BRICKS to Items.NETHER_BRICK,
-            Items.PRISMARINE to Items.PRISMARINE_SHARD,
-            Items.PURPUR_BLOCK to Items.POPPED_CHORUS_FRUIT,
-            Items.SNOW_BLOCK to Items.SNOWBALL,
-            RagiumBlocks.ECHO_BLOCK to Items.ECHO_SHARD,
-            RagiumBlocks.FLUORITE_BLOCK to RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE)
-            // RagiumBlocks.CRYOLITE_BLOCK to RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CRYOLITE)
-        ).forEach { (block: ItemLike, base: ItemLike) ->
-            RagiumRecipeBuilders.crushing {
-                ingredient { items { +block.asItem() } }
-                result {
-                    +base.asItem()
-                    count = 4
-                }
-            }.save(exporter)
-        }
-        setOf(
             Tags.Items.SANDSTONE_UNCOLORED_BLOCKS to Items.SAND,
-            Tags.Items.SANDSTONE_RED_BLOCKS to Items.RED_SAND,
-            RagiumTags.BlockItems.QUARTZ_BLOCKS.item to Items.QUARTZ
+            Tags.Items.SANDSTONE_RED_BLOCKS to Items.RED_SAND
         ).forEach { (block: TagKey<Item>, base: Item) ->
             RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(block) }
@@ -489,6 +468,48 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 }
             }.save(exporter)
         }
+
+        // Stone -> Cobblestone
+        RagiumRecipeBuilders.crushing {
+            ingredient {
+                +(HolderAcceptor.buildItemSet { +Items.STONE } or holderSet(ItemTags.STONE_BRICKS))
+            }
+            result { +Items.COBBLESTONE }
+            time /= 2
+            recipeId suffix "_from_stones"
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient {
+                items {
+                    +Items.DEEPSLATE
+                    +Items.POLISHED_DEEPSLATE
+                    +Items.DEEPSLATE_BRICKS
+                    +Items.CRACKED_DEEPSLATE_BRICKS
+                    +Items.DEEPSLATE_TILES
+                    +Items.CRACKED_DEEPSLATE_TILES
+                    +Items.CHISELED_DEEPSLATE
+                }
+            }
+            result { +Items.COBBLED_DEEPSLATE }
+            time /= 2
+            recipeId suffix "_from_stones"
+        }
+        // Cobblestone -> Gravel
+        RagiumRecipeBuilders.crushing {
+            ingredient {
+                +(holderSet(Tags.Items.COBBLESTONES) and notHolderSet(Tags.Items.COBBLESTONES_INFESTED))
+            }
+            result { +Items.GRAVEL }
+            time /= 2
+            recipeId suffix "_from_cobblestones"
+        }
+        // Gravel -> Sand + Flint
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(Tags.Items.GRAVELS) }
+            result { +Items.SAND }
+            time /= 2
+            recipeId suffix "_from_gravel"
+        }.save(exporter)
 
         // Book -> 3x Paper Pulp
         RagiumRecipeBuilders.crushing {
@@ -530,6 +551,24 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(RagiumTags.Items.COKES) }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CARBON) }
+        }.save(exporter)
+
+        RagiumRecipeBuilders.crushing {
+            ingredient {
+                items {
+                    +Items.CALCITE
+                    +Items.DRIPSTONE_BLOCK
+                }
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.LIME) }
+        }.save(exporter)
+        RagiumRecipeBuilders.crushing {
+            ingredient {
+                items { +Items.POINTED_DRIPSTONE }
+                count = 4
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.LIME) }
+            recipeId suffix "_from_pointed"
         }.save(exporter)
 
         for (gem: RagiumMaterial.Gem in RagiumMaterial.Gem.entries) {
@@ -774,14 +813,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             result { +Items.LEATHER }
             recipeId suffix "_from_book"
         }.save(exporter)
-        // Melon -> Sliced Melon
-        RagiumRecipeBuilders.cutting {
-            ingredient { items { +Items.MELON } }
-            result {
-                +Items.MELON_SLICE
-                count = 9
-            }
-        }.save(exporter)
 
         // Lens
         RagiumRecipeBuilders.cutting {
@@ -802,6 +833,59 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { +holderSet(Tags.Items.NETHER_STARS) }
             result { +RagiumItems.NETHER_STAR_LENS }
         }.save(exporter)
+    }
+
+    private fun pressing() {
+        val unpacking: Ingredient = Ingredient.of(RagiumItems.UNPACKING_DIE)
+        // Melon -> Sliced Melon
+        RagiumRecipeBuilders.pressing {
+            ingredient { items { +Items.MELON } }
+            +unpacking
+            result {
+                +Items.MELON_SLICE
+                count = 9
+            }
+        }.save(exporter)
+
+        // XX Block -> XX
+        setOf(
+            Items.AMETHYST_BLOCK to Items.AMETHYST_SHARD,
+            Items.BRICKS to Items.BRICK,
+            Items.CLAY to Items.CLAY_BALL,
+            Items.DRIPSTONE_BLOCK to Items.POINTED_DRIPSTONE,
+            Items.GLOWSTONE to Items.GLOWSTONE_DUST,
+            Items.HONEYCOMB_BLOCK to Items.HONEYCOMB,
+            Items.MAGMA_BLOCK to Items.MAGMA_CREAM,
+            Items.NETHER_BRICKS to Items.NETHER_BRICK,
+            Items.PRISMARINE to Items.PRISMARINE_SHARD,
+            Items.PURPUR_BLOCK to Items.POPPED_CHORUS_FRUIT,
+            Items.SNOW_BLOCK to Items.SNOWBALL,
+            RagiumBlocks.ECHO_BLOCK to Items.ECHO_SHARD,
+            RagiumBlocks.FLUORITE_BLOCK to RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE)
+            // RagiumBlocks.CRYOLITE_BLOCK to RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CRYOLITE)
+        ).forEach { (block: ItemLike, base: ItemLike) ->
+            RagiumRecipeBuilders.pressing {
+                ingredient { items { +block.asItem() } }
+                +unpacking
+                result {
+                    +base.asItem()
+                    count = 4
+                }
+            }.save(exporter)
+        }
+
+        setOf(
+            RagiumTags.BlockItems.QUARTZ_BLOCKS.item to Items.QUARTZ
+        ).forEach { (block: TagKey<Item>, base: Item) ->
+            RagiumRecipeBuilders.pressing {
+                ingredient { +holderSet(block) }
+                +unpacking
+                result {
+                    +base
+                    count = 4
+                }
+            }.save(exporter)
+        }
     }
 
     private fun filling() {

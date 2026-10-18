@@ -849,16 +849,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun calcium() {
-        // Calcite / Dripstone -> CaCO3
-        RagiumRecipeBuilders.crushing {
-            ingredient {
-                items {
-                    +Items.CALCITE
-                    +Items.DRIPSTONE_BLOCK
-                }
-            }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.LIME) }
-        }.save(exporter)
         // CaCO3 -> CaO + CO2
         VanillaRecipeBuilders.smeltingAndBlasting(exporter) {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.LIME) }
