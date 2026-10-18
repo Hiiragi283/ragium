@@ -4,6 +4,7 @@ import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.integration.jei.HTJeiDrawables
 import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
+import hiiragi283.lib.integration.jei.category.HTCatalysedSingleRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTFluidSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
@@ -27,7 +28,6 @@ import hiiragi283.ragium.integration.jei.category.RTAlloyingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTAssemblingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTCentrifugingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTEnchantingRecipeCategory
-import hiiragi283.ragium.integration.jei.category.RTEngravingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTFreezingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTMixingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTPlantingRecipeCategory
@@ -131,6 +131,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumRecipeTypes.FILLING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING)
             ),
+            HTCatalysedSingleRecipeCategory.ItemToItem(
+                RagiumJeiRecipeTypes.PRESSING,
+                RagiumRecipeTypes.PRESSING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.PRESS_MACHINE)
+            ),
             // Heat
             RTAlloyingRecipeCategory(guiHelper),
             RTFreezingRecipeCategory(guiHelper),
@@ -176,7 +181,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumRecipeTypes.ELECTROLYZING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.ELECTROLYZER)
             ),
-            RTEngravingRecipeCategory(guiHelper),
+            HTCatalysedSingleRecipeCategory.ItemToItem(
+                RagiumJeiRecipeTypes.ENGRAVING,
+                RagiumRecipeTypes.ENGRAVING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.ENGRAVER)
+            ),
             // Arcane
             RTEnchantingRecipeCategory(guiHelper)
         )
@@ -190,6 +199,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeLookups.CRUSHING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.CUTTING, RagiumRecipeLookups.CUTTING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.FILLING, RagiumRecipeLookups.FILLING)
+        HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.PRESSING, RagiumRecipeLookups.PRESSING)
         // Heat
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.ALLOYING, RagiumRecipeLookups.ALLOYING)
         HTJeiRecipeHelper.addRecipes(registration, RagiumJeiRecipeTypes.FREEZING, RagiumRecipeLookups.FREEZING)
@@ -327,6 +337,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RagiumJeiRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
         registration.addCraftingStation(RagiumJeiRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.PRESSING, RagiumBlocks.PRESS_MACHINE)
         // Heat
         registration.addCraftingStation(RagiumJeiRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.FREEZING, RagiumBlocks.FREEZER)

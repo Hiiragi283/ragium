@@ -22,10 +22,12 @@ import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTElectrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEnchanterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTPressMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
@@ -87,6 +89,10 @@ data object RagiumBlockEntityTypes {
     val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> =
         registerTick(RagiumConstants.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
 
+    @JvmField
+    val PRESS_MACHINE: HTDeferredBlockEntityType<HTPressMachineBlockEntity> =
+        registerTick(RagiumConstants.PRESS_MACHINE, ::HTPressMachineBlockEntity)
+
     // Heat
     @JvmField
     val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> =
@@ -138,6 +144,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val ELECTROLYZER: HTDeferredBlockEntityType<HTElectrolyzerBlockEntity> =
         registerTick(RagiumConstants.ELECTROLYZER, ::HTElectrolyzerBlockEntity)
+
+    @JvmField
+    val ENGRAVER: HTDeferredBlockEntityType<HTEngraverBlockEntity> =
+        registerTick(RagiumConstants.ENGRAVER, ::HTEngraverBlockEntity)
 
     // Arcane
     @JvmField
@@ -206,6 +216,7 @@ data object RagiumBlockEntityTypes {
         registerProcessor(CRUSHER.get())
         registerProcessor(COMPRESSOR.get())
         registerProcessor(CUTTING_MACHINE.get())
+        registerProcessor(PRESS_MACHINE.get())
 
         registerProcessor(ALLOY_SMELTER.get())
         registerProcessor(FREEZER.get())
@@ -222,6 +233,7 @@ data object RagiumBlockEntityTypes {
         registerProcessor(RESOURCE_PUMP.get())
 
         registerProcessor(ELECTROLYZER.get())
+        registerProcessor(ENGRAVER.get())
 
         registerProcessor(ENCHANTER.get())
         // Storage

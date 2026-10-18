@@ -410,6 +410,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         mechanical(RagiumBlocks.CRUSHER) { items { +Items.GRINDSTONE } }
         mechanical(RagiumBlocks.COMPRESSOR) { +holderSet(ItemTags.ANVIL) }
         mechanical(RagiumBlocks.CUTTING_MACHINE) { items { +Items.STONECUTTER } }
+        mechanical(RagiumBlocks.PRESS_MACHINE) { items { +Items.PISTON } }
         // Heat
         VanillaRecipeBuilders.shaped {
             hollow4()

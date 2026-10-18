@@ -31,6 +31,7 @@ import hiiragi283.ragium.api.recipe.RTFillingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
+import hiiragi283.ragium.api.recipe.RTPressingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
@@ -103,6 +104,16 @@ data object RagiumRecipeBuilders {
         return HTItemAndFluidToRecipeBuilder.ToItem(RagiumConstants.FILLING, ::RTFillingRecipe).apply(builderAction)
     }
 
+    @JvmStatic
+    inline fun pressing(
+        builderAction: HTSingleRecipeBuilder.Catalysed<HTItemIngredient, HTItemResult, RTPressingRecipe>.() -> Unit
+    ): HTSingleRecipeBuilder.Catalysed<HTItemIngredient, HTItemResult, RTPressingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTSingleRecipeBuilder.Catalysed(RagiumConstants.PRESSING, ::RTPressingRecipe).apply(builderAction)
+    }
+
     // Heat
     @JvmStatic
     inline fun alloying(
@@ -116,12 +127,12 @@ data object RagiumRecipeBuilders {
 
     @JvmStatic
     inline fun freezing(
-        builderAction: HTSingleRecipeBuilder.WithCatalyst<HTFluidIngredient, HTItemResult, RTFreezingRecipe>.() -> Unit
-    ): HTSingleRecipeBuilder.WithCatalyst<HTFluidIngredient, HTItemResult, RTFreezingRecipe> {
+        builderAction: HTSingleRecipeBuilder.Catalysed<HTFluidIngredient, HTItemResult, RTFreezingRecipe>.() -> Unit
+    ): HTSingleRecipeBuilder.Catalysed<HTFluidIngredient, HTItemResult, RTFreezingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSingleRecipeBuilder.WithCatalyst(RagiumConstants.FREEZING, ::RTFreezingRecipe).apply(builderAction)
+        return HTSingleRecipeBuilder.Catalysed(RagiumConstants.FREEZING, ::RTFreezingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -247,12 +258,12 @@ data object RagiumRecipeBuilders {
 
     @JvmStatic
     inline fun engraving(
-        builderAction: HTSingleRecipeBuilder.WithCatalyst<HTItemIngredient, HTItemResult, RTEngravingRecipe>.() -> Unit
-    ): HTSingleRecipeBuilder.WithCatalyst<HTItemIngredient, HTItemResult, RTEngravingRecipe> {
+        builderAction: HTSingleRecipeBuilder.Catalysed<HTItemIngredient, HTItemResult, RTEngravingRecipe>.() -> Unit
+    ): HTSingleRecipeBuilder.Catalysed<HTItemIngredient, HTItemResult, RTEngravingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSingleRecipeBuilder.WithCatalyst(RagiumConstants.ENGRAVING, ::RTEngravingRecipe).apply(builderAction)
+        return HTSingleRecipeBuilder.Catalysed(RagiumConstants.ENGRAVING, ::RTEngravingRecipe).apply(builderAction)
     }
 
     // Arcane

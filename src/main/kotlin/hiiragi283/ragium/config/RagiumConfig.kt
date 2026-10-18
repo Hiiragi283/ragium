@@ -97,6 +97,10 @@ data object RagiumConfig {
             val cuttingMachine: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.CUTTING_MACHINE)
 
+            @JvmField
+            val pressMachine: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.PRESS_MACHINE)
+
             // Heat
             @JvmField
             val alloySmelter: HTEnergyConfig =

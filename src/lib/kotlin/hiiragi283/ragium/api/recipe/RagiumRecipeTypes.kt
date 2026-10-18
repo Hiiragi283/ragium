@@ -53,6 +53,9 @@ data object RagiumRecipeTypes {
     @JvmField
     val FILLING: RecipeType<RTFillingRecipe> = create(RagiumConstants.FILLING)
 
+    @JvmField
+    val PRESSING: RecipeType<RTPressingRecipe> = create(RagiumConstants.PRESSING)
+
     // Heat
     @JvmField
     val ALLOYING: RecipeType<RTAlloyingRecipe> = create(RagiumConstants.ALLOYING)

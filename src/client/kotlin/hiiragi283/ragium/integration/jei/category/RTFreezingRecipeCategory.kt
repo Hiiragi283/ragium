@@ -1,7 +1,7 @@
 package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.lib.integration.jei.add
-import hiiragi283.lib.integration.jei.category.HTSingleAndCatalystRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTCatalysedSingleRecipeCategory
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -10,7 +10,7 @@ import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.helpers.IGuiHelper
 
 class RTFreezingRecipeCategory(guiHelper: IGuiHelper) :
-    HTSingleAndCatalystRecipeCategory<RTFreezingRecipe>(
+    HTCatalysedSingleRecipeCategory<RTFreezingRecipe>(
         RagiumJeiRecipeTypes.FREEZING,
         RagiumRecipeTypes.FREEZING,
         guiHelper.createDrawableItemLike(RagiumBlocks.FREEZER),

@@ -17,7 +17,7 @@ import net.minecraft.network.codec.StreamCodec
  * @author Hiiragi Tsubasa
  * @since 26.1.11
  */
-open class HTSingleAndCatalystRecipe<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>>(
+open class HTCatalysedSingleRecipe<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>>(
     val ingredient: ING,
     val catalyst: HTItemCatalyst,
     val result: RES,
@@ -25,7 +25,7 @@ open class HTSingleAndCatalystRecipe<ING : HTIngredient<*, *>, RES : HTRecipeRes
 ) : HTProgressRecipe.Holder {
     companion object {
         @JvmStatic
-        fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, R : HTSingleAndCatalystRecipe<ING, RES>> codec(
+        fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, R : HTCatalysedSingleRecipe<ING, RES>> codec(
             ingredient: Codec<ING>,
             result: Codec<RES>,
             factory: Factory<ING, RES, R>
@@ -39,7 +39,7 @@ open class HTSingleAndCatalystRecipe<ING : HTIngredient<*, *>, RES : HTRecipeRes
         }
 
         @JvmStatic
-        fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, R : HTSingleAndCatalystRecipe<ING, RES>> streamCodec(
+        fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, R : HTCatalysedSingleRecipe<ING, RES>> streamCodec(
             ingredient: StreamCodec<in RegistryFriendlyByteBuf, ING>,
             result: StreamCodec<in RegistryFriendlyByteBuf, RES>,
             factory: Factory<ING, RES, R>

@@ -4,6 +4,7 @@
     "ragium:centrifuge",
     "ragium:compressor",
     "ragium:crusher",
-    "ragium:cutting_machine"
+    "ragium:cutting_machine",
+    "ragium:press_machine"
   ]
 }

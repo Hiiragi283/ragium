@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
@@ -52,6 +53,9 @@ data object RagiumRecipeLookups {
     @JvmField
     val FILLING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.FILLING)
 
+    @JvmField
+    val PRESSING: HTCompoundRecipeLookup<HTDoubleItemToItemRecipe> = create(RagiumConstants.PRESSING)
+
     // Heat
     @JvmField
     val ALLOYING: HTCompoundRecipeLookup<HTSizedShapelessRecipe> = create(RagiumConstants.ALLOYING)
@@ -99,7 +103,7 @@ data object RagiumRecipeLookups {
     val ELECTROLYZING: HTCompoundRecipeLookup<HTFluidSeparatingRecipe> = create(RagiumConstants.ELECTROLYZING)
 
     @JvmField
-    val ENGRAVING: HTRecipeLookup<RTEngravingRecipe> = create(RagiumRecipeTypes.ENGRAVING)
+    val ENGRAVING: HTCompoundRecipeLookup<HTDoubleItemToItemRecipe> = create(RagiumConstants.ENGRAVING)
 
     // Arcane
     @JvmField

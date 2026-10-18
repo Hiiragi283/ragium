@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:nuggets/sooty_iron",
+    "B": "ragium:machine_parts/mechanical",
+    "C": "#c:gears/copper",
+    "D": "minecraft:piston"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ADA"
+  ],
+  "result": {
+    "id": "ragium:press_machine"
+  }
+}

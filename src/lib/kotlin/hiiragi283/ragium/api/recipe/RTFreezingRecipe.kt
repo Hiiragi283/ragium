@@ -2,9 +2,9 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.HTSerializableRecipe
+import hiiragi283.lib.recipe.base.HTCatalysedSingleRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
-import hiiragi283.lib.recipe.base.HTSingleAndCatalystRecipe
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
@@ -22,7 +22,7 @@ class RTFreezingRecipe(
     catalyst: HTItemCatalyst,
     result: HTItemResult,
     progressData: HTProgressData
-) : HTSingleAndCatalystRecipe<HTFluidIngredient, HTItemResult>(
+) : HTCatalysedSingleRecipe<HTFluidIngredient, HTItemResult>(
     ingredient,
     catalyst,
     result,

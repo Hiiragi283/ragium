@@ -258,6 +258,10 @@ data object RagiumBlocks {
     val CUTTING_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE)
 
+    @JvmField
+    val PRESS_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.PRESS_MACHINE)
+
     // Heat
     @JvmField
     val ALLOY_SMELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
@@ -320,7 +324,7 @@ data object RagiumBlocks {
 
     @JvmField
     val ENGRAVER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerFakeMachine(RagiumConstants.ENGRAVER)
+        registerMachine(RagiumBlockEntityTypes.ENGRAVER)
 
     @JvmField
     val SCANNER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
@@ -341,6 +345,7 @@ data object RagiumBlocks {
                 put(HTMachineType.MECHANICAL, CRUSHER)
                 put(HTMachineType.MECHANICAL, COMPRESSOR)
                 put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
+                put(HTMachineType.MECHANICAL, PRESS_MACHINE)
 
                 put(HTMachineType.HEAT, ALLOY_SMELTER)
                 put(HTMachineType.HEAT, MELTER)
