@@ -9,7 +9,6 @@ import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.crafting.RecipeInput
 
 /**
  * 1種類の材料と触媒から1種類の完成品を作成するレシピを表す抽象クラスです。
@@ -18,15 +17,15 @@ import net.minecraft.world.item.crafting.RecipeInput
  * @author Hiiragi Tsubasa
  * @since 26.1.11
  */
-open class HTSingleAndCatalystRecipe<IN : RecipeInput, ING : HTIngredient<*, *>, RES : HTRecipeResult<*>>(
+open class HTSingleAndCatalystRecipe<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>>(
     val ingredient: ING,
     val catalyst: HTItemCatalyst,
     val result: RES,
     override val progressData: HTProgressData
-) : HTProgressRecipe.Simple<IN> {
+) : HTProgressRecipe.Holder {
     companion object {
         @JvmStatic
-        fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, R : HTSingleAndCatalystRecipe<*, ING, RES>> codec(
+        fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, R : HTSingleAndCatalystRecipe<ING, RES>> codec(
             ingredient: Codec<ING>,
             result: Codec<RES>,
             factory: Factory<ING, RES, R>
@@ -40,7 +39,7 @@ open class HTSingleAndCatalystRecipe<IN : RecipeInput, ING : HTIngredient<*, *>,
         }
 
         @JvmStatic
-        fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, R : HTSingleAndCatalystRecipe<*, ING, RES>> streamCodec(
+        fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, R : HTSingleAndCatalystRecipe<ING, RES>> streamCodec(
             ingredient: StreamCodec<in RegistryFriendlyByteBuf, ING>,
             result: StreamCodec<in RegistryFriendlyByteBuf, RES>,
             factory: Factory<ING, RES, R>

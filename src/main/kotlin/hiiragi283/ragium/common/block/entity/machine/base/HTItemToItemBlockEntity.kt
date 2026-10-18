@@ -41,7 +41,7 @@ abstract class HTItemToItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, 
             HTOutputSlotHelper.forItem(this@HTItemToItemBlockEntity.outputSlot)
         }
 
-        override fun createProgressor(): Progressor<ItemInstance, HTItemToItemRecipe> = TODO()
+        override fun createProgressor(): Progressor<ItemInstance, HTItemToItemRecipe> = SingleProgressor()
 
         override fun getInput(): ItemInstance = inputSlot.getStoredInput()
 

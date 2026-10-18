@@ -49,9 +49,8 @@ abstract class HTItemAndFluidToFluidBlockEntity(type: BlockEntityType<*>, pos: B
                 HTOutputSlotHelper.forFluid(this@HTItemAndFluidToFluidBlockEntity.outputTank)
             }
 
-            override fun createProgressor(): Progressor<ItemInstance, FluidInstance, HTItemAndFluidToFluidRecipe> {
-                TODO("Not yet implemented")
-            }
+            override fun createProgressor(): Progressor<ItemInstance, FluidInstance, HTItemAndFluidToFluidRecipe> =
+                DoubleProgressor()
 
             override fun getFirstInput(): ItemInstance = inputSlot.getStoredInput()
 

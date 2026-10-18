@@ -45,9 +45,7 @@ abstract class HTItemToDoubleItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
                 HTOutputSlotHelper.forItems(this@HTItemToDoubleItemBlockEntity.secondarySlot)
             }
 
-            override fun createProgressor(): Progressor<ItemInstance, HTItemToDoubleItemRecipe> {
-                TODO("Not yet implemented")
-            }
+            override fun createProgressor(): Progressor<ItemInstance, HTItemToDoubleItemRecipe> = SingleProgressor()
 
             override fun getInput(): ItemInstance = inputSlot.getStoredInput()
 

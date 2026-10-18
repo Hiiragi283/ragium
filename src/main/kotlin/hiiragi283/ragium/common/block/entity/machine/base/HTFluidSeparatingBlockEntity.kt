@@ -55,9 +55,7 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
                 HTOutputSlotHelper.forFluid(this@HTFluidSeparatingBlockEntity.rightOutputTank)
             }
 
-            override fun createProgressor(): Progressor<FluidInstance, HTFluidSeparatingRecipe> {
-                TODO("Not yet implemented")
-            }
+            override fun createProgressor(): Progressor<FluidInstance, HTFluidSeparatingRecipe> = SingleProgressor()
 
             override fun getInput(): FluidInstance = inputTank.getStoredInput()
 

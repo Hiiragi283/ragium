@@ -30,7 +30,7 @@ data class RTWashingRecipe(
     val results: Nel<HTItemResult>,
     override val progressData: HTProgressData
 ) : HTItemAndFluidToRecipe<Pair<ItemStack, ItemStack>>,
-    HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
+    HTProgressRecipe.Holder,
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField
@@ -83,6 +83,8 @@ data class RTWashingRecipe(
 
     override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> =
         itemIngredient.getMatchingStack(first) to fluidIngredient.getMatchingStack(second)
+
+    override fun getProgressData(first: ItemInstance, second: FluidInstance): HTProgressData = progressData
 
     override fun getSerializer(): RecipeSerializer<RTWashingRecipe> = RagiumRecipeSerializers.WASHING
 

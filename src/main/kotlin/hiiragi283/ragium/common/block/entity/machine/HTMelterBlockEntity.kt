@@ -43,9 +43,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
                 HTOutputSlotHelper.forFluid(this@HTMelterBlockEntity.outputTank)
             }
 
-            override fun createProgressor(): Progressor<ItemInstance, HTItemToFluidRecipe> {
-                TODO("Not yet implemented")
-            }
+            override fun createProgressor(): Progressor<ItemInstance, HTItemToFluidRecipe> = SingleProgressor()
 
             override fun getInput(): ItemInstance = inputSlot.getStoredInput()
 

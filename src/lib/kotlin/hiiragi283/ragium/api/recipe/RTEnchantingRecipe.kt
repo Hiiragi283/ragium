@@ -25,7 +25,7 @@ data class RTEnchantingRecipe(
     val result: HTItemResult,
     override val progressData: HTProgressData
 ) : HTDoubleItemToItemRecipe,
-    HTProgressRecipe.Simple<RecipeInput>,
+    HTProgressRecipe.Holder,
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField
@@ -62,6 +62,8 @@ data class RTEnchantingRecipe(
 
     override fun getMatchingStack(first: ItemInstance, second: ItemInstance): Pair<ItemInstance, ItemInstance> =
         BOOK_INGREDIENT.getMatchingStack(first) to ingredient.getMatchingStack(second)
+
+    override fun getProgressData(first: ItemInstance, second: ItemInstance): HTProgressData = progressData
 
     override fun getSerializer(): RecipeSerializer<RTEnchantingRecipe> = RagiumRecipeSerializers.ENCHANTING
 

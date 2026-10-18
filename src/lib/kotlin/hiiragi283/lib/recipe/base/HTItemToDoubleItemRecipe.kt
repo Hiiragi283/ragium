@@ -14,7 +14,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
 
 /**
  * 1種類のアイテムから2種類のアイテムを作成するレシピを表すインターフェースです。
@@ -23,8 +22,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
  */
 interface HTItemToDoubleItemRecipe :
     HTRecipePredicates.SingleItem,
-    HTRecipeFactories.SingleItemTo<Pair<ItemStack, ItemStack>>,
-    HTProgressRecipe<SingleRecipeInput> {
+    HTRecipeFactories.SingleItemTo<Pair<ItemStack, ItemStack>> {
 
     fun asSingleOutput(): HTItemToItemRecipe = object : HTItemToItemRecipe {
         override fun test(input: ItemInstance): Boolean = this@HTItemToDoubleItemRecipe.test(input)
@@ -34,7 +32,7 @@ interface HTItemToDoubleItemRecipe :
 
         override fun apply(input: ItemInstance): ItemStack = this@HTItemToDoubleItemRecipe.apply(input).first
 
-        override fun getProgressData(input: SingleRecipeInput): HTProgressData =
+        override fun getProgressData(input: ItemInstance): HTProgressData =
             this@HTItemToDoubleItemRecipe.getProgressData(input)
     }
 
@@ -47,7 +45,7 @@ interface HTItemToDoubleItemRecipe :
         val results: Nel<HTItemResult>,
         override val progressData: HTProgressData
     ) : HTItemToDoubleItemRecipe,
-        HTProgressRecipe.Simple<SingleRecipeInput> {
+        HTProgressRecipe.Holder {
         companion object {
             @JvmStatic
             fun <RECIPE : Basic> codec(factory: HTItemToDoubleItemRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> =
@@ -80,9 +78,11 @@ interface HTItemToDoubleItemRecipe :
 
         override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
-        override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
-
         override fun apply(input: ItemInstance): Pair<ItemStack, ItemStack> =
             results.head.create() to results.getOrNull(1).createOrEmpty()
+
+        override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
+
+        override fun getProgressData(input: ItemInstance): HTProgressData = progressData
     }
 }

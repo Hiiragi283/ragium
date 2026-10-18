@@ -12,7 +12,7 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.recipe.IFocusGroup
 import net.minecraft.world.item.crafting.RecipeType
 
-abstract class HTSingleAndCatalystRecipeCategory<RECIPE : HTSingleAndCatalystRecipe<*, *, *>>(
+abstract class HTSingleAndCatalystRecipeCategory<RECIPE : HTSingleAndCatalystRecipe<*, *>>(
     recipeType: HTRecipeHolderType<RECIPE>,
     recipeType1: RecipeType<*>,
     icon: IDrawable,

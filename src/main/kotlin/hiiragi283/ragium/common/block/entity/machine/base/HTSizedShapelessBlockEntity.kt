@@ -37,9 +37,7 @@ abstract class HTSizedShapelessBlockEntity(type: BlockEntityType<*>, pos: BlockP
             HTOutputSlotHelper.forItem(this@HTSizedShapelessBlockEntity.outputSlot)
         }
 
-        override fun createProgressor(): Progressor<List<ItemInstance>, HTSizedShapelessRecipe> {
-            TODO("Not yet implemented")
-        }
+        override fun createProgressor(): Progressor<List<ItemInstance>, HTSizedShapelessRecipe> = SingleProgressor()
 
         override fun getInput(): List<ItemInstance> =
             this@HTSizedShapelessBlockEntity.inputSlots.map(HTBasicItemSlot::getStackCopy)

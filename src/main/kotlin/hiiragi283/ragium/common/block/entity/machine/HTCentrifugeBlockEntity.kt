@@ -46,9 +46,7 @@ class HTCentrifugeBlockEntity(pos: BlockPos, state: BlockState) :
                 HTOutputSlotHelper.forFluid(this@HTCentrifugeBlockEntity.outputTank)
             }
 
-            override fun createProgressor(): Progressor<ItemInstance, RTCentrifugingRecipe> {
-                TODO("Not yet implemented")
-            }
+            override fun createProgressor(): Progressor<ItemInstance, RTCentrifugingRecipe> = SingleProgressor()
 
             override fun getInput(): ItemInstance = inputSlot.getStoredInput()
 

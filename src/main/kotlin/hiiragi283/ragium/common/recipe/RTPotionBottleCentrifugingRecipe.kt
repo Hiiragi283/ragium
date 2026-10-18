@@ -8,14 +8,13 @@ import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 
 @JvmRecord
 data class RTPotionBottleCentrifugingRecipe(val bottleType: HTBottleType, override val progressData: HTProgressData) :
     RTCentrifugingRecipe,
-    HTProgressRecipe.Simple<SingleRecipeInput> {
+    HTProgressRecipe.Holder {
     companion object {
         @JvmField
         val PROGRESS_DATA: HTProgressData = HTProgressData.time(60)
@@ -36,4 +35,6 @@ data class RTPotionBottleCentrifugingRecipe(val bottleType: HTBottleType, overri
         test(input) -> HTIngredientHelper.copyWithCount(input, 1)
         else -> ItemStack.EMPTY
     }
+
+    override fun getProgressData(input: ItemInstance): HTProgressData = progressData
 }

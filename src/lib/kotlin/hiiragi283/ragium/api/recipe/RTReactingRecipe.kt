@@ -31,7 +31,7 @@ data class RTReactingRecipe(
     override val progressData: HTProgressData
 ) : HTRecipePredicate<HTRecipeInput>,
     HTRecipeFactory<HTRecipeInput, HTItemAndFluidStack>,
-    HTProgressRecipe.Simple<HTRecipeInput>,
+    HTProgressRecipe.Holder,
     HTSerializableRecipe<HTRecipeInput> {
     companion object {
         @JvmField

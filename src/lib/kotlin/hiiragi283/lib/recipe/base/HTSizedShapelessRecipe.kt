@@ -13,7 +13,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeInput
 
 /**
  * 複数のアイテムから1種類のアイテムを作成するレシピを表すインターフェースです。
@@ -22,8 +21,7 @@ import net.minecraft.world.item.crafting.RecipeInput
  */
 interface HTSizedShapelessRecipe :
     HTRecipePredicates.MultiItem,
-    HTRecipeFactories.MultiItemTo<ItemStack>,
-    HTProgressRecipe<RecipeInput> {
+    HTRecipeFactories.MultiItemTo<ItemStack> {
 
     /**
      * @author Hiiragi Tsubasa
@@ -34,7 +32,7 @@ interface HTSizedShapelessRecipe :
         val result: HTItemResult,
         override val progressData: HTProgressData
     ) : HTSizedShapelessRecipe,
-        HTProgressRecipe.Simple<RecipeInput> {
+        HTProgressRecipe.Holder {
         companion object {
             @JvmStatic
             fun <RECIPE : Basic> codec(
@@ -68,9 +66,11 @@ interface HTSizedShapelessRecipe :
 
         override fun test(input: List<ItemInstance>): Boolean = HTIngredientHelper.match(ingredients, input)
 
+        override fun apply(input: List<ItemInstance>): ItemStack = result.create()
+
         override fun getMatchingStack(input: List<ItemInstance>): List<ItemInstance> =
             HTIngredientHelper.getMatchingStacks(ingredients, input)
 
-        override fun apply(input: List<ItemInstance>): ItemStack = result.create()
+        override fun getProgressData(input: List<ItemInstance>): HTProgressData = progressData
     }
 }

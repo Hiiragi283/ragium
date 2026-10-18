@@ -22,6 +22,7 @@ data object HTRecipeFactories {
 
     interface SingleInput<INPUT : RecipeInput, INPUT_A : Any, OUTPUT : Any> :
         HTRecipeFactory<INPUT, OUTPUT>,
+        HTProgressRecipe.Single<INPUT, INPUT_A>,
         Function<INPUT_A, OUTPUT> {
         override fun apply(input: INPUT_A): OUTPUT
 
@@ -36,6 +37,8 @@ data object HTRecipeFactories {
      */
     interface SingleFluidTo<OUTPUT : Any> : SingleInput<HTSingleFluidRecipeInput, FluidInstance, OUTPUT> {
         override fun produce(input: HTSingleFluidRecipeInput): OUTPUT = apply(input.fluid)
+
+        override fun getProgressData(input: HTSingleFluidRecipeInput): HTProgressData = getProgressData(input.fluid)
     }
 
     /**
@@ -43,6 +46,8 @@ data object HTRecipeFactories {
      */
     interface SingleItemTo<OUTPUT : Any> : SingleInput<SingleRecipeInput, ItemInstance, OUTPUT> {
         override fun produce(input: SingleRecipeInput): OUTPUT = apply(input.item())
+
+        override fun getProgressData(input: SingleRecipeInput): HTProgressData = getProgressData(input.item())
     }
 
     /**
@@ -51,12 +56,15 @@ data object HTRecipeFactories {
      */
     interface MultiItemTo<OUTPUT : Any> : SingleInput<RecipeInput, List<ItemInstance>, OUTPUT> {
         override fun produce(input: RecipeInput): OUTPUT = apply(input.asList())
+
+        override fun getProgressData(input: RecipeInput): HTProgressData = getProgressData(input.asList())
     }
 
     //    Double Input    //
 
     interface DoubleInput<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, OUTPUT : Any> :
         HTRecipeFactory<INPUT, OUTPUT>,
+        HTProgressRecipe.Double<INPUT, INPUT_A, INPUT_B>,
         BiFunction<INPUT_A, INPUT_B, OUTPUT> {
         override fun apply(first: INPUT_A, second: INPUT_B): OUTPUT
 
@@ -71,6 +79,9 @@ data object HTRecipeFactories {
      */
     interface ItemAndFluid<OUTPUT : Any> : DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance, OUTPUT> {
         override fun produce(input: HTItemAndFluidRecipeInput): OUTPUT = apply(input.item, input.fluid)
+
+        override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData =
+            getProgressData(input.item, input.fluid)
     }
 
     /**
@@ -78,5 +89,8 @@ data object HTRecipeFactories {
      */
     interface DoubleItem<OUTPUT : Any> : DoubleInput<RecipeInput, ItemInstance, ItemInstance, OUTPUT> {
         override fun produce(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
+
+        override fun getProgressData(input: RecipeInput): HTProgressData =
+            getProgressData(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
     }
 }

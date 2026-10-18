@@ -18,7 +18,7 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
 class RTPlantingRecipe(ingredient: HTItemIngredient, result: HTItemResult, progressData: HTProgressData) :
-    HTBasicSingleRecipe<SingleRecipeInput, HTItemIngredient, HTItemResult>(ingredient, result, progressData),
+    HTBasicSingleRecipe<HTItemIngredient, HTItemResult>(ingredient, result, progressData),
     HTItemToDoubleItemRecipe,
     HTSerializableRecipe<SingleRecipeInput> {
     companion object {
@@ -39,6 +39,8 @@ class RTPlantingRecipe(ingredient: HTItemIngredient, result: HTItemResult, progr
         result.create() to getMatchingStack(input).let(HTIngredientHelper::unwrap).copy()
 
     override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
+
+    override fun getProgressData(input: ItemInstance): HTProgressData = progressData
 
     override fun getSerializer(): RecipeSerializer<RTPlantingRecipe> = RagiumRecipeSerializers.PLANTING
 

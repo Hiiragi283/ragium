@@ -51,9 +51,7 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
             HTOutputSlotHelper.forFluid(this@HTPyrolyzerBlockEntity.outputTank)
         }
 
-        override fun createProgressor(): Progressor<ItemInstance, HTItemToItemAndFluidRecipe> {
-            TODO("Not yet implemented")
-        }
+        override fun createProgressor(): Progressor<ItemInstance, HTItemToItemAndFluidRecipe> = SingleProgressor()
 
         override fun getInput(): ItemInstance = inputSlot.getStoredInput()
 

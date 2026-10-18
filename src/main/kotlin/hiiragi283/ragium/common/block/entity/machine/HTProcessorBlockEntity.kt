@@ -3,11 +3,16 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
+import hiiragi283.lib.recipe.base.HTProgressRecipe
+import hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
+import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
+import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTItemSlot
+import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
@@ -21,6 +26,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
+import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBaseMachineBlockEntity(type, pos, state) {
@@ -113,8 +119,8 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
         //    EnergizedProgressor    //
 
-        /*protected inner class EnergizedProgressor<INPUT : RecipeInput, RECIPE : HTProgressRecipe<INPUT>> :
-            HTRecipeHandler.Progressor<INPUT, RECIPE> {
+        protected inner class SingleProgressor<INPUT : Any, RECIPE : HTProgressRecipe.Single<*, INPUT>> :
+            HTSingleRecipeHandler.Progressor<INPUT, RECIPE> {
             private val baseEnergyPerTick: Int = getConfig().getUsage()
             private val currentEnergyPerTick: Int
                 get() = HTMachineUpgradeHelper.modifySpeed(components(), this.baseEnergyPerTick)
@@ -131,6 +137,29 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
                 }
                 extracted
             }
-        }*/
+        }
+
+        protected inner class DoubleProgressor<
+            INPUT_A : Any,
+            INPUT_B : Any,
+            RECIPE : HTProgressRecipe.Double<*, INPUT_A, INPUT_B>
+            > : HTDoubleRecipeHandler.Progressor<INPUT_A, INPUT_B, RECIPE> {
+            private val baseEnergyPerTick: Int = getConfig().getUsage()
+            private val currentEnergyPerTick: Int
+                get() = HTMachineUpgradeHelper.modifySpeed(components(), this.baseEnergyPerTick)
+
+            override fun getMaxProgress(recipe: RECIPE, first: INPUT_A, second: INPUT_B): Int {
+                val requiredEnergy: Int = recipe.getProgressData(first, second).getTotalEnergy(this.baseEnergyPerTick)
+                return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
+            }
+
+            override fun getProgress(): Int = useTransaction { transaction: Transaction ->
+                val extracted: Int = handler.extract(currentEnergyPerTick, transaction, HTTransferAccess.INTERNAL)
+                if (extracted > 0) {
+                    transaction.commit()
+                }
+                extracted
+            }
+        }
     }
 }

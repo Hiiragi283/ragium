@@ -24,7 +24,7 @@ import java.util.function.BiPredicate
 interface HTLocationToRecipe<OUTPUT : Any> :
     HTRecipePredicate<HTLocationRecipeInput>,
     HTRecipeFactory<HTLocationRecipeInput, OUTPUT>,
-    HTProgressRecipe<HTLocationRecipeInput>,
+    HTProgressRecipe.Double<HTLocationRecipeInput, ServerLevel, BlockPos>,
     BiPredicate<ServerLevel, BlockPos>,
     BiFunction<ServerLevel, BlockPos, OUTPUT> {
 
@@ -37,7 +37,7 @@ interface HTLocationToRecipe<OUTPUT : Any> :
         val result: HTFluidResult,
         override val progressData: HTProgressData
     ) : HTLocationToRecipe<FluidStack>,
-        HTProgressRecipe.Simple<HTLocationRecipeInput> {
+        HTProgressRecipe.Holder {
         companion object {
             @JvmStatic
             fun <RECIPE : BasicFluid> codec(factory: HTLocationToFluidRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> =
@@ -73,5 +73,9 @@ interface HTLocationToRecipe<OUTPUT : Any> :
         override fun produce(input: HTLocationRecipeInput): FluidStack = result.create()
 
         override fun apply(level: ServerLevel, pos: BlockPos): FluidStack = result.create()
+
+        override fun getProgressData(input: HTLocationRecipeInput): HTProgressData = progressData
+
+        override fun getProgressData(first: ServerLevel, second: BlockPos): HTProgressData = progressData
     }
 }

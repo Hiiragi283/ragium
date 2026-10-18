@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
-import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTSingleAndCatalystRecipe
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
@@ -22,9 +21,8 @@ class RTEngravingRecipe(
     catalyst: HTItemCatalyst,
     result: HTItemResult,
     progressData: HTProgressData
-) : HTSingleAndCatalystRecipe<RecipeInput, HTItemIngredient, HTItemResult>(ingredient, catalyst, result, progressData),
+) : HTSingleAndCatalystRecipe<HTItemIngredient, HTItemResult>(ingredient, catalyst, result, progressData),
     HTDoubleItemToItemRecipe,
-    HTProgressRecipe.Simple<RecipeInput>,
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField
@@ -41,10 +39,12 @@ class RTEngravingRecipe(
     override fun test(first: ItemInstance, second: ItemInstance): Boolean =
         ingredient.test(first) && catalyst.test(second)
 
+    override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
+
     override fun getMatchingStack(first: ItemInstance, second: ItemInstance): Pair<ItemInstance, ItemInstance> =
         ingredient.getMatchingStack(first) to catalyst.getMatchingStack(second)
 
-    override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
+    override fun getProgressData(first: ItemInstance, second: ItemInstance): HTProgressData = progressData
 
     override fun getSerializer(): RecipeSerializer<RTEngravingRecipe> = RagiumRecipeSerializers.ENGRAVING
 

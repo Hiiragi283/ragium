@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
-import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTSingleAndCatalystRecipe
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
@@ -23,14 +22,13 @@ class RTFreezingRecipe(
     catalyst: HTItemCatalyst,
     result: HTItemResult,
     progressData: HTProgressData
-) : HTSingleAndCatalystRecipe<HTItemAndFluidRecipeInput, HTFluidIngredient, HTItemResult>(
+) : HTSingleAndCatalystRecipe<HTFluidIngredient, HTItemResult>(
     ingredient,
     catalyst,
     result,
     progressData
 ),
     HTItemAndFluidToItemRecipe,
-    HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField
@@ -51,6 +49,8 @@ class RTFreezingRecipe(
 
     override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> =
         ItemStack.EMPTY to ingredient.getMatchingStack(second)
+
+    override fun getProgressData(first: ItemInstance, second: FluidInstance): HTProgressData = progressData
 
     override fun getSerializer(): RecipeSerializer<RTFreezingRecipe> = RagiumRecipeSerializers.FREEZING
 

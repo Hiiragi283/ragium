@@ -47,9 +47,8 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
                 HTOutputSlotHelper.forItem(this@HTFreezerBlockEntity.outputSlot)
             }
 
-            override fun createProgressor(): Progressor<ItemInstance, FluidInstance, RTFreezingRecipe> {
-                TODO("Not yet implemented")
-            }
+            override fun createProgressor(): Progressor<ItemInstance, FluidInstance, RTFreezingRecipe> =
+                DoubleProgressor()
 
             override fun getFirstInput(): ItemInstance = catalystSlot.getStoredInput()
 

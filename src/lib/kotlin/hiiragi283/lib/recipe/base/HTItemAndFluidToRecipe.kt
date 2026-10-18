@@ -6,7 +6,6 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
@@ -48,8 +47,7 @@ typealias HTItemOrFluidRecipe = HTItemAndFluidToRecipe<HTItemAndFluidStack>
  */
 interface HTItemAndFluidToRecipe<OUTPUT : Any> :
     HTRecipePredicates.ItemAndFluid,
-    HTRecipeFactories.ItemAndFluid<OUTPUT>,
-    HTProgressRecipe<HTItemAndFluidRecipeInput> {
+    HTRecipeFactories.ItemAndFluid<OUTPUT> {
 
     /**
      * @author Hiiragi Tsubasa
@@ -61,7 +59,7 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
         val result: RESULT,
         override val progressData: HTProgressData
     ) : HTItemAndFluidToRecipe<OUTPUT>,
-        HTProgressRecipe.Simple<HTItemAndFluidRecipeInput> {
+        HTProgressRecipe.Holder {
         companion object {
             @JvmStatic
             fun <OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>, RECIPE : Basic<OUTPUT, RESULT>> codec(
@@ -98,10 +96,12 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
         override fun test(first: ItemInstance, second: FluidInstance): Boolean =
             itemIngredient.test(first) && fluidIngredient.test(second)
 
+        override fun apply(first: ItemInstance, second: FluidInstance): OUTPUT = result.create()
+
         override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> =
             itemIngredient.getMatchingStack(first) to fluidIngredient.getMatchingStack(second)
 
-        override fun apply(first: ItemInstance, second: FluidInstance): OUTPUT = result.create()
+        override fun getProgressData(first: ItemInstance, second: FluidInstance): HTProgressData = progressData
     }
 
     /**

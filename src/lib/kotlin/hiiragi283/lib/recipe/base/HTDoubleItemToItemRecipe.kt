@@ -10,7 +10,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeInput
 
 /**
  * 2種類のアイテムから1種類のアイテムを作成するレシピを表すインターフェースです。
@@ -19,8 +18,7 @@ import net.minecraft.world.item.crafting.RecipeInput
  */
 interface HTDoubleItemToItemRecipe :
     HTRecipePredicates.DoubleItem,
-    HTRecipeFactories.DoubleItem<ItemStack>,
-    HTProgressRecipe<RecipeInput> {
+    HTRecipeFactories.DoubleItem<ItemStack> {
 
     /**
      * @author Hiiragi Tsubasa
@@ -32,7 +30,7 @@ interface HTDoubleItemToItemRecipe :
         val result: HTItemResult,
         override val progressData: HTProgressData
     ) : HTDoubleItemToItemRecipe,
-        HTProgressRecipe.Simple<RecipeInput> {
+        HTProgressRecipe.Holder {
         companion object {
             @JvmStatic
             fun <RECIPE : Basic> codec(factory: HTDoubleItemToItemRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> =
@@ -67,9 +65,11 @@ interface HTDoubleItemToItemRecipe :
         override fun test(first: ItemInstance, second: ItemInstance): Boolean =
             primary.test(first) && secondary.test(second)
 
+        override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
+
         override fun getMatchingStack(first: ItemInstance, second: ItemInstance): Pair<ItemInstance, ItemInstance> =
             primary.getMatchingStack(first) to secondary.getMatchingStack(second)
 
-        override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
+        override fun getProgressData(first: ItemInstance, second: ItemInstance): HTProgressData = progressData
     }
 }

@@ -72,9 +72,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
                 HTOutputSlotHelper.forItem(this@HTSmelterBlockEntity.outputSlot)
             }
 
-            override fun createProgressor(): Progressor<ItemInstance, HTItemToItemRecipe> {
-                TODO("Not yet implemented")
-            }
+            override fun createProgressor(): Progressor<ItemInstance, HTItemToItemRecipe> = SingleProgressor()
 
             override fun getInput(): ItemInstance = inputSlot.getStoredInput()
 
@@ -99,7 +97,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
                 override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
 
-                override fun getProgressData(input: SingleRecipeInput): HTProgressData =
+                override fun getProgressData(input: ItemInstance): HTProgressData =
                     HTProgressData.time(recipe.cookingTime())
             }
 
