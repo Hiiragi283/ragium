@@ -11,7 +11,6 @@ import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
-import hiiragi283.ragium.api.data.chemical.HTChemical
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
@@ -151,18 +150,4 @@ abstract class ExporterDataProvider<R : Any>(
     protected fun lavaSet(): HolderSet<Fluid> = holderSet(Tags.Fluids.LAVA)
 
     protected fun milkSet(): HolderSet<Fluid> = holderSet(Tags.Fluids.MILK)
-
-    /**
-     * @since 26.1.11
-     */
-    @JvmName("chemicalHolderSet")
-    protected fun holderSet(chemical: ResourceKey<HTChemical>): HolderSet<HTChemical> =
-        HolderSet.direct(registries.getOrThrow(chemical))
-
-    /**
-     * @since 26.1.11
-     */
-    @JvmName("chemicalHolderSet")
-    protected fun holderSet(vararg chemicals: ResourceKey<HTChemical>): HolderSet<HTChemical> =
-        HolderSet.direct(chemicals.map(registries::getOrThrow))
 }

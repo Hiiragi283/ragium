@@ -3,16 +3,17 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
-import hiiragi283.lib.recipe.HTRecipeFactory
-import hiiragi283.lib.recipe.HTRecipePredicate
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
+import hiiragi283.lib.recipe.base.HTRecipeFactories
+import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTRecipeInput
+import hiiragi283.lib.recipe.input.HTFluidRecipeInput
+import hiiragi283.lib.recipe.input.asList
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -22,18 +23,20 @@ import hiiragi283.lib.serialization.network.nelOf
 import hiiragi283.lib.util.Ior
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.neoforged.neoforge.fluids.FluidInstance
 
 @JvmRecord
 data class RTMixingRecipe(
     val ingredients: Ior<Nel<HTItemIngredient>, Nel<HTFluidIngredient>>,
     val result: HTItemOrFluidResult,
     override val progressData: HTProgressData
-) : HTRecipePredicate<HTRecipeInput>,
-    HTRecipeFactory<HTRecipeInput, HTItemAndFluidStack>,
+) : HTRecipePredicates.DoubleInput<HTFluidRecipeInput, List<ItemInstance>, List<FluidInstance>>,
+    HTRecipeFactories.DoubleInput<HTFluidRecipeInput, List<ItemInstance>, List<FluidInstance>, HTItemAndFluidStack>,
     HTProgressRecipe.Holder,
-    HTSerializableRecipe<HTRecipeInput> {
+    HTSerializableRecipe<HTFluidRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTMixingRecipe> = HTCodecs.recordMap { instance ->
@@ -76,15 +79,35 @@ data class RTMixingRecipe(
         }
     }
 
-    override fun matches(input: HTRecipeInput): Boolean = ingredients.fold(
-        { HTIngredientHelper.match(it, input.items) },
-        { HTIngredientHelper.match(it, input.fluids) },
+    override fun matches(input: HTFluidRecipeInput): Boolean = test(input.asList(), input.asFluidList())
+
+    override fun test(first: List<ItemInstance>, second: List<FluidInstance>): Boolean = ingredients.fold(
+        { HTIngredientHelper.match(it, first) },
+        { HTIngredientHelper.match(it, second) },
         { items: Nel<HTItemIngredient>, fluids: Nel<HTFluidIngredient> ->
-            HTIngredientHelper.match(items, input.items) && HTIngredientHelper.match(fluids, input.fluids)
+            HTIngredientHelper.match(items, first) && HTIngredientHelper.match(fluids, second)
         }
     )
 
-    override fun produce(input: HTRecipeInput): HTItemAndFluidStack = result.create()
+    override fun produce(input: HTFluidRecipeInput): HTItemAndFluidStack = apply(input.asList(), input.asFluidList())
+
+    override fun apply(first: List<ItemInstance>, second: List<FluidInstance>): HTItemAndFluidStack = result.create()
+
+    override fun getMatchingStack(
+        first: List<ItemInstance>,
+        second: List<FluidInstance>
+    ): Pair<List<ItemInstance>, List<FluidInstance>> {
+        val (items: Nel<HTItemIngredient>?, fluids: Nel<HTFluidIngredient>?) = ingredients.toPair()
+        return Pair(
+            items?.let { HTIngredientHelper.getMatchingStacks(it, first) } ?: listOf(),
+            fluids?.let { HTIngredientHelper.getMatchingStacks(it, second) } ?: listOf()
+        )
+    }
+
+    override fun getProgressData(input: HTFluidRecipeInput): HTProgressData =
+        getProgressData(input.asList(), input.asFluidList())
+
+    override fun getProgressData(first: List<ItemInstance>, second: List<FluidInstance>): HTProgressData = progressData
 
     override fun getSerializer(): RecipeSerializer<RTMixingRecipe> = RagiumRecipeSerializers.MIXING
 

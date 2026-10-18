@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.builder.HTLocationToFluidRecipeBuilder
 import hiiragi283.lib.recipe.HTRecipeFactory
-import hiiragi283.lib.recipe.HTRecipePredicate
 import hiiragi283.lib.recipe.ingredient.HTBiomeCondition
 import hiiragi283.lib.recipe.input.HTLocationRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
@@ -15,17 +14,15 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.server.level.ServerLevel
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.BiFunction
-import java.util.function.BiPredicate
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.11
  */
 interface HTLocationToRecipe<OUTPUT : Any> :
-    HTRecipePredicate<HTLocationRecipeInput>,
+    HTRecipePredicates.DoubleInput<HTLocationRecipeInput, ServerLevel, BlockPos>,
     HTRecipeFactory<HTLocationRecipeInput, OUTPUT>,
     HTProgressRecipe.Double<HTLocationRecipeInput, ServerLevel, BlockPos>,
-    BiPredicate<ServerLevel, BlockPos>,
     BiFunction<ServerLevel, BlockPos, OUTPUT> {
 
     /**
@@ -66,13 +63,13 @@ interface HTLocationToRecipe<OUTPUT : Any> :
             )
         }
 
-        override fun matches(input: HTLocationRecipeInput): Boolean = condition.test(input.blockInWorld)
+        override fun matches(input: HTLocationRecipeInput): Boolean = test(input.level, input.pos)
 
-        override fun test(level: ServerLevel, pos: BlockPos): Boolean = condition.test(level.getBiome(pos))
+        override fun test(first: ServerLevel, second: BlockPos): Boolean = condition.test(first.getBiome(second))
 
         override fun produce(input: HTLocationRecipeInput): FluidStack = result.create()
 
-        override fun apply(level: ServerLevel, pos: BlockPos): FluidStack = result.create()
+        override fun apply(first: ServerLevel, second: BlockPos): FluidStack = result.create()
 
         override fun getProgressData(input: HTLocationRecipeInput): HTProgressData = progressData
 
