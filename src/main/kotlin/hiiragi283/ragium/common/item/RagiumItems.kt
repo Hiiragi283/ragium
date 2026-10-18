@@ -232,6 +232,21 @@ data object RagiumItems {
 
     // Mechanical
     @JvmField
+    val BLANK_DIE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("press_die/blank")
+
+    @JvmField
+    val GEAR_DIE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("press_die/gear")
+
+    @JvmField
+    val PACKING_DIE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("press_die/packing")
+
+    @JvmField
+    val UNPACKING_DIE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("press_die/unpacking")
+
+    @JvmField
+    val PRESS_DIES: Set<HTSimpleDeferredItem> = setOf(BLANK_DIE, GEAR_DIE, PACKING_DIE, UNPACKING_DIE)
+
+    @JvmField
     val HEATING_COIL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("heating_coil")
 
     // Heat

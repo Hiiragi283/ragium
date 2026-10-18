@@ -83,6 +83,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
             .addTag(HTCommonTags.Items.COAL_COKE)
             .addTag(HTCommonTags.Items.PITCH_COKE)
         RagiumItems.MOLDS.forEach(builder(RagiumTags.Items.MOLDS)::add)
+        RagiumItems.PRESS_DIES.forEach(builder(RagiumTags.Items.PRESS_DIES)::add)
         for (gem: RagiumMaterial.Gem in setOf(RagiumMaterial.Gem.CINNABAR, RagiumMaterial.Gem.FLUORITE)) {
             for (prefix: HTTagPrefix in setOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM)) {
                 builder(RagiumTags.Items.SMELTING_FLUXES).addTag(prefix.itemTagKey(gem))

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "#c:ingots/sooty_iron"
+    "A": "#c:ingots/gold"
   },
   "pattern": [
     "AA",

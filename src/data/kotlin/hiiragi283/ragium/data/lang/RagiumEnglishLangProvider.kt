@@ -156,6 +156,10 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
 
+        add(RagiumItems.BLANK_DIE, "Blank Press Die")
+        add(RagiumItems.GEAR_DIE, "Gear Press Die")
+        add(RagiumItems.PACKING_DIE, "Packing Press Die")
+        add(RagiumItems.UNPACKING_DIE, "Unpacking Press Die")
         add(RagiumItems.HEATING_COIL, "Heating Coil")
         add(RagiumItems.BLANK_MOLD, "Blank Mold")
         add(RagiumItems.BALL_MOLD, "Ball Mold")

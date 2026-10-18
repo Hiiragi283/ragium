@@ -2,6 +2,8 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
+import hiiragi283.lib.data.recipe.builder.ingredient
+import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.data.recipe.ingredient.IngredientBuilder
 import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
@@ -30,7 +32,6 @@ import net.minecraft.core.HolderSet
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.tags.ItemTags
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.ToolMaterial
@@ -123,11 +124,24 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +RagiumItems.WITHER_DOLL }
         }.save(exporter)
 
-        // XX Mold
+        // XX Press Die
         VanillaRecipeBuilders.shaped {
             +"AA"
             +"AA"
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
+            result { +RagiumItems.BLANK_DIE }
+        }.save(exporter)
+        for (pressDie: HTSimpleDeferredItem in RagiumItems.PRESS_DIES) {
+            VanillaRecipeBuilders.stonecutting {
+                ingredient { +holderSet(RagiumTags.Items.PRESS_DIES) }
+                result { +pressDie }
+            }.save(exporter)
+        }
+        // XX Mold
+        VanillaRecipeBuilders.shaped {
+            +"AA"
+            +"AA"
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
             result { +RagiumItems.BLANK_MOLD }
         }.save(exporter)
         for (mold: HTSimpleDeferredItem in RagiumItems.MOLDS) {
@@ -139,15 +153,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         // XX Tools
         registerTools(RagiumItems.SOOTY_IRON_TOOLS, RagiumToolMaterials.SOOTY_IRON)
-
-        // XX Dye Bucket
-        for (color: DyeColor in DyeColor.entries) {
-            VanillaRecipeBuilders.shapeless {
-                ingredient { +holderSet(Tags.Items.BUCKETS_WATER) }
-                repeat(4) { ingredient { +holderSet(color.tag) } }
-                result { +RagiumFluids.DYES[color].bucketHolder }
-            }.save(exporter)
-        }
     }
 
     private fun registerTools(tools: HTToolCollection<HTSimpleDeferredItem>, material: ToolMaterial) {
@@ -698,10 +703,21 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         ingotToNugget(RagiumMaterial.Alloy.SHADOW_STEEL)
         // Gear
         RagiumItems.getOrThrow(HTItemPart.GEAR, RagiumMaterial.Other.WOOD).let { gear: HTSimpleDeferredItem ->
+            val inputs: HolderSet<Item> = holderSet(ItemTags.PLANKS)
+            // Crafting
             VanillaRecipeBuilders.shaped {
                 hollow4()
-                define('A') { +holderSet(ItemTags.PLANKS) }
+                define('A') { +inputs }
                 define('B') { +holderSet(ItemTags.WOODEN_BUTTONS) }
+                result { +gear }
+            }.save(exporter)
+            // Pressing
+            RagiumRecipeBuilders.pressing {
+                ingredient {
+                    +inputs
+                    count = 4
+                }
+                catalyst { items { +RagiumItems.GEAR_DIE } }
                 result { +gear }
             }.save(exporter)
         }
@@ -861,11 +877,23 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     }
 
     private fun gear(basePrefix: HTTagPrefix, material: RagiumMaterial) {
+        val inputs: HolderSet<Item> = holderSet(basePrefix, material)
+        val gear: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.GEAR, material)
+        // Crafting
         VanillaRecipeBuilders.shaped {
             hollow4()
-            define('A') { +holderSet(basePrefix, material) }
+            define('A') { +inputs }
             define('B') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Other.WOOD) }
-            result { +RagiumItems.getOrThrow(HTItemPart.GEAR, material) }
+            result { +gear }
+        }.save(exporter)
+        // Pressing
+        RagiumRecipeBuilders.pressing {
+            ingredient {
+                +inputs
+                count = 4
+            }
+            catalyst { items { +RagiumItems.GEAR_DIE } }
+            result { +gear }
         }.save(exporter)
     }
 

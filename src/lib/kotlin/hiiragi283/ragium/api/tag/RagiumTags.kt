@@ -83,6 +83,12 @@ data object RagiumTags {
         val MOLDS: TagKey<Item> = create("molds")
 
         /**
+         * @since 26.1.11
+         */
+        @JvmField
+        val PRESS_DIES: TagKey<Item> = create("press_dies")
+
+        /**
          * @since 26.1.7
          */
         @JvmField

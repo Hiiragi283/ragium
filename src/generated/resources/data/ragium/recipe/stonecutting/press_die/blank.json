@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "#ragium:press_dies",
+  "result": {
+    "id": "ragium:press_die/blank"
+  }
+}

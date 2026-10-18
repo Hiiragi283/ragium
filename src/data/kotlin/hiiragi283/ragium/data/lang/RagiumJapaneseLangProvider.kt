@@ -152,6 +152,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")
 
+        add(RagiumItems.BLANK_DIE, "空のプレス型")
+        add(RagiumItems.GEAR_DIE, "歯車のプレス型")
+        add(RagiumItems.PACKING_DIE, "梱包のプレス型")
+        add(RagiumItems.UNPACKING_DIE, "展開のプレス型")
         add(RagiumItems.HEATING_COIL, "加熱コイル")
         add(RagiumItems.BLANK_MOLD, "空の鋳型")
         add(RagiumItems.BALL_MOLD, "ボールの鋳型")

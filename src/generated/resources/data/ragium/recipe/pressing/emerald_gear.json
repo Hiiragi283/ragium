@@ -1,0 +1,13 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": "ragium:press_die/gear",
+  "ingredient": {
+    "count": 4,
+    "items": "#c:gems/emerald"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:emerald_gear"
+  },
+  "time": 200
+}
