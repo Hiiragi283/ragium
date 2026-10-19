@@ -5,6 +5,7 @@ import hiiragi283.lib.transfer.HTResourceSlot
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.proxy.HTProxyResourceHandler
 import net.minecraft.core.Direction
+import net.neoforged.neoforge.transfer.EmptyResourceHandler
 import net.neoforged.neoforge.transfer.ResourceHandler
 import net.neoforged.neoforge.transfer.resource.Resource
 
@@ -20,8 +21,9 @@ class HTResourceCapabilityManager<RESOURCE : Resource, SLOT : HTResourceSlot<RES
 ) : HTCapabilityManagerImpl<HTResourceSlotHolder<SLOT>, SLOT, ResourceHandler<RESOURCE>>(
     holder,
     { side: Direction?, holderIn: HTResourceSlotHolder<SLOT> ->
+        val slots: List<SLOT> = holderIn.getSlots(side)
         HTProxyResourceHandler(
-            HTResourceHandler(holderIn.getSlots(side)),
+            if (slots.isEmpty()) EmptyResourceHandler.instance() else HTResourceHandler(slots),
             side,
             holderIn
         )

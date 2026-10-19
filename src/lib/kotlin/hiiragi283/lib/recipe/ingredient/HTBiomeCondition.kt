@@ -2,7 +2,7 @@ package hiiragi283.lib.recipe.ingredient
 
 import com.mojang.serialization.Codec
 import hiiragi283.lib.data.buildDataPatch
-import hiiragi283.lib.recipe.display.SlotDisplay
+import hiiragi283.lib.recipe.display.toDisplay
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.toText
@@ -61,7 +61,7 @@ data class HTBiomeCondition(val biomes: HolderSet<Biome>) : Predicate<Holder<Bio
         .asSequence()
         .mapNotNull { it.key?.identifier()?.toString() }
         .map(::createDisplay)
-        .let(::SlotDisplay)
+        .toDisplay()
 
     private fun createDisplay(biomeKey: String): SlotDisplay = biomeKey
         .toText()

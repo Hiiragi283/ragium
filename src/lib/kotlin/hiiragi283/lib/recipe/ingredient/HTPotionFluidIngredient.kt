@@ -5,7 +5,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.item.alchemy.HTPotionFluidAccess
 import hiiragi283.lib.item.alchemy.HTPotionHelper
-import hiiragi283.lib.recipe.display.SlotDisplay
+import hiiragi283.lib.recipe.display.toDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.fold
@@ -63,7 +63,7 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>) : FluidIngred
         .map(HTPotionHelper::createFluid)
         .mapNotNull { it.getOrNull()?.create() }
         .map(::FluidStackSlotDisplay)
-        .let(::SlotDisplay)
+        .toDisplay()
 
     override fun isSimple(): Boolean = false
 

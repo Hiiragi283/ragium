@@ -2,7 +2,7 @@ package hiiragi283.lib.integration.jei
 
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.item.toTemplateOrNull
-import hiiragi283.lib.recipe.display.SlotDisplay
+import hiiragi283.lib.recipe.display.toDisplay
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
@@ -48,7 +48,7 @@ data object HTJeiRecipeHelper {
      */
     @JvmStatic
     fun fakeFluid(fluids: Iterable<FluidStack>, amount: Int = FluidType.BUCKET_VOLUME): HTFluidIngredient =
-        fakeFluid(fluids.map(::FluidStackSlotDisplay).let(::SlotDisplay), amount)
+        fakeFluid(fluids.map(::FluidStackSlotDisplay).toDisplay(), amount)
 
     /**
      * 動的レシピ向けに，偽のプレビューをもつ[HTFluidIngredient]を作成します。
@@ -109,7 +109,7 @@ data object HTJeiRecipeHelper {
     @JvmName("fakeItemTemplates")
     @JvmStatic
     fun fakeItem(items: Iterable<ItemStackTemplate>, count: Int = 1): HTItemIngredient =
-        fakeItem(items.map(SlotDisplay::ItemStackSlotDisplay).let(::SlotDisplay), count)
+        fakeItem(items.map(SlotDisplay::ItemStackSlotDisplay).toDisplay(), count)
 
     /**
      * 動的レシピ向けに，偽のプレビューをもつ[HTItemIngredient]を作成します。

@@ -134,7 +134,24 @@ data class HTColoredCollection<out T>(
 
     override fun contains(element: @UnsafeVariance T): Boolean = this.any { it == element }
 
-    fun asSequence(): Sequence<T> = DyeColor.entries.asSequence().map(::get)
+    fun asSequence(): Sequence<T> = sequenceOf(
+        white,
+        orange,
+        magenta,
+        lightBlue,
+        yellow,
+        lime,
+        pink,
+        gray,
+        lightGray,
+        cyan,
+        purple,
+        blue,
+        brown,
+        green,
+        red,
+        black
+    )
 
     override fun iterator(): Iterator<T> = asSequence().iterator()
 

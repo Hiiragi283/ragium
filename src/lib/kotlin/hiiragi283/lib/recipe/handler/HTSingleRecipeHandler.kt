@@ -86,10 +86,8 @@ abstract class HTSingleRecipeHandler<INPUT : Any, OUTPUT : Any, RECIPE : Functio
      * @author Hiiragi Tsubasa
      * @since 26.1.11
      */
-    interface Progressor<INPUT : Any, RECIPE : Any> {
+    interface Progressor<INPUT : Any, RECIPE : Any> : HTRecipeHandler.Progressor {
         fun getMaxProgress(recipe: RECIPE, input: INPUT): Int
-
-        fun getProgress(): Int
     }
 
     //    Cached    //

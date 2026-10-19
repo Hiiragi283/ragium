@@ -12,7 +12,7 @@ fun <E> nelOf(head: E): Nel<E> = Nel(head)
  * @author Hiiragi Tsubasa
  * @since 26.1.6
  */
-fun <E> nelOf(head: E, vararg tail: E): Nel<E> = Nel(head, listOf(*tail))
+fun <E> nelOf(head: E, vararg tail: E): Nel<E> = Nel(head, tail.toList())
 
 /**
  * @param E リストの要素のクラス

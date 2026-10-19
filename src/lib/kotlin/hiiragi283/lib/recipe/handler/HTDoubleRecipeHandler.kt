@@ -100,10 +100,8 @@ abstract class HTDoubleRecipeHandler<
      * @author Hiiragi Tsubasa
      * @since 26.1.11
      */
-    interface Progressor<INPUT_A : Any, INPUT_B : Any, RECIPE : Any> {
+    interface Progressor<INPUT_A : Any, INPUT_B : Any, RECIPE : Any> : HTRecipeHandler.Progressor {
         fun getMaxProgress(recipe: RECIPE, first: INPUT_A, second: INPUT_B): Int
-
-        fun getProgress(): Int
     }
 
     //    Cached    //

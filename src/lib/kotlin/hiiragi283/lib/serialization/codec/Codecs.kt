@@ -5,9 +5,8 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.collection.toNel
-import hiiragi283.lib.util.Either
+import hiiragi283.lib.util.DFUEither
 import hiiragi283.lib.util.identity
-import hiiragi283.lib.util.unwrap
 import net.minecraft.util.ExtraCodecs
 
 //    List    //
@@ -37,11 +36,11 @@ fun <A : Any> Codec<A>.listOrElement(min: Int, max: Int): Codec<List<A>> =
  * @author Hiiragi Tsubasa
  * @since 26.1.7
  */
-fun <A : Any> Codec<A>.compactListFieldOf(singleName: String, listName: String): MapCodec<List<A>> = HTCodecs
+fun <A : Any> Codec<A>.compactListFieldOf(singleName: String, listName: String): MapCodec<List<A>> = Codec
     .mapEither(this.listOf().fieldOf(listName), this.fieldOf(singleName))
     .xmap(
-        { either: Either<List<A>, A> -> either.map(::listOf).unwrap() },
-        { list: List<A> -> list.singleOrNull()?.let { Either.Right(it) } ?: Either.Left(list) }
+        { either: DFUEither<List<A>, A> -> DFUEither.unwrap(either.mapRight(::listOf)) },
+        { list: List<A> -> list.singleOrNull()?.let { DFUEither.right(it) } ?: DFUEither.left(list) }
     )
 
 /**
@@ -52,11 +51,11 @@ fun <A : Any> Codec<A>.compactListFieldOf(singleName: String, listName: String):
  * @since 26.1.7
  */
 fun <A : Any> Codec<A>.compactListFieldOf(singleName: String, listName: String, min: Int, max: Int): MapCodec<List<A>> =
-    HTCodecs
+    Codec
         .mapEither(this.listOf(min, max).fieldOf(listName), this.fieldOf(singleName))
         .xmap(
-            { either: Either<List<A>, A> -> either.map(::listOf).unwrap() },
-            { list: List<A> -> list.singleOrNull()?.let { Either.Right(it) } ?: Either.Left(list) }
+            { either: DFUEither<List<A>, A> -> DFUEither.unwrap(either.mapRight(::listOf)) },
+            { list: List<A> -> list.singleOrNull()?.let { DFUEither.right(it) } ?: DFUEither.left(list) }
         )
 
 //    NonEmptyList    //
@@ -92,9 +91,9 @@ fun <A : Any> Codec<A>.compactNelFieldOf(
     singleName: String,
     nelName: String,
     max: Int = Int.MAX_VALUE
-): MapCodec<Nel<A>> = HTCodecs
+): MapCodec<Nel<A>> = Codec
     .mapEither(this.nelOf(max).fieldOf(nelName), this.fieldOf(singleName))
     .xmap(
-        { either: Either<Nel<A>, A> -> either.map(::nelOf).unwrap() },
-        { list: Nel<A> -> list.singleOrNull()?.let { Either.Right(it) } ?: Either.Left(list) }
+        { either: DFUEither<Nel<A>, A> -> DFUEither.unwrap(either.mapRight(::nelOf)) },
+        { list: Nel<A> -> list.singleOrNull()?.let { DFUEither.right(it) } ?: DFUEither.left(list) }
     )

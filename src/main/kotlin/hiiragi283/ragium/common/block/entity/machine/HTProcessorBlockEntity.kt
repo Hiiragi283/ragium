@@ -119,18 +119,12 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
         //    EnergizedProgressor    //
 
-        protected inner class SingleProgressor<INPUT : Any, RECIPE : HTProgressRecipe.Single<*, INPUT>> :
-            HTSingleRecipeHandler.Progressor<INPUT, RECIPE> {
-            private val baseEnergyPerTick: Int = getConfig().getUsage()
-            private val currentEnergyPerTick: Int
+        protected abstract inner class EnergyProgressor : HTRecipeHandler.Progressor {
+            protected val baseEnergyPerTick: Int = getConfig().getUsage()
+            protected val currentEnergyPerTick: Int
                 get() = HTMachineUpgradeHelper.modifySpeed(components(), this.baseEnergyPerTick)
 
-            override fun getMaxProgress(recipe: RECIPE, input: INPUT): Int {
-                val requiredEnergy: Int = recipe.getProgressData(input).getTotalEnergy(this.baseEnergyPerTick)
-                return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
-            }
-
-            override fun getProgress(): Int = useTransaction { transaction: Transaction ->
+            final override fun getProgress(): Int = useTransaction { transaction: Transaction ->
                 val extracted: Int = handler.extract(currentEnergyPerTick, transaction, HTTransferAccess.INTERNAL)
                 if (extracted > 0) {
                     transaction.commit()
@@ -139,26 +133,25 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             }
         }
 
+        protected inner class SingleProgressor<INPUT : Any, RECIPE : HTProgressRecipe.Single<*, INPUT>> :
+            EnergyProgressor(),
+            HTSingleRecipeHandler.Progressor<INPUT, RECIPE> {
+            override fun getMaxProgress(recipe: RECIPE, input: INPUT): Int {
+                val requiredEnergy: Int = recipe.getProgressData(input).getTotalEnergy(this.baseEnergyPerTick)
+                return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
+            }
+        }
+
         protected inner class DoubleProgressor<
             INPUT_A : Any,
             INPUT_B : Any,
             RECIPE : HTProgressRecipe.Double<*, INPUT_A, INPUT_B>
-            > : HTDoubleRecipeHandler.Progressor<INPUT_A, INPUT_B, RECIPE> {
-            private val baseEnergyPerTick: Int = getConfig().getUsage()
-            private val currentEnergyPerTick: Int
-                get() = HTMachineUpgradeHelper.modifySpeed(components(), this.baseEnergyPerTick)
-
+            > :
+            EnergyProgressor(),
+            HTDoubleRecipeHandler.Progressor<INPUT_A, INPUT_B, RECIPE> {
             override fun getMaxProgress(recipe: RECIPE, first: INPUT_A, second: INPUT_B): Int {
                 val requiredEnergy: Int = recipe.getProgressData(first, second).getTotalEnergy(this.baseEnergyPerTick)
                 return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
-            }
-
-            override fun getProgress(): Int = useTransaction { transaction: Transaction ->
-                val extracted: Int = handler.extract(currentEnergyPerTick, transaction, HTTransferAccess.INTERNAL)
-                if (extracted > 0) {
-                    transaction.commit()
-                }
-                extracted
             }
         }
     }

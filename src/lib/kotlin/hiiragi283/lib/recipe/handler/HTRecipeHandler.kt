@@ -45,4 +45,14 @@ abstract class HTRecipeHandler :
             }
         }
     }
+
+    //    Progressor    //
+
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.11
+     */
+    interface Progressor {
+        fun getProgress(): Int
+    }
 }
