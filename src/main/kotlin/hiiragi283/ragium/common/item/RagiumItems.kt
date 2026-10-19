@@ -4,7 +4,6 @@ import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildSetMultiMap
 import hiiragi283.lib.collection.flatMapTable
-import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.registry.HTDeferredItemRegister
@@ -223,7 +222,7 @@ data object RagiumItems {
 
     @JvmField
     val MACHINE_PARTS: Map<HTMachineType, HTSimpleDeferredItem> = HTMachineType.entries
-        .associateWithTo(mutableEnumMapOf()) { machineType: HTMachineType ->
+        .associateWith { machineType: HTMachineType ->
             REGISTER.registerSimpleItem("machine_parts/${machineType.materialName}")
         }
 

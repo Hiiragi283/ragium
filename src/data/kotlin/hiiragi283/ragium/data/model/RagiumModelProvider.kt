@@ -77,19 +77,18 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         RagiumBlocks.ALL_DECORATIONS.forEach { generators.createDecoration(it) }
 
         // Machine
-        val inactiveModels: Map<HTMachineType, Identifier> = HTMachineType.entries
-            .associateWith { machineType: HTMachineType ->
-                val blockId: Identifier = RagiumAPI.id(HTConstants.BLOCK, "machine", machineType.materialName)
-                ModelTemplates.CUBE_ORIENTABLE.create(
-                    blockId,
-                    textureMapping(machineType).put(TextureSlot.FRONT, Material(blockId.withSuffix("_front"))),
-                    generators.modelOutput
-                )
-            }
+        val inactiveModels: MutableMap<HTMachineType, Identifier> = hashMapOf()
         RagiumBlocks.MACHINES
             .entries
             .forEach { (machineType: HTMachineType, blockItems: List<HTSimpleValueWithKey<Block>>) ->
-                val inactive: Identifier = inactiveModels[machineType]!!
+                val inactive: Identifier = inactiveModels.computeIfAbsent(machineType) {
+                    val blockId: Identifier = RagiumAPI.id(HTConstants.BLOCK, "machine", machineType.materialName)
+                    ModelTemplates.CUBE_ORIENTABLE.create(
+                        blockId,
+                        textureMapping(machineType).put(TextureSlot.FRONT, Material(blockId.withSuffix("_front"))),
+                        generators.modelOutput
+                    )
+                }
                 for (blockItem: HTSimpleValueWithKey<Block> in blockItems) {
                     createMachineBlock(
                         generators,
@@ -99,12 +98,6 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
                     )
                 }
             }
-        createMachineBlock(
-            generators,
-            RagiumBlocks.FREEZER,
-            RagiumAPI.id(HTConstants.BLOCK, "machine", "cryo"),
-            RagiumBlocks.FREEZER.id().blockId
-        )
 
         // Decoration
         generators.createGlassBlocks(

@@ -27,7 +27,6 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
         for (machine: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINES.values.flatten()) {
             add(machine, ::copyComponent)
         }
-        add(RagiumBlocks.FREEZER, ::copyComponent)
         // Storage
         listOf(
             RagiumBlocks.TANK,

@@ -38,12 +38,11 @@ class RagiumBlockItemTagsProvider(factory: (BlockItemTag) -> HTBlockItemTagBuild
 
         RagiumBlocks.ALL_DECORATIONS.forEach { it.appendTags(::builder) }
         // Machine
-        for (machineType: HTMachineType in HTMachineType.entries) {
-            for (block: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINES[machineType] ?: listOf()) {
-                builder(HTMachineType.PREFIX, machineType).add(block)
+        for ((machineType: HTMachineType, machines) in RagiumBlocks.MACHINES.entries) {
+            for (machine: HTSimpleDeferredBlockAndItem in machines) {
+                builder(HTMachineType.PREFIX, machineType).add(machine)
             }
         }
-        builder(HTMachineType.PREFIX.rawCommonTag).add(RagiumBlocks.FREEZER)
         // Storage
         builder(RagiumTags.BlockItems.STORAGES_CREATIVE)
             .add(RagiumBlocks.CREATIVE_BATTERY)

@@ -2,10 +2,10 @@
   "values": [
     "#ragium:machines/arcane",
     "#ragium:machines/chemical",
+    "#ragium:machines/cryo",
     "#ragium:machines/electronics",
     "#ragium:machines/heat",
     "#ragium:machines/mechanical",
-    "#ragium:machines/resource",
-    "ragium:freezer"
+    "#ragium:machines/resource"
   ]
 }

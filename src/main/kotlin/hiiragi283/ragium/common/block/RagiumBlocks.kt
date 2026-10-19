@@ -7,7 +7,7 @@ import hiiragi283.lib.collection.buildListMultiMap
 import hiiragi283.lib.collection.buildSetMultiMap
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.flatMapTable
-import hiiragi283.lib.collection.mutableEnumMapOf
+import hiiragi283.lib.data.lang.HTLangName
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDecorationContent
@@ -338,7 +338,7 @@ data object RagiumBlocks {
     @JvmField
     val MACHINES: Map<HTMachineType, List<HTBasicDeferredBlockAndItem<HTMachineBlock>>> =
         buildListMultiMap(
-            sortedMapOf(),
+            sortedMapOf(HTMachineType.COMPARATOR),
             {
                 put(HTMachineType.MECHANICAL, ASSEMBLER)
                 put(HTMachineType.MECHANICAL, CENTRIFUGE)
@@ -367,6 +367,8 @@ data object RagiumBlocks {
                 put(HTMachineType.ELECTRONICS, SCANNER)
 
                 put(HTMachineType.ARCANE, ENCHANTER)
+
+                put(HTMachineType.Custom("cryo", HTLangName("Cryo", "低温")), FREEZER)
             }
         )
 
@@ -430,7 +432,7 @@ data object RagiumBlocks {
 
     @JvmField
     val MACHINE_CASINGS: Map<HTMachineType, HTSimpleDeferredBlockAndItem> = HTMachineType.entries
-        .associateWithTo(mutableEnumMapOf()) { machineType: HTMachineType ->
+        .associateWith { machineType: HTMachineType ->
             REGISTER.registerSimple("${machineType.materialName}_machine_casing", machine())
         }
 
