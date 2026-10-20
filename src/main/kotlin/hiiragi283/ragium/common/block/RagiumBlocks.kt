@@ -4,9 +4,7 @@ import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
-import hiiragi283.lib.collection.buildSetMultiMap
 import hiiragi283.lib.collection.buildTable
-import hiiragi283.lib.collection.flatMapTable
 import hiiragi283.lib.data.lang.HTLangName
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
@@ -17,12 +15,12 @@ import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.ItemWithContextFactory
+import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
-import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.util.HTStorageHelper
@@ -36,14 +34,12 @@ import hiiragi283.ragium.common.item.block.HTPotionTankBlockItem
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
-import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.DropExperienceBlock
 import net.minecraft.world.level.block.IronBarsBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.TransparentBlock
@@ -69,6 +65,13 @@ data object RagiumBlocks {
         REGISTER.addAlias("bio_machine_casing", "resource_machine_casing")
         REGISTER.addAlias("precision_assembler", "assembler")
         REGISTER.addAlias("void_metal_block", "shadow_steel_block")
+
+        REGISTER.addAlias(RagiumAPI.id("sulfur_ore"), vanillaId("stone"))
+        REGISTER.addAlias(RagiumAPI.id("deepslate_sulfur_ore"), vanillaId("deepslate"))
+        REGISTER.addAlias(RagiumAPI.id("nether_sulfur_ore"), vanillaId("netherrack"))
+        REGISTER.addAlias(RagiumAPI.id("niter_ore"), vanillaId("stone"))
+        REGISTER.addAlias(RagiumAPI.id("deepslate_niter_ore"), vanillaId("deepslate"))
+        REGISTER.addAlias(RagiumAPI.id("nether_niter_ore"), vanillaId("netherrack"))
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -123,8 +126,7 @@ data object RagiumBlocks {
 
     //    Ingredient    //
 
-    @JvmField
-    val MATERIAL_ORES: Table<HTOreBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildSetMultiMap(
+    /*val MATERIAL_ORES: Table<HTOreBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildSetMultiMap(
         {
             putAll(RagiumMaterial.Mineral.SULFUR, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
             putAll(RagiumMaterial.Mineral.NITER, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
@@ -147,7 +149,7 @@ data object RagiumBlocks {
                 )
             )
         }
-    }
+    }*/
 
     @JvmField
     val STORAGE_BLOCKS: Map<RagiumMaterial, HTSimpleDeferredBlockAndItem> = setOf(
@@ -167,15 +169,11 @@ data object RagiumBlocks {
 
     @JvmField
     val MATERIAL_BLOCKS: Table<HTBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildTable {
-        putAll(MATERIAL_ORES)
+        // putAll(MATERIAL_ORES)
         STORAGE_BLOCKS.forEach { (material: RagiumMaterial, blockItem: HTSimpleDeferredBlockAndItem) ->
             put(HTStorageBlockPart.DEFAULT, material, blockItem)
         }
     }
-
-    @JvmStatic
-    fun getOreOrThrow(part: HTOreBlockPart, material: RagiumMaterial): HTSimpleDeferredBlockAndItem =
-        MATERIAL_ORES[part, material] ?: error("Unregistered block: ${part.createName(material)}")
 
     @JvmStatic
     fun getStorageOrThrow(material: RagiumMaterial): HTSimpleDeferredBlockAndItem =
