@@ -5,10 +5,10 @@ package hiiragi283.ragium.api.data.recipe.builder
 import hiiragi283.lib.data.recipe.builder.HTFluidSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemOrFluidRecipeBuilder
-import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTLocationToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTSingleRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTSizedShapelessRecipeBuilder
@@ -68,22 +68,22 @@ data object RagiumRecipeBuilders {
 
     @JvmStatic
     inline fun crushing(
-        builderAction: HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe>.() -> Unit
-    ): HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe> {
+        builderAction: HTItemToMultiItemRecipeBuilder<RTCrushingRecipe>.() -> Unit
+    ): HTItemToMultiItemRecipeBuilder<RTCrushingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToDoubleItemRecipeBuilder(RagiumConstants.CRUSHING, ::RTCrushingRecipe).apply(builderAction)
+        return HTItemToMultiItemRecipeBuilder(RagiumConstants.CRUSHING, ::RTCrushingRecipe).apply(builderAction)
     }
 
     @JvmStatic
     inline fun cutting(
-        builderAction: HTItemToDoubleItemRecipeBuilder<RTCuttingRecipe>.() -> Unit
-    ): HTItemToDoubleItemRecipeBuilder<RTCuttingRecipe> {
+        builderAction: HTItemToMultiItemRecipeBuilder<RTCuttingRecipe>.() -> Unit
+    ): HTItemToMultiItemRecipeBuilder<RTCuttingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToDoubleItemRecipeBuilder(RagiumConstants.CUTTING, ::RTCuttingRecipe).apply(builderAction)
+        return HTItemToMultiItemRecipeBuilder(RagiumConstants.CUTTING, ::RTCuttingRecipe).apply(builderAction)
     }
 
     @JvmStatic

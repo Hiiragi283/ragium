@@ -7,7 +7,7 @@ import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
 import hiiragi283.lib.integration.jei.category.HTCatalysedSingleRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTFluidSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTItemToDoubleItemRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTItemToMultiItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTLocationToFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToItemAndFluidRecipeCategory
@@ -116,12 +116,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumRecipeTypes.COMPRESSING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.COMPRESSOR)
             ),
-            HTItemToDoubleItemRecipeCategory(
+            HTItemToMultiItemRecipeCategory(
                 RagiumJeiRecipeTypes.CRUSHING,
                 RagiumRecipeTypes.CRUSHING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.CRUSHER)
             ),
-            HTItemToDoubleItemRecipeCategory(
+            HTItemToMultiItemRecipeCategory(
                 RagiumJeiRecipeTypes.CUTTING,
                 RagiumRecipeTypes.CUTTING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.CUTTING_MACHINE)

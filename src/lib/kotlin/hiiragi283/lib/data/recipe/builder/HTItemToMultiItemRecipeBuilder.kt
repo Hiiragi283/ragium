@@ -18,12 +18,12 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * 1種類のアイテムから2種類のアイテムを作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
+ * 1種類のアイテムから複数のアイテムを作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
  * @param RECIPE 生成するレシピのクラス
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTItemToDoubleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
+class HTItemToMultiItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
     HTProgressRecipeBuilder<RECIPE>(prefix) {
     override fun getRecipeId(): Identifier? = results.first().getId()
 

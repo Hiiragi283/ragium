@@ -59,7 +59,7 @@ class HTCentrifugeBlockEntity(pos: BlockPos, state: BlockState) :
                 when {
                     inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
                     !outputTank.take(fluid, transaction).fullOrNoneTaken -> false
-                    else -> items.all { outputSlot.take(it, transaction).fullOrNoneTaken }
+                    else -> outputSlot.takeAll(items, transaction).fullOrNoneTaken
                 }
             }
 
@@ -71,7 +71,7 @@ class HTCentrifugeBlockEntity(pos: BlockPos, state: BlockState) :
                 useTransaction { transaction: Transaction ->
                     val (items: List<ItemStack>, fluid: FluidStack) = output
                     inputSlot.use(recipe.getMatchingStack(input), transaction)
-                    items.forEach { outputSlot.take(it, transaction) }
+                    outputSlot.takeAll(items, transaction)
                     outputTank.take(fluid, transaction)
                     transaction.commit()
                 }

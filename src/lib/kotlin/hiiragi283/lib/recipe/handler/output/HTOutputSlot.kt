@@ -16,6 +16,18 @@ interface HTOutputSlot<STACK : Any> {
      */
     fun take(stack: STACK, transaction: TransactionContext): TakeResult
 
+    /**
+     * すべての出力を受け取ります。
+     * @param stacks 受け取る出力の一覧
+     * @param transaction 現在のトランザクション
+     * @since 26.1.11
+     */
+    fun takeAll(stacks: List<STACK>, transaction: TransactionContext): TakeResult = when (stacks.size) {
+        0 -> TakeResult.NONE
+        1 -> this.take(stacks.first(), transaction)
+        else -> if (stacks.all { this.take(it, transaction).fullOrNoneTaken }) TakeResult.FULL else TakeResult.PARTIALLY
+    }
+
     //    TakeResult    //
 
     /**

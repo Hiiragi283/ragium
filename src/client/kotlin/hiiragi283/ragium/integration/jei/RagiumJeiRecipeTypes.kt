@@ -6,7 +6,6 @@ import hiiragi283.lib.integration.jei.IRecipeType
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
-import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTLocationToRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
@@ -36,10 +35,10 @@ data object RagiumJeiRecipeTypes {
     val COMPRESSING: HTRecipeHolderType<HTItemToRecipe.BasicItem> = create(RagiumConstants.COMPRESSING)
 
     @JvmField
-    val CRUSHING: HTRecipeHolderType<HTItemToDoubleItemRecipe.Basic> = create(RagiumConstants.CRUSHING)
+    val CRUSHING: HTRecipeHolderType<HTItemToRecipe.BasicMultiItem> = create(RagiumConstants.CRUSHING)
 
     @JvmField
-    val CUTTING: HTRecipeHolderType<HTItemToDoubleItemRecipe.Basic> = create(RagiumConstants.CUTTING)
+    val CUTTING: HTRecipeHolderType<HTItemToRecipe.BasicMultiItem> = create(RagiumConstants.CUTTING)
 
     @JvmField
     val FILLING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicItem> = create(RagiumConstants.FILLING)

@@ -27,7 +27,7 @@ data object HTIngredientHelper {
      */
     @JvmStatic
     fun unwrap(instance: FluidInstance): FluidStack = when (instance) {
-        is FluidStack -> instance
+        is FluidStack -> instance.copy()
         is FluidStackTemplate -> instance.create()
         else -> FluidStack(instance.typeHolder(), instance.amount(), HTDataComponentHelper.createPatch(instance))
     }
@@ -49,7 +49,7 @@ data object HTIngredientHelper {
     fun copyWithAmount(instance: FluidInstance, newAmount: Int): FluidInstance = when (instance) {
         is FluidStack -> instance.copyWithAmount(newAmount)
         is FluidStackTemplate -> instance.withAmount(newAmount)
-        else -> FluidStackTemplate(instance.typeHolder(), newAmount)
+        else -> FluidStackTemplate(instance.typeHolder(), newAmount, HTDataComponentHelper.createPatch(instance))
     }
 
     /**
@@ -117,7 +117,7 @@ data object HTIngredientHelper {
      */
     @JvmStatic
     fun unwrap(instance: ItemInstance): ItemStack = when (instance) {
-        is ItemStack -> instance
+        is ItemStack -> instance.copy()
         is ItemStackTemplate -> instance.create()
         else -> ItemStack(instance.typeHolder(), instance.count(), HTDataComponentHelper.createPatch(instance))
     }
@@ -139,7 +139,7 @@ data object HTIngredientHelper {
     fun copyWithCount(instance: ItemInstance, newCount: Int): ItemInstance = when (instance) {
         is ItemStack -> instance.copyWithCount(newCount)
         is ItemStackTemplate -> instance.withCount(newCount)
-        else -> ItemStackTemplate(instance.typeHolder(), newCount)
+        else -> ItemStackTemplate(instance.typeHolder(), newCount, HTDataComponentHelper.createPatch(instance))
     }
 
     /**

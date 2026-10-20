@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTBasicSingleRecipe
-import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
+import hiiragi283.lib.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
@@ -19,7 +19,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 
 class RTPlantingRecipe(ingredient: HTItemIngredient, result: HTItemResult, progressData: HTProgressData) :
     HTBasicSingleRecipe<HTItemIngredient, HTItemResult>(ingredient, result, progressData),
-    HTItemToDoubleItemRecipe,
+    HTItemToMultiItemRecipe,
     HTSerializableRecipe<SingleRecipeInput> {
     companion object {
         @JvmField
@@ -35,8 +35,10 @@ class RTPlantingRecipe(ingredient: HTItemIngredient, result: HTItemResult, progr
 
     override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
-    override fun apply(input: ItemInstance): Pair<ItemStack, ItemStack> =
-        result.create() to getMatchingStack(input).let(HTIngredientHelper::unwrap).copy()
+    override fun apply(input: ItemInstance): List<ItemStack> = listOf(
+        result.create(),
+        getMatchingStack(input).let(HTIngredientHelper::unwrap).copy()
+    )
 
     override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
 

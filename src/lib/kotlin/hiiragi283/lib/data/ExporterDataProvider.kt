@@ -12,6 +12,7 @@ import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.data.CachedOutput
@@ -125,10 +126,45 @@ abstract class ExporterDataProvider<R : Any>(
      */
     protected fun <T : Any> holderSet(tagKey: TagKey<T>): HolderSet<T> = this.registries.getOrThrow(tagKey)
 
-    protected fun <T : Any> holderSet(tagKeys: Iterable<TagKey<T>>): HolderSet<T> = when (tagKeys.count()) {
-        0 -> HolderSet.empty()
-        1 -> holderSet(tagKeys.first())
-        else -> tagKeys.map(::holderSet).let(HTComparators::compressHolderSet)
+    protected fun <T : Any> holderSet(tagKeys: Iterable<TagKey<T>>): HolderSet<T> {
+        if (tagKeys is Collection<TagKey<T>>) {
+            return when (tagKeys.size) {
+                0 -> HolderSet.empty()
+                1 -> holderSet(tagKeys.first())
+                else -> tagKeys.map(::holderSet).let(HTComparators::compressHolderSet)
+            }
+        }
+
+        val it: Iterator<TagKey<T>> = tagKeys.iterator()
+        if (!it.hasNext()) {
+            return HolderSet.empty()
+        }
+        val element: HolderSet<T> = holderSet(it.next())
+        if (!it.hasNext()) {
+            return element
+        }
+        val dst = ObjectArrayList<HolderSet<T>>()
+        dst.add(element)
+        while (it.hasNext()) dst.add(holderSet(it.next()))
+        return dst.let(HTComparators::compressHolderSet)
+    }
+
+    /**
+     * @since 26.1.11
+     */
+    protected fun <T : Any> holderSet(tagKeys: Sequence<TagKey<T>>): HolderSet<T> {
+        val it: Iterator<TagKey<T>> = tagKeys.iterator()
+        if (!it.hasNext()) {
+            return HolderSet.empty()
+        }
+        val element: HolderSet<T> = holderSet(it.next())
+        if (!it.hasNext()) {
+            return element
+        }
+        val dst = ObjectArrayList<HolderSet<T>>()
+        dst.add(element)
+        while (it.hasNext()) dst.add(holderSet(it.next()))
+        return dst.let(HTComparators::compressHolderSet)
     }
 
     protected fun <T : Any> holderSet(vararg tagKeys: TagKey<T>): HolderSet<T> = holderSet(tagKeys.toSet())
@@ -142,10 +178,9 @@ abstract class ExporterDataProvider<R : Any>(
     /**
      * @since 26.1.11
      */
-    protected fun <T : Any> notHolderSet(tagKeys: Iterable<TagKey<T>>): HolderSet<T> = when (tagKeys.count()) {
-        0 -> HolderSet.empty()
-        1 -> notHolderSet(tagKeys.first())
-        else -> NotHolderSet(this.registries.lookupOrThrow(tagKeys.first().registry()), holderSet(tagKeys))
+    protected fun <T : Any> notHolderSet(tagKeys: Iterable<TagKey<T>>): HolderSet<T> {
+        val firstTagKey: TagKey<T> = tagKeys.firstOrNull() ?: return HolderSet.empty()
+        return NotHolderSet(this.registries.lookupOrThrow(firstTagKey.registry()), holderSet(tagKeys))
     }
 
     /**
