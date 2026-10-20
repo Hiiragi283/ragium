@@ -326,7 +326,7 @@ data object RagiumBlocks {
 
     @JvmField
     val SCANNER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerFakeMachine(RagiumConstants.SCANNER)
+        registerMachine(RagiumBlockEntityTypes.SCANNER)
 
     // Arcane
     @JvmField

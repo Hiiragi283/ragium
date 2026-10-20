@@ -104,6 +104,7 @@
     "pyrolyzer",
     "refinery",
     "resource_pump",
+    "scanner",
     "smelter",
     "tank",
     "upgrade_station"

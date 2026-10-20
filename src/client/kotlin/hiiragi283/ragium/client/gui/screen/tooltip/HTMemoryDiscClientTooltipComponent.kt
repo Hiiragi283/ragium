@@ -15,14 +15,14 @@ data class HTMemoryDiscClientTooltipComponent private constructor(
     val data: ItemStack,
     val text: Text = RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA.translateColored(ChatFormatting.YELLOW, data)
 ) : ClientTooltipComponent {
-    constructor(tooltip: HTMemoryDiscTooltipComponent) : this(tooltip.data.create())
+    constructor(tooltip: HTMemoryDiscTooltipComponent) : this(tooltip.data.toStack())
 
     override fun getHeight(font: Font): Int = 17 + font.lineHeight
 
     override fun getWidth(font: Font): Int = font.width(text)
 
     override fun extractText(graphics: GuiGraphicsExtractor, font: Font, x: Int, y: Int) {
-        graphics.text(font, text, x, y, 0xffffff, false)
+        graphics.text(font, text, x, y, -1, false)
     }
 
     override fun extractImage(font: Font, x: Int, y: Int, w: Int, h: Int, graphics: GuiGraphicsExtractor) {

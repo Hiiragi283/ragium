@@ -32,6 +32,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTResourcePumpBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTScannerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTUpgradeStationBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
@@ -149,6 +150,10 @@ data object RagiumBlockEntityTypes {
     val ENGRAVER: HTDeferredBlockEntityType<HTEngraverBlockEntity> =
         registerTick(RagiumConstants.ENGRAVER, ::HTEngraverBlockEntity)
 
+    @JvmField
+    val SCANNER: HTDeferredBlockEntityType<HTScannerBlockEntity> =
+        registerTick(RagiumConstants.SCANNER, ::HTScannerBlockEntity)
+
     // Arcane
     @JvmField
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
@@ -234,6 +239,7 @@ data object RagiumBlockEntityTypes {
 
         registerProcessor(ELECTROLYZER.get())
         registerProcessor(ENGRAVER.get())
+        registerProcessor(SCANNER.get())
 
         registerProcessor(ENCHANTER.get())
         // Storage

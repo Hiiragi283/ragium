@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item.tooltip
 
+import hiiragi283.ragium.api.data.HTMemoryDiscData
 import net.minecraft.world.inventory.tooltip.TooltipComponent
-import net.minecraft.world.item.ItemStackTemplate
 
 @JvmRecord
-data class HTMemoryDiscTooltipComponent(val data: ItemStackTemplate) : TooltipComponent
+data class HTMemoryDiscTooltipComponent(val data: HTMemoryDiscData) : TooltipComponent
