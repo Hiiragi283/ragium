@@ -12,7 +12,6 @@ import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
-import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.block.Block
 
 class HTPotionTankBlockItem(block: Block, properties: Properties) :
@@ -24,7 +23,7 @@ class HTPotionTankBlockItem(block: Block, properties: Properties) :
         output: CreativeModeTab.Output
     ) {
         for (potion: Holder<Potion> in parameters.filteredElements(Registries.POTION)) {
-            if (potion == Potions.WATER) continue
+            if (HTPotionHelper.isWater(potion)) continue
             val stack = ItemStack(baseItem)
             HTPotionHelper
                 .createFluid(potion, amount = RagiumConfig.SERVER.tankCapacity.asInt)

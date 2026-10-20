@@ -50,7 +50,6 @@ import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.fluids.FluidStack
 
 @JeiPlugin
@@ -97,7 +96,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTPhysicalSideHelper
                 .filteredLookup(BuiltInRegistries.POTION)
                 .asHolderSequence()
-                .filter { !it.`is`(Potions.WATER) }
+                .filterNot(HTPotionHelper::isWater)
                 .mapNotNull { HTPotionHelper.createFluid(it).getOrNull()?.create() }
                 .toList()
         )
