@@ -11,7 +11,6 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.registry.and
 import hiiragi283.lib.registry.or
 import hiiragi283.lib.resource.debugPath
-import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
@@ -24,6 +23,7 @@ import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.references.ItemIds
 import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
@@ -415,7 +415,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
         setOf(
             RagiumMaterial.Other.WOOD to RagiumItems.PARTICLE_BOARD,
-            RagiumMaterial.Other.PAPER to HTSimpleDeferredItem(vanillaId("paper"))
+            RagiumMaterial.Other.PAPER to HTSimpleDeferredItem(ItemIds.PAPER)
         ).forEach { (material: RagiumMaterial, item: HTSimpleDeferredItem) ->
             RagiumRecipeBuilders.compressing {
                 ingredient {

@@ -121,11 +121,5 @@ data object HTConstants {
     data object Keys {
         @JvmField
         val AIR: Identifier = vanillaId("air")
-
-        @JvmField
-        val EMPTY: Identifier = vanillaId("empty")
-
-        @JvmField
-        val WATER: Identifier = vanillaId("water")
     }
 }

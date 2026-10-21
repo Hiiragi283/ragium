@@ -4,13 +4,13 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.registry.HTSimpleDeferredItem
-import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.TypedInstance
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.resources.Identifier
+import net.minecraft.references.ItemIds
+import net.minecraft.resources.ResourceKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 
@@ -20,9 +20,9 @@ import net.minecraft.world.item.Item
  * @since 26.1.0
  */
 enum class HTBottleType(val filledItem: HTSimpleDeferredItem) : StringRepresentable {
-    DEFAULT(vanillaId("potion")),
-    SPLASH(vanillaId("splash_potion")),
-    LINGERING(vanillaId("lingering_potion"))
+    DEFAULT(ItemIds.POTION),
+    SPLASH(ItemIds.SPLASH_POTION),
+    LINGERING(ItemIds.LINGERING_POTION)
     ;
 
     companion object {
@@ -50,7 +50,7 @@ enum class HTBottleType(val filledItem: HTSimpleDeferredItem) : StringRepresenta
             HTBottleType.entries.firstOrNull { it.emptyItem.isOf(instance) }
     }
 
-    constructor(filledItem: Identifier) : this(HTSimpleDeferredItem(filledItem))
+    constructor(filledItem: ResourceKey<Item>) : this(HTSimpleDeferredItem(filledItem))
 
     val emptyItem: HTSimpleDeferredItem
         get() = when (this) {

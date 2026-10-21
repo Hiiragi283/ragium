@@ -1,20 +1,10 @@
 package hiiragi283.lib.item
 
-import hiiragi283.lib.registry.isAir
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
-
-//    ItemLike    //
-
-/**
- * この[ItemLike][this]が空かどうか判定します。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-@Suppress("DEPRECATION")
-val ItemLike.isAir: Boolean get() = this.asItem().builtInRegistryHolder().isAir
 
 //    ItemStackTemplate    //
 
@@ -31,7 +21,7 @@ fun ItemStackTemplate?.createOrEmpty(): ItemStack = this?.create() ?: ItemStack.
  * @since 26.1.0
  */
 fun ItemStackTemplate.transmuteCopy(newItem: ItemLike, newCount: Int = this.count()): ItemStackTemplate? = when {
-    newItem.isAir -> null
+    newItem.asItem() == Items.AIR -> null
     else -> ItemStackTemplate(newItem.asItem(), newCount, this.components())
 }
 

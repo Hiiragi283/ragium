@@ -16,7 +16,6 @@ import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.ItemWithContextFactory
-import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
@@ -35,6 +34,8 @@ import hiiragi283.ragium.common.item.block.HTPotionTankBlockItem
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
+import net.minecraft.references.BlockItemIds
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
@@ -67,12 +68,15 @@ data object RagiumBlocks {
         REGISTER.addAlias("precision_assembler", "assembler")
         REGISTER.addAlias("void_metal_block", "shadow_steel_block")
 
-        REGISTER.addAlias(RagiumAPI.id("sulfur_ore"), vanillaId("stone"))
-        REGISTER.addAlias(RagiumAPI.id("deepslate_sulfur_ore"), vanillaId("deepslate"))
-        REGISTER.addAlias(RagiumAPI.id("nether_sulfur_ore"), vanillaId("netherrack"))
-        REGISTER.addAlias(RagiumAPI.id("niter_ore"), vanillaId("stone"))
-        REGISTER.addAlias(RagiumAPI.id("deepslate_niter_ore"), vanillaId("deepslate"))
-        REGISTER.addAlias(RagiumAPI.id("nether_niter_ore"), vanillaId("netherrack"))
+        val stoneId: Identifier = BlockItemIds.STONE.block().identifier()
+        val deepslateId: Identifier = BlockItemIds.DEEPSLATE.block().identifier()
+        val netherrackID: Identifier = BlockItemIds.NETHERRACK.block().identifier()
+        REGISTER.addAlias(RagiumAPI.id("sulfur_ore"), stoneId)
+        REGISTER.addAlias(RagiumAPI.id("deepslate_sulfur_ore"), deepslateId)
+        REGISTER.addAlias(RagiumAPI.id("nether_sulfur_ore"), netherrackID)
+        REGISTER.addAlias(RagiumAPI.id("niter_ore"), stoneId)
+        REGISTER.addAlias(RagiumAPI.id("deepslate_niter_ore"), deepslateId)
+        REGISTER.addAlias(RagiumAPI.id("nether_niter_ore"), netherrackID)
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)

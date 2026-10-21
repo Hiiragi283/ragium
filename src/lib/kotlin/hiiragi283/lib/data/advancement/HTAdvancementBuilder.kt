@@ -4,7 +4,6 @@ package hiiragi283.lib.data.advancement
 
 import hiiragi283.lib.advancment.AdvancementKey
 import hiiragi283.lib.data.ConditionBuilder
-import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.data.advancement.criterion.HTConsumeItemBuilder
 import hiiragi283.lib.data.advancement.criterion.HTInventoryChangeBuilder
 import hiiragi283.lib.util.HTBuilderMarker
@@ -19,6 +18,8 @@ import net.minecraft.advancements.DisplayInfo
 import net.minecraft.advancements.triggers.CriteriaTriggers
 import net.minecraft.advancements.triggers.Criterion
 import net.minecraft.advancements.triggers.CriterionTrigger
+import net.minecraft.core.Holder
+import net.minecraft.data.worldgen.BootstrapContext
 import net.neoforged.neoforge.common.conditions.ICondition
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
@@ -94,7 +95,10 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
 
     //    Save    //
 
-    fun save(exporter: ConditionalExporter<Advancement>): AdvancementKey {
+    /**
+     * @since 26.3.0
+     */
+    fun save(context: BootstrapContext<Advancement>): Holder.Reference<Advancement> {
         val adv = Advancement(
             parent.map(AdvancementKey::identifier),
             display,
@@ -103,6 +107,6 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
             this.requirements ?: strategy.create(criteria.keys),
             true
         )
-        return exporter.accept(key, adv, conditions)
+        return context.register(key, adv, *conditions.toTypedArray())
     }
 }

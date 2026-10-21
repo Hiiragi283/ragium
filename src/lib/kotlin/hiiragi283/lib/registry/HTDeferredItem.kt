@@ -4,6 +4,7 @@ import hiiragi283.lib.item.HTItemInstanceLike
 import hiiragi283.lib.text.Text
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.Registries
+import net.minecraft.references.BlockItemId
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
@@ -30,6 +31,11 @@ class HTDeferredItem<out ITEM : Item> :
     constructor(key: ResourceKey<Item>) : super(key)
 
     constructor(id: Identifier) : super(Registries.ITEM.createKey(id))
+
+    /**
+     * @since 26.3.0
+     */
+    constructor(id: BlockItemId) : super(id.item())
 
     override val translationKey: String get() = get().descriptionId
 

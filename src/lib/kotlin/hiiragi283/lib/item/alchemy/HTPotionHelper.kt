@@ -1,6 +1,5 @@
 package hiiragi283.lib.item.alchemy
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.util.fold
@@ -14,6 +13,7 @@ import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.alchemy.PotionIds
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStackTemplate
@@ -62,7 +62,7 @@ data object HTPotionHelper {
      */
     @Suppress("DEPRECATION")
     @JvmStatic
-    fun isWater(potion: Holder<Potion>): Boolean = potion.`is`(HTConstants.Keys.WATER) || potion.`is`(Potions.WATER)
+    fun isWater(potion: Holder<Potion>): Boolean = potion.`is`(PotionIds.WATER) || potion.`is`(Potions.WATER)
 
     /**
      * @since 26.1.11

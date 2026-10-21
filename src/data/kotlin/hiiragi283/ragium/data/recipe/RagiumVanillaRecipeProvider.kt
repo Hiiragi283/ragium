@@ -10,7 +10,6 @@ import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.registry.HTDecorationContent
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
-import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.lib.tag.HTMaterialLike
@@ -31,6 +30,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.references.ItemIds
 import net.minecraft.tags.BlockItemTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
@@ -698,7 +698,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Ingot <-> Nugget
         ingotToNugget(RagiumMaterial.Metal.ALUMINUM)
         ingotToNugget(RagiumMaterial.Metal.SILVER)
-        ingotToNugget(RagiumMaterial.Alloy.NETHERITE, ingot = HTSimpleDeferredItem(vanillaId("netherite_ingot")))
+        ingotToNugget(RagiumMaterial.Alloy.NETHERITE, ingot = HTSimpleDeferredItem(ItemIds.NETHERITE_INGOT))
         ingotToNugget(RagiumMaterial.Alloy.SOOTY_IRON)
         ingotToNugget(RagiumMaterial.Alloy.BLACK_STEEL)
         ingotToNugget(RagiumMaterial.Alloy.SHADOW_STEEL)

@@ -4,9 +4,7 @@ import hiiragi283.lib.collection.asSequence
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.registry.createKey
 import hiiragi283.lib.registry.getOrNull
-import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
@@ -28,13 +26,13 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.FluidIds
 import net.minecraft.world.level.material.FluidState
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.NeoForgeMod
@@ -78,7 +76,7 @@ internal data object RagiumCommon {
         }
 
         BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.add(
-            Registries.FLUID.createKey(vanillaId("water"))
+            FluidIds.WATER
         ) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
             builder.set(RagiumDataComponents.CHEMICAL, provider.getOrThrow(RagiumChemicals.WATER))
         }

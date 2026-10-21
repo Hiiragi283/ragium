@@ -5,7 +5,6 @@ import hiiragi283.lib.collection.ColorCollection
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTFluidContentRegister
 import hiiragi283.lib.resource.toId
-import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.Identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTPotionBucketItem
@@ -16,6 +15,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.ColorCollection
+import net.minecraft.world.level.material.FluidIds
 import net.minecraft.world.level.pathfinder.PathType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.common.SoundActions
@@ -29,7 +29,7 @@ data object RagiumFluids {
     @JvmStatic
     fun register(eventBus: IEventBus) {
         REGISTER.addAlias("calcium_hydroxide_solution", "sodium_hydroxide_solution")
-        REGISTER.addAlias(RagiumAPI.id("molten_blaze"), vanillaId("lava"))
+        REGISTER.addAlias(RagiumAPI.id("molten_blaze"), FluidIds.LAVA.identifier())
         REGISTER.addAlias("creosote", "coal_tar")
         REGISTER.addAlias("chloride", "chlorine")
 
