@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.element.RagiumElements
@@ -11,21 +12,14 @@ import hiiragi283.ragium.data.loot.RagiumBlockLootTableProvider
 import hiiragi283.ragium.data.loot.RagiumGlobalLootModifierProvider
 import hiiragi283.ragium.data.loot.RagiumGlobalLootTableProvider
 import hiiragi283.ragium.data.model.RagiumModelProvider
-import hiiragi283.ragium.data.recipe.RagiumArcaneRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumChemicalRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumColoringRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumCommonRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumElectronicsRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumHeatRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumMechanicalRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumRecipePriorityProvider
-import hiiragi283.ragium.data.recipe.RagiumResourceRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProviderN
 import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.tag.RagiumDamageTypeTagsProvider
 import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
 import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.core.registries.MultiRegistryBootstrap
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.LootTableProvider
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
@@ -43,6 +37,7 @@ data object RagiumDataGen {
         )
         event.defaultPackGenerator.createReloadableRegistryObjects(
             RegistrySetBuilder()
+                .add(Registries.ADVANCEMENT, RagiumAdvancementProvider)
                 .add(
                     Registries.LOOT_TABLE,
                     LootTableProvider(
@@ -65,25 +60,31 @@ data object RagiumDataGen {
                 )
                 .add(RagiumRegistries.Keys.ELEMENT, RagiumElements::bootstrap)
                 .add(RagiumRegistries.Keys.CHEMICAL, RagiumChemicals::bootstrap)
+                .add(object : MultiRegistryBootstrap {
+                    override fun requestedRegistries(): Set<RegistryKey<*>> =
+                        setOf(Registries.RECIPE, Registries.ADVANCEMENT)
+
+                    override fun run(registries: MultiRegistryBootstrap.BootstrapGetter) {
+                        RagiumVanillaRecipeProviderN(registries).buildRecipes()
+                    }
+                })
         )
 
         // Server
-        event.createProvider(::RagiumAdvancementProvider)
-
         event.createProvider(::RagiumDataMapProvider)
 
         event.createProvider(::RagiumGlobalLootModifierProvider)
 
-        event.createProvider(::RagiumVanillaRecipeProvider)
-        event.createProvider(::RagiumCommonRecipeProvider)
-        event.createProvider(::RagiumColoringRecipeProvider)
+        // event.createProvider(::RagiumVanillaRecipeProvider)
+        // event.createProvider(::RagiumCommonRecipeProvider)
+        // event.createProvider(::RagiumColoringRecipeProvider)
 
-        event.createProvider(::RagiumMechanicalRecipeProvider)
-        event.createProvider(::RagiumHeatRecipeProvider)
-        event.createProvider(::RagiumChemicalRecipeProvider)
-        event.createProvider(::RagiumResourceRecipeProvider)
-        event.createProvider(::RagiumElectronicsRecipeProvider)
-        event.createProvider(::RagiumArcaneRecipeProvider)
+        // event.createProvider(::RagiumMechanicalRecipeProvider)
+        // event.createProvider(::RagiumHeatRecipeProvider)
+        // event.createProvider(::RagiumChemicalRecipeProvider)
+        // event.createProvider(::RagiumResourceRecipeProvider)
+        // event.createProvider(::RagiumElectronicsRecipeProvider)
+        // event.createProvider(::RagiumArcaneRecipeProvider)
 
         event.createProvider(::RagiumRecipePriorityProvider)
 

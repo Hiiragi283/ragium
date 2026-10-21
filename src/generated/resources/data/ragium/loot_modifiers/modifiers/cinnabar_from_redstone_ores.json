@@ -1,11 +1,9 @@
 {
   "type": "neoforge:add_table",
-  "conditions": [
-    {
-      "blocks": "#minecraft:redstone_ores",
-      "condition": "ragium:block_set"
-    }
-  ],
+  "condition": {
+    "type": "ragium:block_set",
+    "blocks": "#minecraft:redstone_ores"
+  },
   "priority": 0,
   "table": "ragium:modifiers/cinnabar_from_redstone_ores"
 }

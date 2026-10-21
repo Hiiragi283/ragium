@@ -6,8 +6,6 @@ import com.mojang.serialization.JsonOps
 import hiiragi283.lib.HTComparators
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.RegistryKey
-import hiiragi283.lib.resource.HTSimpleValueWithKey
-import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
@@ -110,15 +108,6 @@ abstract class ExporterDataProvider<R : Any>(
      * @return [modId]を[名前空間][Identifier.getNamespace]とする[ID][Identifier]
      */
     protected fun id(vararg path: String): Identifier = modId.toId(*path)
-
-    protected fun getHasName(id: Identifier): String = "has_${id.debugPath}"
-
-    protected fun getHasName(value: HTSimpleValueWithKey<*>): String = getHasName(value.id())
-
-    protected fun getHasName(tagKey: TagKey<*>): String = getHasName(tagKey.location())
-
-    protected fun getHasName(prefix: HTTagPrefix, material: HTMaterialLike): String =
-        getHasName(prefix.itemTagKey(material))
 
     // Registry
 

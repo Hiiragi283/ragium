@@ -2,74 +2,31 @@ package hiiragi283.ragium.data.advancement
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.advancment.AdvancementKey
+import hiiragi283.lib.data.HTSingleRegistryBootstrap
 import hiiragi283.lib.data.advancement.HTAdvancementBuilder
-import hiiragi283.lib.data.advancement.HTAdvancementProvider
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
+import hiiragi283.lib.resource.HTSimpleValueWithKey
+import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.vanillaId
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.lib.tag.HTMaterialLike
+import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
+import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.core.ClientAsset
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.PackOutput
+import net.minecraft.resources.Identifier
+import net.minecraft.tags.BlockItemTagId
+import net.minecraft.tags.TagKey
 import net.neoforged.neoforge.common.Tags
-import java.util.concurrent.CompletableFuture
 
-class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
-    HTAdvancementProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    private fun createSimple(
-        key: AdvancementKey,
-        parentKey: AdvancementKey,
-        item: HTSimpleDeferredItem,
-        type: AdvancementType = AdvancementType.TASK
-    ) {
-        HTAdvancementBuilder.create(key) {
-            +parentKey
-            display {
-                +item
-                this.type = type
-            }
-            inventory(getHasName(item)) { predicate { items { +item } } }
-        }.save(exporter)
-    }
-
-    private fun createSimple(
-        key: AdvancementKey,
-        parentKey: AdvancementKey,
-        item: HTSimpleDeferredBlockAndItem,
-        type: AdvancementType = AdvancementType.TASK
-    ) {
-        HTAdvancementBuilder.create(key) {
-            +parentKey
-            display {
-                +item
-                this.type = type
-            }
-            inventory(getHasName(item)) { predicate { items { +item } } }
-        }.save(exporter)
-    }
-
-    private fun createSimple(
-        key: AdvancementKey,
-        parentKey: AdvancementKey,
-        part: HTItemPart,
-        material: RagiumMaterial
-    ) {
-        val item: HTSimpleDeferredItem = RagiumItems.getOrThrow(part, material)
-        HTAdvancementBuilder.create(key) {
-            +parentKey
-            display { +item }
-            inventory(getHasName(item)) { predicate { +holderSet(part.tagPrefix, material) } }
-        }.save(exporter)
-    }
-
-    override fun exportValues() {
+data object RagiumAdvancementProvider : HTSingleRegistryBootstrap<Advancement>() {
+    override fun register() {
         // Root
         HTAdvancementBuilder.create(RagiumAdvancementKeys.ROOT) {
             display {
@@ -78,10 +35,10 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
                 showToast = false
                 showChat = false
             }
-            inventory(getHasName(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES)) {
-                predicate { +holderSet(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES) }
+            inventory(getHasName(Tags.BlockItems.PLAYER_WORKSTATIONS_CRAFTING_TABLES)) {
+                predicate { +itemSet(Tags.BlockItems.PLAYER_WORKSTATIONS_CRAFTING_TABLES) }
             }
-        }.save(exporter)
+        }.save(context)
         createSimple(
             RagiumAdvancementKeys.SOOTY_IRON,
             RagiumAdvancementKeys.ROOT,
@@ -153,5 +110,61 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         )
     }
 
-    override fun getName(): String = "Ragium Advancements"
+    //    Extensions    //
+
+    fun getHasName(id: Identifier): String = "has_${id.debugPath}"
+
+    fun getHasName(value: HTSimpleValueWithKey<*>): String = getHasName(value.id())
+
+    fun getHasName(tagKey: TagKey<*>): String = getHasName(tagKey.location())
+
+    fun getHasName(tagKey: BlockItemTagId): String = getHasName(tagKey.item())
+
+    fun getHasName(prefix: HTTagPrefix, material: HTMaterialLike): String = getHasName(prefix.itemTagKey(material))
+
+    private fun createSimple(
+        key: AdvancementKey,
+        parentKey: AdvancementKey,
+        item: HTSimpleDeferredItem,
+        type: AdvancementType = AdvancementType.TASK
+    ) {
+        HTAdvancementBuilder.create(key) {
+            +parentKey
+            display {
+                +item
+                this.type = type
+            }
+            inventory(getHasName(item)) { predicate { items { +item } } }
+        }.save(context)
+    }
+
+    private fun createSimple(
+        key: AdvancementKey,
+        parentKey: AdvancementKey,
+        item: HTSimpleDeferredBlockAndItem,
+        type: AdvancementType = AdvancementType.TASK
+    ) {
+        HTAdvancementBuilder.create(key) {
+            +parentKey
+            display {
+                +item
+                this.type = type
+            }
+            inventory(getHasName(item)) { predicate { items { +item } } }
+        }.save(context)
+    }
+
+    private fun createSimple(
+        key: AdvancementKey,
+        parentKey: AdvancementKey,
+        part: HTItemPart,
+        material: RagiumMaterial
+    ) {
+        val item: HTSimpleDeferredItem = RagiumItems.getOrThrow(part, material)
+        HTAdvancementBuilder.create(key) {
+            +parentKey
+            display { +item }
+            inventory(getHasName(item)) { predicate { +holderSet(part.tagPrefix, material) } }
+        }.save(context)
+    }
 }

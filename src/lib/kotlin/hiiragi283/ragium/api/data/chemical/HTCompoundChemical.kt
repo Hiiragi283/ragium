@@ -16,7 +16,7 @@ import hiiragi283.ragium.api.data.element.HTElement
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
-import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.BootstrapContextAccess
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -57,7 +57,7 @@ data class HTCompoundChemical(val composition: Nel<Pair<Either<Holder<HTChemical
         val TYPE: HTChemical.Type<HTCompoundChemical> = HTChemical.Type(CODEC, STREAM_CODEC)
 
         @JvmStatic
-        inline fun build(context: BootstrapContext<*>, builderAction: Builder.() -> Unit): HTCompoundChemical {
+        inline fun build(context: BootstrapContextAccess, builderAction: Builder.() -> Unit): HTCompoundChemical {
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
             }
@@ -92,7 +92,7 @@ data class HTCompoundChemical(val composition: Nel<Pair<Either<Holder<HTChemical
         private val chemicalGetter: HolderGetter<HTChemical>,
         private val elementGetter: HolderGetter<HTElement>
     ) {
-        constructor(context: BootstrapContext<*>) : this(
+        constructor(context: BootstrapContextAccess) : this(
             context.lookup(RagiumRegistries.Keys.CHEMICAL),
             context.lookup(RagiumRegistries.Keys.ELEMENT)
         )

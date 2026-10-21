@@ -20,7 +20,7 @@ class HTCookingRecipeBuilder(
     /**
      * レシピ本のカテゴリ
      */
-    var category: CookingBookCategory by HTDelegates.onceInitialize { CookingBookCategory.MISC }
+    var cookingCategory: CookingBookCategory by HTDelegates.onceInitialize { CookingBookCategory.MISC }
 
     /**
      * 精錬時にもらえる経験値量
@@ -36,7 +36,7 @@ class HTCookingRecipeBuilder(
 
     override fun createRecipe(): AbstractCookingRecipe = factory.create(
         commonInfo(true),
-        AbstractCookingRecipe.CookingBookInfo(category, group),
+        AbstractCookingRecipe.CookingBookInfo(cookingCategory, group),
         ingredient,
         result,
         exp,

@@ -1,0 +1,16 @@
+[
+  "alloy_smelter",
+  "assembler",
+  "black_steel",
+  "chemical_bath",
+  "chemical_machine_parts",
+  "crusher",
+  "freezer",
+  "heat_machine_parts",
+  "mechanical_machine_parts",
+  "melter",
+  "recipes/misc/smelting/bamboo_charcoal",
+  "root",
+  "sooty_iron",
+  "upgrade_station"
+]

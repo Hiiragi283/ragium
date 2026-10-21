@@ -13,13 +13,13 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * 不定形レシピ向けの[HTCraftingRecipeBuilder]の実装クラスです。
+ * 不定形レシピ向けの[HTVanillaRecipeBuilder]の実装クラスです。
  *
  * 参照 : [Minecraft - ShapelessRecipeBuilder][net.minecraft.data.recipes.ShapelessRecipeBuilder]
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTShapelessRecipeBuilder : HTCraftingRecipeBuilder<ShapelessRecipe>(HTConstants.SHAPELESS) {
+class HTShapelessRecipeBuilder : HTVanillaRecipeBuilder<ShapelessRecipe>(HTConstants.SHAPELESS) {
     @PublishedApi internal val ingredients: MutableList<Ingredient> = ObjectArrayList()
 
     operator fun Ingredient.unaryPlus() {

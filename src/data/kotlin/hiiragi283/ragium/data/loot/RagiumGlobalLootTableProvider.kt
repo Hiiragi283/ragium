@@ -1,12 +1,11 @@
 package hiiragi283.ragium.data.loot
 
+import hiiragi283.lib.data.getOrThrow
 import hiiragi283.lib.data.loot.builder.HTLootTableBuilder
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.LootTableSubProvider
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
@@ -18,8 +17,7 @@ import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFu
 import net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProviders
 
 sealed class RagiumGlobalLootTableProvider(protected val context: LootTableSubProvider.Context) : LootTableSubProvider {
-    protected val enchantments: HolderGetter<Enchantment> = context.lookup(Registries.ENCHANTMENT)
-    protected val fortune: Holder<Enchantment> = enchantments.getOrThrow(Enchantments.FORTUNE)
+    protected val fortune: Holder<Enchantment> by lazy { context.getOrThrow(Enchantments.FORTUNE) }
 
     protected inline fun buildTable(builderAction: HTLootTableBuilder.() -> Unit): LootTable.Builder =
         HTLootTableBuilder.build(builderAction)
@@ -83,8 +81,8 @@ sealed class RagiumGlobalLootTableProvider(protected val context: LootTableSubPr
                         +LootItem
                             .lootTableItem(RagiumItems.ELDER_HEART)
                             .apply(
-                                EnchantedCountIncreaseFunction.lootingMultiplier(
-                                    enchantments,
+                                EnchantedCountIncreaseFunction.Builder(
+                                    context.getOrThrow(Enchantments.LOOTING),
                                     ContextFloatProviders.between(0f, 1f)
                                 )
                             )

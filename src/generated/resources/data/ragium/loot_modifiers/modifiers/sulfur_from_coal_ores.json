@@ -1,11 +1,9 @@
 {
   "type": "neoforge:add_table",
-  "conditions": [
-    {
-      "blocks": "#minecraft:coal_ores",
-      "condition": "ragium:block_set"
-    }
-  ],
+  "condition": {
+    "type": "ragium:block_set",
+    "blocks": "#minecraft:coal_ores"
+  },
   "priority": 0,
   "table": "ragium:modifiers/sulfur_from_coal_ores"
 }

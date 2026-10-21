@@ -54,14 +54,26 @@ data object HTComparators {
         }.sortedWith(HOLDER_SET).let(::OrHolderSet)
 
     /**
-     * @since 26.1.7
+     * @since 26.3.0
      */
     @JvmStatic
-    fun <T : Any> compressHolderSet(holderSets: Sequence<HolderSet<T>>): OrHolderSet<T> =
+    fun <T : Any> resolveHolderSet(holderSets: Iterable<HolderSet<T>>): List<HolderSet<T>> =
         holderSets.flatMap { holderSet: HolderSet<T> ->
             when (holderSet) {
                 is CompositeHolderSet -> holderSet.components.singleOrNull()?.let(::listOf) ?: listOf(holderSet)
                 else -> listOf(holderSet)
             }
-        }.sortedWith(HOLDER_SET).toList().let(::OrHolderSet)
+        }.sortedWith(HOLDER_SET)
+
+    /**
+     * @since 26.3.0
+     */
+    @JvmStatic
+    fun <T : Any> resolveHolderSet(holderSets: Sequence<HolderSet<T>>): Sequence<HolderSet<T>> =
+        holderSets.flatMap { holderSet: HolderSet<T> ->
+            when (holderSet) {
+                is CompositeHolderSet -> holderSet.components.singleOrNull()?.let(::listOf) ?: listOf(holderSet)
+                else -> listOf(holderSet)
+            }
+        }.sortedWith(HOLDER_SET)
 }

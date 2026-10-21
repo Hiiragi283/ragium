@@ -10,6 +10,7 @@ import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
+import net.minecraft.references.BlockItemId
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
@@ -54,6 +55,13 @@ class HTItemResultBuilder @PublishedApi internal constructor() {
     }
 
     operator fun ResourceKey<Item>.unaryPlus() {
+        +HTSimpleDeferredItem(this).delegate
+    }
+
+    /**
+     * @since 26.3.0
+     */
+    operator fun BlockItemId.unaryPlus() {
         +HTSimpleDeferredItem(this).delegate
     }
 

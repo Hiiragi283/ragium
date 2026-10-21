@@ -1,9 +1,9 @@
 package hiiragi283.lib.data.loot
 
+import hiiragi283.lib.data.getOrThrow
 import hiiragi283.lib.resource.HTSimpleValueWithKey
 import hiiragi283.lib.resource.HTValueWithKey
 import net.minecraft.core.Holder
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.data.loot.LootTableSubProvider
 import net.minecraft.world.flag.FeatureFlags
@@ -34,7 +34,7 @@ abstract class HTBlockLootTableProvider(
     /**
      * 幸運エンチャントのインスタンス
      */
-    val fortune: Holder<Enchantment> by lazy { context.lookup(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE) }
+    val fortune: Holder<Enchantment> by lazy { context.getOrThrow(Enchantments.FORTUNE) }
 
     protected fun dropSelf(like: HTSimpleValueWithKey<Block>) {
         dropSelf(like.getOrThrow())

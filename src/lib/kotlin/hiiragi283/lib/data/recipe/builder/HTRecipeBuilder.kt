@@ -3,6 +3,7 @@
 package hiiragi283.lib.data.recipe.builder
 
 import hiiragi283.lib.data.ConditionBuilder
+import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.util.HTBuilderMarker
@@ -137,4 +138,11 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
      */
     open fun save(context: BootstrapContext<Recipe<*>>): Holder.Reference<Recipe<*>> =
         build().let { (key: RecipeKey, recipe: RECIPE) -> context.register(key, recipe, *conditions.toTypedArray()) }
+
+    /**
+     * レシピを生成します。
+     * @param exporter 生成したレシピの出力先
+     */
+    open fun save(exporter: ConditionalExporter<Recipe<*>>): RecipeKey =
+        build().let { (key: RecipeKey, recipe: RECIPE) -> exporter.accept(key, recipe, conditions) }
 }

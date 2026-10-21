@@ -14,13 +14,13 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * 定形レシピ向けの[HTCraftingRecipeBuilder]の実装クラスです。
+ * 定形レシピ向けの[HTVanillaRecipeBuilder]の実装クラスです。
  *
  * 参照 : [Minecraft - ShapedRecipeBuilder][net.minecraft.data.recipes.ShapedRecipeBuilder]
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTShapedRecipeBuilder : HTCraftingRecipeBuilder<ShapedRecipe>(HTConstants.SHAPED) {
+class HTShapedRecipeBuilder : HTVanillaRecipeBuilder<ShapedRecipe>(HTConstants.SHAPED) {
     @PublishedApi internal val patterns: MutableList<String> = ObjectArrayList()
 
     @PublishedApi internal val keys: MutableMap<Char, Ingredient> = Char2ObjectLinkedOpenHashMap()
