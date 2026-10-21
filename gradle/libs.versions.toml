@@ -1,8 +1,8 @@
 [versions]
-minecraft = "26.1.2"
+minecraft = "26.3"
 
 neo-moddev = "2.0.148"
-neo-version = "26.1.2.122"
+neo-version = "26.3.0.95"
 kff-version = "6.4.0"
 
 kotlin = "2.4.21"
@@ -13,10 +13,10 @@ axion-release = "1.21.4"
 maven-publish = "0.37.0"
 mod-publish = "2.1.1"
 
-ae2 = "26.1.13-beta"
-curios = "15.0.0+26.1.2"
-jade = "26.1.12+neoforge"
-jei = "29.47.0.111"
+ae2 = "26.3.1-alpha"
+curios = "17.0.0-beta.3+26.3"
+jade = "26.3.5+neoforge"
+jei = "31.16.0.87"
 
 [libraries]
 
@@ -25,8 +25,8 @@ kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref =
 ae2 = { group = "org.appliedenergistics", name = "appliedenergistics2", version.ref = "ae2" }
 curios = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curios" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
-jei = { group = "mezz.jei", name = "jei-26.1.2-neoforge", version.ref = "jei" }
-jei-api = { group = "mezz.jei", name = "jei-26.1.2-neoforge-api", version.ref = "jei" }
+jei = { group = "mezz.jei", name = "jei-26.3-neoforge", version.ref = "jei" }
+jei-api = { group = "mezz.jei", name = "jei-26.3-neoforge-api", version.ref = "jei" }
 
 [bundles]
 
