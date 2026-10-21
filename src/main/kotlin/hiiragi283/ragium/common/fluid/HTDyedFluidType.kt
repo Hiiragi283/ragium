@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.fluid
 
-import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.fluid.HTFluidType
 import hiiragi283.lib.item.HTItemDropHelper
 import net.minecraft.core.BlockPos
@@ -8,6 +7,7 @@ import net.minecraft.network.chat.TextColor
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.fluids.FluidStack
@@ -17,12 +17,11 @@ class HTDyedFluidType(private val color: DyeColor, properties: Properties) : HTF
 
     override fun onVaporize(entity: LivingEntity?, level: Level, pos: BlockPos, stack: FluidStack) {
         super.onVaporize(entity, level, pos, stack)
-        VanillaColoredCollections.DYE[color].asStack(4).onSuccess { stack: ItemStack ->
-            if (entity != null) {
-                HTItemDropHelper.giveOrDropStack(entity, stack)
-            } else {
-                HTItemDropHelper.dropStackAt(level, Vec3.atCenterOf(pos), stack)
-            }
+        val stack = ItemStack(Items.DYE.pick(color), 4)
+        if (entity != null) {
+            HTItemDropHelper.giveOrDropStack(entity, stack)
+        } else {
+            HTItemDropHelper.dropStackAt(level, Vec3.atCenterOf(pos), stack)
         }
     }
 }

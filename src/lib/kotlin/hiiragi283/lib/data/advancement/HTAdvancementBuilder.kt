@@ -14,11 +14,11 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
-import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.advancements.Criterion
-import net.minecraft.advancements.CriterionTrigger
 import net.minecraft.advancements.CriterionTriggerInstance
 import net.minecraft.advancements.DisplayInfo
+import net.minecraft.advancements.triggers.CriteriaTriggers
+import net.minecraft.advancements.triggers.Criterion
+import net.minecraft.advancements.triggers.CriterionTrigger
 import net.neoforged.neoforge.common.conditions.ICondition
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
@@ -72,11 +72,11 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
 
     //    Criterion    //
 
-    @PublishedApi internal val criterions: MutableMap<String, Criterion<*>> = Object2ObjectLinkedOpenHashMap()
+    @PublishedApi internal val criteria: MutableMap<String, Criterion<*>> = Object2ObjectLinkedOpenHashMap()
 
     infix fun String.criterion(criterion: Criterion<*>) {
-        check(this !in criterions) { "Duplicated criterion: $this" }
-        criterions[this] = criterion
+        check(this !in criteria) { "Duplicated criterion: $this" }
+        criteria[this] = criterion
     }
 
     fun <T : CriterionTriggerInstance> define(key: String, trigger: CriterionTrigger<T>, instance: T) {
@@ -99,8 +99,8 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
             parent.map(AdvancementKey::identifier),
             display,
             rewards,
-            criterions,
-            this.requirements ?: strategy.create(criterions.keys),
+            criteria,
+            this.requirements ?: strategy.create(criteria.keys),
             true
         )
         return exporter.accept(key, adv, conditions)

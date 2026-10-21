@@ -10,7 +10,6 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.world.flag.FeatureElement
 import net.minecraft.world.flag.FeatureFlagSet
 import net.minecraft.world.flag.FeatureFlags
-import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.item.crafting.RecipeMap
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.SubscribeEvent
@@ -96,13 +95,4 @@ data object HTPhysicalSideHelper {
     fun onRecipeSync(event: RecipesReceivedEvent) {
         cachedRecipes = event.recipeMap
     }
-
-    //    PotionBrewing    //
-
-    /**
-     * 現在の[PotionBrewing]を取得します。
-     * @since 26.1.1
-     */
-    @JvmStatic
-    fun getPotionBrewing(): PotionBrewing? = runForSide(Level::potionBrewing, MinecraftServer::potionBrewing)
 }

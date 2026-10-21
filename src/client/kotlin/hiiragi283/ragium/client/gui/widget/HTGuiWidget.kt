@@ -52,10 +52,10 @@ class HTGuiWidget<WIDGET : HTWidget>(private val gui: HTGuiAccess, val widget: W
         widget.mouseScrolled(mouseX, mouseY, scrollX, scrollY)
 
     override fun keyPressed(event: KeyEvent): Boolean =
-        widget.keyPressed(event.key(), event.scancode(), event.modifiers())
+        widget.keyPressed(event.key(), event.keycode(), event.modifiers())
 
     override fun keyReleased(event: KeyEvent): Boolean =
-        widget.keyReleased(event.key(), event.scancode(), event.modifiers())
+        widget.keyReleased(event.key(), event.keycode(), event.modifiers())
 
     override fun charTyped(event: CharacterEvent): Boolean = widget.charTyped(event.codepointAsString()[0])
 

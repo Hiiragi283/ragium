@@ -103,7 +103,7 @@ data object RagiumClient : HTClientMod() {
 
     override fun registerFluidModels(register: HTFluidModelRegister) {
         for (color: DyeColor in DyeColor.entries) {
-            register.register(RagiumFluids.DYES[color]) {
+            register.register(RagiumFluids.DYES.pick(color)) {
                 dull()
                 color.textureDiffuseColor.let(::colorTint)
             }

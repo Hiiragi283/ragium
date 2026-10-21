@@ -1,18 +1,11 @@
 package hiiragi283.ragium.common
 
-import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.collection.asSequence
-import hiiragi283.lib.collection.buildTable
-import hiiragi283.lib.collection.getOrPut
-import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.item.alchemy.HTBottleType
-import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.createKey
-import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.registry.getOrNull
-import hiiragi283.lib.resource.modifyPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
@@ -28,8 +21,6 @@ import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
-import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
@@ -40,17 +31,13 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.alchemy.Potion
-import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.FluidState
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.NeoForgeMod
-import net.neoforged.neoforge.common.crafting.CompoundIngredient
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import net.neoforged.neoforge.registries.datamaps.builtin.Oxidizable
@@ -70,11 +57,11 @@ internal data object RagiumCommon {
             FluidInteractionRegistry.addInteraction(
                 NeoForgeMod.LAVA_TYPE.value(),
                 FluidInteractionRegistry.InteractionInformation(
-                    RagiumFluids.DYES[color].getFluidType()
+                    RagiumFluids.DYES.pick(color).getFluidType()
                 ) { state: FluidState ->
                     when (state.isSource) {
                         true -> Blocks.OBSIDIAN.defaultBlockState()
-                        false -> VanillaColoredCollections.CONCRETE[color].defaultState
+                        false -> Blocks.CONCRETE.pick(color).defaultBlockState()
                     }
                 }
             )
@@ -221,7 +208,7 @@ internal data object RagiumCommon {
                 }
         }
 
-        RagiumRecipeLookups.BREWING.addSubLookup { _ ->
+        /*RagiumRecipeLookups.BREWING.addSubLookup { _ ->
             val mixes: List<PotionBrewing.Mix<Potion>> = HTPhysicalSideHelper.getPotionBrewing()
                 ?.let(PotionBrewing::potionMixes)
                 ?: return@addSubLookup sequenceOf()
@@ -245,8 +232,8 @@ internal data object RagiumCommon {
                             .identifier()
                             .modifyPath { "${it}_from_${potionFrom.getKeyOrThrow().identifier().toDebugFileName()}" }
                     }.build()
-                }
-        }
+                } TODO
+        }*/
     }
 
     private fun HolderGetter.Provider.getOrNull(content: HTFluidContent): HolderSet<Fluid>? =

@@ -4,6 +4,7 @@ import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.text.MutableText
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
+import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.TagKey
 import net.neoforged.neoforge.common.Tags
 
@@ -23,3 +24,9 @@ fun <T : Any> RegistryKey<T>.createTagKey(id: Identifier): TagKey<T> = TagKey.cr
  */
 fun TagKey<*>.getName(): MutableText =
     Component.translatableWithFallback(Tags.getTagTranslationKey(this), "#${this.location}")
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.3.0
+ */
+fun BlockItemTagId(id: Identifier): BlockItemTagId = BlockItemTagId.create(id, id)

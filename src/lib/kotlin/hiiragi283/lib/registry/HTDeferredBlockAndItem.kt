@@ -1,10 +1,10 @@
 package hiiragi283.lib.registry
 
 import hiiragi283.lib.item.HTItemInstanceLike
-import hiiragi283.lib.resource.BlockItemKey
 import hiiragi283.lib.resource.HTValueWithKey
 import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.text.HTHasTranslationKey
+import net.minecraft.references.BlockItemId
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
@@ -43,16 +43,16 @@ data class HTDeferredBlockAndItem<out BLOCK : Block, out ITEM : Item>(
     ItemLike by item,
     HTItemInstanceLike by item {
     /**
-     * @since 26.1.4
+     * @since 26.3.0
      */
-    constructor(key: BlockItemKey) : this(HTDeferredBlock(key.block), HTDeferredItem(key.item))
+    constructor(id: BlockItemId) : this(HTDeferredBlock(id.block), HTDeferredItem(id.item))
 
     constructor(id: Identifier) : this(HTDeferredBlock(id), HTDeferredItem(id))
 
     /**
-     * @since 26.1.7
+     * @since 26.3.0
      */
-    val blockItemKey = BlockItemKey(block.key, item.key)
+    val blockItemId = BlockItemId(block.key(), item.key())
 
     /**
      * @since 26.1.7

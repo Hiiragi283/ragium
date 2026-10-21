@@ -66,7 +66,7 @@ abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val i
             }
             slotIn.onTake(player, stackIn)
             if (index == 0) {
-                player.drop(stackIn, false)
+                // player.drop(stackIn, false) TODO
             }
         }
         return result

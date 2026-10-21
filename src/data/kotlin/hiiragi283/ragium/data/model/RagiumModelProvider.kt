@@ -31,7 +31,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     override fun registerModels(blockModels: BlockModelGenerators, itemModels: ItemModelGenerators) {
         // Fluids
         val dripFluids: List<HTFluidContent> = buildList {
-            addAll(RagiumFluids.DYES)
+            addAll(RagiumFluids.DYES.asList())
             add(RagiumFluids.HONEY)
             add(RagiumFluids.RESIN)
             add(RagiumFluids.OMINOUS_FLUX)
@@ -113,7 +113,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             generators.createTrivialBlock(blockItem.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
         }
         // Misc
-        generators.createTrivialBlock(RagiumBlocks.UPGRADE_STATION.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
+        generators.createTrivialBlock(RagiumBlocks.UPGRADE_STATION.getOrThrow(), TexturedModel.CUBE_BOTTOM_TOP)
     }
 
     private fun createMachineBlock(

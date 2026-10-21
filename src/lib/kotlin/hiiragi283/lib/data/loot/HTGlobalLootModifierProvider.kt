@@ -1,7 +1,6 @@
-@file:OptIn(ExperimentalContracts::class)
-
 package hiiragi283.lib.data.loot
 
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
@@ -14,10 +13,6 @@ import net.neoforged.neoforge.common.loot.AddTableLootModifier
 import net.neoforged.neoforge.common.loot.LootTableIdCondition
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
-import kotlin.jvm.optionals.toList
 
 /**
  * Hiiragi Seriesで使用される[GlobalLootModifierProvider]の拡張クラスです。
@@ -37,65 +32,50 @@ abstract class HTGlobalLootModifierProvider(
      * @since 26.1.8
      */
     protected fun add(key: ResourceKey<LootTable>, condition: LootItemCondition, priority: Int = 0) {
-        add(key.identifier().path, AddTableLootModifier(arrayOf(condition), priority, key))
+        add(key, Holder.direct(condition), priority)
     }
 
     /**
      * GLMを追加します。
      * @param key 参照するルートテーブルの[ResourceKey]
-     * @param conditions [key]のルートテーブルを適応するかどうかの条件の一覧
+     * @param condition [key]のルートテーブルを適応するかどうかの条件
      * @param priority GLMの優先度
+     * @since 26.3.0
      */
-    protected fun add(key: ResourceKey<LootTable>, conditions: Optional<out LootItemCondition>, priority: Int = 0) {
-        add(key, conditions.toList(), priority)
+    protected fun add(key: ResourceKey<LootTable>, condition: Holder<LootItemCondition>, priority: Int = 0) {
+        add(key, Optional.of(condition), priority)
     }
 
     /**
      * GLMを追加します。
      * @param key 参照するルートテーブルの[ResourceKey]
-     * @param conditions [key]のルートテーブルを適応するかどうかの条件の一覧
+     * @param condition [key]のルートテーブルを適応するかどうかの条件
      * @param priority GLMの優先度
+     * @since 26.3.0
      */
-    protected fun add(key: ResourceKey<LootTable>, conditions: Collection<LootItemCondition>, priority: Int = 0) {
-        add(key.identifier().path, AddTableLootModifier(conditions.toTypedArray(), priority, key))
-    }
-
-    /**
-     * GLMを追加します。
-     * @param key 参照するルートテーブルの[ResourceKey]
-     * @param priority GLMの優先度
-     * @param builderAction [key]のルートテーブルを適応するかどうかの条件を作成するブロック
-     */
-    protected inline fun add(
-        key: ResourceKey<LootTable>,
-        priority: Int = 0,
-        builderAction: MutableCollection<LootItemCondition>.() -> Unit
-    ) {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        add(key.identifier().path, AddTableLootModifier(buildList(builderAction).toTypedArray(), priority, key))
+    protected fun add(key: ResourceKey<LootTable>, condition: Optional<Holder<LootItemCondition>>, priority: Int = 0) {
+        add(key.identifier().path, AddTableLootModifier(condition, priority, key))
     }
 
     /**
      * 新しい[LootItemCondition]のインスタンスを作成します。
      * @param key ルートテーブルの参照先
      */
-    protected fun condition(key: ResourceKey<LootTable>): LootItemCondition =
-        LootTableIdCondition.Builder(key.identifier()).build()
+    protected fun condition(key: ResourceKey<LootTable>): Holder<LootItemCondition> =
+        Holder.direct(LootTableIdCondition.Builder(key.identifier()).build())
 
     /**
      * 新しい[LootItemCondition]のインスタンスを作成します。
      * @param block ルートテーブルの参照先となるブロック
      * @return [Block.getLootTable]が空の場合は[Optional.empty]
      */
-    protected fun condition(block: Block): Optional<LootItemCondition> = block.lootTable.map(::condition)
+    protected fun condition(block: Block): Optional<Holder<LootItemCondition>> = block.lootTable.map(::condition)
 
     /**
      * 新しい[LootItemCondition]のインスタンスを作成します。
      * @param entityType ルートテーブルの参照先となるエンティティの種類
      * @return [EntityType.getDefaultLootTable]が空の場合は[Optional.empty]
      */
-    protected fun condition(entityType: EntityType<*>): Optional<LootItemCondition> =
+    protected fun condition(entityType: EntityType<*>): Optional<Holder<LootItemCondition>> =
         entityType.defaultLootTable.map(::condition)
 }

@@ -5,9 +5,9 @@ package hiiragi283.lib.data.advancement.criterion
 import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
-import net.minecraft.advancements.criterion.DataComponentMatchers
-import net.minecraft.advancements.criterion.ItemPredicate
-import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.predicates.DataComponentMatchers
+import net.minecraft.advancements.predicates.ItemPredicate
+import net.minecraft.advancements.predicates.MinMaxBounds
 import net.minecraft.core.HolderSet
 import net.minecraft.world.item.Item
 import java.util.Optional

@@ -1,13 +1,11 @@
 package hiiragi283.ragium.data.tag
 
 import hiiragi283.lib.collection.forEach
-import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.tag.HTBlockItemTagsProvider
 import hiiragi283.lib.data.tag.HTItemTagsProvider
 import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.HTSimpleValueWithKey
-import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.lib.tag.HTTagPrefix
@@ -21,8 +19,8 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.references.ItemIds
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.common.Tags
@@ -31,11 +29,9 @@ import java.util.concurrent.CompletableFuture
 class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
     HTItemTagsProvider(output, lookupProvider, RagiumAPI.MOD_ID) {
     override fun appendTags(registries: HolderLookup.Provider) {
-        RagiumBlockItemTagsProvider { (_, item: TagKey<Item>) ->
-            HTBlockItemTagsProvider.forItem(builder(item))
-        }.run()
+        RagiumBlockItemTagsProvider { HTBlockItemTagsProvider.forItem(builder(it.item())) }.run()
         // Material
-        builder(CommonTagPrefixes.GEM, RagiumMaterial.Gem.ECHO).add(vanillaId("echo_shard"))
+        builder(CommonTagPrefixes.GEM, RagiumMaterial.Gem.ECHO).add(ItemIds.ECHO_SHARD)
 
         RagiumItems.MATERIAL_ITEMS
             .forEach { (part: HTItemPart, material: RagiumMaterial, item: HTSimpleValueWithKey<Item>) ->
@@ -66,19 +62,19 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
         builder(Tags.Items.SLIME_BALLS).add(RagiumItems.STICKY_BALL)
         for (color: DyeColor in DyeColor.entries) {
-            builder(color.dyedTag).add(VanillaColoredCollections.HARNESS[color])
+            builder(color.dyedTag).add(ItemIds.HARNESS.pick(color))
         }
 
         builder(HTCommonTags.Items.COAL_COKE).add(RagiumItems.COAL_COKE)
-        builder(HTCommonTags.Items.PAPER).add(vanillaId("paper"))
+        builder(HTCommonTags.Items.PAPER).add(ItemIds.PAPER)
         builder(HTCommonTags.Items.PITCH_COKE).add(RagiumItems.PITCH_COKE)
         builder(HTCommonTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
         builder(HTCommonTags.Items.SILICON).add(RagiumItems.CRUDE_SILICON)
 
         builder(RagiumTags.Items.COALS)
             .add(RagiumItems.BAMBOO_CHARCOAL)
-            .add(vanillaId("charcoal"))
-            .add(vanillaId("coal"))
+            .add(ItemIds.CHARCOAL)
+            .add(ItemIds.COAL)
         builder(RagiumTags.Items.COKES)
             .addTag(HTCommonTags.Items.COAL_COKE)
             .addTag(HTCommonTags.Items.PITCH_COKE)

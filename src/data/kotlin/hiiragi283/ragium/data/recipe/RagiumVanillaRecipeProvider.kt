@@ -31,6 +31,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.tags.BlockItemTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -86,7 +87,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
         // Cement
         VanillaRecipeBuilders.shapeless {
-            ingredient { +holderSet(Tags.Items.SANDS) }
+            ingredient { +itemSet(Tags.BlockItems.SANDS) }
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.QUICK_LIME) }
             result {
                 +RagiumItems.CEMENT
@@ -288,7 +289,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"ABA"
             +" A "
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
+            define('B') { +itemSet(Tags.BlockItems.CHESTS_WOODEN) }
             result {
                 +Items.HOPPER
                 count = 2
@@ -300,7 +301,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"ABA"
             +" A "
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
-            define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
+            define('B') { +itemSet(Tags.BlockItems.CHESTS_WOODEN) }
             result {
                 +Items.HOPPER
                 count = 4
@@ -411,7 +412,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
 
         mechanical(RagiumBlocks.ASSEMBLER) { items { +Items.CRAFTER } }
-        mechanical(RagiumBlocks.CENTRIFUGE) { +holderSet(ItemTags.BARS) }
+        mechanical(RagiumBlocks.CENTRIFUGE) { +itemSet(BlockItemTags.BARS) }
         mechanical(RagiumBlocks.CRUSHER) { items { +Items.GRINDSTONE } }
         mechanical(RagiumBlocks.COMPRESSOR) { +holderSet(ItemTags.ANVIL) }
         mechanical(RagiumBlocks.CUTTING_MACHINE) { items { +Items.STONECUTTER } }
@@ -490,7 +491,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
 
         electronics(RagiumBlocks.BLENDER) { items { +RagiumBlocks.MIXER } }
-        electronics(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
+        electronics(RagiumBlocks.ELECTROLYZER) { +itemSet(BlockItemTags.LIGHTNING_RODS) }
         // Arcane
         arcane(RagiumBlocks.ENCHANTER) { items { +Items.ENCHANTING_TABLE } }
         // Other
@@ -643,7 +644,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             cross8()
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             define('B') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.IRON) }
-            define('C') { +holderSet(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES) }
+            define('C') { +itemSet(Tags.BlockItems.PLAYER_WORKSTATIONS_CRAFTING_TABLES) }
             result { +RagiumBlocks.UPGRADE_STATION }
         }.save(exporter)
 
@@ -651,7 +652,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         VanillaRecipeBuilders.shaped {
             crossLayered()
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON) }
-            define('B') { +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP) }
+            define('B') { +itemSet(Tags.BlockItems.GLASS_BLOCKS_CHEAP) }
             define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
             define('D') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.COPPER) }
             result { +RagiumItems.BASIC_UPGRADE }

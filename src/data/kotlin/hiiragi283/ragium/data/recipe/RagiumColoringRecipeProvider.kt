@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.recipe
 
-import hiiragi283.lib.color.HTColoredCollection
-import hiiragi283.lib.color.VanillaColoredCollections
+import hiiragi283.lib.collection.get
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
@@ -19,7 +18,9 @@ import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.ColorCollection
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
@@ -50,20 +51,20 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
                     amount /= 4
                 }
                 catalyst { items { +RagiumItems.BALL_MOLD } }
-                result { +VanillaColoredCollections.DYE[color] }
+                result { +Items.DYE[color] }
                 time /= 4
                 recipeId replace id("dye/$name")
             }.save(exporter)
             // Sand + Gravel + Liquid Dye -> XX Concrete
             RagiumRecipeBuilders.mixing {
-                itemIngredient { +holderSet(Tags.Items.SANDS) }
-                itemIngredient { +holderSet(Tags.Items.GRAVELS) }
+                itemIngredient { +itemSet(Tags.BlockItems.SANDS) }
+                itemIngredient { +itemSet(Tags.BlockItems.GRAVELS) }
                 fluidIngredient {
                     +holderSet(dyeContent)
                     amount /= 4
                 }
                 itemResult {
-                    +VanillaColoredCollections.CONCRETE[color]
+                    +Items.CONCRETE[color]
                     count = 2
                 }
                 time /= 2
@@ -102,14 +103,14 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
 
     override fun getName(): String = "Coloring Recipes"
 
-    enum class ColoredContents(val allTag: TagKey<Item>, val items: HTColoredCollection<ItemLike>) :
+    enum class ColoredContents(val allTag: TagKey<Item>, val items: ColorCollection<out ItemLike>) :
         StringRepresentable {
-        BANNER(ItemTags.BANNERS, VanillaColoredCollections.BANNER),
-        BED(ItemTags.BEDS, VanillaColoredCollections.BED),
-        HARNESS(ItemTags.HARNESSES, VanillaColoredCollections.HARNESS),
-        SHULKER_BOX(ItemTags.SHULKER_BOXES, VanillaColoredCollections.SHULKER_BOX),
-        WOOL(ItemTags.WOOL, VanillaColoredCollections.WOOL),
-        WOOL_CARPET(ItemTags.WOOL_CARPETS, VanillaColoredCollections.CARPET)
+        BANNER(ItemTags.BANNERS, Items.BANNER),
+        BED(ItemTags.BEDS, Items.BED),
+        HARNESS(ItemTags.HARNESSES, Items.HARNESS),
+        SHULKER_BOX(ItemTags.SHULKER_BOXES, Items.DYED_SHULKER_BOX),
+        WOOL(ItemTags.WOOL, Items.WOOL),
+        WOOL_CARPET(ItemTags.WOOL_CARPETS, Items.CARPET)
         ;
 
         val white: ItemLike get() = items[DyeColor.WHITE]
@@ -120,11 +121,11 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
     /**
      * 白色のアイテムのみを判定します。
      */
-    fun ColoredContents.onlyWhites(): HolderSet<Item> = holderSet(this.allTag) and holderSet(Tags.Items.DYED_WHITE)
+    fun ColoredContents.onlyWhites(): HolderSet<Item> = holderSet(this.allTag) and itemSet(Tags.BlockItems.DYED_WHITE)
 
     /**
      * 白色以外のアイテムを判定します。
      */
     fun ColoredContents.excludeWhites(): HolderSet<Item> =
-        holderSet(this.allTag) and notHolderSet(Tags.Items.DYED_WHITE)
+        holderSet(this.allTag) and notHolderSet(Tags.BlockItems.DYED_WHITE.item())
 }

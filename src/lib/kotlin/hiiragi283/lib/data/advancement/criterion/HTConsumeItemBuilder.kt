@@ -3,8 +3,8 @@
 package hiiragi283.lib.data.advancement.criterion
 
 import hiiragi283.lib.util.HTDelegates
-import net.minecraft.advancements.criterion.ConsumeItemTrigger
-import net.minecraft.advancements.criterion.ItemPredicate
+import net.minecraft.advancements.predicates.ItemPredicate
+import net.minecraft.advancements.triggers.ConsumeItemTrigger
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

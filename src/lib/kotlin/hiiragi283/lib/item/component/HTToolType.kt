@@ -4,10 +4,7 @@ import hiiragi283.lib.data.lang.HTLangPatternProvider
 import hiiragi283.lib.tag.HTMaterialLike
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.AxeItem
-import net.minecraft.world.item.HoeItem
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ShovelItem
 import net.minecraft.world.item.ToolMaterial
 
 /**
@@ -31,18 +28,18 @@ enum class HTToolType(val toolTag: TagKey<Item>, provider: HTLangPatternProvider
 
     fun createPath(material: HTMaterialLike): String = createPath(material.materialName)
 
-    fun createItem(
+    fun createProp(
         properties: Item.Properties,
         material: ToolMaterial,
         axeDamage: Float,
         axeSpeed: Float,
         hoeDamage: Float,
         hoeSpeed: Float
-    ): Item = when (this) {
-        SWORD -> Item(properties.sword(material, 3f, -2.4f))
-        SHOVEL -> ShovelItem(material, 1.5f, -3f, properties)
-        PICKAXE -> Item(properties.pickaxe(material, 1f, -2.8f))
-        AXE -> AxeItem(material, axeDamage, axeSpeed, properties)
-        HOE -> HoeItem(material, hoeDamage, hoeSpeed, properties)
+    ): Item.Properties = when (this) {
+        SWORD -> properties.sword(material, 3f, -2.4f)
+        SHOVEL -> properties.shovel(material, 1.5f, -3f)
+        PICKAXE -> properties.pickaxe(material, 1f, -2.8f)
+        AXE -> properties.axe(material, axeDamage, axeSpeed)
+        HOE -> properties.hoe(material, hoeDamage, hoeSpeed)
     }
 }

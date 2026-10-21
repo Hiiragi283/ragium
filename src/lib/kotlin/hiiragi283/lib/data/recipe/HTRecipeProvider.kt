@@ -34,7 +34,7 @@ abstract class HTRecipeProvider(
     packOutput: PackOutput,
     future: CompletableFuture<HolderLookup.Provider>,
     modId: String
-) : ExporterDataProvider<Recipe<*>>(packOutput, future, Registries.RECIPE, modId, Recipe.CONDITIONAL_CODEC) {
+) : ExporterDataProvider<Recipe<*>>(packOutput, future, Registries.RECIPE, modId, TODO()) {
     //    Extension    //
 
     /**

@@ -1,31 +1,31 @@
 package hiiragi283.lib.data.tag
 
-import hiiragi283.lib.resource.BlockItemKey
-import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import net.minecraft.references.BlockItemId
+import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 
 /**
- * [BlockItemKey]と[BlockItemTag]向けにタグを生成するクラスです。
- * @param factory [BlockItemTag]から[ビルダー][HTBlockItemTagBuilder]を作成するブロック
+ * [BlockItemId]と[BlockItemTagId]向けにタグを生成するクラスです。
+ * @param factory [BlockItemTagId]から[ビルダー][HTBlockItemTagBuilder]を作成するブロック
  * @author Hiiragi Tsubasa
  * @since 26.1.4
  */
-abstract class HTBlockItemTagsProvider(private val factory: (BlockItemTag) -> HTBlockItemTagBuilder) {
+abstract class HTBlockItemTagsProvider(private val factory: (BlockItemTagId) -> HTBlockItemTagBuilder) {
     companion object {
         /**
          * [HTTagBuilder]を[HTBlockItemTagBuilder]に変換します。
          */
         @JvmStatic
         fun forBlock(builder: HTTagBuilder<Block>): HTBlockItemTagBuilder = object : HTBlockItemTagBuilder {
-            override fun add(key: BlockItemKey, type: HTTagDependType): HTBlockItemTagBuilder =
-                apply { builder.add(key.block, type) }
+            override fun add(key: BlockItemId, type: HTTagDependType): HTBlockItemTagBuilder =
+                apply { builder.add(key.block(), type) }
 
-            override fun addTag(child: BlockItemTag, type: HTTagDependType): HTBlockItemTagBuilder =
-                apply { builder.addTag(child.block, type) }
+            override fun addTag(child: BlockItemTagId, type: HTTagDependType): HTBlockItemTagBuilder =
+                apply { builder.addTag(child.block(), type) }
         }
 
         /**
@@ -33,11 +33,11 @@ abstract class HTBlockItemTagsProvider(private val factory: (BlockItemTag) -> HT
          */
         @JvmStatic
         fun forItem(builder: HTTagBuilder<Item>): HTBlockItemTagBuilder = object : HTBlockItemTagBuilder {
-            override fun add(key: BlockItemKey, type: HTTagDependType): HTBlockItemTagBuilder =
-                apply { builder.add(key.item, type) }
+            override fun add(key: BlockItemId, type: HTTagDependType): HTBlockItemTagBuilder =
+                apply { builder.add(key.item(), type) }
 
-            override fun addTag(child: BlockItemTag, type: HTTagDependType): HTBlockItemTagBuilder =
-                apply { builder.addTag(child.item, type) }
+            override fun addTag(child: BlockItemTagId, type: HTTagDependType): HTBlockItemTagBuilder =
+                apply { builder.addTag(child.item(), type) }
         }
     }
 
@@ -46,16 +46,16 @@ abstract class HTBlockItemTagsProvider(private val factory: (BlockItemTag) -> HT
      */
     abstract fun run()
 
-    protected fun builder(tagKey: BlockItemTag): HTBlockItemTagBuilder = factory(tagKey)
+    protected fun builder(tagKey: BlockItemTagId): HTBlockItemTagBuilder = factory(tagKey)
 
     /**
      * @since 26.1.8
      */
     protected fun builder(block: TagKey<Block>, item: TagKey<Item>): HTBlockItemTagBuilder =
-        builder(BlockItemTag(block, item))
+        builder(BlockItemTagId(block, item))
 
-    protected fun builders(tagKey: BlockItemTag, vararg children: BlockItemTag): HTBlockItemTagBuilder =
-        children.fold(builder(tagKey)) { builder: HTBlockItemTagBuilder, tagKeyIn: BlockItemTag ->
+    protected fun builders(tagKey: BlockItemTagId, vararg children: BlockItemTagId): HTBlockItemTagBuilder =
+        children.fold(builder(tagKey)) { builder: HTBlockItemTagBuilder, tagKeyIn: BlockItemTagId ->
             builder.addTag(tagKeyIn)
             builder(tagKeyIn)
         }

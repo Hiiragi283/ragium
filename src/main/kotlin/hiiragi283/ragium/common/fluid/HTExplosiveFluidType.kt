@@ -4,6 +4,7 @@ import hiiragi283.lib.fluid.HTFluidType
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTExplosiveFluidType(private val power: Float, properties: Properties) : HTFluidType(properties) {
@@ -13,7 +14,7 @@ class HTExplosiveFluidType(private val power: Float, properties: Properties) : H
             null,
             null,
             null,
-            pos.center,
+            Vec3.atCenterOf(pos),
             power,
             true,
             Level.ExplosionInteraction.BLOCK

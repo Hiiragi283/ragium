@@ -18,11 +18,9 @@ import hiiragi283.lib.util.java
 import hiiragi283.lib.util.kotlin
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
-import net.minecraft.core.RegistryCodecs
 import net.minecraft.core.UUIDUtil
+import net.minecraft.core.registries.codec.RegistryCodecs
 import net.minecraft.network.chat.ComponentSerialization
-import net.minecraft.resources.RegistryFileCodec
-import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
@@ -248,7 +246,7 @@ data object HTCodecs {
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> holder(registryKey: RegistryKey<T>): Codec<Holder<T>> = RegistryFixedCodec.create(registryKey)
+    fun <T : Any> holder(registryKey: RegistryKey<T>): Codec<Holder<T>> = RegistryCodecs.holder(registryKey)
 
     /**
      * 指定した[registryKey]から[Holder]の[Codec]を返します。
@@ -258,15 +256,14 @@ data object HTCodecs {
      */
     @JvmStatic
     fun <T : Any> holder(registryKey: RegistryKey<T>, directCodec: Codec<T>): Codec<Holder<T>> =
-        RegistryFileCodec.create(registryKey, directCodec)
+        RegistryCodecs.holder(registryKey, directCodec)
 
     /**
      * 指定した[registryKey]から[HolderSet]の[Codec]を返します。
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> holderSet(registryKey: RegistryKey<T>): Codec<HolderSet<T>> =
-        RegistryCodecs.homogeneousList(registryKey)
+    fun <T : Any> holderSet(registryKey: RegistryKey<T>): Codec<HolderSet<T>> = RegistryCodecs.holderSet(registryKey)
 
     /**
      * 指定した[registryKey]から[HolderSet]の[Codec]を返します。
@@ -276,5 +273,5 @@ data object HTCodecs {
      */
     @JvmStatic
     fun <T : Any> holderSet(registryKey: RegistryKey<T>, directCodec: Codec<T>): Codec<HolderSet<T>> =
-        RegistryCodecs.homogeneousList(registryKey, directCodec)
+        RegistryCodecs.holderSet(registryKey, directCodec)
 }

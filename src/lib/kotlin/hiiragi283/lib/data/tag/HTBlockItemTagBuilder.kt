@@ -1,10 +1,10 @@
 package hiiragi283.lib.data.tag
 
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
-import hiiragi283.lib.resource.BlockItemKey
-import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import net.minecraft.references.BlockItemId
+import net.minecraft.tags.BlockItemTagId
 
 /**
  * [HTBlockItemTagsProvider]で使用されるタグのビルダークラスです。
@@ -17,7 +17,7 @@ interface HTBlockItemTagBuilder {
      * @param key 要素のキー
      * @param type このエントリの依存関係
      */
-    fun add(key: BlockItemKey, type: HTTagDependType = HTTagDependType.REQUIRED): HTBlockItemTagBuilder
+    fun add(key: BlockItemId, type: HTTagDependType = HTTagDependType.REQUIRED): HTBlockItemTagBuilder
 
     /**
      * 指定した要素をタグに追加します。
@@ -27,14 +27,14 @@ interface HTBlockItemTagBuilder {
     fun add(
         value: HTSimpleDeferredBlockAndItem,
         type: HTTagDependType = HTTagDependType.REQUIRED
-    ): HTBlockItemTagBuilder = this.add(value.blockItemKey, type)
+    ): HTBlockItemTagBuilder = this.add(value.blockItemId, type)
 
     /**
      * 指定した子タグをタグに追加します。
      * @param child 子タグ
      * @param type このエントリの依存関係
      */
-    fun addTag(child: BlockItemTag, type: HTTagDependType = HTTagDependType.REQUIRED): HTBlockItemTagBuilder
+    fun addTag(child: BlockItemTagId, type: HTTagDependType = HTTagDependType.REQUIRED): HTBlockItemTagBuilder
 
     /**
      * 指定した子タグをタグに追加します。

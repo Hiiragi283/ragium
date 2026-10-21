@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.lib.collection.forEach
-import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
@@ -21,26 +20,25 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.tags.BlockItemTagId
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.data.DataMapProvider
-import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import java.util.concurrent.CompletableFuture
 
 class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
     DataMapProvider(packOutput, lookupProvider) {
     override fun gather(provider: HolderLookup.Provider) {
-        furnaceFuel()
+        // furnaceFuel() TODO
 
         chemical(provider)
         mortarRepair()
     }
 
-    private fun furnaceFuel() {
+    /*private fun furnaceFuel() {
         val builder: Builder<FurnaceFuel, Item> = builder(NeoForgeDataMaps.FURNACE_FUELS)
             .add(RagiumItems.BAMBOO_CHARCOAL, FurnaceFuel(200 * 6), false)
             .add(RagiumItems.COAL_COKE, FurnaceFuel(200 * 16), false)
@@ -61,7 +59,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
                 builder.add(tiny, FurnaceFuel(time), false)
             }
         }
-    }
+    }*/
 
     private fun chemical(provider: HolderLookup.Provider) {
         val getter: HolderGetter<HTChemical> = provider.lookupOrThrow(RagiumRegistries.Keys.CHEMICAL)
@@ -178,7 +176,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
     @JvmName("addBlock")
     private fun <T : Any> Builder<T, Block>.add(
-        tag: BlockItemTag,
+        tag: BlockItemTagId,
         value: T,
         replace: Boolean = false,
         vararg conditions: ICondition
@@ -204,7 +202,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
     @JvmName("addItem")
     private fun <T : Any> Builder<T, Item>.add(
-        tag: BlockItemTag,
+        tag: BlockItemTagId,
         value: T,
         replace: Boolean = false,
         vararg conditions: ICondition

@@ -1,8 +1,9 @@
 package hiiragi283.ragium.data.lang
 
 import hiiragi283.lib.collection.forEach
-import hiiragi283.lib.color.HTColoredCollection
+import hiiragi283.lib.collection.get
 import hiiragi283.lib.data.lang.HTLangName
+import hiiragi283.lib.data.lang.HTLangNames
 import hiiragi283.lib.data.lang.HTLangPatternProvider
 import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangType
@@ -42,7 +43,7 @@ interface RagiumLangProvider {
         for (color: DyeColor in DyeColor.entries) {
             provider.addFluid(
                 RagiumFluids.DYES[color],
-                dyePattern.translate(langType, HTColoredCollection.TRANSLATED_NAMES[color])
+                dyePattern.translate(langType, HTLangNames.COLOR[color])
             )
         }
         // Item

@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block
 import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.Table
+import hiiragi283.lib.collection.base
 import hiiragi283.lib.collection.buildListMultiMap
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.data.lang.HTLangName
@@ -156,8 +157,8 @@ data object RagiumBlocks {
         RagiumMaterial.Fuel.CHARCOAL to copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF),
         RagiumMaterial.Fuel.COAL_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Fuel.PITCH_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_BLUE),
-        RagiumMaterial.Metal.ALUMINUM to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.COLOR_PINK),
-        RagiumMaterial.Metal.SILVER to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_LIGHT_GRAY),
+        RagiumMaterial.Metal.ALUMINUM to copyOf(Blocks.COPPER_BLOCK.base()).mapColor(MapColor.COLOR_PINK),
+        RagiumMaterial.Metal.SILVER to copyOf(Blocks.COPPER_BLOCK.base()).mapColor(MapColor.TERRACOTTA_LIGHT_GRAY),
         RagiumMaterial.Alloy.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Alloy.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
         RagiumMaterial.Alloy.SHADOW_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)

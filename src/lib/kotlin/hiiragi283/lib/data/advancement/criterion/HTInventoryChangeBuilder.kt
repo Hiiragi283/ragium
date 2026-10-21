@@ -4,9 +4,9 @@ package hiiragi283.lib.data.advancement.criterion
 
 import hiiragi283.lib.util.HTDelegates
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import net.minecraft.advancements.criterion.InventoryChangeTrigger
-import net.minecraft.advancements.criterion.ItemPredicate
-import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.predicates.ItemPredicate
+import net.minecraft.advancements.predicates.MinMaxBounds
+import net.minecraft.advancements.triggers.InventoryChangeTrigger
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

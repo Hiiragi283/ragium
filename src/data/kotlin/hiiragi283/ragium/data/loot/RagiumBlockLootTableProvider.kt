@@ -6,8 +6,8 @@ import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.common.block.RagiumBlocks
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
+import net.minecraft.data.loot.LootTableSubProvider
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
@@ -15,8 +15,8 @@ import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition
 
-class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
-    HTBlockLootTableProvider(registries, RagiumAPI.MOD_ID, RagiumBlocks.REGISTER.asBlockSequence()) {
+class RagiumBlockLootTableProvider(context: LootTableSubProvider.Context) :
+    HTBlockLootTableProvider(context, RagiumAPI.MOD_ID, RagiumBlocks.REGISTER.asBlockSequence()) {
     override fun generate() {
         knownBlocks.forEach(::dropSelf)
 

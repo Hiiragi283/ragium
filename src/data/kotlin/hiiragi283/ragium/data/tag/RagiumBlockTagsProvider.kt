@@ -9,16 +9,13 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
-import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import java.util.concurrent.CompletableFuture
 
 class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
     HTTagsProvider<Block>(output, Registries.BLOCK, lookupProvider, RagiumAPI.MOD_ID) {
     override fun appendTags(registries: HolderLookup.Provider) {
-        RagiumBlockItemTagsProvider { (block: TagKey<Block>, _) ->
-            HTBlockItemTagsProvider.forBlock(builder(block))
-        }.run()
+        RagiumBlockItemTagsProvider { HTBlockItemTagsProvider.forBlock(builder(it.block())) }.run()
 
         // Mineable
         val pickaxe: HTTagBuilder<Block> = builder(BlockTags.MINEABLE_WITH_PICKAXE)

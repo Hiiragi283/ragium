@@ -21,8 +21,10 @@ import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.RegistryOps
 import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
@@ -188,6 +190,16 @@ abstract class ExporterDataProvider<R : Any>(
      */
     protected fun <T : Any> anyHolderSet(registryKey: RegistryKey<T>): HolderSet<T> =
         AnyHolderSet(this.registries.lookupOrThrow(registryKey))
+
+    /**
+     * @since 26.3.0
+     */
+    protected fun blockSet(tagKey: BlockItemTagId): HolderSet<Block> = holderSet(tagKey.block())
+
+    /**
+     * @since 26.3.0
+     */
+    protected fun itemSet(tagKey: BlockItemTagId): HolderSet<Item> = holderSet(tagKey.item())
 
     /**
      * [HolderSet]を取得します。

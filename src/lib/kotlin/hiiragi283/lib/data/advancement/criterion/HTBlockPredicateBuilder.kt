@@ -5,10 +5,10 @@ package hiiragi283.lib.data.advancement.criterion
 import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
-import net.minecraft.advancements.criterion.BlockPredicate
-import net.minecraft.advancements.criterion.DataComponentMatchers
-import net.minecraft.advancements.criterion.NbtPredicate
-import net.minecraft.advancements.criterion.StatePropertiesPredicate
+import net.minecraft.advancements.predicates.BlockPredicate
+import net.minecraft.advancements.predicates.DataComponentMatchers
+import net.minecraft.advancements.predicates.NbtPredicate
+import net.minecraft.advancements.predicates.StatePropertiesPredicate
 import net.minecraft.core.HolderSet
 import net.minecraft.world.level.block.Block
 import java.util.Optional

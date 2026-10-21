@@ -298,9 +298,9 @@ data object RagiumItems {
 
     @JvmField
     val SOOTY_IRON_TOOLS: HTToolCollection<HTSimpleDeferredItem> = HTToolCollection { toolType: HTToolType ->
-        REGISTER.registerItem(
+        REGISTER.registerSimpleItem(
             toolType.createPath(RagiumMaterial.Alloy.SOOTY_IRON),
-            { prop: Item.Properties -> toolType.createItem(prop, RagiumToolMaterials.SOOTY_IRON, 6f, -3.1f, -2f, -1f) }
+            { prop: Item.Properties -> toolType.createProp(prop, RagiumToolMaterials.SOOTY_IRON, 6f, -3.1f, -2f, -1f) }
         )
     }
 

@@ -21,5 +21,5 @@ abstract class HTAdvancementProvider(
     future,
     Registries.ADVANCEMENT,
     modId,
-    Advancement.CONDITIONAL_CODEC
+    TODO()
 )

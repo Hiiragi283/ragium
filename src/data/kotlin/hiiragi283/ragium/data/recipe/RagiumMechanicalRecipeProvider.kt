@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
-import hiiragi283.lib.color.HTColoredCollection
-import hiiragi283.lib.color.VanillaColoredCollections
+import hiiragi283.lib.collection.base
+import hiiragi283.lib.collection.get
 import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.ingredient
@@ -24,6 +24,7 @@ import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -32,9 +33,11 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.ColorCollection
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.BlockTagIngredient
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient
+import java.util.Optional
 import java.util.concurrent.CompletableFuture
 
 class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
@@ -77,13 +80,13 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
         // Crimson Nylium
         RagiumRecipeBuilders.assembling {
-            ingredient { +holderSet(Tags.Items.NETHERRACKS) }
+            ingredient { +itemSet(Tags.BlockItems.NETHERRACKS) }
             ingredient { items { +Items.CRIMSON_FUNGUS } }
             result { +Items.CRIMSON_NYLIUM }
         }.save(exporter)
         // Warped Nylium
         RagiumRecipeBuilders.assembling {
-            ingredient { +holderSet(Tags.Items.NETHERRACKS) }
+            ingredient { +itemSet(Tags.BlockItems.NETHERRACKS) }
             ingredient { items { +Items.WARPED_FUNGUS } }
             result { +Items.WARPED_NYLIUM }
         }.save(exporter)
@@ -99,7 +102,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         // XX Ingot + XX Nugget -> XX Chain
         setOf(
-            RagiumMaterial.Metal.COPPER to Items.COPPER_CHAIN.unaffected(),
+            RagiumMaterial.Metal.COPPER to Items.COPPER_CHAIN.base(),
             RagiumMaterial.Metal.IRON to Items.IRON_CHAIN
         ).forEach { (metal: RagiumMaterial.Metal, chain: Item) ->
             RagiumRecipeBuilders.assembling {
@@ -116,7 +119,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
         // XX Ingot + Torch -> XX Lantern
         setOf(
-            RagiumMaterial.Metal.COPPER to Items.COPPER_LANTERN.unaffected(),
+            RagiumMaterial.Metal.COPPER to Items.COPPER_LANTERN.base(),
             RagiumMaterial.Metal.IRON to Items.LANTERN
         ).forEach { (metal: RagiumMaterial.Metal, lantern: Item) ->
             RagiumRecipeBuilders.assembling {
@@ -138,7 +141,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
         // Repeater
         RagiumRecipeBuilders.assembling {
-            ingredient { +holderSet(Tags.Items.STONES) }
+            ingredient { +itemSet(Tags.BlockItems.STONES) }
             ingredient {
                 items { +Items.REDSTONE_TORCH }
                 count = 2
@@ -153,7 +156,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
         // Comparator
         RagiumRecipeBuilders.assembling {
-            ingredient { +holderSet(Tags.Items.STONES) }
+            ingredient { +itemSet(Tags.BlockItems.STONES) }
             ingredient {
                 items { +Items.REDSTONE_TORCH }
                 count = 3
@@ -237,7 +240,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // TNT
         RagiumRecipeBuilders.assembling {
             ingredient {
-                +holderSet(Tags.Items.SANDS)
+                +itemSet(Tags.BlockItems.SANDS)
                 count = 4
             }
             ingredient {
@@ -389,11 +392,11 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         for (color: DyeColor in DyeColor.entries) {
             RagiumRecipeBuilders.compressing {
                 ingredient {
-                    items { +VanillaColoredCollections.CARPET[color] }
+                    items { +Items.CARPET[color] }
                     count = 3
                 }
                 result {
-                    +VanillaColoredCollections.WOOL[color]
+                    +Items.WOOL[color]
                     count = 2
                 }
                 recipeId suffix "_from_carpet"
@@ -457,11 +460,11 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         // XX Block -> XX
         setOf(
-            Tags.Items.SANDSTONE_UNCOLORED_BLOCKS to Items.SAND,
-            Tags.Items.SANDSTONE_RED_BLOCKS to Items.RED_SAND
-        ).forEach { (block: TagKey<Item>, base: Item) ->
+            Tags.BlockItems.SANDSTONE_UNCOLORED_BLOCKS to Items.SAND,
+            Tags.BlockItems.SANDSTONE_RED_BLOCKS to Items.RED_SAND
+        ).forEach { (block: BlockItemTagId, base: Item) ->
             RagiumRecipeBuilders.crushing {
-                ingredient { +holderSet(block) }
+                ingredient { +itemSet(block) }
                 result {
                     +base
                     count = 4
@@ -497,7 +500,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Cobblestone -> Gravel
         RagiumRecipeBuilders.crushing {
             ingredient {
-                +(holderSet(Tags.Items.COBBLESTONES) and notHolderSet(Tags.Items.COBBLESTONES_INFESTED))
+                +(itemSet(Tags.BlockItems.COBBLESTONES) and notHolderSet(Tags.BlockItems.COBBLESTONES_INFESTED.item()))
             }
             result { +Items.GRAVEL }
             time /= 2
@@ -505,7 +508,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
         // Gravel -> Sand + Flint
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(Tags.Items.GRAVELS) }
+            ingredient { +itemSet(Tags.BlockItems.GRAVELS) }
             result { +Items.SAND }
             time /= 2
             recipeId suffix "_from_gravel"
@@ -617,7 +620,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             recipeId suffix "_from_amethyst_block"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
+            ingredient { +itemSet(Tags.BlockItems.OBSIDIANS_NORMAL) }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN) }
         }.save(exporter)
         /*RagiumRecipeBuilders.crushing {
@@ -657,10 +660,10 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             Triple(ItemTags.SIGNS, 1, 2),
             Triple(ItemTags.HANGING_SIGNS, 1, 6),
             Triple(ItemTags.CHEST_BOATS, 1, 13),
-            Triple(Tags.Items.BARRELS_WOODEN, 1, 7),
-            Triple(Tags.Items.CHESTS_WOODEN, 1, 8),
-            Triple(Tags.Items.FENCE_GATES_WOODEN, 1, 4),
-            Triple(Tags.Items.FENCES_WOODEN, 1, 1),
+            Triple(Tags.BlockItems.BARRELS_WOODEN.item(), 1, 7),
+            Triple(Tags.BlockItems.CHESTS_WOODEN.item(), 1, 8),
+            Triple(Tags.BlockItems.FENCE_GATES_WOODEN.item(), 1, 4),
+            Triple(Tags.BlockItems.FENCES_WOODEN.item(), 1, 1),
             Triple(Tags.Items.RODS_WOODEN, 2, 1),
             Triple(CommonTagPrefixes.GEAR.itemTagKey(RagiumMaterial.Other.WOOD), 4, 1)
         ).forEach { (input: TagKey<Item>, inputCount: Int, outputCount: Int) ->
@@ -694,57 +697,57 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
     private fun dyes() {
         // Single
-        val single = HTColoredCollection<(HTItemIngredientBuilder.() -> Unit)?>(
-            white = {
+        val single = ColorCollection<Optional<HTItemIngredientBuilder.() -> Unit>>(
+            Optional.of {
                 items {
                     +Items.BONE_MEAL
                     +Items.LILY_OF_THE_VALLEY
                 }
             },
-            orange = {
+            Optional.of {
                 items {
                     +Items.ORANGE_TULIP
                     +Items.TORCHFLOWER
                     +Items.OPEN_EYEBLOSSOM
                 }
             },
-            magenta = { items { +Items.ALLIUM } },
-            lightBlue = { items { +Items.BLUE_ORCHID } },
-            yellow = {
+            Optional.of { items { +Items.ALLIUM } },
+            Optional.of { items { +Items.BLUE_ORCHID } },
+            Optional.of {
                 items {
                     +Items.DANDELION
                     +Items.GOLDEN_DANDELION
                     +Items.WILDFLOWERS
                 }
             },
-            lime = { items { +Items.SEA_PICKLE } },
-            pink = {
+            Optional.of { items { +Items.SEA_PICKLE } },
+            Optional.of {
                 items {
                     +Items.CACTUS_FLOWER
                     +Items.PINK_PETALS
                     +Items.PINK_TULIP
                 }
             },
-            gray = { items { +Items.CLOSED_EYEBLOSSOM } },
-            lightGray = {
+            Optional.of { items { +Items.CLOSED_EYEBLOSSOM } },
+            Optional.of {
                 items {
                     +Items.AZURE_BLUET
                     +Items.OXEYE_DAISY
                     +Items.WHITE_TULIP
                 }
             },
-            cyan = null,
-            purple = null,
-            blue = { items { +Items.CORNFLOWER } },
-            brown = { items { +Items.COCOA_BEANS } },
-            green = { items { +Items.CACTUS } },
-            red = {
+            Optional.empty(),
+            Optional.empty(),
+            Optional.of { items { +Items.CORNFLOWER } },
+            Optional.of { items { +Items.COCOA_BEANS } },
+            Optional.of { items { +Items.CACTUS } },
+            Optional.of {
                 items {
                     +Items.POPPY
                     +Items.BEETROOT
                 }
             },
-            black = {
+            Optional.of {
                 items {
                     +Items.INK_SAC
                     +Items.WITHER_ROSE
@@ -752,20 +755,21 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
         )
         for (color: DyeColor in DyeColor.entries) {
-            val builder: HTItemIngredientBuilder.() -> Unit = single[color] ?: continue
-            RagiumRecipeBuilders.crushing {
-                ingredient(builder)
-                result {
-                    +VanillaColoredCollections.DYE[color]
-                    count = 2
-                }
-            }.save(exporter)
+            single[color].ifPresent { builder: HTItemIngredientBuilder.() -> Unit ->
+                RagiumRecipeBuilders.crushing {
+                    ingredient(builder)
+                    result {
+                        +Items.DYE[color]
+                        count = 2
+                    }
+                }.save(exporter)
+            }
         }
         // Double
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.ROSE_BUSH } }
             result {
-                +Items.RED_DYE
+                +Items.DYE.red()
                 count = 4
             }
             recipeId prefix "double_"
@@ -773,7 +777,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.SUNFLOWER } }
             result {
-                +Items.YELLOW_DYE
+                +Items.DYE.yellow()
                 count = 4
             }
             recipeId prefix "double_"
@@ -781,7 +785,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.PITCHER_PLANT } }
             result {
-                +Items.CYAN_DYE
+                +Items.DYE.cyan()
                 count = 4
             }
             recipeId prefix "double_"
@@ -789,7 +793,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.LILAC } }
             result {
-                +Items.PINK_DYE
+                +Items.DYE.pink()
                 count = 4
             }
             recipeId prefix "double_"
@@ -911,12 +915,12 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // XX Concrete Powder + Water -> XX Concrete
         for (color: DyeColor in DyeColor.entries) {
             RagiumRecipeBuilders.filling {
-                itemIngredient { items { +VanillaColoredCollections.CONCRETE_POWDER[color] } }
+                itemIngredient { items { +Items.CONCRETE_POWDER[color] } }
                 fluidIngredient {
                     +waterSet()
                     amount = 10
                 }
-                result { +VanillaColoredCollections.CONCRETE[color] }
+                result { +Items.CONCRETE[color] }
                 recipeId suffix "_from_powder"
             }.save(exporter)
         }

@@ -201,9 +201,9 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
                 Registries.ITEM.createTagKey(bucketTag)
             )
             entries += content
-            contentsCache[sourceHolder.key] = content
+            contentsCache[sourceHolder.key()] = content
             if (content is HTFluidContent.Flowing) {
-                contentsCache[content.flowingHolder.key] = content
+                contentsCache[content.flowingHolder.key()] = content
             }
             return content
         }

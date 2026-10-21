@@ -61,7 +61,7 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>) : FluidIngred
         .asSequence()
         .filter { it.value().isEnabled(HTPhysicalSideHelper.getFeatureFlags()) }
         .map(HTPotionHelper::createFluid)
-        .mapNotNull { it.getOrNull()?.create() }
+        .mapNotNull { it.getOrNull() }
         .map(::FluidStackSlotDisplay)
         .toDisplay()
 

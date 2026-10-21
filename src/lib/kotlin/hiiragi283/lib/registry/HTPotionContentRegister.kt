@@ -82,9 +82,9 @@ class HTPotionContentRegister(modId: String) : RegistryAliasAcceptor {
         }
         val content = HTPotionContent(baseHolder, longHolder, strongHolder)
         entries += content
-        contentsCache[baseHolder.key] = content
-        contentsCache[longHolder.key] = content
-        strongHolder?.key?.let { contentsCache[it] = content }
+        contentsCache[baseHolder.key()] = content
+        contentsCache[longHolder.key()] = content
+        strongHolder?.key()?.let { contentsCache[it] = content }
         return content
     }
 

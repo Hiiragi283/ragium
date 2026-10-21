@@ -17,7 +17,7 @@ import net.neoforged.neoforge.registries.holdersets.OrHolderSet
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <R : Any> Holder<R>.getKeyOrThrow(): ResourceKey<R> = this.key ?: error("Unregistered holder: $this")
+fun <R : Any> Holder<R>.getKeyOrThrow(): ResourceKey<R> = this.keyOrNull() ?: error("Unregistered holder: $this")
 
 /**
  * この[TypedInstance][this]から[ResourceKey]を取得します。

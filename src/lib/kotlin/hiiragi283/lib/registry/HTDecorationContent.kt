@@ -2,10 +2,8 @@ package hiiragi283.lib.registry
 
 import hiiragi283.lib.data.tag.HTBlockItemTagBuilder
 import net.minecraft.resources.ResourceKey
-import net.minecraft.tags.BlockTags
-import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
+import net.minecraft.tags.BlockItemTagId
+import net.minecraft.tags.BlockItemTags
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
@@ -66,9 +64,9 @@ data class HTDecorationContent(
 
     val all: List<HTSimpleDeferredBlockAndItem> get() = listOfNotNull(base, slab, stairs, wall)
 
-    fun appendTags(builder: (TagKey<Block>, TagKey<Item>) -> HTBlockItemTagBuilder) {
-        builder(BlockTags.SLABS, ItemTags.SLABS).add(slab)
-        stairs?.let(builder(BlockTags.STAIRS, ItemTags.STAIRS)::add)
-        wall?.let(builder(BlockTags.WALLS, ItemTags.WALLS)::add)
+    fun appendTags(factory: (BlockItemTagId) -> HTBlockItemTagBuilder) {
+        factory(BlockItemTags.SLABS).add(slab)
+        stairs?.let(factory(BlockItemTags.STAIRS)::add)
+        wall?.let(factory(BlockItemTags.WALLS)::add)
     }
 }

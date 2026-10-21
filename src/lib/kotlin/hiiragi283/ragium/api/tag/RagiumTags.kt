@@ -1,7 +1,8 @@
 package hiiragi283.ragium.api.tag
 
-import hiiragi283.lib.tag.BlockItemTag
+import hiiragi283.lib.tag.BlockItemTagId
 import hiiragi283.ragium.api.RagiumAPI
+import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -20,16 +21,16 @@ data object RagiumTags {
      */
     data object BlockItems {
         @JvmField
-        val QUARTZ_BLOCKS: BlockItemTag = create("quartz_blocks")
+        val QUARTZ_BLOCKS: BlockItemTagId = create("quartz_blocks")
 
         /**
          * @since 26.1.7
          */
         @JvmField
-        val STORAGES_CREATIVE: BlockItemTag = create("storages", "creative")
+        val STORAGES_CREATIVE: BlockItemTagId = create("storages", "creative")
 
         @JvmStatic
-        private fun create(vararg path: String): BlockItemTag = BlockItemTag(RagiumAPI.id(*path))
+        private fun create(vararg path: String): BlockItemTagId = BlockItemTagId(RagiumAPI.id(*path))
     }
 
     /**

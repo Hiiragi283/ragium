@@ -20,7 +20,7 @@ data object HTClientChemicalHelper {
     fun addToTooltip(instance: ItemInstance, acceptor: (Text) -> Unit) {
         val holder: Holder<HTChemical> = instance.getData(RagiumDataMaps.CHEMICAL)?.chemical ?: return
         when {
-            Minecraft.getInstance().hasShiftDown() -> holder.key?.toLanguageKey()?.let(::translatableText)
+            Minecraft.getInstance().hasShiftDown() -> holder.keyOrNull()?.toLanguageKey()?.let(::translatableText)
             else -> holder.value().getText()
         }?.withStyle(ChatFormatting.YELLOW)?.let(acceptor)
     }
@@ -29,7 +29,7 @@ data object HTClientChemicalHelper {
     fun addToTooltip(instance: FluidInstance, acceptor: (Text) -> Unit) {
         val holder: Holder<HTChemical> = instance.get(RagiumDataComponents.CHEMICAL) ?: return
         when {
-            Minecraft.getInstance().hasShiftDown() -> holder.key?.toLanguageKey()?.let(::translatableText)
+            Minecraft.getInstance().hasShiftDown() -> holder.keyOrNull()?.toLanguageKey()?.let(::translatableText)
             else -> holder.value().getText()
         }?.withStyle(ChatFormatting.YELLOW)?.let(acceptor)
     }

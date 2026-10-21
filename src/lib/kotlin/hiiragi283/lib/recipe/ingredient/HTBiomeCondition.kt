@@ -59,7 +59,7 @@ data class HTBiomeCondition(val biomes: HolderSet<Biome>) : Predicate<Holder<Bio
      */
     val display: SlotDisplay get() = this@HTBiomeCondition.biomes
         .asSequence()
-        .mapNotNull { it.key?.identifier()?.toString() }
+        .mapNotNull { it.keyOrNull()?.identifier()?.toString() }
         .map(::createDisplay)
         .toDisplay()
 

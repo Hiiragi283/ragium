@@ -203,7 +203,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
             customName
         )
 
-        override fun getId(): Identifier? = content.getRight()?.key?.identifier()
+        override fun getId(): Identifier? = content.getRight()?.keyOrNull()?.identifier()
     }
 }
 

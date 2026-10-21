@@ -2,6 +2,7 @@ package hiiragi283.lib.tag
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.resource.toId
+import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
@@ -22,13 +23,13 @@ data object HTCommonTags {
      */
     data object BlockItems {
         @JvmField
-        val GLASS_BLOCKS_QUARTZ: BlockItemTag = create("glass_blocks", "quartz")
+        val GLASS_BLOCKS_QUARTZ: BlockItemTagId = create("glass_blocks", "quartz")
 
         @JvmField
-        val GLASS_PANES_QUARTZ: BlockItemTag = create("glass_panes", "quartz")
+        val GLASS_PANES_QUARTZ: BlockItemTagId = create("glass_panes", "quartz")
 
         @JvmStatic
-        private fun create(vararg path: String): BlockItemTag = BlockItemTag(HTConstants.COMMON.toId(*path))
+        private fun create(vararg path: String): BlockItemTagId = BlockItemTagId(HTConstants.COMMON.toId(*path))
     }
 
     data object Blocks {

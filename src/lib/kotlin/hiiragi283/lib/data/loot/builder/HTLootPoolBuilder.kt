@@ -5,12 +5,15 @@ package hiiragi283.lib.data.loot.builder
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
+import net.minecraft.core.Holder
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider
+import net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProvider
+import net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProviders
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -33,8 +36,8 @@ class HTLootPoolBuilder {
     }
 
     // Rolls
-    var rolls: NumberProvider by HTDelegates.onceInitialize { ConstantValue.exactly(1f) }
-    var bonusRolls: NumberProvider by HTDelegates.onceInitialize { ConstantValue.exactly(0f) }
+    var rolls: Holder<ContextIntProvider> by HTDelegates.onceInitialize { ContextIntProviders.exactly(1) }
+    var bonusRolls: Holder<ContextFloatProvider> by HTDelegates.onceInitialize { ContextFloatProviders.exactly(0f) }
 
     // Entries
     @PublishedApi internal val entries: MutableList<LootPoolEntryContainer.Builder<*>> = ObjectArrayList()

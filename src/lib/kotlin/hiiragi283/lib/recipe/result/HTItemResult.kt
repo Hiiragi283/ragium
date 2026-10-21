@@ -238,7 +238,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
             .let { buildDataPatch { set(DataComponents.STORED_ENCHANTMENTS, it) } }
             .let { ItemStack(Items.ENCHANTED_BOOK, it) }
 
-        override fun getId(): Identifier? = content.leftOrNull()?.key?.identifier()
+        override fun getId(): Identifier? = content.leftOrNull()?.keyOrNull()?.identifier()
     }
 
     /**

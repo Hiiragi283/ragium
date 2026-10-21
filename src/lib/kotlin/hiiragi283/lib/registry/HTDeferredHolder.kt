@@ -34,8 +34,6 @@ open class HTDeferredHolder<R : Any, out T : R> :
      */
     fun isOf(instance: TypedInstance<R>): Boolean = this.isBound && instance.`is`(this)
 
-    final override fun key(): ResourceKey<R> = this.key
-
     final override fun asResult(): Result<T> = runCatching { get() }
 
     final override fun getOrNull(): T? = when (this.isBound) {
@@ -58,6 +56,6 @@ open class HTDeferredHolder<R : Any, out T : R> :
 
         constructor(key: RegistryKey<R>, id: Identifier) : super(key, id)
 
-        override val translationKey: String = key.toLanguageKey()
+        override val translationKey: String = key().toLanguageKey()
     }
 }

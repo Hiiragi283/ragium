@@ -1,6 +1,8 @@
 package hiiragi283.lib.tag
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.resource.toId
+import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -11,7 +13,7 @@ import net.minecraft.world.level.block.Block
  * @since 26.1.0
  */
 class HTTagPrefix(
-    val rawCommonTag: BlockItemTag,
+    val rawCommonTag: BlockItemTagId,
     private val tagPattern: String,
     private val childNamespace: String = HTConstants.COMMON
 ) {
@@ -19,14 +21,14 @@ class HTTagPrefix(
         commonTagId: String,
         tagPattern: String,
         childNamespace: String = HTConstants.COMMON
-    ) : this(BlockItemTag(childNamespace, commonTagId), tagPattern, childNamespace)
+    ) : this(BlockItemTagId(childNamespace.toId(commonTagId)), tagPattern, childNamespace)
 
     /**
      * 素材の共通タグを生成します。
      * @param material 素材の種類
      */
-    fun materialTag(material: HTMaterialLike): BlockItemTag =
-        BlockItemTag(childNamespace, tagPattern.replace("%s", material.materialName))
+    fun materialTag(material: HTMaterialLike): BlockItemTagId =
+        BlockItemTagId(childNamespace.toId(tagPattern.replace("%s", material.materialName)))
 
     /**
      * ブロックの素材の共通タグを生成します。

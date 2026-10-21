@@ -12,7 +12,7 @@ import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.registries.DataPackRegistryEvent
+import net.neoforged.neoforge.registries.NewDatapackRegistryEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegistryBuilder
 
@@ -51,17 +51,9 @@ data object RagiumRegistries {
     }
 
     @SubscribeEvent
-    fun registerDynamicRegistries(event: DataPackRegistryEvent.NewRegistry) {
-        event.dataPackRegistry(
-            Keys.CHEMICAL,
-            HTChemical.DISPATCH_CODEC,
-            HTChemical.DISPATCH_CODEC
-        )
-        event.dataPackRegistry(
-            Keys.ELEMENT,
-            HTElement.DIRECT_CODEC,
-            HTElement.DIRECT_CODEC
-        )
+    fun registerDynamicRegistries(event: NewDatapackRegistryEvent) {
+        event.reloadableRegistry(Keys.CHEMICAL, HTChemical.DISPATCH_CODEC)
+        event.reloadableRegistry(Keys.ELEMENT, HTElement.DIRECT_CODEC)
     }
 
     @JvmStatic

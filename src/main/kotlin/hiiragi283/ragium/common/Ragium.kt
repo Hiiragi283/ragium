@@ -61,8 +61,8 @@ data object Ragium : HTCommonMod() {
 
         RagiumWidgetTypes.REGISTER.register(eventBus)
 
-        container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
-        container.registerConfig(ModConfig.Type.SERVER, RagiumConfig.SERVER_SPEC)
+        container.registerConfig(ModConfig.Type.LOCAL, RagiumConfig.COMMON_SPEC)
+        container.registerConfig(ModConfig.Type.SYNCED, RagiumConfig.SERVER_SPEC)
 
         RagiumAPI.LOGGER.info("Ragium has been initialized!")
     }
@@ -73,7 +73,7 @@ data object Ragium : HTCommonMod() {
                 RagiumAPI.id("common"),
                 HTCreativeModeTabHelper.createSimpleTab(
                     RagiumTranslation.RAGIUM,
-                    Items.RED_DYE
+                    Items.DYE.red()
                 ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     // Items
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumItems.REGISTER.asSequence())

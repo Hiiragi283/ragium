@@ -3,8 +3,9 @@ package hiiragi283.lib.data.loot
 import hiiragi283.lib.resource.HTSimpleValueWithKey
 import hiiragi283.lib.resource.HTValueWithKey
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.BlockLootSubProvider
+import net.minecraft.data.loot.LootTableSubProvider
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
@@ -18,10 +19,10 @@ import net.minecraft.world.level.storage.loot.LootTable
  * @since 26.1.0
  */
 abstract class HTBlockLootTableProvider(
-    registries: HolderLookup.Provider,
+    context: LootTableSubProvider.Context,
     protected val modId: String,
     private val rawBlocks: Sequence<HTSimpleValueWithKey<Block>>
-) : BlockLootSubProvider(emptySet(), FeatureFlags.REGISTRY.allFlags(), registries) {
+) : BlockLootSubProvider(emptySet(), FeatureFlags.REGISTRY.allFlags(), context) {
     final override fun getKnownBlocks(): Iterable<Block> = rawBlocks
         .filter { block: HTSimpleValueWithKey<Block> -> block.id().namespace == modId }
         .mapNotNull(HTSimpleValueWithKey<Block>::getOrNull)
@@ -33,7 +34,7 @@ abstract class HTBlockLootTableProvider(
     /**
      * 幸運エンチャントのインスタンス
      */
-    val fortune: Holder<Enchantment> by lazy { registries.holderOrThrow(Enchantments.FORTUNE) }
+    val fortune: Holder<Enchantment> by lazy { context.lookup(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE) }
 
     protected fun dropSelf(like: HTSimpleValueWithKey<Block>) {
         dropSelf(like.getOrThrow())

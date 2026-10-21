@@ -1,6 +1,7 @@
 package hiiragi283.lib.integration.jei
 
 import hiiragi283.lib.HTPhysicalSideHelper
+import hiiragi283.lib.fluid.toTemplateOrNull
 import hiiragi283.lib.item.toTemplateOrNull
 import hiiragi283.lib.recipe.display.toDisplay
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
@@ -17,6 +18,7 @@ import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.crafting.CustomDisplayIngredient
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.CustomDisplayFluidIngredient
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
@@ -39,15 +41,37 @@ data object HTJeiRecipeHelper {
      * @param stack 偽のプレビュー
      */
     @JvmStatic
-    fun fakeFluid(stack: FluidStack): HTFluidIngredient = fakeFluid(FluidStackSlotDisplay(stack), stack.amount)
+    fun fakeFluid(stack: FluidStack): HTFluidIngredient =
+        fakeFluid(stack.toTemplateOrNull()?.let(::FluidStackSlotDisplay) ?: SlotDisplay.Empty.INSTANCE, stack.amount)
+
+    /**
+     * 動的レシピ向けに，偽のプレビューをもつ[HTFluidIngredient]を作成します。
+     * @param template 偽のプレビュー
+     * @since 26.3.0
+     */
+    @JvmStatic
+    fun fakeFluid(template: FluidStackTemplate): HTFluidIngredient =
+        fakeFluid(FluidStackSlotDisplay(template), template.amount())
 
     /**
      * 動的レシピ向けに，偽のプレビューをもつ[HTFluidIngredient]を作成します。
      * @param fluids 偽のプレビューの一覧
      * @param amount 必要な数量
      */
+    @JvmName("fakeFluidStacks")
     @JvmStatic
     fun fakeFluid(fluids: Iterable<FluidStack>, amount: Int = FluidType.BUCKET_VOLUME): HTFluidIngredient =
+        fakeFluid(fluids.mapNotNull { it.toTemplateOrNull() }, amount)
+
+    /**
+     * 動的レシピ向けに，偽のプレビューをもつ[HTFluidIngredient]を作成します。
+     * @param fluids 偽のプレビューの一覧
+     * @param amount 必要な数量
+     * @since 26.3.0
+     */
+    @JvmName("fakeFluidTemplates")
+    @JvmStatic
+    fun fakeFluid(fluids: Iterable<FluidStackTemplate>, amount: Int = FluidType.BUCKET_VOLUME): HTFluidIngredient =
         fakeFluid(fluids.map(::FluidStackSlotDisplay).toDisplay(), amount)
 
     /**
@@ -79,8 +103,11 @@ data object HTJeiRecipeHelper {
      * @param count 必要な個数
      */
     @JvmStatic
-    fun fakeItem(stack: ItemStack, count: Int = 1): HTItemIngredient =
-        fakeItem(stack.toTemplateOrNull()?.let(SlotDisplay::ItemStackSlotDisplay) ?: SlotDisplay.Empty.INSTANCE, count)
+    fun fakeItem(stack: ItemStack, count: Int = stack.count()): HTItemIngredient = fakeItem(
+        stack.toTemplateOrNull()?.let { SlotDisplay.ItemStackSlotDisplay(it.withCount(1)) }
+            ?: SlotDisplay.Empty.INSTANCE,
+        count
+    )
 
     /**
      * 動的レシピ向けに，偽のプレビューをもつ[HTItemIngredient]を作成します。
@@ -88,7 +115,7 @@ data object HTJeiRecipeHelper {
      * @param count 必要な個数
      */
     @JvmStatic
-    fun fakeItem(template: ItemStackTemplate, count: Int = 1): HTItemIngredient =
+    fun fakeItem(template: ItemStackTemplate, count: Int = template.count()): HTItemIngredient =
         fakeItem(SlotDisplay.ItemStackSlotDisplay(template), count)
 
     /**
@@ -109,7 +136,7 @@ data object HTJeiRecipeHelper {
     @JvmName("fakeItemTemplates")
     @JvmStatic
     fun fakeItem(items: Iterable<ItemStackTemplate>, count: Int = 1): HTItemIngredient =
-        fakeItem(items.map(SlotDisplay::ItemStackSlotDisplay).toDisplay(), count)
+        fakeItem(items.map { SlotDisplay.ItemStackSlotDisplay(it.withCount(1)) }.toDisplay(), count)
 
     /**
      * 動的レシピ向けに，偽のプレビューをもつ[HTItemIngredient]を作成します。

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.lib.data.createLootTables
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.element.RagiumElements
@@ -26,9 +25,9 @@ import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.tag.RagiumDamageTypeTagsProvider
 import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
-import hiiragi283.ragium.data.worldgen.RagiumWorldData
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.loot.LootTableProvider
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -38,12 +37,34 @@ import net.neoforged.neoforge.data.event.GatherDataEvent
 data object RagiumDataGen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent.Client) {
-        event.createDatapackRegistryObjects(
+        event.defaultPackGenerator.createWorldRegistryObjects(
             RegistrySetBuilder()
                 .add(Registries.DAMAGE_TYPE, RagiumDamageTypes::bootstrap)
+        )
+        event.defaultPackGenerator.createReloadableRegistryObjects(
+            RegistrySetBuilder()
+                .add(
+                    Registries.LOOT_TABLE,
+                    LootTableProvider(
+                        setOf(),
+                        listOf(
+                            LootTableProvider.SubProviderEntry(
+                                ::RagiumBlockLootTableProvider,
+                                LootContextParamSets.BLOCK
+                            ),
+                            LootTableProvider.SubProviderEntry(
+                                RagiumGlobalLootTableProvider::ForBlock,
+                                LootContextParamSets.BLOCK
+                            ),
+                            LootTableProvider.SubProviderEntry(
+                                RagiumGlobalLootTableProvider::ForEntity,
+                                LootContextParamSets.ENTITY
+                            )
+                        )
+                    )
+                )
                 .add(RagiumRegistries.Keys.ELEMENT, RagiumElements::bootstrap)
                 .add(RagiumRegistries.Keys.CHEMICAL, RagiumChemicals::bootstrap)
-                .apply(RagiumWorldData::bootstrap)
         )
 
         // Server
@@ -51,11 +72,6 @@ data object RagiumDataGen {
 
         event.createProvider(::RagiumDataMapProvider)
 
-        event.createLootTables(
-            ::RagiumBlockLootTableProvider to LootContextParamSets.BLOCK,
-            RagiumGlobalLootTableProvider::ForBlock to LootContextParamSets.BLOCK,
-            RagiumGlobalLootTableProvider::ForEntity to LootContextParamSets.ENTITY
-        )
         event.createProvider(::RagiumGlobalLootModifierProvider)
 
         event.createProvider(::RagiumVanillaRecipeProvider)
