@@ -1,13 +1,15 @@
 {
   "type": "ragium:alloying",
-  "extra": {
-    "count": 1,
-    "items": "#minecraft:soul_fire_base_blocks"
-  },
-  "ingredient": {
-    "count": 1,
-    "items": "#c:netherracks"
-  },
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "#c:netherracks"
+    },
+    {
+      "count": 1,
+      "items": "#minecraft:soul_fire_base_blocks"
+    }
+  ],
   "result": {
     "count": 2,
     "id": "minecraft:nether_brick"

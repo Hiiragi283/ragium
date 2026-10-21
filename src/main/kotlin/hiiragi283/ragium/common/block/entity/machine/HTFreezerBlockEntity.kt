@@ -1,15 +1,15 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.recipe.handler.HTFluidInputTank
-import hiiragi283.lib.recipe.handler.HTItemInputSlot
-import hiiragi283.lib.recipe.handler.HTOutputSlot
-import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
-import hiiragi283.lib.recipe.input.HTRecipeInput
-import hiiragi283.lib.recipe.lookup.HTRecipeCache
+import hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
+import hiiragi283.lib.recipe.handler.HTRecipeHandler
+import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
+import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.input.HTInputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
@@ -24,67 +24,62 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FREEZER.get(), pos, state) {
-    private val cache: HTRecipeCache<HTRecipeInput, RTFreezingRecipe> =
-        HTRecipeCache(RagiumRecipeLookups.FREEZING)
-
-    override fun writeValue(output: ValueOutput) {
-        super.writeValue(output)
-        output.putChild(HTConstants.LAST_RECIPE, cache)
-    }
-
-    override fun readValue(input: ValueInput) {
-        super.readValue(input)
-        input.readChild(HTConstants.LAST_RECIPE, cache)
-    }
-
-    override fun initializeVariables(listener: Runnable) {
-        super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<HTRecipeInput, ItemStack, RTFreezingRecipe>() {
-            private val inputTank: HTFluidInputTank by lazy { HTFluidInputTank(this@HTFreezerBlockEntity.inputTank) }
-            private val catalystSlot: HTItemInputSlot by lazy {
-                HTItemInputSlot(this@HTFreezerBlockEntity.catalystSlot)
+    override fun createRecipeHandler(): HTRecipeHandler =
+        object : HTDoubleRecipeHandler.Cached<ItemInstance, FluidInstance, ItemStack, RTFreezingRecipe>(
+            HTRecipeCacheHelper.ItemAndFluid(RagiumRecipeLookups.FREEZING, false)
+        ) {
+            private val inputTank: HTInputSlot<FluidInstance> by lazy {
+                HTInputHandlerHelper.forFluid(this@HTFreezerBlockEntity.inputTank)
+            }
+            private val catalystSlot: HTInputSlot<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItem(this@HTFreezerBlockEntity.catalystSlot)
             }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItem(this@HTFreezerBlockEntity.outputSlot)
             }
 
-            override fun createInput(): HTRecipeInput =
-                HTRecipeInput(catalystSlot.getStoredInput(), inputTank.getStoredInput(), customKeys)
+            override fun createProgressor(): Progressor<ItemInstance, FluidInstance, RTFreezingRecipe> =
+                DoubleProgressor()
 
-            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): RTFreezingRecipe? =
-                cache.findFirstRecipe(input, level)
+            override fun getFirstInput(): ItemInstance = catalystSlot.getStoredInput()
 
-            override fun canComplete(recipe: RTFreezingRecipe, input: HTRecipeInput, output: ItemStack): Boolean =
-                useTransaction { transaction: Transaction ->
-                    val (_, inputConsume: FluidInstance) = recipe.getMatchingStack(input)
-                    when {
-                        inputTank.use(inputConsume, transaction).failed -> false
-                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
-                    }
+            override fun getSecondInput(): FluidInstance = inputTank.getStoredInput()
+
+            override fun canComplete(
+                recipe: RTFreezingRecipe,
+                first: ItemInstance,
+                second: FluidInstance,
+                output: ItemStack
+            ): Boolean = useTransaction { transaction: Transaction ->
+                when {
+                    inputTank.use(second, transaction).failed -> false
+                    else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
                 }
+            }
 
-            override fun onComplete(recipe: RTFreezingRecipe, input: HTRecipeInput, output: ItemStack) {
+            override fun onComplete(
+                recipe: RTFreezingRecipe,
+                first: ItemInstance,
+                second: FluidInstance,
+                output: ItemStack
+            ) {
                 useTransaction { transaction: Transaction ->
-                    val (_, fluidInput: FluidInstance) = recipe.getMatchingStack(input)
-                    inputTank.use(fluidInput, transaction)
+                    inputTank.use(second, transaction)
                     outputSlot.take(output, transaction)
                     transaction.commit()
                 }
                 playSound(SoundEvents.BUCKET_FILL_POWDER_SNOW)
             }
         }
-    }
 
     private lateinit var inputTank: HTVariableFluidTank
 

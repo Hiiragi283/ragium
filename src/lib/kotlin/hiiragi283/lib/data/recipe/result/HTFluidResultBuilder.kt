@@ -2,16 +2,21 @@
 
 package hiiragi283.lib.data.recipe.result
 
+import hiiragi283.lib.collection.toNelOrNull
+import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.registry.HTDeferredHolder
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.createKey
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
+import hiiragi283.lib.util.Ior
+import hiiragi283.lib.util.IorNel
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.material.Fluid
@@ -23,6 +28,7 @@ import net.neoforged.neoforge.fluids.FluidType
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * [HTFluidResult]を作成するビルダークラスです。
@@ -96,13 +102,26 @@ class HTFluidResultBuilder @PublishedApi internal constructor() {
     }
 
     // Potion
+    @Suppress("DEPRECATION")
     @JvmName("unaryPlusPotion")
     operator fun Holder<Potion>.unaryPlus() {
-        +PotionContents(this)
+        if (HTPotionHelper.isWater(this)) {
+            water()
+        } else {
+            +HTFluidResult.PotionEntry(this)
+        }
     }
 
     operator fun PotionContents.unaryPlus() {
-        +HTFluidResult.PotionEntry(this)
+        if (HTPotionHelper.isWater(this)) {
+            water()
+        } else {
+            val content: IorNel<MobEffectInstance, Holder<Potion>> = Ior.fromNullable(
+                this.customEffects().toNelOrNull(),
+                this.potion().getOrNull()
+            ) ?: error("Could not create fluid result with empty potion contents")
+            +HTFluidResult.PotionEntry(content, this.customColor(), this.customName())
+        }
     }
 
     fun build(): HTFluidResult = HTFluidResult(entry, amount)

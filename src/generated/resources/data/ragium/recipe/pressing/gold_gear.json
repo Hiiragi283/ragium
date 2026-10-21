@@ -1,0 +1,13 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": "ragium:press_die/gear",
+  "ingredient": {
+    "count": 4,
+    "items": "#c:ingots/gold"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:gold_gear"
+  },
+  "time": 200
+}

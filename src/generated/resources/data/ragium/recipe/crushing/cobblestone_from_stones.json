@@ -1,0 +1,18 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": {
+      "type": "neoforge:or",
+      "values": [
+        "minecraft:stone",
+        "#minecraft:stone_bricks"
+      ]
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:cobblestone"
+  },
+  "time": 100
+}

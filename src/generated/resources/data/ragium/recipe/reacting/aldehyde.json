@@ -1,0 +1,20 @@
+{
+  "type": "ragium:reacting",
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#ragium:alcohols"
+    },
+    {
+      "amount": 500,
+      "fluids": "#c:oxygen"
+    }
+  ],
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:aldehyde"
+    }
+  },
+  "time": 200
+}

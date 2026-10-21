@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -11,13 +12,11 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTChemicalBathBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemAndFluidToItemBlockEntity(
-        RagiumBlockEntityTypes.CHEMICAL_BATH.get(),
+    HTItemAndFluidToItemBlockEntity(RagiumBlockEntityTypes.CHEMICAL_BATH.get(), pos, state) {
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.BATHING,
-        pos,
-        state
-    ) {
-    override fun getCompletedSound(): HTSoundInstance = HTSoundInstance(SoundEvents.SPONGE_ABSORB)
+        HTSoundInstance(SoundEvents.SPONGE_ABSORB)
+    )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.chemicalBath
 }

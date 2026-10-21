@@ -5,14 +5,16 @@
     "fluids": "#c:coal_tar"
   },
   "result": {
-    "fluid": {
-      "amount": 250,
-      "id": "ragium:aromatic_compound"
-    },
-    "item": {
-      "count": 1,
-      "id": "ragium:pitch_coke"
-    }
+    "fluids": [
+      {
+        "amount": 500,
+        "id": "ragium:natural_gas"
+      },
+      {
+        "amount": 500,
+        "id": "ragium:aromatic_compound"
+      }
+    ]
   },
   "time": 200
 }

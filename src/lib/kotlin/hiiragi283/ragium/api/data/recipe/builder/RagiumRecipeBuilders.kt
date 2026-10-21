@@ -2,29 +2,39 @@
 
 package hiiragi283.ragium.api.data.recipe.builder
 
-import hiiragi283.lib.data.recipe.builder.HTFluidToItemAndFluidRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTFluidSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemOrFluidRecipeBuilder
-import hiiragi283.lib.data.recipe.builder.HTItemToDoubleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemToMultiItemRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTLocationToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTSingleRecipeBuilder
-import hiiragi283.lib.data.recipe.builder.HTTripleItemToItemRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTSizedShapelessRecipeBuilder
+import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
+import hiiragi283.ragium.api.recipe.RTBrewingRecipe
 import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
+import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.RTEngravingRecipe
 import hiiragi283.ragium.api.recipe.RTExchangingRecipe
 import hiiragi283.ragium.api.recipe.RTFillingRecipe
+import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
+import hiiragi283.ragium.api.recipe.RTPressingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
+import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -38,12 +48,12 @@ data object RagiumRecipeBuilders {
     // Mechanical
     @JvmStatic
     inline fun assembling(
-        builderAction: HTTripleItemToItemRecipeBuilder<RTAssemblingRecipe>.() -> Unit
-    ): HTTripleItemToItemRecipeBuilder<RTAssemblingRecipe> {
+        builderAction: HTSizedShapelessRecipeBuilder<RTAssemblingRecipe>.() -> Unit
+    ): HTSizedShapelessRecipeBuilder<RTAssemblingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTTripleItemToItemRecipeBuilder(RagiumConstants.ASSEMBLING, ::RTAssemblingRecipe).apply(builderAction)
+        return HTSizedShapelessRecipeBuilder(RagiumConstants.ASSEMBLING, ::RTAssemblingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -53,27 +63,27 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSingleRecipeBuilder(RagiumConstants.COMPRESSING, ::RTCompressingRecipe).apply(builderAction)
+        return HTSingleRecipeBuilder.Basic(RagiumConstants.COMPRESSING, ::RTCompressingRecipe).apply(builderAction)
     }
 
     @JvmStatic
     inline fun crushing(
-        builderAction: HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe>.() -> Unit
-    ): HTItemToDoubleItemRecipeBuilder<RTCrushingRecipe> {
+        builderAction: HTItemToMultiItemRecipeBuilder<RTCrushingRecipe>.() -> Unit
+    ): HTItemToMultiItemRecipeBuilder<RTCrushingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToDoubleItemRecipeBuilder(RagiumConstants.CRUSHING, ::RTCrushingRecipe).apply(builderAction)
+        return HTItemToMultiItemRecipeBuilder(RagiumConstants.CRUSHING, ::RTCrushingRecipe).apply(builderAction)
     }
 
     @JvmStatic
     inline fun cutting(
-        builderAction: HTItemToDoubleItemRecipeBuilder<RTCuttingRecipe>.() -> Unit
-    ): HTItemToDoubleItemRecipeBuilder<RTCuttingRecipe> {
+        builderAction: HTItemToMultiItemRecipeBuilder<RTCuttingRecipe>.() -> Unit
+    ): HTItemToMultiItemRecipeBuilder<RTCuttingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToDoubleItemRecipeBuilder(RagiumConstants.CUTTING, ::RTCuttingRecipe).apply(builderAction)
+        return HTItemToMultiItemRecipeBuilder(RagiumConstants.CUTTING, ::RTCuttingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -94,23 +104,35 @@ data object RagiumRecipeBuilders {
         return HTItemAndFluidToRecipeBuilder.ToItem(RagiumConstants.FILLING, ::RTFillingRecipe).apply(builderAction)
     }
 
+    @JvmStatic
+    inline fun pressing(
+        builderAction: HTSingleRecipeBuilder.Catalysed<HTItemIngredient, HTItemResult, RTPressingRecipe>.() -> Unit
+    ): HTSingleRecipeBuilder.Catalysed<HTItemIngredient, HTItemResult, RTPressingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTSingleRecipeBuilder.Catalysed(RagiumConstants.PRESSING, ::RTPressingRecipe).apply(builderAction)
+    }
+
     // Heat
     @JvmStatic
     inline fun alloying(
-        builderAction: HTTripleItemToItemRecipeBuilder<RTAlloyingRecipe>.() -> Unit
-    ): HTTripleItemToItemRecipeBuilder<RTAlloyingRecipe> {
+        builderAction: HTSizedShapelessRecipeBuilder<RTAlloyingRecipe>.() -> Unit
+    ): HTSizedShapelessRecipeBuilder<RTAlloyingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTTripleItemToItemRecipeBuilder(RagiumConstants.ALLOYING, ::RTAlloyingRecipe).apply(builderAction)
+        return HTSizedShapelessRecipeBuilder(RagiumConstants.ALLOYING, ::RTAlloyingRecipe).apply(builderAction)
     }
 
     @JvmStatic
-    inline fun freezing(builderAction: RTFreezingRecipeBuilder.() -> Unit): RTFreezingRecipeBuilder {
+    inline fun freezing(
+        builderAction: HTSingleRecipeBuilder.Catalysed<HTFluidIngredient, HTItemResult, RTFreezingRecipe>.() -> Unit
+    ): HTSingleRecipeBuilder.Catalysed<HTFluidIngredient, HTItemResult, RTFreezingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTFreezingRecipeBuilder().apply(builderAction)
+        return HTSingleRecipeBuilder.Catalysed(RagiumConstants.FREEZING, ::RTFreezingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -120,7 +142,7 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSingleRecipeBuilder(RagiumConstants.MELTING, ::RTMeltingRecipe).apply(builderAction)
+        return HTSingleRecipeBuilder.Basic(RagiumConstants.MELTING, ::RTMeltingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -135,12 +157,12 @@ data object RagiumRecipeBuilders {
 
     @JvmStatic
     inline fun refining(
-        builderAction: HTFluidToItemAndFluidRecipeBuilder<RTRefiningRecipe>.() -> Unit
-    ): HTFluidToItemAndFluidRecipeBuilder<RTRefiningRecipe> {
+        builderAction: HTFluidSeparatingRecipeBuilder<RTRefiningRecipe>.() -> Unit
+    ): HTFluidSeparatingRecipeBuilder<RTRefiningRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTFluidToItemAndFluidRecipeBuilder(RagiumConstants.REFINING, ::RTRefiningRecipe).apply(builderAction)
+        return HTFluidSeparatingRecipeBuilder(RagiumConstants.REFINING, ::RTRefiningRecipe).apply(builderAction)
     }
 
     // Chemical
@@ -169,15 +191,7 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTMixingRecipeBuilder(RagiumConstants.MIXING).apply(builderAction)
-    }
-
-    @JvmStatic
-    inline fun brewing(builderAction: RTMixingRecipeBuilder.() -> Unit): RTMixingRecipeBuilder {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return RTMixingRecipeBuilder(RagiumConstants.BREWING).apply(builderAction)
+        return RTMixingRecipeBuilder().apply(builderAction)
     }
 
     @JvmStatic
@@ -198,32 +212,58 @@ data object RagiumRecipeBuilders {
 
     // Resource
     @JvmStatic
-    inline fun planting(
-        builderAction: HTItemToDoubleItemRecipeBuilder<RTPlantingRecipe>.() -> Unit
-    ): HTItemToDoubleItemRecipeBuilder<RTPlantingRecipe> {
+    inline fun brewing(
+        builderAction: HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe>.() -> Unit
+    ): HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToDoubleItemRecipeBuilder(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
+        return HTItemAndFluidToRecipeBuilder.ToFluid(RagiumConstants.BREWING, ::RTBrewingRecipe).apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun planting(
+        builderAction: HTItemToItemRecipeBuilder<RTPlantingRecipe>.() -> Unit
+    ): HTItemToItemRecipeBuilder<RTPlantingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTSingleRecipeBuilder.Basic(RagiumConstants.PLANTING, ::RTPlantingRecipe).apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun resourcePumping(
+        builderAction: HTLocationToFluidRecipeBuilder<RTResourcePumpingRecipe>.() -> Unit
+    ): HTLocationToFluidRecipeBuilder<RTResourcePumpingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTLocationToFluidRecipeBuilder(RagiumConstants.RESOURCE_PUMPING, ::RTResourcePumpingRecipe)
+            .apply(builderAction)
     }
 
     // Electronics
     @JvmStatic
-    inline fun electrolyzing(builderAction: RTElectrolyzingRecipeBuilder.() -> Unit): RTElectrolyzingRecipeBuilder {
+    inline fun electrolyzing(
+        builderAction: HTFluidSeparatingRecipeBuilder<RTElectrolyzingRecipe>.() -> Unit
+    ): HTFluidSeparatingRecipeBuilder<RTElectrolyzingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTElectrolyzingRecipeBuilder().apply(builderAction)
+        return HTFluidSeparatingRecipeBuilder(
+            RagiumConstants.ELECTROLYZING,
+            ::RTElectrolyzingRecipe
+        ).apply(builderAction)
     }
 
     @JvmStatic
-    inline fun resourceExtracting(
-        builderAction: RTResourceExtractingRecipeBuilder.() -> Unit
-    ): RTResourceExtractingRecipeBuilder {
+    inline fun engraving(
+        builderAction: HTSingleRecipeBuilder.Catalysed<HTItemIngredient, HTItemResult, RTEngravingRecipe>.() -> Unit
+    ): HTSingleRecipeBuilder.Catalysed<HTItemIngredient, HTItemResult, RTEngravingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTResourceExtractingRecipeBuilder().apply(builderAction)
+        return HTSingleRecipeBuilder.Catalysed(RagiumConstants.ENGRAVING, ::RTEngravingRecipe).apply(builderAction)
     }
 
     // Arcane
@@ -234,6 +274,6 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSingleRecipeBuilder(RagiumConstants.ENCHANTING, ::RTEnchantingRecipe).apply(builderAction)
+        return HTSingleRecipeBuilder.Basic(RagiumConstants.ENCHANTING, ::RTEnchantingRecipe).apply(builderAction)
     }
 }

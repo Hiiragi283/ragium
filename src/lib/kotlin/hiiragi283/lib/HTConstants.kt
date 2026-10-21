@@ -124,5 +124,8 @@ data object HTConstants {
 
         @JvmField
         val EMPTY: Identifier = vanillaId("empty")
+
+        @JvmField
+        val WATER: Identifier = vanillaId("water")
     }
 }

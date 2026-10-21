@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "#c:dusts/amethyst",
+    "A": "#c:gems/amethyst",
     "B": "minecraft:magma_block",
     "C": "#c:dusts/sulfur"
   },

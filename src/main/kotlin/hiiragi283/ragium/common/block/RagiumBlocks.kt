@@ -4,10 +4,8 @@ import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
-import hiiragi283.lib.collection.buildSetMultiMap
 import hiiragi283.lib.collection.buildTable
-import hiiragi283.lib.collection.flatMapTable
-import hiiragi283.lib.collection.mutableEnumMapOf
+import hiiragi283.lib.data.lang.HTLangName
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDecorationContent
@@ -17,18 +15,15 @@ import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.ItemWithContextFactory
+import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
-import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
-import hiiragi283.ragium.api.material.HTOreBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.util.HTStorageHelper
-import hiiragi283.ragium.common.block.entity.HTFluidStorageBlock
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock
 import hiiragi283.ragium.common.block.storage.HTPotionTankBlock
@@ -39,14 +34,12 @@ import hiiragi283.ragium.common.item.block.HTPotionTankBlockItem
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
-import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.DropExperienceBlock
 import net.minecraft.world.level.block.IronBarsBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.TransparentBlock
@@ -69,8 +62,16 @@ data object RagiumBlocks {
     @JvmStatic
     fun register(eventBus: IEventBus) {
         REGISTER.addAlias("steel_block", "sooty_iron_block")
-        REGISTER.addAlias("brewery", "mixer")
         REGISTER.addAlias("bio_machine_casing", "resource_machine_casing")
+        REGISTER.addAlias("precision_assembler", "assembler")
+        REGISTER.addAlias("void_metal_block", "shadow_steel_block")
+
+        REGISTER.addAlias(RagiumAPI.id("sulfur_ore"), vanillaId("stone"))
+        REGISTER.addAlias(RagiumAPI.id("deepslate_sulfur_ore"), vanillaId("deepslate"))
+        REGISTER.addAlias(RagiumAPI.id("nether_sulfur_ore"), vanillaId("netherrack"))
+        REGISTER.addAlias(RagiumAPI.id("niter_ore"), vanillaId("stone"))
+        REGISTER.addAlias(RagiumAPI.id("deepslate_niter_ore"), vanillaId("deepslate"))
+        REGISTER.addAlias(RagiumAPI.id("nether_niter_ore"), vanillaId("netherrack"))
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -125,8 +126,7 @@ data object RagiumBlocks {
 
     //    Ingredient    //
 
-    @JvmField
-    val MATERIAL_ORES: Table<HTOreBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildSetMultiMap(
+    /*val MATERIAL_ORES: Table<HTOreBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildSetMultiMap(
         {
             putAll(RagiumMaterial.Mineral.SULFUR, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
             putAll(RagiumMaterial.Mineral.NITER, HTOreBlockPart.STONE, HTOreBlockPart.DEEPSLATE, HTOreBlockPart.NETHER)
@@ -145,15 +145,11 @@ data object RagiumBlocks {
                 material,
                 REGISTER.registerSimple(
                     part.createName(material),
-                    blockFactory = { DropExperienceBlock(UniformInt.of(0, 2), properties.setId(it)) },
-                    itemProp = { prop: Item.Properties ->
-                        material.chemicalKey?.let { prop.delayedHolderComponent(RagiumDataComponents.CHEMICAL, it) }
-                        prop
-                    }
+                    { DropExperienceBlock(UniformInt.of(0, 2), properties.setId(it)) }
                 )
             )
         }
-    }
+    }*/
 
     @JvmField
     val STORAGE_BLOCKS: Map<RagiumMaterial, HTSimpleDeferredBlockAndItem> = setOf(
@@ -161,9 +157,10 @@ data object RagiumBlocks {
         RagiumMaterial.Fuel.COAL_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Fuel.PITCH_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_BLUE),
         RagiumMaterial.Metal.ALUMINUM to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.COLOR_PINK),
+        RagiumMaterial.Metal.SILVER to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_LIGHT_GRAY),
         RagiumMaterial.Alloy.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Alloy.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
-        RagiumMaterial.Alloy.VOID_METAL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
+        RagiumMaterial.Alloy.SHADOW_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
     ).associateTo(
         sortedMapOf(RagiumMaterial.COMPARATOR)
     ) { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
@@ -172,15 +169,11 @@ data object RagiumBlocks {
 
     @JvmField
     val MATERIAL_BLOCKS: Table<HTBlockPart, RagiumMaterial, HTSimpleDeferredBlockAndItem> = buildTable {
-        putAll(MATERIAL_ORES)
+        // putAll(MATERIAL_ORES)
         STORAGE_BLOCKS.forEach { (material: RagiumMaterial, blockItem: HTSimpleDeferredBlockAndItem) ->
             put(HTStorageBlockPart.DEFAULT, material, blockItem)
         }
     }
-
-    @JvmStatic
-    fun getOreOrThrow(part: HTOreBlockPart, material: RagiumMaterial): HTSimpleDeferredBlockAndItem =
-        MATERIAL_ORES[part, material] ?: error("Unregistered block: ${part.createName(material)}")
 
     @JvmStatic
     fun getStorageOrThrow(material: RagiumMaterial): HTSimpleDeferredBlockAndItem =
@@ -199,8 +192,7 @@ data object RagiumBlocks {
     @JvmField
     val FLUORITE_BLOCK: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple(
         "fluorite_block",
-        copyOf(Blocks.QUARTZ_BLOCK).mapColor(MapColor.COLOR_GREEN),
-        itemProp = { it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.FLUORITE) }
+        copyOf(Blocks.QUARTZ_BLOCK).mapColor(MapColor.COLOR_GREEN)
     )
 
     @JvmField
@@ -264,6 +256,10 @@ data object RagiumBlocks {
     val CUTTING_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE)
 
+    @JvmField
+    val PRESS_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.PRESS_MACHINE)
+
     // Heat
     @JvmField
     val ALLOY_SMELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
@@ -304,25 +300,33 @@ data object RagiumBlocks {
 
     // Resource
     @JvmField
+    val BREWERY: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.BREWERY)
+
+    @JvmField
     val PLANTER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.PLANTER)
+
+    @JvmField
+    val RESOURCE_PUMP: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.RESOURCE_PUMP)
 
     // Electronics
     @JvmField
     val BLENDER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerMachine(RagiumBlockEntityTypes.BLENDER)
+        registerFakeMachine(RagiumConstants.BLENDER)
 
     @JvmField
     val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
         registerMachine(RagiumBlockEntityTypes.ELECTROLYZER)
 
     @JvmField
-    val PRECISION_ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerMachine(RagiumBlockEntityTypes.PRECISION_ASSEMBLER)
+    val ENGRAVER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        registerMachine(RagiumBlockEntityTypes.ENGRAVER)
 
     @JvmField
     val SCANNER: HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        registerFakeMachine(RagiumConstants.SCANNER)
+        registerMachine(RagiumBlockEntityTypes.SCANNER)
 
     // Arcane
     @JvmField
@@ -332,16 +336,16 @@ data object RagiumBlocks {
     @JvmField
     val MACHINES: Map<HTMachineType, List<HTBasicDeferredBlockAndItem<HTMachineBlock>>> =
         buildListMultiMap(
-            sortedMapOf(),
+            sortedMapOf(HTMachineType.COMPARATOR),
             {
                 put(HTMachineType.MECHANICAL, ASSEMBLER)
                 put(HTMachineType.MECHANICAL, CENTRIFUGE)
                 put(HTMachineType.MECHANICAL, CRUSHER)
                 put(HTMachineType.MECHANICAL, COMPRESSOR)
                 put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
+                put(HTMachineType.MECHANICAL, PRESS_MACHINE)
 
                 put(HTMachineType.HEAT, ALLOY_SMELTER)
-                put(HTMachineType.HEAT, FREEZER)
                 put(HTMachineType.HEAT, MELTER)
                 put(HTMachineType.HEAT, PYROLYZER)
                 put(HTMachineType.HEAT, REFINERY)
@@ -351,24 +355,20 @@ data object RagiumBlocks {
                 put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
                 put(HTMachineType.CHEMICAL, MIXER)
 
+                put(HTMachineType.RESOURCE, BREWERY)
                 put(HTMachineType.RESOURCE, PLANTER)
+                put(HTMachineType.RESOURCE, RESOURCE_PUMP)
 
                 put(HTMachineType.ELECTRONICS, BLENDER)
                 put(HTMachineType.ELECTRONICS, ELECTROLYZER)
-                put(HTMachineType.ELECTRONICS, PRECISION_ASSEMBLER)
+                put(HTMachineType.ELECTRONICS, ENGRAVER)
                 put(HTMachineType.ELECTRONICS, SCANNER)
 
                 put(HTMachineType.ARCANE, ENCHANTER)
+
+                put(HTMachineType.Custom("cryo", HTLangName("Cryo", "低温")), FREEZER)
             }
         )
-
-    //    Bus    //
-
-    @JvmField
-    val FLUID_OUTPUT_BUS: HTBasicDeferredBlockAndItem<HTFluidStorageBlock> = registerMachine(
-        RagiumBlockEntityTypes.FLUID_OUTPUT_BUS,
-        ::HTFluidStorageBlock
-    )
 
     //    Storage    //
 
@@ -430,7 +430,7 @@ data object RagiumBlocks {
 
     @JvmField
     val MACHINE_CASINGS: Map<HTMachineType, HTSimpleDeferredBlockAndItem> = HTMachineType.entries
-        .associateWithTo(mutableEnumMapOf()) { machineType: HTMachineType ->
+        .associateWith { machineType: HTMachineType ->
             REGISTER.registerSimple("${machineType.materialName}_machine_casing", machine())
         }
 
@@ -448,14 +448,6 @@ data object RagiumBlocks {
             VOID_TANK.getOrThrow()
         )
         // Item
-        event.registerItem(
-            HTFluidCapabilities.item,
-            { _, access ->
-                HTItemAccessFluidHandler.output(access, RagiumConfig.SERVER.tankCapacity.asInt)
-            },
-            FLUID_OUTPUT_BUS
-        )
-
         event.registerItem(
             HTFluidCapabilities.item,
             { _, access ->
@@ -501,7 +493,7 @@ data object RagiumBlocks {
         // Block
         setOf(
             RagiumMaterial.Alloy.BLACK_STEEL to Rarity.UNCOMMON,
-            RagiumMaterial.Alloy.VOID_METAL to Rarity.RARE
+            RagiumMaterial.Alloy.SHADOW_STEEL to Rarity.RARE
         ).forEach { (material: RagiumMaterial, rarity: Rarity) ->
             for (part: HTBlockPart in HTBlockPart.entries) {
                 val block: ItemLike = MATERIAL_BLOCKS[part, material] ?: continue

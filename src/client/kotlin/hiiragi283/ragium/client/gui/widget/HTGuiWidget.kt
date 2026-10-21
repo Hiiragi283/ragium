@@ -17,8 +17,8 @@ import net.minecraft.world.item.ItemStack
  */
 class HTGuiWidget<WIDGET : HTWidget>(private val gui: HTGuiAccess, val widget: WIDGET) :
     AbstractWidget(
-        widget.bounds.x + gui.getGuiLeft(),
-        widget.bounds.y + gui.getGuiTop(),
+        widget.bounds.x + gui.getLeftPos(),
+        widget.bounds.y + gui.getTopPos(),
         widget.bounds.width,
         widget.bounds.height,
         Text.empty()

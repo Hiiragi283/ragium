@@ -2,11 +2,11 @@ package hiiragi283.lib.recipe.base
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
+import hiiragi283.lib.recipe.result.HTRecipeResult
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
@@ -41,20 +41,37 @@ typealias HTFluidToItemAndFluidRecipe = HTFluidToRecipe<HTItemAndFluidStack>
  */
 interface HTFluidToRecipe<OUTPUT : Any> :
     HTRecipePredicates.SingleFluid,
-    HTRecipeFactories.SingleFluidTo<OUTPUT>,
-    HTProgressRecipe<HTRecipeInput> {
+    HTRecipeFactories.SingleFluidTo<OUTPUT> {
+
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.11
+     */
+    open class Basic<OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>>(
+        ingredient: HTFluidIngredient,
+        result: RESULT,
+        progressData: HTProgressData
+    ) : HTBasicSingleRecipe<HTFluidIngredient, RESULT>(ingredient, result, progressData),
+        HTFluidToRecipe<OUTPUT> {
+        override fun test(input: FluidInstance): Boolean = ingredient.test(input)
+
+        override fun apply(input: FluidInstance): OUTPUT = result.create()
+
+        override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
+
+        override fun getProgressData(input: FluidInstance): HTProgressData = progressData
+    }
 
     /**
      * @author Hiiragi Tsubasa
      * @since 26.1.5
      */
     open class BasicItem(ingredient: HTFluidIngredient, result: HTItemResult, progressData: HTProgressData) :
-        HTBasicSingleRecipe<HTFluidIngredient, HTItemResult>(
+        Basic<ItemStack, HTItemResult>(
             ingredient,
             result,
             progressData
-        ),
-        HTFluidToRecipe<ItemStack> {
+        ) {
         companion object {
             @JvmStatic
             fun <RECIPE : BasicItem> codec(
@@ -70,12 +87,6 @@ interface HTFluidToRecipe<OUTPUT : Any> :
             @JvmField
             val SIMPLE_CODEC: MapCodec<BasicItem> = codec(::BasicItem)
         }
-
-        override fun test(input: FluidInstance): Boolean = ingredient.test(input)
-
-        override fun apply(input: FluidInstance): ItemStack = result.create()
-
-        override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
     }
 
     /**
@@ -83,12 +94,11 @@ interface HTFluidToRecipe<OUTPUT : Any> :
      * @since 26.1.5
      */
     open class BasicFluid(ingredient: HTFluidIngredient, result: HTFluidResult, progressData: HTProgressData) :
-        HTBasicSingleRecipe<HTFluidIngredient, HTFluidResult>(
+        Basic<FluidStack, HTFluidResult>(
             ingredient,
             result,
             progressData
-        ),
-        HTFluidToRecipe<FluidStack> {
+        ) {
         companion object {
             @JvmStatic
             fun <RECIPE : BasicFluid> codec(
@@ -104,12 +114,6 @@ interface HTFluidToRecipe<OUTPUT : Any> :
             @JvmField
             val SIMPLE_CODEC: MapCodec<BasicFluid> = codec(::BasicFluid)
         }
-
-        override fun test(input: FluidInstance): Boolean = ingredient.test(input)
-
-        override fun apply(input: FluidInstance): FluidStack = result.create()
-
-        override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
     }
 
     /**
@@ -120,12 +124,11 @@ interface HTFluidToRecipe<OUTPUT : Any> :
         ingredient: HTFluidIngredient,
         result: HTItemOrFluidResult,
         progressData: HTProgressData
-    ) : HTBasicSingleRecipe<HTFluidIngredient, HTItemOrFluidResult>(
+    ) : Basic<HTItemAndFluidStack, HTItemOrFluidResult>(
         ingredient,
         result,
         progressData
-    ),
-        HTFluidToRecipe<HTItemAndFluidStack> {
+    ) {
         companion object {
             @JvmStatic
             fun <RECIPE : BasicItemAndFluid> codec(
@@ -141,11 +144,5 @@ interface HTFluidToRecipe<OUTPUT : Any> :
             @JvmField
             val SIMPLE_CODEC: MapCodec<BasicItemAndFluid> = codec(::BasicItemAndFluid)
         }
-
-        override fun test(input: FluidInstance): Boolean = ingredient.test(input)
-
-        override fun apply(input: FluidInstance): HTItemAndFluidStack = result.create()
-
-        override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
     }
 }

@@ -97,6 +97,10 @@ data object RagiumConfig {
             val cuttingMachine: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.CUTTING_MACHINE)
 
+            @JvmField
+            val pressMachine: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.PRESS_MACHINE)
+
             // Heat
             @JvmField
             val alloySmelter: HTEnergyConfig =
@@ -137,8 +141,20 @@ data object RagiumConfig {
 
             // Resource
             @JvmField
+            val brewery: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.BREWERY)
+
+            @JvmField
             val planter: HTEnergyConfig =
                 HTEnergyConfig.createMachine(builder, RagiumConstants.PLANTER)
+
+            @JvmField
+            val resourceMiner: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.RESOURCE_MINER, 32)
+
+            @JvmField
+            val resourcePump: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.RESOURCE_PUMP, 32)
 
             // Electronics
             @JvmField
@@ -150,8 +166,8 @@ data object RagiumConfig {
                 HTEnergyConfig.createMachine(builder, RagiumConstants.ELECTROLYZER, 64)
 
             @JvmField
-            val precisionAssembler: HTEnergyConfig =
-                HTEnergyConfig.createMachine(builder, RagiumConstants.PRECISION_ASSEMBLER, 64)
+            val engraver: HTEnergyConfig =
+                HTEnergyConfig.createMachine(builder, RagiumConstants.ENGRAVER, 64)
 
             @JvmField
             val scanner: HTEnergyConfig =

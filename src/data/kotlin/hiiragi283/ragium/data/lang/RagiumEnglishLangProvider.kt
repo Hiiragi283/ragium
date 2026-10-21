@@ -50,6 +50,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
+        add(RagiumBlocks.PRESS_MACHINE, "Press Machine")
 
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         add(RagiumBlocks.FREEZER, "Freezer")
@@ -62,16 +63,16 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.CHEMICAL_REACTOR, "Chemical Reactor")
         add(RagiumBlocks.MIXER, "Mixer")
 
+        add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.PLANTER, "Planter")
+        add(RagiumBlocks.RESOURCE_PUMP, "Resource Pump")
 
         add(RagiumBlocks.BLENDER, "Blender")
         add(RagiumBlocks.ELECTROLYZER, "Electrolyzer")
-        add(RagiumBlocks.PRECISION_ASSEMBLER, "Precision Assembler")
+        add(RagiumBlocks.ENGRAVER, "Laser Engraver")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")
-
-        add(RagiumBlocks.FLUID_OUTPUT_BUS, "Fluid Output Bus")
 
         add(RagiumBlocks.TANK, "Variable Tank")
         add(RagiumBlocks.POTION_TANK, "Potion Tank")
@@ -108,11 +109,13 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.ALDEHYDE, "Aldehyde")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "Aromatic Compound")
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
+        addFluid(RagiumFluids.NATURAL_GAS, "Natural Gas")
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
         addFluid(RagiumFluids.FUEL, "Fuel")
         addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "Molten Plastic")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "Synthetic Resin")
+        addFluid(RagiumFluids.AMMONIA, "Ammonia")
         addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "Liquid Explosive")
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
@@ -133,12 +136,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.MORTAR, "Mortar")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.STICKY_BALL, "Sticky Ball")
+        add(RagiumItems.SODIUM_HYDROXIDE, "Sodium Hydroxide")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
-        add(RagiumItems.CARBON_FIBER, "Carbon Fiber")
-        add(RagiumItems.CFRP_PLATE, "CFRP Plate")
         // add(RagiumItems.ALCLAD_PLATE, "Alclad Plate")
         add(RagiumItems.BEESWAX, "Beeswax")
         add(RagiumItems.SPLASH_BOTTLE, "Splash Bottle")
@@ -148,14 +150,23 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.SILICON_CHIP, "Silicon Chip")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
+        add(RagiumItems.DIAMOND_WAFER, "Diamond Wafer")
+        add(RagiumItems.DIAMOND_CHIP, "Diamond Chip")
         add(RagiumItems.ELDER_HEART, "Elder Heart")
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
 
+        add(RagiumItems.BLANK_DIE, "Blank Press Die")
+        add(RagiumItems.GEAR_DIE, "Gear Press Die")
+        add(RagiumItems.PACKING_DIE, "Packing Press Die")
+        add(RagiumItems.UNPACKING_DIE, "Unpacking Press Die")
+        add(RagiumItems.HEATING_COIL, "Heating Coil")
         add(RagiumItems.BLANK_MOLD, "Blank Mold")
         add(RagiumItems.BALL_MOLD, "Ball Mold")
         add(RagiumItems.BLOCK_MOLD, "Block Mold")
         add(RagiumItems.PLATE_MOLD, "Plate Mold")
+        add(RagiumItems.SHADOW_LENS, "Shadow Lens")
+        add(RagiumItems.NETHER_STAR_LENS, "Nether Star Lens")
         add(RagiumItems.MEMORY_DISC, "Memory Disc")
 
         add(RagiumItems.BASIC_UPGRADE, "Basic Upgrade")
@@ -186,6 +197,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.CRUSHING, "Crushing")
         addRecipeType(RagiumRecipeTypes.CUTTING, "Cutting")
         addRecipeType(RagiumRecipeTypes.FILLING, "Filling")
+        addRecipeType(RagiumRecipeTypes.PRESSING, "Pressing")
 
         addRecipeType(RagiumRecipeTypes.ALLOYING, "Alloying")
         addRecipeType(RagiumRecipeTypes.FREEZING, "Freezing")
@@ -199,10 +211,12 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.REACTING, "Chemical Reacting")
         addRecipeType(RagiumRecipeTypes.WASHING, "Washing")
 
+        addRecipeType(RagiumRecipeTypes.BREWING, "Brewing")
         addRecipeType(RagiumRecipeTypes.PLANTING, "Planting")
+        addRecipeType(RagiumRecipeTypes.RESOURCE_PUMPING, "Resource Pumping")
 
         addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
-        addRecipeType(RagiumRecipeTypes.RESOURCE_EXTRACTING, "Resource Extracting")
+        addRecipeType(RagiumRecipeTypes.ENGRAVING, "Laser Engraving")
 
         addRecipeType(RagiumRecipeTypes.ENCHANTING, "Enchanting")
 
@@ -271,6 +285,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         addFromKey(RagiumChemicals.IRON, "Iron")
         addFromKey(RagiumChemicals.COPPER, "Copper")
+        addFromKey(RagiumChemicals.NICKEL, "Nickel")
+        addFromKey(RagiumChemicals.SILVER, "Silver")
         addFromKey(RagiumChemicals.GOLD, "Gold")
         addFromKey(RagiumChemicals.MERCURY, "Mercury")
 
@@ -303,6 +319,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumChemicals.CALCIUM_SULFATE, "Calcium Sulfate")
 
         addFromKey(RagiumChemicals.MERCURY_SULFIDE, "Mercury Sulfide")
+
+        addFromKey(RagiumChemicals.COAL, "Coal")
+        addFromKey(RagiumChemicals.CHARCOAL, "Char Coal")
         // Element
         addFromKey(RagiumElements.HYDROGEN, "Hydrogen")
 
@@ -321,6 +340,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFromKey(RagiumElements.CALCIUM, "Calcium")
         addFromKey(RagiumElements.IRON, "Iron")
         addFromKey(RagiumElements.COPPER, "Copper")
+        addFromKey(RagiumElements.NICKEL, "Nickel")
+
+        addFromKey(RagiumElements.SILVER, "Silver")
 
         addFromKey(RagiumElements.GOLD, "Gold")
         addFromKey(RagiumElements.MERCURY, "Mercury")

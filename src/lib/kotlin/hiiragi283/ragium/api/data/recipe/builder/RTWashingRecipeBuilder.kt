@@ -26,9 +26,9 @@ class RTWashingRecipeBuilder : HTProgressRecipeBuilder<RTWashingRecipe>(RagiumCo
         RTWashingRecipe(itemIngredient, fluidIngredient, results.toNel(), progressData)
 
     // Ingredient
-    var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()
+    @PublishedApi internal var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()
 
-    var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
+    @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
     operator fun HTItemIngredient.unaryPlus() {
         itemIngredient = this

@@ -1,13 +1,15 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
+import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
+import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
+import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemOrFluidRecipe
-import hiiragi283.lib.recipe.base.HTItemToDoubleItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemRecipe
-import hiiragi283.lib.recipe.base.HTTripleItemToItemRecipe
+import hiiragi283.lib.recipe.base.HTItemToMultiItemRecipe
+import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.lookup.HTCompoundRecipeLookup
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.recipe.lookup.HTVanillaRecipeLookup
@@ -34,7 +36,7 @@ data object RagiumRecipeLookups {
 
     // Mechanical
     @JvmField
-    val ASSEMBLING: HTCompoundRecipeLookup<HTTripleItemToItemRecipe> = create(RagiumConstants.ASSEMBLING)
+    val ASSEMBLING: HTCompoundRecipeLookup<HTSizedShapelessRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
     val CENTRIFUGING: HTCompoundRecipeLookup<RTCentrifugingRecipe> = create(RagiumConstants.CENTRIFUGING)
@@ -43,17 +45,20 @@ data object RagiumRecipeLookups {
     val COMPRESSING: HTCompoundRecipeLookup<HTItemToItemRecipe> = create(RagiumConstants.COMPRESSING)
 
     @JvmField
-    val CRUSHING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.CRUSHING)
+    val CRUSHING: HTCompoundRecipeLookup<HTItemToMultiItemRecipe> = create(RagiumConstants.CRUSHING)
 
     @JvmField
-    val CUTTING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.CUTTING)
+    val CUTTING: HTCompoundRecipeLookup<HTItemToMultiItemRecipe> = create(RagiumConstants.CUTTING)
 
     @JvmField
     val FILLING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.FILLING)
 
+    @JvmField
+    val PRESSING: HTCompoundRecipeLookup<HTDoubleItemToItemRecipe> = create(RagiumConstants.PRESSING)
+
     // Heat
     @JvmField
-    val ALLOYING: HTCompoundRecipeLookup<HTTripleItemToItemRecipe> = create(RagiumConstants.ALLOYING)
+    val ALLOYING: HTCompoundRecipeLookup<HTSizedShapelessRecipe> = create(RagiumConstants.ALLOYING)
 
     @JvmField
     val FREEZING: HTRecipeLookup<RTFreezingRecipe> = create(RagiumRecipeTypes.FREEZING)
@@ -65,7 +70,7 @@ data object RagiumRecipeLookups {
     val PYROLYZING: HTCompoundRecipeLookup<HTItemToItemAndFluidRecipe> = create(RagiumConstants.PYROLYZING)
 
     @JvmField
-    val REFINING: HTCompoundRecipeLookup<HTFluidToItemAndFluidRecipe> = create(RagiumConstants.REFINING)
+    val REFINING: HTCompoundRecipeLookup<HTFluidSeparatingRecipe> = create(RagiumConstants.REFINING)
 
     // Chemical
     @JvmField
@@ -85,14 +90,20 @@ data object RagiumRecipeLookups {
 
     // Resource
     @JvmField
-    val PLANTING: HTCompoundRecipeLookup<HTItemToDoubleItemRecipe> = create(RagiumConstants.PLANTING)
+    val BREWING: HTCompoundRecipeLookup<HTItemAndFluidToFluidRecipe> = create(RagiumConstants.BREWING)
+
+    @JvmField
+    val PLANTING: HTCompoundRecipeLookup<HTItemToMultiItemRecipe> = create(RagiumConstants.PLANTING)
+
+    @JvmField
+    val RESOURCE_PUMPING: HTRecipeLookup<RTResourcePumpingRecipe> = create(RagiumRecipeTypes.RESOURCE_PUMPING)
 
     // Electronics
     @JvmField
-    val ELECTROLYZING: HTRecipeLookup<RTElectrolyzingRecipe> = create(RagiumRecipeTypes.ELECTROLYZING)
+    val ELECTROLYZING: HTCompoundRecipeLookup<HTFluidSeparatingRecipe> = create(RagiumConstants.ELECTROLYZING)
 
     @JvmField
-    val RESOURCE_EXTRACTING: HTRecipeLookup<RTResourceExtractingRecipe> = create(RagiumRecipeTypes.RESOURCE_EXTRACTING)
+    val ENGRAVING: HTCompoundRecipeLookup<HTDoubleItemToItemRecipe> = create(RagiumConstants.ENGRAVING)
 
     // Arcane
     @JvmField

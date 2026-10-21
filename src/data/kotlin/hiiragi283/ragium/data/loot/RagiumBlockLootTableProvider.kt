@@ -29,7 +29,6 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
         }
         // Storage
         listOf(
-            RagiumBlocks.FLUID_OUTPUT_BUS,
             RagiumBlocks.TANK,
             RagiumBlocks.POTION_TANK,
             RagiumBlocks.CREATIVE_TANK

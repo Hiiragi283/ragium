@@ -10,6 +10,8 @@ import net.minecraft.world.item.ItemStackTemplate
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
+import net.neoforged.neoforge.transfer.fluid.FluidResource
+import net.neoforged.neoforge.transfer.item.ItemResource
 
 /**
  * [TypedInstance]の変換を補助するクラスです。
@@ -17,6 +19,7 @@ import net.neoforged.neoforge.fluids.FluidStackTemplate
  * @since 26.1.0
  */
 data object HTIngredientHelper {
+
     //    Fluid    //
 
     /**
@@ -24,7 +27,7 @@ data object HTIngredientHelper {
      */
     @JvmStatic
     fun unwrap(instance: FluidInstance): FluidStack = when (instance) {
-        is FluidStack -> instance
+        is FluidStack -> instance.copy()
         is FluidStackTemplate -> instance.create()
         else -> FluidStack(instance.typeHolder(), instance.amount(), HTDataComponentHelper.createPatch(instance))
     }
@@ -46,7 +49,65 @@ data object HTIngredientHelper {
     fun copyWithAmount(instance: FluidInstance, newAmount: Int): FluidInstance = when (instance) {
         is FluidStack -> instance.copyWithAmount(newAmount)
         is FluidStackTemplate -> instance.withAmount(newAmount)
-        else -> FluidStack(instance.typeHolder(), newAmount)
+        else -> FluidStackTemplate(instance.typeHolder(), newAmount, HTDataComponentHelper.createPatch(instance))
+    }
+
+    /**
+     * @since 26.1.11
+     */
+    @JvmName("matchFluids")
+    @JvmStatic
+    fun match(ingredients: Iterable<HTFluidIngredient>, inputs: Iterable<FluidInstance>): Boolean {
+        val combined: List<FluidStack> = inputs
+            .fold(mutableMapOf()) { map: MutableMap<FluidResource, Int>, instance: FluidInstance ->
+                val resource: FluidResource = unwrap(instance).let(FluidResource::of)
+                if (!resource.isEmpty) {
+                    map.compute(resource) { _, old: Int? -> (old ?: 0) + instance.amount() }
+                }
+                map
+            }.map { (resource: FluidResource, count: Int) -> resource.toStack(count) }
+        ingredient@for (ingredient: HTFluidIngredient in ingredients) {
+            for (stack: FluidStack in combined) {
+                if (ingredient.test(stack)) {
+                    stack.amount -= ingredient.getMatchingStack(stack).amount()
+                    continue@ingredient
+                }
+            }
+            return false
+        }
+        return true
+    }
+
+    /**
+     * @since 26.1.11
+     */
+    @JvmName("getMatchingFluids")
+    @JvmStatic
+    fun getMatchingStacks(
+        ingredients: Iterable<HTFluidIngredient>,
+        inputs: Iterable<FluidInstance>
+    ): List<FluidInstance> {
+        val combined: List<FluidStack> = inputs
+            .fold(mutableMapOf()) { map: MutableMap<FluidResource, Int>, instance: FluidInstance ->
+                val resource: FluidResource = unwrap(instance).let(FluidResource::of)
+                if (!resource.isEmpty) {
+                    map.compute(resource) { _, old: Int? -> (old ?: 0) + instance.amount() }
+                }
+                map
+            }.map { (resource: FluidResource, count: Int) -> resource.toStack(count) }
+        val results: MutableList<FluidInstance> = mutableListOf()
+        ingredient@for (ingredient: HTFluidIngredient in ingredients) {
+            for (stack: FluidStack in combined) {
+                if (ingredient.test(stack)) {
+                    val stackMatched: FluidInstance = ingredient.getMatchingStack(stack)
+                    results += stackMatched
+                    stack.amount -= stackMatched.amount()
+                    continue@ingredient
+                }
+            }
+            return listOf()
+        }
+        return results
     }
 
     //    Item    //
@@ -56,7 +117,7 @@ data object HTIngredientHelper {
      */
     @JvmStatic
     fun unwrap(instance: ItemInstance): ItemStack = when (instance) {
-        is ItemStack -> instance
+        is ItemStack -> instance.copy()
         is ItemStackTemplate -> instance.create()
         else -> ItemStack(instance.typeHolder(), instance.count(), HTDataComponentHelper.createPatch(instance))
     }
@@ -78,6 +139,61 @@ data object HTIngredientHelper {
     fun copyWithCount(instance: ItemInstance, newCount: Int): ItemInstance = when (instance) {
         is ItemStack -> instance.copyWithCount(newCount)
         is ItemStackTemplate -> instance.withCount(newCount)
-        else -> ItemStack(instance.typeHolder(), newCount)
+        else -> ItemStackTemplate(instance.typeHolder(), newCount, HTDataComponentHelper.createPatch(instance))
+    }
+
+    /**
+     * @since 26.1.11
+     */
+    @JvmName("matchItems")
+    @JvmStatic
+    fun match(ingredients: Iterable<HTItemIngredient>, inputs: Iterable<ItemInstance>): Boolean {
+        val combined: List<ItemStack> = inputs
+            .fold(mutableMapOf()) { map: MutableMap<ItemResource, Int>, instance: ItemInstance ->
+                val resource: ItemResource = unwrap(instance).let(ItemResource::of)
+                if (!resource.isEmpty) {
+                    map.compute(resource) { _, old: Int? -> (old ?: 0) + instance.count() }
+                }
+                map
+            }.map { (resource: ItemResource, count: Int) -> resource.toStack(count) }
+        ingredient@for (ingredient: HTItemIngredient in ingredients) {
+            for (stack: ItemStack in combined) {
+                if (ingredient.test(stack)) {
+                    stack.count -= ingredient.getMatchingStack(stack).count()
+                    continue@ingredient
+                }
+            }
+            return false
+        }
+        return true
+    }
+
+    /**
+     * @since 26.1.11
+     */
+    @JvmName("getMatchingItems")
+    @JvmStatic
+    fun getMatchingStacks(ingredients: Iterable<HTItemIngredient>, inputs: Iterable<ItemInstance>): List<ItemInstance> {
+        val combined: List<ItemStack> = inputs
+            .fold(mutableMapOf()) { map: MutableMap<ItemResource, Int>, instance: ItemInstance ->
+                val resource: ItemResource = unwrap(instance).let(ItemResource::of)
+                if (!resource.isEmpty) {
+                    map.compute(resource) { _, old: Int? -> (old ?: 0) + instance.count() }
+                }
+                map
+            }.map { (resource: ItemResource, count: Int) -> resource.toStack(count) }
+        val results: MutableList<ItemInstance> = mutableListOf()
+        ingredient@for (ingredient: HTItemIngredient in ingredients) {
+            for (stack: ItemStack in combined) {
+                if (ingredient.test(stack)) {
+                    val stackMatched: ItemInstance = ingredient.getMatchingStack(stack)
+                    results += stackMatched
+                    stack.count -= stackMatched.count()
+                    continue@ingredient
+                }
+            }
+            return listOf()
+        }
+        return results
     }
 }

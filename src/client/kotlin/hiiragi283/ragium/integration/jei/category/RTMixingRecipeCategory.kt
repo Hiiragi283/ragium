@@ -3,6 +3,8 @@ package hiiragi283.ragium.integration.jei.category
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.add
 import hiiragi283.lib.integration.jei.category.HTHolderRecipeCategory
+import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -18,37 +20,42 @@ class RTMixingRecipeCategory(guiHelper: IGuiHelper) :
         RagiumJeiRecipeTypes.MIXING,
         RagiumRecipeTypes.MIXING,
         guiHelper.createDrawableItemLike(RagiumBlocks.MIXER),
-        18 * 9,
-        18 * 1,
+        18 * 7,
+        18 * 2,
         RTMixingRecipe.CODEC
     ) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTMixingRecipe, focuses: IFocusGroup) {
         // inputs
-        builder
-            .addInputSlot(getPosition(0), getPosition(0))
-            .add(recipe.fluidIngredient)
-            .setSlotBackground(HTBackgroundType.INPUT)
-        builder
-            .addInputSlot(getPosition(2), getPosition(0))
-            .add(recipe.itemIngredients.head)
-            .setSlotBackground(HTBackgroundType.INPUT)
-        val secondInput: IRecipeSlotBuilder = builder
-            .addInputSlot(getPosition(3), getPosition(0))
-            .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
-        recipe.itemIngredients.getOrNull(1)?.let(secondInput::add)
+        val fluidInputs: List<IRecipeSlotBuilder> = List(2) { index: Int ->
+            builder
+                .addInputSlot(getPosition(0), getPosition(index))
+                .setSlotBackground(HTBackgroundType.INPUT)
+        }
+        val itemInputs: List<IRecipeSlotBuilder> = List(4) { index: Int ->
+            builder
+                .addInputSlot(getPosition(2 + index % 2), getPosition(index / 2))
+                .setSlotBackground(HTBackgroundType.INPUT)
+        }
+        val (items: List<HTItemIngredient>?, fluids: List<HTFluidIngredient>?) = recipe.ingredients.toPair()
+        fluidInputs.forEachIndexed { index: Int, builder: IRecipeSlotBuilder ->
+            fluids?.getOrNull(index)?.let(builder::add)
+        }
+        itemInputs.forEachIndexed { index: Int, builder: IRecipeSlotBuilder ->
+            items?.getOrNull(index)?.let(builder::add)
+        }
         // outputs
         val itemOutput: IRecipeSlotBuilder = builder
             .addOutputSlot(getPosition(6), getPosition(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
         val fluidOutput: IRecipeSlotBuilder = builder
-            .addOutputSlot(getPosition(8), getPosition(0))
+            .addOutputSlot(getPosition(6), getPosition(1))
             .setSlotBackground(HTBackgroundType.OUTPUT)
         recipe.result.content.mapLeft(itemOutput::add).mapRight(fluidOutput::add)
     }
 
     override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTMixingRecipe, focuses: IFocusGroup) {
-        builder.addRecipePlus(getPosition(1))
-        builder.addRecipeArrow(recipe).setPosition(getPosition(4.25), getPosition(0))
-        builder.addRecipePlus(getPosition(7))
+        val posY: Int = getPosition(0.5)
+        builder.addRecipePlus(getPosition(1), posY)
+        builder.addRecipeArrow(recipe).setPosition(getPosition(4.25), posY)
     }
 }

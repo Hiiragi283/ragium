@@ -14,17 +14,34 @@ interface HTProgressRecipe<INPUT : RecipeInput> {
      */
     fun getProgressData(input: INPUT): HTProgressData
 
-    //    Simple    //
+    //    Single    //
 
     /**
-     * 一定の[HTProgressData]を提供する[HTProgressRecipe]の拡張インターフェースです。
-     * @param INPUT レシピの入力となるクラス
      * @author Hiiragi Tsubasa
-     * @since 26.1.0
+     * @since 26.1.11
      */
-    interface Simple<INPUT : RecipeInput> : HTProgressRecipe<INPUT> {
-        val progressData: HTProgressData
+    interface Single<INPUT : RecipeInput, INPUT_A : Any> : HTProgressRecipe<INPUT> {
+        fun getProgressData(input: INPUT_A): HTProgressData
+    }
 
-        override fun getProgressData(input: INPUT): HTProgressData = progressData
+    //    Double    //
+
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.11
+     */
+    interface Double<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any> : HTProgressRecipe<INPUT> {
+        fun getProgressData(first: INPUT_A, second: INPUT_B): HTProgressData
+    }
+
+    //    Static    //
+
+    /**
+     * 一定の[HTProgressData]を提供するインターフェースです。
+     * @author Hiiragi Tsubasa
+     * @since 26.1.11
+     */
+    interface Holder {
+        val progressData: HTProgressData
     }
 }

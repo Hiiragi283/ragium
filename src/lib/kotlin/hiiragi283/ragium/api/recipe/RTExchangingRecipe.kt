@@ -5,7 +5,7 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTRecipeInput
+import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
@@ -16,7 +16,7 @@ class RTExchangingRecipe(
     result: HTItemOrFluidResult,
     progressData: HTProgressData
 ) : HTItemAndFluidToRecipe.BasicItemAndFluid(itemIngredient, fluidIngredient, result, progressData),
-    HTSerializableRecipe<HTRecipeInput> {
+    HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField
         val SERIALIZER: RecipeSerializer<RTExchangingRecipe> =

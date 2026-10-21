@@ -1,14 +1,18 @@
 package hiiragi283.lib.recipe.result
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.fluid.HTFlowingFluidHelper
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
+import hiiragi283.lib.serialization.codec.nelOf
+import hiiragi283.lib.serialization.network.HTStreamCodecs
+import hiiragi283.lib.serialization.network.nelOf
 import hiiragi283.lib.util.DFUEither
+import hiiragi283.lib.util.Ior
+import hiiragi283.lib.util.IorNel
 import hiiragi283.lib.util.fold
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
@@ -17,6 +21,8 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
@@ -147,33 +153,57 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
     }
 
     @JvmRecord
-    data class PotionEntry(val contents: PotionContents) : Entry {
+    data class PotionEntry(
+        val content: IorNel<MobEffectInstance, Holder<Potion>>,
+        val customColor: Optional<Int>,
+        val customName: Optional<String>
+    ) : Entry {
         companion object {
             @JvmField
-            val CODEC: MapCodec<PotionEntry> =
-                MapCodec.assumeMapUnsafe(
-                    PotionContents.CODEC.validate { contents: PotionContents ->
-                        when (HTPotionHelper.isEmpty(contents)) {
-                            true -> DataResult.error { "Could not create fluid result with empty potion contents" }
-                            false -> DataResult.success(contents)
-                        }
-                    }
-                ).xmap(::PotionEntry, PotionEntry::contents)
+            val CODEC: MapCodec<PotionEntry> = HTCodecs.recordMap { instance ->
+                instance.group(
+                    HTCodecs.ior(
+                        MobEffectInstance.CODEC.nelOf().fieldOf("custom_effects"),
+                        Potion.CODEC.fieldOf("potion")
+                    ).forGetter(PotionEntry::content),
+                    Codec.INT.optionalFieldOf("custom_color").forGetter(PotionEntry::customColor),
+                    Codec.STRING.optionalFieldOf("custom_name").forGetter(PotionEntry::customName)
+                ).apply(instance, ::PotionEntry)
+            }
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, PotionEntry> =
-                PotionContents.STREAM_CODEC.map(::PotionEntry, PotionEntry::contents)
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, PotionEntry> = StreamCodec.composite(
+                HTStreamCodecs.ior(
+                    MobEffectInstance.STREAM_CODEC.nelOf(),
+                    Potion.STREAM_CODEC
+                ),
+                PotionEntry::content,
+                ByteBufCodecs.optional(ByteBufCodecs.VAR_INT),
+                PotionEntry::customColor,
+                ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8),
+                PotionEntry::customName,
+                ::PotionEntry
+            )
 
             @JvmField
             val TYPE: HTFluidResultType<PotionEntry> = HTFluidResultType(CODEC, STREAM_CODEC)
         }
 
+        constructor(potion: Holder<Potion>) : this(Ior.Right(potion), Optional.empty(), Optional.empty())
+
         override fun type(): HTFluidResultType<*> = TYPE
 
         override fun create(amount: Int): FluidStack =
-            HTPotionHelper.createFluid(contents, amount).fold(FluidStackTemplate::create) { FluidStack.EMPTY }
+            HTPotionHelper.createFluid(toVanilla(), amount).fold(FluidStackTemplate::create) { FluidStack.EMPTY }
 
-        override fun getId(): Identifier? = HTPotionHelper.getPotionId(contents)
+        private fun toVanilla(): PotionContents = PotionContents(
+            Optional.ofNullable(content.getRight()),
+            customColor,
+            content.getLeft() ?: listOf(),
+            customName
+        )
+
+        override fun getId(): Identifier? = content.getRight()?.key?.identifier()
     }
 }
 

@@ -6,7 +6,6 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
-import hiiragi283.lib.recipe.input.HTRecipeInput
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidInstance
@@ -14,7 +13,7 @@ import net.neoforged.neoforge.fluids.FluidInstance
 @JvmRecord
 data class RTPotionBottleFillingRecipe(val bottleType: HTBottleType, override val progressData: HTProgressData) :
     HTItemAndFluidToItemRecipe,
-    HTProgressRecipe.Simple<HTRecipeInput> {
+    HTProgressRecipe.Holder {
     companion object {
         @JvmField
         val PROGRESS_DATA: HTProgressData = HTProgressData.time(60)
@@ -35,4 +34,6 @@ data class RTPotionBottleFillingRecipe(val bottleType: HTBottleType, override va
         HTIngredientHelper.copyWithCount(first, 1),
         HTIngredientHelper.copyWithAmount(second, HTPotionHelper.BOTTLE_AMOUNT)
     )
+
+    override fun getProgressData(first: ItemInstance, second: FluidInstance): HTProgressData = progressData
 }

@@ -131,6 +131,7 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING, identity())
         RagiumRecipeLookups.CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING, identity())
         RagiumRecipeLookups.FILLING.fromRecipeType(RagiumRecipeTypes.FILLING, identity())
+        RagiumRecipeLookups.PRESSING.fromRecipeType(RagiumRecipeTypes.PRESSING, identity())
 
         RagiumRecipeLookups.ALLOYING.fromRecipeType(RagiumRecipeTypes.ALLOYING, identity())
         RagiumRecipeLookups.MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())
@@ -141,7 +142,11 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.EXCHANGING.fromRecipeType(RagiumRecipeTypes.EXCHANGING, identity())
         RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING, identity())
 
+        RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
         RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
+
+        RagiumRecipeLookups.ELECTROLYZING.fromRecipeType(RagiumRecipeTypes.ELECTROLYZING, identity())
+        RagiumRecipeLookups.ENGRAVING.fromRecipeType(RagiumRecipeTypes.ENGRAVING, identity())
         // runtime recipes
         RagiumRecipeLookups.CENTRIFUGING.addRecipes(
             buildMap {
@@ -216,7 +221,7 @@ internal data object RagiumCommon {
                 }
         }
 
-        RagiumRecipeLookups.MIXING.addSubLookup { _ ->
+        RagiumRecipeLookups.BREWING.addSubLookup { _ ->
             val mixes: List<PotionBrewing.Mix<Potion>> = HTPhysicalSideHelper.getPotionBrewing()
                 ?.let(PotionBrewing::potionMixes)
                 ?: return@addSubLookup sequenceOf()
@@ -235,7 +240,7 @@ internal data object RagiumCommon {
                     RagiumRecipeBuilders.brewing {
                         itemIngredient { +CompoundIngredient(ingredients) }
                         fluidIngredient { +HTPotionFluidIngredient(potionFrom) }
-                        fluidResult { +potionTo }
+                        result { +potionTo }
                         recipeId replace potionTo.getKeyOrThrow()
                             .identifier()
                             .modifyPath { "${it}_from_${potionFrom.getKeyOrThrow().identifier().toDebugFileName()}" }

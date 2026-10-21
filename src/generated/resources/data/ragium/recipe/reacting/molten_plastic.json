@@ -3,7 +3,7 @@
   "ingredients": [
     {
       "amount": 500,
-      "fluids": "#c:naphtha"
+      "fluids": "#c:natural_gas"
     },
     {
       "amount": 250,

@@ -1,0 +1,13 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": "ragium:press_die/unpacking",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:prismarine"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:prismarine_shard"
+  },
+  "time": 200
+}

@@ -1,5 +1,5 @@
 {
-  "type": "ragium:mixing",
+  "type": "ragium:brewing",
   "ingredient": {
     "fluid": {
       "amount": 1000,
@@ -14,25 +14,23 @@
     }
   },
   "result": {
-    "fluid": {
-      "type": "ragium:potion",
-      "amount": 1000,
-      "custom_color": 16750848,
-      "custom_effects": [
-        {
-          "amplifier": 1,
-          "duration": 100,
-          "id": "minecraft:regeneration",
-          "show_icon": true
-        },
-        {
-          "duration": 2400,
-          "id": "minecraft:absorption",
-          "show_icon": true
-        }
-      ],
-      "custom_name": "golden_apple"
-    }
+    "type": "ragium:potion",
+    "amount": 1000,
+    "custom_color": 16750848,
+    "custom_effects": [
+      {
+        "amplifier": 1,
+        "duration": 100,
+        "id": "minecraft:regeneration",
+        "show_icon": true
+      },
+      {
+        "duration": 2400,
+        "id": "minecraft:absorption",
+        "show_icon": true
+      }
+    ],
+    "custom_name": "golden_apple"
   },
   "time": 200
 }

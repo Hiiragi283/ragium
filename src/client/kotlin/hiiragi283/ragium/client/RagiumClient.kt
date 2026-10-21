@@ -5,6 +5,8 @@ import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.event.HTRegisterWidgetRendererEvent
 import hiiragi283.lib.fluid.FluidStackTintSource
 import hiiragi283.lib.fluid.HTFluidModelRegister
+import hiiragi283.lib.gui.HTGuiAccess
+import hiiragi283.lib.gui.HTSpriteRenderHelper
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.mod.HTClientMod
 import hiiragi283.lib.network.HTPayloadHandlers
@@ -27,11 +29,14 @@ import hiiragi283.ragium.client.renderer.HTTankBlockEntityRenderer
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
+import hiiragi283.ragium.common.gui.widget.HTTextureWidget
 import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.common.item.tooltip.HTMemoryDiscTooltipComponent
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import net.minecraft.ChatFormatting
+import net.minecraft.client.gui.GuiGraphicsExtractor
+import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.resources.model.sprite.Material
 import net.minecraft.util.ARGB
 import net.minecraft.world.item.DyeColor
@@ -81,6 +86,19 @@ data object RagiumClient : HTClientMod() {
         event.register(RagiumWidgetTypes.FLUID.get(), ::HTFluidWidgetRenderer)
         event.register(RagiumWidgetTypes.ITEM.get(), ::HTItemWidgetRenderer)
         event.register(RagiumWidgetTypes.PROGRESS.get(), ::HTProgressWidgetRenderer)
+        event.register(RagiumWidgetTypes.TEXTURE.get()) { gui: HTGuiAccess, widget: HTTextureWidget ->
+            Renderable { graphics: GuiGraphicsExtractor, _, _, _ ->
+                val (x: Int, y: Int, width: Int, height: Int) = widget.bounds
+                HTSpriteRenderHelper.blit(
+                    graphics,
+                    widget.textureId,
+                    gui.getLeftPos() + x - 1,
+                    gui.getTopPos() + y - 1,
+                    width,
+                    height
+                )
+            }
+        }
     }
 
     override fun registerFluidModels(register: HTFluidModelRegister) {
@@ -139,7 +157,7 @@ data object RagiumClient : HTClientMod() {
         }
         register.register(RagiumFluids.CHLORINE) {
             transparent()
-            colorTint(Color(0x99cc33))
+            colorTint(Color(0x66cc33))
         }
 
         register.register(RagiumFluids.WOOD_TAR) {
@@ -166,6 +184,10 @@ data object RagiumClient : HTClientMod() {
             molten()
             colorTint(Color(0x333333))
         }
+        register.register(RagiumFluids.NATURAL_GAS) {
+            transparent()
+            colorTint(Color(0xcccccc))
+        }
         register.register(RagiumFluids.NAPHTHA) {
             transparent()
             colorTint(Color(0xff6600))
@@ -185,6 +207,10 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.SYNTHETIC_RESIN) {
             molten()
             colorTint(Color(0xff6633))
+        }
+        register.register(RagiumFluids.AMMONIA) {
+            transparent()
+            colorTint(Color(0x9999cc))
         }
         register.register(RagiumFluids.NITRIC_ACID) {
             dull()
@@ -229,11 +255,11 @@ data object RagiumClient : HTClientMod() {
         }
         register.register(RagiumFluids.HYDROGEN_CHLORIDE) {
             transparent()
-            colorTint(Color(0x66cc33))
+            colorTint(Color(0x99cc66))
         }
         register.register(RagiumFluids.HYDROCHLORIC_ACID) {
             dull()
-            colorTint(Color(0x66cc33))
+            colorTint(Color(0x99cc66))
         }
         register.register(RagiumFluids.BLEACH) {
             dull()

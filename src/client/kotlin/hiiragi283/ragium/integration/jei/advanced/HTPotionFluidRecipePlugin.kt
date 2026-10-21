@@ -42,7 +42,7 @@ data object HTPotionFluidRecipePlugin : IRecipeManagerPlugin {
                 HTBottleType.entries.map { bottleType: HTBottleType ->
                     RagiumRecipeBuilders.filling {
                         itemIngredient { items { +bottleType.emptyItem } }
-                        fluidIngredient = HTJeiRecipeHelper.fakeFluid(stackFocused)
+                        +HTJeiRecipeHelper.fakeFluid(stackFocused)
                         result {
                             bottleType.filledItem
                                 .asTemplate(patch = potionPatch)

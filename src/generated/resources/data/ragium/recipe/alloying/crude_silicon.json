@@ -1,0 +1,26 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "#c:dusts/silica"
+    },
+    {
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/coal_coke",
+          "c:dusts/pitch_coke",
+          "c:dusts/carbon",
+          "ragium:cokes"
+        ]
+      }
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:crude_silicon"
+  },
+  "time": 200
+}

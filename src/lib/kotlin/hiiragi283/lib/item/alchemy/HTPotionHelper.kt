@@ -1,7 +1,9 @@
 package hiiragi283.lib.item.alchemy
 
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.text.Text
+import hiiragi283.lib.util.fold
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentGetter
 import net.minecraft.core.component.DataComponentPatch
@@ -54,6 +56,18 @@ data object HTPotionHelper {
 
     @JvmStatic
     fun hasAnyEffect(getter: DataComponentGetter): Boolean = !getContentsOrEmpty(getter).let(::isEmpty)
+
+    /**
+     * @since 26.1.11
+     */
+    @Suppress("DEPRECATION")
+    @JvmStatic
+    fun isWater(potion: Holder<Potion>): Boolean = potion.`is`(HTConstants.Keys.WATER) || potion.`is`(Potions.WATER)
+
+    /**
+     * @since 26.1.11
+     */
+    fun isWater(contents: PotionContents): Boolean = contents.potion().fold({ false }, ::isWater)
 
     // Patch
     @JvmStatic
@@ -113,7 +127,6 @@ data object HTPotionHelper {
     fun createBuket(getter: DataComponentGetter): Result<ItemStackTemplate> =
         getContentsOrEmpty(getter).let(::createBuket)
 
-    @Suppress("DEPRECATION")
     @JvmStatic
     fun createBuket(potion: Holder<Potion>): Result<ItemStackTemplate> = createBuket(PotionContents(potion))
 
@@ -121,7 +134,7 @@ data object HTPotionHelper {
     fun createBuket(contents: PotionContents): Result<ItemStackTemplate> = when {
         isEmpty(contents) -> Result.failure(IllegalStateException("Could not create Filled Bucket for empty potion"))
 
-        contents.`is`(Potions.WATER) -> Result.success(ItemStackTemplate(Items.WATER_BUCKET))
+        isWater(contents) -> Result.success(ItemStackTemplate(Items.WATER_BUCKET))
 
         else -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.asTemplate(
             patch = createPotionPatch(contents)
@@ -134,10 +147,9 @@ data object HTPotionHelper {
     fun createFluid(getter: DataComponentGetter, amount: Int = FluidType.BUCKET_VOLUME): Result<FluidStackTemplate> =
         createFluid(getContentsOrEmpty(getter), amount)
 
-    @Suppress("DEPRECATION")
     @JvmStatic
     fun createFluid(potion: Holder<Potion>, amount: Int = FluidType.BUCKET_VOLUME): Result<FluidStackTemplate> = when {
-        potion.`is`(Potions.WATER) -> Result.success(FluidStackTemplate(Fluids.WATER, amount))
+        isWater(potion) -> Result.success(FluidStackTemplate(Fluids.WATER, amount))
         else -> HTPotionFluidAccess.INSTANCE.fluidContent.asTemplate(amount, createPotionPatch(potion))
     }
 
@@ -145,7 +157,7 @@ data object HTPotionHelper {
     fun createFluid(contents: PotionContents, amount: Int = FluidType.BUCKET_VOLUME): Result<FluidStackTemplate> =
         when {
             isEmpty(contents) -> Result.failure(IllegalStateException("Could not create FluidStack for empty potion"))
-            contents.`is`(Potions.WATER) -> Result.success(FluidStackTemplate(Fluids.WATER, amount))
+            isWater(contents) -> Result.success(FluidStackTemplate(Fluids.WATER, amount))
             else -> HTPotionFluidAccess.INSTANCE.fluidContent.asTemplate(amount, createPotionPatch(contents))
         }
 }

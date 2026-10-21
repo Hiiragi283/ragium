@@ -1,0 +1,18 @@
+{
+  "type": "ragium:bathing",
+  "ingredient": {
+    "fluid": {
+      "amount": 180,
+      "fluids": "#c:molten_plastic"
+    },
+    "item": {
+      "count": 1,
+      "items": "ragium:machine_parts/chemical"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:machine_parts/resource"
+  },
+  "time": 200
+}

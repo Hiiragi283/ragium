@@ -1,13 +1,15 @@
 {
   "type": "ragium:assembling",
-  "extra": {
-    "count": 3,
-    "items": "#c:nuggets/iron"
-  },
-  "ingredient": {
-    "count": 1,
-    "items": "#c:ingots/iron"
-  },
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "#c:ingots/iron"
+    },
+    {
+      "count": 3,
+      "items": "#c:nuggets/iron"
+    }
+  ],
   "result": {
     "count": 3,
     "id": "minecraft:iron_chain"

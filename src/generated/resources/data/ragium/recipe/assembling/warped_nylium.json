@@ -1,13 +1,15 @@
 {
   "type": "ragium:assembling",
-  "extra": {
-    "count": 1,
-    "items": "minecraft:warped_fungus"
-  },
-  "ingredient": {
-    "count": 1,
-    "items": "#c:netherracks"
-  },
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "#c:netherracks"
+    },
+    {
+      "count": 1,
+      "items": "minecraft:warped_fungus"
+    }
+  ],
   "result": {
     "count": 1,
     "id": "minecraft:warped_nylium"

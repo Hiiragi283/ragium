@@ -1,0 +1,24 @@
+{
+  "type": "ragium:electrolyzing",
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:salt_water"
+  },
+  "result": {
+    "fluids": [
+      {
+        "amount": 500,
+        "id": "ragium:hydrogen"
+      },
+      {
+        "amount": 500,
+        "id": "ragium:chlorine"
+      }
+    ],
+    "item": {
+      "count": 1,
+      "id": "ragium:sodium_hydroxide"
+    }
+  },
+  "time": 200
+}

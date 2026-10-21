@@ -3,9 +3,10 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.recipe.HTRecipeFactory
 import hiiragi283.lib.recipe.base.HTProgressRecipe
+import hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
+import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
 import hiiragi283.lib.transfer.fluid.HTFluidTank
@@ -21,7 +22,6 @@ import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
@@ -30,11 +30,16 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBaseMachineBlockEntity(type, pos, state) {
-    protected lateinit var recipeHandler: HTRecipeHandler<*, *, *>
+    protected val recipeHandler: HTRecipeHandler by lazy(::createRecipeHandler)
+
+    protected abstract fun createRecipeHandler(): HTRecipeHandler
 
     final override fun createFluidHandler(listener: Runnable): HTResourceSlotHolder<HTFluidTank>? {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
-        createFluidTanks(builder, recipeHandler.createListener(listener))
+        createFluidTanks(builder) {
+            recipeHandler.run()
+            listener.run()
+        }
         return builder.build()
     }
 
@@ -42,14 +47,17 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
     final override fun createItemHandler(listener: Runnable): HTResourceSlotHolder<HTItemSlot>? {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
-        createItemSlots(builder, recipeHandler.createListener(listener))
+        createItemSlots(builder) {
+            recipeHandler.run()
+            listener.run()
+        }
         return builder.build()
     }
 
     protected open fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {}
 
     fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(3.75)) {
-        widgetHolder += HTProgressWidget.createArrow(recipeHandler::progression, x, HTSlotHelper.getSlotPosY(1))
+        widgetHolder += HTProgressWidget(recipeHandler::progression, x, HTSlotHelper.getSlotPosY(1))
     }
 
     override fun writeValue(output: ValueOutput) {
@@ -109,20 +117,12 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             input.readChild(HTConstants.ENERGY, handler)
         }
 
-        //    EnergizedHandler    //
+        //    EnergizedProgressor    //
 
-        abstract inner class EnergizedHandler<INPUT : RecipeInput, OUTPUT : Any, RECIPE> :
-            HTRecipeHandler<INPUT, OUTPUT, RECIPE>()
-            where RECIPE : HTRecipeFactory<INPUT, OUTPUT>,
-                  RECIPE : HTProgressRecipe<INPUT> {
-            private val baseEnergyPerTick: Int = getConfig().getUsage()
-            private val currentEnergyPerTick: Int
+        protected abstract inner class EnergyProgressor : HTRecipeHandler.Progressor {
+            protected val baseEnergyPerTick: Int = getConfig().getUsage()
+            protected val currentEnergyPerTick: Int
                 get() = HTMachineUpgradeHelper.modifySpeed(components(), this.baseEnergyPerTick)
-
-            final override fun getMaxProgress(recipe: RECIPE, input: INPUT): Int {
-                val requiredEnergy: Int = recipe.getProgressData(input).getTotalEnergy(this.baseEnergyPerTick)
-                return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
-            }
 
             final override fun getProgress(): Int = useTransaction { transaction: Transaction ->
                 val extracted: Int = handler.extract(currentEnergyPerTick, transaction, HTTransferAccess.INTERNAL)
@@ -130,6 +130,28 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
                     transaction.commit()
                 }
                 extracted
+            }
+        }
+
+        protected inner class SingleProgressor<INPUT : Any, RECIPE : HTProgressRecipe.Single<*, INPUT>> :
+            EnergyProgressor(),
+            HTSingleRecipeHandler.Progressor<INPUT, RECIPE> {
+            override fun getMaxProgress(recipe: RECIPE, input: INPUT): Int {
+                val requiredEnergy: Int = recipe.getProgressData(input).getTotalEnergy(this.baseEnergyPerTick)
+                return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
+            }
+        }
+
+        protected inner class DoubleProgressor<
+            INPUT_A : Any,
+            INPUT_B : Any,
+            RECIPE : HTProgressRecipe.Double<*, INPUT_A, INPUT_B>
+            > :
+            EnergyProgressor(),
+            HTDoubleRecipeHandler.Progressor<INPUT_A, INPUT_B, RECIPE> {
+            override fun getMaxProgress(recipe: RECIPE, first: INPUT_A, second: INPUT_B): Int {
+                val requiredEnergy: Int = recipe.getProgressData(first, second).getTotalEnergy(this.baseEnergyPerTick)
+                return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
             }
         }
     }

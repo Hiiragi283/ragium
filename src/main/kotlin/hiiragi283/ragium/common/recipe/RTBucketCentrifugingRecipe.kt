@@ -5,14 +5,13 @@ import hiiragi283.lib.item.createOrEmpty
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
-import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
-data object RTBucketCentrifugingRecipe : RTCentrifugingRecipe, HTProgressRecipe.Simple<HTRecipeInput> {
+data object RTBucketCentrifugingRecipe : RTCentrifugingRecipe, HTProgressRecipe.Holder {
     override fun test(input: ItemInstance): Boolean = when {
         input.craftingRemainder?.`is`(Tags.Items.BUCKETS_EMPTY) ?: false ->
             HTIngredientHelper.unwrap(input).let(HTFluidCapabilities::getCapability)?.size() == 1
@@ -29,6 +28,8 @@ data object RTBucketCentrifugingRecipe : RTCentrifugingRecipe, HTProgressRecipe.
         test(input) -> HTIngredientHelper.copyWithCount(input, 1)
         else -> ItemStack.EMPTY
     }
+
+    override fun getProgressData(input: ItemInstance): HTProgressData = progressData
 
     override val progressData: HTProgressData = HTProgressData.time(60)
 }

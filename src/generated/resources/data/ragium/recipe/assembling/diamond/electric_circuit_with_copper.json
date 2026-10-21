@@ -1,0 +1,22 @@
+{
+  "type": "ragium:assembling",
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "ragium:circuit_board"
+    },
+    {
+      "count": 9,
+      "items": "#c:nuggets/copper"
+    },
+    {
+      "count": 1,
+      "items": "ragium:diamond_chip"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:electric_circuit"
+  },
+  "time": 200
+}

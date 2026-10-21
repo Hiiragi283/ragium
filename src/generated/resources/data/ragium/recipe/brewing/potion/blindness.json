@@ -1,5 +1,5 @@
 {
-  "type": "ragium:mixing",
+  "type": "ragium:brewing",
   "ingredient": {
     "fluid": {
       "amount": 1000,
@@ -14,18 +14,16 @@
     }
   },
   "result": {
-    "fluid": {
-      "type": "ragium:potion",
-      "amount": 1000,
-      "custom_effects": [
-        {
-          "duration": 900,
-          "id": "minecraft:blindness",
-          "show_icon": true
-        }
-      ],
-      "custom_name": "blindness"
-    }
+    "type": "ragium:potion",
+    "amount": 1000,
+    "custom_effects": [
+      {
+        "duration": 900,
+        "id": "minecraft:blindness",
+        "show_icon": true
+      }
+    ],
+    "custom_name": "blindness"
   },
   "time": 200
 }

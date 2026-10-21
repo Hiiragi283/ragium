@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.RecipeType
  * @author Hiiragi Tsubasa
  * @since 26.1.6
  */
-abstract class HTDoubleItemToRecipeCategory<RECIPE : HTProgressRecipe.Simple<*>>(
+abstract class HTDoubleItemToRecipeCategory<RECIPE : HTProgressRecipe.Holder>(
     recipeType: HTRecipeHolderType<RECIPE>,
     recipeType1: RecipeType<*>,
     icon: IDrawable,

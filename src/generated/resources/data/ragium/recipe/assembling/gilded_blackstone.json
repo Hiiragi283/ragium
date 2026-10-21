@@ -1,13 +1,15 @@
 {
   "type": "ragium:assembling",
-  "extra": {
-    "count": 8,
-    "items": "#c:dusts/gold"
-  },
-  "ingredient": {
-    "count": 1,
-    "items": "minecraft:blackstone"
-  },
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "minecraft:blackstone"
+    },
+    {
+      "count": 8,
+      "items": "#c:dusts/gold"
+    }
+  ],
   "result": {
     "count": 1,
     "id": "minecraft:gilded_blackstone"

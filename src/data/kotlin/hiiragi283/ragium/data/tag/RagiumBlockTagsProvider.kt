@@ -23,7 +23,7 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
         // Mineable
         val pickaxe: HTTagBuilder<Block> = builder(BlockTags.MINEABLE_WITH_PICKAXE)
         sequence {
-            yieldAll(RagiumBlocks.MATERIAL_ORES.values)
+            // yieldAll(RagiumBlocks.MATERIAL_ORES.values)
             yieldAll(RagiumBlocks.STORAGE_BLOCKS.values)
             yield(RagiumBlocks.ECHO_BLOCK)
             yield(RagiumBlocks.QUARTZ_GLASS)
@@ -33,8 +33,6 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yieldAll(RagiumBlocks.MACHINES.values.flatten())
             yield(RagiumBlocks.MACHINE_CASING)
             yieldAll(RagiumBlocks.MACHINE_CASINGS.values)
-
-            yield(RagiumBlocks.FLUID_OUTPUT_BUS)
 
             yieldAll(RagiumBlocks.TANKS)
             yield(RagiumBlocks.CREATIVE_BATTERY)

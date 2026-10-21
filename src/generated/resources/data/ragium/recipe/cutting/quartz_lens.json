@@ -1,0 +1,18 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": {
+    "count": 1,
+    "items": "#ragium:quartz_blocks"
+  },
+  "results": [
+    {
+      "count": 1,
+      "id": "ragium:quartz_lens"
+    },
+    {
+      "count": 1,
+      "id": "ragium:silica_dust"
+    }
+  ],
+  "time": 200
+}

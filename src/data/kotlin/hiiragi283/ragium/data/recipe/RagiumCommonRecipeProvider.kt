@@ -8,14 +8,13 @@ import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
+import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
@@ -81,7 +80,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.QUARTZ) }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
                 count = 4
             }
             result { +Items.GOLD_NUGGET }
@@ -111,10 +110,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.COPPER)
                 count = 3
             }
-            result {
-                +Items.GOLD_NUGGET
-                count = 3
-            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.NICKEL) }
             recipeId suffix "_from_ore"
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
@@ -132,6 +128,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.GOLD)
                 count = 2
             }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.SILVER) }
             recipeId suffix "_from_ore"
         }.save(exporter)
         // Alloying
@@ -150,7 +147,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.forEach { (material: HTMaterialLike, result: Item, count: Int) ->
             RagiumRecipeBuilders.alloying {
                 ingredient { +holderSet(CommonTagPrefixes.ORE, material) }
-                extra { +holderSet(RagiumTags.Items.SMELTING_FLUXES) }
+                ingredient { +holderSet(RagiumTags.Items.SMELTING_FLUXES) }
                 result {
                     +result
                     this.count = count
@@ -164,6 +161,11 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         // Crushing
         for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
+            val extraDust: HTSimpleDeferredItem? = when (metal) {
+                RagiumMaterial.Metal.COPPER -> RagiumMaterial.Metal.NICKEL
+                RagiumMaterial.Metal.GOLD -> RagiumMaterial.Metal.SILVER
+                else -> null
+            }?.let { RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, it] }
             // 3x Raw -> 4x Dust
             RagiumRecipeBuilders.crushing {
                 ingredient {
@@ -174,6 +176,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     +dust
                     count = 4
                 }
+                extraDust?.asTemplate()?.getOrNull()?.let { result { from(it) } }
                 recipeId suffix "_from_raw"
                 condition { itemTagPresent(CommonTagPrefixes.RAW_MATERIALS, metal) }
             }.save(exporter)
@@ -184,6 +187,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     +dust
                     count = 12
                 }
+                extraDust?.asTemplate(3)?.getOrNull()?.let { result { from(it) } }
                 recipeId suffix "_from_raw_block"
                 condition { itemTagPresent(CommonTagPrefixes.RAW_STORAGE_BLOCK, metal) }
             }.save(exporter)
@@ -230,6 +234,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.ALCOHOL
                 amount = 500
             }
+            fluidResult {
+                +RagiumFluids.AROMATIC_COMPOUND
+                amount = 500
+            }
             recipeId replace RagiumFluids.WOOD_TAR.id()
         }.save(exporter)
     }
@@ -264,13 +272,16 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             time = time / 2 * 9
         }.save(exporter)
 
-        // Coal Tar -> Aromatic Compound + Pitch Coke
+        // Coal Tar -> Natural Gas + Aromatic Compound
         RagiumRecipeBuilders.refining {
             ingredient { +holderSet(RagiumFluids.COAL_TAR) }
-            itemResult { +RagiumItems.PITCH_COKE }
+            fluidResult {
+                +RagiumFluids.NATURAL_GAS
+                amount = 500
+            }
             fluidResult {
                 +RagiumFluids.AROMATIC_COMPOUND
-                amount = 250
+                amount = 500
             }
             recipeId replace RagiumFluids.COAL_TAR.id()
         }.save(exporter)
@@ -278,6 +289,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun oilRefining() {
         plastic()
+        resin()
 
         // Soul Sand -> Sand + Crude Oil
         RagiumRecipeBuilders.centrifuging {
@@ -299,9 +311,13 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             recipeId replace id("crude_oil_from_soul_soil")
         }.save(exporter)
-        // Crude Oil -> Naphtha + Residue Oil
+        // Crude Oil -> Natural Gas + Naphtha + Residue Oil
         RagiumRecipeBuilders.refining {
             ingredient { +holderSet(RagiumFluids.CRUDE_OIL) }
+            fluidResult {
+                +RagiumFluids.NATURAL_GAS
+                amount = 250
+            }
             fluidResult {
                 +RagiumFluids.NAPHTHA
                 amount = 750
@@ -318,7 +334,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.FUEL
                 amount = 500
             }
-            recipeId replace RagiumFluids.NAPHTHA.id()
+            recipeId suffix "_from_naphtha"
         }.save(exporter)
         // Naphtha + Redstone -> Anti-rust Oil
         RagiumRecipeBuilders.mixing {
@@ -327,11 +343,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.ANTI_RUST_OIL }
         }.save(exporter)
 
-        // Tar -> Aromatic Compound + Pitch Coke
+        // Tar -> Pitch Coke
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { items { +RagiumItems.TAR } }
             itemResult { +RagiumItems.PITCH_COKE }
-            fluidResult { +RagiumFluids.AROMATIC_COMPOUND }
             recipeId suffix "_from_tar"
         }.save(exporter)
         // Tar + H2 -> Fuel
@@ -347,10 +362,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun plastic() {
-        // Naphtha + O2 -> Molten Plastic
+        // Natural Gas + O2 -> Molten Plastic
         RagiumRecipeBuilders.reacting {
             ingredient {
-                +holderSet(RagiumFluids.NAPHTHA)
+                +holderSet(RagiumFluids.NATURAL_GAS)
                 amount /= 2
             }
             ingredient {
@@ -370,32 +385,62 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount = 90
             }
         }.save(exporter)
+        RagiumRecipeBuilders.melting {
+            ingredient {
+                items {
+                    +RagiumItems.SYNTHETIC_FEATHER
+                    +RagiumItems.SYNTHETIC_LEATHER
+                    +RagiumItems.SYNTHETIC_FIBER
+                }
+            }
+            result {
+                +RagiumFluids.MOLTEN_PLASTIC
+                amount = 90
+            }
+            recipeId suffix "_from_synthetic_parts"
+        }.save(exporter)
+
         val moltenPlastic = HTFluidIngredient(FluidIngredient.of(holderSet(RagiumFluids.MOLTEN_PLASTIC)), 90)
         RagiumRecipeBuilders.freezing {
-            ingredient = moltenPlastic
+            +moltenPlastic
             catalyst { items { +RagiumItems.PLATE_MOLD } }
             result { +RagiumItems.PLASTIC_PLATE }
         }.save(exporter)
         // Plastic -> Synthetic XX
         RagiumRecipeBuilders.freezing {
-            ingredient = moltenPlastic
+            +moltenPlastic
             catalyst { +holderSet(Tags.Items.FEATHERS) }
             result { +RagiumItems.SYNTHETIC_FEATHER }
         }.save(exporter)
         RagiumRecipeBuilders.freezing {
-            ingredient = moltenPlastic
+            +moltenPlastic
             catalyst { +holderSet(Tags.Items.LEATHERS) }
             result { +RagiumItems.SYNTHETIC_LEATHER }
         }.save(exporter)
         RagiumRecipeBuilders.freezing {
-            ingredient = moltenPlastic
+            +moltenPlastic
             catalyst { +holderSet(Tags.Items.STRINGS) }
             result { +RagiumItems.SYNTHETIC_FIBER }
         }.save(exporter)
+    }
 
-        // Alcohol -> Aldehyde
-        RagiumRecipeBuilders.refining {
+    private fun resin() {
+        // Natural Gas + H2O -> Alcohol
+        RagiumRecipeBuilders.reacting {
+            ingredient { +holderSet(RagiumFluids.NATURAL_GAS) }
+            ingredient {
+                +waterSet()
+                amount /= 2
+            }
+            fluidResult { +RagiumFluids.ALCOHOL }
+        }.save(exporter)
+        // Alcohol + O2 -> Aldehyde
+        RagiumRecipeBuilders.reacting {
             ingredient { +holderSet(RagiumTags.Fluids.ALCOHOLS) }
+            ingredient {
+                +holderSet(RagiumFluids.OXYGEN)
+                amount /= 2
+            }
             fluidResult { +RagiumFluids.ALDEHYDE }
         }.save(exporter)
         // Aromatic Compound + Aldehyde -> Synthetic Resin
@@ -406,17 +451,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.SYNTHETIC_RESIN
                 amount *= 2
             }
-        }.save(exporter)
-
-        // Synthetic Fiber + Nitrogen -> Carbon Fiber
-        // Carbon Fiber + Resin -> CFRP Plate
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { items { +RagiumItems.CARBON_FIBER } }
-            fluidIngredient {
-                +holderSet(RagiumTags.Fluids.RESINS)
-                amount /= 4
-            }
-            result { +RagiumItems.CFRP_PLATE }
         }.save(exporter)
     }
 
@@ -436,7 +470,65 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         calcium()
     }
 
+    private fun saltAndSolution(fluid: HTFluidContent, item: HTSimpleDeferredItem) {
+        // Salt + Water -> Salt (aq)
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { items { +item } }
+            fluidIngredient { +waterSet() }
+            fluidResult { +fluid }
+        }.save(exporter)
+        // Salt (aq) -> Salt + Water
+        RagiumRecipeBuilders.refining {
+            ingredient { +holderSet(fluid) }
+            fluidResult { water() }
+            itemResult { +item }
+            recipeId replace item.id.withSuffix("_from_solution")
+        }.save(exporter)
+    }
+
+    private fun saltAndSolution(fluid: HTFluidContent, material: RagiumMaterial) {
+        // Salt + Water -> Salt (aq)
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, material) }
+            fluidIngredient { +waterSet() }
+            fluidResult { +fluid }
+        }.save(exporter)
+        // Salt (aq) -> Salt + Water
+        val item: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, material)
+        RagiumRecipeBuilders.refining {
+            ingredient { +holderSet(fluid) }
+            fluidResult { water() }
+            itemResult { +item }
+            recipeId replace item.id.withSuffix("_from_solution")
+        }.save(exporter)
+    }
+
     private fun nitrogen() {
+        // 3x H2 + N2 -> 2x NH3
+        RagiumRecipeBuilders.reacting {
+            ingredient {
+                +holderSet(RagiumFluids.HYDROGEN)
+                amount *= 3
+            }
+            ingredient { +holderSet(RagiumFluids.NITROGEN) }
+            catalyst { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.IRON) }
+            fluidResult {
+                +RagiumFluids.AMMONIA
+                amount *= 2
+            }
+        }.save(exporter)
+        // NH3 + O2 -> HNO3
+        RagiumRecipeBuilders.reacting {
+            ingredient {
+                +holderSet(RagiumFluids.AMMONIA)
+                amount /= 2
+            }
+            ingredient { +holderSet(RagiumFluids.OXYGEN) }
+            fluidResult {
+                +RagiumFluids.NITRIC_ACID
+                amount /= 2
+            }
+        }.save(exporter)
         // 1/2 H2SO4 + KNO3 -> HNO3
         RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
@@ -445,7 +537,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount /= 2
             }
             fluidResult { +RagiumFluids.NITRIC_ACID }
-            recipeId suffix "_from_niter"
+            recipeId suffix "_from_salt"
         }.save(exporter)
     }
 
@@ -475,22 +567,26 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     private fun fluorine() {
         // CaF2 + H2SO4 -> 2x HF + CaSO4
         RagiumRecipeBuilders.mixing {
-            itemIngredient { +dustOrGem(RagiumMaterial.Gem.FLUORITE) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.FLUORITE) }
             fluidIngredient { +holderSet(RagiumFluids.SULFURIC_ACID) }
             fluidResult {
                 +RagiumFluids.HYDROGEN_FLUORIDE
                 amount *= 2
             }
+            recipeId suffix "_from_salt"
         }.save(exporter)
         // HF + H2O -> HF(aq)
-        RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.HYDROGEN_FLUORIDE) }
-            ingredient { +waterSet() }
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.HYDROGEN_FLUORIDE) }
+            fluidIngredient { +waterSet() }
             fluidResult { +RagiumFluids.HYDROFLUORIC_ACID }
         }.save(exporter)
     }
 
     private fun sodium() {
+        // NaOH (aq)
+        saltAndSolution(RagiumFluids.NAOH_SOLUTION, RagiumItems.SODIUM_HYDROXIDE)
+
         // Dried Kelp -> Na2CO3
         VanillaRecipeBuilders.smeltingAndBlasting(exporter) {
             ingredient { items { +Items.DRIED_KELP } }
@@ -505,15 +601,15 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount *= 2
             }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SODA_ASH) }
-            recipeId replace RagiumFluids.NAOH_SOLUTION.id()
+            recipeId replace id("soda_ash_dust")
         }.save(exporter)
         // SiO2 + Na2CO3 -> Glass
         RagiumRecipeBuilders.alloying {
             ingredient {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.QUARTZ)
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICA)
                 count = 2
             }
-            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SODA_ASH) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SODA_ASH) }
             result {
                 +Items.GLASS
                 count = 6
@@ -560,7 +656,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             recipeId replace RagiumFluids.ALUMINA_SOLUTION.id()
         }.save(exporter)
         // Al(OH)3 (aq) + HF (aq) -> AlF3 (aq)
-        RagiumRecipeBuilders.reacting {
+        RagiumRecipeBuilders.mixing {
             primaryIngredient { +holderSet(RagiumFluids.ALUMINA_SOLUTION) }
             secondaryIngredient {
                 +holderSet(RagiumFluids.HYDROFLUORIC_ACID)
@@ -618,9 +714,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     private fun silica() {
         // Glass -> Molten Glass
         RagiumRecipeBuilders.melting {
-            ingredient {
-                +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP, CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Other.GLASS))
-            }
+            ingredient { +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP) }
             result { +RagiumFluids.MOLTEN_GLASS }
             recipeId suffix "_from_block"
         }.save(exporter)
@@ -660,25 +754,12 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // SiO2 + Sand -> Quartz Glass
         RagiumRecipeBuilders.alloying {
-            ingredient { +dustOrGem(RagiumMaterial.Gem.QUARTZ) }
-            extra { +holderSet(Tags.Items.SANDS) }
-            result { +RagiumBlocks.QUARTZ_GLASS }
-            recipeId suffix "_from_quartz"
-        }.save(exporter)
-        RagiumRecipeBuilders.alloying {
-            ingredient {
-                +dustOrGem(RagiumMaterial.Gem.AMETHYST)
-                count = 4
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICA) }
+            ingredient { +holderSet(Tags.Items.SANDS) }
+            result {
+                +RagiumBlocks.QUARTZ_GLASS
+                count = 2
             }
-            extra { +holderSet(Tags.Items.SANDS) }
-            result { +RagiumBlocks.QUARTZ_GLASS }
-            recipeId suffix "_from_amethyst"
-        }.save(exporter)
-        RagiumRecipeBuilders.alloying {
-            ingredient { items { +Items.AMETHYST_BLOCK } }
-            extra { +holderSet(Tags.Items.SANDS) }
-            result { +RagiumBlocks.QUARTZ_GLASS }
-            recipeId suffix "_from_amethyst_block"
         }.save(exporter)
     }
 
@@ -689,9 +770,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.SULFUR_DIOXIDE }
         }.save(exporter)
         // SO2 + 1/2 O2 -> SO3
-        RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
-            ingredient {
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
+            fluidIngredient {
                 +holderSet(RagiumFluids.OXYGEN)
                 amount /= 2
             }
@@ -703,21 +784,16 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
         }.save(exporter)
         // SO3 + H2O -> H2SO4
-        RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.SULFUR_TRIOXIDE) }
-            ingredient { +waterSet() }
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.SULFUR_TRIOXIDE) }
+            fluidIngredient { +waterSet() }
             fluidResult { +RagiumFluids.SULFURIC_ACID }
         }.save(exporter)
     }
 
     private fun chlorine() {
-        // NaCl(aq) -> H2O + NaCl
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.SALT_WATER) }
-            fluidResult { water() }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SALT) }
-            recipeId replace RagiumFluids.SALT_WATER.id()
-        }.save(exporter)
+        // NaCl(aq)
+        saltAndSolution(RagiumFluids.SALT_WATER, RagiumMaterial.Mineral.SALT)
 
         // 2x NaCl + H2SO4 -> 2x HCl + Na2SO4
         RagiumRecipeBuilders.mixing {
@@ -727,53 +803,52 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 amount /= 2
             }
             fluidResult { +RagiumFluids.HYDROGEN_CHLORIDE }
+            recipeId suffix "_from_salt"
         }.save(exporter)
 
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
         RagiumRecipeBuilders.electrolyzing {
             ingredient { +holderSet(RagiumFluids.SALT_WATER) }
-            result {
+            fluidResult {
                 +RagiumFluids.HYDROGEN
                 amount /= 2
             }
-            result {
+            fluidResult {
                 +RagiumFluids.CHLORINE
                 amount /= 2
             }
-            result { +RagiumFluids.NAOH_SOLUTION }
-            recipeId suffix "_from_salt_water"
+            itemResult { +RagiumItems.SODIUM_HYDROXIDE }
+            recipeId replace id("salt_water")
         }.save(exporter)
 
         // H2 + Cl2 -> 2x HCl
-        RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.HYDROGEN) }
-            ingredient { +holderSet(RagiumFluids.CHLORINE) }
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.HYDROGEN) }
+            fluidIngredient { +holderSet(RagiumFluids.CHLORINE) }
             fluidResult {
                 +RagiumFluids.HYDROGEN_CHLORIDE
                 amount *= 2
             }
         }.save(exporter)
         // HCl + H2O -> HCl(aq)
-        RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.HYDROGEN_CHLORIDE) }
-            ingredient { +waterSet() }
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.HYDROGEN_CHLORIDE) }
+            fluidIngredient { +waterSet() }
             fluidResult { +RagiumFluids.HYDROCHLORIC_ACID }
         }.save(exporter)
 
         // Cl2 + 2x NaOH(aq) -> 2x NaClO(aq) + H2
+        RagiumRecipeBuilders.reacting {
+            ingredient {
+                +holderSet(RagiumFluids.CHLORINE)
+                amount /= 2
+            }
+            ingredient { +holderSet(RagiumFluids.NAOH_SOLUTION) }
+            fluidResult { +RagiumFluids.BLEACH }
+        }.save(exporter)
     }
 
     private fun calcium() {
-        // Calcite / Dripstone -> CaCO3
-        RagiumRecipeBuilders.crushing {
-            ingredient {
-                items {
-                    +Items.CALCITE
-                    +Items.DRIPSTONE_BLOCK
-                }
-            }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.LIME) }
-        }.save(exporter)
         // CaCO3 -> CaO + CO2
         VanillaRecipeBuilders.smeltingAndBlasting(exporter) {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.LIME) }
@@ -794,53 +869,25 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun electronics() {
         silicon()
+        diamond()
     }
 
     private fun silicon() {
-        val dustOrCoke: HTMaterialTagsIngredient = materialTags(
-            nelOf(
-                CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL_COKE),
-                CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.PITCH_COKE),
-                RagiumTags.Items.COKES
-            )
-        )
-        // Quartz + Coal Coke -> Crude Si
+        // SiO2 + C -> Si + CO2
         RagiumRecipeBuilders.alloying {
-            ingredient { +dustOrGem(RagiumMaterial.Gem.QUARTZ) }
-            extra { +dustOrCoke }
-            result { +RagiumItems.CRUDE_SILICON }
-            recipeId suffix "_from_quartz"
-        }.save(exporter)
-        RagiumRecipeBuilders.alloying {
-            ingredient { +holderSet(RagiumTags.BlockItems.QUARTZ_BLOCKS.item) }
-            extra {
-                +dustOrCoke
-                count = 4
-            }
-            result {
-                +RagiumItems.CRUDE_SILICON
-                count = 4
-            }
-            time *= 4
-            recipeId suffix "_from_quartz_block"
-        }.save(exporter)
-        // Amethyst + Coal Coke -> Crude Si
-        RagiumRecipeBuilders.alloying {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICA) }
             ingredient {
-                +dustOrGem(RagiumMaterial.Gem.AMETHYST)
-                count = 4
+                +materialTags(
+                    nelOf(
+                        CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL_COKE),
+                        CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.PITCH_COKE),
+                        CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Chemicals.CARBON),
+                        RagiumTags.Items.COKES
+                    )
+                )
             }
-            extra { +dustOrCoke }
             result { +RagiumItems.CRUDE_SILICON }
-            recipeId suffix "_from_amethyst"
         }.save(exporter)
-        RagiumRecipeBuilders.alloying {
-            ingredient { items { +Items.AMETHYST_BLOCK } }
-            extra { +dustOrCoke }
-            result { +RagiumItems.CRUDE_SILICON }
-            recipeId suffix "_from_amethyst_block"
-        }.save(exporter)
-
         // Crude Si + HCl -> Si Dust
         RagiumRecipeBuilders.bathing {
             itemIngredient { +holderSet(HTCommonTags.Items.SILICON) }
@@ -856,10 +903,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICON)
                 count = 8
             }
-            extra { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.RAGINITE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.RAGINITE) }
             result { +RagiumItems.SILICON_WAFER }
         }.save(exporter)
-        // Silicon Wafer -> Circuit Chip
+        // Silicon Wafer -> Silicon Chip
         RagiumRecipeBuilders.cutting {
             ingredient { items { +RagiumItems.SILICON_WAFER } }
             result {
@@ -868,58 +915,134 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
 
-        // Plastic + Gold Dust -> Circuit Board
+        // Plastic + SiO2 Dust -> Circuit Board
         RagiumRecipeBuilders.alloying {
             ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
-            extra { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.SILICA) }
             result { +RagiumItems.CIRCUIT_BOARD }
         }.save(exporter)
-        // Silicon Chip + Circuit Board -> Electric Circuit
+        // Circuit Board + Wiring Metal + Silicon Chip -> Electric Circuit
         RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
             ingredient {
-                items { +RagiumItems.SILICON_CHIP }
-                count = 2
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.COPPER)
+                count = 9
             }
-            extra { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient { items { +RagiumItems.SILICON_CHIP } }
             result { +RagiumItems.ELECTRIC_CIRCUIT }
-            recipeId suffix "_with_board"
+            recipeId prefix "silicon/"
+            recipeId suffix "_with_copper"
         }.save(exporter)
-        // Plastic + Silicon Chip + Gold Nugget -> Electric Circuit
         RagiumRecipeBuilders.assembling {
-            ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
-            extra {
-                items { +RagiumItems.SILICON_CHIP }
-                count = 2
-            }
-            extra {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
                 +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.GOLD)
+                count = 6
+            }
+            ingredient { items { +RagiumItems.SILICON_CHIP } }
+            result { +RagiumItems.ELECTRIC_CIRCUIT }
+            recipeId prefix "silicon/"
+            recipeId suffix "_with_gold"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SILVER)
                 count = 3
             }
+            ingredient { items { +RagiumItems.SILICON_CHIP } }
             result { +RagiumItems.ELECTRIC_CIRCUIT }
-        }.save(exporter)
-        // Machine Parts
-        RagiumRecipeBuilders.assembling {
-            ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL)
-                count = 2
-            }
-            extra { items { +RagiumItems.ELECTRIC_CIRCUIT } }
-            result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
-            recipeId suffix "_by_black_metal"
+            recipeId prefix "silicon/"
+            recipeId suffix "_with_silver"
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
             ingredient {
-                items { +RagiumItems.CFRP_PLATE }
-            }
-            extra {
-                items { +RagiumItems.SILICON_CHIP }
-                count = 2
-            }
-            extra {
-                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.GOLD)
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.ALUMINUM)
                 count = 3
             }
-            result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
+            ingredient { items { +RagiumItems.SILICON_CHIP } }
+            result { +RagiumItems.ELECTRIC_CIRCUIT }
+            recipeId prefix "silicon/"
+            recipeId suffix "_with_aluminum"
+        }.save(exporter)
+    }
+
+    private fun diamond() {
+        // Carbon -> Diamond Wafer
+        // TODO: CVD法
+        RagiumRecipeBuilders.engraving {
+            ingredient {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.CARBON)
+                count = 8
+            }
+            catalyst { items { +RagiumItems.DIAMOND_LENS } }
+            result { +RagiumItems.DIAMOND_WAFER }
+        }.save(exporter)
+        // Diamond Wafer -> Diamond Chip
+        RagiumRecipeBuilders.cutting {
+            ingredient { items { +RagiumItems.DIAMOND_WAFER } }
+            result {
+                +RagiumItems.DIAMOND_CHIP
+                count = 8
+            }
+        }.save(exporter)
+        // Circuit Board + Wiring Metal + Silicon Chip -> Electric Circuit
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.COPPER)
+                count = 9
+            }
+            ingredient { items { +RagiumItems.DIAMOND_CHIP } }
+            result {
+                +RagiumItems.ELECTRIC_CIRCUIT
+                count = 2
+            }
+            recipeId prefix "diamond/"
+            recipeId suffix "_with_copper"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.GOLD)
+                count = 6
+            }
+            ingredient { items { +RagiumItems.DIAMOND_CHIP } }
+            result {
+                +RagiumItems.ELECTRIC_CIRCUIT
+                count = 2
+            }
+            recipeId prefix "diamond/"
+            recipeId suffix "_with_gold"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SILVER)
+                count = 3
+            }
+            ingredient { items { +RagiumItems.DIAMOND_CHIP } }
+            result {
+                +RagiumItems.ELECTRIC_CIRCUIT
+                count = 2
+            }
+            recipeId prefix "diamond/"
+            recipeId suffix "_with_silver"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARD } }
+            ingredient {
+                +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.ALUMINUM)
+                count = 3
+            }
+            ingredient { items { +RagiumItems.DIAMOND_CHIP } }
+            result {
+                +RagiumItems.ELECTRIC_CIRCUIT
+                count = 2
+            }
+            recipeId prefix "diamond/"
+            recipeId suffix "_with_aluminum"
         }.save(exporter)
     }
 }

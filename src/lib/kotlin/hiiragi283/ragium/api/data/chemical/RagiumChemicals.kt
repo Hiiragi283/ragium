@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.element.HTElement
 import hiiragi283.ragium.api.data.element.RagiumElements
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
@@ -53,6 +54,13 @@ data object RagiumChemicals {
 
     @JvmField
     val COPPER: ResourceKey<HTChemical> = create("copper")
+
+    @JvmField
+    val NICKEL: ResourceKey<HTChemical> = create("nickel")
+
+    // 5th Period
+    @JvmField
+    val SILVER: ResourceKey<HTChemical> = create("silver")
 
     // 6th Period
     @JvmField
@@ -145,6 +153,13 @@ data object RagiumChemicals {
 
     //    Mixtures    //
 
+    // 2nd Period
+    @JvmField
+    val COAL: ResourceKey<HTChemical> = create("coal")
+
+    @JvmField
+    val CHARCOAL: ResourceKey<HTChemical> = create("charcoal")
+
     @JvmStatic
     private fun create(name: String): ResourceKey<HTChemical> =
         RagiumRegistries.Keys.CHEMICAL.createKey(RagiumAPI.id(name))
@@ -167,6 +182,9 @@ data object RagiumChemicals {
 
         context.register(IRON, HTSimpleChemical(getter.getOrThrow(RagiumElements.IRON), 1))
         context.register(COPPER, HTSimpleChemical(getter.getOrThrow(RagiumElements.COPPER), 1))
+        context.register(NICKEL, HTSimpleChemical(getter.getOrThrow(RagiumElements.NICKEL), 1))
+
+        context.register(SILVER, HTSimpleChemical(getter.getOrThrow(RagiumElements.SILVER), 1))
 
         context.register(GOLD, HTSimpleChemical(getter.getOrThrow(RagiumElements.GOLD), 1))
         context.register(MERCURY, HTSimpleChemical(getter.getOrThrow(RagiumElements.MERCURY), 1))
@@ -352,5 +370,13 @@ data object RagiumChemicals {
                 add(RagiumElements.SULFUR, 1)
             }
         )
+
+        // Mixtures
+        val hydrogen: Holder<HTElement> = getter.getOrThrow(RagiumElements.HYDROGEN)
+        val carbon: Holder<HTElement> = getter.getOrThrow(RagiumElements.CARBON)
+        val oxygen: Holder<HTElement> = getter.getOrThrow(RagiumElements.OXYGEN)
+        val organic = HTMixtureChemical(hydrogen, carbon, oxygen)
+        context.register(COAL, organic)
+        context.register(CHARCOAL, organic)
     }
 }

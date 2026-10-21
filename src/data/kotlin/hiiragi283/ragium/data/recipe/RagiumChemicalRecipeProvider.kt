@@ -78,45 +78,42 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             fluidIngredient { +waterSet() }
             result { +Items.FLINT }
         }.save(exporter)
-        // Sand + Water -> SiO2 + Borax
+        // Sand + Water -> SiO2
         RagiumRecipeBuilders.washing {
             itemIngredient {
-                +holderSet(Tags.Items.SANDS_COLORLESS)
-                count = 4
+                +holderSet(Tags.Items.SANDS)
+                count = 8
             }
             fluidIngredient { +waterSet() }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
                 count = 3
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.BORAX) }
             recipeId suffix "_from_sands"
-        }.save(exporter)
-        // Red Sand + Water -> SiO2 + Bauxite
-        RagiumRecipeBuilders.washing {
-            itemIngredient {
-                +holderSet(Tags.Items.SANDS_RED)
-                count = 4
-            }
-            fluidIngredient { +waterSet() }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ)
-                count = 3
-            }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.BAUXITE) }
-            recipeId suffix "_from_red_sands"
         }.save(exporter)
         // Clay + Water -> Al2O3 + SiO2
         RagiumRecipeBuilders.washing {
-            itemIngredient { items { +Items.CLAY } }
+            itemIngredient {
+                items { +Items.CLAY_BALL }
+                count = 16
+            }
             fluidIngredient { +waterSet() }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.ALUMINA)
-                count = 2
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
+                count = 3
             }
+            recipeId suffix "_from_clay_ball"
+        }.save(exporter)
+
+        RagiumRecipeBuilders.washing {
+            itemIngredient {
+                items { +Items.CLAY }
+                count = 4
+            }
+            fluidIngredient { +waterSet() }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.QUARTZ)
-                count = 2
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
+                count = 3
             }
             recipeId suffix "_from_clay"
         }.save(exporter)

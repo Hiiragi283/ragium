@@ -1,14 +1,15 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.recipe.handler.HTItemInputSlot
-import hiiragi283.lib.recipe.handler.HTOutputSlot
-import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
-import hiiragi283.lib.recipe.input.HTRecipeInput
-import hiiragi283.lib.recipe.lookup.HTRecipeCache
+import hiiragi283.lib.recipe.handler.HTRecipeHandler
+import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
+import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
+import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.input.HTInputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
@@ -23,34 +24,21 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTCentrifugeBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.CENTRIFUGE.get(), pos, state) {
-    private val cache: HTRecipeCache<HTRecipeInput, RTCentrifugingRecipe> =
-        HTRecipeCache(RagiumRecipeLookups.CENTRIFUGING)
-
-    override fun writeValue(output: ValueOutput) {
-        super.writeValue(output)
-        output.putChild(HTConstants.LAST_RECIPE, cache)
-    }
-
-    override fun readValue(input: ValueInput) {
-        super.readValue(input)
-        input.readChild(HTConstants.LAST_RECIPE, cache)
-    }
-
-    override fun initializeVariables(listener: Runnable) {
-        super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<HTRecipeInput, RTCentrifugingRecipe.Output, RTCentrifugingRecipe>() {
-            private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTCentrifugeBlockEntity.inputSlot) }
+    override fun createRecipeHandler(): HTRecipeHandler =
+        object : HTSingleRecipeHandler.Cached<ItemInstance, RTCentrifugingRecipe.Output, RTCentrifugingRecipe>(
+            HTRecipeCacheHelper.SingleItem(RagiumRecipeLookups.CENTRIFUGING)
+        ) {
+            private val inputSlot: HTInputSlot<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItem(this@HTCentrifugeBlockEntity.inputSlot)
+            }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
                 HTOutputSlotHelper.forItems(this@HTCentrifugeBlockEntity.outputSlots)
             }
@@ -58,42 +46,38 @@ class HTCentrifugeBlockEntity(pos: BlockPos, state: BlockState) :
                 HTOutputSlotHelper.forFluid(this@HTCentrifugeBlockEntity.outputTank)
             }
 
-            override fun createInput(): HTRecipeInput = HTRecipeInput(inputSlot.getStoredInput(), customKeys)
+            override fun createProgressor(): Progressor<ItemInstance, RTCentrifugingRecipe> = SingleProgressor()
 
-            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): RTCentrifugingRecipe? =
-                cache.findFirstRecipe(input, level)
+            override fun getInput(): ItemInstance = inputSlot.getStoredInput()
 
             override fun canComplete(
                 recipe: RTCentrifugingRecipe,
-                input: HTRecipeInput,
+                input: ItemInstance,
                 output: RTCentrifugingRecipe.Output
             ): Boolean = useTransaction { transaction: Transaction ->
-                val inputConsume: ItemInstance = recipe.getMatchingStack(input)
                 val (items: List<ItemStack>, fluid: FluidStack) = output
                 when {
-                    inputSlot.use(inputConsume, transaction).failed -> false
+                    inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
                     !outputTank.take(fluid, transaction).fullOrNoneTaken -> false
-                    else -> items.all { outputSlot.take(it, transaction).fullOrNoneTaken }
+                    else -> outputSlot.takeAll(items, transaction).fullOrNoneTaken
                 }
             }
 
             override fun onComplete(
                 recipe: RTCentrifugingRecipe,
-                input: HTRecipeInput,
+                input: ItemInstance,
                 output: RTCentrifugingRecipe.Output
             ) {
                 useTransaction { transaction: Transaction ->
-                    val inputConsume: ItemInstance = recipe.getMatchingStack(input)
                     val (items: List<ItemStack>, fluid: FluidStack) = output
-                    inputSlot.use(inputConsume, transaction)
-                    items.forEach { outputSlot.take(it, transaction) }
+                    inputSlot.use(recipe.getMatchingStack(input), transaction)
+                    outputSlot.takeAll(items, transaction)
                     outputTank.take(fluid, transaction)
                     transaction.commit()
                 }
                 // TODO: playSound
             }
         }
-    }
 
     private lateinit var outputTank: HTVariableFluidTank
 

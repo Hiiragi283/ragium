@@ -3,8 +3,10 @@
     "ragium:aluminum_ingot",
     "ragium:black_steel_ingot",
     "ragium:cinnabar",
+    "ragium:constantan_ingot",
     "ragium:fluorite",
-    "ragium:sooty_iron_ingot",
-    "ragium:void_metal_ingot"
+    "ragium:shadow_steel_ingot",
+    "ragium:silver_ingot",
+    "ragium:sooty_iron_ingot"
   ]
 }

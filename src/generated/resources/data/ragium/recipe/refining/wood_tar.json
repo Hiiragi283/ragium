@@ -5,10 +5,16 @@
     "fluids": "#c:wood_tar"
   },
   "result": {
-    "fluid": {
-      "amount": 500,
-      "id": "ragium:alcohol"
-    }
+    "fluids": [
+      {
+        "amount": 500,
+        "id": "ragium:alcohol"
+      },
+      {
+        "amount": 500,
+        "id": "ragium:aromatic_compound"
+      }
+    ]
   },
   "time": 200
 }

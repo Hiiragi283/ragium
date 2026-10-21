@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.ingredient.HTIngredient
-import hiiragi283.lib.recipe.input.HTRecipeInput
 import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -21,7 +20,7 @@ open class HTBasicSingleRecipe<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>
     val ingredient: ING,
     val result: RES,
     override val progressData: HTProgressData
-) : HTProgressRecipe.Simple<HTRecipeInput> {
+) : HTProgressRecipe.Holder {
     companion object {
         @JvmStatic
         fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, RECIPE : HTBasicSingleRecipe<ING, RES>> codec(

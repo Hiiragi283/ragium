@@ -5,10 +5,16 @@
     "fluids": "#c:crude_oil"
   },
   "result": {
-    "fluid": {
-      "amount": 750,
-      "id": "ragium:naphtha"
-    },
+    "fluids": [
+      {
+        "amount": 250,
+        "id": "ragium:natural_gas"
+      },
+      {
+        "amount": 750,
+        "id": "ragium:naphtha"
+      }
+    ],
     "item": {
       "count": 1,
       "id": "ragium:tar"

@@ -4,15 +4,9 @@
     "count": 8,
     "items": "minecraft:cherry_sapling"
   },
-  "results": [
-    {
-      "count": 48,
-      "id": "minecraft:cherry_log"
-    },
-    {
-      "count": 12,
-      "id": "minecraft:cherry_sapling"
-    }
-  ],
+  "result": {
+    "count": 48,
+    "id": "minecraft:cherry_log"
+  },
   "time": 200
 }

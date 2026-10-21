@@ -4,15 +4,9 @@
     "count": 8,
     "items": "minecraft:spruce_sapling"
   },
-  "results": [
-    {
-      "count": 48,
-      "id": "minecraft:spruce_log"
-    },
-    {
-      "count": 12,
-      "id": "minecraft:spruce_sapling"
-    }
-  ],
+  "result": {
+    "count": 48,
+    "id": "minecraft:spruce_log"
+  },
   "time": 200
 }

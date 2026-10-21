@@ -1,13 +1,15 @@
 {
   "type": "ragium:assembling",
-  "extra": {
-    "count": 1,
-    "items": "#c:tools/bow"
-  },
-  "ingredient": {
-    "count": 1,
-    "items": "minecraft:dropper"
-  },
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "minecraft:dropper"
+    },
+    {
+      "count": 1,
+      "items": "#c:tools/bow"
+    }
+  ],
   "result": {
     "count": 1,
     "id": "minecraft:dispenser"

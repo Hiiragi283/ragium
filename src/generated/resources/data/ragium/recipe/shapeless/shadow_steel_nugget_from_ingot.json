@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "shadow_steel_nugget",
+  "ingredients": [
+    "#c:ingots/shadow_steel"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:shadow_steel_nugget"
+  }
+}

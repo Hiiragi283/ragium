@@ -14,6 +14,7 @@ data object RagiumConstants {
     const val COMPRESSOR = "compressor"
     const val CRUSHER = "crusher"
     const val CUTTING_MACHINE = "cutting_machine"
+    const val PRESS_MACHINE = "press_machine"
 
     // Heat
     const val ALLOY_SMELTER = "alloy_smelter"
@@ -30,12 +31,16 @@ data object RagiumConstants {
     const val WASHER = "washer"
 
     // Resource
+    const val BREWERY = "brewery"
     const val PLANTER = "planter"
+
+    const val RESOURCE_MINER = "resource_miner"
+    const val RESOURCE_PUMP = "resource_pump"
 
     // Electronics
     const val BLENDER = "blender"
     const val ELECTROLYZER = "electrolyzer"
-    const val PRECISION_ASSEMBLER = "precision_assembler"
+    const val ENGRAVER = "engraver"
     const val SCANNER = "scanner"
 
     // Arcane
@@ -52,6 +57,7 @@ data object RagiumConstants {
     const val CRUSHING = "crushing"
     const val CUTTING = "cutting"
     const val FILLING = "filling"
+    const val PRESSING = "pressing"
 
     // Heat
     const val ALLOYING = "alloying"
@@ -71,11 +77,13 @@ data object RagiumConstants {
     const val BREWING = "brewing"
     const val PLANTING = "planting"
 
+    const val RESOURCE_MINING = "resource/mining"
+    const val RESOURCE_PUMPING = "resource/pumping"
+
     // Electronics
     const val ELECTROLYZING = "electrolyzing"
+    const val ENGRAVING = "engraving"
     const val PRINTING = "printing"
-
-    const val RESOURCE_EXTRACTING = "resource/extracting"
 
     // Arcane
     const val ENCHANTING = "enchanting"

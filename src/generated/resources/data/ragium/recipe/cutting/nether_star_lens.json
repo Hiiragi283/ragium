@@ -1,0 +1,12 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:nether_stars"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:nether_star_lens"
+  },
+  "time": 200
+}

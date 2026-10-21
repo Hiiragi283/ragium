@@ -24,25 +24,26 @@ sealed interface RagiumMaterial :
 
     val chemicalKey: ResourceKey<HTChemical>?
 
-    enum class Fuel(langName: HTLangName) :
+    enum class Fuel(langName: HTLangName, override val chemicalKey: ResourceKey<HTChemical>) :
         RagiumMaterial,
         HTLangName by langName {
         // Minecraft
-        COAL("Coal", "石炭"),
-        CHARCOAL("Charcoal", "木炭"),
+        COAL("Coal", "石炭", RagiumChemicals.COAL),
+        CHARCOAL("Charcoal", "木炭", RagiumChemicals.CHARCOAL),
 
         // Common
-        COAL_COKE("Coal Coke", "石炭コークス"),
+        COAL_COKE("Coal Coke", "石炭コークス", RagiumChemicals.CARBON),
 
         /**
          * @since 26.1.7
          */
-        PITCH_COKE("Pitch Coke", "ピッチコークス")
+        PITCH_COKE("Pitch Coke", "ピッチコークス", RagiumChemicals.CARBON)
         ;
 
-        constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
-
-        override val chemicalKey: ResourceKey<HTChemical> = RagiumChemicals.CARBON
+        constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>) : this(
+            HTLangName(enName, jaName),
+            chemicalKey
+        )
 
         override val materialName: String = name.lowercase()
     }
@@ -122,6 +123,11 @@ sealed interface RagiumMaterial :
          * @since 26.1.7
          */
         SILICON("Silicon", "シリコン", RagiumChemicals.SILICON),
+
+        /**
+         * @since 26.1.11
+         */
+        SILICA("Silica", "シリカ", RagiumChemicals.SILICON_DIOXIDE),
 
         /**
          * @since 26.1.9
@@ -206,7 +212,17 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.7
          */
-        ALUMINUM("Aluminum", "アルミニウム", RagiumChemicals.ALUMINUM)
+        ALUMINUM("Aluminum", "アルミニウム", RagiumChemicals.ALUMINUM),
+
+        /**
+         * @since 26.1.11
+         */
+        NICKEL("Nickel", "ニッケル", RagiumChemicals.NICKEL),
+
+        /**
+         * @since 26.1.11
+         */
+        SILVER("Silver", "銀", RagiumChemicals.SILVER)
         ;
 
         constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>? = null) : this(
@@ -223,6 +239,13 @@ sealed interface RagiumMaterial :
         // Minecraft
         NETHERITE("Netherite", "ネザライト"),
 
+        // Common
+
+        /**
+         * @since 26.1.11
+         */
+        CONSTANTAN("Constantan", "コンスタンタン"),
+
         // Ragium
 
         /**
@@ -236,9 +259,9 @@ sealed interface RagiumMaterial :
         BLACK_STEEL("Black Steel", "黒鋼"),
 
         /**
-         * @since 26.1.4
+         * @since 26.1.11
          */
-        VOID_METAL("Void Metal", "虚金")
+        SHADOW_STEEL("Shadow Steel", "影鋼")
         ;
 
         constructor(enName: String, jaName: String, chemicalKey: ResourceKey<HTChemical>? = null) : this(
@@ -256,7 +279,6 @@ sealed interface RagiumMaterial :
         WOOD("Wood", "木") {
             override val isPulp: Boolean = true
         },
-        GLASS("Glass", "ガラス", RagiumChemicals.SILICON_DIOXIDE),
         OBSIDIAN("Obsidian", "黒曜石"),
         PAPER("Paper", "紙") {
             override val isPulp: Boolean = true

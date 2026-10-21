@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.text.HTItemTooltip
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.codec.ByteBufCodecs
-import net.minecraft.world.item.ItemStackTemplate
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import java.util.UUID
 
@@ -43,8 +42,8 @@ data object RagiumDataComponents {
         DataComponentType(HTItemTooltip.CODEC, HTItemTooltip.STREAM_CODEC)
 
     @JvmField
-    val MEMORY_DISC_DATA: DataComponentType<ItemStackTemplate> =
-        DataComponentType(ItemStackTemplate.CODEC, ItemStackTemplate.STREAM_CODEC)
+    val MEMORY_DISC_DATA: DataComponentType<HTMemoryDiscData> =
+        DataComponentType(HTMemoryDiscData.CODEC, HTMemoryDiscData.STREAM_CODEC)
 
     /**
      * @since 26.1.7

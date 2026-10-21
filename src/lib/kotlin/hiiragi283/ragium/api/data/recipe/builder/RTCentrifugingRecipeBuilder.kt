@@ -29,7 +29,7 @@ class RTCentrifugingRecipeBuilder : HTProgressRecipeBuilder<RTCentrifugingRecipe
     )
 
     // Ingredient
-    var ingredient: HTItemIngredient by HTDelegates.onceInitialize()
+    @PublishedApi internal var ingredient: HTItemIngredient by HTDelegates.onceInitialize()
 
     operator fun HTItemIngredient.unaryPlus() {
         ingredient = this
@@ -43,9 +43,9 @@ class RTCentrifugingRecipeBuilder : HTProgressRecipeBuilder<RTCentrifugingRecipe
     }
 
     // Results
-    var itemResults: MutableList<HTItemResult> = mutableListOf()
+    @PublishedApi internal var itemResults: MutableList<HTItemResult> = mutableListOf()
 
-    var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
+    @PublishedApi internal var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
 
     operator fun HTItemResult.unaryPlus() {
         itemResults += this

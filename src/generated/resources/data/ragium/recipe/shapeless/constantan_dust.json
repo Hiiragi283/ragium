@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:dusts/copper",
+    "#c:dusts/nickel"
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:constantan_dust"
+  }
+}

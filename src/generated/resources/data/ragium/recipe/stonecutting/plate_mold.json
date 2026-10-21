@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "#ragium:molds",
-  "result": {
-    "id": "ragium:plate_mold"
-  }
-}

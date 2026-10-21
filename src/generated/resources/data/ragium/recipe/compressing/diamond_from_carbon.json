@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "count": 64,
+    "items": "#c:dusts/carbon"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:diamond"
+  },
+  "time": 800
+}

@@ -1,15 +1,16 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
-import hiiragi283.lib.recipe.handler.HTItemInputSlot
-import hiiragi283.lib.recipe.handler.HTOutputSlot
-import hiiragi283.lib.recipe.handler.HTOutputSlotHelper
-import hiiragi283.lib.recipe.input.HTRecipeInput
-import hiiragi283.lib.recipe.lookup.HTRecipeCache
+import hiiragi283.lib.recipe.handler.HTRecipeHandler
+import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
+import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
+import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.input.HTInputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -24,76 +25,58 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.PYROLYZER.get(), pos, state) {
-    private val cache: HTRecipeCache<HTRecipeInput, HTItemToItemAndFluidRecipe> =
-        HTRecipeCache(RagiumRecipeLookups.PYROLYZING)
+    override fun createRecipeHandler(): HTRecipeHandler = object : HTSingleRecipeHandler.Cached<
+        ItemInstance,
+        HTItemAndFluidStack,
+        HTItemToItemAndFluidRecipe
+        >(
+        HTRecipeCacheHelper.SingleItem(RagiumRecipeLookups.PYROLYZING)
+    ) {
+        private val inputSlot: HTInputSlot<ItemInstance> by lazy {
+            HTInputHandlerHelper.forItem(this@HTPyrolyzerBlockEntity.inputSlot)
+        }
+        private val outputSlot: HTOutputSlot<ItemStack> by lazy {
+            HTOutputSlotHelper.forItem(this@HTPyrolyzerBlockEntity.outputSlot)
+        }
+        private val outputTank: HTOutputSlot<FluidStack> by lazy {
+            HTOutputSlotHelper.forFluid(this@HTPyrolyzerBlockEntity.outputTank)
+        }
 
-    override fun writeValue(output: ValueOutput) {
-        super.writeValue(output)
-        output.putChild(HTConstants.LAST_RECIPE, cache)
-    }
+        override fun createProgressor(): Progressor<ItemInstance, HTItemToItemAndFluidRecipe> = SingleProgressor()
 
-    override fun readValue(input: ValueInput) {
-        super.readValue(input)
-        input.readChild(HTConstants.LAST_RECIPE, cache)
-    }
+        override fun getInput(): ItemInstance = inputSlot.getStoredInput()
 
-    override fun initializeVariables(listener: Runnable) {
-        super.initializeVariables(listener)
-        recipeHandler = object : EnergizedHandler<HTRecipeInput, HTItemAndFluidStack, HTItemToItemAndFluidRecipe>() {
-            private val inputSlot: HTItemInputSlot by lazy { HTItemInputSlot(this@HTPyrolyzerBlockEntity.inputSlot) }
-            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-                HTOutputSlotHelper.forItem(this@HTPyrolyzerBlockEntity.outputSlot)
+        override fun canComplete(
+            recipe: HTItemToItemAndFluidRecipe,
+            input: ItemInstance,
+            output: HTItemAndFluidStack
+        ): Boolean = useTransaction { transaction: Transaction ->
+            val (itemOutput: ItemStack, fluidOutput: FluidStack) = output
+            when {
+                inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
+                !outputSlot.take(itemOutput, transaction).fullOrNoneTaken -> false
+                else -> outputTank.take(fluidOutput, transaction).fullOrNoneTaken
             }
-            private val outputTank: HTOutputSlot<FluidStack> by lazy {
-                HTOutputSlotHelper.forFluid(this@HTPyrolyzerBlockEntity.outputTank)
+        }
+
+        override fun onComplete(recipe: HTItemToItemAndFluidRecipe, input: ItemInstance, output: HTItemAndFluidStack) {
+            useTransaction { transaction: Transaction ->
+                val (itemOutput: ItemStack, fluidOutput: FluidStack) = output
+                inputSlot.use(recipe.getMatchingStack(input), transaction)
+                outputSlot.take(itemOutput, transaction)
+                outputTank.take(fluidOutput, transaction)
+                transaction.commit()
             }
-
-            override fun createInput(): HTRecipeInput = HTRecipeInput(inputSlot.getStoredInput(), customKeys)
-
-            override fun findRecipe(level: ServerLevel, input: HTRecipeInput): HTItemToItemAndFluidRecipe? =
-                cache.findFirstRecipe(input, level)
-
-            override fun canComplete(
-                recipe: HTItemToItemAndFluidRecipe,
-                input: HTRecipeInput,
-                output: HTItemAndFluidStack
-            ): Boolean = useTransaction { transaction: Transaction ->
-                val inputConsume: ItemInstance = recipe.getMatchingStack(input)
-                val (item: ItemStack, fluid: FluidStack) = output
-                when {
-                    inputSlot.use(inputConsume, transaction).failed -> false
-                    !outputSlot.take(item, transaction).fullOrNoneTaken -> false
-                    else -> outputTank.take(fluid, transaction).fullOrNoneTaken
-                }
-            }
-
-            override fun onComplete(
-                recipe: HTItemToItemAndFluidRecipe,
-                input: HTRecipeInput,
-                output: HTItemAndFluidStack
-            ) {
-                useTransaction { transaction: Transaction ->
-                    val inputConsume: ItemInstance = recipe.getMatchingStack(input)
-                    val (item: ItemStack, fluid: FluidStack) = output
-                    inputSlot.use(inputConsume, transaction)
-                    outputSlot.take(item, transaction)
-                    outputTank.take(fluid, transaction)
-                    transaction.commit()
-                }
-                playSound(SoundEvents.BLAZE_DEATH)
-            }
+            playSound(SoundEvents.BLAZE_DEATH)
         }
     }
 

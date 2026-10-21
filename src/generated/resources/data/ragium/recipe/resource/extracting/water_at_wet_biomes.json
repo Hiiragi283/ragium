@@ -1,9 +1,0 @@
-{
-  "type": "ragium:resource/extracting",
-  "condition": "#c:is_wet",
-  "result": {
-    "amount": 1000,
-    "id": "minecraft:water"
-  },
-  "time": 200
-}

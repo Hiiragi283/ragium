@@ -1,0 +1,30 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/copper",
+          "c:ingots/copper"
+        ]
+      }
+    },
+    {
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/nickel",
+          "c:ingots/nickel"
+        ]
+      }
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:constantan_ingot"
+  },
+  "time": 200
+}

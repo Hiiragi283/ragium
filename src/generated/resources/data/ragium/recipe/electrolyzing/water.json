@@ -1,0 +1,20 @@
+{
+  "type": "ragium:electrolyzing",
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:water"
+  },
+  "result": {
+    "fluids": [
+      {
+        "amount": 1000,
+        "id": "ragium:hydrogen"
+      },
+      {
+        "amount": 500,
+        "id": "ragium:oxygen"
+      }
+    ]
+  },
+  "time": 200
+}

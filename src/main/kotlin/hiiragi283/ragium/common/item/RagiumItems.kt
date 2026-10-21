@@ -4,7 +4,6 @@ import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildSetMultiMap
 import hiiragi283.lib.collection.flatMapTable
-import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.item.component.HTToolCollection
 import hiiragi283.lib.item.component.HTToolType
 import hiiragi283.lib.registry.HTDeferredItemRegister
@@ -12,7 +11,6 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.text.HTHasTranslationKey
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineUpgrade
 import hiiragi283.ragium.api.material.HTItemPart
@@ -21,14 +19,11 @@ import hiiragi283.ragium.api.text.HTItemTooltip
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.HoneycombItem
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
@@ -48,6 +43,20 @@ data object RagiumItems {
         REGISTER.addAlias("coal_coke_dust", "carbon_dust")
         REGISTER.addAlias("circuit_chip", "silicon_chip")
         REGISTER.addAlias("bio_machine_parts", "resource_machine_parts")
+        REGISTER.addAlias("void_metal_ingot", "shadow_steel_ingot")
+        REGISTER.addAlias("void_metal_nugget", "shadow_steel_nugget")
+        REGISTER.addAlias("carbon_fiber", "synthetic_fiber")
+        REGISTER.addAlias("cfrp_plate", "plastic_plate")
+        REGISTER.addAlias("quartz_dust", "silica_dust")
+        REGISTER.addAlias("amethyst_dust", "silica_dust")
+        REGISTER.addAlias("blank_mold", "mold/blank")
+        REGISTER.addAlias("ball_mold", "mold/ball")
+        REGISTER.addAlias("block_mold", "mold/block")
+        REGISTER.addAlias("plate_mold", "mold/plate")
+        HTMachineType.entries.forEach { machineType: HTMachineType ->
+            val name: String = machineType.materialName
+            REGISTER.addAlias("${name}_machine_parts", "machine_parts/$name")
+        }
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -74,8 +83,6 @@ data object RagiumItems {
                 }
                 // Gem
                 putAll(RagiumMaterial.Gem.LAPIS, HTItemPart.DUST)
-                putAll(RagiumMaterial.Gem.QUARTZ, HTItemPart.DUST)
-                putAll(RagiumMaterial.Gem.AMETHYST, HTItemPart.DUST)
                 putAll(RagiumMaterial.Gem.DIAMOND, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Gem.EMERALD, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Gem.ECHO, HTItemPart.DUST)
@@ -88,11 +95,14 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Metal.GOLD, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Metal.NICKEL, HTItemPart.DUST)
+                putAll(RagiumMaterial.Metal.SILVER, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET)
                 // Alloy
                 putAll(RagiumMaterial.Alloy.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Alloy.CONSTANTAN, HTItemPart.DUST, HTItemPart.INGOT)
                 putAll(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
-                putAll(RagiumMaterial.Alloy.VOID_METAL, HTItemPart.INGOT, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Alloy.SHADOW_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
                 // Other
                 putAll(RagiumMaterial.Other.WOOD, HTItemPart.GEAR)
             },
@@ -106,14 +116,11 @@ data object RagiumItems {
                         when (material) {
                             RagiumMaterial.Mineral.RAGINITE -> Rarity.EPIC
                             RagiumMaterial.Alloy.BLACK_STEEL -> Rarity.UNCOMMON
-                            RagiumMaterial.Alloy.VOID_METAL -> Rarity.RARE
+                            RagiumMaterial.Alloy.SHADOW_STEEL -> Rarity.RARE
                             else -> null
                         }?.let(properties::rarity)
                         if (material == RagiumMaterial.Alloy.NETHERITE) {
                             properties.fireResistant()
-                        }
-                        material.chemicalKey?.let {
-                            properties.delayedHolderComponent(RagiumDataComponents.CHEMICAL, it)
                         }
                         properties
                     }
@@ -140,22 +147,21 @@ data object RagiumItems {
 
     // Heat
     @JvmField
-    val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.COAL_COKE.materialName) {
-        it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
-    }
+    val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.COAL_COKE.materialName)
 
     @JvmField
     val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
 
     @JvmField
-    val PITCH_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.PITCH_COKE.materialName) {
-        it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
-    }
+    val PITCH_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.PITCH_COKE.materialName)
 
     @JvmField
     val STICKY_BALL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("sticky_ball")
 
     // Chemical
+    @JvmField
+    val SODIUM_HYDROXIDE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("sodium_hydroxide")
+
     @JvmField
     val PLASTIC_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plastic_plate")
 
@@ -167,12 +173,6 @@ data object RagiumItems {
 
     @JvmField
     val SYNTHETIC_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("synthetic_fiber")
-
-    @JvmField
-    val CARBON_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("carbon_fiber")
-
-    @JvmField
-    val CFRP_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cfrp_plate")
 
     // val ALCLAD_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alclad_plate")
 
@@ -188,9 +188,7 @@ data object RagiumItems {
 
     // Electronics
     @JvmField
-    val CRUDE_SILICON: HTSimpleDeferredItem = REGISTER.registerSimpleItem("crude_silicon") {
-        it.delayedHolderComponent(RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON)
-    }
+    val CRUDE_SILICON: HTSimpleDeferredItem = REGISTER.registerSimpleItem("crude_silicon")
 
     @JvmField
     val SILICON_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_wafer")
@@ -203,6 +201,12 @@ data object RagiumItems {
 
     @JvmField
     val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit")
+
+    @JvmField
+    val DIAMOND_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_wafer")
+
+    @JvmField
+    val DIAMOND_CHIP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_chip")
 
     // Arcane
     @JvmField
@@ -218,27 +222,44 @@ data object RagiumItems {
 
     @JvmField
     val MACHINE_PARTS: Map<HTMachineType, HTSimpleDeferredItem> = HTMachineType.entries
-        .associateWithTo(mutableEnumMapOf()) { machineType: HTMachineType ->
-            REGISTER.registerSimpleItem("${machineType.materialName}_machine_parts")
+        .associateWith { machineType: HTMachineType ->
+            REGISTER.registerSimpleItem("machine_parts/${machineType.materialName}")
         }
 
     @JvmStatic
     fun getParts(machineType: HTMachineType): HTSimpleDeferredItem = MACHINE_PARTS[machineType]!!
 
     // Mechanical
+    @JvmField
+    val BLANK_DIE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("press_die/blank")
+
+    @JvmField
+    val GEAR_DIE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("press_die/gear")
+
+    @JvmField
+    val PACKING_DIE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("press_die/packing")
+
+    @JvmField
+    val UNPACKING_DIE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("press_die/unpacking")
+
+    @JvmField
+    val PRESS_DIES: Set<HTSimpleDeferredItem> = setOf(BLANK_DIE, GEAR_DIE, PACKING_DIE, UNPACKING_DIE)
+
+    @JvmField
+    val HEATING_COIL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("heating_coil")
 
     // Heat
     @JvmField
-    val BLANK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_mold") { it.stacksTo(1) }
+    val BLANK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("mold/blank") { it.stacksTo(1) }
 
     @JvmField
-    val BALL_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ball_mold") { it.stacksTo(1) }
+    val BALL_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("mold/ball") { it.stacksTo(1) }
 
     @JvmField
-    val BLOCK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("block_mold") { it.stacksTo(1) }
+    val BLOCK_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("mold/block") { it.stacksTo(1) }
 
     @JvmField
-    val PLATE_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plate_mold") { it.stacksTo(1) }
+    val PLATE_MOLD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("mold/plate") { it.stacksTo(1) }
 
     @JvmField
     val MOLDS: Set<HTSimpleDeferredItem> = setOf(BLANK_MOLD, BALL_MOLD, BLOCK_MOLD, PLATE_MOLD)
@@ -248,6 +269,26 @@ data object RagiumItems {
     // Resource
 
     // Electronics
+    @JvmField
+    val QUARTZ_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("quartz_lens") {
+        it.stacksTo(1)
+    }
+
+    @JvmField
+    val DIAMOND_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_lens") {
+        it.stacksTo(1).rarity(Rarity.UNCOMMON)
+    }
+
+    @JvmField
+    val SHADOW_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("shadow_lens") {
+        it.stacksTo(1).rarity(Rarity.RARE)
+    }
+
+    @JvmField
+    val NETHER_STAR_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("nether_star_lens") {
+        it.stacksTo(1).rarity(Rarity.EPIC)
+    }
+
     @JvmField
     val MEMORY_DISC: HTSimpleDeferredItem = REGISTER.registerItem("memory_disc", ::HTMemoryDiscItem)
 
@@ -306,43 +347,6 @@ data object RagiumItems {
             }
         }
 
-        // Chemical
-        fun <T : Any> setHolder(item: ItemLike, type: DataComponentType<Holder<T>>, key: ResourceKey<T>) {
-            event.modify(item) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
-                builder.set(type, provider.getOrThrow(key))
-            }
-        }
-
-        setHolder(Items.COAL_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
-        setHolder(Items.COAL, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
-        setHolder(Items.CHARCOAL, RagiumDataComponents.CHEMICAL, RagiumChemicals.CARBON)
-
-        setHolder(Items.DIAMOND_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.DIAMOND)
-        setHolder(Items.DIAMOND, RagiumDataComponents.CHEMICAL, RagiumChemicals.DIAMOND)
-
-        setHolder(Items.IRON_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.IRON)
-        setHolder(Items.IRON_INGOT, RagiumDataComponents.CHEMICAL, RagiumChemicals.IRON)
-        setHolder(Items.IRON_NUGGET, RagiumDataComponents.CHEMICAL, RagiumChemicals.IRON)
-
-        setHolder(Items.COPPER_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.COPPER)
-        setHolder(Items.COPPER_INGOT, RagiumDataComponents.CHEMICAL, RagiumChemicals.COPPER)
-        setHolder(Items.COPPER_NUGGET, RagiumDataComponents.CHEMICAL, RagiumChemicals.COPPER)
-
-        setHolder(Items.GOLD_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
-        setHolder(Items.GOLD_INGOT, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
-        setHolder(Items.GOLD_NUGGET, RagiumDataComponents.CHEMICAL, RagiumChemicals.GOLD)
-
-        setHolder(Items.SNOWBALL, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
-        setHolder(Items.SNOW_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
-        setHolder(Items.ICE, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
-        setHolder(Items.PACKED_ICE, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
-        setHolder(Items.BLUE_ICE, RagiumDataComponents.CHEMICAL, RagiumChemicals.WATER)
-
-        setHolder(Items.AMETHYST_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
-        setHolder(Items.AMETHYST_SHARD, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
-
-        setHolder(Items.QUARTZ_BLOCK, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
-        setHolder(Items.QUARTZ, RagiumDataComponents.CHEMICAL, RagiumChemicals.SILICON_DIOXIDE)
         // Tooltip
         fun setTooltip(item: ItemLike, delegate: HTHasTranslationKey) {
             set(item, RagiumDataComponents.ITEM_TOOLTIP, HTItemTooltip.wrap(delegate))

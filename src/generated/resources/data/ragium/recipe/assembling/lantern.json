@@ -1,13 +1,15 @@
 {
   "type": "ragium:assembling",
-  "extra": {
-    "count": 1,
-    "items": "minecraft:torch"
-  },
-  "ingredient": {
-    "count": 1,
-    "items": "#c:ingots/iron"
-  },
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "#c:ingots/iron"
+    },
+    {
+      "count": 1,
+      "items": "minecraft:torch"
+    }
+  ],
   "result": {
     "count": 2,
     "id": "minecraft:lantern"

@@ -1,5 +1,5 @@
 {
-  "type": "ragium:mixing",
+  "type": "ragium:brewing",
   "ingredient": {
     "fluid": {
       "amount": 1000,
@@ -10,28 +10,20 @@
     },
     "item": {
       "count": 1,
-      "items": {
-        "neoforge:ingredient_type": "ragium:material_tags",
-        "tags": [
-          "c:dusts/echo",
-          "c:gems/echo"
-        ]
-      }
+      "items": "#c:dusts/echo"
     }
   },
   "result": {
-    "fluid": {
-      "type": "ragium:potion",
-      "amount": 1000,
-      "custom_effects": [
-        {
-          "duration": 900,
-          "id": "minecraft:darkness",
-          "show_icon": true
-        }
-      ],
-      "custom_name": "darkness"
-    }
+    "type": "ragium:potion",
+    "amount": 1000,
+    "custom_effects": [
+      {
+        "duration": 900,
+        "id": "minecraft:darkness",
+        "show_icon": true
+      }
+    ],
+    "custom_name": "darkness"
   },
   "time": 200
 }

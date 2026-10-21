@@ -1,11 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.lookup.mapNotNull
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.block.entity.machine.base.HTItemAndFluidToFluidBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.base.HTItemOrFluidBlockEntity
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
@@ -13,13 +14,11 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemAndFluidToFluidBlockEntity(
-        RagiumBlockEntityTypes.MIXER.get(),
-        RagiumRecipeLookups.MIXING.mapNotNull(RTMixingRecipe::toItemAndFluidToFluid),
-        pos,
-        state
-    ) {
-    override fun getCompletedSound(): HTSoundInstance = HTSoundInstance(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE)
+    HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.MIXER.get(), pos, state) {
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
+        RagiumRecipeLookups.MIXING.mapNotNull(RTMixingRecipe::asSimple),
+        HTSoundInstance(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE)
+    )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.mixer
 }

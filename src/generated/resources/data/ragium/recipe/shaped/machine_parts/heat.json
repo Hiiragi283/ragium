@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ragium:heating_coil",
+    "B": "ragium:machine_parts/mechanical"
+  },
+  "pattern": [
+    "AAA",
+    "BBB",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:machine_parts/heat"
+  }
+}
