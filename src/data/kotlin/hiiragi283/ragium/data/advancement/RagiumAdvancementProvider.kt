@@ -11,6 +11,7 @@ import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -25,7 +26,7 @@ import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.TagKey
 import net.neoforged.neoforge.common.Tags
 
-data object RagiumAdvancementProvider : HTSingleRegistryBootstrap<Advancement>() {
+data object RagiumAdvancementProvider : HTSingleRegistryBootstrap<Advancement>(RagiumAPI.MOD_ID) {
     override fun register() {
         // Root
         HTAdvancementBuilder.create(RagiumAdvancementKeys.ROOT) {

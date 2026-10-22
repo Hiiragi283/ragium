@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dusts_wood": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dusts/wood"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "ragium:shaped/particle_board"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dusts_wood"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:shaped/particle_board"
+    ]
+  }
+}

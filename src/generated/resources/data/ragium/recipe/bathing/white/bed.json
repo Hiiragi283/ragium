@@ -8,19 +8,9 @@
     "item": {
       "count": 1,
       "items": {
-        "type": "neoforge:and",
-        "values": [
-          {
-            "type": "neoforge:or",
-            "values": [
-              "#minecraft:beds"
-            ]
-          },
-          {
-            "type": "neoforge:not",
-            "value": "#c:dyed/white"
-          }
-        ]
+        "neoforge:ingredient_type": "neoforge:difference",
+        "base": "#minecraft:beds",
+        "subtracted": "#c:dyed/white"
       }
     }
   },

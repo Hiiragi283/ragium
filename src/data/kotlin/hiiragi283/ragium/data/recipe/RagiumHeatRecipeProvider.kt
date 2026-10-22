@@ -13,19 +13,16 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
-import net.minecraft.data.PackOutput
+import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.OminousBottleAmplifier
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient
-import java.util.concurrent.CompletableFuture
 
-class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
-    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun exportValues() {
+data object RagiumHeatRecipeProvider : HTRecipeProvider(RagiumAPI.MOD_ID) {
+    override fun register() {
         alloying()
         freezing()
         melting()
@@ -43,25 +40,25 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 count = 2
             }
             result { +Items.NETHERITE_INGOT }
-        }.save(exporter)
+        }.save(context)
         // Clay + Sand -> Brick
         RagiumRecipeBuilders.alloying {
             ingredient { items { +Items.CLAY_BALL } }
-            ingredient { +holderSet(Tags.Items.SANDS) }
+            ingredient { +itemSet(Tags.BlockItems.SANDS) }
             result {
                 +Items.BRICK
                 count = 2
             }
-        }.save(exporter)
+        }.save(context)
         // Netherrack + Soul Sand -> Nether Brick
         RagiumRecipeBuilders.alloying {
-            ingredient { +holderSet(Tags.Items.NETHERRACKS) }
+            ingredient { +itemSet(Tags.BlockItems.NETHERRACKS) }
             ingredient { +holderSet(ItemTags.SOUL_FIRE_BASE_BLOCKS) }
             result {
                 +Items.NETHER_BRICK
                 count = 2
             }
-        }.save(exporter)
+        }.save(context)
 
         // Copper + Nickel -> Constantan
         VanillaRecipeBuilders.shapeless {
@@ -71,7 +68,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Alloy.CONSTANTAN)
                 count = 2
             }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.alloying {
             ingredient { +dustOrIngot(RagiumMaterial.Metal.COPPER) }
             ingredient { +dustOrIngot(RagiumMaterial.Metal.NICKEL) }
@@ -79,7 +76,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.CONSTANTAN)
                 count = 2
             }
-        }.save(exporter)
+        }.save(context)
 
         // Iron + Coals -> Sooty Iron
         RagiumRecipeBuilders.alloying {
@@ -95,7 +92,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             recipeId suffix "_by_coals"
-        }.save(exporter)
+        }.save(context)
         // 2x Iron + Cokes -> 2x Sooty Iron
         RagiumRecipeBuilders.alloying {
             ingredient {
@@ -108,7 +105,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 count = 2
             }
             recipeId suffix "_by_cokes"
-        }.save(exporter)
+        }.save(context)
         // Sooty Iron + Nickel + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {
             ingredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
@@ -118,7 +115,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 count = 2
             }
             result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
-        }.save(exporter)
+        }.save(context)
     }
 
     private fun freezing() {
@@ -130,25 +127,25 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             catalyst { items { +RagiumItems.BALL_MOLD } }
             result { +Items.SNOWBALL }
-        }.save(exporter)
+        }.save(context)
         // Water -> Snow Block
         RagiumRecipeBuilders.freezing {
             ingredient { +waterSet() }
             catalyst { items { +RagiumItems.BLOCK_MOLD } }
             result { +Items.SNOW_BLOCK }
-        }.save(exporter)
+        }.save(context)
         // Lava -> Obsidian
         RagiumRecipeBuilders.freezing {
             ingredient { +lavaSet() }
             catalyst { items { +RagiumItems.BLOCK_MOLD } }
             result { +Items.OBSIDIAN }
-        }.save(exporter)
+        }.save(context)
         // Honey
         RagiumRecipeBuilders.freezing {
             ingredient { +holderSet(RagiumFluids.HONEY) }
             catalyst { items { +RagiumItems.BLOCK_MOLD } }
             result { +Items.HONEY_BLOCK }
-        }.save(exporter)
+        }.save(context)
 
         // Sticky Ball
         RagiumRecipeBuilders.freezing {
@@ -158,7 +155,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             catalyst { items { +RagiumItems.BALL_MOLD } }
             result { +RagiumItems.STICKY_BALL }
-        }.save(exporter)
+        }.save(context)
     }
 
     private fun melting() {
@@ -171,7 +168,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             result { water() }
             time /= 2
             recipeId suffix "_from_snowball"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.melting {
             ingredient {
                 items {
@@ -180,7 +177,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 }
             }
             result { water() }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.melting {
             ingredient { items { +Items.PACKED_ICE } }
             result {
@@ -189,7 +186,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             time *= 6
             recipeId suffix "_from_packed_ice"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.melting {
             ingredient { items { +Items.BLUE_ICE } }
             result {
@@ -198,11 +195,13 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             time *= 36
             recipeId suffix "_from_blue_ice"
-        }.save(exporter)
+        }.save(context)
 
         // Stone -> Lava
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.STONES, Tags.Items.COBBLESTONES) }
+            ingredient {
+                +holderSet(setOf(Tags.BlockItems.STONES, Tags.BlockItems.COBBLESTONES).map(BlockItemTagId::item))
+            }
             result {
                 lava()
                 amount /= 8
@@ -217,14 +216,14 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount /= 2
             }
             recipeId suffix "_from_magma_block"
-        }.save(exporter)
+        }.save(context)
 
         // Honey
         RagiumRecipeBuilders.melting {
             ingredient { items { +Items.HONEY_BLOCK } }
             result { +RagiumFluids.HONEY }
             recipeId suffix "_from_block"
-        }.save(exporter)
+        }.save(context)
         // Resin
         RagiumRecipeBuilders.melting {
             ingredient { +holderSet(Tags.Items.CLUMPS_RESIN) }
@@ -233,15 +232,15 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount = 90
             }
             recipeId suffix "_from_clump"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.STORAGE_BLOCKS_RESIN) }
+            ingredient { +itemSet(Tags.BlockItems.STORAGE_BLOCKS_RESIN) }
             result {
                 +RagiumFluids.RESIN
                 amount = 90 * 9
             }
             recipeId suffix "_from_block"
-        }.save(exporter)
+        }.save(context)
 
         // Ominous Bottle -> Ominous Flux
         (OminousBottleAmplifier.MIN_AMPLIFIER..OminousBottleAmplifier.MAX_AMPLIFIER).forEach { amplifier: Int ->
@@ -259,7 +258,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                     amount = 250 * (amplifier + 1)
                 }
                 recipeId prefix "${amplifier}x_"
-            }.save(exporter)
+            }.save(context)
         }
         // Molten Redstone
         RagiumRecipeBuilders.melting {
@@ -268,7 +267,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +RagiumFluids.MOLTEN_REDSTONE
                 amount = 90
             }
-        }.save(exporter)
+        }.save(context)
         // Molten Glowstone
         RagiumRecipeBuilders.melting {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.GLOWSTONE) }
@@ -276,7 +275,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +RagiumFluids.MOLTEN_GLOWSTONE
                 amount = 90
             }
-        }.save(exporter)
+        }.save(context)
         // Molten Ender
         RagiumRecipeBuilders.melting {
             ingredient { +holderSet(Tags.Items.ENDER_PEARLS) }
@@ -284,8 +283,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 +RagiumFluids.MOLTEN_ENDER
                 amount = 90
             }
-        }.save(exporter)
+        }.save(context)
     }
-
-    override fun getName(): String = "Heat Recipes"
 }

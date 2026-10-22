@@ -1,11 +1,10 @@
 package hiiragi283.lib.data.recipe
 
 import hiiragi283.lib.HTComparators
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.collection.toNel
-import hiiragi283.lib.data.ExporterDataProvider
+import hiiragi283.lib.data.HTSingleRegistryBootstrap
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.vanilla.HTSmithingRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
@@ -13,28 +12,18 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.material.RagiumMaterial
-import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.Registries
-import net.minecraft.data.PackOutput
-import net.minecraft.resources.Identifier
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Recipe
-import net.neoforged.neoforge.common.conditions.ModLoadedCondition
-import java.util.concurrent.CompletableFuture
 
 /**
- * Hiiragi Seriesで使用される，レシピ向けの[ExporterDataProvider]の拡張クラスです。
+ * Hiiragi Seriesで使用される，レシピ向けの[HTSingleRegistryBootstrap]の拡張クラスです。
  * 参照 : [Minecraft - RecipeProvider][net.minecraft.data.recipes.RecipeProvider]
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTRecipeProvider(
-    packOutput: PackOutput,
-    future: CompletableFuture<HolderLookup.Provider>,
-    modId: String
-) : ExporterDataProvider<Recipe<*>>(packOutput, future, Registries.RECIPE, modId, TODO()) {
+abstract class HTRecipeProvider(modId: String) : HTSingleRegistryBootstrap<Recipe<*>>(modId) {
     //    Extension    //
 
     /**
@@ -85,28 +74,6 @@ abstract class HTRecipeProvider(
             template { items { +Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE } }
             addition { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.NETHERITE) }
             builderAction()
-        }.save(exporter)
-    }
-
-    //    Integration    //
-
-    abstract class Integration(
-        packOutput: PackOutput,
-        future: CompletableFuture<HolderLookup.Provider>,
-        modId: String,
-        integrationModId: String
-    ) : HTRecipeProvider(packOutput, future, modId) {
-        val condition = ModLoadedCondition(integrationModId)
-        private val builtInIds: Set<String> = HTConstants.getBuiltInIdSet(modId)
-
-        final override fun modifyId(id: Identifier): Identifier {
-            val namespace: String = id.namespace
-            return if (namespace !in builtInIds) {
-                val path: List<String> = id.path.split("/", limit = 2)
-                id(path[0], namespace, path[1])
-            } else {
-                super.modifyId(id)
-            }
-        }
+        }.save(context)
     }
 }

@@ -4,13 +4,9 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.common.fluid.RagiumFluids
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.PackOutput
-import java.util.concurrent.CompletableFuture
 
-class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
-    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun exportValues() {
+data object RagiumElectronicsRecipeProvider : HTRecipeProvider(RagiumAPI.MOD_ID) {
+    override fun register() {
         electrolyzing()
     }
 
@@ -24,8 +20,6 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
                 amount /= 2
             }
             recipeId replace id("water")
-        }.save(exporter)
+        }.save(context)
     }
-
-    override fun getName(): String = "Electronics Recipes"
 }

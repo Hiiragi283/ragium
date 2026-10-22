@@ -2,14 +2,11 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.collection.base
 import hiiragi283.lib.collection.get
-import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
 import hiiragi283.lib.registry.HTSimpleDeferredItem
-import hiiragi283.lib.registry.and
-import hiiragi283.lib.registry.or
 import hiiragi283.lib.resource.debugPath
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
@@ -21,8 +18,6 @@ import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.PackOutput
 import net.minecraft.references.ItemIds
 import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.BlockTags
@@ -36,13 +31,12 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.ColorCollection
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.BlockTagIngredient
+import net.neoforged.neoforge.common.crafting.CompoundIngredient
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient
 import java.util.Optional
-import java.util.concurrent.CompletableFuture
 
-class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
-    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun exportValues() {
+data object RagiumMechanicalRecipeProvider : HTRecipeProvider(RagiumAPI.MOD_ID) {
+    override fun register() {
         assembling()
         centrifuging()
         compressing()
@@ -62,7 +56,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 8
             }
             result { +Items.GILDED_BLACKSTONE }
-        }.save(exporter)
+        }.save(context)
         // Dirt + Leaves -> Podzol
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.DIRT } }
@@ -71,25 +65,25 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 8
             }
             result { +Items.PODZOL }
-        }.save(exporter)
+        }.save(context)
         // Dirt + Mushroom -> Mycelium
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.DIRT } }
             ingredient { +holderSet(Tags.Items.MUSHROOMS) }
             result { +Items.MYCELIUM }
-        }.save(exporter)
+        }.save(context)
         // Crimson Nylium
         RagiumRecipeBuilders.assembling {
             ingredient { +itemSet(Tags.BlockItems.NETHERRACKS) }
             ingredient { items { +Items.CRIMSON_FUNGUS } }
             result { +Items.CRIMSON_NYLIUM }
-        }.save(exporter)
+        }.save(context)
         // Warped Nylium
         RagiumRecipeBuilders.assembling {
             ingredient { +itemSet(Tags.BlockItems.NETHERRACKS) }
             ingredient { items { +Items.WARPED_FUNGUS } }
             result { +Items.WARPED_NYLIUM }
-        }.save(exporter)
+        }.save(context)
         // String + Slime Ball -> Cobweb
         RagiumRecipeBuilders.assembling {
             ingredient {
@@ -98,7 +92,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             ingredient { +holderSet(Tags.Items.SLIME_BALLS) }
             result { +Items.COBWEB }
-        }.save(exporter)
+        }.save(context)
 
         // XX Ingot + XX Nugget -> XX Chain
         setOf(
@@ -115,7 +109,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                     +chain
                     count = 3
                 }
-            }.save(exporter)
+            }.save(context)
         }
         // XX Ingot + Torch -> XX Lantern
         setOf(
@@ -129,7 +123,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                     +lantern
                     count = 2
                 }
-            }.save(exporter)
+            }.save(context)
         }
         RagiumRecipeBuilders.assembling {
             ingredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON) }
@@ -138,7 +132,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.SOUL_LANTERN
                 count = 2
             }
-        }.save(exporter)
+        }.save(context)
         // Repeater
         RagiumRecipeBuilders.assembling {
             ingredient { +itemSet(Tags.BlockItems.STONES) }
@@ -153,7 +147,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.REPEATER
                 count = 2
             }
-        }.save(exporter)
+        }.save(context)
         // Comparator
         RagiumRecipeBuilders.assembling {
             ingredient { +itemSet(Tags.BlockItems.STONES) }
@@ -166,13 +160,13 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.COMPARATOR
                 count = 2
             }
-        }.save(exporter)
+        }.save(context)
         // Dispenser
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.DROPPER } }
             ingredient { +holderSet(Tags.Items.TOOLS_BOW) }
             result { +Items.DISPENSER }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.DROPPER } }
             ingredient {
@@ -185,7 +179,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             result { +Items.DISPENSER }
             recipeId suffix "_stackable"
-        }.save(exporter)
+        }.save(context)
         // Rail
         RagiumRecipeBuilders.assembling {
             ingredient {
@@ -197,7 +191,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.RAIL
                 count = 24
             }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.assembling {
             ingredient {
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD)
@@ -209,7 +203,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.POWERED_RAIL
                 count = 9
             }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.assembling {
             ingredient {
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
@@ -221,7 +215,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.DETECTOR_RAIL
                 count = 9
             }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.assembling {
             ingredient {
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
@@ -236,7 +230,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.ACTIVATOR_RAIL
                 count = 9
             }
-        }.save(exporter)
+        }.save(context)
         // TNT
         RagiumRecipeBuilders.assembling {
             ingredient {
@@ -251,7 +245,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.TNT
                 count = 2
             }
-        }.save(exporter)
+        }.save(context)
         // Head
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.SKELETON_SKULL } }
@@ -260,7 +254,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 8
             }
             result { +Items.ZOMBIE_HEAD }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.SKELETON_SKULL } }
             ingredient {
@@ -268,7 +262,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 8
             }
             result { +Items.CREEPER_HEAD }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.SKELETON_SKULL } }
             ingredient {
@@ -276,7 +270,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 8
             }
             result { +Items.PIGLIN_HEAD }
-        }.save(exporter)
+        }.save(context)
 
         // Gold Block + Apple -> Enchanted Golden Apple
         RagiumRecipeBuilders.assembling {
@@ -287,7 +281,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             result { +Items.ENCHANTED_GOLDEN_APPLE }
             time *= 8
-        }.save(exporter)
+        }.save(context)
     }
 
     private fun centrifuging() {
@@ -300,13 +294,13 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 amount = 250
             }
             recipeId replace id("honey_from_bottle")
-        }.save(exporter)
+        }.save(context)
         // Wet Sponge -> Sponge + Water
         RagiumRecipeBuilders.centrifuging {
             ingredient { items { +Items.WET_SPONGE } }
             itemResult { +Items.SPONGE }
             fluidResult { water() }
-        }.save(exporter)
+        }.save(context)
 
         // Honeycomb -> Beeswax + Honey
         RagiumRecipeBuilders.centrifuging {
@@ -317,7 +311,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 amount = 250
             }
             recipeId replace id("honey_from_comb")
-        }.save(exporter)
+        }.save(context)
     }
 
     private fun compressing() {
@@ -328,12 +322,12 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 8
             }
             result { +Items.SNOW_BLOCK }
-        }.save(exporter)
+        }.save(context)
         // Snow Block -> Ice
         RagiumRecipeBuilders.compressing {
             ingredient { items { +Items.SNOW_BLOCK } }
             result { +Items.ICE }
-        }.save(exporter)
+        }.save(context)
         // Ice -> Packed Ice
         RagiumRecipeBuilders.compressing {
             ingredient {
@@ -341,7 +335,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 6
             }
             result { +Items.PACKED_ICE }
-        }.save(exporter)
+        }.save(context)
         // Packed Ice -> Blue Ice
         RagiumRecipeBuilders.compressing {
             ingredient {
@@ -349,13 +343,13 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 6
             }
             result { +Items.BLUE_ICE }
-        }.save(exporter)
+        }.save(context)
 
         // Mud -> Clay
         RagiumRecipeBuilders.compressing {
             ingredient { items { +Items.MUD } }
             result { +Items.CLAY }
-        }.save(exporter)
+        }.save(context)
         // Moss Carpet -> Moss
         RagiumRecipeBuilders.compressing {
             ingredient {
@@ -367,7 +361,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 2
             }
             recipeId suffix "_from_carpet"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.compressing {
             ingredient {
                 items { +Items.PALE_MOSS_CARPET }
@@ -378,7 +372,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 2
             }
             recipeId suffix "_from_carpet"
-        }.save(exporter)
+        }.save(context)
         // Sculk Vein -> Sculk
         RagiumRecipeBuilders.compressing {
             ingredient {
@@ -386,7 +380,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 8
             }
             result { +Items.SCULK }
-        }.save(exporter)
+        }.save(context)
 
         // XX Carpet -> XX Wool
         for (color: DyeColor in DyeColor.entries) {
@@ -400,7 +394,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                     count = 2
                 }
                 recipeId suffix "_from_carpet"
-            }.save(exporter)
+            }.save(context)
         }
 
         // XX Dust -> XX
@@ -411,7 +405,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 result { +baseItem }
                 recipeId suffix "_from_dust"
                 condition { itemTagPresent(CommonTagPrefixes.DUST, fuel) }
-            }.save(exporter)
+            }.save(context)
         }
         setOf(
             RagiumMaterial.Other.WOOD to RagiumItems.PARTICLE_BOARD,
@@ -423,7 +417,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                     count = 2
                 }
                 result { +item }
-            }.save(exporter)
+            }.save(context)
         }
         RagiumRecipeBuilders.compressing {
             ingredient {
@@ -433,7 +427,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             result { +Items.DIAMOND }
             time *= 4
             recipeId suffix "_from_carbon"
-        }.save(exporter)
+        }.save(context)
 
         // 4x Blaze Powder -> Blaze Rod
         RagiumRecipeBuilders.compressing {
@@ -442,7 +436,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 4
             }
             result { +Items.BLAZE_ROD }
-        }.save(exporter)
+        }.save(context)
         // 6x Wind Charge -> Breeze Rod
         RagiumRecipeBuilders.compressing {
             ingredient {
@@ -450,7 +444,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 6
             }
             result { +Items.BREEZE_ROD }
-        }.save(exporter)
+        }.save(context)
     }
 
     private fun crushing() {
@@ -469,18 +463,21 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                     +base
                     count = 4
                 }
-            }.save(exporter)
+            }.save(context)
         }
 
         // Stone -> Cobblestone
         RagiumRecipeBuilders.crushing {
             ingredient {
-                +(HolderAcceptor.buildItemSet { +Items.STONE } or holderSet(ItemTags.STONE_BRICKS))
+                +CompoundIngredient.of(
+                    Ingredient.of(Items.STONE),
+                    Ingredient.of(holderSet(ItemTags.STONE_BRICKS))
+                )
             }
             result { +Items.COBBLESTONE }
             time /= 2
             recipeId suffix "_from_stones"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.crushing {
             ingredient {
                 items {
@@ -500,7 +497,10 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         // Cobblestone -> Gravel
         RagiumRecipeBuilders.crushing {
             ingredient {
-                +(itemSet(Tags.BlockItems.COBBLESTONES) and notHolderSet(Tags.BlockItems.COBBLESTONES_INFESTED.item()))
+                +DifferenceIngredient.of(
+                    Ingredient.of(itemSet(Tags.BlockItems.COBBLESTONES)),
+                    Ingredient.of(itemSet(Tags.BlockItems.COBBLESTONES_INFESTED))
+                )
             }
             result { +Items.GRAVEL }
             time /= 2
@@ -512,7 +512,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             result { +Items.SAND }
             time /= 2
             recipeId suffix "_from_gravel"
-        }.save(exporter)
+        }.save(context)
 
         // Book -> 3x Paper Pulp
         RagiumRecipeBuilders.crushing {
@@ -522,7 +522,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 3
             }
             recipeId suffix "_from_book"
-        }.save(exporter)
+        }.save(context)
         // Blaze Rod -> 4x Blaze Powder
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.RODS_BLAZE) }
@@ -530,7 +530,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.BLAZE_POWDER
                 count = 4
             }
-        }.save(exporter)
+        }.save(context)
         // Breeze Rod -> 6x Wind Charge
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.RODS_BREEZE) }
@@ -538,7 +538,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.WIND_CHARGE
                 count = 6
             }
-        }.save(exporter)
+        }.save(context)
     }
 
     private fun crushMaterial() {
@@ -546,15 +546,15 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.COAL } }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.COAL) }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.CHARCOAL } }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.CHARCOAL) }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(RagiumTags.Items.COKES) }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CARBON) }
-        }.save(exporter)
+        }.save(context)
 
         RagiumRecipeBuilders.crushing {
             ingredient {
@@ -564,7 +564,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 }
             }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.LIME) }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.crushing {
             ingredient {
                 items { +Items.POINTED_DRIPSTONE }
@@ -572,7 +572,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.LIME) }
             recipeId suffix "_from_pointed"
-        }.save(exporter)
+        }.save(context)
 
         for (gem: RagiumMaterial.Gem in RagiumMaterial.Gem.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, gem] ?: continue
@@ -580,7 +580,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 ingredient { +holderSet(CommonTagPrefixes.GEM, gem) }
                 result { +dust }
                 recipeId suffix "_from_gem"
-            }.save(exporter)
+            }.save(context)
         }
 
         for (metalLike: RagiumMaterial.MetalLike in RagiumMaterial.MetalLike.entries) {
@@ -589,7 +589,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 ingredient { +holderSet(CommonTagPrefixes.INGOT, metalLike) }
                 result { +dust }
                 recipeId suffix "_from_ingot"
-            }.save(exporter)
+            }.save(context)
         }
 
         val silicaDust: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
@@ -597,7 +597,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.QUARTZ) }
             result { +silicaDust }
             recipeId suffix "_from_quartz"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(RagiumTags.BlockItems.QUARTZ_BLOCKS.item) }
             result {
@@ -605,7 +605,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 4
             }
             recipeId suffix "_from_quartz_block"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.crushing {
             ingredient {
                 +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.AMETHYST)
@@ -613,22 +613,22 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             result { +silicaDust }
             recipeId suffix "_from_amethyst"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.AMETHYST_BLOCK } }
             result { +silicaDust }
             recipeId suffix "_from_amethyst_block"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.crushing {
             ingredient { +itemSet(Tags.BlockItems.OBSIDIANS_NORMAL) }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN) }
-        }.save(exporter)
+        }.save(context)
         /*RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.OBSIDIANS_CRYING) }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN) }
             result { +RagiumItems.ELDRITCH_TEAR }
             recipeId suffix "_from_crying"
-        }.save(exporter)*/
+        }.save(context)*/
         // Gear -> Dust
         for (material: RagiumMaterial in RagiumMaterial.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, material] ?: continue
@@ -640,7 +640,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                         count = 4
                     }
                     recipeId suffix "_from_gear"
-                }.save(exporter)
+                }.save(context)
             }
         }
     }
@@ -677,7 +677,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                     count = outputCount
                 }
                 recipeId suffix "_from_${input.location().debugPath}"
-            }.save(exporter)
+            }.save(context)
         }
 
         RagiumRecipeBuilders.crushing {
@@ -692,7 +692,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 5
             }
             recipeId suffix "_from_boats"
-        }.save(exporter)
+        }.save(context)
     }
 
     private fun dyes() {
@@ -762,7 +762,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                         +Items.DYE[color]
                         count = 2
                     }
-                }.save(exporter)
+                }.save(context)
             }
         }
         // Double
@@ -773,7 +773,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 4
             }
             recipeId prefix "double_"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.SUNFLOWER } }
             result {
@@ -781,7 +781,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 4
             }
             recipeId prefix "double_"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.PITCHER_PLANT } }
             result {
@@ -789,7 +789,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 4
             }
             recipeId prefix "double_"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.LILAC } }
             result {
@@ -797,7 +797,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 4
             }
             recipeId prefix "double_"
-        }.save(exporter)
+        }.save(context)
     }
 
     private fun cutting() {
@@ -806,7 +806,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { +holderSet(ItemTags.SAPLINGS) }
             result { +Items.STICK }
             recipeId suffix "_from_saplings"
-        }.save(exporter)
+        }.save(context)
         // Book -> Leather + 3x Paper
         RagiumRecipeBuilders.cutting {
             ingredient { items { +Items.BOOK } }
@@ -816,14 +816,14 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             result { +Items.LEATHER }
             recipeId suffix "_from_book"
-        }.save(exporter)
+        }.save(context)
 
         // Lens
         RagiumRecipeBuilders.cutting {
             ingredient { +holderSet(RagiumTags.BlockItems.QUARTZ_BLOCKS.item) }
             result { +RagiumItems.QUARTZ_LENS }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA) }
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.cutting {
             ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Gem.DIAMOND) }
             result { +RagiumItems.DIAMOND_LENS }
@@ -831,12 +831,12 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.DIAMOND)
                 count = 3
             }
-        }.save(exporter)
+        }.save(context)
 
         RagiumRecipeBuilders.cutting {
             ingredient { +holderSet(Tags.Items.NETHER_STARS) }
             result { +RagiumItems.NETHER_STAR_LENS }
-        }.save(exporter)
+        }.save(context)
     }
 
     private fun pressing() {
@@ -849,7 +849,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 +Items.MELON_SLICE
                 count = 9
             }
-        }.save(exporter)
+        }.save(context)
 
         // XX Block -> XX
         setOf(
@@ -875,7 +875,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                     +base.asItem()
                     count = 4
                 }
-            }.save(exporter)
+            }.save(context)
         }
 
         setOf(
@@ -888,7 +888,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                     +base
                     count = 4
                 }
-            }.save(exporter)
+            }.save(context)
         }
     }
 
@@ -901,7 +901,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 amount = 250
             }
             result { +Items.HONEY_BOTTLE }
-        }.save(exporter)
+        }.save(context)
         // Dirt + Water -> Mud
         RagiumRecipeBuilders.filling {
             itemIngredient { items { +Items.DIRT } }
@@ -910,7 +910,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 amount = 250
             }
             result { +Items.MUD }
-        }.save(exporter)
+        }.save(context)
 
         // XX Concrete Powder + Water -> XX Concrete
         for (color: DyeColor in DyeColor.entries) {
@@ -922,9 +922,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 }
                 result { +Items.CONCRETE[color] }
                 recipeId suffix "_from_powder"
-            }.save(exporter)
+            }.save(context)
         }
     }
-
-    override fun getName(): String = "Mechanical Recipes"
 }

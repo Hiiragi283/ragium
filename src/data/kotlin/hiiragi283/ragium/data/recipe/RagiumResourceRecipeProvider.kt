@@ -10,8 +10,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.fluid.RagiumFluids
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
@@ -23,11 +21,9 @@ import net.minecraft.world.item.component.Consumables
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect
 import net.minecraft.world.level.biome.Biomes
 import net.neoforged.neoforge.common.Tags
-import java.util.concurrent.CompletableFuture
 
-class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
-    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun exportValues() {
+data object RagiumResourceRecipeProvider : HTRecipeProvider(RagiumAPI.MOD_ID) {
+    override fun register() {
         brewing()
         planting()
 
@@ -47,11 +43,11 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 )
             }
             recipeId replace id("potion/nausea")
-        }.save(exporter)
+        }.save(context)
         // Resistance
         // Blindness
         RagiumRecipeBuilders.brewing {
-            itemIngredient { +holderSet(Tags.Items.GLASS_BLOCKS_TINTED) }
+            itemIngredient { +itemSet(Tags.BlockItems.GLASS_BLOCKS_TINTED) }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
             result {
                 +PotionContents(
@@ -60,7 +56,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 )
             }
             recipeId replace id("potion/blindness")
-        }.save(exporter)
+        }.save(context)
         // Hunger
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.ROTTEN_FLESH } }
@@ -72,7 +68,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 )
             }
             recipeId replace id("potion/hunger")
-        }.save(exporter)
+        }.save(context)
         // Wither
         RagiumRecipeBuilders.brewing {
             itemIngredient {
@@ -89,7 +85,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 )
             }
             recipeId replace id("potion/wither")
-        }.save(exporter)
+        }.save(context)
         // Health Boost
         // Absorption
         // Saturation
@@ -108,7 +104,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 )
             }
             recipeId replace id("potion/darkness")
-        }.save(exporter)
+        }.save(context)
 
         // Golden Apple
         RagiumRecipeBuilders.brewing {
@@ -122,7 +118,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 )
             }
             recipeId replace id("potion/golden_apple")
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.brewing {
             itemIngredient { items { +Items.ENCHANTED_GOLDEN_APPLE } }
             fluidIngredient { +HTPotionFluidIngredient(Potions.THICK) }
@@ -134,7 +130,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 )
             }
             recipeId replace id("potion/enchanted_golden_apple")
-        }.save(exporter)
+        }.save(context)
     }
 
     private fun extractEffects(consumable: Consumable): List<MobEffectInstance> = consumable
@@ -161,7 +157,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                     +crop
                     count = 12
                 }
-            }.save(exporter)
+            }.save(context)
         }
         // Plant without seed
         val crops: Set<Item> = setOf(
@@ -185,7 +181,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                     +crop
                     count = 16
                 }
-            }.save(exporter)
+            }.save(context)
         }
         // Cactus, Sugar Cane
         for (crop: Item in listOf(Items.CACTUS, Items.SUGAR_CANE)) {
@@ -198,7 +194,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                     +crop
                     count = 24
                 }
-            }.save(exporter)
+            }.save(context)
         }
         // Trees
         setOf(
@@ -224,7 +220,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                     +log
                     count = 48
                 }
-            }.save(exporter)
+            }.save(context)
         }
     }
 
@@ -237,7 +233,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 amount *= 4
             }
             recipeId suffix "_at_ocean"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.resourcePumping {
             biomes { +holderSet(Tags.Biomes.IS_RIVER) }
             result {
@@ -245,12 +241,12 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 amount *= 2
             }
             recipeId suffix "_at_river"
-        }.save(exporter)
+        }.save(context)
         RagiumRecipeBuilders.resourcePumping {
             biomes { +holderSet(Tags.Biomes.IS_WET) }
             result { water() }
             recipeId suffix "_at_wet_biomes"
-        }.save(exporter)
+        }.save(context)
 
         // Nether -> Lava
         RagiumRecipeBuilders.resourcePumping {
@@ -260,17 +256,15 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 amount /= 4
             }
             recipeId suffix "_at_nether"
-        }.save(exporter)
+        }.save(context)
         // Soul Sand Valley -> Crude Oil
         RagiumRecipeBuilders.resourcePumping {
-            biomes { biomes { +registries.getOrThrow(Biomes.SOUL_SAND_VALLEY) } }
+            biomes { biomes { +holder(Biomes.SOUL_SAND_VALLEY) } }
             result {
                 +RagiumFluids.CRUDE_OIL
                 amount /= 4
             }
             recipeId suffix "_at_soul_sand_valley"
-        }.save(exporter)
+        }.save(context)
     }
-
-    override fun getName(): String = "Bio Recipes"
 }

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "#c:bricks/normal",
+    "B": "ragium:mortar"
+  },
+  "pattern": [
+    "AB",
+    "BA"
+  ],
+  "result": {
+    "id": "minecraft:bricks"
+  }
+}

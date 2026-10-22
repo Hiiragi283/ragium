@@ -10,16 +10,12 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.common.Tags
-import java.util.concurrent.CompletableFuture
 
-class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
-    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun exportValues() {
+data object RagiumChemicalRecipeProvider : HTRecipeProvider(RagiumAPI.MOD_ID) {
+    override fun register() {
         washing()
 
         // Wood Pulp + Resin -> Particle Board
@@ -30,7 +26,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 amount /= 8
             }
             result { +RagiumItems.PARTICLE_BOARD }
-        }.save(exporter)
+        }.save(context)
         // Piston + Resin -> Sticky Piston
         RagiumRecipeBuilders.bathing {
             itemIngredient { items { +Items.PISTON } }
@@ -39,7 +35,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 amount /= 8
             }
             result { +Items.STICKY_PISTON }
-        }.save(exporter)
+        }.save(context)
 
         // Cement + Water -> Mortar
         RagiumRecipeBuilders.bathing {
@@ -49,7 +45,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 amount /= 4
             }
             result { +RagiumItems.MORTAR }
-        }.save(exporter)
+        }.save(context)
 
         // Poison + Spider Eye -> Fermented Spider Eye
         RagiumRecipeBuilders.bathing {
@@ -59,7 +55,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 amount = 250
             }
             result { +Items.FERMENTED_SPIDER_EYE }
-        }.save(exporter)
+        }.save(context)
         // Poison + Potato -> Poisonous Potato
         RagiumRecipeBuilders.bathing {
             itemIngredient { +holderSet(Tags.Items.CROPS_POTATO) }
@@ -68,20 +64,20 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 amount = 250
             }
             result { +Items.POISONOUS_POTATO }
-        }.save(exporter)
+        }.save(context)
     }
 
     private fun washing() {
         // Gravel + Water -> Flint
         RagiumRecipeBuilders.washing {
-            itemIngredient { +holderSet(Tags.Items.GRAVELS) }
+            itemIngredient { +itemSet(Tags.BlockItems.GRAVELS) }
             fluidIngredient { +waterSet() }
             result { +Items.FLINT }
-        }.save(exporter)
+        }.save(context)
         // Sand + Water -> SiO2
         RagiumRecipeBuilders.washing {
             itemIngredient {
-                +holderSet(Tags.Items.SANDS)
+                +itemSet(Tags.BlockItems.SANDS)
                 count = 8
             }
             fluidIngredient { +waterSet() }
@@ -90,7 +86,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 count = 3
             }
             recipeId suffix "_from_sands"
-        }.save(exporter)
+        }.save(context)
         // Clay + Water -> Al2O3 + SiO2
         RagiumRecipeBuilders.washing {
             itemIngredient {
@@ -103,7 +99,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 count = 3
             }
             recipeId suffix "_from_clay_ball"
-        }.save(exporter)
+        }.save(context)
 
         RagiumRecipeBuilders.washing {
             itemIngredient {
@@ -116,7 +112,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 count = 3
             }
             recipeId suffix "_from_clay"
-        }.save(exporter)
+        }.save(context)
 
         // Ancient Debris -> Netherite Scrap
         RagiumRecipeBuilders.washing {
@@ -130,8 +126,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 count = 3
             }
             recipeId suffix "_from_debris"
-        }.save(exporter)
+        }.save(context)
     }
-
-    override fun getName(): String = "Chemical Recipes"
 }

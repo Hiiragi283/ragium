@@ -3,14 +3,12 @@
 package hiiragi283.lib.data.recipe.builder
 
 import hiiragi283.lib.data.ConditionBuilder
-import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.Identity
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Holder
-import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
@@ -124,25 +122,9 @@ abstract class HTRecipeBuilder<out RECIPE : Recipe<*>>(private val prefix: Strin
 
     /**
      * レシピを生成します。
-     * @param output 生成したレシピの出力先
-     * @since 26.3.0
-     */
-    open fun save(output: RecipeOutput) {
-        build().let { (key: RecipeKey, recipe: RECIPE) -> output.accept(key, recipe, null, *conditions.toTypedArray()) }
-    }
-
-    /**
-     * レシピを生成します。
      * @param context 生成したレシピの出力先
      * @since 26.3.0
      */
     open fun save(context: BootstrapContext<Recipe<*>>): Holder.Reference<Recipe<*>> =
         build().let { (key: RecipeKey, recipe: RECIPE) -> context.register(key, recipe, *conditions.toTypedArray()) }
-
-    /**
-     * レシピを生成します。
-     * @param exporter 生成したレシピの出力先
-     */
-    open fun save(exporter: ConditionalExporter<Recipe<*>>): RecipeKey =
-        build().let { (key: RecipeKey, recipe: RECIPE) -> exporter.accept(key, recipe, conditions) }
 }

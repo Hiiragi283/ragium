@@ -8,19 +8,9 @@
     "item": {
       "count": 1,
       "items": {
-        "type": "neoforge:and",
-        "values": [
-          {
-            "type": "neoforge:or",
-            "values": [
-              "#minecraft:wool_carpets"
-            ]
-          },
-          {
-            "type": "neoforge:not",
-            "value": "#c:dyed/white"
-          }
-        ]
+        "neoforge:ingredient_type": "neoforge:difference",
+        "base": "#minecraft:wool_carpets",
+        "subtracted": "#c:dyed/white"
       }
     }
   },

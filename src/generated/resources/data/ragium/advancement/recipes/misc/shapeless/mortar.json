@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cement": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:cement"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "ragium:shapeless/mortar"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cement"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:shapeless/mortar"
+    ]
+  }
+}

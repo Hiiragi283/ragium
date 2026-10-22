@@ -8,8 +8,8 @@
     "item": {
       "count": 1,
       "items": {
-        "type": "neoforge:and",
-        "values": [
+        "neoforge:ingredient_type": "neoforge:intersection",
+        "children": [
           "#minecraft:banners",
           "#c:dyed/white"
         ]

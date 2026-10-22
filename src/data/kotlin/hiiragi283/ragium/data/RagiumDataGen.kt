@@ -12,16 +12,27 @@ import hiiragi283.ragium.data.loot.RagiumBlockLootTableProvider
 import hiiragi283.ragium.data.loot.RagiumGlobalLootModifierProvider
 import hiiragi283.ragium.data.loot.RagiumGlobalLootTableProvider
 import hiiragi283.ragium.data.model.RagiumModelProvider
+import hiiragi283.ragium.data.recipe.RagiumArcaneRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumChemicalRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumColoringRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumCommonRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumElectronicsRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumHeatRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumMechanicalRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumRecipePriorityProvider
+import hiiragi283.ragium.data.recipe.RagiumResourceRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProviderN
 import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.tag.RagiumDamageTypeTagsProvider
 import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
+import net.minecraft.advancements.Advancement
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.MultiRegistryBootstrap
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.LootTableProvider
+import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -65,7 +76,20 @@ data object RagiumDataGen {
                         setOf(Registries.RECIPE, Registries.ADVANCEMENT)
 
                     override fun run(registries: MultiRegistryBootstrap.BootstrapGetter) {
-                        RagiumVanillaRecipeProviderN(registries).buildRecipes()
+                        val recipes: BootstrapContext<Recipe<*>> = registries.get(Registries.RECIPE)
+                        val advancements: BootstrapContext<Advancement> = registries.get(Registries.ADVANCEMENT)
+
+                        RagiumVanillaRecipeProviderN(recipes, advancements).buildRecipes()
+
+                        RagiumCommonRecipeProvider.run(recipes)
+                        RagiumColoringRecipeProvider.run(recipes)
+
+                        RagiumMechanicalRecipeProvider.run(recipes)
+                        RagiumHeatRecipeProvider.run(recipes)
+                        RagiumChemicalRecipeProvider.run(recipes)
+                        RagiumResourceRecipeProvider.run(recipes)
+                        RagiumElectronicsRecipeProvider.run(recipes)
+                        RagiumArcaneRecipeProvider.run(recipes)
                     }
                 })
         )

@@ -5,28 +5,25 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.registry.and
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
-import net.minecraft.core.HolderLookup
-import net.minecraft.core.HolderSet
-import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.ColorCollection
 import net.neoforged.neoforge.common.Tags
-import java.util.concurrent.CompletableFuture
+import net.neoforged.neoforge.common.crafting.DifferenceIngredient
+import net.neoforged.neoforge.common.crafting.IntersectionIngredient
 
-class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
-    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun exportValues() {
+data object RagiumColoringRecipeProvider : HTRecipeProvider(RagiumAPI.MOD_ID) {
+    override fun register() {
         for (color: DyeColor in DyeColor.entries) {
             val name: String = color.serializedName
             val dyeContent: HTFluidContent = RagiumFluids.DYES[color]
@@ -43,7 +40,7 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 }
                 time /= 2
                 recipeId replace id("$name/liquid_dye")
-            }.save(exporter)
+            }.save(context)
             // Liquid Dye -> Solid Dye
             RagiumRecipeBuilders.freezing {
                 ingredient {
@@ -54,7 +51,7 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 result { +Items.DYE[color] }
                 time /= 4
                 recipeId replace id("dye/$name")
-            }.save(exporter)
+            }.save(context)
             // Sand + Gravel + Liquid Dye -> XX Concrete
             RagiumRecipeBuilders.mixing {
                 itemIngredient { +itemSet(Tags.BlockItems.SANDS) }
@@ -69,7 +66,7 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 }
                 time /= 2
                 recipeId replace id("$name/concrete")
-            }.save(exporter)
+            }.save(context)
 
             // Coloring
             if (color == DyeColor.WHITE) continue
@@ -83,7 +80,7 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
                     result { +contents.items[color].asItem() }
                     time /= 4
                     recipeId replace id("$name/${contents.serializedName}")
-                }.save(exporter)
+                }.save(context)
             }
         }
 
@@ -97,11 +94,9 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 }
                 result { +contents.white.asItem() }
                 recipeId replace id("white/${contents.serializedName}")
-            }.save(exporter)
+            }.save(context)
         }
     }
-
-    override fun getName(): String = "Coloring Recipes"
 
     enum class ColoredContents(val allTag: TagKey<Item>, val items: ColorCollection<out ItemLike>) :
         StringRepresentable {
@@ -121,11 +116,16 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
     /**
      * 白色のアイテムのみを判定します。
      */
-    fun ColoredContents.onlyWhites(): HolderSet<Item> = holderSet(this.allTag) and itemSet(Tags.BlockItems.DYED_WHITE)
+    fun ColoredContents.onlyWhites(): Ingredient = IntersectionIngredient.of(
+        Ingredient.of(holderSet(this.allTag)),
+        Ingredient.of(itemSet(Tags.BlockItems.DYED_WHITE))
+    )
 
     /**
      * 白色以外のアイテムを判定します。
      */
-    fun ColoredContents.excludeWhites(): HolderSet<Item> =
-        holderSet(this.allTag) and notHolderSet(Tags.BlockItems.DYED_WHITE.item())
+    fun ColoredContents.excludeWhites(): Ingredient = DifferenceIngredient.of(
+        Ingredient.of(holderSet(this.allTag)),
+        Ingredient.of(itemSet(Tags.BlockItems.DYED_WHITE))
+    )
 }

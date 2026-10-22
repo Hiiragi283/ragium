@@ -7,14 +7,10 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.RagiumMaterial
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.PackOutput
 import net.minecraft.world.item.enchantment.Enchantments
-import java.util.concurrent.CompletableFuture
 
-class RagiumArcaneRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
-    HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    override fun exportValues() {
+data object RagiumArcaneRecipeProvider : HTRecipeProvider(RagiumAPI.MOD_ID) {
+    override fun register() {
         enchanting()
     }
 
@@ -25,8 +21,8 @@ class RagiumArcaneRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
                 count = 64
             }
-            result { +registries.getOrThrow(Enchantments.PROTECTION) }
-        }.save(exporter)
+            result { +holder(Enchantments.PROTECTION) }
+        }.save(context)
         // Diamond -> Protection + Unbreaking
         RagiumRecipeBuilders.enchanting {
             ingredient {
@@ -35,13 +31,11 @@ class RagiumArcaneRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             result {
                 enchantedBook {
-                    set(registries.getOrThrow(Enchantments.PROTECTION), 4)
-                    set(registries.getOrThrow(Enchantments.UNBREAKING), 3)
+                    set(holder(Enchantments.PROTECTION), 4)
+                    set(holder(Enchantments.UNBREAKING), 3)
                 }
             }
             recipeId replace id("diamond_armor")
-        }.save(exporter)
+        }.save(context)
     }
-
-    override fun getName(): String = "Arcane Recipes"
 }

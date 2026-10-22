@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "ragium:machine_casing",
-  "result": {
-    "id": "ragium:resource_machine_casing"
-  }
-}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_molds": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#ragium:molds"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "ragium:stonecutting/mold/plate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_molds"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:stonecutting/mold/plate"
+    ]
+  }
+}

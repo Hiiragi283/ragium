@@ -2,7 +2,6 @@ package hiiragi283.lib.registry
 
 import hiiragi283.lib.HTConstants
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderSet
 import net.minecraft.core.TypedInstance
 import net.minecraft.references.BlockItemId
 import net.minecraft.resources.ResourceKey
@@ -11,8 +10,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.FluidIds
-import net.neoforged.neoforge.registries.holdersets.AndHolderSet
-import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 
 /**
  * この[Holder][this]から[ResourceKey]を取得します。
@@ -31,18 +28,6 @@ fun <R : Any> Holder<R>.getKeyOrThrow(): ResourceKey<R> = this.keyOrNull() ?: er
  * @since 26.1.0
  */
 fun <T : Any> TypedInstance<T>.getKeyOrThrow(): ResourceKey<T> = this.typeHolder().getKeyOrThrow()
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.11
- */
-infix fun <T : Any> HolderSet<T>.and(other: HolderSet<T>): HolderSet<T> = AndHolderSet(this, other)
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.11
- */
-infix fun <T : Any> HolderSet<T>.or(other: HolderSet<T>): HolderSet<T> = OrHolderSet(this, other)
 
 //    Block    //
 

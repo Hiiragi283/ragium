@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "A": "minecraft:wither_skeleton_skull",
     "B": "#minecraft:soul_fire_base_blocks"

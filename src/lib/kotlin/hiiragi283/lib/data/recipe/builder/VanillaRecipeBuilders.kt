@@ -3,13 +3,14 @@
 package hiiragi283.lib.data.recipe.builder
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.data.ConditionalExporter
 import hiiragi283.lib.data.recipe.builder.vanilla.HTCookingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.vanilla.HTShapedRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.vanilla.HTShapelessRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.vanilla.HTSingleItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.vanilla.HTSmithingRecipeBuilder
 import hiiragi283.lib.util.identity
+import net.minecraft.core.Holder
+import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.world.item.crafting.BlastingRecipe
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.SmeltingRecipe
@@ -88,28 +89,24 @@ data object VanillaRecipeBuilders {
      */
     @JvmStatic
     inline fun smeltingAndBlasting(
-        exporter: ConditionalExporter<Recipe<*>>,
+        context: BootstrapContext<Recipe<*>>,
         builderAction: HTCookingRecipeBuilder.() -> Unit
-    ) {
-        sequenceOf(
-            smelting(builderAction),
-            HTCookingRecipeBuilder(::BlastingRecipe, { it / 2 }, HTConstants.BLASTING).apply(builderAction)
-        ).forEach { it.save(exporter) }
-    }
+    ): Sequence<Holder.Reference<Recipe<*>>> = sequenceOf(
+        smelting(builderAction),
+        HTCookingRecipeBuilder(::BlastingRecipe, { it / 2 }, HTConstants.BLASTING).apply(builderAction)
+    ).map { it.save(context) }
 
     /**
      * かまどレシピと燻製器レシピを生成します。後者の処理時間は前者の半分で登録されます。
      */
     @JvmStatic
     inline fun smeltingAndSmoking(
-        exporter: ConditionalExporter<Recipe<*>>,
+        context: BootstrapContext<Recipe<*>>,
         builderAction: HTCookingRecipeBuilder.() -> Unit
-    ) {
-        sequenceOf(
-            smelting(builderAction),
-            HTCookingRecipeBuilder(::SmokingRecipe, { it / 2 }, HTConstants.SMOKING).apply(builderAction)
-        ).forEach { it.save(exporter) }
-    }
+    ): Sequence<Holder.Reference<Recipe<*>>> = sequenceOf(
+        smelting(builderAction),
+        HTCookingRecipeBuilder(::SmokingRecipe, { it / 2 }, HTConstants.SMOKING).apply(builderAction)
+    ).map { it.save(context) }
 
     //    Other    //
 

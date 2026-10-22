@@ -2,35 +2,78 @@ package hiiragi283.lib.data
 
 import hiiragi283.lib.HTComparators
 import hiiragi283.lib.registry.HTFluidContent
+import hiiragi283.lib.resource.toId
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderSet
+import net.minecraft.core.Registry
 import net.minecraft.core.registries.SingleRegistryBootstrap
 import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockItemTagId
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import java.util.stream.Stream
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.3.0
  */
-abstract class HTSingleRegistryBootstrap<T : Any> : SingleRegistryBootstrap<T> {
-    lateinit var context: BootstrapContext<T>
+abstract class HTSingleRegistryBootstrap<R : Any>(protected val modId: String) : SingleRegistryBootstrap<R> {
+    lateinit var context: BootstrapContext<R>
         private set
 
-    final override fun run(registry: BootstrapContext<T>) {
-        this.context = registry
+    final override fun run(registry: BootstrapContext<R>) {
+        this.context = object : BootstrapContext<R> {
+            override fun register(key: ResourceKey<R>, value: R): Holder.Reference<R> =
+                registry.register(modifyId(key), value)
+
+            override fun <S : Any> lookup(key: ResourceKey<out Registry<out S>>): HolderGetter<S> = registry.lookup(key)
+
+            @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
+            override fun <S : Any> listContextElements(
+                key: ResourceKey<out Registry<out S>>
+            ): Stream<Holder.Reference<S>> = registry.listContextElements(key)
+        }
         register()
     }
 
     protected abstract fun register()
 
+    protected fun modifyId(key: ResourceKey<R>): ResourceKey<R> =
+        ResourceKey.create(key.registryKey(), key.identifier().let(::modifyId))
+
+    /**
+     * 受け取った[id]を[context]内で変換します。
+     */
+    protected open fun modifyId(id: Identifier): Identifier = modId.toId(id.path)
+
     //    Extensions    //
+
+    // Identifier
+
+    /**
+     * 指定した[パス][path]から[ID][Identifier]を作成します。
+     * @return [modId]を[名前空間][Identifier.getNamespace]とする[ID][Identifier]
+     */
+    protected fun id(path: String): Identifier = modId.toId(path)
+
+    /**
+     * 指定した[パス][path]から[ID][Identifier]を作成します。
+     * @return [modId]を[名前空間][Identifier.getNamespace]とする[ID][Identifier]
+     */
+    protected fun id(vararg path: String): Identifier = modId.toId(*path)
+
+    // Registry
+
+    protected fun <T : Any> holder(key: ResourceKey<T>): Holder.Reference<T> = this.context.getOrThrow(key)
 
     /**
      * [HolderSet]を取得します。

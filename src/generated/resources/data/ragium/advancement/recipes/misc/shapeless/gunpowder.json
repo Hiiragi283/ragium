@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dusts_niter": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dusts/niter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_dusts_sulfur": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dusts/sulfur"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "ragium:shapeless/gunpowder"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dusts_sulfur",
+      "has_dusts_niter"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:shapeless/gunpowder"
+    ]
+  }
+}

@@ -20,7 +20,6 @@ import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.Recipe
-import kotlin.collections.set
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -80,7 +79,12 @@ abstract class HTVanillaRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String) : 
 
     final override fun getRecipeId(): Identifier = result.getKeyOrThrow().identifier()
 
-    override fun save(output: RecipeOutput) {
+    /**
+     * レシピを生成します。
+     * @param output 生成したレシピの出力先
+     * @since 26.3.0
+     */
+    fun save(output: RecipeOutput) {
         build().let { (key: RecipeKey, recipe: RECIPE) ->
             output.accept(
                 key,
