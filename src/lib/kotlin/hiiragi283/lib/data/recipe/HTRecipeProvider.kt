@@ -5,16 +5,12 @@ import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.data.HTSingleRegistryBootstrap
-import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
-import hiiragi283.lib.data.recipe.builder.vanilla.HTSmithingRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
-import hiiragi283.ragium.api.material.RagiumMaterial
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Recipe
 
 /**
@@ -65,15 +61,4 @@ abstract class HTRecipeProvider(modId: String) : HTSingleRegistryBootstrap<Recip
      */
     protected fun dustOrIngot(material: HTMaterialLike): HTMaterialTagsIngredient =
         materialTags(nelOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT), material)
-
-    /**
-     * @since 26.1.9
-     */
-    protected inline fun netheriteUpgrading(builderAction: HTSmithingRecipeBuilder.() -> Unit) {
-        VanillaRecipeBuilders.smithing {
-            template { items { +Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE } }
-            addition { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.NETHERITE) }
-            builderAction()
-        }.save(context)
-    }
 }

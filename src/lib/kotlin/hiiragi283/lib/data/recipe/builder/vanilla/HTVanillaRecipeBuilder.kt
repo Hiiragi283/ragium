@@ -6,7 +6,6 @@ import hiiragi283.lib.data.advancement.criterion.HTInventoryChangeBuilder
 import hiiragi283.lib.data.recipe.builder.HTRecipeBuilder
 import hiiragi283.lib.item.ItemInstanceBuilder
 import hiiragi283.lib.recipe.RecipeKey
-import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.advancements.CriterionTriggerInstance
 import net.minecraft.advancements.triggers.CriteriaTriggers
@@ -77,7 +76,7 @@ abstract class HTVanillaRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String) : 
 
     //    HTRecipeBuilder    //
 
-    final override fun getRecipeId(): Identifier = result.getKeyOrThrow().identifier()
+    final override fun getRecipeId(): Identifier = result.typeHolder().key().identifier()
 
     /**
      * レシピを生成します。

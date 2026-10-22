@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.fluid.HTFlowingFluidHelper
 import hiiragi283.lib.item.alchemy.HTPotionHelper
-import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.nelOf
 import hiiragi283.lib.serialization.network.HTStreamCodecs
@@ -149,7 +148,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
 
         override fun create(amount: Int): FluidStack = FluidStack(fluid, amount, components)
 
-        override fun getId(): Identifier = fluid.getKeyOrThrow().identifier()
+        override fun getId(): Identifier = fluid.key().identifier()
     }
 
     @JvmRecord

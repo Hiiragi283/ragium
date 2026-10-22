@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_buckets_empty": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:buckets/empty"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "ragium:tank_by_black_steel"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_buckets_empty"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:tank_by_black_steel"
+    ]
+  }
+}

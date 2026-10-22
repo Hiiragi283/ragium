@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "pitch_coke_block",
+  "key": {
+    "A": "ragium:pitch_coke",
+    "B": "ragium:pitch_coke"
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:pitch_coke_block"
+  }
+}

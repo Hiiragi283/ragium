@@ -7,14 +7,12 @@ import hiiragi283.lib.data.recipe.builder.vanilla.HTCookingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.vanilla.HTShapedRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.vanilla.HTShapelessRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.vanilla.HTSingleItemRecipeBuilder
-import hiiragi283.lib.data.recipe.builder.vanilla.HTSmithingRecipeBuilder
 import hiiragi283.lib.util.identity
 import net.minecraft.core.Holder
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.world.item.crafting.BlastingRecipe
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.SmeltingRecipe
-import net.minecraft.world.item.crafting.SmokingRecipe
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -52,39 +50,6 @@ data object VanillaRecipeBuilders {
     //    Cooking    //
 
     /**
-     * かまどレシピのみを生成します。
-     */
-    @JvmStatic
-    inline fun smelting(builderAction: HTCookingRecipeBuilder.() -> Unit): HTCookingRecipeBuilder {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTCookingRecipeBuilder(::SmeltingRecipe, identity(), HTConstants.SMELTING).apply(builderAction)
-    }
-
-    /**
-     * 溶鉱炉レシピのみを生成します。
-     */
-    @JvmStatic
-    inline fun blasting(builderAction: HTCookingRecipeBuilder.() -> Unit): HTCookingRecipeBuilder {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTCookingRecipeBuilder(::BlastingRecipe, identity(), HTConstants.BLASTING).apply(builderAction)
-    }
-
-    /**
-     * 燻製器レシピのみを生成します。
-     */
-    @JvmStatic
-    inline fun smoking(builderAction: HTCookingRecipeBuilder.() -> Unit): HTCookingRecipeBuilder {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTCookingRecipeBuilder(::SmokingRecipe, identity(), HTConstants.SMOKING).apply(builderAction)
-    }
-
-    /**
      * かまどレシピと溶鉱炉レシピを生成します。後者の処理時間は前者の半分で登録されます。
      */
     @JvmStatic
@@ -92,34 +57,11 @@ data object VanillaRecipeBuilders {
         context: BootstrapContext<Recipe<*>>,
         builderAction: HTCookingRecipeBuilder.() -> Unit
     ): Sequence<Holder.Reference<Recipe<*>>> = sequenceOf(
-        smelting(builderAction),
+        HTCookingRecipeBuilder(::SmeltingRecipe, identity(), HTConstants.SMELTING).apply(builderAction),
         HTCookingRecipeBuilder(::BlastingRecipe, { it / 2 }, HTConstants.BLASTING).apply(builderAction)
     ).map { it.save(context) }
 
-    /**
-     * かまどレシピと燻製器レシピを生成します。後者の処理時間は前者の半分で登録されます。
-     */
-    @JvmStatic
-    inline fun smeltingAndSmoking(
-        context: BootstrapContext<Recipe<*>>,
-        builderAction: HTCookingRecipeBuilder.() -> Unit
-    ): Sequence<Holder.Reference<Recipe<*>>> = sequenceOf(
-        smelting(builderAction),
-        HTCookingRecipeBuilder(::SmokingRecipe, { it / 2 }, HTConstants.SMOKING).apply(builderAction)
-    ).map { it.save(context) }
-
     //    Other    //
-
-    /**
-     * 鍛冶台レシピを生成します。
-     */
-    @JvmStatic
-    inline fun smithing(builderAction: HTSmithingRecipeBuilder.() -> Unit): HTSmithingRecipeBuilder {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTSmithingRecipeBuilder().apply(builderAction)
-    }
 
     /**
      * 石切台レシピを生成します。

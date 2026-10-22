@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "pitch_coke",
+  "ingredients": [
+    "#c:storage_blocks/pitch_coke"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:pitch_coke"
+  }
+}

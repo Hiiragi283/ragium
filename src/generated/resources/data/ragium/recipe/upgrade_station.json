@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "#c:ingots/sooty_iron",
+    "B": "#c:gears/iron",
+    "C": "#c:player_workstations/crafting_tables"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "id": "ragium:upgrade_station"
+  }
+}

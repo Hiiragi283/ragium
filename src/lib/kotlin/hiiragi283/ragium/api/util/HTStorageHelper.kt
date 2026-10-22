@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.util
 import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.item.ItemStack
-import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.HTTextUtil
 import hiiragi283.lib.text.Text
@@ -197,7 +196,7 @@ data object HTStorageHelper {
         tooltips.forEach(consumer)
         // Mod Name
         stack.typeHolder()
-            .getKeyOrThrow()
+            .key()
             .identifier()
             .namespace
             .let(HTTextUtil::getModNameText)

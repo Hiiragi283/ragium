@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_rods_blaze": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:rods/blaze"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "ragium:potion_tank"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_rods_blaze"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:potion_tank"
+    ]
+  }
+}

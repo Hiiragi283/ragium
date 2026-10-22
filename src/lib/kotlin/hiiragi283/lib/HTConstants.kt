@@ -82,9 +82,6 @@ data object HTConstants {
     const val SHAPED = "shaped"
     const val SHAPELESS = "shapeless"
     const val SMELTING = "smelting"
-    const val SMITHING = "smithing"
-    const val SMOKING = "smoking"
-    const val TRANSMUTE = "transmute"
 
     // Serialization
     const val ENERGY = "energy"

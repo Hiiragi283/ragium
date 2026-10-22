@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "#c:ingots/gold",
+    "B": "#c:gems/quartz",
+    "C": "#c:gears/iron",
+    "D": "ragium:basic_upgrade"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "id": "ragium:advanced_upgrade"
+  }
+}

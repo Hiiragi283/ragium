@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "aluminum_block",
+  "key": {
+    "A": "#c:ingots/aluminum",
+    "B": "ragium:aluminum_ingot"
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:aluminum_block"
+  }
+}

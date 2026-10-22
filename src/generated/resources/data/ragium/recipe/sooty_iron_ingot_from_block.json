@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "sooty_iron_ingot",
+  "ingredients": [
+    "#c:storage_blocks/sooty_iron"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:sooty_iron_ingot"
+  }
+}

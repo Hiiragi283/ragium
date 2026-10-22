@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_shadow_steel_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:shadow_steel_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "ragium:shadow_steel_ingot_from_nugget"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_shadow_steel_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:shadow_steel_ingot_from_nugget"
+    ]
+  }
+}

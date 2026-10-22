@@ -6,7 +6,6 @@ import hiiragi283.lib.integration.jei.HTJeiDrawables
 import hiiragi283.lib.integration.jei.ingredient.HTFluidSlotRenderer
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
-import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.text.translatableText
@@ -47,7 +46,7 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
         height: Int
     ) : this(
         recipeType,
-        translatableText(BuiltInRegistries.RECIPE_TYPE.wrapAsHolder(recipeType1).getKeyOrThrow().toLanguageKey()),
+        translatableText(BuiltInRegistries.RECIPE_TYPE.wrapAsHolder(recipeType1).key().toLanguageKey()),
         icon,
         width,
         height

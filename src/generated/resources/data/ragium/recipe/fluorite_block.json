@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "fluorite_block",
+  "key": {
+    "A": "#c:gems/fluorite"
+  },
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "result": {
+    "id": "ragium:fluorite_block"
+  }
+}

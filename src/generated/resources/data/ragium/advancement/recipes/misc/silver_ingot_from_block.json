@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_storage_blocks_silver": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:storage_blocks/silver"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "ragium:silver_ingot_from_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_storage_blocks_silver"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:silver_ingot_from_block"
+    ]
+  }
+}

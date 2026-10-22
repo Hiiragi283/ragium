@@ -8,7 +8,6 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.item.ItemStack
 import hiiragi283.lib.item.component.buildItemEnchantments
-import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.DFUEither
@@ -157,7 +156,7 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
         override fun create(): ItemStack = ItemStack(item, 1, components)
 
-        override fun getId(): Identifier = item.getKeyOrThrow().identifier()
+        override fun getId(): Identifier = item.key().identifier()
     }
 
     @JvmRecord

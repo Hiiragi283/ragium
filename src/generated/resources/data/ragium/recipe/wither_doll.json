@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": "minecraft:wither_skeleton_skull",
+    "B": "#minecraft:soul_fire_base_blocks"
+  },
+  "pattern": [
+    "AAA",
+    "BBB",
+    " B "
+  ],
+  "result": {
+    "id": "ragium:wither_doll"
+  }
+}

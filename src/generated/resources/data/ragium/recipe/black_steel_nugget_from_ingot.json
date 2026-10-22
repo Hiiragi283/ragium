@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "black_steel_nugget",
+  "ingredients": [
+    "#c:ingots/black_steel"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:black_steel_nugget"
+  }
+}

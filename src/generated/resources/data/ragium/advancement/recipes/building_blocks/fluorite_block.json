@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gems_fluorite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:gems/fluorite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "ragium:fluorite_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gems_fluorite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:fluorite_block"
+    ]
+  }
+}

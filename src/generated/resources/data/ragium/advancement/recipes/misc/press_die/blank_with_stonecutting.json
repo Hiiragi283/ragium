@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_press_dies": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#ragium:press_dies"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "ragium:press_die/blank_with_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_press_dies"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:press_die/blank_with_stonecutting"
+    ]
+  }
+}
