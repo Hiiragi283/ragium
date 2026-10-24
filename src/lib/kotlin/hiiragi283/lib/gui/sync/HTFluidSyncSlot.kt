@@ -1,6 +1,6 @@
 package hiiragi283.lib.gui.sync
 
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
+import hiiragi283.lib.transfer.fluid.HTFluidStackResourceSlot
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.core.RegistryAccess
 import net.neoforged.neoforge.fluids.FluidStack
@@ -25,7 +25,7 @@ class HTFluidSyncSlot(property: ReadWriteProperty<Any?, FluidStack>) : HTIntSync
 
     constructor(property: KMutableProperty0<FluidStack>) : this(HTDelegates.LazyDelegate(property::get, property::set))
 
-    constructor(tank: HTBasicFluidTank) : this(tank::getStackCopy, tank::setStack)
+    constructor(tank: HTFluidStackResourceSlot) : this(tank::getStackCopy, tank::setStack)
 
     private var lastStack: FluidStack = FluidStack.EMPTY
 

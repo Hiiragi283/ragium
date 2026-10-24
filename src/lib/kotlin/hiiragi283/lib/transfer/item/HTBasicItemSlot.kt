@@ -1,7 +1,7 @@
 package hiiragi283.lib.transfer.item
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.transfer.HTStackResourceSlot
+import hiiragi283.lib.transfer.HTSnapshotStackResourceSlot
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
@@ -15,7 +15,7 @@ import java.util.function.BiPredicate
 import java.util.function.Predicate
 
 /**
- * [アイテム][ItemResource]向けの[HTStackResourceSlot]の実装クラスです。
+ * [アイテム][ItemResource]向けの[HTSnapshotStackResourceSlot]の実装クラスです。
  *
  * 参照 : [Mekanism - BasicInventorySlot](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/inventory/slot/BasicInventorySlot.java)
  * @author Hiiragi Tsubasa
@@ -27,7 +27,8 @@ open class HTBasicItemSlot(
     canInsert: BiPredicate<ItemResource, HTTransferAccess>,
     filter: Predicate<ItemResource>,
     listener: Runnable?,
-) : HTStackResourceSlot.Basic<ItemStack, ItemResource>(capacity, canExtract, canInsert, filter, listener) {
+) : HTSnapshotStackResourceSlot.Basic<ItemStack, ItemResource>(capacity, canExtract, canInsert, filter, listener),
+    HTItemStackResourceSlot {
     companion object {
         @JvmStatic
         fun create(
@@ -80,14 +81,6 @@ open class HTBasicItemSlot(
         }
         onRootCommit(getStackCopy())
     }
-
-    final override fun getResourceFrom(stack: ItemStack): ItemResource = ItemResource.of(stack)
-
-    final override fun getAmountFrom(stack: ItemStack): Int = stack.count()
-
-    final override fun isSame(stack: ItemStack, resource: ItemResource): Boolean = resource.matches(stack)
-
-    final override fun createStack(resource: ItemResource, amount: Int): ItemStack = resource.toStack(amount)
 
     override fun getCapacity(resource: ItemResource): Int = when (resource.isEmpty) {
         true -> capacity

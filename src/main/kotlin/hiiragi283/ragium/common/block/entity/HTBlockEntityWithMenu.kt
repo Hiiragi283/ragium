@@ -6,17 +6,17 @@ import hiiragi283.lib.gui.sync.HTItemSyncSlot
 import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
-import hiiragi283.lib.transfer.item.HTBasicItemSlot
+import hiiragi283.lib.transfer.fluid.HTFluidStackResourceSlot
+import hiiragi283.lib.transfer.item.HTItemStackResourceSlot
 
 fun interface HTBlockEntityWithMenu {
     fun setupMenu(widgetHolder: HTWidgetHolder)
 
-    fun HTWidgetHolder.track(tank: HTBasicFluidTank, syncType: HTSyncType = HTSyncType.S2C) {
+    fun HTWidgetHolder.track(tank: HTFluidStackResourceSlot, syncType: HTSyncType = HTSyncType.S2C) {
         this.track(HTFluidSyncSlot(tank), syncType)
     }
 
-    fun HTWidgetHolder.track(slot: HTBasicItemSlot, syncType: HTSyncType = HTSyncType.S2C) {
+    fun HTWidgetHolder.track(slot: HTItemStackResourceSlot, syncType: HTSyncType = HTSyncType.S2C) {
         this.track(HTItemSyncSlot(slot), syncType)
     }
 

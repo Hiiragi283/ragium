@@ -6,8 +6,8 @@ import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.lib.recipe.widget.HTGhostWidget
 import hiiragi283.lib.recipe.widget.HTIngredientWidget
-import hiiragi283.lib.transfer.item.HTBasicItemSlot
-import hiiragi283.ragium.common.gui.HTContainerItemSlot
+import hiiragi283.lib.transfer.item.HTItemStackResourceSlot
+import hiiragi283.ragium.common.gui.slot.HTItemContainerSlot
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 
@@ -26,12 +26,19 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
 
     class Container(val slot: Slot, backgroundType: HTBackgroundType) : HTItemWidget(backgroundType) {
         constructor(
-            slot: HTBasicItemSlot,
+            slot: HTItemStackResourceSlot,
+            x: Int,
+            y: Int,
+            backgroundType: HTBackgroundType,
+        ) : this(HTItemContainerSlot.create(slot, x, y), backgroundType)
+
+        constructor(
+            slot: HTItemStackResourceSlot,
             index: Int,
             x: Int,
             y: Int,
             backgroundType: HTBackgroundType,
-        ) : this(HTContainerItemSlot.create(slot, index, x, y, backgroundType), backgroundType)
+        ) : this(HTItemContainerSlot.create(slot, x, y), backgroundType)
 
         override fun getStack(): ItemStack = slot.item
 
@@ -63,7 +70,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
             isGhost: Boolean,
         ) : this(stackGetter, stackSetter, HTBounds.createSlot(x - 1, y - 1), backgroundType, isGhost)
 
-        constructor(slot: HTBasicItemSlot, bounds: HTBounds, backgroundType: HTBackgroundType, isGhost: Boolean) : this(
+        constructor(slot: HTItemStackResourceSlot, bounds: HTBounds, backgroundType: HTBackgroundType, isGhost: Boolean) : this(
             slot::getStackCopy,
             slot::setStack,
             bounds,
@@ -71,7 +78,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
             isGhost,
         )
 
-        constructor(slot: HTBasicItemSlot, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(
+        constructor(slot: HTItemStackResourceSlot, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(
             slot,
             HTBounds.createSlot(x - 1, y - 1),
             backgroundType,

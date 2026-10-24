@@ -21,6 +21,22 @@ interface HTResourceSlot<T : Resource> :
     fun isValid(resource: T): Boolean
 
     /**
+     * 指定したリソースをこのスロットに搬入できるか判定します。
+     * @param resource 搬入されるリソース
+     * @param access このスロットへのアクセスの種類
+     * @return 搬入できる場合は`true`
+     */
+    fun isValidForInsert(resource: T, access: HTTransferAccess): Boolean = isValid(resource)
+
+    /**
+     * 指定したリソースをこのスロットから搬出できるか判定します。
+     * @param resource 搬出されるリソース
+     * @param access このスロットへのアクセスの種類
+     * @return 搬出できる場合は`true`
+     */
+    fun canResourceExtract(resource: T, access: HTTransferAccess): Boolean = true
+
+    /**
      * リソースを搬入します。
      * @param resource 搬入するリソース
      * @param amount 搬入する数量

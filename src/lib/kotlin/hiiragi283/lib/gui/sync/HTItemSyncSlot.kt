@@ -1,6 +1,6 @@
 package hiiragi283.lib.gui.sync
 
-import hiiragi283.lib.transfer.item.HTBasicItemSlot
+import hiiragi283.lib.transfer.item.HTItemStackResourceSlot
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.core.RegistryAccess
 import net.minecraft.world.item.ItemStack
@@ -25,7 +25,7 @@ class HTItemSyncSlot(property: ReadWriteProperty<Any?, ItemStack>) : HTIntSyncSl
 
     constructor(property: KMutableProperty0<ItemStack>) : this(HTDelegates.LazyDelegate(property::get, property::set))
 
-    constructor(slot: HTBasicItemSlot) : this(slot::getStackCopy, slot::setStack)
+    constructor(slot: HTItemStackResourceSlot) : this(slot::getStackCopy, slot::setStack)
 
     private var lastStack: ItemStack = ItemStack.EMPTY
 

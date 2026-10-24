@@ -1,7 +1,7 @@
 package hiiragi283.lib.transfer.fluid
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.transfer.HTStackResourceSlot
+import hiiragi283.lib.transfer.HTSnapshotStackResourceSlot
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
@@ -13,7 +13,7 @@ import java.util.function.BiPredicate
 import java.util.function.Predicate
 
 /**
- * [液体][FluidResource]向けの[HTStackResourceSlot]の実装クラスです。
+ * [液体][FluidResource]向けの[HTSnapshotStackResourceSlot]の実装クラスです。
  *
  * 参照 : [Mekanism - BasicFluidTank](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/fluid/BasicFluidTank.java)
  * @author Hiiragi Tsubasa
@@ -25,7 +25,8 @@ open class HTBasicFluidTank(
     canInsert: BiPredicate<FluidResource, HTTransferAccess>,
     filter: Predicate<FluidResource>,
     listener: Runnable?,
-) : HTStackResourceSlot.Basic<FluidStack, FluidResource>(capacity, canExtract, canInsert, filter, listener) {
+) : HTSnapshotStackResourceSlot.Basic<FluidStack, FluidResource>(capacity, canExtract, canInsert, filter, listener),
+    HTFluidStackResourceSlot {
     companion object {
         @JvmStatic
         fun create(
@@ -78,14 +79,6 @@ open class HTBasicFluidTank(
         }
         onRootCommit(getStackCopy())
     }
-
-    final override fun getResourceFrom(stack: FluidStack): FluidResource = FluidResource.of(stack)
-
-    final override fun getAmountFrom(stack: FluidStack): Int = stack.amount()
-
-    final override fun isSame(stack: FluidStack, resource: FluidResource): Boolean = resource.matches(stack)
-
-    final override fun createStack(resource: FluidResource, amount: Int): FluidStack = resource.toStack(amount)
 
     //    ValueIOSerializable    //
 
