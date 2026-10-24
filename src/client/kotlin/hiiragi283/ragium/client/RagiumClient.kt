@@ -16,7 +16,6 @@ import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.chemical.HTClientChemicalHelper
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.screen.tooltip.HTMemoryDiscClientTooltipComponent
@@ -314,11 +313,6 @@ data object RagiumClient : HTClientMod() {
                     view.currentCapacity
                 )
             }.let(builder::accept)
-        }
-        event.registerAppender(
-            TooltipLocation.HEAD
-        ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
-            HTClientChemicalHelper.addToTooltip(stack, builder::accept)
         }
 
         event.registerAppender(

@@ -4,8 +4,6 @@ import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
-import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
@@ -261,89 +259,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.TOOLTIPS_UPGRADE_EFFICIENCY, $$"Energy Efficiency: %1$s")
         add(RagiumTranslation.TOOLTIPS_UPGRADE_CAPACITY, $$"Energy Capacity: %1$s")
 
-        addDataTranslations()
-
         // Jade Config
         addJadeConfig(HTMachineOwnerProvider.ID, "機械の所有者")
         addJadeConfig(HTMachineUpgradeProvider.ID, "機械のアップグレード")
-    }
-
-    private fun addDataTranslations() {
-        // Chemical
-        addFromKey(RagiumChemicals.HYDROGEN, "Hydrogen")
-
-        addFromKey(RagiumChemicals.CARBON, "Carbon")
-        addFromKey(RagiumChemicals.DIAMOND, "Diamond")
-        addFromKey(RagiumChemicals.NITROGEN, "Nitrogen")
-        addFromKey(RagiumChemicals.OXYGEN, "Oxygen")
-
-        addFromKey(RagiumChemicals.ALUMINUM, "Aluminum")
-        addFromKey(RagiumChemicals.SILICON, "Silicon")
-        addFromKey(RagiumChemicals.SULFUR, "Sulfur")
-        addFromKey(RagiumChemicals.CHLORINE, "Chlorine")
-
-        addFromKey(RagiumChemicals.IRON, "Iron")
-        addFromKey(RagiumChemicals.COPPER, "Copper")
-        addFromKey(RagiumChemicals.NICKEL, "Nickel")
-        addFromKey(RagiumChemicals.SILVER, "Silver")
-        addFromKey(RagiumChemicals.GOLD, "Gold")
-        addFromKey(RagiumChemicals.MERCURY, "Mercury")
-
-        addFromKey(RagiumChemicals.HYDROXIDE, "Hydroxide")
-        addFromKey(RagiumChemicals.WATER, "Water")
-
-        addFromKey(RagiumChemicals.CARBONATE, "Carbonate")
-        addFromKey(RagiumChemicals.NITRATE, "Nitrate")
-        addFromKey(RagiumChemicals.NITRIC_ACID, "Nitric Acid")
-        addFromKey(RagiumChemicals.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
-        addFromKey(RagiumChemicals.FLUORITE, "Fluorite")
-        addFromKey(RagiumChemicals.CRYOLITE, "Cryolite")
-
-        addFromKey(RagiumChemicals.SODIUM_HYDROXIDE, "Sodium Hydroxide")
-        addFromKey(RagiumChemicals.SODIUM_CARBONATE, "Sodium Carbonate")
-        addFromKey(RagiumChemicals.SODIUM_CHLORIDE, "Sodium Chloride")
-        addFromKey(RagiumChemicals.ALUMINUM_OXIDE, "Aluminum Oxide")
-        addFromKey(RagiumChemicals.ALUMINUM_FLUORIDE, "Aluminum Fluoride")
-        addFromKey(RagiumChemicals.SILICON_DIOXIDE, "Silicon Dioxide")
-        addFromKey(RagiumChemicals.SULFUR_DIOXIDE, "Sulfur Dioxide")
-        addFromKey(RagiumChemicals.SULFUR_TRIOXIDE, "Sulfur Trioxide")
-        addFromKey(RagiumChemicals.SULFATE, "Sulfate")
-        addFromKey(RagiumChemicals.SULFURIC_ACID, "Sulfuric Acid")
-        addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "Hydrogen chloride")
-
-        addFromKey(RagiumChemicals.POTASSIUM_CARBONATE, "Potassium Carbonate")
-        addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "Potassium Nitrate")
-        addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "Calcium Carbonate")
-        addFromKey(RagiumChemicals.CALCIUM_OXIDE, "Calcium Oxide")
-        addFromKey(RagiumChemicals.CALCIUM_SULFATE, "Calcium Sulfate")
-
-        addFromKey(RagiumChemicals.MERCURY_SULFIDE, "Mercury Sulfide")
-
-        addFromKey(RagiumChemicals.COAL, "Coal")
-        addFromKey(RagiumChemicals.CHARCOAL, "Char Coal")
-        // Element
-        addFromKey(RagiumElements.HYDROGEN, "Hydrogen")
-
-        addFromKey(RagiumElements.CARBON, "Carbon")
-        addFromKey(RagiumElements.NITROGEN, "Nitrogen")
-        addFromKey(RagiumElements.OXYGEN, "Oxygen")
-        addFromKey(RagiumElements.FLUORINE, "Fluorine")
-
-        addFromKey(RagiumElements.SODIUM, "Sodium")
-        addFromKey(RagiumElements.ALUMINUM, "Aluminum")
-        addFromKey(RagiumElements.SILICON, "Silicon")
-        addFromKey(RagiumElements.SULFUR, "Sulfur")
-        addFromKey(RagiumElements.CHLORINE, "Chlorine")
-
-        addFromKey(RagiumElements.POTASSIUM, "Potassium")
-        addFromKey(RagiumElements.CALCIUM, "Calcium")
-        addFromKey(RagiumElements.IRON, "Iron")
-        addFromKey(RagiumElements.COPPER, "Copper")
-        addFromKey(RagiumElements.NICKEL, "Nickel")
-
-        addFromKey(RagiumElements.SILVER, "Silver")
-
-        addFromKey(RagiumElements.GOLD, "Gold")
-        addFromKey(RagiumElements.MERCURY, "Mercury")
     }
 }

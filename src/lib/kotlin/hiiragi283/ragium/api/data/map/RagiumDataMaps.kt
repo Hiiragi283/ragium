@@ -1,11 +1,9 @@
 package hiiragi283.ragium.api.data.map
 
 import com.mojang.serialization.Codec
-import hiiragi283.lib.HTConstants
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -20,15 +18,6 @@ import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 @EventBusSubscriber
 data object RagiumDataMaps {
     /**
-     * @since 26.1.11
-     */
-    @JvmField
-    val CHEMICAL: DataMapType<Item, HTChemicalData> =
-        DataMapType.builder(RagiumAPI.id(HTConstants.CHEMICAL), Registries.ITEM, HTChemicalData.CODEC)
-            .synced(HTChemicalData.CODEC, false)
-            .build()
-
-    /**
      * モルタルによるブロックの修復
      */
     @JvmField
@@ -41,7 +30,7 @@ data object RagiumDataMaps {
 
     @SubscribeEvent
     fun registerDataMapType(event: RegisterDataMapTypesEvent) {
-        event.register(CHEMICAL)
+        // event.register(CHEMICAL)
         event.register(MORTAR_REPAIR)
     }
 }

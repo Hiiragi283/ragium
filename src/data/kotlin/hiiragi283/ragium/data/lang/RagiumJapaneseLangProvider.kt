@@ -4,8 +4,6 @@ import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
-import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
@@ -257,89 +255,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.TOOLTIPS_UPGRADE_EFFICIENCY, $$"エネルギー効率: %1$s")
         add(RagiumTranslation.TOOLTIPS_UPGRADE_CAPACITY, $$"エネルギー容量: %1$s")
 
-        addDataTranslations()
-
         // Jade Config
         addJadeConfig(HTMachineOwnerProvider.ID, "Machine Owner")
         addJadeConfig(HTMachineUpgradeProvider.ID, "Machine Upgrades")
-    }
-
-    private fun addDataTranslations() {
-        // Chemical
-        addFromKey(RagiumChemicals.HYDROGEN, "水素")
-
-        addFromKey(RagiumChemicals.CARBON, "炭素")
-        addFromKey(RagiumChemicals.DIAMOND, "ダイヤモンド")
-        addFromKey(RagiumChemicals.NITROGEN, "窒素")
-        addFromKey(RagiumChemicals.OXYGEN, "酸素")
-
-        addFromKey(RagiumChemicals.ALUMINUM, "アルミニウム")
-        addFromKey(RagiumChemicals.SILICON, "ケイ素")
-        addFromKey(RagiumChemicals.SULFUR, "硫黄")
-        addFromKey(RagiumChemicals.CHLORINE, "塩素")
-
-        addFromKey(RagiumChemicals.IRON, "鉄")
-        addFromKey(RagiumChemicals.COPPER, "銅")
-        addFromKey(RagiumChemicals.NICKEL, "ニッケル")
-        addFromKey(RagiumChemicals.SILVER, "銀")
-        addFromKey(RagiumChemicals.GOLD, "金")
-        addFromKey(RagiumChemicals.MERCURY, "水銀")
-
-        addFromKey(RagiumChemicals.HYDROXIDE, "水酸化物")
-        addFromKey(RagiumChemicals.WATER, "水")
-
-        addFromKey(RagiumChemicals.CARBONATE, "炭酸塩")
-        addFromKey(RagiumChemicals.NITRATE, "硝酸塩")
-        addFromKey(RagiumChemicals.NITRIC_ACID, "硝酸")
-        addFromKey(RagiumChemicals.HYDROGEN_FLUORIDE, "フッ化水素")
-        addFromKey(RagiumChemicals.FLUORITE, "蛍石")
-        addFromKey(RagiumChemicals.CRYOLITE, "氷晶石")
-
-        addFromKey(RagiumChemicals.SODIUM_HYDROXIDE, "水酸化ナトリウム")
-        addFromKey(RagiumChemicals.SODIUM_CARBONATE, "炭酸ナトリウム")
-        addFromKey(RagiumChemicals.SODIUM_CHLORIDE, "塩化ナトリウム")
-        addFromKey(RagiumChemicals.ALUMINUM_OXIDE, "酸化アルミニウム")
-        addFromKey(RagiumChemicals.ALUMINUM_FLUORIDE, "フッ化アルミニウム")
-        addFromKey(RagiumChemicals.SILICON_DIOXIDE, "二酸化ケイ素")
-        addFromKey(RagiumChemicals.SULFUR_DIOXIDE, "二酸化硫黄")
-        addFromKey(RagiumChemicals.SULFUR_TRIOXIDE, "三酸化硫黄")
-        addFromKey(RagiumChemicals.SULFATE, "硫酸塩")
-        addFromKey(RagiumChemicals.SULFURIC_ACID, "硫酸")
-        addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "塩化水素")
-
-        addFromKey(RagiumChemicals.POTASSIUM_CARBONATE, "炭酸カリウム")
-        addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "硝酸カリウム")
-        addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "炭酸カルシウム")
-        addFromKey(RagiumChemicals.CALCIUM_OXIDE, "酸化カルシウム")
-        addFromKey(RagiumChemicals.CALCIUM_SULFATE, "硫酸カルシウム")
-
-        addFromKey(RagiumChemicals.MERCURY_SULFIDE, "硫化水銀")
-
-        addFromKey(RagiumChemicals.COAL, "石炭")
-        addFromKey(RagiumChemicals.CHARCOAL, "木炭")
-        // Element
-        addFromKey(RagiumElements.HYDROGEN, "水素")
-
-        addFromKey(RagiumElements.CARBON, "炭素")
-        addFromKey(RagiumElements.NITROGEN, "窒素")
-        addFromKey(RagiumElements.OXYGEN, "酸素")
-        addFromKey(RagiumElements.FLUORINE, "フッ素")
-
-        addFromKey(RagiumElements.SODIUM, "ナトリウム")
-        addFromKey(RagiumElements.ALUMINUM, "アルミニウム")
-        addFromKey(RagiumElements.SILICON, "ケイ素")
-        addFromKey(RagiumElements.SULFUR, "硫黄")
-        addFromKey(RagiumElements.CHLORINE, "塩素")
-
-        addFromKey(RagiumElements.POTASSIUM, "カリウム")
-        addFromKey(RagiumElements.CALCIUM, "カルシウム")
-        addFromKey(RagiumElements.IRON, "鉄")
-        addFromKey(RagiumElements.COPPER, "銅")
-        addFromKey(RagiumElements.NICKEL, "ニッケル")
-
-        addFromKey(RagiumElements.SILVER, "銀")
-
-        addFromKey(RagiumElements.GOLD, "金")
-        addFromKey(RagiumElements.MERCURY, "水銀")
     }
 }

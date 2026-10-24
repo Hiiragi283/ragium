@@ -1,28 +1,17 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.lib.collection.forEach
 import hiiragi283.lib.tag.BlockItemTag
-import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
-import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.api.data.chemical.HTChemical
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
-import hiiragi283.ragium.api.data.map.HTChemicalData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
-import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.conditions.ICondition
@@ -36,7 +25,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     override fun gather(provider: HolderLookup.Provider) {
         furnaceFuel()
 
-        chemical(provider)
+        // chemical(provider)
         mortarRepair()
     }
 
@@ -63,7 +52,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         }
     }
 
-    private fun chemical(provider: HolderLookup.Provider) {
+    /*private fun chemical(provider: HolderLookup.Provider) {
         val getter: HolderGetter<HTChemical> = provider.lookupOrThrow(RagiumRegistries.Keys.CHEMICAL)
         val builder: Builder<HTChemicalData, Item> = builder(RagiumDataMaps.CHEMICAL)
             // Fuel
@@ -155,7 +144,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
                 builder.add(part.tagPrefix, material, HTChemicalData(chemical, scale))
             }
         }
-    }
+    }*/
 
     private fun mortarRepair() {
         builder(RagiumDataMaps.MORTAR_REPAIR)
