@@ -7,10 +7,16 @@
   "result": {
     "type": "ragium:enchanted_book",
     "count": 1,
-    "enchantments": {
-      "minecraft:protection": 4,
-      "minecraft:unbreaking": 3
-    }
+    "enchantments": [
+      {
+        "id": "minecraft:unbreaking",
+        "level": 3
+      },
+      {
+        "id": "minecraft:protection",
+        "level": 4
+      }
+    ]
   },
   "time": 200
 }
