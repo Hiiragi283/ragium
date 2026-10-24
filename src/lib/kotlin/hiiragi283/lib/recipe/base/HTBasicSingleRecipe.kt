@@ -3,8 +3,6 @@ package hiiragi283.lib.recipe.base
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.recipe.ingredient.HTIngredient
-import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -16,30 +14,27 @@ import net.minecraft.network.codec.StreamCodec
  * @author Hiiragi Tsubasa
  * @since 26.1.8
  */
-open class HTBasicSingleRecipe<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>>(
-    val ingredient: ING,
-    val result: RES,
-    override val progressData: HTProgressData
-) : HTProgressRecipe.Holder {
+open class HTBasicSingleRecipe<out ING : Any, out RES : Any>(val ingredient: ING, val result: RES, override val progressData: HTProgressData) :
+    HTProgressRecipe.Holder {
     companion object {
         @JvmStatic
-        fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, RECIPE : HTBasicSingleRecipe<ING, RES>> codec(
+        fun <ING : Any, RES : Any, RECIPE : HTBasicSingleRecipe<ING, RES>> codec(
             ingredient: Codec<ING>,
             result: Codec<RES>,
-            factory: Factory<ING, RES, RECIPE>
+            factory: Factory<ING, RES, RECIPE>,
         ): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
             instance.group(
                 ingredient.fieldOf(HTConstants.INGREDIENT).forGetter { it.ingredient },
                 result.fieldOf(HTConstants.RESULT).forGetter { it.result },
-                HTProgressData.CODEC.forGetter { it.progressData }
+                HTProgressData.CODEC.forGetter { it.progressData },
             ).apply(instance, factory::create)
         }
 
         @JvmStatic
-        fun <ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, RECIPE : HTBasicSingleRecipe<ING, RES>> streamCodec(
+        fun <ING : Any, RES : Any, RECIPE : HTBasicSingleRecipe<ING, RES>> streamCodec(
             ingredient: StreamCodec<in RegistryFriendlyByteBuf, ING>,
             result: StreamCodec<in RegistryFriendlyByteBuf, RES>,
-            factory: Factory<ING, RES, RECIPE>
+            factory: Factory<ING, RES, RECIPE>,
         ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
             ingredient,
             { it.ingredient },
@@ -47,7 +42,7 @@ open class HTBasicSingleRecipe<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>
             { it.result },
             HTProgressData.STREAM_CODEC,
             { it.progressData },
-            factory::create
+            factory::create,
         )
     }
 
@@ -60,7 +55,7 @@ open class HTBasicSingleRecipe<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>
      * @author Hiiragi Tsubasa
      * @since 26.1.8
      */
-    fun interface Factory<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, out RECIPE : Any> {
+    fun interface Factory<ING : Any, RES : Any, out RECIPE : Any> {
         fun create(ingredient: ING, result: RES, progressData: HTProgressData): RECIPE
     }
 }

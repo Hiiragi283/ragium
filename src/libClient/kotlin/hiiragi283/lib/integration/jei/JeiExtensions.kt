@@ -11,13 +11,6 @@ import kotlin.jvm.optionals.getOrNull
 //    IRecipeType    //
 
 /**
- * @param T JEIに登録するレシピのクラス
- * @author Hiiragi Tsubasa
- * @since 26.1.8
- */
-typealias HTRecipeHolderType<T> = IRecipeType<HTJeiRecipeHolder<T>>
-
-/**
  * 新しい[IRecipeType]のインスタンスを作成します。
  * @param T JEIに登録するレシピのクラス
  * @author Hiiragi Tsubasa

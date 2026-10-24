@@ -1,98 +1,91 @@
 package hiiragi283.ragium.integration.jei
 
-import hiiragi283.lib.integration.jei.HTJeiRecipeHolder
-import hiiragi283.lib.integration.jei.HTRecipeHolderType
 import hiiragi283.lib.integration.jei.IRecipeType
-import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
-import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
-import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
-import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
-import hiiragi283.lib.recipe.base.HTItemToRecipe
-import hiiragi283.lib.recipe.base.HTLocationToRecipe
-import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
+import hiiragi283.lib.recipe.viewer.HTCatalysedSingleToSingleViewerRecipe
+import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
+import hiiragi283.lib.recipe.viewer.HTFluidSeparatingViewerRecipe
+import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
+import hiiragi283.lib.recipe.viewer.HTMultiToSingleViewerRecipe
+import hiiragi283.lib.recipe.viewer.HTSingleToMultiViewerRecipe
+import hiiragi283.lib.recipe.viewer.HTSingleToSingleViewerRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
-import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
-import hiiragi283.ragium.api.recipe.RTFreezingRecipe
-import hiiragi283.ragium.api.recipe.RTMixingRecipe
-import hiiragi283.ragium.api.recipe.RTPlantingRecipe
-import hiiragi283.ragium.api.recipe.RTReactingRecipe
-import hiiragi283.ragium.api.recipe.RTWashingRecipe
+import hiiragi283.ragium.recipe.viewer.RTMixingViewerRecipe
+import hiiragi283.ragium.recipe.viewer.RTWashingViewerRecipe
+import mezz.jei.api.recipe.types.IRecipeType
 
 data object RagiumJeiRecipeTypes {
     @JvmStatic
-    private inline fun <reified T : Any> create(name: String): HTRecipeHolderType<T> =
-        IRecipeType<HTJeiRecipeHolder<T>>(RagiumAPI.id(name))
+    private inline fun <reified T : Any> create(name: String): IRecipeType<T> = IRecipeType<T>(RagiumAPI.id(name))
 
     // Mechanical
     @JvmField
-    val ASSEMBLING: HTRecipeHolderType<HTSizedShapelessRecipe.Basic> = create(RagiumConstants.ASSEMBLING)
+    val ASSEMBLING: IRecipeType<HTMultiToSingleViewerRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
-    val CENTRIFUGING: HTRecipeHolderType<HTItemSeparatingRecipe.Basic> = create(RagiumConstants.CENTRIFUGING)
+    val CENTRIFUGING: IRecipeType<HTItemSeparatingViewerRecipe> = create(RagiumConstants.CENTRIFUGING)
 
     @JvmField
-    val COMPRESSING: HTRecipeHolderType<HTItemToRecipe.BasicItem> = create(RagiumConstants.COMPRESSING)
+    val COMPRESSING: IRecipeType<HTSingleToSingleViewerRecipe> = create(RagiumConstants.COMPRESSING)
 
     @JvmField
-    val CRUSHING: HTRecipeHolderType<HTItemToRecipe.BasicMultiItem> = create(RagiumConstants.CRUSHING)
+    val CRUSHING: IRecipeType<HTSingleToMultiViewerRecipe> = create(RagiumConstants.CRUSHING)
 
     @JvmField
-    val CUTTING: HTRecipeHolderType<HTItemToRecipe.BasicMultiItem> = create(RagiumConstants.CUTTING)
+    val CUTTING: IRecipeType<HTSingleToMultiViewerRecipe> = create(RagiumConstants.CUTTING)
 
     @JvmField
-    val FILLING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicItem> = create(RagiumConstants.FILLING)
+    val FILLING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.FILLING)
 
     @JvmField
-    val PRESSING: HTRecipeHolderType<HTDoubleItemToItemRecipe.Catalysed> = create(RagiumConstants.PRESSING)
+    val PRESSING: IRecipeType<HTCatalysedSingleToSingleViewerRecipe> = create(RagiumConstants.PRESSING)
 
     // Heat
     @JvmField
-    val ALLOYING: HTRecipeHolderType<HTSizedShapelessRecipe.Basic> = create(RagiumConstants.ALLOYING)
+    val ALLOYING: IRecipeType<HTMultiToSingleViewerRecipe> = create(RagiumConstants.ALLOYING)
 
     @JvmField
-    val FREEZING: HTRecipeHolderType<RTFreezingRecipe> = create(RagiumConstants.FREEZING)
+    val FREEZING: IRecipeType<HTCatalysedSingleToSingleViewerRecipe> = create(RagiumConstants.FREEZING)
 
     @JvmField
-    val MELTING: HTRecipeHolderType<HTItemToRecipe.BasicFluid> = create(RagiumConstants.MELTING)
+    val MELTING: IRecipeType<HTSingleToSingleViewerRecipe> = create(RagiumConstants.MELTING)
 
     @JvmField
-    val PYROLYZING: HTRecipeHolderType<HTItemSeparatingRecipe.Basic> = create(RagiumConstants.PYROLYZING)
+    val PYROLYZING: IRecipeType<HTItemSeparatingViewerRecipe> = create(RagiumConstants.PYROLYZING)
 
     @JvmField
-    val REFINING: HTRecipeHolderType<HTFluidSeparatingRecipe> = create(RagiumConstants.REFINING)
+    val REFINING: IRecipeType<HTFluidSeparatingViewerRecipe> = create(RagiumConstants.REFINING)
 
     // Chemical
     @JvmField
-    val BATHING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicItem> = create(RagiumConstants.BATHING)
+    val BATHING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.BATHING)
 
     @JvmField
-    val MIXING: HTRecipeHolderType<RTMixingRecipe> = create(RagiumConstants.MIXING)
+    val MIXING: IRecipeType<RTMixingViewerRecipe> = create(RagiumConstants.MIXING)
+
+    // val REACTING: IRecipeType<RTReactingViewerRecipe> = create(RagiumConstants.REACTING) TODO
 
     @JvmField
-    val REACTING: HTRecipeHolderType<RTReactingRecipe> = create(RagiumConstants.REACTING)
-
-    @JvmField
-    val WASHING: HTRecipeHolderType<RTWashingRecipe> = create(RagiumConstants.WASHING)
+    val WASHING: IRecipeType<RTWashingViewerRecipe> = create(RagiumConstants.WASHING)
 
     // Resource
     @JvmField
-    val BREWING: HTRecipeHolderType<HTItemAndFluidToRecipe.BasicFluid> = create(RagiumConstants.BREWING)
+    val BREWING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.BREWING)
 
     @JvmField
-    val PLANTING: HTRecipeHolderType<RTPlantingRecipe> = create(RagiumConstants.PLANTING)
+    val PLANTING: IRecipeType<HTSingleToSingleViewerRecipe> = create(RagiumConstants.PLANTING)
 
     @JvmField
-    val RESOURCE_PUMPING: HTRecipeHolderType<HTLocationToRecipe.BasicFluid> = create(RagiumConstants.RESOURCE_PUMPING)
+    val RESOURCE_PUMPING: IRecipeType<HTSingleToSingleViewerRecipe> = create(RagiumConstants.RESOURCE_PUMPING)
 
     // Electronics
     @JvmField
-    val ELECTROLYZING: HTRecipeHolderType<HTFluidSeparatingRecipe> = create(RagiumConstants.ELECTROLYZING)
+    val ELECTROLYZING: IRecipeType<HTFluidSeparatingViewerRecipe> = create(RagiumConstants.ELECTROLYZING)
 
     @JvmField
-    val ENGRAVING: HTRecipeHolderType<HTDoubleItemToItemRecipe.Catalysed> = create(RagiumConstants.ENGRAVING)
+    val ENGRAVING: IRecipeType<HTCatalysedSingleToSingleViewerRecipe> = create(RagiumConstants.ENGRAVING)
 
     // Arcane
     @JvmField
-    val ENCHANTING: HTRecipeHolderType<RTEnchantingRecipe> = create(RagiumConstants.ENCHANTING)
+    val ENCHANTING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.ENCHANTING)
 }

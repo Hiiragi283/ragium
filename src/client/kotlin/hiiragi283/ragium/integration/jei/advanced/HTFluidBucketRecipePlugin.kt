@@ -1,10 +1,10 @@
 package hiiragi283.ragium.integration.jei.advanced
 
 import hiiragi283.lib.fluid.createBucket
-import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
-import hiiragi283.lib.integration.jei.HTJeiRecipeHolder
 import hiiragi283.lib.integration.jei.getIngredient
-import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
+import hiiragi283.lib.item.toTemplateOrNull
+import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
+import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
 import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTBucketFillingRecipe
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
@@ -17,8 +17,10 @@ import mezz.jei.api.recipe.types.IRecipeType
 import net.minecraft.world.item.BucketItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
+import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.crafting.display.FluidStackSlotDisplay
 import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
 data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
@@ -48,27 +50,31 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
         // 液体入りバケツを選択中の場合
         val filledBucket: ItemStack? = focus.getIngredient(VanillaTypes.ITEM_STACK)?.takeIf(::isFilledBucket)
         if (filledBucket != null) {
+            val filledBucketDisplay: SlotDisplay =
+                filledBucket.toTemplateOrNull()?.let(SlotDisplay::ItemStackSlotDisplay) ?: SlotDisplay.Empty.INSTANCE
             val fluidIn: FluidStack = FluidUtil.getFirstStackContained(filledBucket)
             val remainder: ItemStackTemplate? = filledBucket.craftingRemainder
             if (!fluidIn.isEmpty && remainder != null) {
                 return when (focus.role) {
                     // Filled Bucket -> Empty Bucket + Fluid
                     RecipeIngredientRole.INPUT if recipeType == RagiumJeiRecipeTypes.CENTRIFUGING ->
-                        RagiumRecipeBuilders.centrifuging {
-                            +HTJeiRecipeHelper.fakeItem(filledBucket)
-                            itemResult { from(remainder) }
-                            fluidResult { from(fluidIn) }
-                            progressData = RTBucketCentrifugingRecipe.progressData
-                        }.buildSynthetic(::HTJeiRecipeHolder)
+                        HTItemSeparatingViewerRecipe(
+                            null,
+                            filledBucketDisplay,
+                            listOf(SlotDisplay.ItemStackSlotDisplay(remainder)),
+                            FluidStackSlotDisplay(fluidIn),
+                            RTBucketCentrifugingRecipe.progressData,
+                        )
 
                     // Empty Bucket + Fluid -> Filled Bucket
                     RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.FILLING ->
-                        RagiumRecipeBuilders.filling {
-                            +HTJeiRecipeHelper.fakeItem(remainder)
-                            +HTJeiRecipeHelper.fakeFluid(fluidIn)
-                            result { from(filledBucket) }
-                            progressData = RTBucketFillingRecipe.progressData
-                        }.buildSynthetic(::HTJeiRecipeHolder)
+                        HTDoubleToSingleViewerRecipe(
+                            null,
+                            SlotDisplay.ItemStackSlotDisplay(remainder),
+                            FluidStackSlotDisplay(fluidIn),
+                            filledBucketDisplay,
+                            RTBucketFillingRecipe.progressData,
+                        )
 
                     else -> null
                 }.let(::listOfNotNull).filterIsInstance(recipeType.recipeClass)
@@ -76,24 +82,26 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
         }
         // 液体を選択中の場合
         val fluid: FluidStack = focus.getIngredient(NeoForgeTypes.FLUID_STACK) ?: return listOf()
-        val bucket: ItemStack = fluid.createBucket()
+        val bucket: ItemStackTemplate = fluid.createBucket().toTemplateOrNull() ?: return listOf()
         val remainder: ItemStackTemplate = bucket.craftingRemainder ?: return listOf()
         return when (focus.role) {
             RecipeIngredientRole.INPUT if recipeType == RagiumJeiRecipeTypes.FILLING ->
-                RagiumRecipeBuilders.filling {
-                    +HTJeiRecipeHelper.fakeItem(remainder)
-                    +HTJeiRecipeHelper.fakeFluid(fluid)
-                    result { from(bucket) }
-                    progressData = RTBucketFillingRecipe.progressData
-                }.buildSynthetic(::HTJeiRecipeHolder)
+                HTDoubleToSingleViewerRecipe(
+                    null,
+                    SlotDisplay.ItemStackSlotDisplay(remainder),
+                    FluidStackSlotDisplay(fluid),
+                    SlotDisplay.ItemStackSlotDisplay(bucket),
+                    RTBucketFillingRecipe.progressData,
+                )
 
             RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.CENTRIFUGING ->
-                RagiumRecipeBuilders.centrifuging {
-                    +HTJeiRecipeHelper.fakeItem(bucket)
-                    itemResult { from(remainder) }
-                    fluidResult { from(fluid) }
-                    progressData = RTBucketCentrifugingRecipe.progressData
-                }.buildSynthetic(::HTJeiRecipeHolder)
+                HTItemSeparatingViewerRecipe(
+                    null,
+                    SlotDisplay.ItemStackSlotDisplay(bucket),
+                    listOf(SlotDisplay.ItemStackSlotDisplay(remainder)),
+                    FluidStackSlotDisplay(fluid),
+                    RTBucketCentrifugingRecipe.progressData,
+                )
 
             else -> null
         }.let(::listOfNotNull).filterIsInstance(recipeType.recipeClass)

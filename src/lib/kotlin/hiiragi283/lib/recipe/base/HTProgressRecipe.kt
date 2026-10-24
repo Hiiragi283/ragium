@@ -1,5 +1,6 @@
 package hiiragi283.lib.recipe.base
 
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.world.item.crafting.RecipeInput
 
 /**
@@ -42,6 +43,14 @@ interface HTProgressRecipe<INPUT : RecipeInput> {
      * @since 26.1.11
      */
     interface Holder {
+        companion object {
+            /**
+             * @since 26.1.12
+             */
+            @JvmStatic
+            fun <T : Holder> progressCodec(): RecordCodecBuilder<T, HTProgressData> = HTProgressData.CODEC.forGetter(Holder::progressData)
+        }
+
         val progressData: HTProgressData
     }
 }

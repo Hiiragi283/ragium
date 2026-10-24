@@ -1,9 +1,8 @@
 package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
-import hiiragi283.lib.integration.jei.add
-import hiiragi283.lib.integration.jei.category.HTHolderRecipeCategory
-import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
+import hiiragi283.lib.integration.jei.category.HTViewerRecipeCategory
+import hiiragi283.lib.recipe.viewer.HTMultiToSingleViewerRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
@@ -14,19 +13,15 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class RTAssemblingRecipeCategory(guiHelper: IGuiHelper) :
-    HTHolderRecipeCategory<HTSizedShapelessRecipe.Basic>(
+    HTViewerRecipeCategory<HTMultiToSingleViewerRecipe>(
         RagiumJeiRecipeTypes.ASSEMBLING,
         RagiumRecipeTypes.ASSEMBLING,
         guiHelper.createDrawableItemLike(RagiumBlocks.ASSEMBLER),
         18 * 5,
         18 * 2,
-        HTSizedShapelessRecipe.Basic.SIMPLE_CODEC
+        HTMultiToSingleViewerRecipe.CODEC,
     ) {
-    override fun setupRecipe(
-        builder: IRecipeLayoutBuilder,
-        recipe: HTSizedShapelessRecipe.Basic,
-        focuses: IFocusGroup
-    ) {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTMultiToSingleViewerRecipe, focuses: IFocusGroup) {
         // inputs
         val inputSlots: List<IRecipeSlotBuilder> = List(4) { index: Int ->
             builder
@@ -42,11 +37,7 @@ class RTAssemblingRecipeCategory(guiHelper: IGuiHelper) :
             .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 
-    override fun setupRecipeExtras(
-        builder: IRecipeExtrasBuilder,
-        recipe: HTSizedShapelessRecipe.Basic,
-        focuses: IFocusGroup
-    ) {
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTMultiToSingleViewerRecipe, focuses: IFocusGroup) {
         builder.addRecipeArrow(recipe).setPosition(getPosition(2.25), getPosition(0.5))
     }
 }
