@@ -103,8 +103,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
         addFluid(RagiumFluids.CHLORINE, "Chlorine")
 
-        addFluid(RagiumFluids.WOOD_TAR, "Wood Tar")
-        addFluid(RagiumFluids.COAL_TAR, "Coal Tar")
+        addFluid(RagiumFluids.CREOSOTE, "Creosote")
         addFluid(RagiumFluids.ALCOHOL, "Alcohol")
         addFluid(RagiumFluids.ALDEHYDE, "Aldehyde")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "Aromatic Compound")

@@ -37,7 +37,7 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
             val CODEC: Codec<Result> = HTCodecs.record { instance ->
                 instance.group(
                     HTItemResult.CODEC
-                        .compactNelFieldOf(HTConstants.ITEM, HTConstants.ITEMS, 2)
+                        .compactNelFieldOf(HTConstants.ITEM, HTConstants.ITEMS, 4)
                         .forGetter(Result::items),
                     HTFluidResult.CODEC.optionalFieldOf(HTConstants.FLUID).forGetter(Result::fluid)
                 ).apply(instance, ::Result)

@@ -8,7 +8,7 @@
     "#c:buckets/aromatic_compound",
     "#c:buckets/bleach",
     "#c:buckets/chlorine",
-    "#c:buckets/coal_tar",
+    "#c:buckets/creosote",
     "#c:buckets/crude_oil",
     "#c:buckets/dye/black",
     "#c:buckets/dye/blue",
@@ -52,7 +52,6 @@
     "#c:buckets/sulfur_dioxide",
     "#c:buckets/sulfur_trioxide",
     "#c:buckets/sulfuric_acid",
-    "#c:buckets/synthetic_resin",
-    "#c:buckets/wood_tar"
+    "#c:buckets/synthetic_resin"
   ]
 }

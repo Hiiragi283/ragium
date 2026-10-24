@@ -160,13 +160,9 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0x66cc33))
         }
 
-        register.register(RagiumFluids.WOOD_TAR) {
-            molten()
+        register.register(RagiumFluids.CREOSOTE) {
+            dull()
             colorTint(Color(0x663333))
-        }
-        register.register(RagiumFluids.COAL_TAR) {
-            molten()
-            colorTint(Color(0x333366))
         }
         register.register(RagiumFluids.ALCOHOL) {
             transparent()

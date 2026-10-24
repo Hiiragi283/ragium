@@ -136,7 +136,7 @@
     "blue_dye",
     "brown_dye",
     "chlorine",
-    "coal_tar",
+    "creosote",
     "crude_oil",
     "cyan_dye",
     "flowing_aromatic_compound",
@@ -206,7 +206,6 @@
     "sulfuric_acid",
     "synthetic_resin",
     "white_dye",
-    "wood_tar",
     "yellow_dye"
   ],
   "minecraft:item": [
@@ -254,7 +253,6 @@
     "coal_coke",
     "coal_coke_block",
     "coal_dust",
-    "coal_tar_bucket",
     "compressor",
     "constantan_dust",
     "constantan_ingot",
@@ -262,6 +260,7 @@
     "copper_gear",
     "creative_battery",
     "creative_tank",
+    "creosote_bucket",
     "crude_oil_bucket",
     "crude_silicon",
     "crusher",
@@ -427,7 +426,6 @@
     "wither_star",
     "wood_dust",
     "wood_gear",
-    "wood_tar_bucket",
     "yellow_dye_bucket"
   ],
   "minecraft:loot_condition_type": [
@@ -522,7 +520,7 @@
     "blue_dye",
     "brown_dye",
     "chlorine",
-    "coal_tar",
+    "creosote",
     "crude_oil",
     "cyan_dye",
     "fuel",
@@ -563,7 +561,6 @@
     "sulfuric_acid",
     "synthetic_resin",
     "white_dye",
-    "wood_tar",
     "yellow_dye"
   ],
   "neoforge:ingredient_serializer": [

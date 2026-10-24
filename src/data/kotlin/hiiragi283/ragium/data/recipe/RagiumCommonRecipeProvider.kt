@@ -203,12 +203,12 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun charcoal() {
-        // Log -> Charcoal + Wood Tar
+        // Log -> Charcoal + Creosote
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(ItemTags.LOGS_THAT_BURN) }
             itemResult { +Items.CHARCOAL }
             fluidResult {
-                +RagiumFluids.WOOD_TAR
+                +RagiumFluids.CREOSOTE
                 amount = 250
             }
             time /= 2
@@ -221,34 +221,31 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.CHARCOAL) }
             fluidResult {
-                +RagiumFluids.WOOD_TAR
+                +RagiumFluids.CREOSOTE
                 amount = 250
             }
             time /= 2
         }.save(exporter)
 
-        // Wood Tar -> Alcohol + Aromatic Compound
+        // Creosote -> Aromatic Compound
         RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.WOOD_TAR) }
-            fluidResult {
-                +RagiumFluids.ALCOHOL
-                amount = 500
-            }
+            ingredient { +holderSet(RagiumFluids.CREOSOTE) }
             fluidResult {
                 +RagiumFluids.AROMATIC_COMPOUND
                 amount = 500
             }
-            recipeId replace RagiumFluids.WOOD_TAR.id()
+            recipeId replace RagiumFluids.CREOSOTE.id()
         }.save(exporter)
     }
 
     private fun coal() {
-        // Coal -> Coal Coke + Coal Tar
+        // Coal -> Coal Coke + Tar + Creosote
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { items { +Items.COAL } }
             itemResult { +RagiumItems.COAL_COKE }
+            itemResult { +RagiumItems.TAR }
             fluidResult {
-                +RagiumFluids.COAL_TAR
+                +RagiumFluids.CREOSOTE
                 amount = 500
             }
             time /= 2
@@ -256,8 +253,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL) }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CARBON) }
+            itemResult { +RagiumItems.TAR }
             fluidResult {
-                +RagiumFluids.COAL_TAR
+                +RagiumFluids.CREOSOTE
                 amount = 500
             }
             time /= 2
@@ -265,25 +263,15 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL) }
             itemResult { +RagiumBlocks.getStorageOrThrow(RagiumMaterial.Fuel.COAL_COKE) }
+            itemResult { 
+                +RagiumItems.TAR
+                count = 9
+            }
             fluidResult {
-                +RagiumFluids.COAL_TAR
+                +RagiumFluids.CREOSOTE
                 amount = 500 * 9
             }
             time = time / 2 * 9
-        }.save(exporter)
-
-        // Coal Tar -> Natural Gas + Aromatic Compound
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.COAL_TAR) }
-            fluidResult {
-                +RagiumFluids.NATURAL_GAS
-                amount = 500
-            }
-            fluidResult {
-                +RagiumFluids.AROMATIC_COMPOUND
-                amount = 500
-            }
-            recipeId replace RagiumFluids.COAL_TAR.id()
         }.save(exporter)
     }
 
@@ -765,9 +753,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun sulfur() {
         // S -> SO2
-        RagiumRecipeBuilders.pyrolyzing {
+        RagiumRecipeBuilders.melting {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
-            fluidResult { +RagiumFluids.SULFUR_DIOXIDE }
+            result { +RagiumFluids.SULFUR_DIOXIDE }
         } // TODO
         // SO2 + 1/2 O2 -> SO3
         RagiumRecipeBuilders.mixing {
@@ -779,9 +767,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
         }.save(exporter)
         // Blaze Powder -> SO3
-        RagiumRecipeBuilders.pyrolyzing {
+        RagiumRecipeBuilders.melting {
             ingredient { items { +Items.BLAZE_POWDER } }
-            fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
+            result { +RagiumFluids.SULFUR_TRIOXIDE }
         } // TODO
         // SO3 + H2O -> H2SO4
         RagiumRecipeBuilders.mixing {
