@@ -2,18 +2,18 @@ package hiiragi283.lib.recipe.ingredient
 
 import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.fluid.HTFlowingFluidHelper
+import hiiragi283.lib.recipe.display.HTDisplayableContent
+import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.util.context.ContextMap
+import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
-import net.neoforged.neoforge.fluids.crafting.display.ForFluidStacks
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
@@ -27,7 +27,7 @@ import kotlin.jvm.optionals.getOrNull
 @JvmRecord
 data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
     HTIngredient<Fluid, FluidInstance>,
-    HTStackPreview<FluidStack> {
+    HTDisplayableContent {
     companion object {
         @JvmField
         val CODEC: Codec<HTFluidIngredient> = HTCodecs.record { instance ->
@@ -60,11 +60,7 @@ data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
         false -> FluidStack.EMPTY
     }
 
-    override fun getPreviewStacks(contextMap: ContextMap): List<FluidStack> = unsized
-        .display()
-        .resolve(contextMap, ForFluidStacks { it.copyWithAmount(amount) })
-        .filter(HTFlowingFluidHelper::isSource)
-        .toList()
+    override fun display(): SlotDisplay = HTSizedSlotDisplay(unsized.display(), amount)
 }
 
 //    Extensions    //

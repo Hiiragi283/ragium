@@ -2,16 +2,17 @@ package hiiragi283.lib.recipe.ingredient
 
 import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.recipe.display.HTDisplayableContent
+import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.util.context.ContextMap
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.display.DisplayContentsFactory
+import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -26,7 +27,7 @@ import kotlin.jvm.optionals.getOrNull
 @JvmRecord
 data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
     HTIngredient<Item, ItemInstance>,
-    HTStackPreview<ItemStack> {
+    HTDisplayableContent {
     companion object {
         @JvmField
         val CODEC: Codec<HTItemIngredient> = HTCodecs.record { instance ->
@@ -59,10 +60,7 @@ data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
         false -> ItemStack.EMPTY
     }
 
-    override fun getPreviewStacks(contextMap: ContextMap): List<ItemStack> = unsized
-        .display()
-        .resolve(contextMap, DisplayContentsFactory.ForStacks { it.copyWithCount(count) })
-        .toList()
+    override fun display(): SlotDisplay = HTSizedSlotDisplay(unsized.display(), count)
 }
 
 //    Extensions    //

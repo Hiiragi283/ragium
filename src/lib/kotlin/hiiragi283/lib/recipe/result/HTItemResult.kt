@@ -8,6 +8,8 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.item.ItemStack
 import hiiragi283.lib.item.component.buildItemEnchantments
+import hiiragi283.lib.recipe.display.HTDisplayableContent
+import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
@@ -31,6 +33,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
@@ -42,7 +45,9 @@ import java.util.Optional
  * @since 26.1.0
  */
 @JvmRecord
-data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemStack> {
+data class HTItemResult(val entry: Entry, val count: Int) :
+    HTRecipeResult<ItemStack>,
+    HTDisplayableContent {
     companion object {
         @JvmField
         val MAP_CODEC: MapCodec<HTItemResult> = HTCodecs.recordMap { instance ->
@@ -80,9 +85,11 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
     /**
      * アイテムの完成品を作成します。
      */
-    override fun create(): ItemStack = entry.create().copyWithCount(count)
+    override fun create(): ItemStack = entry.create(count)
 
     override fun getId(): Identifier? = entry.getId()
+
+    override fun display(): SlotDisplay = HTSizedSlotDisplay(entry.display(), count)
 
     //    Entry    //
 
@@ -112,11 +119,13 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
         fun type(): HTItemResultType<*>
 
-        fun create(): ItemStack
+        fun create(count: Int = 1): ItemStack
 
         fun toResult(count: Int = 1): HTItemResult = HTItemResult(this, count)
 
         fun getId(): Identifier?
+
+        fun display(): SlotDisplay
     }
 
     @JvmRecord
@@ -155,9 +164,11 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
         override fun type(): HTItemResultType<*> = TYPE
 
-        override fun create(): ItemStack = ItemStack(item, 1, components)
+        override fun create(count: Int): ItemStack = ItemStack(item, count, components)
 
         override fun getId(): Identifier = item.getKeyOrThrow().identifier()
+
+        override fun display(): SlotDisplay = SlotDisplay.ItemStackSlotDisplay(ItemStackTemplate(item, 1, components))
     }
 
     @JvmRecord
@@ -195,14 +206,21 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
         override fun type(): HTItemResultType<*> = TYPE
 
-        override fun create(): ItemStack = tag
+        override fun create(count: Int): ItemStack = tag
             .asSequence()
             .sortedWith(HOLDER_COMPARATOR)
             .firstOrNull()
-            ?.let(::ItemStack)
+            ?.let { ItemStack(it, count) }
             ?: ItemStack.EMPTY
 
         override fun getId(): Identifier = tag.unwrapKey().orElseThrow().location()
+
+        override fun display(): SlotDisplay = tag
+            .asSequence()
+            .sortedWith(HOLDER_COMPARATOR)
+            .firstOrNull()
+            ?.let(SlotDisplay::ItemSlotDisplay)
+            ?: SlotDisplay.Empty.INSTANCE
     }
 
     /**
@@ -232,13 +250,20 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
         override fun type(): HTItemResultType<*> = TYPE
 
-        override fun create(): ItemStack = content
+        override fun create(count: Int): ItemStack = content
             .mapLeft { holder: Holder<Enchantment> -> buildItemEnchantments { set(holder, holder.value().maxLevel) } }
             .unwrap()
             .let { buildDataPatch { set(DataComponents.STORED_ENCHANTMENTS, it) } }
-            .let { ItemStack(Items.ENCHANTED_BOOK, it) }
+            .let { ItemStack(Items.ENCHANTED_BOOK, count, it) }
 
         override fun getId(): Identifier? = content.leftOrNull()?.key?.identifier()
+
+        override fun display(): SlotDisplay = content
+            .mapLeft { holder: Holder<Enchantment> -> buildItemEnchantments { set(holder, holder.value().maxLevel) } }
+            .unwrap()
+            .let { buildDataPatch { set(DataComponents.STORED_ENCHANTMENTS, it) } }
+            .let { ItemStackTemplate(Items.ENCHANTED_BOOK, it) }
+            .let(SlotDisplay::ItemStackSlotDisplay)
     }
 
     /**
@@ -270,9 +295,13 @@ data class HTItemResult(val entry: Entry, val count: Int) : HTRecipeResult<ItemS
 
         override fun type(): HTItemResultType<*> = TYPE
 
-        override fun create(): ItemStack = base.create().takeUnless(ItemStack::isEmpty) ?: fallback.create()
+        override fun create(count: Int): ItemStack =
+            base.create(count).takeUnless(ItemStack::isEmpty) ?: fallback.create(count)
 
         override fun getId(): Identifier? = base.getId() ?: fallback.getId()
+
+        override fun display(): SlotDisplay =
+            base.display().takeUnless { it is SlotDisplay.Empty } ?: fallback.display()
     }
 }
 

@@ -9,6 +9,7 @@ import hiiragi283.lib.gui.sync.HTLongSyncPayload
 import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
+import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
@@ -109,6 +110,9 @@ data object Ragium : HTCommonMod() {
         }
         event.register(Registries.RECIPE_TYPE) { helper ->
             RagiumRecipeTypes.allTypes.forEach(helper::register)
+        }
+        event.register(Registries.SLOT_DISPLAY) { helper ->
+            helper.register(RagiumAPI.id("sized"), HTSizedSlotDisplay.TYPE)
         }
         event.register(Registries.LOOT_CONDITION_TYPE) { helper ->
             helper.register(RagiumAPI.id("block_set"), HTBlockSetLootCondition.CODEC)

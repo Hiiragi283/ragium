@@ -5,6 +5,8 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.fluid.HTFlowingFluidHelper
 import hiiragi283.lib.item.alchemy.HTPotionHelper
+import hiiragi283.lib.recipe.display.HTDisplayableContent
+import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.nelOf
@@ -25,11 +27,13 @@ import net.minecraft.resources.Identifier
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.fluids.crafting.display.FluidStackSlotDisplay
 import java.util.Optional
 
 /**
@@ -38,7 +42,9 @@ import java.util.Optional
  * @since 26.1.0
  */
 @JvmRecord
-data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<FluidStack> {
+data class HTFluidResult(val entry: Entry, val amount: Int) :
+    HTRecipeResult<FluidStack>,
+    HTDisplayableContent {
     companion object {
         @JvmField
         val MAP_CODEC: MapCodec<HTFluidResult> = HTCodecs.recordMap { instance ->
@@ -76,6 +82,8 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
 
     override fun getId(): Identifier? = entry.getId()
 
+    override fun display(): SlotDisplay = HTSizedSlotDisplay(entry.display(), amount)
+
     //    Entry    //
 
     interface Entry {
@@ -109,6 +117,8 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
         fun toResult(amount: Int = FluidType.BUCKET_VOLUME): HTFluidResult = HTFluidResult(this, amount)
 
         fun getId(): Identifier?
+
+        fun display(): SlotDisplay = FluidStackSlotDisplay(create())
     }
 
     @JvmRecord
