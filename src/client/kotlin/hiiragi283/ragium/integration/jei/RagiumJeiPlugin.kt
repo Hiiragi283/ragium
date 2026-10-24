@@ -7,10 +7,10 @@ import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
 import hiiragi283.lib.integration.jei.category.HTCatalysedSingleRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTFluidSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemAndFluidToRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTItemSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemToMultiItemRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTLocationToFluidRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTSingleToItemAndFluidRecipeCategory
 import hiiragi283.lib.integration.jei.ingredient.HTIngredientTypes
 import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTPotionHelper
@@ -26,7 +26,6 @@ import hiiragi283.ragium.integration.jei.advanced.HTFluidBucketRecipePlugin
 import hiiragi283.ragium.integration.jei.advanced.HTPotionFluidRecipePlugin
 import hiiragi283.ragium.integration.jei.category.RTAlloyingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTAssemblingRecipeCategory
-import hiiragi283.ragium.integration.jei.category.RTCentrifugingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTEnchantingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTFreezingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTMixingRecipeCategory
@@ -109,7 +108,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipeCategories(
             // Mechanical
             RTAssemblingRecipeCategory(guiHelper),
-            RTCentrifugingRecipeCategory(guiHelper),
+            HTItemSeparatingRecipeCategory(
+                RagiumJeiRecipeTypes.CENTRIFUGING,
+                RagiumRecipeTypes.CENTRIFUGING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.CENTRIFUGE)
+            ),
             HTSingleRecipeCategory.ItemToItem(
                 RagiumJeiRecipeTypes.COMPRESSING,
                 RagiumRecipeTypes.COMPRESSING,
@@ -143,7 +146,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumRecipeTypes.MELTING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.MELTER)
             ),
-            HTSingleToItemAndFluidRecipeCategory.ItemTo(
+            HTItemSeparatingRecipeCategory(
                 RagiumJeiRecipeTypes.PYROLYZING,
                 RagiumRecipeTypes.PYROLYZING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.PYROLYZER)

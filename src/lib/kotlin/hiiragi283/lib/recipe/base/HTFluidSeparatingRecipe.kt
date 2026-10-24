@@ -12,8 +12,8 @@ import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
 import hiiragi283.lib.serialization.network.nelOf
+import hiiragi283.lib.serialization.network.optionalOf
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidInstance
@@ -24,8 +24,7 @@ open class HTFluidSeparatingRecipe(
     val ingredient: HTFluidIngredient,
     val result: Result,
     override val progressData: HTProgressData
-) : HTRecipePredicates.SingleFluid,
-    HTRecipeFactories.SingleFluidTo<HTFluidSeparatingRecipe.Output>,
+) : HTFluidToRecipe<HTFluidSeparatingRecipe.Output>,
     HTProgressRecipe.Holder {
     companion object {
         @JvmStatic
@@ -88,7 +87,7 @@ open class HTFluidSeparatingRecipe(
             val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Result> = StreamCodec.composite(
                 HTFluidResult.STREAM_CODEC.nelOf(),
                 Result::fluids,
-                ByteBufCodecs.optional(HTItemResult.STREAM_CODEC),
+                HTItemResult.STREAM_CODEC.optionalOf(),
                 Result::item,
                 ::Result
             )

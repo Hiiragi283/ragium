@@ -10,6 +10,7 @@ import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.nelOf
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.nelOf
+import hiiragi283.lib.serialization.network.optionalOf
 import hiiragi283.lib.util.DFUEither
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.IorNel
@@ -178,9 +179,9 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
                     Potion.STREAM_CODEC
                 ),
                 PotionEntry::content,
-                ByteBufCodecs.optional(ByteBufCodecs.VAR_INT),
+                ByteBufCodecs.VAR_INT.optionalOf(),
                 PotionEntry::customColor,
-                ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8),
+                ByteBufCodecs.STRING_UTF8.optionalOf(),
                 PotionEntry::customName,
                 ::PotionEntry
             )

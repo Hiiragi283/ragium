@@ -5,8 +5,8 @@ package hiiragi283.ragium.api.data.recipe.builder
 import hiiragi283.lib.data.recipe.builder.HTFluidSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemOrFluidRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
-import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTLocationToFluidRecipeBuilder
@@ -20,6 +20,7 @@ import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
 import hiiragi283.ragium.api.recipe.RTBrewingRecipe
+import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
@@ -87,11 +88,13 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun centrifuging(builderAction: RTCentrifugingRecipeBuilder.() -> Unit): RTCentrifugingRecipeBuilder {
+    inline fun centrifuging(
+        builderAction: HTItemSeparatingRecipeBuilder<RTCentrifugingRecipe>.() -> Unit
+    ): HTItemSeparatingRecipeBuilder<RTCentrifugingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTCentrifugingRecipeBuilder().apply(builderAction)
+        return HTItemSeparatingRecipeBuilder(RagiumConstants.CENTRIFUGING, ::RTCentrifugingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -147,12 +150,12 @@ data object RagiumRecipeBuilders {
 
     @JvmStatic
     inline fun pyrolyzing(
-        builderAction: HTItemToItemAndFluidRecipeBuilder<RTPyrolyzingRecipe>.() -> Unit
-    ): HTItemToItemAndFluidRecipeBuilder<RTPyrolyzingRecipe> {
+        builderAction: HTItemSeparatingRecipeBuilder<RTPyrolyzingRecipe>.() -> Unit
+    ): HTItemSeparatingRecipeBuilder<RTPyrolyzingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemToItemAndFluidRecipeBuilder(RagiumConstants.PYROLYZING, ::RTPyrolyzingRecipe).apply(builderAction)
+        return HTItemSeparatingRecipeBuilder(RagiumConstants.PYROLYZING, ::RTPyrolyzingRecipe).apply(builderAction)
     }
 
     @JvmStatic

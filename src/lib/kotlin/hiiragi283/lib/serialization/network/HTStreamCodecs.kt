@@ -19,7 +19,6 @@ import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ByIdMap
-import java.util.Optional
 import java.util.UUID
 
 /**
@@ -47,13 +46,6 @@ data object HTStreamCodecs {
         keyCodec: StreamCodec<in B, K>,
         valueCodec: StreamCodec<in B, V>
     ): StreamCodec<B, Map<K, V>> = ByteBufCodecs.map(::LinkedHashMap, keyCodec, valueCodec)
-
-    /**
-     * [Optional]でラップされた[StreamCodec]を作成します。
-     */
-    @JvmStatic
-    fun <B : ByteBuf, V : Any> optional(codec: StreamCodec<in B, V>): StreamCodec<B, Optional<V>> =
-        ByteBufCodecs.optional(codec)
 
     /**
      * [Pair]の[StreamCodec]を作成します。

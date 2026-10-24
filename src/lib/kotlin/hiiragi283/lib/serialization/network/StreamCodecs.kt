@@ -6,6 +6,7 @@ import hiiragi283.lib.util.identity
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
+import java.util.Optional
 
 //    Collection    //
 
@@ -17,6 +18,15 @@ import net.minecraft.network.codec.StreamCodec
  * @since 26.1.0
  */
 fun <B : ByteBuf, V : Any> StreamCodec<B, V>.listOf(): StreamCodec<B, List<V>> = this.apply(ByteBufCodecs.list())
+
+/**
+ * この[StreamCodec][this]を[Optional]の[StreamCodec]に変換します。
+ * @param B パケットのクラス
+ * @param V 値のクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.12
+ */
+fun <B : ByteBuf, V : Any> StreamCodec<B, V>.optionalOf(): StreamCodec<B, Optional<V>> = ByteBufCodecs.optional(this)
 
 /**
  * この[StreamCodec][this]を[Nel]の[StreamCodec]に変換します。

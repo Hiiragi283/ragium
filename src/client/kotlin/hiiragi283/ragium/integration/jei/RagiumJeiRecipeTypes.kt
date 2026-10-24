@@ -6,12 +6,12 @@ import hiiragi283.lib.integration.jei.IRecipeType
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
+import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTLocationToRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
-import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
@@ -29,7 +29,7 @@ data object RagiumJeiRecipeTypes {
     val ASSEMBLING: HTRecipeHolderType<HTSizedShapelessRecipe.Basic> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
-    val CENTRIFUGING: HTRecipeHolderType<RTCentrifugingRecipe.Basic> = create(RagiumConstants.CENTRIFUGING)
+    val CENTRIFUGING: HTRecipeHolderType<HTItemSeparatingRecipe.Basic> = create(RagiumConstants.CENTRIFUGING)
 
     @JvmField
     val COMPRESSING: HTRecipeHolderType<HTItemToRecipe.BasicItem> = create(RagiumConstants.COMPRESSING)
@@ -57,7 +57,7 @@ data object RagiumJeiRecipeTypes {
     val MELTING: HTRecipeHolderType<HTItemToRecipe.BasicFluid> = create(RagiumConstants.MELTING)
 
     @JvmField
-    val PYROLYZING: HTRecipeHolderType<HTItemToRecipe.BasicItemAndFluid> = create(RagiumConstants.PYROLYZING)
+    val PYROLYZING: HTRecipeHolderType<HTItemSeparatingRecipe.Basic> = create(RagiumConstants.PYROLYZING)
 
     @JvmField
     val REFINING: HTRecipeHolderType<HTFluidSeparatingRecipe> = create(RagiumConstants.REFINING)
