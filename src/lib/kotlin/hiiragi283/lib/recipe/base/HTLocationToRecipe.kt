@@ -49,9 +49,6 @@ interface HTLocationToRecipe<OUTPUT : Any> :
                     ).apply(instance, factory::create)
                 }
 
-            @JvmField
-            val SIMPLE_CODEC: MapCodec<BasicFluid> = codec(::BasicFluid)
-
             @JvmStatic
             fun <RECIPE : BasicFluid> streamCodec(
                 factory: HTLocationToFluidRecipeBuilder.Factory<RECIPE>,

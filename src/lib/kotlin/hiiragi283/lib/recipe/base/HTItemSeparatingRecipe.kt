@@ -20,9 +20,17 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.Optional
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.12
+ */
 interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output> {
     //    Output    //
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.12
+     */
     @JvmRecord
     data class Output(val items: List<ItemStack>, val fluid: FluidStack) {
         constructor(item: ItemStack, fluid: FluidStack) : this(listOf(item), fluid)
@@ -30,6 +38,10 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
 
     //    Result    //
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.12
+     */
     @JvmRecord
     data class Result(val items: Nel<HTItemResult>, val fluid: Optional<HTFluidResult>) {
         companion object {
@@ -58,6 +70,10 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
 
     //    Basic    //
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.12
+     */
     open class Basic(val ingredient: HTItemIngredient, val result: Result, override val progressData: HTProgressData) :
         HTItemSeparatingRecipe,
         HTProgressRecipe.Holder {
@@ -70,9 +86,6 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
                     HTProgressData.CODEC.forGetter(Basic::progressData),
                 ).apply(instance, factory::create)
             }
-
-            @JvmField
-            val SIMPLE_CODEC: MapCodec<Basic> = codec(::Basic)
 
             @JvmStatic
             fun <RECIPE : Basic> streamCodec(factory: HTItemSeparatingRecipeBuilder.Factory<RECIPE>): StreamCodec<RegistryFriendlyByteBuf, RECIPE> =

@@ -43,9 +43,6 @@ interface HTSizedShapelessRecipe :
                     ).apply(instance, factory)
                 }
 
-            @JvmField
-            val SIMPLE_CODEC: MapCodec<Basic> = codec(::Basic)
-
             @JvmStatic
             fun <RECIPE : Basic> streamCodec(
                 factory: (Nel<HTItemIngredient>, HTItemResult, HTProgressData) -> RECIPE,

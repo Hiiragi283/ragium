@@ -78,9 +78,6 @@ interface HTFluidToRecipe<OUTPUT : Any> :
             fun <RECIPE : BasicItem> streamCodec(
                 factory: Factory<HTFluidIngredient, HTItemResult, RECIPE>,
             ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = streamCodec(HTFluidIngredient.STREAM_CODEC, HTItemResult.STREAM_CODEC, factory)
-
-            @JvmField
-            val SIMPLE_CODEC: MapCodec<BasicItem> = codec(::BasicItem)
         }
     }
 
@@ -103,9 +100,6 @@ interface HTFluidToRecipe<OUTPUT : Any> :
             fun <RECIPE : BasicFluid> streamCodec(
                 factory: Factory<HTFluidIngredient, HTFluidResult, RECIPE>,
             ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = streamCodec(HTFluidIngredient.STREAM_CODEC, HTFluidResult.STREAM_CODEC, factory)
-
-            @JvmField
-            val SIMPLE_CODEC: MapCodec<BasicFluid> = codec(::BasicFluid)
         }
     }
 
@@ -128,9 +122,6 @@ interface HTFluidToRecipe<OUTPUT : Any> :
             fun <RECIPE : BasicItemAndFluid> streamCodec(
                 factory: Factory<HTFluidIngredient, HTItemOrFluidResult, RECIPE>,
             ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = streamCodec(HTFluidIngredient.STREAM_CODEC, HTItemOrFluidResult.STREAM_CODEC, factory)
-
-            @JvmField
-            val SIMPLE_CODEC: MapCodec<BasicItemAndFluid> = codec(::BasicItemAndFluid)
         }
     }
 }

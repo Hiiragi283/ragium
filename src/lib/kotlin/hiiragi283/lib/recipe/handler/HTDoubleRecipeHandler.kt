@@ -17,12 +17,7 @@ import java.util.function.BiPredicate
  * @author Hiiragi Tsubasa
  * @since 26.1.11
  */
-abstract class HTDoubleRecipeHandler<
-    INPUT_A : Any,
-    INPUT_B : Any,
-    OUTPUT : Any,
-    RECIPE : BiFunction<INPUT_A, INPUT_B, OUTPUT>,
-    > : HTRecipeHandler() {
+abstract class HTDoubleRecipeHandler<INPUT_A : Any, INPUT_B : Any, OUTPUT : Any, RECIPE : BiFunction<INPUT_A, INPUT_B, OUTPUT>> : HTRecipeHandler() {
 
     protected val progressor: Progressor<INPUT_A, INPUT_B, RECIPE> = createProgressor()
 
@@ -111,14 +106,8 @@ abstract class HTDoubleRecipeHandler<
      * @author Hiiragi Tsubasa
      * @since 26.1.11
      */
-    abstract class Cached<
-        INPUT_A : Any,
-        INPUT_B : Any,
-        OUTPUT : Any,
-        RECIPE,
-        >(
-        val cache: HTDoubleRecipeCache<INPUT_A, INPUT_B, RECIPE>,
-    ) : HTDoubleRecipeHandler<INPUT_A, INPUT_B, OUTPUT, RECIPE>()
+    abstract class Cached<INPUT_A : Any, INPUT_B : Any, OUTPUT : Any, RECIPE>(val cache: HTDoubleRecipeCache<INPUT_A, INPUT_B, RECIPE>) :
+        HTDoubleRecipeHandler<INPUT_A, INPUT_B, OUTPUT, RECIPE>()
         where RECIPE : BiPredicate<INPUT_A, INPUT_B>, RECIPE : BiFunction<INPUT_A, INPUT_B, OUTPUT> {
         final override fun findRecipe(first: INPUT_A, second: INPUT_B, level: ServerLevel): RECIPE? = cache.findFirstRecipe(first, second, level)
 

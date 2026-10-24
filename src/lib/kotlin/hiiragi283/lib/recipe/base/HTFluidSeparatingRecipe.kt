@@ -34,9 +34,6 @@ open class HTFluidSeparatingRecipe(val ingredient: HTFluidIngredient, val result
                 ).apply(instance, factory::create)
             }
 
-        @JvmField
-        val SIMPLE_CODEC: MapCodec<HTFluidSeparatingRecipe> = codec(::HTFluidSeparatingRecipe)
-
         @JvmStatic
         fun <RECIPE : HTFluidSeparatingRecipe> streamCodec(
             factory: HTFluidSeparatingRecipeBuilder.Factory<RECIPE>,

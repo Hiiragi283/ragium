@@ -43,9 +43,6 @@ interface HTDoubleItemToItemRecipe :
                 ).apply(instance, factory::create)
             }
 
-            @JvmField
-            val SIMPLE_CODEC: MapCodec<Basic> = codec(::Basic)
-
             @JvmStatic
             fun <RECIPE : Basic> streamCodec(factory: HTDoubleItemToItemRecipeBuilder.Factory<RECIPE>): StreamCodec<RegistryFriendlyByteBuf, RECIPE> =
                 StreamCodec.composite(
