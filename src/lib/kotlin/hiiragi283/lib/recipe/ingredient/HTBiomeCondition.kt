@@ -3,6 +3,7 @@ package hiiragi283.lib.recipe.ingredient
 import com.mojang.serialization.Codec
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.recipe.display.HTDisplayableContent
+import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.recipe.display.toDisplay
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.text.HTCommonTranslation
@@ -70,5 +71,5 @@ data class HTBiomeCondition(val biomes: HolderSet<Biome>) :
         .toText()
         .let(HTCommonTranslation.BIOME::translate)
         .let { ItemStackTemplate(Items.COMPASS, buildDataPatch { set(DataComponents.ITEM_NAME, it) }) }
-        .let(SlotDisplay::ItemStackSlotDisplay)
+        .let(HTSlotDisplayHelper::create)
 }

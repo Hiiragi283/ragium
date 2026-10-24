@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import java.util.Optional
-import kotlin.jvm.optionals.getOrDefault
 
 /**
  * 消費されない[Item]向けの[HTIngredient]の実装クラスです。
@@ -47,5 +46,5 @@ data class HTItemCatalyst(val content: Optional<Ingredient>) :
 
     override fun getMatchingStack(instance: ItemInstance): ItemInstance = ItemStack.EMPTY
 
-    override fun display(): SlotDisplay = content.map(Ingredient::display).getOrDefault(SlotDisplay.Empty.INSTANCE)
+    override fun display(): SlotDisplay = content.fold(SlotDisplay.Empty::INSTANCE, Ingredient::display)
 }

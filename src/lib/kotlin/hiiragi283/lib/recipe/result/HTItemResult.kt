@@ -10,6 +10,7 @@ import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.item.component.buildItemEnchantments
 import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
+import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.nelOrElement
@@ -55,7 +56,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
         val MAP_CODEC: MapCodec<HTItemResult> = HTCodecs.recordMap { instance ->
             instance.group(
                 Entry.MAP_CODEC.forGetter(HTItemResult::entry),
-                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.COUNT).orElse(1).forGetter(HTItemResult::count)
+                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.COUNT).orElse(1).forGetter(HTItemResult::count),
             ).apply(instance, ::HTItemResult)
         }
 
@@ -70,7 +71,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
             HTItemResult::entry,
             ByteBufCodecs.VAR_INT,
             HTItemResult::count,
-            ::HTItemResult
+            ::HTItemResult,
         )
     }
 
@@ -102,7 +103,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
                 RagiumRegistries.ITEM_RESULT_TYPE.byNameCodec(),
                 Entry::type,
                 HTItemResultType<*>::codec,
-                SimpleEntry.CODEC
+                SimpleEntry.CODEC,
             ).xmap(
                 { DFUEither.unwrap(it) },
                 { entry: Entry ->
@@ -110,12 +111,12 @@ data class HTItemResult(val entry: Entry, val count: Int) :
                         is SimpleEntry -> DFUEither.right(entry)
                         else -> DFUEither.left(entry)
                     }
-                }
+                },
             )
 
             @JvmField
             val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> = ByteBufCodecs.registry(
-                RagiumRegistries.Keys.ITEM_RESULT_TYPE
+                RagiumRegistries.Keys.ITEM_RESULT_TYPE,
             ).dispatch(Entry::type, HTItemResultType<*>::streamCodec)
         }
 
@@ -131,10 +132,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
     }
 
     @JvmRecord
-    data class SimpleEntry @JvmOverloads constructor(
-        val item: Holder<Item>,
-        val components: DataComponentPatch = DataComponentPatch.EMPTY
-    ) : Entry {
+    data class SimpleEntry @JvmOverloads constructor(val item: Holder<Item>, val components: DataComponentPatch = DataComponentPatch.EMPTY) : Entry {
         companion object {
             @JvmField
             val CODEC: MapCodec<SimpleEntry> = HTCodecs.recordMap { instance ->
@@ -142,8 +140,8 @@ data class HTItemResult(val entry: Entry, val count: Int) :
                     Item.CODEC.fieldOf(HTConstants.ID).forGetter(SimpleEntry::item),
                     DataComponentPatch.CODEC.optionalFieldOf(
                         HTConstants.COMPONENTS,
-                        DataComponentPatch.EMPTY
-                    ).forGetter(SimpleEntry::components)
+                        DataComponentPatch.EMPTY,
+                    ).forGetter(SimpleEntry::components),
                 ).apply(instance, ::SimpleEntry)
             }
 
@@ -153,7 +151,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
                 SimpleEntry::item,
                 DataComponentPatch.STREAM_CODEC,
                 SimpleEntry::components,
-                ::SimpleEntry
+                ::SimpleEntry,
             )
 
             @JvmField
@@ -170,7 +168,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
 
         override fun getId(): Identifier = item.getKeyOrThrow().identifier()
 
-        override fun display(): SlotDisplay = SlotDisplay.ItemStackSlotDisplay(ItemStackTemplate(item, 1, components))
+        override fun display(): SlotDisplay = HTSlotDisplayHelper.create(ItemStackTemplate(item, 1, components))
     }
 
     @JvmRecord
@@ -221,8 +219,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
             .asSequence()
             .sortedWith(HOLDER_COMPARATOR)
             .firstOrNull()
-            ?.let(SlotDisplay::ItemSlotDisplay)
-            ?: SlotDisplay.Empty.INSTANCE
+            .let(HTSlotDisplayHelper::create)
     }
 
     /**
@@ -237,14 +234,14 @@ data class HTItemResult(val entry: Entry, val count: Int) :
                 @JvmField
                 val FLAT_CODEC: Codec<EnchantmentValue> = Enchantment.CODEC.xmap(
                     ::EnchantmentValue,
-                    EnchantmentValue::enchantment
+                    EnchantmentValue::enchantment,
                 )
 
                 @JvmField
                 val NESTED_CODEC: Codec<EnchantmentValue> = HTCodecs.record { instance ->
                     instance.group(
                         Enchantment.CODEC.fieldOf(HTConstants.ID).forGetter(EnchantmentValue::enchantment),
-                        HTCodecs.POSITIVE_INT.optionalFieldOf("level").forGetter(EnchantmentValue::level)
+                        HTCodecs.POSITIVE_INT.optionalFieldOf("level").forGetter(EnchantmentValue::level),
                     ).apply(instance, ::EnchantmentValue)
                 }
 
@@ -253,7 +250,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
                     { DFUEither.unwrap(it) },
                     { value: EnchantmentValue ->
                         if (value.level.isEmpty) DFUEither.left(value) else DFUEither.right(value)
-                    }
+                    },
                 )
 
                 @JvmField
@@ -262,7 +259,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
                     EnchantmentValue::enchantment,
                     ByteBufCodecs.VAR_INT.optionalOf(),
                     EnchantmentValue::level,
-                    ::EnchantmentValue
+                    ::EnchantmentValue,
                 )
             }
 
@@ -299,14 +296,14 @@ data class HTItemResult(val entry: Entry, val count: Int) :
                     for (value: EnchantmentValue in enchantments) {
                         set(value.enchantment, value.fixedLevel)
                     }
-                }
+                },
             )
             return stack
         }
 
         override fun getId(): Identifier? = enchantments.head.enchantment.key?.identifier()
 
-        override fun display(): SlotDisplay = SlotDisplay.ItemStackSlotDisplay(
+        override fun display(): SlotDisplay = HTSlotDisplayHelper.create(
             ItemStackTemplate(
                 Items.ENCHANTED_BOOK,
                 1,
@@ -317,10 +314,10 @@ data class HTItemResult(val entry: Entry, val count: Int) :
                             for (value: EnchantmentValue in enchantments) {
                                 set(value.enchantment, value.fixedLevel)
                             }
-                        }
+                        },
                     )
-                }
-            )
+                },
+            ),
         )
     }
 
@@ -334,7 +331,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
             val CODEC: MapCodec<WithFallbackEntry> = HTCodecs.recordMap { instance ->
                 instance.group(
                     Entry.MAP_CODEC.fieldOf("base").forGetter(WithFallbackEntry::base),
-                    Entry.MAP_CODEC.fieldOf("fallback").forGetter(WithFallbackEntry::fallback)
+                    Entry.MAP_CODEC.fieldOf("fallback").forGetter(WithFallbackEntry::fallback),
                 ).apply(instance, ::WithFallbackEntry)
             }
 
@@ -344,7 +341,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
                 WithFallbackEntry::base,
                 Entry.STREAM_CODEC,
                 WithFallbackEntry::fallback,
-                ::WithFallbackEntry
+                ::WithFallbackEntry,
             )
 
             @JvmField
@@ -353,13 +350,11 @@ data class HTItemResult(val entry: Entry, val count: Int) :
 
         override fun type(): HTItemResultType<*> = TYPE
 
-        override fun create(count: Int): ItemStack =
-            base.create(count).takeUnless(ItemStack::isEmpty) ?: fallback.create(count)
+        override fun create(count: Int): ItemStack = base.create(count).takeUnless(ItemStack::isEmpty) ?: fallback.create(count)
 
         override fun getId(): Identifier? = base.getId() ?: fallback.getId()
 
-        override fun display(): SlotDisplay =
-            base.display().takeUnless { it is SlotDisplay.Empty } ?: fallback.display()
+        override fun display(): SlotDisplay = base.display().takeUnless { it is SlotDisplay.Empty } ?: fallback.display()
     }
 }
 

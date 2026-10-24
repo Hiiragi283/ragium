@@ -3,6 +3,7 @@ package hiiragi283.ragium.integration.jei.advanced
 import hiiragi283.lib.integration.jei.getIngredient
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
+import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleCentrifugingRecipe
@@ -14,7 +15,6 @@ import mezz.jei.api.recipe.RecipeIngredientRole
 import mezz.jei.api.recipe.advanced.IRecipeManagerPlugin
 import mezz.jei.api.recipe.types.IRecipeType
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.display.FluidStackSlotDisplay
 
@@ -43,12 +43,12 @@ data object HTPotionFluidRecipePlugin : IRecipeManagerPlugin {
                 HTBottleType.entries.map { bottleType: HTBottleType ->
                     HTDoubleToSingleViewerRecipe(
                         null,
-                        SlotDisplay.ItemSlotDisplay(bottleType.emptyItem),
+                        HTSlotDisplayHelper.create(bottleType.emptyItem),
                         FluidStackSlotDisplay(stackFocused),
                         bottleType.filledItem
                             .asTemplate(patch = potionPatch)
                             .getOrThrow()
-                            .let(SlotDisplay::ItemStackSlotDisplay),
+                            .let(HTSlotDisplayHelper::create),
                         RTPotionBottleFillingRecipe.PROGRESS_DATA,
                     )
                 }
@@ -58,8 +58,8 @@ data object HTPotionFluidRecipePlugin : IRecipeManagerPlugin {
                 HTBottleType.entries.map { bottleType: HTBottleType ->
                     HTItemSeparatingViewerRecipe(
                         null,
-                        SlotDisplay.ItemStackSlotDisplay(bottleType.filledItem.asTemplate(patch = potionPatch).getOrThrow()),
-                        listOf(SlotDisplay.ItemSlotDisplay(bottleType.emptyItem)),
+                        HTSlotDisplayHelper.create(bottleType.filledItem.asTemplate(patch = potionPatch).getOrThrow()),
+                        listOf(HTSlotDisplayHelper.create(bottleType.emptyItem)),
                         FluidStackSlotDisplay(stackFocused),
                         RTPotionBottleCentrifugingRecipe.PROGRESS_DATA,
                     )

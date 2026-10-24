@@ -3,6 +3,7 @@ package hiiragi283.ragium.integration.jei.advanced
 import hiiragi283.lib.fluid.createBucket
 import hiiragi283.lib.integration.jei.getIngredient
 import hiiragi283.lib.item.toTemplateOrNull
+import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
 import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
@@ -17,10 +18,8 @@ import mezz.jei.api.recipe.types.IRecipeType
 import net.minecraft.world.item.BucketItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
-import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.crafting.display.FluidStackSlotDisplay
 import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
 data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
@@ -50,8 +49,6 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
         // 液体入りバケツを選択中の場合
         val filledBucket: ItemStack? = focus.getIngredient(VanillaTypes.ITEM_STACK)?.takeIf(::isFilledBucket)
         if (filledBucket != null) {
-            val filledBucketDisplay: SlotDisplay =
-                filledBucket.toTemplateOrNull()?.let(SlotDisplay::ItemStackSlotDisplay) ?: SlotDisplay.Empty.INSTANCE
             val fluidIn: FluidStack = FluidUtil.getFirstStackContained(filledBucket)
             val remainder: ItemStackTemplate? = filledBucket.craftingRemainder
             if (!fluidIn.isEmpty && remainder != null) {
@@ -60,9 +57,9 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
                     RecipeIngredientRole.INPUT if recipeType == RagiumJeiRecipeTypes.CENTRIFUGING ->
                         HTItemSeparatingViewerRecipe(
                             null,
-                            filledBucketDisplay,
-                            listOf(SlotDisplay.ItemStackSlotDisplay(remainder)),
-                            FluidStackSlotDisplay(fluidIn),
+                            HTSlotDisplayHelper.create(filledBucket),
+                            listOf(HTSlotDisplayHelper.create(remainder)),
+                            HTSlotDisplayHelper.create(fluidIn),
                             RTBucketCentrifugingRecipe.progressData,
                         )
 
@@ -70,9 +67,9 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
                     RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.FILLING ->
                         HTDoubleToSingleViewerRecipe(
                             null,
-                            SlotDisplay.ItemStackSlotDisplay(remainder),
-                            FluidStackSlotDisplay(fluidIn),
-                            filledBucketDisplay,
+                            HTSlotDisplayHelper.create(remainder),
+                            HTSlotDisplayHelper.create(fluidIn),
+                            HTSlotDisplayHelper.create(filledBucket),
                             RTBucketFillingRecipe.progressData,
                         )
 
@@ -88,18 +85,18 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
             RecipeIngredientRole.INPUT if recipeType == RagiumJeiRecipeTypes.FILLING ->
                 HTDoubleToSingleViewerRecipe(
                     null,
-                    SlotDisplay.ItemStackSlotDisplay(remainder),
-                    FluidStackSlotDisplay(fluid),
-                    SlotDisplay.ItemStackSlotDisplay(bucket),
+                    HTSlotDisplayHelper.create(remainder),
+                    HTSlotDisplayHelper.create(fluid),
+                    HTSlotDisplayHelper.create(bucket),
                     RTBucketFillingRecipe.progressData,
                 )
 
             RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.CENTRIFUGING ->
                 HTItemSeparatingViewerRecipe(
                     null,
-                    SlotDisplay.ItemStackSlotDisplay(bucket),
-                    listOf(SlotDisplay.ItemStackSlotDisplay(remainder)),
-                    FluidStackSlotDisplay(fluid),
+                    HTSlotDisplayHelper.create(bucket),
+                    listOf(HTSlotDisplayHelper.create(remainder)),
+                    HTSlotDisplayHelper.create(fluid),
                     RTBucketCentrifugingRecipe.progressData,
                 )
 

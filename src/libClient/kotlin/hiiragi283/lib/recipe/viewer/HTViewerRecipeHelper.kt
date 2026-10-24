@@ -1,4 +1,4 @@
-package hiiragi283.ragium.recipe.viewer
+package hiiragi283.lib.recipe.viewer
 
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.RecipeKey
@@ -15,19 +15,12 @@ import hiiragi283.lib.recipe.display.display
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.recipe.viewer.HTCatalysedSingleToSingleViewerRecipe
-import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
-import hiiragi283.lib.recipe.viewer.HTFluidSeparatingViewerRecipe
-import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
-import hiiragi283.lib.recipe.viewer.HTMultiToSingleViewerRecipe
-import hiiragi283.lib.recipe.viewer.HTSingleToMultiViewerRecipe
-import hiiragi283.lib.recipe.viewer.HTSingleToSingleViewerRecipe
 
 /**
  * @author Hiiragi Tsubasa
  * @since 26.1.12
  */
-data object RagiumViewerRecipeHelper {
+data object HTViewerRecipeHelper {
     // Single
     @JvmStatic
     fun singleToSingle(holder: HTRecipeHolder<HTBasicSingleRecipe<HTDisplayableContent, HTDisplayableContent>>): HTSingleToSingleViewerRecipe {

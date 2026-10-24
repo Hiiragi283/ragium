@@ -9,6 +9,10 @@ import net.minecraft.world.item.crafting.display.SlotDisplay
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.12
+ */
 @JvmRecord
 data class HTMultiToSingleViewerRecipe(
     override val id: Identifier?,
