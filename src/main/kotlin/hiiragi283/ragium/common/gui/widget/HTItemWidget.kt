@@ -30,7 +30,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
             index: Int,
             x: Int,
             y: Int,
-            backgroundType: HTBackgroundType
+            backgroundType: HTBackgroundType,
         ) : this(HTContainerItemSlot.create(slot, index, x, y, backgroundType), backgroundType)
 
         override fun getStack(): ItemStack = slot.item
@@ -51,7 +51,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
         private val stackSetter: ItemStackSetter?,
         override val bounds: HTBounds,
         backgroundType: HTBackgroundType,
-        val isGhost: Boolean
+        val isGhost: Boolean,
     ) : HTItemWidget(backgroundType),
         HTGhostWidget {
         constructor(
@@ -60,7 +60,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
             x: Int,
             y: Int,
             backgroundType: HTBackgroundType,
-            isGhost: Boolean
+            isGhost: Boolean,
         ) : this(stackGetter, stackSetter, HTBounds.createSlot(x - 1, y - 1), backgroundType, isGhost)
 
         constructor(slot: HTBasicItemSlot, bounds: HTBounds, backgroundType: HTBackgroundType, isGhost: Boolean) : this(
@@ -68,14 +68,14 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
             slot::setStack,
             bounds,
             backgroundType,
-            isGhost
+            isGhost,
         )
 
         constructor(slot: HTBasicItemSlot, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(
             slot,
             HTBounds.createSlot(x - 1, y - 1),
             backgroundType,
-            isGhost
+            isGhost,
         )
 
         override fun getStack(): ItemStack = stackGetter()
@@ -92,7 +92,6 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
             }
         }
 
-        override fun toString(): String =
-            "HTItemWidget.Fake(bounds=$bounds, stack=${getStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
+        override fun toString(): String = "HTItemWidget.Fake(bounds=$bounds, stack=${getStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
     }
 }

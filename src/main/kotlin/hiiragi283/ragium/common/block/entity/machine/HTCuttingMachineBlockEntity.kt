@@ -15,7 +15,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CUTTING_MACHINE.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.CUTTING,
-        HTSoundInstance(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
+        HTSoundInstance(SoundEvents.UI_STONECUTTER_TAKE_RESULT),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.cuttingMachine

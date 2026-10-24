@@ -22,11 +22,7 @@ data object HTCreativeModeTabHelper {
      * @param items クリエタブに追加するアイテムの一覧
      */
     @JvmStatic
-    fun addToDisplay(
-        parameters: CreativeModeTab.ItemDisplayParameters,
-        output: CreativeModeTab.Output,
-        items: Sequence<Holder<Item>>
-    ) {
+    fun addToDisplay(parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output, items: Sequence<Holder<Item>>) {
         for (item: Holder<Item> in items) {
             addToDisplay(parameters, output, item)
         }
@@ -39,11 +35,7 @@ data object HTCreativeModeTabHelper {
      * @param holder クリエタブに追加するアイテム
      */
     @JvmStatic
-    fun addToDisplay(
-        parameters: CreativeModeTab.ItemDisplayParameters,
-        output: CreativeModeTab.Output,
-        holder: Holder<Item>
-    ) {
+    fun addToDisplay(parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output, holder: Holder<Item>) {
         val visibility: CreativeModeTab.TabVisibility = when (output) {
             is BuildCreativeModeTabContentsEvent -> CreativeModeTab.TabVisibility.PARENT_TAB_ONLY
             else -> CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS
@@ -70,11 +62,7 @@ data object HTCreativeModeTabHelper {
      * @param builder クリエタブの要素を初期化するブロック
      * @return 新しい[DeferredHolder]のインスタンス
      */
-    fun createSimpleTab(
-        title: HTTranslation,
-        icon: ItemLike,
-        builder: CreativeModeTab.DisplayItemsGenerator
-    ): CreativeModeTab = CreativeModeTab
+    fun createSimpleTab(title: HTTranslation, icon: ItemLike, builder: CreativeModeTab.DisplayItemsGenerator): CreativeModeTab = CreativeModeTab
         .builder()
         .title(title.translate())
         .icon { ItemStack(icon) }
@@ -88,11 +76,7 @@ data object HTCreativeModeTabHelper {
      * @param builderAction [CreativeModeTab.Builder]を初期化するブロック
      * @return 新しい[DeferredHolder]のインスタンス
      */
-    fun createSimpleTab(
-        title: HTTranslation,
-        icon: ItemLike,
-        builderAction: CreativeModeTab.Builder.() -> Unit
-    ): CreativeModeTab = CreativeModeTab
+    fun createSimpleTab(title: HTTranslation, icon: ItemLike, builderAction: CreativeModeTab.Builder.() -> Unit): CreativeModeTab = CreativeModeTab
         .builder()
         .title(title.translate())
         .icon { ItemStack(icon) }

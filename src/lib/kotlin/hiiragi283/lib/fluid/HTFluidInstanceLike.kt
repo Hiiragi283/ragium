@@ -14,25 +14,18 @@ interface HTFluidInstanceLike {
     /**
      * 新しい[FluidStackTemplate]のインスタンスを作成します。
      */
-    fun asTemplate(
-        amount: Int = FluidType.BUCKET_VOLUME,
-        patch: DataComponentPatch = DataComponentPatch.EMPTY
-    ): Result<FluidStackTemplate>
+    fun asTemplate(amount: Int = FluidType.BUCKET_VOLUME, patch: DataComponentPatch = DataComponentPatch.EMPTY): Result<FluidStackTemplate>
 
     /**
      * 新しい[FluidStack]のインスタンスを作成します。
      */
-    fun asStack(
-        amount: Int = FluidType.BUCKET_VOLUME,
-        patch: DataComponentPatch = DataComponentPatch.EMPTY
-    ): Result<FluidStack> = asTemplate(amount, patch).map(FluidStackTemplate::create)
+    fun asStack(amount: Int = FluidType.BUCKET_VOLUME, patch: DataComponentPatch = DataComponentPatch.EMPTY): Result<FluidStack> =
+        asTemplate(amount, patch).map(FluidStackTemplate::create)
 
     /**
      * 新しい[FluidStack]のインスタンスを作成します。
      * @return [FluidStack]のインスタンスを作成できなかった場合は[FluidStack.EMPTY]
      */
-    fun asStackOrEmpty(
-        amount: Int = FluidType.BUCKET_VOLUME,
-        patch: DataComponentPatch = DataComponentPatch.EMPTY
-    ): FluidStack = asStack(amount, patch).getOrElse { FluidStack.EMPTY }
+    fun asStackOrEmpty(amount: Int = FluidType.BUCKET_VOLUME, patch: DataComponentPatch = DataComponentPatch.EMPTY): FluidStack =
+        asStack(amount, patch).getOrElse { FluidStack.EMPTY }
 }

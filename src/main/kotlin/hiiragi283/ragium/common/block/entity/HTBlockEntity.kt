@@ -158,8 +158,7 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
 
     fun getFluidTank(side: Direction?, index: Int): HTFluidTank? = getFluidTanks(side).getOrNull(index)
 
-    final override fun getFluidHandler(direction: Direction?): FluidResourceHandler? =
-        fluidHandlerManager?.resolve(direction)
+    final override fun getFluidHandler(direction: Direction?): FluidResourceHandler? = fluidHandlerManager?.resolve(direction)
 
     // Item
     fun hasItemHandler(): Boolean = itemHandlerManager != null
@@ -170,8 +169,7 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
 
     fun getItemSlot(side: Direction?, index: Int): HTItemSlot? = getItemSlots(side).getOrNull(index)
 
-    final override fun getItemHandler(direction: Direction?): ItemResourceHandler? =
-        itemHandlerManager?.resolve(direction)
+    final override fun getItemHandler(direction: Direction?): ItemResourceHandler? = itemHandlerManager?.resolve(direction)
 
     override fun preRemoveSideEffects(pos: BlockPos, state: BlockState) {
         val level: Level = this.level ?: return

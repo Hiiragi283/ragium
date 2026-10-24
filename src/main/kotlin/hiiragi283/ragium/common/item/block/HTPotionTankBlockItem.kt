@@ -17,11 +17,7 @@ import net.minecraft.world.level.block.Block
 class HTPotionTankBlockItem(block: Block, properties: Properties) :
     BlockItem(block, properties),
     HTSubCreativeTabContents {
-    override fun addItems(
-        baseItem: Holder<Item>,
-        parameters: CreativeModeTab.ItemDisplayParameters,
-        output: CreativeModeTab.Output
-    ) {
+    override fun addItems(baseItem: Holder<Item>, parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output) {
         for (potion: Holder<Potion> in parameters.filteredElements(Registries.POTION)) {
             if (HTPotionHelper.isWater(potion)) continue
             val stack = ItemStack(baseItem)

@@ -28,40 +28,38 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTItemToItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    protected fun createRecipeHandler(
-        lookup: HTRecipeLookup<HTItemToItemRecipe>,
-        sound: HTSoundInstance
-    ): HTRecipeHandler = object : HTSingleRecipeHandler.Cached<ItemInstance, ItemStack, HTItemToItemRecipe>(
-        HTRecipeCacheHelper.SingleItem(lookup)
-    ) {
-        private val inputSlot: HTInputSlot<ItemInstance> by lazy {
-            HTInputHandlerHelper.forItem(this@HTItemToItemBlockEntity.inputSlot)
-        }
-        private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-            HTOutputSlotHelper.forItem(this@HTItemToItemBlockEntity.outputSlot)
-        }
+    protected fun createRecipeHandler(lookup: HTRecipeLookup<HTItemToItemRecipe>, sound: HTSoundInstance): HTRecipeHandler =
+        object : HTSingleRecipeHandler.Cached<ItemInstance, ItemStack, HTItemToItemRecipe>(
+            HTRecipeCacheHelper.SingleItem(lookup),
+        ) {
+            private val inputSlot: HTInputSlot<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItem(this@HTItemToItemBlockEntity.inputSlot)
+            }
+            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
+                HTOutputSlotHelper.forItem(this@HTItemToItemBlockEntity.outputSlot)
+            }
 
-        override fun createProgressor(): Progressor<ItemInstance, HTItemToItemRecipe> = SingleProgressor()
+            override fun createProgressor(): Progressor<ItemInstance, HTItemToItemRecipe> = SingleProgressor()
 
-        override fun getInput(): ItemInstance = inputSlot.getStoredInput()
+            override fun getInput(): ItemInstance = inputSlot.getStoredInput()
 
-        override fun canComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack): Boolean =
-            useTransaction { transaction: Transaction ->
-                when {
-                    inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
-                    else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+            override fun canComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack): Boolean =
+                useTransaction { transaction: Transaction ->
+                    when {
+                        inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
+                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+                    }
                 }
-            }
 
-        override fun onComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack) {
-            useTransaction { transaction: Transaction ->
-                inputSlot.use(recipe.getMatchingStack(input), transaction)
-                outputSlot.take(output, transaction)
-                transaction.commit()
+            override fun onComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack) {
+                useTransaction { transaction: Transaction ->
+                    inputSlot.use(recipe.getMatchingStack(input), transaction)
+                    outputSlot.take(output, transaction)
+                    transaction.commit()
+                }
+                playSound(sound)
             }
-            playSound(sound)
         }
-    }
 
     private lateinit var inputSlot: HTBasicItemSlot
     private lateinit var outputSlot: HTBasicItemSlot
@@ -82,7 +80,7 @@ abstract class HTItemToItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, 
             0,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
-            HTBackgroundType.INPUT
+            HTBackgroundType.INPUT,
         )
         widgetHolder.track(inputSlot)
         // output
@@ -91,7 +89,7 @@ abstract class HTItemToItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, 
             1,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT
+            HTBackgroundType.OUTPUT,
         )
         widgetHolder.track(outputSlot)
     }

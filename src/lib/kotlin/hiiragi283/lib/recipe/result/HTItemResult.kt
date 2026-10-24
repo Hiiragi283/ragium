@@ -5,7 +5,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.item.component.buildItemEnchantments
 import hiiragi283.lib.recipe.display.HTDisplayableContent
@@ -13,9 +12,7 @@ import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.codec.nelOrElement
 import hiiragi283.lib.serialization.network.HTStreamCodecs
-import hiiragi283.lib.serialization.network.nelOf
 import hiiragi283.lib.serialization.network.optionalOf
 import hiiragi283.lib.util.DFUEither
 import hiiragi283.lib.util.fold
@@ -38,6 +35,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import java.util.Optional
 import kotlin.jvm.optionals.getOrElse
@@ -226,97 +224,48 @@ data class HTItemResult(val entry: Entry, val count: Int) :
      * @since 26.1.6
      */
     @JvmRecord
-    data class EnchantedBookEntry(val enchantments: Nel<EnchantmentValue>) : Entry {
-
-        @JvmRecord
-        data class EnchantmentValue(val enchantment: Holder<Enchantment>, private val level: Optional<Int>) {
-            companion object {
-                @JvmField
-                val FLAT_CODEC: Codec<EnchantmentValue> = Enchantment.CODEC.xmap(
-                    ::EnchantmentValue,
-                    EnchantmentValue::enchantment,
-                )
-
-                @JvmField
-                val NESTED_CODEC: Codec<EnchantmentValue> = HTCodecs.record { instance ->
-                    instance.group(
-                        Enchantment.CODEC.fieldOf(HTConstants.ID).forGetter(EnchantmentValue::enchantment),
-                        HTCodecs.POSITIVE_INT.optionalFieldOf("level").forGetter(EnchantmentValue::level),
-                    ).apply(instance, ::EnchantmentValue)
-                }
-
-                @JvmField
-                val CODEC: Codec<EnchantmentValue> = Codec.either(FLAT_CODEC, NESTED_CODEC).xmap(
-                    { DFUEither.unwrap(it) },
-                    { value: EnchantmentValue ->
-                        if (value.level.isEmpty) DFUEither.left(value) else DFUEither.right(value)
-                    },
-                )
-
-                @JvmField
-                val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchantmentValue> = StreamCodec.composite(
-                    Enchantment.STREAM_CODEC,
-                    EnchantmentValue::enchantment,
-                    ByteBufCodecs.VAR_INT.optionalOf(),
-                    EnchantmentValue::level,
-                    ::EnchantmentValue,
-                )
-            }
-
-            constructor(enchantment: Holder<Enchantment>) : this(enchantment, Optional.empty())
-
-            constructor(enchantment: Holder<Enchantment>, level: Int) : this(enchantment, Optional.of(level))
-
-            val fixedLevel: Int get() = this.level.getOrElse { this.enchantment.value().maxLevel }
-        }
-
+    data class EnchantedBookEntryN(val enchantments: Map<Holder<Enchantment>, Optional<Int>>) : Entry {
         companion object {
             @JvmField
-            val CODEC: MapCodec<EnchantedBookEntry> = EnchantmentValue.CODEC
-                .nelOrElement()
+            val CODEC: MapCodec<EnchantedBookEntryN> = HTCodecs.mapOf(Enchantment.CODEC, HTCodecs.optional(HTCodecs.POSITIVE_INT))
                 .fieldOf("enchantments")
-                .xmap(::EnchantedBookEntry, EnchantedBookEntry::enchantments)
+                .xmap(::EnchantedBookEntryN, EnchantedBookEntryN::enchantments)
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchantedBookEntry> = EnchantmentValue.STREAM_CODEC
-                .nelOf()
-                .map(::EnchantedBookEntry, EnchantedBookEntry::enchantments)
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchantedBookEntryN> = HTStreamCodecs.mapOf(
+                Enchantment.STREAM_CODEC,
+                ByteBufCodecs.VAR_INT.optionalOf(),
+            ).map(::EnchantedBookEntryN, EnchantedBookEntryN::enchantments)
 
             @JvmField
-            val TYPE: HTItemResultType<EnchantedBookEntry> = HTItemResultType(CODEC, STREAM_CODEC)
+            val TYPE: HTItemResultType<EnchantedBookEntryN> = HTItemResultType(CODEC, STREAM_CODEC)
         }
+
+        constructor(enchantment: Holder<Enchantment>) : this(mapOf(enchantment to Optional.empty()))
+
+        constructor(enchantment: Holder<Enchantment>, level: Int) : this(mapOf(enchantment to Optional.of(level)))
 
         override fun type(): HTItemResultType<*> = TYPE
 
         override fun create(count: Int): ItemStack {
             val stack = ItemStack(Items.ENCHANTED_BOOK, count)
-            EnchantmentHelper.setEnchantments(
-                stack,
-                buildItemEnchantments {
-                    for (value: EnchantmentValue in enchantments) {
-                        set(value.enchantment, value.fixedLevel)
-                    }
-                },
-            )
+            EnchantmentHelper.setEnchantments(stack, buildEnchantments())
             return stack
         }
 
-        override fun getId(): Identifier? = enchantments.head.enchantment.key?.identifier()
+        private fun buildEnchantments(): ItemEnchantments = buildItemEnchantments {
+            for ((holder: Holder<Enchantment>, level: Optional<Int>) in enchantments) {
+                set(holder, level.getOrElse { holder.value().maxLevel })
+            }
+        }
+
+        override fun getId(): Identifier? = enchantments.entries.singleOrNull()?.key?.key?.identifier()
 
         override fun display(): SlotDisplay = HTSlotDisplayHelper.create(
             ItemStackTemplate(
                 Items.ENCHANTED_BOOK,
                 1,
-                buildDataPatch {
-                    set(
-                        DataComponents.STORED_ENCHANTMENTS,
-                        buildItemEnchantments {
-                            for (value: EnchantmentValue in enchantments) {
-                                set(value.enchantment, value.fixedLevel)
-                            }
-                        },
-                    )
-                },
+                buildDataPatch { set(DataComponents.STORED_ENCHANTMENTS, buildEnchantments()) },
             ),
         )
     }

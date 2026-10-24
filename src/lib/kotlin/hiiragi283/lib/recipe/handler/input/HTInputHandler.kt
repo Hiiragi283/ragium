@@ -40,7 +40,8 @@ interface HTInputHandler<INSTANCE : TypedInstance<*>> {
         /**
          * 入力を消費できる場合
          */
-        CONSUMED
+        CONSUMED,
+
         ;
 
         /**

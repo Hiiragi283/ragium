@@ -32,7 +32,7 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.7
          */
-        PITCH_COKE("Pitch Coke", "ピッチコークス")
+        PITCH_COKE("Pitch Coke", "ピッチコークス"),
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -79,7 +79,7 @@ sealed interface RagiumMaterial :
         GYPSUM("Gypsum", "石膏"),
 
         // Ragium
-        RAGINITE("Raginite", "ラギナイト")
+        RAGINITE("Raginite", "ラギナイト"),
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -131,7 +131,7 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.8
          */
-        QUICK_LIME("Quick Lime", "生石灰")
+        QUICK_LIME("Quick Lime", "生石灰"),
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -161,7 +161,7 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.7
          */
-        FLUORITE("Fluorite", "蛍石")
+        FLUORITE("Fluorite", "蛍石"),
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -205,7 +205,7 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.11
          */
-        SILVER("Silver", "銀")
+        SILVER("Silver", "銀"),
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -241,7 +241,7 @@ sealed interface RagiumMaterial :
         /**
          * @since 26.1.11
          */
-        SHADOW_STEEL("Shadow Steel", "影鋼")
+        SHADOW_STEEL("Shadow Steel", "影鋼"),
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -259,8 +259,7 @@ sealed interface RagiumMaterial :
         OBSIDIAN("Obsidian", "黒曜石"),
         PAPER("Paper", "紙") {
             override val isPulp: Boolean = true
-        }
-        ;
+        }, ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
 

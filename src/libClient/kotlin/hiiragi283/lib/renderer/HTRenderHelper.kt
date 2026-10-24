@@ -29,11 +29,11 @@ data object HTRenderHelper {
         to: Vector3f,
         sprite: TextureAtlasSprite,
         color: Int,
-        light: Int
+        light: Int,
     ) {
         submitNodeCollector.submitCustomGeometry(poseStack, renderType) {
                 pose: PoseStack.Pose,
-                consumer: VertexConsumer
+                consumer: VertexConsumer,
             ->
             for (direction: Direction in Direction.entries) {
                 val faceInfo: FaceInfo = FaceInfo.fromFacing(direction)
@@ -41,7 +41,7 @@ data object HTRenderHelper {
                     faceInfo.getVertexInfo(0).select(from, to),
                     faceInfo.getVertexInfo(1).select(from, to),
                     faceInfo.getVertexInfo(2).select(from, to),
-                    faceInfo.getVertexInfo(3).select(from, to)
+                    faceInfo.getVertexInfo(3).select(from, to),
                 )
                 for (i: Int in positions.indices) {
                     val position: Vector3f = positions[i]

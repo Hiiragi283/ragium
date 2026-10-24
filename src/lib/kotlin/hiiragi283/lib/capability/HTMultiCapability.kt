@@ -43,14 +43,12 @@ interface HTMultiCapability<HANDLER : Any> {
         pos: BlockPos,
         side: Direction?,
         validator: BooleanSupplier = BooleanSupplier { true },
-        listener: Runnable = Runnables.doNothing()
-    ): BlockCapabilityCache<HANDLER, Direction?> =
-        BlockCapabilityCache.create(block, level, pos, side, validator, listener)
+        listener: Runnable = Runnables.doNothing(),
+    ): BlockCapabilityCache<HANDLER, Direction?> = BlockCapabilityCache.create(block, level, pos, side, validator, listener)
 
     //    Entity    //
 
-    fun getCapability(entity: Entity, side: Direction?): HANDLER? =
-        entity.getCapability(this@HTMultiCapability.entity, side)
+    fun getCapability(entity: Entity, side: Direction?): HANDLER? = entity.getCapability(this@HTMultiCapability.entity, side)
 
     //    Item    //
 

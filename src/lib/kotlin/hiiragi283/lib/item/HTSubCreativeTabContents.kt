@@ -20,22 +20,17 @@ fun interface HTSubCreativeTabContents {
      * @param parameters 登録時のコンテキスト
      * @param output [ItemStack]の登録先
      */
-    fun addItems(
-        baseItem: Holder<Item>,
-        parameters: CreativeModeTab.ItemDisplayParameters,
-        output: CreativeModeTab.Output
-    )
+    fun addItems(baseItem: Holder<Item>, parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output)
 
     /**
      * @since 26.1.7
      */
-    fun <T : FeatureElement> CreativeModeTab.ItemDisplayParameters.filteredElements(
-        registryKey: RegistryKey<T>
-    ): Stream<Holder.Reference<T>> = this.holders()
-        .lookup(registryKey)
-        .map { it.filterFeatures(this.enabledFeatures()) }
-        .stream()
-        .flatMap { it.listElements() }
+    fun <T : FeatureElement> CreativeModeTab.ItemDisplayParameters.filteredElements(registryKey: RegistryKey<T>): Stream<Holder.Reference<T>> =
+        this.holders()
+            .lookup(registryKey)
+            .map { it.filterFeatures(this.enabledFeatures()) }
+            .stream()
+            .flatMap { it.listElements() }
 
     /**
      * デフォルトの[ItemStack]を追加するか判定します。

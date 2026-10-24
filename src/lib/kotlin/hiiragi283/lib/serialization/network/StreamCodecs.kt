@@ -35,5 +35,4 @@ fun <B : ByteBuf, V : Any> StreamCodec<B, V>.optionalOf(): StreamCodec<B, Option
  * @author Hiiragi Tsubasa
  * @since 26.1.6
  */
-fun <B : ByteBuf, V : Any> StreamCodec<B, V>.nelOf(): StreamCodec<B, Nel<V>> =
-    this.listOf().map(List<V>::toNel, identity())
+fun <B : ByteBuf, V : Any> StreamCodec<B, V>.nelOf(): StreamCodec<B, Nel<V>> = this.listOf().map(List<V>::toNel, identity())

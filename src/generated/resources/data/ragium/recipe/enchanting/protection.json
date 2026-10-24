@@ -7,9 +7,9 @@
   "result": {
     "type": "ragium:enchanted_book",
     "count": 1,
-    "enchantments": [
-      "minecraft:protection"
-    ]
+    "enchantments": {
+      "minecraft:protection": {}
+    }
   },
   "time": 200
 }

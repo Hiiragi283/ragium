@@ -69,7 +69,6 @@ data object RagiumRegistries {
         // Dynamic
 
         @JvmStatic
-        private fun <T : Any> createKey(path: String): ResourceKey<Registry<T>> =
-            ResourceKey.createRegistryKey(RagiumAPI.MOD_ID.toId(path))
+        private fun <T : Any> createKey(path: String): ResourceKey<Registry<T>> = ResourceKey.createRegistryKey(RagiumAPI.MOD_ID.toId(path))
     }
 }

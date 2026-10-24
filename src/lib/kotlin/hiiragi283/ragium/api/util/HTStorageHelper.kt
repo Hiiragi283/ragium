@@ -64,8 +64,7 @@ data object HTStorageHelper {
         Mth.lerpDiscrete(fixedFraction(amount, capacity), Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
 
     @JvmStatic
-    fun calculateRedstoneLevel(view: HTResourceView<*>): Int =
-        Mth.lerpDiscrete(view.currentFilledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+    fun calculateRedstoneLevel(view: HTResourceView<*>): Int = Mth.lerpDiscrete(view.currentFilledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
 
     @JvmStatic
     fun calculateRedstoneLevel(handler: HTEnergyHandler): Int =
@@ -74,12 +73,7 @@ data object HTStorageHelper {
     //    Energy    //
 
     @JvmStatic
-    fun createStackWithEnergy(
-        item: ItemLike,
-        amount: Int,
-        count: Int = 1,
-        patch: DataComponentPatch = DataComponentPatch.EMPTY
-    ): ItemStack {
+    fun createStackWithEnergy(item: ItemLike, amount: Int, count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): ItemStack {
         val stack = ItemStack(item, count, patch)
         updateEnergy(stack, amount)
         return stack
@@ -117,7 +111,7 @@ data object HTStorageHelper {
             isCreative -> HTCommonTranslation.STORED_FE.translate(HTCommonTranslation.INFINITE)
 
             else -> HTCommonTranslation.STORED_FE.translate(
-                HTCommonTranslation.FRACTION.translate(handler.amountAsInt, handler.capacityAsLong)
+                HTCommonTranslation.FRACTION.translate(handler.amountAsInt, handler.capacityAsLong),
             )
         }.let(consumer)
     }
@@ -141,7 +135,7 @@ data object HTStorageHelper {
         item: ItemLike,
         fluidStack: FluidStack,
         count: Int = 1,
-        patch: DataComponentPatch = DataComponentPatch.EMPTY
+        patch: DataComponentPatch = DataComponentPatch.EMPTY,
     ): ItemStack {
         val stack = ItemStack(item, count, patch)
         updateFluid(stack, fluidStack)
@@ -149,8 +143,7 @@ data object HTStorageHelper {
     }
 
     @JvmStatic
-    fun getFluid(container: DataComponentGetter): FluidStack =
-        container.getOrDefault(RagiumDataComponents.FLUID, SimpleFluidContent.EMPTY).copy()
+    fun getFluid(container: DataComponentGetter): FluidStack = container.getOrDefault(RagiumDataComponents.FLUID, SimpleFluidContent.EMPTY).copy()
 
     @JvmStatic
     fun updateFluid(container: ItemStack, newStack: FluidStack) {
@@ -168,18 +161,12 @@ data object HTStorageHelper {
     fun updateFluid(container: DataComponentMap.Builder, newStack: FluidStack) {
         container.set(
             RagiumDataComponents.FLUID,
-            newStack.takeUnless(FluidStack::isEmpty)?.let(SimpleFluidContent::copyOf)
+            newStack.takeUnless(FluidStack::isEmpty)?.let(SimpleFluidContent::copyOf),
         )
     }
 
     @JvmStatic
-    inline fun addFluidTooltip(
-        stack: FluidStack,
-        consumer: (Text) -> Unit,
-        context: Item.TooltipContext,
-        flag: TooltipFlag,
-        isCreative: Boolean
-    ) {
+    inline fun addFluidTooltip(stack: FluidStack, consumer: (Text) -> Unit, context: Item.TooltipContext, flag: TooltipFlag, isCreative: Boolean) {
         // Empty name if stack is empty
         if (stack.isEmpty) {
             consumer(HTCommonTranslation.EMPTY.translate())

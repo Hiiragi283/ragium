@@ -29,7 +29,7 @@ class HTVoidTankBlock(properties: Properties) : Block(properties) {
         pos: BlockPos,
         player: Player,
         hand: InteractionHand,
-        hitResult: BlockHitResult
+        hitResult: BlockHitResult,
     ): InteractionResult {
         val result: InteractionResult = super.useItemOn(itemStack, state, level, pos, player, hand, hitResult)
         if (itemStack.isEmpty) return result
@@ -42,6 +42,5 @@ class HTVoidTankBlock(properties: Properties) : Block(properties) {
         return result
     }
 
-    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape =
-        HTTankBlock.SHAPE
+    override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape = HTTankBlock.SHAPE
 }

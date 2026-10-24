@@ -17,15 +17,8 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.TooltipFlag
 import kotlin.math.roundToInt
 
-class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) :
-    HTAbstractWidgetRenderer<HTFluidWidget>(gui, widget) {
-    override fun render(
-        bounds: HTBounds,
-        graphics: GuiGraphicsExtractor,
-        mouseX: Int,
-        mouseY: Int,
-        partialTick: Float
-    ) {
+class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) : HTAbstractWidgetRenderer<HTFluidWidget>(gui, widget) {
+    override fun render(bounds: HTBounds, graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, partialTick: Float) {
         // Render background
         HTSpriteRenderHelper.blit(
             graphics,
@@ -33,7 +26,7 @@ class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) :
                 is HTFluidWidget.Slot -> widget.backgroundType.slotTexture
                 is HTFluidWidget.Tank -> widget.backgroundType.tankTexture
             },
-            bounds
+            bounds,
         )
         // Render sprite
         renderFluid(bounds, graphics)
@@ -71,7 +64,7 @@ class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) :
             tileScaling.height,
             tileScaling.width,
             tileScaling.height,
-            color
+            color,
         )
         graphics.disableScissor()
     }

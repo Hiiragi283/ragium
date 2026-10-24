@@ -16,19 +16,15 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTRegisterWidgetRendererEvent(
-    private val registerer: (HTWidgetType<*>, HTWidgetRendererFactory<*, *>) -> HTWidgetRendererFactory<*, *>?
-) : Event(),
+class HTRegisterWidgetRendererEvent(private val registerer: (HTWidgetType<*>, HTWidgetRendererFactory<*, *>) -> HTWidgetRendererFactory<*, *>?) :
+    Event(),
     IModBusEvent {
     /**
      * 指定した[type]と[factory]を紐づけます。
      * @param WIDGET [HTWidget]を実装したクラス
      * @throws IllegalStateException すでに[type]に[HTWidgetRendererFactory]が登録されている場合
      */
-    fun <WIDGET : HTWidget, RENDERER : Renderable> register(
-        type: HTWidgetType<WIDGET>,
-        factory: HTWidgetRendererFactory<WIDGET, RENDERER>
-    ) {
+    fun <WIDGET : HTWidget, RENDERER : Renderable> register(type: HTWidgetType<WIDGET>, factory: HTWidgetRendererFactory<WIDGET, RENDERER>) {
         check(registerer(type, factory) == null) {
             "Duplicated widget renderer for ${RagiumRegistries.WIDGET_TYPE.getKey(type)}"
         }

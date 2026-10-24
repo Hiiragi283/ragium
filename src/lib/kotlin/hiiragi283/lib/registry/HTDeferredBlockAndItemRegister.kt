@@ -15,15 +15,13 @@ import net.neoforged.bus.api.IEventBus
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTDeferredBlockAndItemRegister(
-    private val blockRegister: HTDeferredBlockRegister,
-    private val itemRegister: HTDeferredItemRegister
-) : RegistryAliasAcceptor {
+class HTDeferredBlockAndItemRegister(private val blockRegister: HTDeferredBlockRegister, private val itemRegister: HTDeferredItemRegister) :
+    RegistryAliasAcceptor {
     constructor(namespace: String) : this(HTDeferredBlockRegister(namespace))
 
     constructor(blockRegister: HTDeferredBlockRegister) : this(
         blockRegister,
-        HTDeferredItemRegister(blockRegister.namespace)
+        HTDeferredItemRegister(blockRegister.namespace),
     )
 
     override fun addAlias(from: String, to: String) {
@@ -46,7 +44,7 @@ class HTDeferredBlockAndItemRegister(
     fun registerSimple(
         name: String,
         blockProp: BlockBehaviour.Properties,
-        itemProp: Identity<Item.Properties> = identity()
+        itemProp: Identity<Item.Properties> = identity(),
     ): HTSimpleDeferredBlockAndItem = registerSimple(name, blockProp, ::Block, itemProp)
 
     /**
@@ -62,7 +60,7 @@ class HTDeferredBlockAndItemRegister(
         name: String,
         blockProp: BlockBehaviour.Properties,
         blockFactory: BlockFactory<BLOCK>,
-        itemProp: Identity<Item.Properties> = identity()
+        itemProp: Identity<Item.Properties> = identity(),
     ): HTBasicDeferredBlockAndItem<BLOCK> = register(name, blockProp, blockFactory, ::BlockItem, itemProp)
 
     /**
@@ -81,13 +79,13 @@ class HTDeferredBlockAndItemRegister(
         blockProp: BlockBehaviour.Properties,
         blockFactory: BlockFactory<BLOCK>,
         itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
-        itemProp: Identity<Item.Properties> = identity()
+        itemProp: Identity<Item.Properties> = identity(),
     ): HTDeferredBlockAndItem<BLOCK, ITEM> {
         val blockHolder: HTDeferredBlock<BLOCK> = blockRegister.registerBlock(name, blockProp, blockFactory)
         val itemHolder: HTDeferredItem<ITEM> = itemRegister.registerItem(
             name,
             { prop: Item.Properties -> itemFactory(blockHolder.get(), prop.useBlockDescriptionPrefix()) },
-            itemProp
+            itemProp,
         )
         return HTDeferredBlockAndItem(blockHolder, itemHolder)
     }
@@ -104,7 +102,7 @@ class HTDeferredBlockAndItemRegister(
     fun <BLOCK : Block> registerSimple(
         name: String,
         blockFactory: (ResourceKey<Block>) -> BLOCK,
-        itemProp: Identity<Item.Properties> = identity()
+        itemProp: Identity<Item.Properties> = identity(),
     ): HTBasicDeferredBlockAndItem<BLOCK> = register(name, blockFactory, ::BlockItem, itemProp)
 
     /**
@@ -122,14 +120,14 @@ class HTDeferredBlockAndItemRegister(
         name: String,
         blockFactory: (ResourceKey<Block>) -> BLOCK,
         itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
-        itemProp: Identity<Item.Properties> = identity()
+        itemProp: Identity<Item.Properties> = identity(),
     ): HTDeferredBlockAndItem<BLOCK, ITEM> {
         val blockHolder: HTDeferredBlock<BLOCK> =
             blockRegister.register(name) { id: Identifier -> blockFactory(blockRegister.createKey(id)) }
         val itemHolder: HTDeferredItem<ITEM> = itemRegister.registerItem(
             name,
             { prop: Item.Properties -> itemFactory(blockHolder.get(), prop.useBlockDescriptionPrefix()) },
-            itemProp
+            itemProp,
         )
         return HTDeferredBlockAndItem(blockHolder, itemHolder)
     }

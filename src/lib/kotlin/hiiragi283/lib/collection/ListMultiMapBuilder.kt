@@ -7,10 +7,8 @@ package hiiragi283.lib.collection
  * @author Hiiragi Tsubasa
  * @since 26.1.7
  */
-class ListMultiMapBuilder<K, V>(
-    destination: MutableMap<K, MutableList<V>>,
-    private val collectionFactory: () -> MutableList<V> = ::mutableListOf
-) : AbstractMultiMapBuilder<K, V, MutableList<V>>(destination) {
+class ListMultiMapBuilder<K, V>(destination: MutableMap<K, MutableList<V>>, private val collectionFactory: () -> MutableList<V> = ::mutableListOf) :
+    AbstractMultiMapBuilder<K, V, MutableList<V>>(destination) {
     override fun emptyCollection(): MutableList<V> = collectionFactory()
 
     override fun build(): Map<K, List<V>> = destination

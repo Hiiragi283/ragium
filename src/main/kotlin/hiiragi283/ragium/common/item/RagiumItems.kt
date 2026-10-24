@@ -106,7 +106,7 @@ data object RagiumItems {
                 // Other
                 putAll(RagiumMaterial.Other.WOOD, HTItemPart.GEAR)
             },
-            ::sortedSetOf
+            ::sortedSetOf,
         ).flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
             parts.map { part: HTItemPart ->
                 Triple(
@@ -123,7 +123,7 @@ data object RagiumItems {
                             properties.fireResistant()
                         }
                         properties
-                    }
+                    },
                 )
             }
         }
@@ -300,7 +300,7 @@ data object RagiumItems {
     val SOOTY_IRON_TOOLS: HTToolCollection<HTSimpleDeferredItem> = HTToolCollection { toolType: HTToolType ->
         REGISTER.registerItem(
             toolType.createPath(RagiumMaterial.Alloy.SOOTY_IRON),
-            { prop: Item.Properties -> toolType.createItem(prop, RagiumToolMaterials.SOOTY_IRON, 6f, -3.1f, -2f, -1f) }
+            { prop: Item.Properties -> toolType.createItem(prop, RagiumToolMaterials.SOOTY_IRON, 6f, -3.1f, -2f, -1f) },
         )
     }
 
@@ -334,7 +334,7 @@ data object RagiumItems {
         event.registerItem(
             HTFluidCapabilities.item,
             { _, access: ItemAccess -> HTPotionBucketItem.BucketHandler(access) },
-            RagiumFluids.POTION.bucketHolder
+            RagiumFluids.POTION.bucketHolder,
         )
         // Item
     }

@@ -16,7 +16,7 @@ open class HTBasicEnergyHandler(
     private val capacity: Int,
     protected val canExtract: Predicate<HTTransferAccess>,
     protected val canInsert: Predicate<HTTransferAccess>,
-    private val listener: Runnable?
+    private val listener: Runnable?,
 ) : SnapshotJournal<Int>(),
     HTEnergyHandler,
     ValueIOSerializable {
@@ -34,9 +34,8 @@ open class HTBasicEnergyHandler(
             capacity: Int,
             listener: Runnable?,
             canExtract: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue(),
-            canInsert: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue()
-        ): HTBasicEnergyHandler =
-            HTBasicEnergyHandler(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, listener)
+            canInsert: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue(),
+        ): HTBasicEnergyHandler = HTBasicEnergyHandler(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, listener)
     }
 
     private var amountIn: Int = 0

@@ -22,13 +22,12 @@ data class RTPotionBottleCentrifugingRecipe(val bottleType: HTBottleType, overri
 
     constructor(bottleType: HTBottleType) : this(bottleType, PROGRESS_DATA)
 
-    override fun test(input: ItemInstance): Boolean =
-        bottleType.filledItem.isOf(input) && HTPotionHelper.hasAnyEffect(input)
+    override fun test(input: ItemInstance): Boolean = bottleType.filledItem.isOf(input) && HTPotionHelper.hasAnyEffect(input)
 
     override fun apply(input: ItemInstance): HTItemSeparatingRecipe.Output = HTItemSeparatingRecipe.Output(
         bottleType.emptyItem.asStackOrEmpty(),
         HTPotionHelper.createFluid(input, HTPotionHelper.BOTTLE_AMOUNT)
-            .fold(FluidStackTemplate::create) { FluidStack.EMPTY }
+            .fold(FluidStackTemplate::create) { FluidStack.EMPTY },
     )
 
     override fun getMatchingStack(input: ItemInstance): ItemInstance = when {

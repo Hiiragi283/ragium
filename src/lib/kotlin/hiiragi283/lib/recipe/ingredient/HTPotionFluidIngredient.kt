@@ -54,8 +54,7 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>) : FluidIngred
     }
 
     @Suppress("DEPRECATION")
-    override fun generateFluids(): Stream<Holder<Fluid>> =
-        Stream.of(HTPotionFluidAccess.INSTANCE.fluidContent.sourceHolder)
+    override fun generateFluids(): Stream<Holder<Fluid>> = Stream.of(HTPotionFluidAccess.INSTANCE.fluidContent.sourceHolder)
 
     override fun display(): SlotDisplay = potions
         .asSequence()

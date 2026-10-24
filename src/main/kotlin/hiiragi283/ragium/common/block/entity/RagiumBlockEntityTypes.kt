@@ -63,10 +63,7 @@ data object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    private fun <BE : HTBlockEntity> registerTick(
-        name: String,
-        factory: BlockEntityType.BlockEntitySupplier<BE>
-    ): HTDeferredBlockEntityType<BE> =
+    private fun <BE : HTBlockEntity> registerTick(name: String, factory: BlockEntityType.BlockEntitySupplier<BE>): HTDeferredBlockEntityType<BE> =
         REGISTER.registerType(name, factory, HTBlockEntity::tickServer, HTBlockEntity::tickClient)
 
     // Mechanical
@@ -249,7 +246,7 @@ data object RagiumBlockEntityTypes {
 
         event.registerBlockEntity(
             HTEnergyCapabilities.block,
-            CREATIVE_BATTERY.get()
+            CREATIVE_BATTERY.get(),
         ) { _, _ -> InfiniteEnergyHandler.INSTANCE }
         // Misc
         registerBlockEntity(UPGRADE_STATION.get())

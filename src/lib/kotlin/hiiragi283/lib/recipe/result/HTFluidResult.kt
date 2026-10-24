@@ -50,7 +50,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
         val MAP_CODEC: MapCodec<HTFluidResult> = HTCodecs.recordMap { instance ->
             instance.group(
                 Entry.MAP_CODEC.forGetter(HTFluidResult::entry),
-                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.AMOUNT).forGetter(HTFluidResult::amount)
+                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.AMOUNT).forGetter(HTFluidResult::amount),
             ).apply(instance, ::HTFluidResult)
         }
 
@@ -64,7 +64,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
             HTFluidResult::entry,
             ByteBufCodecs.VAR_INT,
             HTFluidResult::amount,
-            ::HTFluidResult
+            ::HTFluidResult,
         )
     }
 
@@ -93,7 +93,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
                 RagiumRegistries.FLUID_RESULT_TYPE.byNameCodec(),
                 Entry::type,
                 HTFluidResultType<*>::codec,
-                SimpleEntry.CODEC
+                SimpleEntry.CODEC,
             ).xmap(
                 { DFUEither.unwrap(it) },
                 { entry: Entry ->
@@ -101,7 +101,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
                         is SimpleEntry -> DFUEither.right(entry)
                         else -> DFUEither.left(entry)
                     }
-                }
+                },
             )
 
             @JvmField
@@ -122,10 +122,8 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
     }
 
     @JvmRecord
-    data class SimpleEntry @JvmOverloads constructor(
-        val fluid: Holder<Fluid>,
-        val components: DataComponentPatch = DataComponentPatch.EMPTY
-    ) : Entry {
+    data class SimpleEntry @JvmOverloads constructor(val fluid: Holder<Fluid>, val components: DataComponentPatch = DataComponentPatch.EMPTY) :
+        Entry {
         companion object {
             @JvmField
             val CODEC: MapCodec<SimpleEntry> = HTCodecs.recordMap { instance ->
@@ -135,7 +133,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
                         .forGetter(SimpleEntry::fluid),
                     DataComponentPatch.CODEC
                         .optionalFieldOf(HTConstants.COMPONENTS, DataComponentPatch.EMPTY)
-                        .forGetter(SimpleEntry::components)
+                        .forGetter(SimpleEntry::components),
                 ).apply(instance, ::SimpleEntry)
             }
 
@@ -145,7 +143,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
                 SimpleEntry::fluid,
                 DataComponentPatch.STREAM_CODEC,
                 SimpleEntry::components,
-                ::SimpleEntry
+                ::SimpleEntry,
             )
 
             @JvmField
@@ -164,21 +162,18 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
     }
 
     @JvmRecord
-    data class PotionEntry(
-        val content: IorNel<MobEffectInstance, Holder<Potion>>,
-        val customColor: Optional<Int>,
-        val customName: Optional<String>
-    ) : Entry {
+    data class PotionEntry(val content: IorNel<MobEffectInstance, Holder<Potion>>, val customColor: Optional<Int>, val customName: Optional<String>) :
+        Entry {
         companion object {
             @JvmField
             val CODEC: MapCodec<PotionEntry> = HTCodecs.recordMap { instance ->
                 instance.group(
                     HTCodecs.ior(
                         MobEffectInstance.CODEC.nelOf().fieldOf("custom_effects"),
-                        Potion.CODEC.fieldOf("potion")
+                        Potion.CODEC.fieldOf("potion"),
                     ).forGetter(PotionEntry::content),
                     Codec.INT.optionalFieldOf("custom_color").forGetter(PotionEntry::customColor),
-                    Codec.STRING.optionalFieldOf("custom_name").forGetter(PotionEntry::customName)
+                    Codec.STRING.optionalFieldOf("custom_name").forGetter(PotionEntry::customName),
                 ).apply(instance, ::PotionEntry)
             }
 
@@ -186,14 +181,14 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
             val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, PotionEntry> = StreamCodec.composite(
                 HTStreamCodecs.ior(
                     MobEffectInstance.STREAM_CODEC.nelOf(),
-                    Potion.STREAM_CODEC
+                    Potion.STREAM_CODEC,
                 ),
                 PotionEntry::content,
                 ByteBufCodecs.VAR_INT.optionalOf(),
                 PotionEntry::customColor,
                 ByteBufCodecs.STRING_UTF8.optionalOf(),
                 PotionEntry::customName,
-                ::PotionEntry
+                ::PotionEntry,
             )
 
             @JvmField
@@ -211,7 +206,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
             Optional.ofNullable(content.getRight()),
             customColor,
             content.getLeft() ?: listOf(),
-            customName
+            customName,
         )
 
         override fun getId(): Identifier? = content.getRight()?.key?.identifier()

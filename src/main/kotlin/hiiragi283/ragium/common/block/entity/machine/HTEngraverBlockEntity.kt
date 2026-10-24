@@ -15,7 +15,7 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
     HTCatalysedItemToItemBlockEntity(RagiumBlockEntityTypes.ENGRAVER.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.ENGRAVING,
-        HTSoundInstance(SoundEvents.ALLAY_HURT)
+        HTSoundInstance(SoundEvents.ALLAY_HURT),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.engraver

@@ -43,7 +43,7 @@ val generateModMetadata: TaskProvider<ProcessResources> =
                 "mod_license" to "MPL-2.0",
                 "mod_version" to version.toString(),
                 "mod_authors" to "Hiiragi283",
-                "mod_description" to "A simple tech mod for vanilla expansion and automation"
+                "mod_description" to "A simple tech mod for vanilla expansion and automation",
             )
         inputs.properties(replaceProperties)
         expand(replaceProperties)
@@ -197,7 +197,7 @@ neoForge {
                 "--output",
                 file("src/generated/resources/").absolutePath,
                 "--existing",
-                file("src/main/resources").absolutePath
+                file("src/main/resources").absolutePath,
             )
         }
 
@@ -353,7 +353,7 @@ dokka {
             sourceRoots.from(
                 listOf(libModule, libClientModule)
                     .map { it.kotlin }
-                    .map { it.srcDirs.filter { "lib" in it.path } }
+                    .map { it.srcDirs.filter { "lib" in it.path } },
             )
         }
     }

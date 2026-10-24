@@ -20,7 +20,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 data class HTWorldGenData(
     val configuredKey: ResourceKey<ConfiguredFeature<*, *>>,
     val placedKey: ResourceKey<PlacedFeature>,
-    val modifierKey: ResourceKey<BiomeModifier>
+    val modifierKey: ResourceKey<BiomeModifier>,
 ) {
     /**
      * [id]に基づいて各[ResourceKey]を作成します。
@@ -28,7 +28,7 @@ data class HTWorldGenData(
     constructor(id: Identifier) : this(
         Registries.CONFIGURED_FEATURE.createKey(id),
         Registries.PLACED_FEATURE.createKey(id),
-        NeoForgeRegistries.Keys.BIOME_MODIFIERS.createKey(id)
+        NeoForgeRegistries.Keys.BIOME_MODIFIERS.createKey(id),
     )
 
     /**
@@ -37,6 +37,6 @@ data class HTWorldGenData(
     constructor(configuredData: HTWorldGenData, id: Identifier) : this(
         configuredData.configuredKey,
         Registries.PLACED_FEATURE.createKey(id),
-        NeoForgeRegistries.Keys.BIOME_MODIFIERS.createKey(id)
+        NeoForgeRegistries.Keys.BIOME_MODIFIERS.createKey(id),
     )
 }

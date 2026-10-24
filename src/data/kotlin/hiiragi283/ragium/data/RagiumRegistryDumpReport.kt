@@ -15,20 +15,18 @@ import java.util.concurrent.CompletableFuture
 /**
  * @see net.minecraft.data.info.RegistryDumpReport
  */
-class RagiumRegistryDumpReport(val output: PackOutput, val future: CompletableFuture<HolderLookup.Provider>) :
-    DataProvider {
-    override fun run(cache: CachedOutput): CompletableFuture<*> =
-        this.future.thenCompose { provider: HolderLookup.Provider ->
-            val root = JsonObject()
-            provider.listRegistries().forEach { lookup: HolderLookup.RegistryLookup<*> ->
-                dumpRegistry(lookup)?.let { root.add(lookup.key().identifier().toString(), it) }
-            }
-            DataProvider.saveStable(
-                cache,
-                root,
-                output.getOutputFolder(PackOutput.Target.REPORTS).resolve(RagiumAPI.MOD_ID, "registries.json")
-            )
+class RagiumRegistryDumpReport(val output: PackOutput, val future: CompletableFuture<HolderLookup.Provider>) : DataProvider {
+    override fun run(cache: CachedOutput): CompletableFuture<*> = this.future.thenCompose { provider: HolderLookup.Provider ->
+        val root = JsonObject()
+        provider.listRegistries().forEach { lookup: HolderLookup.RegistryLookup<*> ->
+            dumpRegistry(lookup)?.let { root.add(lookup.key().identifier().toString(), it) }
         }
+        DataProvider.saveStable(
+            cache,
+            root,
+            output.getOutputFolder(PackOutput.Target.REPORTS).resolve(RagiumAPI.MOD_ID, "registries.json"),
+        )
+    }
 
     private fun dumpRegistry(lookup: HolderLookup.RegistryLookup<*>): JsonElement? {
         val entries = JsonArray()

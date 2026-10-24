@@ -20,13 +20,13 @@ abstract class HTItemTagsProvider : HTTagsProvider<Item> {
         output: PackOutput,
         lookupProvider: CompletableFuture<HolderLookup.Provider>,
         parentProvider: CompletableFuture<TagLookup<Item>>,
-        modId: String
+        modId: String,
     ) : super(output, Registries.ITEM, lookupProvider, parentProvider, modId)
 
     constructor(
         output: PackOutput,
         lookupProvider: CompletableFuture<HolderLookup.Provider>,
-        modId: String
+        modId: String,
     ) : super(output, Registries.ITEM, lookupProvider, modId)
 
     //    Extensions    //
@@ -46,6 +46,6 @@ abstract class HTItemTagsProvider : HTTagsProvider<Item> {
      */
     protected fun HTTagBuilder<Item>.add(
         blockItem: HTSimpleDeferredBlockAndItem,
-        type: HTTagDependType = HTTagDependType.REQUIRED
+        type: HTTagDependType = HTTagDependType.REQUIRED,
     ): HTTagBuilder<Item> = this.add(blockItem.item, type)
 }

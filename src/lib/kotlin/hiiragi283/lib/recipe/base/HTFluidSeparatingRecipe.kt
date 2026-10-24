@@ -20,30 +20,26 @@ import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.Optional
 
-open class HTFluidSeparatingRecipe(
-    val ingredient: HTFluidIngredient,
-    val result: Result,
-    override val progressData: HTProgressData
-) : HTFluidToRecipe<HTFluidSeparatingRecipe.Output>,
+open class HTFluidSeparatingRecipe(val ingredient: HTFluidIngredient, val result: Result, override val progressData: HTProgressData) :
+    HTFluidToRecipe<HTFluidSeparatingRecipe.Output>,
     HTProgressRecipe.Holder {
     companion object {
         @JvmStatic
-        fun <RECIPE : HTFluidSeparatingRecipe> codec(
-            factory: HTFluidSeparatingRecipeBuilder.Factory<RECIPE>
-        ): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
-            instance.group(
-                HTFluidIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(HTFluidSeparatingRecipe::ingredient),
-                Result.CODEC.fieldOf(HTConstants.RESULT).forGetter(HTFluidSeparatingRecipe::result),
-                HTProgressData.CODEC.forGetter(HTFluidSeparatingRecipe::progressData)
-            ).apply(instance, factory::create)
-        }
+        fun <RECIPE : HTFluidSeparatingRecipe> codec(factory: HTFluidSeparatingRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> =
+            HTCodecs.recordMap { instance ->
+                instance.group(
+                    HTFluidIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(HTFluidSeparatingRecipe::ingredient),
+                    Result.CODEC.fieldOf(HTConstants.RESULT).forGetter(HTFluidSeparatingRecipe::result),
+                    HTProgressData.CODEC.forGetter(HTFluidSeparatingRecipe::progressData),
+                ).apply(instance, factory::create)
+            }
 
         @JvmField
         val SIMPLE_CODEC: MapCodec<HTFluidSeparatingRecipe> = codec(::HTFluidSeparatingRecipe)
 
         @JvmStatic
         fun <RECIPE : HTFluidSeparatingRecipe> streamCodec(
-            factory: HTFluidSeparatingRecipeBuilder.Factory<RECIPE>
+            factory: HTFluidSeparatingRecipeBuilder.Factory<RECIPE>,
         ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
             HTFluidIngredient.STREAM_CODEC,
             HTFluidSeparatingRecipe::ingredient,
@@ -51,7 +47,7 @@ open class HTFluidSeparatingRecipe(
             HTFluidSeparatingRecipe::result,
             HTProgressData.STREAM_CODEC,
             HTFluidSeparatingRecipe::progressData,
-            factory::create
+            factory::create,
         )
     }
 
@@ -79,7 +75,7 @@ open class HTFluidSeparatingRecipe(
                     HTFluidResult.CODEC
                         .compactNelFieldOf(HTConstants.FLUID, HTConstants.FLUIDS, 2)
                         .forGetter(Result::fluids),
-                    HTItemResult.CODEC.optionalFieldOf(HTConstants.ITEM).forGetter(Result::item)
+                    HTItemResult.CODEC.optionalFieldOf(HTConstants.ITEM).forGetter(Result::item),
                 ).apply(instance, ::Result)
             }
 
@@ -89,7 +85,7 @@ open class HTFluidSeparatingRecipe(
                 Result::fluids,
                 HTItemResult.STREAM_CODEC.optionalOf(),
                 Result::item,
-                ::Result
+                ::Result,
             )
         }
 

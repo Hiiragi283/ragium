@@ -2,14 +2,13 @@
 
 package hiiragi283.lib.data.recipe.result
 
-import hiiragi283.lib.collection.nelOf
-import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.item.component.buildItemEnchantments
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.registry.HTDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
+import hiiragi283.lib.util.toOptional
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.resources.Identifier
@@ -94,19 +93,14 @@ class HTItemResultBuilder @PublishedApi internal constructor() {
      */
     @JvmName("unaryPlusEnchantment")
     operator fun Holder<Enchantment>.unaryPlus() {
-        +HTItemResult.EnchantedBookEntry.EnchantmentValue(this).let(::nelOf).let(HTItemResult::EnchantedBookEntry)
+        +HTItemResult.EnchantedBookEntryN(this)
     }
 
     /**
      * @since 26.1.6
      */
     operator fun ItemEnchantments.unaryPlus() {
-        +this.entrySet()
-            .map { (enchantment: Holder<Enchantment>, level: Int) ->
-                HTItemResult.EnchantedBookEntry.EnchantmentValue(enchantment, level)
-            }
-            .toNel()
-            .let(HTItemResult::EnchantedBookEntry)
+        +HTItemResult.EnchantedBookEntryN(this.entrySet().associate { (holder: Holder<Enchantment>, level: Int) -> holder to level.toOptional() })
     }
 
     /**

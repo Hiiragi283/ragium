@@ -870,8 +870,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                         CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL_COKE),
                         CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.PITCH_COKE),
                         CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Chemicals.CARBON),
-                        RagiumTags.Items.COKES
-                    )
+                        RagiumTags.Items.COKES,
+                    ),
                 )
             }
             result { +RagiumItems.CRUDE_SILICON }

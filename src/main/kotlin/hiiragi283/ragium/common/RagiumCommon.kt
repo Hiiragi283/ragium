@@ -59,13 +59,13 @@ internal data object RagiumCommon {
             FluidInteractionRegistry.addInteraction(
                 NeoForgeMod.LAVA_TYPE.value(),
                 FluidInteractionRegistry.InteractionInformation(
-                    RagiumFluids.DYES[color].getFluidType()
+                    RagiumFluids.DYES[color].getFluidType(),
                 ) { state: FluidState ->
                     when (state.isSource) {
                         true -> Blocks.OBSIDIAN.defaultBlockState()
                         false -> VanillaColoredCollections.CONCRETE[color].defaultState
                     }
-                }
+                },
             )
         }
     }
@@ -102,7 +102,7 @@ internal data object RagiumCommon {
                         RTPotionBottleCentrifugingRecipe(bottleType)
                 }
                 this[RagiumAPI.id("/${RagiumConstants.CENTRIFUGING}/bucket")] = RTBucketCentrifugingRecipe
-            }
+            },
         )
         RagiumRecipeLookups.FILLING.addRecipes(
             buildMap {
@@ -111,7 +111,7 @@ internal data object RagiumCommon {
                         RTPotionBottleFillingRecipe(bottleType)
                 }
                 this[RagiumAPI.id("/${RagiumConstants.FILLING}/bucket")] = RTBucketFillingRecipe
-            }
+            },
         )
 
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
@@ -196,6 +196,5 @@ internal data object RagiumCommon {
         }
     }
 
-    private fun HolderGetter.Provider.getOrNull(content: HTFluidContent): HolderSet<Fluid>? =
-        this.getOrNull(content.fluidTag)
+    private fun HolderGetter.Provider.getOrNull(content: HTFluidContent): HolderSet<Fluid>? = this.getOrNull(content.fluidTag)
 }

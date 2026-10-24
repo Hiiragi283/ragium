@@ -13,7 +13,7 @@ class HTVariableFluidTank(
     canExtract: BiPredicate<FluidResource, HTTransferAccess>,
     canInsert: BiPredicate<FluidResource, HTTransferAccess>,
     filter: Predicate<FluidResource>,
-    listener: Runnable?
+    listener: Runnable?,
 ) : HTBasicFluidTank(capacitySupplier.asInt, canExtract, canInsert, filter, listener) {
     companion object {
         @JvmStatic
@@ -22,7 +22,7 @@ class HTVariableFluidTank(
             listener: Runnable?,
             canExtract: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
-            filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue()
+            filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
         ): HTVariableFluidTank = HTVariableFluidTank(capacity, canExtract, canInsert, filter, listener)
 
         @JvmStatic
@@ -30,13 +30,13 @@ class HTVariableFluidTank(
             capacity: IntSupplier,
             listener: Runnable?,
             canInsert: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
-            filter: Predicate<FluidResource> = canInsert
+            filter: Predicate<FluidResource> = canInsert,
         ): HTVariableFluidTank = create(
             capacity,
             listener,
             HTTransferPredicates.notExternal(),
             { resource: FluidResource, _ -> canInsert.test(resource) },
-            filter
+            filter,
         )
 
         @JvmStatic

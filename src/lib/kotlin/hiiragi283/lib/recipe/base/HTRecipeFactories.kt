@@ -80,8 +80,7 @@ data object HTRecipeFactories {
     interface ItemAndFluid<OUTPUT : Any> : DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance, OUTPUT> {
         override fun produce(input: HTItemAndFluidRecipeInput): OUTPUT = apply(input.item, input.fluid)
 
-        override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData =
-            getProgressData(input.item, input.fluid)
+        override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData = getProgressData(input.item, input.fluid)
     }
 
     /**
@@ -90,7 +89,6 @@ data object HTRecipeFactories {
     interface DoubleItem<OUTPUT : Any> : DoubleInput<RecipeInput, ItemInstance, ItemInstance, OUTPUT> {
         override fun produce(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
 
-        override fun getProgressData(input: RecipeInput): HTProgressData =
-            getProgressData(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
+        override fun getProgressData(input: RecipeInput): HTProgressData = getProgressData(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
     }
 }

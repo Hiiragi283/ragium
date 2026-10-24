@@ -10,7 +10,7 @@ data class HTItemSyncPayload(val value: ItemStack) : HTSyncablePayload {
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemSyncPayload> = ItemStack.OPTIONAL_STREAM_CODEC.map(
             ::HTItemSyncPayload,
-            HTItemSyncPayload::value
+            HTItemSyncPayload::value,
         )
 
         @JvmField

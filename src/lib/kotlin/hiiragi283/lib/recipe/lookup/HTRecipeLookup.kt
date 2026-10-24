@@ -41,9 +41,8 @@ fun interface HTRecipeLookup<out RECIPE : Any> {
         /**
          * @since 26.1.3
          */
-        fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> byType(
-            recipeType: RecipeType<RECIPE>
-        ): Sequence<HTRecipeHolder<RECIPE>> = this.recipeMap.byType(recipeType).asSequence().map { it.kotlin }
+        fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> byType(recipeType: RecipeType<RECIPE>): Sequence<HTRecipeHolder<RECIPE>> =
+            this.recipeMap.byType(recipeType).asSequence().map { it.kotlin }
     }
 }
 

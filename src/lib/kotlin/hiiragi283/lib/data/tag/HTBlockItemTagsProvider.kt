@@ -21,11 +21,9 @@ abstract class HTBlockItemTagsProvider(private val factory: (BlockItemTag) -> HT
          */
         @JvmStatic
         fun forBlock(builder: HTTagBuilder<Block>): HTBlockItemTagBuilder = object : HTBlockItemTagBuilder {
-            override fun add(key: BlockItemKey, type: HTTagDependType): HTBlockItemTagBuilder =
-                apply { builder.add(key.block, type) }
+            override fun add(key: BlockItemKey, type: HTTagDependType): HTBlockItemTagBuilder = apply { builder.add(key.block, type) }
 
-            override fun addTag(child: BlockItemTag, type: HTTagDependType): HTBlockItemTagBuilder =
-                apply { builder.addTag(child.block, type) }
+            override fun addTag(child: BlockItemTag, type: HTTagDependType): HTBlockItemTagBuilder = apply { builder.addTag(child.block, type) }
         }
 
         /**
@@ -33,11 +31,9 @@ abstract class HTBlockItemTagsProvider(private val factory: (BlockItemTag) -> HT
          */
         @JvmStatic
         fun forItem(builder: HTTagBuilder<Item>): HTBlockItemTagBuilder = object : HTBlockItemTagBuilder {
-            override fun add(key: BlockItemKey, type: HTTagDependType): HTBlockItemTagBuilder =
-                apply { builder.add(key.item, type) }
+            override fun add(key: BlockItemKey, type: HTTagDependType): HTBlockItemTagBuilder = apply { builder.add(key.item, type) }
 
-            override fun addTag(child: BlockItemTag, type: HTTagDependType): HTBlockItemTagBuilder =
-                apply { builder.addTag(child.item, type) }
+            override fun addTag(child: BlockItemTag, type: HTTagDependType): HTBlockItemTagBuilder = apply { builder.addTag(child.item, type) }
         }
     }
 
@@ -51,8 +47,7 @@ abstract class HTBlockItemTagsProvider(private val factory: (BlockItemTag) -> HT
     /**
      * @since 26.1.8
      */
-    protected fun builder(block: TagKey<Block>, item: TagKey<Item>): HTBlockItemTagBuilder =
-        builder(BlockItemTag(block, item))
+    protected fun builder(block: TagKey<Block>, item: TagKey<Item>): HTBlockItemTagBuilder = builder(BlockItemTag(block, item))
 
     protected fun builders(tagKey: BlockItemTag, vararg children: BlockItemTag): HTBlockItemTagBuilder =
         children.fold(builder(tagKey)) { builder: HTBlockItemTagBuilder, tagKeyIn: BlockItemTag ->

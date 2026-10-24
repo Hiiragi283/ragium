@@ -27,7 +27,7 @@ sealed class HTFluidContent(
     val sourceHolder: HTDeferredHolder<Fluid, *>,
     val bucketHolder: HTSimpleDeferredItem,
     val fluidTag: TagKey<Fluid>,
-    val bucketTag: TagKey<Item>
+    val bucketTag: TagKey<Item>,
 ) : HTFluidInstanceLike,
     HTSimpleValueWithKey<Fluid> by sourceHolder {
     /**
@@ -57,7 +57,7 @@ sealed class HTFluidContent(
         sourceHolder: HTDeferredHolder<Fluid, *>,
         bucketHolder: HTSimpleDeferredItem,
         fluidTag: TagKey<Fluid>,
-        bucketTag: TagKey<Item>
+        bucketTag: TagKey<Item>,
     ) : HTFluidContent(typeHolder, sourceHolder, bucketHolder, fluidTag, bucketTag)
 
     /**
@@ -74,6 +74,6 @@ sealed class HTFluidContent(
         fluidTag: TagKey<Fluid>,
         bucketTag: TagKey<Item>,
         val flowingHolder: HTDeferredHolder<Fluid, FlowingFluid>,
-        val blockHolder: HTDeferredBlock<LiquidBlock>?
+        val blockHolder: HTDeferredBlock<LiquidBlock>?,
     ) : HTFluidContent(typeHolder, sourceHolder, bucketHolder, fluidTag, bucketTag)
 }

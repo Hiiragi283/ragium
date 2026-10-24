@@ -29,13 +29,13 @@ sealed interface HTProgressData : HTHasText {
                         is Energy -> DFUEither.right(progressData)
                         is Time -> DFUEither.left(progressData)
                     }
-                }
+                },
             )
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTProgressData> = ByteBufCodecs.either(
             Time.STREAM_CODEC,
-            Energy.STREAM_CODEC
+            Energy.STREAM_CODEC,
         )
             .map(
                 { DFUEither.unwrap(it) },
@@ -44,7 +44,7 @@ sealed interface HTProgressData : HTHasText {
                         is Energy -> DFUEither.right(progressData)
                         is Time -> DFUEither.left(progressData)
                     }
-                }
+                },
             )
 
         /**
@@ -108,7 +108,7 @@ sealed interface HTProgressData : HTHasText {
         companion object {
             @JvmField
             val CODEC: MapCodec<Energy> = HTCodecs.NON_NEGATIVE_INT.fieldOf(
-                HTConstants.ENERGY
+                HTConstants.ENERGY,
             ).xmap(::Energy, Energy::value)
 
             @JvmField

@@ -13,11 +13,9 @@ import java.util.function.Supplier
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTVanillaRecipeLookup<INPUT : RecipeInput, out RECIPE : Recipe<INPUT>>(
-    private val recipeType: Supplier<out RecipeType<RECIPE>>
-) : HTRecipeLookup<RECIPE> {
+class HTVanillaRecipeLookup<INPUT : RecipeInput, out RECIPE : Recipe<INPUT>>(private val recipeType: Supplier<out RecipeType<RECIPE>>) :
+    HTRecipeLookup<RECIPE> {
     constructor(recipeType: RecipeType<RECIPE>) : this(Supplier { recipeType })
 
-    override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> =
-        context.byType(recipeType.get())
+    override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> = context.byType(recipeType.get())
 }

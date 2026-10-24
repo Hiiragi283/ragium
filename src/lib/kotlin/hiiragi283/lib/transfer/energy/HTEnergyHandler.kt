@@ -15,19 +15,17 @@ interface HTEnergyHandler : EnergyHandler {
 
     @Deprecated(
         "Use 'insert(Int, TransactionContext, HTTransferAccess)' instead",
-        ReplaceWith("this.insert(amount, transaction, HTTransferAccess.EXTERNAL)")
+        ReplaceWith("this.insert(amount, transaction, HTTransferAccess.EXTERNAL)"),
     )
-    override fun insert(amount: Int, transaction: TransactionContext): Int =
-        insert(amount, transaction, HTTransferAccess.EXTERNAL)
+    override fun insert(amount: Int, transaction: TransactionContext): Int = insert(amount, transaction, HTTransferAccess.EXTERNAL)
 
     fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int
 
     @Deprecated(
         "Use 'extract(Int, TransactionContext, HTTransferAccess)' instead",
-        ReplaceWith("this.extract(amount, transaction, HTTransferAccess.EXTERNAL)")
+        ReplaceWith("this.extract(amount, transaction, HTTransferAccess.EXTERNAL)"),
     )
-    override fun extract(amount: Int, transaction: TransactionContext): Int =
-        extract(amount, transaction, HTTransferAccess.EXTERNAL)
+    override fun extract(amount: Int, transaction: TransactionContext): Int = extract(amount, transaction, HTTransferAccess.EXTERNAL)
 
     val isEmpty: Boolean get() = amountAsLong == 0L
 

@@ -24,10 +24,8 @@ interface HTBlockItemTagBuilder {
      * @param value 要素のキーを提供する[HTSimpleDeferredBlockAndItem]
      * @param type このエントリの依存関係
      */
-    fun add(
-        value: HTSimpleDeferredBlockAndItem,
-        type: HTTagDependType = HTTagDependType.REQUIRED
-    ): HTBlockItemTagBuilder = this.add(value.blockItemKey, type)
+    fun add(value: HTSimpleDeferredBlockAndItem, type: HTTagDependType = HTTagDependType.REQUIRED): HTBlockItemTagBuilder =
+        this.add(value.blockItemKey, type)
 
     /**
      * 指定した子タグをタグに追加します。
@@ -42,9 +40,6 @@ interface HTBlockItemTagBuilder {
      * @param material タグの素材
      * @param type このエントリの依存関係
      */
-    fun addTag(
-        prefix: HTTagPrefix,
-        material: HTMaterialLike,
-        type: HTTagDependType = HTTagDependType.REQUIRED
-    ): HTBlockItemTagBuilder = this.addTag(prefix.materialTag(material), type)
+    fun addTag(prefix: HTTagPrefix, material: HTMaterialLike, type: HTTagDependType = HTTagDependType.REQUIRED): HTBlockItemTagBuilder =
+        this.addTag(prefix.materialTag(material), type)
 }

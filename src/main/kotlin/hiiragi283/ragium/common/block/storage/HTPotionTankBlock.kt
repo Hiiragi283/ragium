@@ -21,8 +21,7 @@ import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
-class HTPotionTankBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) :
-    HTTankBlock(type, properties) {
+class HTPotionTankBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : HTTankBlock(type, properties) {
     override fun interactTank(
         itemStack: ItemStack,
         state: BlockState,
@@ -31,7 +30,7 @@ class HTPotionTankBlock(type: HTDeferredBlockEntityType<*>, properties: Properti
         player: Player,
         hand: InteractionHand,
         hitResult: BlockHitResult,
-        tank: HTFluidTank
+        tank: HTFluidTank,
     ): Boolean = handlePotionBottle(itemStack, player, tank) ||
         super.interactTank(itemStack, state, level, pos, player, hand, hitResult, tank)
 
@@ -42,7 +41,7 @@ class HTPotionTankBlock(type: HTDeferredBlockEntityType<*>, properties: Properti
             if (emptyBottle != null) {
                 HTPotionHelper.createFluid(
                     itemStack,
-                    HTPotionHelper.BOTTLE_AMOUNT
+                    HTPotionHelper.BOTTLE_AMOUNT,
                 ).onSuccess { template: FluidStackTemplate ->
                     val (resource: FluidResource, amount: Int) = template.toResourcePair()
                     if (tank.insert(resource, amount, transaction, HTTransferAccess.EXTERNAL) == amount) {

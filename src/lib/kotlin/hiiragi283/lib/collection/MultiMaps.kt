@@ -16,7 +16,7 @@ import kotlin.contracts.contract
  */
 inline fun <K, V> buildListMultiMap(
     builderAction: ListMultiMapBuilder<K, V>.() -> Unit,
-    noinline collectionFactory: () -> MutableList<V> = ::mutableListOf
+    noinline collectionFactory: () -> MutableList<V> = ::mutableListOf,
 ): Map<K, List<V>> = buildListMultiMap(Object2ObjectLinkedOpenHashMap(), builderAction, collectionFactory)
 
 /**
@@ -29,7 +29,7 @@ inline fun <K, V> buildListMultiMap(
 inline fun <K, V> buildListMultiMap(
     map: MutableMap<K, MutableList<V>>,
     builderAction: ListMultiMapBuilder<K, V>.() -> Unit,
-    noinline collectionFactory: () -> MutableList<V> = ::mutableListOf
+    noinline collectionFactory: () -> MutableList<V> = ::mutableListOf,
 ): Map<K, List<V>> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
@@ -46,7 +46,7 @@ inline fun <K, V> buildListMultiMap(
  */
 inline fun <K, V> buildSetMultiMap(
     builderAction: SetMultiMapBuilder<K, V>.() -> Unit,
-    noinline collectionFactory: () -> MutableSet<V> = ::mutableSetOf
+    noinline collectionFactory: () -> MutableSet<V> = ::mutableSetOf,
 ): Map<K, Set<V>> = buildSetMultiMap(Object2ObjectLinkedOpenHashMap(), builderAction, collectionFactory)
 
 /**
@@ -59,7 +59,7 @@ inline fun <K, V> buildSetMultiMap(
 inline fun <K, V> buildSetMultiMap(
     map: MutableMap<K, MutableSet<V>>,
     builderAction: SetMultiMapBuilder<K, V>.() -> Unit,
-    noinline collectionFactory: () -> MutableSet<V> = ::mutableSetOf
+    noinline collectionFactory: () -> MutableSet<V> = ::mutableSetOf,
 ): Map<K, Set<V>> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
@@ -81,7 +81,7 @@ inline fun <K, V> buildSetMultiMap(
  * @since 26.1.0
  */
 inline fun <K, V, R : Any, C : Any, W : Any> Map<K, Collection<V>>.flatMapTable(
-    transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>
+    transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>,
 ): Table<R, C, W> = this.flatMapTableTo(DelegatingTable.Builder(), transform)
 
 /**
@@ -98,7 +98,7 @@ inline fun <K, V, R : Any, C : Any, W : Any> Map<K, Collection<V>>.flatMapTable(
  */
 inline fun <K, V, R : Any, C : Any, W : Any, D : Table.Builder<R, C, W>> Map<K, Collection<V>>.flatMapTableTo(
     builder: D,
-    transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>
+    transform: (Map.Entry<K, Collection<V>>) -> Iterable<Triple<R, C, W>>,
 ): Table<R, C, W> {
     this.entries.flatMap(transform).forEach(builder::put)
     return builder.build()

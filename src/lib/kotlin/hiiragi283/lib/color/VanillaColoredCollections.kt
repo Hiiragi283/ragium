@@ -54,8 +54,7 @@ data object VanillaColoredCollections {
     val WOOL: HTColoredCollection<HTSimpleDeferredBlockAndItem> = block("%s_wool")
 
     @JvmStatic
-    private fun block(path: String): HTColoredCollection<HTSimpleDeferredBlockAndItem> =
-        create(path, ::HTSimpleDeferredBlockAndItem)
+    private fun block(path: String): HTColoredCollection<HTSimpleDeferredBlockAndItem> = create(path, ::HTSimpleDeferredBlockAndItem)
 
     @JvmStatic
     private fun item(path: String): HTColoredCollection<HTSimpleDeferredItem> = create(path, ::HTSimpleDeferredItem)

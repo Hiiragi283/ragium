@@ -22,7 +22,7 @@ import net.minecraft.world.item.Item
 enum class HTBottleType(val filledItem: HTSimpleDeferredItem) : StringRepresentable {
     DEFAULT(vanillaId("potion")),
     SPLASH(vanillaId("splash_potion")),
-    LINGERING(vanillaId("lingering_potion"))
+    LINGERING(vanillaId("lingering_potion")),
     ;
 
     companion object {
@@ -39,15 +39,13 @@ enum class HTBottleType(val filledItem: HTSimpleDeferredItem) : StringRepresenta
          * @since 26.1.8
          */
         @JvmStatic
-        fun getFromFilled(instance: TypedInstance<Item>): HTBottleType? =
-            HTBottleType.entries.firstOrNull { it.filledItem.isOf(instance) }
+        fun getFromFilled(instance: TypedInstance<Item>): HTBottleType? = HTBottleType.entries.firstOrNull { it.filledItem.isOf(instance) }
 
         /**
          * @since 26.1.8
          */
         @JvmStatic
-        fun getFromEmpty(instance: TypedInstance<Item>): HTBottleType? =
-            HTBottleType.entries.firstOrNull { it.emptyItem.isOf(instance) }
+        fun getFromEmpty(instance: TypedInstance<Item>): HTBottleType? = HTBottleType.entries.firstOrNull { it.emptyItem.isOf(instance) }
     }
 
     constructor(filledItem: Identifier) : this(HTSimpleDeferredItem(filledItem))

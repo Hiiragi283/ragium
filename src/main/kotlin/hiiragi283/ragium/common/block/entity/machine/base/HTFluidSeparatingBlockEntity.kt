@@ -34,12 +34,9 @@ import java.util.function.IntSupplier
 
 abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    protected fun createRecipeHandler(
-        lookup: HTRecipeLookup<HTFluidSeparatingRecipe>,
-        sound: HTSoundInstance
-    ): HTRecipeHandler =
+    protected fun createRecipeHandler(lookup: HTRecipeLookup<HTFluidSeparatingRecipe>, sound: HTSoundInstance): HTRecipeHandler =
         object : HTSingleRecipeHandler.Cached<FluidInstance, HTFluidSeparatingRecipe.Output, HTFluidSeparatingRecipe>(
-            HTRecipeCacheHelper.SingleFluid(lookup)
+            HTRecipeCacheHelper.SingleFluid(lookup),
         ) {
             private val inputTank: HTInputSlot<FluidInstance> by lazy {
                 HTInputHandlerHelper.forFluid(this@HTFluidSeparatingBlockEntity.inputTank)
@@ -59,30 +56,23 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
 
             override fun getInput(): FluidInstance = inputTank.getStoredInput()
 
-            override fun canComplete(
-                recipe: HTFluidSeparatingRecipe,
-                input: FluidInstance,
-                output: HTFluidSeparatingRecipe.Output
-            ): Boolean = useTransaction { transaction: Transaction ->
-                when {
-                    inputTank.use(recipe.getMatchingStack(input), transaction).failed -> false
+            override fun canComplete(recipe: HTFluidSeparatingRecipe, input: FluidInstance, output: HTFluidSeparatingRecipe.Output): Boolean =
+                useTransaction { transaction: Transaction ->
+                    when {
+                        inputTank.use(recipe.getMatchingStack(input), transaction).failed -> false
 
-                    else -> {
-                        val (left: FluidStack, right: FluidStack, item: ItemStack) = output
-                        when {
-                            leftOutputTank.take(right, transaction) != HTOutputSlot.TakeResult.FULL -> false
-                            rightOutputTank.take(left, transaction) != HTOutputSlot.TakeResult.FULL -> false
-                            else -> outputSlot.take(item, transaction).fullOrNoneTaken
+                        else -> {
+                            val (left: FluidStack, right: FluidStack, item: ItemStack) = output
+                            when {
+                                leftOutputTank.take(right, transaction) != HTOutputSlot.TakeResult.FULL -> false
+                                rightOutputTank.take(left, transaction) != HTOutputSlot.TakeResult.FULL -> false
+                                else -> outputSlot.take(item, transaction).fullOrNoneTaken
+                            }
                         }
                     }
                 }
-            }
 
-            override fun onComplete(
-                recipe: HTFluidSeparatingRecipe,
-                input: FluidInstance,
-                output: HTFluidSeparatingRecipe.Output
-            ) {
+            override fun onComplete(recipe: HTFluidSeparatingRecipe, input: FluidInstance, output: HTFluidSeparatingRecipe.Output) {
                 useTransaction { transaction: Transaction ->
                     inputTank.use(recipe.getMatchingStack(input), transaction)
                     val (left: FluidStack, right: FluidStack, item: ItemStack) = output
@@ -123,7 +113,7 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
             HTSlotHelper.getSlotPosX(1),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
-            false
+            false,
         )
         widgetHolder.track(inputTank)
         // outputs
@@ -132,7 +122,7 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
             0,
             HTSlotHelper.getSlotPosX(4),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT
+            HTBackgroundType.OUTPUT,
         )
         widgetHolder.track(outputSlot)
         widgetHolder += HTFluidWidget.Tank(
@@ -140,7 +130,7 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
             HTSlotHelper.getSlotPosX(5.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
-            false
+            false,
         )
         widgetHolder.track(leftOutputTank)
         widgetHolder += HTFluidWidget.Tank(
@@ -148,7 +138,7 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
             HTSlotHelper.getSlotPosX(7),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.EXTRA_OUTPUT,
-            false
+            false,
         )
         widgetHolder.track(rightOutputTank)
     }

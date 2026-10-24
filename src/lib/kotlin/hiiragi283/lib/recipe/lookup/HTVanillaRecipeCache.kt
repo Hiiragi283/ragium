@@ -26,8 +26,7 @@ import kotlin.jvm.optionals.getOrNull
  * @author Hiiragi Tsubasa
  * @since 26.1.6
  */
-class HTVanillaRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(val recipeType: RecipeType<RECIPE>) :
-    ValueIOSerializable {
+class HTVanillaRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(val recipeType: RecipeType<RECIPE>) : ValueIOSerializable {
     private var lastRecipe: Either<RecipeKey, RecipeHolder<RECIPE>>? = null
 
     /**
@@ -41,7 +40,7 @@ class HTVanillaRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(val reci
         val recipeManager: RecipeManager = level.recipeAccess()
         val foundRecipe: Optional<RecipeHolder<RECIPE>> = lastRecipe?.fold(
             { key: RecipeKey -> recipeManager.getRecipeFor(recipeType, input, level, key) },
-            { holder: RecipeHolder<RECIPE> -> recipeManager.getRecipeFor(recipeType, input, level, holder) }
+            { holder: RecipeHolder<RECIPE> -> recipeManager.getRecipeFor(recipeType, input, level, holder) },
         ) ?: recipeManager.getRecipeFor(recipeType, input, level)
         lastRecipe = foundRecipe.map { it.right() }.getOrNull()
         return foundRecipe.getOrNull()

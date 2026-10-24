@@ -31,7 +31,7 @@ class RTMixingRecipeBuilder : HTProgressRecipeBuilder<RTMixingRecipe>(RagiumCons
         Ior.fromNullable(itemIngredients.toNelOrNull(), fluidIngredients.toNelOrNull())
             ?: error("Either item or fluid ingredient required"),
         result,
-        progressData
+        progressData,
     )
 
     // Ingredients

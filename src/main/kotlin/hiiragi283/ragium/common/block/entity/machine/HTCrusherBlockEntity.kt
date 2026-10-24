@@ -11,11 +11,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CRUSHER.get(), pos, state) {
+class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CRUSHER.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.CRUSHING,
-        HTSoundInstance(SoundEvents.GRINDSTONE_USE)
+        HTSoundInstance(SoundEvents.GRINDSTONE_USE),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.crusher

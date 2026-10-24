@@ -83,10 +83,7 @@ data object HTIngredientHelper {
      */
     @JvmName("getMatchingFluids")
     @JvmStatic
-    fun getMatchingStacks(
-        ingredients: Iterable<HTFluidIngredient>,
-        inputs: Iterable<FluidInstance>
-    ): List<FluidInstance> {
+    fun getMatchingStacks(ingredients: Iterable<HTFluidIngredient>, inputs: Iterable<FluidInstance>): List<FluidInstance> {
         val combined: List<FluidStack> = inputs
             .fold(mutableMapOf()) { map: MutableMap<FluidResource, Int>, instance: FluidInstance ->
                 val resource: FluidResource = unwrap(instance).let(FluidResource::of)

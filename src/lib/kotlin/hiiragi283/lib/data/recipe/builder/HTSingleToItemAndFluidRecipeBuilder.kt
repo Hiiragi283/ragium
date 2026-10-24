@@ -31,7 +31,7 @@ import kotlin.contracts.contract
  */
 class HTSingleToItemAndFluidRecipeBuilder<ING : HTIngredient<*, *>, out RECIPE : Recipe<*>>(
     prefix: String,
-    private val factory: HTBasicSingleRecipe.Factory<ING, HTItemOrFluidResult, RECIPE>
+    private val factory: HTBasicSingleRecipe.Factory<ING, HTItemOrFluidResult, RECIPE>,
 ) : HTProgressRecipeBuilder<RECIPE>(prefix) {
     override fun getRecipeId(): Identifier? = result.getId()
 
@@ -97,9 +97,7 @@ typealias HTItemToItemAndFluidRecipeBuilder<RECIPE> = HTSingleToItemAndFluidReci
  * @since 26.1.8
  */
 @JvmName("itemIngredient")
-fun HTSingleToItemAndFluidRecipeBuilder<HTFluidIngredient, *>.ingredient(
-    builderAction: HTFluidIngredientBuilder.() -> Unit
-) {
+fun HTSingleToItemAndFluidRecipeBuilder<HTFluidIngredient, *>.ingredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -111,9 +109,7 @@ fun HTSingleToItemAndFluidRecipeBuilder<HTFluidIngredient, *>.ingredient(
  * @since 26.1.8
  */
 @JvmName("fluidIngredient")
-fun HTSingleToItemAndFluidRecipeBuilder<HTItemIngredient, *>.ingredient(
-    builderAction: HTItemIngredientBuilder.() -> Unit
-) {
+fun HTSingleToItemAndFluidRecipeBuilder<HTItemIngredient, *>.ingredient(builderAction: HTItemIngredientBuilder.() -> Unit) {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }

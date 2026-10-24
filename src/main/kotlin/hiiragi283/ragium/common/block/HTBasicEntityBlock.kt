@@ -59,23 +59,20 @@ open class HTBasicEntityBlock(val type: HTDeferredBlockEntityType<*>, properties
         pos: BlockPos,
         block: Block,
         orientation: Orientation?,
-        movedByPiston: Boolean
+        movedByPiston: Boolean,
     ) {
         super.neighborChanged(state, level, pos, block, orientation, movedByPiston)
         level.getTypedBlockEntity<HTExtendedBlockEntity>(
-            pos
+            pos,
         )?.neighborChanged(state, level, pos, block, orientation, movedByPiston)
     }
 
     final override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = type.create(pos, state)
 
     @Suppress("UNCHECKED_CAST")
-    final override fun <T : BlockEntity> getTicker(
-        level: Level,
-        state: BlockState,
-        blockEntityType: BlockEntityType<T>
-    ): BlockEntityTicker<T>? = when (blockEntityType) {
-        type.get() -> type.getTicker(level.isClientSide) as? BlockEntityTicker<T>
-        else -> null
-    }
+    final override fun <T : BlockEntity> getTicker(level: Level, state: BlockState, blockEntityType: BlockEntityType<T>): BlockEntityTicker<T>? =
+        when (blockEntityType) {
+            type.get() -> type.getTicker(level.isClientSide) as? BlockEntityTicker<T>
+            else -> null
+        }
 }

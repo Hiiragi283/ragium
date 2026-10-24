@@ -21,21 +21,20 @@ class HTContainerItemSlot(
     y: Int,
     private val stackSetter: Consumer<ItemStack>,
     private val manualFilter: BiPredicate<ItemResource, HTTransferAccess>,
-    override val slotType: HTBackgroundType
+    override val slotType: HTBackgroundType,
 ) : StackCopySlot(index, x, y),
     HTWidgetSlot {
     companion object {
         @JvmStatic
-        fun create(slot: HTBasicItemSlot, index: Int, x: Int, y: Int, slotType: HTBackgroundType): HTContainerItemSlot =
-            HTContainerItemSlot(
-                slot,
-                index,
-                x,
-                y,
-                slot::setStack,
-                slot::isValidForInsert,
-                slotType
-            )
+        fun create(slot: HTBasicItemSlot, index: Int, x: Int, y: Int, slotType: HTBackgroundType): HTContainerItemSlot = HTContainerItemSlot(
+            slot,
+            index,
+            x,
+            y,
+            slot::setStack,
+            slot::isValidForInsert,
+            slotType,
+        )
     }
 
     override fun getStackCopy(): ItemStack = slot.getItemStack()
@@ -53,8 +52,7 @@ class HTContainerItemSlot(
 
     override fun getMaxStackSize(itemStack: ItemStack): Int = slot.getCapacity(ItemResource.of(itemStack))
 
-    override fun mayPickup(player: Player): Boolean =
-        useTransaction { slot.extractSelf(1, it, HTTransferAccess.MANUAL) } > 0
+    override fun mayPickup(player: Player): Boolean = useTransaction { slot.extractSelf(1, it, HTTransferAccess.MANUAL) } > 0
 
     override fun tryRemove(amount: Int, maxAmount: Int, player: Player): Optional<ItemStack> {
         if (!mayPickup(player)) {

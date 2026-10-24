@@ -47,11 +47,8 @@ interface HTFluidToRecipe<OUTPUT : Any> :
      * @author Hiiragi Tsubasa
      * @since 26.1.11
      */
-    open class Basic<OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>>(
-        ingredient: HTFluidIngredient,
-        result: RESULT,
-        progressData: HTProgressData
-    ) : HTBasicSingleRecipe<HTFluidIngredient, RESULT>(ingredient, result, progressData),
+    open class Basic<OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>>(ingredient: HTFluidIngredient, result: RESULT, progressData: HTProgressData) :
+        HTBasicSingleRecipe<HTFluidIngredient, RESULT>(ingredient, result, progressData),
         HTFluidToRecipe<OUTPUT> {
         override fun test(input: FluidInstance): Boolean = ingredient.test(input)
 
@@ -70,19 +67,17 @@ interface HTFluidToRecipe<OUTPUT : Any> :
         Basic<ItemStack, HTItemResult>(
             ingredient,
             result,
-            progressData
+            progressData,
         ) {
         companion object {
             @JvmStatic
-            fun <RECIPE : BasicItem> codec(
-                factory: Factory<HTFluidIngredient, HTItemResult, RECIPE>
-            ): MapCodec<RECIPE> = codec(HTFluidIngredient.CODEC, HTItemResult.CODEC, factory)
+            fun <RECIPE : BasicItem> codec(factory: Factory<HTFluidIngredient, HTItemResult, RECIPE>): MapCodec<RECIPE> =
+                codec(HTFluidIngredient.CODEC, HTItemResult.CODEC, factory)
 
             @JvmStatic
             fun <RECIPE : BasicItem> streamCodec(
-                factory: Factory<HTFluidIngredient, HTItemResult, RECIPE>
-            ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> =
-                streamCodec(HTFluidIngredient.STREAM_CODEC, HTItemResult.STREAM_CODEC, factory)
+                factory: Factory<HTFluidIngredient, HTItemResult, RECIPE>,
+            ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = streamCodec(HTFluidIngredient.STREAM_CODEC, HTItemResult.STREAM_CODEC, factory)
 
             @JvmField
             val SIMPLE_CODEC: MapCodec<BasicItem> = codec(::BasicItem)
@@ -97,19 +92,17 @@ interface HTFluidToRecipe<OUTPUT : Any> :
         Basic<FluidStack, HTFluidResult>(
             ingredient,
             result,
-            progressData
+            progressData,
         ) {
         companion object {
             @JvmStatic
-            fun <RECIPE : BasicFluid> codec(
-                factory: Factory<HTFluidIngredient, HTFluidResult, RECIPE>
-            ): MapCodec<RECIPE> = codec(HTFluidIngredient.CODEC, HTFluidResult.CODEC, factory)
+            fun <RECIPE : BasicFluid> codec(factory: Factory<HTFluidIngredient, HTFluidResult, RECIPE>): MapCodec<RECIPE> =
+                codec(HTFluidIngredient.CODEC, HTFluidResult.CODEC, factory)
 
             @JvmStatic
             fun <RECIPE : BasicFluid> streamCodec(
-                factory: Factory<HTFluidIngredient, HTFluidResult, RECIPE>
-            ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> =
-                streamCodec(HTFluidIngredient.STREAM_CODEC, HTFluidResult.STREAM_CODEC, factory)
+                factory: Factory<HTFluidIngredient, HTFluidResult, RECIPE>,
+            ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = streamCodec(HTFluidIngredient.STREAM_CODEC, HTFluidResult.STREAM_CODEC, factory)
 
             @JvmField
             val SIMPLE_CODEC: MapCodec<BasicFluid> = codec(::BasicFluid)
@@ -120,26 +113,21 @@ interface HTFluidToRecipe<OUTPUT : Any> :
      * @author Hiiragi Tsubasa
      * @since 26.1.8
      */
-    open class BasicItemAndFluid(
-        ingredient: HTFluidIngredient,
-        result: HTItemOrFluidResult,
-        progressData: HTProgressData
-    ) : Basic<HTItemAndFluidStack, HTItemOrFluidResult>(
-        ingredient,
-        result,
-        progressData
-    ) {
+    open class BasicItemAndFluid(ingredient: HTFluidIngredient, result: HTItemOrFluidResult, progressData: HTProgressData) :
+        Basic<HTItemAndFluidStack, HTItemOrFluidResult>(
+            ingredient,
+            result,
+            progressData,
+        ) {
         companion object {
             @JvmStatic
-            fun <RECIPE : BasicItemAndFluid> codec(
-                factory: Factory<HTFluidIngredient, HTItemOrFluidResult, RECIPE>
-            ): MapCodec<RECIPE> = codec(HTFluidIngredient.CODEC, HTItemOrFluidResult.CODEC, factory)
+            fun <RECIPE : BasicItemAndFluid> codec(factory: Factory<HTFluidIngredient, HTItemOrFluidResult, RECIPE>): MapCodec<RECIPE> =
+                codec(HTFluidIngredient.CODEC, HTItemOrFluidResult.CODEC, factory)
 
             @JvmStatic
             fun <RECIPE : BasicItemAndFluid> streamCodec(
-                factory: Factory<HTFluidIngredient, HTItemOrFluidResult, RECIPE>
-            ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> =
-                streamCodec(HTFluidIngredient.STREAM_CODEC, HTItemOrFluidResult.STREAM_CODEC, factory)
+                factory: Factory<HTFluidIngredient, HTItemOrFluidResult, RECIPE>,
+            ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = streamCodec(HTFluidIngredient.STREAM_CODEC, HTItemOrFluidResult.STREAM_CODEC, factory)
 
             @JvmField
             val SIMPLE_CODEC: MapCodec<BasicItemAndFluid> = codec(::BasicItemAndFluid)

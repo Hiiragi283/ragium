@@ -20,11 +20,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
 @JvmRecord
-data class RTEnchantingRecipe(
-    val ingredient: HTItemIngredient,
-    val result: HTItemResult,
-    override val progressData: HTProgressData
-) : HTDoubleItemToItemRecipe,
+data class RTEnchantingRecipe(val ingredient: HTItemIngredient, val result: HTItemResult, override val progressData: HTProgressData) :
+    HTDoubleItemToItemRecipe,
     HTProgressRecipe.Holder,
     HTSerializableRecipe<RecipeInput> {
     companion object {
@@ -36,7 +33,7 @@ data class RTEnchantingRecipe(
             instance.group(
                 HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(RTEnchantingRecipe::ingredient),
                 HTItemResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(RTEnchantingRecipe::result),
-                HTProgressData.CODEC.forGetter(RTEnchantingRecipe::progressData)
+                HTProgressData.CODEC.forGetter(RTEnchantingRecipe::progressData),
             ).apply(instance, ::RTEnchantingRecipe)
         }
 
@@ -48,15 +45,14 @@ data class RTEnchantingRecipe(
             RTEnchantingRecipe::result,
             HTProgressData.STREAM_CODEC,
             RTEnchantingRecipe::progressData,
-            ::RTEnchantingRecipe
+            ::RTEnchantingRecipe,
         )
 
         @JvmField
         val SERIALIZER: RecipeSerializer<RTEnchantingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(first: ItemInstance, second: ItemInstance): Boolean =
-        BOOK_INGREDIENT.test(first) && ingredient.test(second)
+    override fun test(first: ItemInstance, second: ItemInstance): Boolean = BOOK_INGREDIENT.test(first) && ingredient.test(second)
 
     override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
 

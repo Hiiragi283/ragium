@@ -21,8 +21,7 @@ import java.util.function.BiConsumer
 sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.Provider) : LootTableSubProvider {
     protected val fortune: Holder<Enchantment> by lazy { provider.getOrThrow(Enchantments.FORTUNE) }
 
-    protected inline fun buildTable(builderAction: HTLootTableBuilder.() -> Unit): LootTable.Builder =
-        HTLootTableBuilder.build(builderAction)
+    protected inline fun buildTable(builderAction: HTLootTableBuilder.() -> Unit): LootTable.Builder = HTLootTableBuilder.build(builderAction)
 
     //    ForBlock    //
 
@@ -36,7 +35,7 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
                         +item(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR)
                             .apply(ApplyBonusCount.addOreBonusCount(fortune))
                     }
-                }
+                },
             )
             output.accept(
                 RagiumGlobalLootTables.CINNABAR_FROM_REDSTONE_ORES,
@@ -45,7 +44,7 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
                         +item(HTItemPart.GEM, RagiumMaterial.Gem.CINNABAR)
                             .apply(ApplyBonusCount.addOreBonusCount(fortune))
                     }
-                }
+                },
             )
             output.accept(
                 RagiumGlobalLootTables.FLUORITE_FROM_LAPIS_ORES,
@@ -54,7 +53,7 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
                         +item(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE)
                             .apply(ApplyBonusCount.addOreBonusCount(fortune))
                     }
-                }
+                },
             )
             output.accept(
                 RagiumGlobalLootTables.CARBON_FROM_DIAMOND_ORES,
@@ -63,7 +62,7 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
                         +item(HTItemPart.DUST, RagiumMaterial.Chemicals.CARBON)
                             .apply(ApplyBonusCount.addOreBonusCount(fortune))
                     }
-                }
+                },
             )
         }
 
@@ -85,11 +84,11 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
                             .apply(
                                 EnchantedCountIncreaseFunction.lootingMultiplier(
                                     provider,
-                                    UniformGenerator.between(0f, 1f)
-                                )
+                                    UniformGenerator.between(0f, 1f),
+                                ),
                             )
                     }
-                }
+                },
             )
             // Drops Trader Catalog from Wandering Trader
             /*output.accept(

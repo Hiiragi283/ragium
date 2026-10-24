@@ -9,11 +9,9 @@ import net.minecraft.world.item.ItemStack
 import java.util.Optional
 
 class HTMemoryDiscItem(properties: Properties) : Item(properties) {
-    override fun getTooltipImage(stack: ItemStack): Optional<TooltipComponent> =
-        stack.get(RagiumDataComponents.MEMORY_DISC_DATA)
-            ?.let(::HTMemoryDiscTooltipComponent)
-            .toOptional()
+    override fun getTooltipImage(stack: ItemStack): Optional<TooltipComponent> = stack.get(RagiumDataComponents.MEMORY_DISC_DATA)
+        ?.let(::HTMemoryDiscTooltipComponent)
+        .toOptional()
 
-    override fun isFoil(stack: ItemStack): Boolean =
-        stack.has(RagiumDataComponents.MEMORY_DISC_DATA) || super.isFoil(stack)
+    override fun isFoil(stack: ItemStack): Boolean = stack.has(RagiumDataComponents.MEMORY_DISC_DATA) || super.isFoil(stack)
 }

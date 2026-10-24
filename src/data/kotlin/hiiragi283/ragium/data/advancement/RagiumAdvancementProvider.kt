@@ -27,7 +27,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         key: AdvancementKey,
         parentKey: AdvancementKey,
         item: HTSimpleDeferredItem,
-        type: AdvancementType = AdvancementType.TASK
+        type: AdvancementType = AdvancementType.TASK,
     ) {
         HTAdvancementBuilder.create(key) {
             +parentKey
@@ -43,7 +43,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         key: AdvancementKey,
         parentKey: AdvancementKey,
         item: HTSimpleDeferredBlockAndItem,
-        type: AdvancementType = AdvancementType.TASK
+        type: AdvancementType = AdvancementType.TASK,
     ) {
         HTAdvancementBuilder.create(key) {
             +parentKey
@@ -55,12 +55,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         }.save(exporter)
     }
 
-    private fun createSimple(
-        key: AdvancementKey,
-        parentKey: AdvancementKey,
-        part: HTItemPart,
-        material: RagiumMaterial
-    ) {
+    private fun createSimple(key: AdvancementKey, parentKey: AdvancementKey, part: HTItemPart, material: RagiumMaterial) {
         val item: HTSimpleDeferredItem = RagiumItems.getOrThrow(part, material)
         HTAdvancementBuilder.create(key) {
             +parentKey
@@ -86,70 +81,70 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             RagiumAdvancementKeys.SOOTY_IRON,
             RagiumAdvancementKeys.ROOT,
             HTItemPart.INGOT,
-            RagiumMaterial.Alloy.SOOTY_IRON
+            RagiumMaterial.Alloy.SOOTY_IRON,
         )
         // Mechanical
         createSimple(
             RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
             RagiumAdvancementKeys.SOOTY_IRON,
             RagiumItems.getParts(HTMachineType.MECHANICAL),
-            AdvancementType.GOAL
+            AdvancementType.GOAL,
         )
         createSimple(
             RagiumAdvancementKeys.ASSEMBLER,
             RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
-            RagiumBlocks.ASSEMBLER
+            RagiumBlocks.ASSEMBLER,
         )
         createSimple(
             RagiumAdvancementKeys.CRUSHER,
             RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
-            RagiumBlocks.CRUSHER
+            RagiumBlocks.CRUSHER,
         )
         createSimple(
             RagiumAdvancementKeys.UPGRADE_STATION,
             RagiumAdvancementKeys.SOOTY_IRON,
             RagiumBlocks.UPGRADE_STATION,
-            AdvancementType.GOAL
+            AdvancementType.GOAL,
         )
         // Heat
         createSimple(
             RagiumAdvancementKeys.HEAT_MACHINE_PARTS,
             RagiumAdvancementKeys.ASSEMBLER,
             RagiumItems.getParts(HTMachineType.HEAT),
-            AdvancementType.GOAL
+            AdvancementType.GOAL,
         )
         createSimple(
             RagiumAdvancementKeys.ALLOY_SMELTER,
             RagiumAdvancementKeys.HEAT_MACHINE_PARTS,
-            RagiumBlocks.ALLOY_SMELTER
+            RagiumBlocks.ALLOY_SMELTER,
         )
         createSimple(
             RagiumAdvancementKeys.BLACK_STEEL,
             RagiumAdvancementKeys.ALLOY_SMELTER,
             HTItemPart.INGOT,
-            RagiumMaterial.Alloy.BLACK_STEEL
+            RagiumMaterial.Alloy.BLACK_STEEL,
         )
         createSimple(
             RagiumAdvancementKeys.FREEZER,
             RagiumAdvancementKeys.HEAT_MACHINE_PARTS,
-            RagiumBlocks.FREEZER
+            RagiumBlocks.FREEZER,
         )
         createSimple(
             RagiumAdvancementKeys.MELTER,
             RagiumAdvancementKeys.HEAT_MACHINE_PARTS,
-            RagiumBlocks.MELTER
+            RagiumBlocks.MELTER,
         )
         // Chemical
         createSimple(
             RagiumAdvancementKeys.CHEMICAL_MACHINE_PARTS,
             RagiumAdvancementKeys.BLACK_STEEL,
             RagiumItems.getParts(HTMachineType.CHEMICAL),
-            AdvancementType.GOAL
+            AdvancementType.GOAL,
         )
         createSimple(
             RagiumAdvancementKeys.CHEMICAL_BATH,
             RagiumAdvancementKeys.CHEMICAL_MACHINE_PARTS,
-            RagiumBlocks.CHEMICAL_BATH
+            RagiumBlocks.CHEMICAL_BATH,
         )
     }
 

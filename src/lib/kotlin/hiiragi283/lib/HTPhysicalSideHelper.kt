@@ -37,7 +37,7 @@ data object HTPhysicalSideHelper {
     @JvmStatic
     inline fun <T> runForSide(client: (Level) -> T, server: (MinecraftServer) -> T): T? = runForDist(
         { Minecraft.getInstance().level?.let(client) },
-        { ServerLifecycleHooks.getCurrentServer()?.let(server) }
+        { ServerLifecycleHooks.getCurrentServer()?.let(server) },
     )
 
     //    Registry    //
@@ -50,15 +50,13 @@ data object HTPhysicalSideHelper {
     fun getRegistryAccess(): RegistryAccess? = runForSide(Level::registryAccess, MinecraftServer::registryAccess)
 
     @JvmStatic
-    fun <T : Any> registry(registryKey: RegistryKey<T>): Registry<T>? =
-        getRegistryAccess()?.lookup(registryKey)?.getOrNull()
+    fun <T : Any> registry(registryKey: RegistryKey<T>): Registry<T>? = getRegistryAccess()?.lookup(registryKey)?.getOrNull()
 
     /**
      * @since 26.1.5
      */
     @JvmStatic
-    fun <T : Any> registryOrThrow(registryKey: RegistryKey<T>): Registry<T> =
-        (getRegistryAccess() ?: RegistryAccess.EMPTY).lookupOrThrow(registryKey)
+    fun <T : Any> registryOrThrow(registryKey: RegistryKey<T>): Registry<T> = (getRegistryAccess() ?: RegistryAccess.EMPTY).lookupOrThrow(registryKey)
 
     //    Feature Flag    //
 
@@ -67,12 +65,10 @@ data object HTPhysicalSideHelper {
      * @return クライアント側でワールドを読み込んでいない，またはサーバーのインスタンスが作成されていない場合は[FeatureFlags.DEFAULT_FLAGS]
      **/
     @JvmStatic
-    fun getFeatureFlags(): FeatureFlagSet =
-        runForSide(Level::enabledFeatures) { it.worldData.enabledFeatures() } ?: FeatureFlags.DEFAULT_FLAGS
+    fun getFeatureFlags(): FeatureFlagSet = runForSide(Level::enabledFeatures) { it.worldData.enabledFeatures() } ?: FeatureFlags.DEFAULT_FLAGS
 
     @JvmStatic
-    fun <T : FeatureElement> filteredLookup(registry: Registry<T>): HolderLookup.RegistryLookup<T> =
-        registry.filterFeatures(getFeatureFlags())
+    fun <T : FeatureElement> filteredLookup(registry: Registry<T>): HolderLookup.RegistryLookup<T> = registry.filterFeatures(getFeatureFlags())
 
     //    RecipeMap    //
 
@@ -89,7 +85,7 @@ data object HTPhysicalSideHelper {
         { level: Level -> HTRecipeLookup.Context(cachedRecipes, level.registryAccess()) },
         { server: MinecraftServer ->
             HTRecipeLookup.Context(server.recipeManager.recipeMap(), server.registryAccess())
-        }
+        },
     ) ?: HTRecipeLookup.Context.EMPTY
 
     @SubscribeEvent

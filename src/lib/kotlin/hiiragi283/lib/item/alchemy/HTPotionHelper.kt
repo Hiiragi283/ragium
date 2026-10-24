@@ -34,8 +34,7 @@ data object HTPotionHelper {
      * @return 値を保持していない場合は[PotionContents.EMPTY]
      */
     @JvmStatic
-    fun getContentsOrEmpty(getter: DataComponentGetter): PotionContents =
-        getter.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
+    fun getContentsOrEmpty(getter: DataComponentGetter): PotionContents = getter.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
 
     /**
      * 指定した[getter]から[PotionContents]を取得します。
@@ -43,8 +42,7 @@ data object HTPotionHelper {
      * @since 26.1.8
      */
     @JvmStatic
-    fun getContentsNotEmpty(getter: DataComponentGetter): PotionContents? =
-        getContentsOrEmpty(getter).takeUnless(::isEmpty)
+    fun getContentsNotEmpty(getter: DataComponentGetter): PotionContents? = getContentsOrEmpty(getter).takeUnless(::isEmpty)
 
     /**
      * 指定した[contents]が空かどうか判定します。
@@ -98,12 +96,10 @@ data object HTPotionHelper {
     // Name
 
     @JvmStatic
-    fun getPotionName(getter: DataComponentGetter, bottleType: HTBottleType): Text =
-        getPotionName(getContentsOrEmpty(getter), bottleType)
+    fun getPotionName(getter: DataComponentGetter, bottleType: HTBottleType): Text = getPotionName(getContentsOrEmpty(getter), bottleType)
 
     @JvmStatic
-    fun getPotionName(contents: PotionContents, bottleType: HTBottleType): Text =
-        contents.getName("${bottleType.filledItem.translationKey}.effect.")
+    fun getPotionName(contents: PotionContents, bottleType: HTBottleType): Text = contents.getName("${bottleType.filledItem.translationKey}.effect.")
 
     //    ItemStack    //
 
@@ -114,8 +110,7 @@ data object HTPotionHelper {
         createFilled(getContentsOrEmpty(getter), bottleType)
 
     @JvmStatic
-    fun createFilled(potion: Holder<Potion>, bottleType: HTBottleType): Result<ItemStackTemplate> =
-        createFilled(PotionContents(potion), bottleType)
+    fun createFilled(potion: Holder<Potion>, bottleType: HTBottleType): Result<ItemStackTemplate> = createFilled(PotionContents(potion), bottleType)
 
     @JvmStatic
     fun createFilled(contents: PotionContents, bottleType: HTBottleType): Result<ItemStackTemplate> =
@@ -124,8 +119,7 @@ data object HTPotionHelper {
     // Bucket
 
     @JvmStatic
-    fun createBuket(getter: DataComponentGetter): Result<ItemStackTemplate> =
-        getContentsOrEmpty(getter).let(::createBuket)
+    fun createBuket(getter: DataComponentGetter): Result<ItemStackTemplate> = getContentsOrEmpty(getter).let(::createBuket)
 
     @JvmStatic
     fun createBuket(potion: Holder<Potion>): Result<ItemStackTemplate> = createBuket(PotionContents(potion))
@@ -137,7 +131,7 @@ data object HTPotionHelper {
         isWater(contents) -> Result.success(ItemStackTemplate(Items.WATER_BUCKET))
 
         else -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.asTemplate(
-            patch = createPotionPatch(contents)
+            patch = createPotionPatch(contents),
         )
     }
 
@@ -154,10 +148,9 @@ data object HTPotionHelper {
     }
 
     @JvmStatic
-    fun createFluid(contents: PotionContents, amount: Int = FluidType.BUCKET_VOLUME): Result<FluidStackTemplate> =
-        when {
-            isEmpty(contents) -> Result.failure(IllegalStateException("Could not create FluidStack for empty potion"))
-            isWater(contents) -> Result.success(FluidStackTemplate(Fluids.WATER, amount))
-            else -> HTPotionFluidAccess.INSTANCE.fluidContent.asTemplate(amount, createPotionPatch(contents))
-        }
+    fun createFluid(contents: PotionContents, amount: Int = FluidType.BUCKET_VOLUME): Result<FluidStackTemplate> = when {
+        isEmpty(contents) -> Result.failure(IllegalStateException("Could not create FluidStack for empty potion"))
+        isWater(contents) -> Result.success(FluidStackTemplate(Fluids.WATER, amount))
+        else -> HTPotionFluidAccess.INSTANCE.fluidContent.asTemplate(amount, createPotionPatch(contents))
+    }
 }

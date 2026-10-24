@@ -21,7 +21,7 @@ abstract class HTDoubleRecipeHandler<
     INPUT_A : Any,
     INPUT_B : Any,
     OUTPUT : Any,
-    RECIPE : BiFunction<INPUT_A, INPUT_B, OUTPUT>
+    RECIPE : BiFunction<INPUT_A, INPUT_B, OUTPUT>,
     > : HTRecipeHandler() {
 
     protected val progressor: Progressor<INPUT_A, INPUT_B, RECIPE> = createProgressor()
@@ -115,13 +115,12 @@ abstract class HTDoubleRecipeHandler<
         INPUT_A : Any,
         INPUT_B : Any,
         OUTPUT : Any,
-        RECIPE
+        RECIPE,
         >(
-        val cache: HTDoubleRecipeCache<INPUT_A, INPUT_B, RECIPE>
+        val cache: HTDoubleRecipeCache<INPUT_A, INPUT_B, RECIPE>,
     ) : HTDoubleRecipeHandler<INPUT_A, INPUT_B, OUTPUT, RECIPE>()
         where RECIPE : BiPredicate<INPUT_A, INPUT_B>, RECIPE : BiFunction<INPUT_A, INPUT_B, OUTPUT> {
-        final override fun findRecipe(first: INPUT_A, second: INPUT_B, level: ServerLevel): RECIPE? =
-            cache.findFirstRecipe(first, second, level)
+        final override fun findRecipe(first: INPUT_A, second: INPUT_B, level: ServerLevel): RECIPE? = cache.findFirstRecipe(first, second, level)
 
         override fun serialize(output: ValueOutput) {
             super.serialize(output)

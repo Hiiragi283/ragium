@@ -37,7 +37,7 @@ class RTPlantingRecipe(ingredient: HTItemIngredient, result: HTItemResult, progr
 
     override fun apply(input: ItemInstance): List<ItemStack> = listOf(
         result.create(),
-        getMatchingStack(input).let(HTIngredientHelper::unwrap).copy()
+        getMatchingStack(input).let(HTIngredientHelper::unwrap).copy(),
     )
 
     override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)

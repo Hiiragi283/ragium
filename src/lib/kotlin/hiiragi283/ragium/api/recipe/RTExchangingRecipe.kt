@@ -14,7 +14,7 @@ class RTExchangingRecipe(
     itemIngredient: HTItemIngredient,
     fluidIngredient: HTFluidIngredient,
     result: HTItemOrFluidResult,
-    progressData: HTProgressData
+    progressData: HTProgressData,
 ) : HTItemAndFluidToRecipe.BasicItemAndFluid(itemIngredient, fluidIngredient, result, progressData),
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {

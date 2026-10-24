@@ -49,7 +49,9 @@ interface HTOutputSlot<STACK : Any> {
         /**
          * 出力をすべて受け取れる場合
          */
-        FULL;
+        FULL,
+
+        ;
 
         /**
          * 出力をすべて受け取れた場合は`true`

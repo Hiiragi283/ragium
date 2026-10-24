@@ -118,8 +118,8 @@ abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val i
                     inventory,
                     index + 9,
                     HTSlotHelper.getSlotPosX(index % 9),
-                    103 + (index / 9) * 18 + yOffset
-                )
+                    103 + (index / 9) * 18 + yOffset,
+                ),
             )
         }
     }

@@ -54,7 +54,7 @@ data object HTGuiRenderHelper {
                 tileScaling.height,
                 tileScaling.width,
                 tileScaling.height,
-                color
+                color,
             )
             graphics.disableScissor()
         }
@@ -65,8 +65,7 @@ data object HTGuiRenderHelper {
     /**
      * @since 26.1.8
      */
-    fun getTooltipContext(): Item.TooltipContext =
-        Minecraft.getInstance().let { Item.TooltipContext.of(it.level, it.player) }
+    fun getTooltipContext(): Item.TooltipContext = Minecraft.getInstance().let { Item.TooltipContext.of(it.level, it.player) }
 
     /**
      * @since 26.1.8
@@ -76,6 +75,6 @@ data object HTGuiRenderHelper {
         when (Minecraft.getInstance().options.advancedItemTooltips) {
             true -> TooltipFlag.ADVANCED
             false -> TooltipFlag.NORMAL
-        }
+        },
     )
 }

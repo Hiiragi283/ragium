@@ -23,8 +23,7 @@ data object HTDelegates {
     private class OnceInitialize<T : Any> : ReadWriteProperty<Any?, T> {
         private var value: T? = null
 
-        override fun getValue(thisRef: Any?, property: KProperty<*>): T =
-            value ?: error("Property ${property.name} was not initialized")
+        override fun getValue(thisRef: Any?, property: KProperty<*>): T = value ?: error("Property ${property.name} was not initialized")
 
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
             check(this.value == null) { "Property ${property.name} has already been initialized" }
@@ -55,8 +54,7 @@ data object HTDelegates {
     fun <T : Any> optionalInitialize(): ReadWriteProperty<Any?, Optional<T>> = onceInitialize { Optional.empty() }
 
     @JvmRecord
-    data class LazyDelegate<T : Any>(private val getter: Supplier<out T>, private val setter: Consumer<in T>) :
-        ReadWriteProperty<Any?, T> {
+    data class LazyDelegate<T : Any>(private val getter: Supplier<out T>, private val setter: Consumer<in T>) : ReadWriteProperty<Any?, T> {
         override fun getValue(thisRef: Any?, property: KProperty<*>): T = getter.get()
 
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {

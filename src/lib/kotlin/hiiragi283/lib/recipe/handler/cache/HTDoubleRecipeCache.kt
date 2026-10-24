@@ -14,9 +14,8 @@ import java.util.function.BiPredicate
  * @author Hiiragi Tsubasa
  * @since 26.1.11
  */
-abstract class HTDoubleRecipeCache<INPUT_A : Any, INPUT_B : Any, RECIPE : BiPredicate<INPUT_A, INPUT_B>>(
-    lookup: HTRecipeLookup<RECIPE>
-) : HTBaseRecipeCache<RECIPE>(lookup) {
+abstract class HTDoubleRecipeCache<INPUT_A : Any, INPUT_B : Any, RECIPE : BiPredicate<INPUT_A, INPUT_B>>(lookup: HTRecipeLookup<RECIPE>) :
+    HTBaseRecipeCache<RECIPE>(lookup) {
     /**
      * レシピを取得します。
      * @param first レシピの1番目の入力
@@ -24,8 +23,7 @@ abstract class HTDoubleRecipeCache<INPUT_A : Any, INPUT_B : Any, RECIPE : BiPred
      * @param level レシピ取得時のレベル
      * @return [first]と[second]に一致する最初のレシピ
      */
-    fun findFirstRecipe(first: INPUT_A, second: INPUT_B, level: ServerLevel): RECIPE? =
-        findFirstRecipe(first, second, HTRecipeLookup.Context(level))
+    fun findFirstRecipe(first: INPUT_A, second: INPUT_B, level: ServerLevel): RECIPE? = findFirstRecipe(first, second, HTRecipeLookup.Context(level))
 
     /**
      * レシピを取得します。
@@ -34,8 +32,7 @@ abstract class HTDoubleRecipeCache<INPUT_A : Any, INPUT_B : Any, RECIPE : BiPred
      * @param context レシピ取得時のコンテキスト
      * @return [first]と[second]に一致する最初のレシピ
      */
-    fun findFirstRecipe(first: INPUT_A, second: INPUT_B, context: HTRecipeLookup.Context): RECIPE? =
-        findFirstHolder(first, second, context)?.recipe
+    fun findFirstRecipe(first: INPUT_A, second: INPUT_B, context: HTRecipeLookup.Context): RECIPE? = findFirstHolder(first, second, context)?.recipe
 
     /**
      * [HTRecipeHolder]を取得します。

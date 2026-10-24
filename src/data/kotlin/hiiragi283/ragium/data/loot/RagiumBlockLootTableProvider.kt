@@ -31,7 +31,7 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
         listOf(
             RagiumBlocks.TANK,
             RagiumBlocks.POTION_TANK,
-            RagiumBlocks.CREATIVE_TANK
+            RagiumBlocks.CREATIVE_TANK,
         ).forEach { blockItem: HTSimpleDeferredBlockAndItem ->
             add(blockItem) { block: Block -> copyComponent(block) { include(RagiumDataComponents.FLUID) } }
         }
@@ -39,13 +39,9 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
         add(RagiumBlocks.UPGRADE_STATION, ::copyComponent)
     }
 
-    private inline fun buildTable(builderAction: HTLootTableBuilder.() -> Unit): LootTable.Builder =
-        HTLootTableBuilder.build(builderAction)
+    private inline fun buildTable(builderAction: HTLootTableBuilder.() -> Unit): LootTable.Builder = HTLootTableBuilder.build(builderAction)
 
-    private inline fun copyComponent(
-        block: Block,
-        builderAction: CopyComponentsFunction.Builder.() -> Unit = {}
-    ): LootTable.Builder = buildTable {
+    private inline fun copyComponent(block: Block, builderAction: CopyComponentsFunction.Builder.() -> Unit = {}): LootTable.Builder = buildTable {
         pool {
             +LootItem
                 .lootTableItem(block)
@@ -55,7 +51,7 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
                         .include(DataComponents.CUSTOM_NAME)
                         .include(RagiumDataComponents.OWNER_ID)
                         .include(RagiumDataComponents.UPGRADES)
-                        .apply(builderAction)
+                        .apply(builderAction),
                 )
             +ExplosionCondition.survivesExplosion()
         }

@@ -20,9 +20,9 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 abstract class HTResourceInputSlot<
     TYPE : Any,
     RESOURCE : RegisteredResource<TYPE>,
-    INSTANCE : TypedInstance<TYPE>
+    INSTANCE : TypedInstance<TYPE>,
     >(
-    protected val slot: HTResourceSlot<RESOURCE>
+    protected val slot: HTResourceSlot<RESOURCE>,
 ) : HTInputSlot<INSTANCE> {
     /**
      * 指定した入力が空かどうか判定します。

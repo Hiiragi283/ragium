@@ -35,11 +35,8 @@ interface HTLocationToRecipe<OUTPUT : Any> :
      * @author Hiiragi Tsubasa
      * @since 26.1.11
      */
-    open class BasicFluid(
-        val condition: HTBiomeCondition,
-        val result: HTFluidResult,
-        override val progressData: HTProgressData
-    ) : HTLocationToRecipe<FluidStack>,
+    open class BasicFluid(val condition: HTBiomeCondition, val result: HTFluidResult, override val progressData: HTProgressData) :
+        HTLocationToRecipe<FluidStack>,
         HTProgressRecipe.Holder {
         companion object {
             @JvmStatic
@@ -48,7 +45,7 @@ interface HTLocationToRecipe<OUTPUT : Any> :
                     instance.group(
                         HTBiomeCondition.CODEC.fieldOf("condition").forGetter(BasicFluid::condition),
                         HTFluidResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(BasicFluid::result),
-                        HTProgressData.CODEC.forGetter(BasicFluid::progressData)
+                        HTProgressData.CODEC.forGetter(BasicFluid::progressData),
                     ).apply(instance, factory::create)
                 }
 
@@ -57,7 +54,7 @@ interface HTLocationToRecipe<OUTPUT : Any> :
 
             @JvmStatic
             fun <RECIPE : BasicFluid> streamCodec(
-                factory: HTLocationToFluidRecipeBuilder.Factory<RECIPE>
+                factory: HTLocationToFluidRecipeBuilder.Factory<RECIPE>,
             ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
                 HTBiomeCondition.STREAM_CODEC,
                 BasicFluid::condition,
@@ -65,7 +62,7 @@ interface HTLocationToRecipe<OUTPUT : Any> :
                 BasicFluid::result,
                 HTProgressData.STREAM_CODEC,
                 BasicFluid::progressData,
-                factory::create
+                factory::create,
             )
         }
 

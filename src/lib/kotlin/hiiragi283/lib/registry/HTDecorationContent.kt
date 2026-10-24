@@ -23,7 +23,7 @@ data class HTDecorationContent(
     val slab: HTBasicDeferredBlockAndItem<SlabBlock>,
     val stairs: HTBasicDeferredBlockAndItem<StairBlock>?,
     val wall: HTBasicDeferredBlockAndItem<WallBlock>?,
-    val parent: () -> HTDecorationContent?
+    val parent: () -> HTDecorationContent?,
 ) {
     companion object {
         @JvmStatic
@@ -37,17 +37,17 @@ data class HTDecorationContent(
             base: HTSimpleDeferredBlockAndItem,
             hasStairs: Boolean = true,
             hasWall: Boolean = true,
-            parent: () -> HTDecorationContent? = { null }
+            parent: () -> HTDecorationContent? = { null },
         ): HTDecorationContent = HTDecorationContent(
             base,
             register.registerSimple(
                 "${name}_slab",
-                blockFactory = { key: ResourceKey<Block> -> SlabBlock(copyOf(key, base)) }
+                blockFactory = { key: ResourceKey<Block> -> SlabBlock(copyOf(key, base)) },
             ),
             when (hasStairs) {
                 true -> register.registerSimple(
                     "${name}_stairs",
-                    blockFactory = { key: ResourceKey<Block> -> StairBlock(base.defaultState, copyOf(key, base)) }
+                    blockFactory = { key: ResourceKey<Block> -> StairBlock(base.defaultState, copyOf(key, base)) },
                 )
 
                 false -> null
@@ -55,12 +55,12 @@ data class HTDecorationContent(
             when (hasWall) {
                 true -> register.registerSimple(
                     "${name}_wall",
-                    blockFactory = { key: ResourceKey<Block> -> WallBlock(copyOf(key, base)) }
+                    blockFactory = { key: ResourceKey<Block> -> WallBlock(copyOf(key, base)) },
                 )
 
                 false -> null
             },
-            parent
+            parent,
         )
     }
 

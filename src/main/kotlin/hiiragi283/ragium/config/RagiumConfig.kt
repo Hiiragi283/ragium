@@ -41,10 +41,10 @@ data object RagiumConfig {
                         RagiumAPI.MOD_ID,
                         HTConstants.MINECRAFT,
                         "alltheores",
-                        "mekanism"
+                        "mekanism",
                     ),
                     { "" },
-                    { obj: Any -> obj is String }
+                    { obj: Any -> obj is String },
                 )
 
         @JvmField

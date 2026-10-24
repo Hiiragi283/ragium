@@ -19,8 +19,7 @@ data object HTMachineOwnerProvider {
     val ID: Identifier = RagiumAPI.id("machine_owner")
 
     data object Server : StreamServerDataProvider<BlockAccessor, String> {
-        override fun streamData(accessor: BlockAccessor): String? =
-            (accessor.blockEntity as? HTOwnedBlockEntity)?.getOwnerName()
+        override fun streamData(accessor: BlockAccessor): String? = (accessor.blockEntity as? HTOwnedBlockEntity)?.getOwnerName()
 
         override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, String> = ByteBufCodecs.STRING_UTF8.cast()
 

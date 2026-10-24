@@ -15,6 +15,5 @@ class HTEnergySlotWidget(handler: HTEnergyHandler, x: Int, y: Int) :
     @Suppress("NonExtendableApiUsage")
     override fun getCapacityAsInt(): Int = super.getCapacityAsInt()
 
-    override fun toString(): String =
-        "HTEnergySlotWidget(bounds=$bounds, amount=$amountAsLong, capacity=$capacityAsLong)"
+    override fun toString(): String = "HTEnergySlotWidget(bounds=$bounds, amount=$amountAsLong, capacity=$capacityAsLong)"
 }

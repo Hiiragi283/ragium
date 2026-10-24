@@ -49,8 +49,8 @@ data object RagiumWorldData {
                         Feature.LAKE,
                         LakeFeature.Configuration(
                             BlockStateProvider.simple(it),
-                            BlockStateProvider.simple(Blocks.MUD)
-                        )
+                            BlockStateProvider.simple(Blocks.MUD),
+                        ),
                     )
                 }
                 // Ore
@@ -88,8 +88,8 @@ data object RagiumWorldData {
                         RarityFilter.onAverageOnceEvery(200),
                         InSquarePlacement.spread(),
                         PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
-                        BiomeFilter.biome()
-                    )
+                        BiomeFilter.biome(),
+                    ),
                 )
                 // Ore
                 /*fun commonOrePlacement(count: Int, range: PlacementModifier): List<PlacementModifier> = listOf(
@@ -138,7 +138,7 @@ data object RagiumWorldData {
                     context,
                     CRUDE_OIL_LAKE,
                     BiomeTags.IS_OVERWORLD,
-                    GenerationStep.Decoration.LAKES
+                    GenerationStep.Decoration.LAKES,
                 )
                 // Ore
                 /*HTWorldGenHelper.register(

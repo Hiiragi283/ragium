@@ -94,7 +94,7 @@ data object RagiumClient : HTClientMod() {
                     gui.getLeftPos() + x - 1,
                     gui.getTopPos() + y - 1,
                     width,
-                    height
+                    height,
                 )
             }
         }
@@ -275,7 +275,7 @@ data object RagiumClient : HTClientMod() {
     @JvmStatic
     private fun registerTooltipAppenders(event: RegisterTooltipAppendersEvent) {
         event.registerAppender(
-            TooltipLocation.HEAD
+            TooltipLocation.HEAD,
         ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
             if (!stack.`is`(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)) return@registerAppender
             val view: HTFluidView = HTFluidCapabilities.getSlot(stack, 0) ?: return@registerAppender
@@ -289,14 +289,14 @@ data object RagiumClient : HTClientMod() {
                     ChatFormatting.LIGHT_PURPLE,
                     resource.hoverName,
                     ChatFormatting.GRAY,
-                    HTCommonTranslation.INFINITE
+                    HTCommonTranslation.INFINITE,
                 )
 
                 else -> HTCommonTranslation.STORED_MB.translateColored(
                     ChatFormatting.LIGHT_PURPLE,
                     resource.hoverName,
                     ChatFormatting.GRAY,
-                    view.amount
+                    view.amount,
                 )
             }.let(builder::accept)
             // Tank Capacity
@@ -304,28 +304,28 @@ data object RagiumClient : HTClientMod() {
                 true -> HTCommonTranslation.CAPACITY.translateColored(
                     ChatFormatting.BLUE,
                     ChatFormatting.GRAY,
-                    HTCommonTranslation.INFINITE
+                    HTCommonTranslation.INFINITE,
                 )
 
                 false -> HTCommonTranslation.CAPACITY_MB.translateColored(
                     ChatFormatting.BLUE,
                     ChatFormatting.GRAY,
-                    view.currentCapacity
+                    view.currentCapacity,
                 )
             }.let(builder::accept)
         }
 
         event.registerAppender(
             TooltipLocation.PRE_ITEM_INFO,
-            TooltipAppender.createComponentAppender(RagiumDataComponents.ITEM_TOOLTIP)
+            TooltipAppender.createComponentAppender(RagiumDataComponents.ITEM_TOOLTIP),
         )
         event.registerAppender(
             TooltipLocation.PRE_ITEM_INFO,
-            TooltipAppender.createComponentAppender(RagiumDataComponents.UPGRADE)
+            TooltipAppender.createComponentAppender(RagiumDataComponents.UPGRADE),
         )
         event.registerAppender(
             TooltipLocation.PRE_ITEM_INFO,
-            TooltipAppender.createComponentAppender(RagiumDataComponents.UPGRADES)
+            TooltipAppender.createComponentAppender(RagiumDataComponents.UPGRADES),
         )
     }
 }

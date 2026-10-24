@@ -6,7 +6,7 @@ import hiiragi283.lib.transfer.item.HTItemSlot
 class HTBasicItemSlotHolder private constructor(
     configGetter: HTSlotInfoProvider?,
     slots: List<HTItemSlot>,
-    slotMap: Map<HTSlotInfo, List<HTItemSlot>>
+    slotMap: Map<HTSlotInfo, List<HTItemSlot>>,
 ) : HTSlottedCapabilityHolder<HTItemSlot>(configGetter, slots, slotMap),
     HTResourceSlotHolder<HTItemSlot> {
     companion object {
@@ -17,6 +17,6 @@ class HTBasicItemSlotHolder private constructor(
     class Builder(configGetter: HTSlotInfoProvider?) :
         HTSlottedCapabilityHolder.Builder<HTItemSlot, HTResourceSlotHolder<HTItemSlot>>(
             configGetter,
-            ::HTBasicItemSlotHolder
+            ::HTBasicItemSlotHolder,
         )
 }

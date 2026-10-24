@@ -16,13 +16,7 @@ import net.minecraft.world.phys.BlockHitResult
 class HTUpgradeStationBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) :
     HTHorizontalEntityBlock(type, properties),
     HTBlockWidgetHolderContext.Factory {
-    override fun useWithoutItem(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult
-    ): InteractionResult {
+    override fun useWithoutItem(state: BlockState, level: Level, pos: BlockPos, player: Player, hitResult: BlockHitResult): InteractionResult {
         if (player is ServerPlayer) {
             HTBlockWidgetHolderContext.openMenu(player, pos)
         }

@@ -15,22 +15,13 @@ import net.minecraft.world.item.TooltipFlag
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTAbstractWidgetRenderer<WIDGET : HTWidget>(
-    protected val gui: HTGuiAccess,
-    protected val widget: WIDGET
-) : Renderable {
+abstract class HTAbstractWidgetRenderer<WIDGET : HTWidget>(protected val gui: HTGuiAccess, protected val widget: WIDGET) : Renderable {
     final override fun extractRenderState(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, a: Float) {
         val bounds: HTBounds = widget.bounds.offset(gui.getLeftPos(), gui.getTopPos())
         render(bounds, graphics, mouseX, mouseY, a)
     }
 
-    protected abstract fun render(
-        bounds: HTBounds,
-        graphics: GuiGraphicsExtractor,
-        mouseX: Int,
-        mouseY: Int,
-        partialTick: Float
-    )
+    protected abstract fun render(bounds: HTBounds, graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, partialTick: Float)
 
     /**
      * @since 26.1.11
@@ -40,17 +31,17 @@ abstract class HTAbstractWidgetRenderer<WIDGET : HTWidget>(
         graphics: GuiGraphicsExtractor,
         mouseX: Int,
         mouseY: Int,
-        action: (context: Item.TooltipContext, flag: TooltipFlag) -> List<Text>
+        action: (context: Item.TooltipContext, flag: TooltipFlag) -> List<Text>,
     ) {
         if (bounds.contains(mouseX, mouseY)) {
             graphics.setTooltipForNextFrame(
                 Minecraft.getInstance().font,
                 action(
                     HTGuiRenderHelper.getTooltipContext(),
-                    HTGuiRenderHelper.getTooltipFlag()
+                    HTGuiRenderHelper.getTooltipFlag(),
                 ).map(Text::getVisualOrderText),
                 mouseX,
-                mouseY
+                mouseY,
             )
         }
     }

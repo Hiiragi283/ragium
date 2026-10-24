@@ -46,8 +46,7 @@ data object RagiumFluids {
     private fun liquid(): FluidType.Properties = create(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
 
     @JvmStatic
-    private fun gaseous(): FluidType.Properties =
-        liquid().canSwim(false).canExtinguish(false).supportsBoating(false).density(-1000)
+    private fun gaseous(): FluidType.Properties = liquid().canSwim(false).canExtinguish(false).supportsBoating(false).density(-1000)
 
     @JvmStatic
     private fun molten(lightLevel: Int = 15, temp: Int = 1300): FluidType.Properties =

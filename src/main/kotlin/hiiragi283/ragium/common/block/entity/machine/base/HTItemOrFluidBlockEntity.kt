@@ -36,7 +36,7 @@ abstract class HTItemOrFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
     HTProcessorBlockEntity.Energized(type, pos, state) {
     fun createRecipeHandler(lookup: HTRecipeLookup<HTItemOrFluidRecipe>, sound: HTSoundInstance): HTRecipeHandler =
         object : HTDoubleRecipeHandler.Cached<ItemInstance, FluidInstance, HTItemAndFluidStack, HTItemOrFluidRecipe>(
-            HTRecipeCacheHelper.ItemAndFluid(lookup, true)
+            HTRecipeCacheHelper.ItemAndFluid(lookup, true),
         ) {
             private val inputTank: HTInputSlot<FluidInstance> by lazy {
                 HTInputHandlerHelper.forFluid(this@HTItemOrFluidBlockEntity.inputTank)
@@ -51,35 +51,25 @@ abstract class HTItemOrFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
                 HTOutputSlotHelper.forItem(this@HTItemOrFluidBlockEntity.outputSlot)
             }
 
-            override fun createProgressor(): Progressor<ItemInstance, FluidInstance, HTItemOrFluidRecipe> =
-                DoubleProgressor()
+            override fun createProgressor(): Progressor<ItemInstance, FluidInstance, HTItemOrFluidRecipe> = DoubleProgressor()
 
             override fun getFirstInput(): ItemInstance = inputSlot.getStoredInput()
 
             override fun getSecondInput(): FluidInstance = inputTank.getStoredInput()
 
-            override fun canComplete(
-                recipe: HTItemOrFluidRecipe,
-                first: ItemInstance,
-                second: FluidInstance,
-                output: HTItemAndFluidStack
-            ): Boolean = useTransaction { transaction: Transaction ->
-                val (itemInput: ItemInstance, fluidInput: FluidInstance) = recipe.getMatchingStack(first, second)
-                val (itemOutput: ItemStack, fluidOutput: FluidStack) = output
-                when {
-                    inputSlot.use(itemInput, transaction).failed -> false
-                    inputTank.use(fluidInput, transaction).failed -> false
-                    !outputSlot.take(itemOutput, transaction).fullOrNoneTaken -> false
-                    else -> outputTank.take(fluidOutput, transaction).fullOrNoneTaken
+            override fun canComplete(recipe: HTItemOrFluidRecipe, first: ItemInstance, second: FluidInstance, output: HTItemAndFluidStack): Boolean =
+                useTransaction { transaction: Transaction ->
+                    val (itemInput: ItemInstance, fluidInput: FluidInstance) = recipe.getMatchingStack(first, second)
+                    val (itemOutput: ItemStack, fluidOutput: FluidStack) = output
+                    when {
+                        inputSlot.use(itemInput, transaction).failed -> false
+                        inputTank.use(fluidInput, transaction).failed -> false
+                        !outputSlot.take(itemOutput, transaction).fullOrNoneTaken -> false
+                        else -> outputTank.take(fluidOutput, transaction).fullOrNoneTaken
+                    }
                 }
-            }
 
-            override fun onComplete(
-                recipe: HTItemOrFluidRecipe,
-                first: ItemInstance,
-                second: FluidInstance,
-                output: HTItemAndFluidStack
-            ) {
+            override fun onComplete(recipe: HTItemOrFluidRecipe, first: ItemInstance, second: FluidInstance, output: HTItemAndFluidStack) {
                 useTransaction { transaction: Transaction ->
                     val (itemInput: ItemInstance, fluidInput: FluidInstance) = recipe.getMatchingStack(first, second)
                     val (itemOutput: ItemStack, fluidOutput: FluidStack) = output
@@ -120,7 +110,7 @@ abstract class HTItemOrFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
             0,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
-            HTBackgroundType.INPUT
+            HTBackgroundType.INPUT,
         )
         widgetHolder.track(inputSlot)
         widgetHolder += HTFluidWidget.Tank(
@@ -128,7 +118,7 @@ abstract class HTItemOrFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
             HTSlotHelper.getSlotPosX(1),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
-            false
+            false,
         )
         widgetHolder.track(inputTank)
         // output
@@ -137,7 +127,7 @@ abstract class HTItemOrFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
             1,
             HTSlotHelper.getSlotPosX(5.5),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT
+            HTBackgroundType.OUTPUT,
         )
         widgetHolder.track(outputSlot)
         widgetHolder += HTFluidWidget.Tank(
@@ -145,7 +135,7 @@ abstract class HTItemOrFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
             HTSlotHelper.getSlotPosX(7),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
-            false
+            false,
         )
         widgetHolder.track(outputTank)
     }

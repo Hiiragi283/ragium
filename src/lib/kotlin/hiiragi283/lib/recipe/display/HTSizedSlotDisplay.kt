@@ -22,7 +22,7 @@ data class HTSizedSlotDisplay(val unsized: SlotDisplay, val size: Int) : SlotDis
         val CODEC: MapCodec<HTSizedSlotDisplay> = HTCodecs.recordMap { instance ->
             instance.group(
                 SlotDisplay.CODEC.fieldOf("unsized").forGetter(HTSizedSlotDisplay::unsized),
-                HTCodecs.POSITIVE_INT.optionalFieldOf("size", 1).forGetter(HTSizedSlotDisplay::size)
+                HTCodecs.POSITIVE_INT.optionalFieldOf("size", 1).forGetter(HTSizedSlotDisplay::size),
             ).apply(instance, ::HTSizedSlotDisplay)
         }
 
@@ -32,27 +32,26 @@ data class HTSizedSlotDisplay(val unsized: SlotDisplay, val size: Int) : SlotDis
             HTSizedSlotDisplay::unsized,
             ByteBufCodecs.VAR_INT,
             HTSizedSlotDisplay::size,
-            ::HTSizedSlotDisplay
+            ::HTSizedSlotDisplay,
         )
 
         @JvmField
         val TYPE: SlotDisplay.Type<HTSizedSlotDisplay> = SlotDisplay.Type(CODEC, STREAM_CODEC)
     }
 
-    override fun <T : Any> resolve(context: ContextMap, builder: DisplayContentsFactory<T>): Stream<T> =
-        when (builder) {
-            is ForFluidStacks<T> -> unsized.resolve(
-                context,
-                ForFluidStacks { it.copyWithAmount(size) }
-            ).map(builder::forStack)
+    override fun <T : Any> resolve(context: ContextMap, builder: DisplayContentsFactory<T>): Stream<T> = when (builder) {
+        is ForFluidStacks<T> -> unsized.resolve(
+            context,
+            ForFluidStacks { it.copyWithAmount(size) },
+        ).map(builder::forStack)
 
-            is DisplayContentsFactory.ForStacks<T> -> unsized.resolve(
-                context,
-                DisplayContentsFactory.ForStacks { it.copyWithCount(size) }
-            ).map(builder::forStack)
+        is DisplayContentsFactory.ForStacks<T> -> unsized.resolve(
+            context,
+            DisplayContentsFactory.ForStacks { it.copyWithCount(size) },
+        ).map(builder::forStack)
 
-            else -> Stream.empty()
-        }
+        else -> Stream.empty()
+    }
 
     override fun type(): SlotDisplay.Type<out SlotDisplay> = TYPE
 }

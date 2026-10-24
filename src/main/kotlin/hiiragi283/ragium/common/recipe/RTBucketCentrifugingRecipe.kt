@@ -21,7 +21,7 @@ data object RTBucketCentrifugingRecipe : HTItemSeparatingRecipe, HTProgressRecip
 
     override fun apply(input: ItemInstance): HTItemSeparatingRecipe.Output = HTItemSeparatingRecipe.Output(
         input.craftingRemainder.createOrEmpty(),
-        HTIngredientHelper.unwrap(input).let(FluidUtil::getFirstStackContained)
+        HTIngredientHelper.unwrap(input).let(FluidUtil::getFirstStackContained),
     )
 
     override fun getMatchingStack(input: ItemInstance): ItemInstance = when {

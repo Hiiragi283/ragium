@@ -33,14 +33,14 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
         registryKey: RegistryKey<T>,
         lookupProvider: CompletableFuture<HolderLookup.Provider>,
         parentProvider: CompletableFuture<TagLookup<T>>,
-        modId: String
+        modId: String,
     ) : super(output, registryKey, lookupProvider, parentProvider, modId)
 
     constructor(
         output: PackOutput,
         registryKey: RegistryKey<T>,
         lookupProvider: CompletableFuture<HolderLookup.Provider>,
-        modId: String
+        modId: String,
     ) : super(output, registryKey, lookupProvider, modId)
 
     private val entryCache = SetMultiMapBuilder<TagKey<T>, TagEntry>(Object2ObjectLinkedOpenHashMap()) {
@@ -66,8 +66,7 @@ abstract class HTTagsProvider<T : Any> : TagsProvider<T> {
      * 新しい[HTTagBuilder]のインスタンスを作成します。
      * @param tagKey 生成対象のタグ
      */
-    protected fun builder(tagKey: TagKey<T>): HTTagBuilder<T> =
-        HTTagBuilder { entry: TagEntry -> entryCache.put(tagKey, entry) }
+    protected fun builder(tagKey: TagKey<T>): HTTagBuilder<T> = HTTagBuilder { entry: TagEntry -> entryCache.put(tagKey, entry) }
 
     /**
      * 新しい[HTTagBuilder]のインスタンスを作成します。

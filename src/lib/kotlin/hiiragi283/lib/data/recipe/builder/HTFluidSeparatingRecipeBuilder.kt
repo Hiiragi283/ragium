@@ -29,7 +29,7 @@ class HTFluidSeparatingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pri
         ingredient,
         fluidResults.toNel(),
         itemResult,
-        progressData
+        progressData,
     )
 
     // Ingredient
@@ -81,21 +81,13 @@ class HTFluidSeparatingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pri
      * @since 26.1.11
      */
     fun interface Factory<out RECIPE : Any> {
-        fun create(
-            ingredient: HTFluidIngredient,
-            fluids: Nel<HTFluidResult>,
-            item: Optional<HTItemResult>,
-            progressData: HTProgressData
-        ): RECIPE = create(
-            ingredient,
-            HTFluidSeparatingRecipe.Result(fluids, item),
-            progressData
-        )
+        fun create(ingredient: HTFluidIngredient, fluids: Nel<HTFluidResult>, item: Optional<HTItemResult>, progressData: HTProgressData): RECIPE =
+            create(
+                ingredient,
+                HTFluidSeparatingRecipe.Result(fluids, item),
+                progressData,
+            )
 
-        fun create(
-            ingredient: HTFluidIngredient,
-            result: HTFluidSeparatingRecipe.Result,
-            progressData: HTProgressData
-        ): RECIPE
+        fun create(ingredient: HTFluidIngredient, result: HTFluidSeparatingRecipe.Result, progressData: HTProgressData): RECIPE
     }
 }

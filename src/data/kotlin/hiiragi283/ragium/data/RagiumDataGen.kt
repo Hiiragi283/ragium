@@ -38,7 +38,7 @@ data object RagiumDataGen {
         event.createDatapackRegistryObjects(
             RegistrySetBuilder()
                 .add(Registries.DAMAGE_TYPE, RagiumDamageTypes::bootstrap)
-                .apply(RagiumWorldData::bootstrap)
+                .apply(RagiumWorldData::bootstrap),
         )
 
         // Server
@@ -49,7 +49,7 @@ data object RagiumDataGen {
         event.createLootTables(
             ::RagiumBlockLootTableProvider to LootContextParamSets.BLOCK,
             RagiumGlobalLootTableProvider::ForBlock to LootContextParamSets.BLOCK,
-            RagiumGlobalLootTableProvider::ForEntity to LootContextParamSets.ENTITY
+            RagiumGlobalLootTableProvider::ForEntity to LootContextParamSets.ENTITY,
         )
         event.createProvider(::RagiumGlobalLootModifierProvider)
 

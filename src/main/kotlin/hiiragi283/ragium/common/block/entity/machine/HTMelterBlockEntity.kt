@@ -30,41 +30,39 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
-class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler =
-        object : HTSingleRecipeHandler.Cached<ItemInstance, FluidStack, HTItemToFluidRecipe>(
-            HTRecipeCacheHelper.SingleItem(RagiumRecipeLookups.MELTING)
-        ) {
-            private val inputSlot: HTInputSlot<ItemInstance> by lazy {
-                HTInputHandlerHelper.forItem(this@HTMelterBlockEntity.inputSlot)
-            }
-            private val outputTank: HTOutputSlot<FluidStack> by lazy {
-                HTOutputSlotHelper.forFluid(this@HTMelterBlockEntity.outputTank)
-            }
-
-            override fun createProgressor(): Progressor<ItemInstance, HTItemToFluidRecipe> = SingleProgressor()
-
-            override fun getInput(): ItemInstance = inputSlot.getStoredInput()
-
-            override fun canComplete(recipe: HTItemToFluidRecipe, input: ItemInstance, output: FluidStack): Boolean =
-                useTransaction { transaction: Transaction ->
-                    val inputConsume: ItemInstance = recipe.getMatchingStack(input)
-                    when {
-                        inputSlot.use(inputConsume, transaction).failed -> false
-                        else -> outputTank.take(output, transaction) == HTOutputSlot.TakeResult.FULL
-                    }
-                }
-
-            override fun onComplete(recipe: HTItemToFluidRecipe, input: ItemInstance, output: FluidStack) {
-                useTransaction { transaction: Transaction ->
-                    inputSlot.use(recipe.getMatchingStack(input), transaction)
-                    outputTank.take(output, transaction)
-                    transaction.commit()
-                }
-                playSound(SoundEvents.LAVA_POP)
-            }
+class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER.get(), pos, state) {
+    override fun createRecipeHandler(): HTRecipeHandler = object : HTSingleRecipeHandler.Cached<ItemInstance, FluidStack, HTItemToFluidRecipe>(
+        HTRecipeCacheHelper.SingleItem(RagiumRecipeLookups.MELTING),
+    ) {
+        private val inputSlot: HTInputSlot<ItemInstance> by lazy {
+            HTInputHandlerHelper.forItem(this@HTMelterBlockEntity.inputSlot)
         }
+        private val outputTank: HTOutputSlot<FluidStack> by lazy {
+            HTOutputSlotHelper.forFluid(this@HTMelterBlockEntity.outputTank)
+        }
+
+        override fun createProgressor(): Progressor<ItemInstance, HTItemToFluidRecipe> = SingleProgressor()
+
+        override fun getInput(): ItemInstance = inputSlot.getStoredInput()
+
+        override fun canComplete(recipe: HTItemToFluidRecipe, input: ItemInstance, output: FluidStack): Boolean =
+            useTransaction { transaction: Transaction ->
+                val inputConsume: ItemInstance = recipe.getMatchingStack(input)
+                when {
+                    inputSlot.use(inputConsume, transaction).failed -> false
+                    else -> outputTank.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+                }
+            }
+
+        override fun onComplete(recipe: HTItemToFluidRecipe, input: ItemInstance, output: FluidStack) {
+            useTransaction { transaction: Transaction ->
+                inputSlot.use(recipe.getMatchingStack(input), transaction)
+                outputTank.take(output, transaction)
+                transaction.commit()
+            }
+            playSound(SoundEvents.LAVA_POP)
+        }
+    }
 
     private lateinit var outputTank: HTVariableFluidTank
 
@@ -90,7 +88,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
             0,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(0.5),
-            HTBackgroundType.INPUT
+            HTBackgroundType.INPUT,
         )
         widgetHolder.track(inputSlot)
         // output
@@ -99,7 +97,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
-            false
+            false,
         )
         widgetHolder.track(outputTank)
     }

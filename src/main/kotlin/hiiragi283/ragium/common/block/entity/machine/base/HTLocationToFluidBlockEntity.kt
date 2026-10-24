@@ -25,41 +25,40 @@ import net.neoforged.neoforge.fluids.FluidStack
 abstract class HTLocationToFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
 
-    fun createRecipeHandler(lookup: HTRecipeLookup<HTLocationToFluidRecipe>, sound: HTSoundInstance): HTRecipeHandler =
-        object : HTRecipeHandler() {
-            private val cache: HTRecipeCacheHelper.Located<HTLocationToFluidRecipe> =
-                HTRecipeCacheHelper.Located(lookup)
-            private val outputTank: HTOutputSlot<FluidStack> by lazy {
-                HTOutputSlotHelper.forFluid(this@HTLocationToFluidBlockEntity.outputTank)
-            }
+    fun createRecipeHandler(lookup: HTRecipeLookup<HTLocationToFluidRecipe>, sound: HTSoundInstance): HTRecipeHandler = object : HTRecipeHandler() {
+        private val cache: HTRecipeCacheHelper.Located<HTLocationToFluidRecipe> =
+            HTRecipeCacheHelper.Located(lookup)
+        private val outputTank: HTOutputSlot<FluidStack> by lazy {
+            HTOutputSlotHelper.forFluid(this@HTLocationToFluidBlockEntity.outputTank)
+        }
 
-            private var outputCache: FluidStack? = null
+        private var outputCache: FluidStack? = null
 
-            override fun run() {
-                super.run()
-                outputCache = null
-            }
+        override fun run() {
+            super.run()
+            outputCache = null
+        }
 
-            override fun tick(level: ServerLevel): Boolean {
-                if (!shouldCheck) return false
-                // インプットに一致するレシピを探索する
-                val recipe: HTLocationToFluidRecipe =
-                    cache.findFirstRecipe(level, blockPos, level) ?: return run {
-                        shouldCheck = false
-                        updateProgress(-1)
-                        false
-                    }
-                // アウトプットに完成品を搬出できるか判定する
-                val output: FluidStack = recipe.apply(level, blockPos)
-                outputCache = output
-                if (!canProgress) {
-                    if (useTransaction { outputTank.take(output, it) == HTOutputSlot.TakeResult.FULL }) {
-                        canProgress = true
-                    } else {
-                        return false
-                    }
+        override fun tick(level: ServerLevel): Boolean {
+            if (!shouldCheck) return false
+            // インプットに一致するレシピを探索する
+            val recipe: HTLocationToFluidRecipe =
+                cache.findFirstRecipe(level, blockPos, level) ?: return run {
+                    shouldCheck = false
+                    updateProgress(-1)
+                    false
                 }
-                // レシピの最大進捗量を更新する
+            // アウトプットに完成品を搬出できるか判定する
+            val output: FluidStack = recipe.apply(level, blockPos)
+            outputCache = output
+            if (!canProgress) {
+                if (useTransaction { outputTank.take(output, it) == HTOutputSlot.TakeResult.FULL }) {
+                    canProgress = true
+                } else {
+                    return false
+                }
+            }
+            // レシピの最大進捗量を更新する
             /*val maxProgress: Int = progressor.getMaxProgress(recipe, level, blockPos)
             if (this.maxProgress != maxProgress) {
                 updateProgress(maxProgress)
@@ -68,20 +67,20 @@ abstract class HTLocationToFluidBlockEntity(type: BlockEntityType<*>, pos: Block
             if (progress < maxProgress) {
                 progress += progressor.getProgress()
             }*/
-                // 進捗が最大量を超えたらレシピを実行する
-                if (progress >= maxProgress) {
-                    progress -= maxProgress
-                    canProgress = false
-                    useTransaction {
-                        outputTank.take(output, it)
-                        it.commit()
-                    }
-                    playSound(sound)
-                    outputCache = null
+            // 進捗が最大量を超えたらレシピを実行する
+            if (progress >= maxProgress) {
+                progress -= maxProgress
+                canProgress = false
+                useTransaction {
+                    outputTank.take(output, it)
+                    it.commit()
                 }
-                return true
+                playSound(sound)
+                outputCache = null
             }
+            return true
         }
+    }
 
     private lateinit var outputTank: HTVariableFluidTank
 
@@ -100,7 +99,7 @@ abstract class HTLocationToFluidBlockEntity(type: BlockEntityType<*>, pos: Block
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
-            false
+            false,
         )
         widgetHolder.track(outputTank)
     }

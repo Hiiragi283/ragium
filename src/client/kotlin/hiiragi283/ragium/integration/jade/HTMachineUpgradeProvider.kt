@@ -20,8 +20,7 @@ data object HTMachineUpgradeProvider {
         override fun streamData(accessor: BlockAccessor): HTMachineUpgradeList? =
             accessor.blockEntity?.components()?.get(RagiumDataComponents.UPGRADES)
 
-        override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, HTMachineUpgradeList> =
-            HTMachineUpgradeList.STREAM_CODEC
+        override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, HTMachineUpgradeList> = HTMachineUpgradeList.STREAM_CODEC
 
         override fun getUid(): Identifier = ID
     }

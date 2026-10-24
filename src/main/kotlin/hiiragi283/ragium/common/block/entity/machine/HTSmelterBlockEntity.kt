@@ -63,61 +63,58 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    override fun createRecipeHandler(): HTRecipeHandler =
-        object : HTSingleRecipeHandler<ItemInstance, ItemStack, HTItemToItemRecipe>() {
-            private val inputSlot: HTInputSlot<ItemInstance> by lazy {
-                HTInputHandlerHelper.forItem(this@HTSmelterBlockEntity.inputSlot)
-            }
-            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-                HTOutputSlotHelper.forItem(this@HTSmelterBlockEntity.outputSlot)
-            }
-
-            override fun createProgressor(): Progressor<ItemInstance, HTItemToItemRecipe> = SingleProgressor()
-
-            override fun getInput(): ItemInstance = inputSlot.getStoredInput()
-
-            override fun findRecipe(input: ItemInstance, level: ServerLevel): HTItemToItemRecipe? {
-                val stackIn: ItemStack = typeSlot.getStackCopy()
-                val cache: HTVanillaRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when {
-                    stackIn.`is`(Items.BLAST_FURNACE) -> blastingCache
-                    stackIn.`is`(Items.SMOKER) -> smokingCache
-                    else -> smeltingCache
-                }
-                val input1: SingleRecipeInput = input.let(HTIngredientHelper::unwrap).let(::SingleRecipeInput)
-                return cache.findFirstHolder(input1, level)?.value()?.let(::wrapRecipe)
-            }
-
-            private fun wrapRecipe(recipe: AbstractCookingRecipe): HTItemToItemRecipe = object : HTItemToItemRecipe {
-                val ingredient = HTItemIngredient(recipe.input(), 1)
-
-                override fun test(input: ItemInstance): Boolean = ingredient.test(input)
-
-                override fun apply(input: ItemInstance): ItemStack =
-                    HTIngredientHelper.unwrap(input).let(::SingleRecipeInput).let(recipe::assemble)
-
-                override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
-
-                override fun getProgressData(input: ItemInstance): HTProgressData =
-                    HTProgressData.time(recipe.cookingTime())
-            }
-
-            override fun canComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack): Boolean =
-                useTransaction { transaction: Transaction ->
-                    when {
-                        inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
-                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
-                    }
-                }
-
-            override fun onComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack) {
-                useTransaction { transaction: Transaction ->
-                    inputSlot.use(recipe.getMatchingStack(input), transaction)
-                    outputSlot.take(output, transaction)
-                    transaction.commit()
-                }
-                playSound(SoundEvents.FIRE_EXTINGUISH)
-            }
+    override fun createRecipeHandler(): HTRecipeHandler = object : HTSingleRecipeHandler<ItemInstance, ItemStack, HTItemToItemRecipe>() {
+        private val inputSlot: HTInputSlot<ItemInstance> by lazy {
+            HTInputHandlerHelper.forItem(this@HTSmelterBlockEntity.inputSlot)
         }
+        private val outputSlot: HTOutputSlot<ItemStack> by lazy {
+            HTOutputSlotHelper.forItem(this@HTSmelterBlockEntity.outputSlot)
+        }
+
+        override fun createProgressor(): Progressor<ItemInstance, HTItemToItemRecipe> = SingleProgressor()
+
+        override fun getInput(): ItemInstance = inputSlot.getStoredInput()
+
+        override fun findRecipe(input: ItemInstance, level: ServerLevel): HTItemToItemRecipe? {
+            val stackIn: ItemStack = typeSlot.getStackCopy()
+            val cache: HTVanillaRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when {
+                stackIn.`is`(Items.BLAST_FURNACE) -> blastingCache
+                stackIn.`is`(Items.SMOKER) -> smokingCache
+                else -> smeltingCache
+            }
+            val input1: SingleRecipeInput = input.let(HTIngredientHelper::unwrap).let(::SingleRecipeInput)
+            return cache.findFirstHolder(input1, level)?.value()?.let(::wrapRecipe)
+        }
+
+        private fun wrapRecipe(recipe: AbstractCookingRecipe): HTItemToItemRecipe = object : HTItemToItemRecipe {
+            val ingredient = HTItemIngredient(recipe.input(), 1)
+
+            override fun test(input: ItemInstance): Boolean = ingredient.test(input)
+
+            override fun apply(input: ItemInstance): ItemStack = HTIngredientHelper.unwrap(input).let(::SingleRecipeInput).let(recipe::assemble)
+
+            override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
+
+            override fun getProgressData(input: ItemInstance): HTProgressData = HTProgressData.time(recipe.cookingTime())
+        }
+
+        override fun canComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack): Boolean =
+            useTransaction { transaction: Transaction ->
+                when {
+                    inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
+                    else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+                }
+            }
+
+        override fun onComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack) {
+            useTransaction { transaction: Transaction ->
+                inputSlot.use(recipe.getMatchingStack(input), transaction)
+                outputSlot.take(output, transaction)
+                transaction.commit()
+            }
+            playSound(SoundEvents.FIRE_EXTINGUISH)
+        }
+    }
 
     private lateinit var inputSlot: HTBasicItemSlot
     private lateinit var typeSlot: HTBasicItemSlot
@@ -140,7 +137,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
             0,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0),
-            HTBackgroundType.INPUT
+            HTBackgroundType.INPUT,
         )
         widgetHolder.track(inputSlot)
         widgetHolder += HTItemWidget.Container(
@@ -148,7 +145,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
             1,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(2),
-            HTBackgroundType.NONE
+            HTBackgroundType.NONE,
         )
         widgetHolder.track(typeSlot)
         // output
@@ -157,7 +154,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
             2,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT
+            HTBackgroundType.OUTPUT,
         )
         widgetHolder.track(outputSlot)
     }

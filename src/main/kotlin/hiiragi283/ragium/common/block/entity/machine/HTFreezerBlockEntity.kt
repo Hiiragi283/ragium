@@ -35,7 +35,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FREEZER.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler =
         object : HTDoubleRecipeHandler.Cached<ItemInstance, FluidInstance, ItemStack, RTFreezingRecipe>(
-            HTRecipeCacheHelper.ItemAndFluid(RagiumRecipeLookups.FREEZING, false)
+            HTRecipeCacheHelper.ItemAndFluid(RagiumRecipeLookups.FREEZING, false),
         ) {
             private val inputTank: HTInputSlot<FluidInstance> by lazy {
                 HTInputHandlerHelper.forFluid(this@HTFreezerBlockEntity.inputTank)
@@ -47,31 +47,21 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
                 HTOutputSlotHelper.forItem(this@HTFreezerBlockEntity.outputSlot)
             }
 
-            override fun createProgressor(): Progressor<ItemInstance, FluidInstance, RTFreezingRecipe> =
-                DoubleProgressor()
+            override fun createProgressor(): Progressor<ItemInstance, FluidInstance, RTFreezingRecipe> = DoubleProgressor()
 
             override fun getFirstInput(): ItemInstance = catalystSlot.getStoredInput()
 
             override fun getSecondInput(): FluidInstance = inputTank.getStoredInput()
 
-            override fun canComplete(
-                recipe: RTFreezingRecipe,
-                first: ItemInstance,
-                second: FluidInstance,
-                output: ItemStack
-            ): Boolean = useTransaction { transaction: Transaction ->
-                when {
-                    inputTank.use(second, transaction).failed -> false
-                    else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+            override fun canComplete(recipe: RTFreezingRecipe, first: ItemInstance, second: FluidInstance, output: ItemStack): Boolean =
+                useTransaction { transaction: Transaction ->
+                    when {
+                        inputTank.use(second, transaction).failed -> false
+                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+                    }
                 }
-            }
 
-            override fun onComplete(
-                recipe: RTFreezingRecipe,
-                first: ItemInstance,
-                second: FluidInstance,
-                output: ItemStack
-            ) {
+            override fun onComplete(recipe: RTFreezingRecipe, first: ItemInstance, second: FluidInstance, output: ItemStack) {
                 useTransaction { transaction: Transaction ->
                     inputTank.use(second, transaction)
                     outputSlot.take(output, transaction)
@@ -106,7 +96,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotHelper.getSlotPosX(1),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
-            false
+            false,
         )
         widgetHolder.track(inputTank)
         // catalyst
@@ -115,7 +105,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
             0,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
-            HTBackgroundType.NONE
+            HTBackgroundType.NONE,
         )
         widgetHolder.track(catalystSlot)
         // output
@@ -124,7 +114,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
             1,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT
+            HTBackgroundType.OUTPUT,
         )
         widgetHolder.track(outputSlot)
     }

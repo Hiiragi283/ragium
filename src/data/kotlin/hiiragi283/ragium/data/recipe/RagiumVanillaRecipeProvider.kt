@@ -528,7 +528,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         material: HTMaterialLike,
         gear: HTMaterialLike,
         result: HTSimpleDeferredBlockAndItem,
-        builderAction: IngredientBuilder.() -> Unit
+        builderAction: IngredientBuilder.() -> Unit,
     ) {
         VanillaRecipeBuilders.shaped {
             +"ABA"
@@ -548,7 +548,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.SOOTY_IRON,
             RagiumMaterial.Metal.COPPER,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -558,7 +558,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.SOOTY_IRON,
             RagiumMaterial.Metal.IRON,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -568,7 +568,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.BLACK_STEEL,
             RagiumMaterial.Metal.GOLD,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -578,7 +578,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.BLACK_STEEL,
             RagiumMaterial.Gem.EMERALD,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -588,7 +588,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.BLACK_STEEL,
             RagiumMaterial.Gem.DIAMOND,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -598,7 +598,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.SHADOW_STEEL,
             RagiumMaterial.Alloy.NETHERITE,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -854,7 +854,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private fun ingotToNugget(
         material: RagiumMaterial,
         ingot: HTSimpleDeferredItem? = RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, material],
-        nugget: HTSimpleDeferredItem? = RagiumItems.MATERIAL_ITEMS[HTItemPart.NUGGET, material]
+        nugget: HTSimpleDeferredItem? = RagiumItems.MATERIAL_ITEMS[HTItemPart.NUGGET, material],
     ) {
         if (ingot == null || nugget == null) return
         VanillaRecipeBuilders.shapeless {

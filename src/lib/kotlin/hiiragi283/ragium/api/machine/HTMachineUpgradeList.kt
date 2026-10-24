@@ -41,16 +41,11 @@ class HTMachineUpgradeList private constructor(private val stacks: List<ItemStac
             it.sumOf(HTMachineUpgrade::speed),
             it.sumOf(HTMachineUpgrade::efficiency),
             it.sumOf(HTMachineUpgrade::capacity),
-            it.flatMap(HTMachineUpgrade::customKeys).toSet()
+            it.flatMap(HTMachineUpgrade::customKeys).toSet(),
         )
     }
 
-    override fun addToTooltip(
-        context: Item.TooltipContext,
-        consumer: Consumer<Component>,
-        flag: TooltipFlag,
-        components: DataComponentGetter
-    ) {
+    override fun addToTooltip(context: Item.TooltipContext, consumer: Consumer<Component>, flag: TooltipFlag, components: DataComponentGetter) {
         combinedUpgrade.addToTooltip(context, consumer, flag, components)
     }
 
@@ -59,8 +54,7 @@ class HTMachineUpgradeList private constructor(private val stacks: List<ItemStac
     }
 
     @Suppress("DEPRECATION")
-    override fun equals(other: Any?): Boolean =
-        other is HTMachineUpgradeList && ItemStack.listMatches(this.stacks, other.stacks)
+    override fun equals(other: Any?): Boolean = other is HTMachineUpgradeList && ItemStack.listMatches(this.stacks, other.stacks)
 
     @Suppress("DEPRECATION")
     override fun hashCode(): Int = ItemStack.hashStackList(stacks)

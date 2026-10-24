@@ -13,8 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 
-abstract class HTBaseTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTConfigurableBlockEntity(type, pos, state) {
+abstract class HTBaseTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTConfigurableBlockEntity(type, pos, state) {
     abstract val tank: HTFluidTank
 
     final override fun createFluidHandler(listener: Runnable): HTResourceSlotHolder<HTFluidTank>? {
@@ -29,8 +28,7 @@ abstract class HTBaseTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, st
         level?.updateNeighbourForOutputSignal(blockPos, blockState.block)
     }
 
-    override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
-        HTStorageHelper.calculateRedstoneLevel(tank)
+    override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStorageHelper.calculateRedstoneLevel(tank)
 
     //    Sync    //
 

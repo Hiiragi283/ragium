@@ -8,11 +8,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
-class RTCentrifugingRecipe(
-    ingredient: HTItemIngredient,
-    result: HTItemSeparatingRecipe.Result,
-    progressData: HTProgressData
-) : HTItemSeparatingRecipe.Basic(ingredient, result, progressData),
+class RTCentrifugingRecipe(ingredient: HTItemIngredient, result: HTItemSeparatingRecipe.Result, progressData: HTProgressData) :
+    HTItemSeparatingRecipe.Basic(ingredient, result, progressData),
     HTSerializableRecipe<SingleRecipeInput> {
     companion object {
         @JvmField

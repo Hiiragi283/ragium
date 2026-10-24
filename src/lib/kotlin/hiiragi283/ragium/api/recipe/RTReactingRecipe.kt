@@ -31,7 +31,7 @@ data class RTReactingRecipe(
     val fluidIngredients: Nel<HTFluidIngredient>,
     val catalyst: HTItemCatalyst,
     val result: HTItemOrFluidResult,
-    override val progressData: HTProgressData
+    override val progressData: HTProgressData,
 ) : HTRecipePredicates.DoubleInput<HTFluidRecipeInput, ItemInstance, List<FluidInstance>>,
     HTRecipeFactories.DoubleInput<HTFluidRecipeInput, ItemInstance, List<FluidInstance>, HTItemAndFluidStack>,
     HTProgressRecipe.Holder,
@@ -45,7 +45,7 @@ data class RTReactingRecipe(
                     .forGetter(RTReactingRecipe::fluidIngredients),
                 HTItemCatalyst.CODEC.forGetter(RTReactingRecipe::catalyst),
                 HTItemOrFluidResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(RTReactingRecipe::result),
-                HTProgressData.CODEC.forGetter(RTReactingRecipe::progressData)
+                HTProgressData.CODEC.forGetter(RTReactingRecipe::progressData),
             ).apply(instance, ::RTReactingRecipe)
         }
 
@@ -59,7 +59,7 @@ data class RTReactingRecipe(
             RTReactingRecipe::result,
             HTProgressData.STREAM_CODEC,
             RTReactingRecipe::progressData,
-            ::RTReactingRecipe
+            ::RTReactingRecipe,
         )
 
         @JvmField
@@ -71,19 +71,14 @@ data class RTReactingRecipe(
     override fun test(first: ItemInstance, second: List<FluidInstance>): Boolean =
         catalyst.test(first) && HTIngredientHelper.match(fluidIngredients, second)
 
-    override fun produce(input: HTFluidRecipeInput): HTItemAndFluidStack =
-        apply(input.getItemOrEmpty(0), input.asFluidList())
+    override fun produce(input: HTFluidRecipeInput): HTItemAndFluidStack = apply(input.getItemOrEmpty(0), input.asFluidList())
 
     override fun apply(first: ItemInstance, second: List<FluidInstance>): HTItemAndFluidStack = result.create()
 
-    override fun getMatchingStack(
-        first: ItemInstance,
-        second: List<FluidInstance>
-    ): Pair<ItemInstance, List<FluidInstance>> =
+    override fun getMatchingStack(first: ItemInstance, second: List<FluidInstance>): Pair<ItemInstance, List<FluidInstance>> =
         ItemStack.EMPTY to HTIngredientHelper.getMatchingStacks(fluidIngredients, second)
 
-    override fun getProgressData(input: HTFluidRecipeInput): HTProgressData =
-        getProgressData(input.getItemOrEmpty(0), input.asFluidList())
+    override fun getProgressData(input: HTFluidRecipeInput): HTProgressData = getProgressData(input.getItemOrEmpty(0), input.asFluidList())
 
     override fun getProgressData(first: ItemInstance, second: List<FluidInstance>): HTProgressData = progressData
 

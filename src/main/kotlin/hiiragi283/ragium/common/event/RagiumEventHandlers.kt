@@ -18,7 +18,7 @@ data object RagiumEventHandlers {
         RagiumPotions.FROSTBITE.registerMix(builder, Items.SNOW_BLOCK)
         RagiumPotions.CHEMICAL_BURN.registerMix(
             builder,
-            RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR)
+            RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR),
         )
     }
 }

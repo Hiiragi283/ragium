@@ -28,8 +28,7 @@ import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
-abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTBaseMachineBlockEntity(type, pos, state) {
+abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTBaseMachineBlockEntity(type, pos, state) {
     protected val recipeHandler: HTRecipeHandler by lazy(::createRecipeHandler)
 
     protected abstract fun createRecipeHandler(): HTRecipeHandler
@@ -82,13 +81,11 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
     //    Ticking    //
 
-    final override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean =
-        recipeHandler.tick(level)
+    final override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = recipeHandler.tick(level)
 
     //    Energized    //
 
-    abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-        HTProcessorBlockEntity(type, pos, state) {
+    abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
         lateinit var handler: HTBasicEnergyHandler
             private set
 
@@ -96,7 +93,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             super.initializeVariables(listener)
             handler = HTBasicEnergyHandler.input(
                 HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
-                listener
+                listener,
             )
         }
 
@@ -145,7 +142,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
         protected inner class DoubleProgressor<
             INPUT_A : Any,
             INPUT_B : Any,
-            RECIPE : HTProgressRecipe.Double<*, INPUT_A, INPUT_B>
+            RECIPE : HTProgressRecipe.Double<*, INPUT_A, INPUT_B>,
             > :
             EnergyProgressor(),
             HTDoubleRecipeHandler.Progressor<INPUT_A, INPUT_B, RECIPE> {

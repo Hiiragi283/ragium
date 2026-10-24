@@ -12,11 +12,8 @@ import net.minecraft.world.item.crafting.CookingBookCategory
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTCookingRecipeBuilder(
-    private val factory: AbstractCookingRecipe.Factory<*>,
-    private val timeOperator: Identity<Int>,
-    prefix: String
-) : HTSingleItemRecipeBuilder<AbstractCookingRecipe>(prefix) {
+class HTCookingRecipeBuilder(private val factory: AbstractCookingRecipe.Factory<*>, private val timeOperator: Identity<Int>, prefix: String) :
+    HTSingleItemRecipeBuilder<AbstractCookingRecipe>(prefix) {
     /**
      * レシピ本のカテゴリ
      */
@@ -40,6 +37,6 @@ class HTCookingRecipeBuilder(
         ingredient,
         result,
         exp,
-        timeOperator(time)
+        timeOperator(time),
     )
 }

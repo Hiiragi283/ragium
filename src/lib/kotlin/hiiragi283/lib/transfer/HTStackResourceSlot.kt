@@ -135,7 +135,7 @@ abstract class HTStackResourceSlot<S : Any, T : Resource> :
         private val canExtract: BiPredicate<T, HTTransferAccess>,
         private val canInsert: BiPredicate<T, HTTransferAccess>,
         private val filter: Predicate<T>,
-        private val listener: Runnable?
+        private val listener: Runnable?,
     ) : HTStackResourceSlot<S, T>() {
         override fun isValidForInsert(resource: T, access: HTTransferAccess): Boolean =
             super.isValidForInsert(resource, access) && canInsert.test(resource, access)

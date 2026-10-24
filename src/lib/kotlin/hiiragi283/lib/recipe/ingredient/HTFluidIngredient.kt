@@ -35,9 +35,9 @@ data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
                 NeoForgeExtraCodecs.aliasedFieldOf(
                     FluidIngredient.CODEC,
                     HTConstants.FLUIDS,
-                    HTConstants.INGREDIENT
+                    HTConstants.INGREDIENT,
                 ).forGetter(HTFluidIngredient::unsized),
-                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.AMOUNT).forGetter(HTFluidIngredient::amount)
+                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.AMOUNT).forGetter(HTFluidIngredient::amount),
             ).apply(instance, ::HTFluidIngredient)
         }
 
@@ -47,7 +47,7 @@ data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
             HTFluidIngredient::unsized,
             ByteBufCodecs.VAR_INT,
             HTFluidIngredient::amount,
-            ::HTFluidIngredient
+            ::HTFluidIngredient,
         )
     }
 
@@ -75,5 +75,4 @@ fun Optional<HTFluidIngredient>.test(instance: FluidInstance): Boolean = this.ge
  * @author Hiiragi Tsubasa
  * @since 26.1.9
  */
-fun HTFluidIngredient?.testOrEmpty(instance: FluidInstance): Boolean =
-    this?.test(instance) ?: HTIngredientHelper.isEmpty(instance)
+fun HTFluidIngredient?.testOrEmpty(instance: FluidInstance): Boolean = this?.test(instance) ?: HTIngredientHelper.isEmpty(instance)

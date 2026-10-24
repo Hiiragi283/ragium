@@ -32,12 +32,9 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    protected fun createRecipeHandler(
-        lookup: HTRecipeLookup<HTItemSeparatingRecipe>,
-        sound: HTSoundInstance
-    ): HTRecipeHandler =
+    protected fun createRecipeHandler(lookup: HTRecipeLookup<HTItemSeparatingRecipe>, sound: HTSoundInstance): HTRecipeHandler =
         object : HTSingleRecipeHandler.Cached<ItemInstance, HTItemSeparatingRecipe.Output, HTItemSeparatingRecipe>(
-            HTRecipeCacheHelper.SingleItem(lookup)
+            HTRecipeCacheHelper.SingleItem(lookup),
         ) {
             private val inputSlot: HTInputSlot<ItemInstance> by lazy {
                 HTInputHandlerHelper.forItem(this@HTItemSeparatingBlockEntity.inputSlot)
@@ -53,24 +50,17 @@ abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockP
 
             override fun getInput(): ItemInstance = inputSlot.getStoredInput()
 
-            override fun canComplete(
-                recipe: HTItemSeparatingRecipe,
-                input: ItemInstance,
-                output: HTItemSeparatingRecipe.Output
-            ): Boolean = useTransaction { transaction: Transaction ->
-                val (items: List<ItemStack>, fluid: FluidStack) = output
-                when {
-                    inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
-                    !outputTank.take(fluid, transaction).fullOrNoneTaken -> false
-                    else -> outputSlot.takeAll(items, transaction).fullOrNoneTaken
+            override fun canComplete(recipe: HTItemSeparatingRecipe, input: ItemInstance, output: HTItemSeparatingRecipe.Output): Boolean =
+                useTransaction { transaction: Transaction ->
+                    val (items: List<ItemStack>, fluid: FluidStack) = output
+                    when {
+                        inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
+                        !outputTank.take(fluid, transaction).fullOrNoneTaken -> false
+                        else -> outputSlot.takeAll(items, transaction).fullOrNoneTaken
+                    }
                 }
-            }
 
-            override fun onComplete(
-                recipe: HTItemSeparatingRecipe,
-                input: ItemInstance,
-                output: HTItemSeparatingRecipe.Output
-            ) {
+            override fun onComplete(recipe: HTItemSeparatingRecipe, input: ItemInstance, output: HTItemSeparatingRecipe.Output) {
                 useTransaction { transaction: Transaction ->
                     val (items: List<ItemStack>, fluid: FluidStack) = output
                     inputSlot.use(recipe.getMatchingStack(input), transaction)
@@ -107,7 +97,7 @@ abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockP
             0,
             HTSlotHelper.getSlotPosX(1),
             HTSlotHelper.getSlotPosY(0.5),
-            HTBackgroundType.INPUT
+            HTBackgroundType.INPUT,
         )
         widgetHolder.track(inputSlot)
         // outputs
@@ -117,7 +107,7 @@ abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockP
                 1 + index,
                 HTSlotHelper.getSlotPosX(5 + index % 2),
                 HTSlotHelper.getSlotPosY(0.5 + index / 2),
-                HTBackgroundType.OUTPUT
+                HTBackgroundType.OUTPUT,
             )
             widgetHolder.track(slot)
         }
@@ -126,7 +116,7 @@ abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockP
             HTSlotHelper.getSlotPosX(7.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
-            false
+            false,
         )
         widgetHolder.track(outputTank)
     }

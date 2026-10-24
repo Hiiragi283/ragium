@@ -24,14 +24,11 @@ data object RagiumRecipeSerializers {
     private fun <RECIPE : Recipe<*>> register(
         name: String,
         codec: MapCodec<RECIPE>,
-        streamCodec: StreamCodec<RegistryFriendlyByteBuf, RECIPE>
+        streamCodec: StreamCodec<RegistryFriendlyByteBuf, RECIPE>,
     ): RecipeSerializer<RECIPE> = register(name, RecipeSerializer(codec, streamCodec))
 
     @JvmStatic
-    private fun <RECIPE : Recipe<*>> register(
-        name: String,
-        serializer: RecipeSerializer<RECIPE>
-    ): RecipeSerializer<RECIPE> {
+    private fun <RECIPE : Recipe<*>> register(name: String, serializer: RecipeSerializer<RECIPE>): RecipeSerializer<RECIPE> {
         allSerializers[RagiumAPI.id(name)] = serializer
         return serializer
     }

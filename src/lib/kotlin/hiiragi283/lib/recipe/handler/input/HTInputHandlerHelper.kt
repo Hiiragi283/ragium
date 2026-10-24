@@ -35,8 +35,7 @@ data object HTInputHandlerHelper {
     @JvmStatic
     fun forFluid(tank: HTFluidTank): HTInputSlot<FluidInstance> = SingleFluid(tank)
 
-    private class SingleFluid(tank: HTResourceSlot<FluidResource>) :
-        HTResourceInputSlot<Fluid, FluidResource, FluidInstance>(tank) {
+    private class SingleFluid(tank: HTResourceSlot<FluidResource>) : HTResourceInputSlot<Fluid, FluidResource, FluidInstance>(tank) {
         override fun isEmpty(instance: FluidInstance): Boolean = HTIngredientHelper.isEmpty(instance)
 
         override fun getEmptyStack(): FluidStack = FluidStack.EMPTY
@@ -85,8 +84,7 @@ data object HTInputHandlerHelper {
     @JvmStatic
     fun forItem(slot: HTItemSlot): HTInputSlot<ItemInstance> = SingleItem(slot)
 
-    private class SingleItem(slot: HTResourceSlot<ItemResource>) :
-        HTResourceInputSlot<Item, ItemResource, ItemInstance>(slot) {
+    private class SingleItem(slot: HTResourceSlot<ItemResource>) : HTResourceInputSlot<Item, ItemResource, ItemInstance>(slot) {
         override fun isEmpty(instance: ItemInstance): Boolean = HTIngredientHelper.isEmpty(instance)
 
         override fun getEmptyStack(): ItemStack = ItemStack.EMPTY

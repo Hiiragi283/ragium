@@ -43,7 +43,7 @@ abstract class ExporterDataProvider<R : Any>(
     private val future: CompletableFuture<HolderLookup.Provider>,
     registryKey: RegistryKey<R>,
     protected val modId: String,
-    private val codec: Codec<Optional<WithConditions<R>>>
+    private val codec: Codec<Optional<WithConditions<R>>>,
 ) : DataProvider {
     private val pathProvider: PackOutput.PathProvider = packOutput.createRegistryElementsPathProvider(registryKey)
 
@@ -78,7 +78,7 @@ abstract class ExporterDataProvider<R : Any>(
                 cache,
                 { conditions: WithConditions<R> -> codec.encodeStart(dynamicOps, Optional.of(conditions)).orThrow },
                 pathProvider::json,
-                map
+                map,
             )
         }
 
@@ -87,8 +87,7 @@ abstract class ExporterDataProvider<R : Any>(
      */
     protected abstract fun exportValues()
 
-    protected fun modifyId(key: ResourceKey<R>): ResourceKey<R> =
-        ResourceKey.create(key.registryKey(), key.identifier().let(::modifyId))
+    protected fun modifyId(key: ResourceKey<R>): ResourceKey<R> = ResourceKey.create(key.registryKey(), key.identifier().let(::modifyId))
 
     /**
      * 受け取った[id]を[exporter]内で変換します。
@@ -115,8 +114,7 @@ abstract class ExporterDataProvider<R : Any>(
 
     protected fun getHasName(tagKey: TagKey<*>): String = getHasName(tagKey.location())
 
-    protected fun getHasName(prefix: HTTagPrefix, material: HTMaterialLike): String =
-        getHasName(prefix.itemTagKey(material))
+    protected fun getHasName(prefix: HTTagPrefix, material: HTMaterialLike): String = getHasName(prefix.itemTagKey(material))
 
     // Registry
 
@@ -186,16 +184,14 @@ abstract class ExporterDataProvider<R : Any>(
     /**
      * @since 26.1.11
      */
-    protected fun <T : Any> anyHolderSet(registryKey: RegistryKey<T>): HolderSet<T> =
-        AnyHolderSet(this.registries.lookupOrThrow(registryKey))
+    protected fun <T : Any> anyHolderSet(registryKey: RegistryKey<T>): HolderSet<T> = AnyHolderSet(this.registries.lookupOrThrow(registryKey))
 
     /**
      * [HolderSet]を取得します。
      * @param prefix タグのプレフィックス
      * @param material タグの種類を表す素材
      */
-    protected fun holderSet(prefix: HTTagPrefix, material: HTMaterialLike): HolderSet<Item> =
-        holderSet(prefix.itemTagKey(material))
+    protected fun holderSet(prefix: HTTagPrefix, material: HTMaterialLike): HolderSet<Item> = holderSet(prefix.itemTagKey(material))
 
     /**
      * [HolderSet]を取得します。

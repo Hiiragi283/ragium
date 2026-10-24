@@ -67,11 +67,6 @@ class HTDoubleItemToItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pr
      * @since 26.1.0
      */
     fun interface Factory<out RECIPE : Any> {
-        fun create(
-            primary: HTItemIngredient,
-            secondary: HTItemIngredient,
-            result: HTItemResult,
-            progressData: HTProgressData
-        ): RECIPE
+        fun create(primary: HTItemIngredient, secondary: HTItemIngredient, result: HTItemResult, progressData: HTProgressData): RECIPE
     }
 }

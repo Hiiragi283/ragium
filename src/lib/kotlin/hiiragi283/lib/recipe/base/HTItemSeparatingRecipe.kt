@@ -39,7 +39,7 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
                     HTItemResult.CODEC
                         .compactNelFieldOf(HTConstants.ITEM, HTConstants.ITEMS, 4)
                         .forGetter(Result::items),
-                    HTFluidResult.CODEC.optionalFieldOf(HTConstants.FLUID).forGetter(Result::fluid)
+                    HTFluidResult.CODEC.optionalFieldOf(HTConstants.FLUID).forGetter(Result::fluid),
                 ).apply(instance, ::Result)
             }
 
@@ -49,7 +49,7 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
                 Result::items,
                 HTFluidResult.STREAM_CODEC.optionalOf(),
                 Result::fluid,
-                ::Result
+                ::Result,
             )
         }
 
@@ -63,30 +63,28 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
         HTProgressRecipe.Holder {
         companion object {
             @JvmStatic
-            fun <RECIPE : Basic> codec(factory: HTItemSeparatingRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> =
-                HTCodecs.recordMap { instance ->
-                    instance.group(
-                        HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
-                        Result.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
-                        HTProgressData.CODEC.forGetter(Basic::progressData)
-                    ).apply(instance, factory::create)
-                }
+            fun <RECIPE : Basic> codec(factory: HTItemSeparatingRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
+                instance.group(
+                    HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
+                    Result.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
+                    HTProgressData.CODEC.forGetter(Basic::progressData),
+                ).apply(instance, factory::create)
+            }
 
             @JvmField
             val SIMPLE_CODEC: MapCodec<Basic> = codec(::Basic)
 
             @JvmStatic
-            fun <RECIPE : Basic> streamCodec(
-                factory: HTItemSeparatingRecipeBuilder.Factory<RECIPE>
-            ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
-                HTItemIngredient.STREAM_CODEC,
-                Basic::ingredient,
-                Result.STREAM_CODEC,
-                Basic::result,
-                HTProgressData.STREAM_CODEC,
-                Basic::progressData,
-                factory::create
-            )
+            fun <RECIPE : Basic> streamCodec(factory: HTItemSeparatingRecipeBuilder.Factory<RECIPE>): StreamCodec<RegistryFriendlyByteBuf, RECIPE> =
+                StreamCodec.composite(
+                    HTItemIngredient.STREAM_CODEC,
+                    Basic::ingredient,
+                    Result.STREAM_CODEC,
+                    Basic::result,
+                    HTProgressData.STREAM_CODEC,
+                    Basic::progressData,
+                    factory::create,
+                )
         }
 
         override fun test(input: ItemInstance): Boolean = ingredient.test(input)

@@ -32,7 +32,7 @@ import net.neoforged.neoforge.fluids.FluidInstance
 data class RTMixingRecipe(
     val ingredients: Ior<Nel<HTItemIngredient>, Nel<HTFluidIngredient>>,
     val result: HTItemOrFluidResult,
-    override val progressData: HTProgressData
+    override val progressData: HTProgressData,
 ) : HTRecipePredicates.DoubleInput<HTFluidRecipeInput, List<ItemInstance>, List<FluidInstance>>,
     HTRecipeFactories.DoubleInput<HTFluidRecipeInput, List<ItemInstance>, List<FluidInstance>, HTItemAndFluidStack>,
     HTProgressRecipe.Holder,
@@ -43,10 +43,10 @@ data class RTMixingRecipe(
             instance.group(
                 HTCodecs.ior(
                     HTItemIngredient.CODEC.compactNelFieldOf(HTConstants.ITEM, HTConstants.ITEMS, 4),
-                    HTFluidIngredient.CODEC.compactNelFieldOf(HTConstants.FLUID, HTConstants.FLUIDS, 2)
+                    HTFluidIngredient.CODEC.compactNelFieldOf(HTConstants.FLUID, HTConstants.FLUIDS, 2),
                 ).fieldOf(HTConstants.INGREDIENT).forGetter(RTMixingRecipe::ingredients),
                 HTItemOrFluidResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(RTMixingRecipe::result),
-                HTProgressData.CODEC.forGetter(RTMixingRecipe::progressData)
+                HTProgressData.CODEC.forGetter(RTMixingRecipe::progressData),
             ).apply(instance, ::RTMixingRecipe)
         }
 
@@ -54,14 +54,14 @@ data class RTMixingRecipe(
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, RTMixingRecipe> = StreamCodec.composite(
             HTStreamCodecs.ior(
                 HTItemIngredient.STREAM_CODEC.nelOf(),
-                HTFluidIngredient.STREAM_CODEC.nelOf()
+                HTFluidIngredient.STREAM_CODEC.nelOf(),
             ),
             RTMixingRecipe::ingredients,
             HTItemOrFluidResult.STREAM_CODEC,
             RTMixingRecipe::result,
             HTProgressData.STREAM_CODEC,
             RTMixingRecipe::progressData,
-            ::RTMixingRecipe
+            ::RTMixingRecipe,
         )
 
         @JvmField
@@ -86,26 +86,22 @@ data class RTMixingRecipe(
         { HTIngredientHelper.match(it, second) },
         { items: Nel<HTItemIngredient>, fluids: Nel<HTFluidIngredient> ->
             HTIngredientHelper.match(items, first) && HTIngredientHelper.match(fluids, second)
-        }
+        },
     )
 
     override fun produce(input: HTFluidRecipeInput): HTItemAndFluidStack = apply(input.asList(), input.asFluidList())
 
     override fun apply(first: List<ItemInstance>, second: List<FluidInstance>): HTItemAndFluidStack = result.create()
 
-    override fun getMatchingStack(
-        first: List<ItemInstance>,
-        second: List<FluidInstance>
-    ): Pair<List<ItemInstance>, List<FluidInstance>> {
+    override fun getMatchingStack(first: List<ItemInstance>, second: List<FluidInstance>): Pair<List<ItemInstance>, List<FluidInstance>> {
         val (items: Nel<HTItemIngredient>?, fluids: Nel<HTFluidIngredient>?) = ingredients.toPair()
         return Pair(
             items?.let { HTIngredientHelper.getMatchingStacks(it, first) } ?: listOf(),
-            fluids?.let { HTIngredientHelper.getMatchingStacks(it, second) } ?: listOf()
+            fluids?.let { HTIngredientHelper.getMatchingStacks(it, second) } ?: listOf(),
         )
     }
 
-    override fun getProgressData(input: HTFluidRecipeInput): HTProgressData =
-        getProgressData(input.asList(), input.asFluidList())
+    override fun getProgressData(input: HTFluidRecipeInput): HTProgressData = getProgressData(input.asList(), input.asFluidList())
 
     override fun getProgressData(first: List<ItemInstance>, second: List<FluidInstance>): HTProgressData = progressData
 

@@ -27,7 +27,7 @@ class HTUpdateMenuPacket private constructor(val containerId: Int, val map: Map<
             HTUpdateMenuPacket::containerId,
             ByteBufCodecs.map(::HashMap, ByteBufCodecs.VAR_INT, HTSyncablePayload.STREAM_CODEC),
             HTUpdateMenuPacket::map,
-            ::HTUpdateMenuPacket
+            ::HTUpdateMenuPacket,
         )
 
         @JvmStatic
@@ -37,10 +37,8 @@ class HTUpdateMenuPacket private constructor(val containerId: Int, val map: Map<
         }
 
         @JvmStatic
-        inline fun create(
-            containerId: Int,
-            builderAction: MutableMap<Int, HTSyncablePayload>.() -> Unit
-        ): HTUpdateMenuPacket? = create(containerId, buildMap(builderAction))
+        inline fun create(containerId: Int, builderAction: MutableMap<Int, HTSyncablePayload>.() -> Unit): HTUpdateMenuPacket? =
+            create(containerId, buildMap(builderAction))
     }
 
     override fun type(): CustomPacketPayload.Type<HTUpdateMenuPacket> = TYPE

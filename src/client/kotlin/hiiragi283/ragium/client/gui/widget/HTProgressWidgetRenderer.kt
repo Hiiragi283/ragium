@@ -12,8 +12,7 @@ import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.resources.Identifier
 import kotlin.math.roundToInt
 
-class HTProgressWidgetRenderer(gui: HTGuiAccess, widget: HTProgressWidget) :
-    HTAbstractWidgetRenderer<HTProgressWidget>(gui, widget) {
+class HTProgressWidgetRenderer(gui: HTGuiAccess, widget: HTProgressWidget) : HTAbstractWidgetRenderer<HTProgressWidget>(gui, widget) {
     companion object {
         @JvmField
         val SPRITE: Identifier = RagiumAPI.id("arrow")
@@ -22,13 +21,7 @@ class HTProgressWidgetRenderer(gui: HTGuiAccess, widget: HTProgressWidget) :
         val BACKGROUND: Identifier = RagiumAPI.id(HTConstants.TEXTURES, HTConstants.GUI, "arrow_background")
     }
 
-    override fun render(
-        bounds: HTBounds,
-        graphics: GuiGraphicsExtractor,
-        mouseX: Int,
-        mouseY: Int,
-        partialTick: Float
-    ) {
+    override fun render(bounds: HTBounds, graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, partialTick: Float) {
         // Render background
         HTSpriteRenderHelper.blit(graphics, BACKGROUND, bounds)
         // Render sprite
@@ -46,7 +39,7 @@ class HTProgressWidgetRenderer(gui: HTGuiAccess, widget: HTProgressWidget) :
                 x,
                 y,
                 fixedX,
-                height
+                height,
             )
         }
     }

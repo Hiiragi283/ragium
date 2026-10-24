@@ -32,7 +32,7 @@ data class RTPotionBottleFillingRecipe(val bottleType: HTBottleType, override va
 
     override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> = Pair(
         HTIngredientHelper.copyWithCount(first, 1),
-        HTIngredientHelper.copyWithAmount(second, HTPotionHelper.BOTTLE_AMOUNT)
+        HTIngredientHelper.copyWithAmount(second, HTPotionHelper.BOTTLE_AMOUNT),
     )
 
     override fun getProgressData(first: ItemInstance, second: FluidInstance): HTProgressData = progressData

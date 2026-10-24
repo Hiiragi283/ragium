@@ -25,18 +25,13 @@ open class HTPotionBasedItem(properties: Properties) :
         return stack
     }
 
-    override fun getCreatorModId(registries: HolderLookup.Provider, itemStack: ItemStack): String? =
-        HTPotionHelper.getPotionId(itemStack)
-            ?.namespace
-            ?: super.getCreatorModId(registries, itemStack)
+    override fun getCreatorModId(registries: HolderLookup.Provider, itemStack: ItemStack): String? = HTPotionHelper.getPotionId(itemStack)
+        ?.namespace
+        ?: super.getCreatorModId(registries, itemStack)
 
     //    HTSubCreativeTabContents    //
 
-    override fun addItems(
-        baseItem: Holder<Item>,
-        parameters: CreativeModeTab.ItemDisplayParameters,
-        output: CreativeModeTab.Output
-    ) {
+    override fun addItems(baseItem: Holder<Item>, parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output) {
         parameters.filteredElements(Registries.POTION)
             .map { ItemStack(baseItem, 1, HTPotionHelper.createPotionPatch(it)) }
             .forEach(output::accept)

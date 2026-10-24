@@ -96,33 +96,29 @@ data object RagiumBlocks {
     private fun <BLOCK : Block> registerMachine(
         type: HTDeferredBlockEntityType<*>,
         factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> BLOCK,
-        properties: BlockBehaviour.Properties = machine()
-    ): HTBasicDeferredBlockAndItem<BLOCK> =
-        REGISTER.registerSimple(type.id.path, { factory(type, properties.setId(it)) })
+        properties: BlockBehaviour.Properties = machine(),
+    ): HTBasicDeferredBlockAndItem<BLOCK> = REGISTER.registerSimple(type.id.path, { factory(type, properties.setId(it)) })
 
     @JvmStatic
     private fun <BLOCK : Block, ITEM : Item> registerMachine(
         type: HTDeferredBlockEntityType<*>,
         factory: (HTDeferredBlockEntityType<*>, BlockBehaviour.Properties) -> BLOCK,
         itemFactory: ItemWithContextFactory<BLOCK, ITEM>,
-        properties: BlockBehaviour.Properties = machine()
-    ): HTDeferredBlockAndItem<BLOCK, ITEM> =
-        REGISTER.register(type.id.path, { factory(type, properties.setId(it)) }, itemFactory)
+        properties: BlockBehaviour.Properties = machine(),
+    ): HTDeferredBlockAndItem<BLOCK, ITEM> = REGISTER.register(type.id.path, { factory(type, properties.setId(it)) }, itemFactory)
 
     @JvmStatic
     private fun registerMachine(
         type: HTDeferredBlockEntityType<*>,
-        properties: BlockBehaviour.Properties = machine()
+        properties: BlockBehaviour.Properties = machine(),
     ): HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(type, ::HTMachineBlock, properties)
 
     @JvmStatic
-    private fun registerFakeMachine(
-        name: String,
-        properties: BlockBehaviour.Properties = machine()
-    ): HTBasicDeferredBlockAndItem<HTMachineBlock> = REGISTER.registerSimple(
-        name,
-        { HTMachineBlock(RagiumBlockEntityTypes.CRUSHER, properties.setId(it)) } // TODO
-    )
+    private fun registerFakeMachine(name: String, properties: BlockBehaviour.Properties = machine()): HTBasicDeferredBlockAndItem<HTMachineBlock> =
+        REGISTER.registerSimple(
+            name,
+            { HTMachineBlock(RagiumBlockEntityTypes.CRUSHER, properties.setId(it)) }, // TODO
+        )
 
     //    Ingredient    //
 
@@ -160,9 +156,9 @@ data object RagiumBlocks {
         RagiumMaterial.Metal.SILVER to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_LIGHT_GRAY),
         RagiumMaterial.Alloy.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Alloy.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
-        RagiumMaterial.Alloy.SHADOW_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE)
+        RagiumMaterial.Alloy.SHADOW_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE),
     ).associateTo(
-        sortedMapOf(RagiumMaterial.COMPARATOR)
+        sortedMapOf(RagiumMaterial.COMPARATOR),
     ) { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
         material to REGISTER.registerSimple(HTStorageBlockPart.DEFAULT.createName(material), properties)
     }
@@ -192,14 +188,14 @@ data object RagiumBlocks {
     @JvmField
     val FLUORITE_BLOCK: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple(
         "fluorite_block",
-        copyOf(Blocks.QUARTZ_BLOCK).mapColor(MapColor.COLOR_GREEN)
+        copyOf(Blocks.QUARTZ_BLOCK).mapColor(MapColor.COLOR_GREEN),
     )
 
     @JvmField
     val FLUORITE_DECORATION: HTDecorationContent = HTDecorationContent.create(
         REGISTER,
         RagiumMaterial.Gem.FLUORITE.materialName,
-        FLUORITE_BLOCK
+        FLUORITE_BLOCK,
     )
 
     // Cryolite
@@ -229,7 +225,7 @@ data object RagiumBlocks {
     // Helper
     @JvmField
     val ALL_DECORATIONS: List<HTDecorationContent> = listOf(
-        FLUORITE_DECORATION
+        FLUORITE_DECORATION,
         // CRYOLITE_DECORATION
     )
 
@@ -367,7 +363,7 @@ data object RagiumBlocks {
                 put(HTMachineType.ARCANE, ENCHANTER)
 
                 put(HTMachineType.Custom("cryo", HTLangName("Cryo", "低温")), FREEZER)
-            }
+            },
         )
 
     //    Storage    //
@@ -383,7 +379,7 @@ data object RagiumBlocks {
     val TANK: HTBasicDeferredBlockAndItem<HTTankBlock> = registerMachine(
         RagiumBlockEntityTypes.TANK,
         ::HTTankBlock,
-        tankProperty
+        tankProperty,
     )
 
     @JvmField
@@ -391,14 +387,14 @@ data object RagiumBlocks {
         RagiumBlockEntityTypes.POTION_TANK,
         ::HTPotionTankBlock,
         ::HTPotionTankBlockItem,
-        tankProperty
+        tankProperty,
     )
 
     @JvmField
     val VOID_TANK: HTBasicDeferredBlockAndItem<HTVoidTankBlock> = REGISTER.registerSimple(
         "void_tank",
         tankProperty,
-        ::HTVoidTankBlock
+        ::HTVoidTankBlock,
     )
 
     @JvmField
@@ -406,7 +402,7 @@ data object RagiumBlocks {
         RagiumBlockEntityTypes.CREATIVE_TANK,
         ::HTTankBlock,
         ::HTCreativeTankBlockItem,
-        tankProperty
+        tankProperty,
     )
 
     @JvmField
@@ -445,7 +441,7 @@ data object RagiumBlocks {
         event.registerBlock(
             HTFluidCapabilities.block,
             { _, _, _, _, _ -> HTVoidTankBlock.VOIDING_HANDLER },
-            VOID_TANK.getOrThrow()
+            VOID_TANK.getOrThrow(),
         )
         // Item
         event.registerItem(
@@ -453,7 +449,7 @@ data object RagiumBlocks {
             { _, access ->
                 HTItemAccessFluidHandler.create(access, RagiumConfig.SERVER.tankCapacity.asInt)
             },
-            TANK
+            TANK,
         )
         event.registerItem(
             HTFluidCapabilities.item,
@@ -461,20 +457,20 @@ data object RagiumBlocks {
                 HTItemAccessFluidHandler.create(
                     access,
                     RagiumConfig.SERVER.tankCapacity.asInt,
-                    filter = HTPotionHelper::hasAnyEffect
+                    filter = HTPotionHelper::hasAnyEffect,
                 )
             },
-            POTION_TANK
+            POTION_TANK,
         )
         event.registerItem(
             HTFluidCapabilities.item,
             { _, _ -> HTVoidTankBlock.VOIDING_HANDLER },
-            VOID_TANK
+            VOID_TANK,
         )
         event.registerItem(
             HTEnergyCapabilities.item,
             { _, _ -> InfiniteEnergyHandler.INSTANCE },
-            CREATIVE_BATTERY
+            CREATIVE_BATTERY,
         )
         event.registerItem(
             HTFluidCapabilities.item,
@@ -484,7 +480,7 @@ data object RagiumBlocks {
                     .takeUnless(FluidResource::isEmpty)
                     ?.let(::InfiniteResourceHandler)
             },
-            CREATIVE_TANK
+            CREATIVE_TANK,
         )
     }
 
@@ -493,7 +489,7 @@ data object RagiumBlocks {
         // Block
         setOf(
             RagiumMaterial.Alloy.BLACK_STEEL to Rarity.UNCOMMON,
-            RagiumMaterial.Alloy.SHADOW_STEEL to Rarity.RARE
+            RagiumMaterial.Alloy.SHADOW_STEEL to Rarity.RARE,
         ).forEach { (material: RagiumMaterial, rarity: Rarity) ->
             for (part: HTBlockPart in HTBlockPart.entries) {
                 val block: ItemLike = MATERIAL_BLOCKS[part, material] ?: continue

@@ -28,7 +28,7 @@ data class RTWashingRecipe(
     val itemIngredient: HTItemIngredient,
     val fluidIngredient: HTFluidIngredient,
     val results: Nel<HTItemResult>,
-    override val progressData: HTProgressData
+    override val progressData: HTProgressData,
 ) : HTItemAndFluidToRecipe<Pair<ItemStack, ItemStack>>,
     HTProgressRecipe.Holder,
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
@@ -38,12 +38,12 @@ data class RTWashingRecipe(
             instance.group(
                 HTCodecs.mapPair(
                     HTItemIngredient.CODEC.fieldOf(HTConstants.ITEM),
-                    HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID)
+                    HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID),
                 ).fieldOf(HTConstants.INGREDIENT).forGetter { it.itemIngredient to it.fluidIngredient },
                 HTItemResult.CODEC
                     .compactNelFieldOf(HTConstants.RESULT, HTConstants.RESULTS, 2)
                     .forGetter(RTWashingRecipe::results),
-                HTProgressData.CODEC.forGetter(RTWashingRecipe::progressData)
+                HTProgressData.CODEC.forGetter(RTWashingRecipe::progressData),
             ).apply(instance, ::RTWashingRecipe)
         }
 
@@ -57,7 +57,7 @@ data class RTWashingRecipe(
             RTWashingRecipe::results,
             HTProgressData.STREAM_CODEC,
             RTWashingRecipe::progressData,
-            ::RTWashingRecipe
+            ::RTWashingRecipe,
         )
 
         @JvmField
@@ -67,16 +67,15 @@ data class RTWashingRecipe(
     constructor(
         ingredient: Pair<HTItemIngredient, HTFluidIngredient>,
         results: Nel<HTItemResult>,
-        progressData: HTProgressData
+        progressData: HTProgressData,
     ) : this(
         ingredient.first,
         ingredient.second,
         results,
-        progressData
+        progressData,
     )
 
-    override fun test(first: ItemInstance, second: FluidInstance): Boolean =
-        itemIngredient.test(first) && fluidIngredient.test(second)
+    override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.test(first) && fluidIngredient.test(second)
 
     override fun apply(first: ItemInstance, second: FluidInstance): Pair<ItemStack, ItemStack> =
         results.head.create() to results.getOrNull(1).createOrEmpty()

@@ -20,7 +20,7 @@ import net.minecraft.world.level.storage.loot.LootTable
 abstract class HTBlockLootTableProvider(
     registries: HolderLookup.Provider,
     protected val modId: String,
-    private val rawBlocks: Sequence<HTSimpleValueWithKey<Block>>
+    private val rawBlocks: Sequence<HTSimpleValueWithKey<Block>>,
 ) : BlockLootSubProvider(emptySet(), FeatureFlags.REGISTRY.allFlags(), registries) {
     final override fun getKnownBlocks(): Iterable<Block> = rawBlocks
         .filter { block: HTSimpleValueWithKey<Block> -> block.id().namespace == modId }

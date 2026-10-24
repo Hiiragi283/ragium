@@ -31,8 +31,7 @@ interface HTViewerRecipe {
         HTProgressRecipe.Holder {
         companion object {
             @JvmStatic
-            fun <T : HTProgressRecipe.Holder> progressCodec(): RecordCodecBuilder<T, HTProgressData> =
-                HTProgressRecipe.Holder.progressCodec()
+            fun <T : HTProgressRecipe.Holder> progressCodec(): RecordCodecBuilder<T, HTProgressData> = HTProgressRecipe.Holder.progressCodec()
         }
     }
 }

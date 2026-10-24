@@ -16,11 +16,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSizedShapelessBlockEntity(RagiumBlockEntityTypes.ASSEMBLER.get(), pos, state) {
+class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) : HTSizedShapelessBlockEntity(RagiumBlockEntityTypes.ASSEMBLER.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.ASSEMBLING,
-        HTSoundInstance(SoundEvents.CRAFTER_CRAFT)
+        HTSoundInstance(SoundEvents.CRAFTER_CRAFT),
     )
 
     override fun getInputSize(): Int = 4
@@ -37,7 +36,7 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
                 index,
                 HTSlotHelper.getSlotPosX(1 + index % 2),
                 HTSlotHelper.getSlotPosY(0.5 + index / 2),
-                HTBackgroundType.INPUT
+                HTBackgroundType.INPUT,
             )
             widgetHolder.track(slot)
         }
@@ -47,7 +46,7 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
             4,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT
+            HTBackgroundType.OUTPUT,
         )
         widgetHolder.track(outputSlot)
     }

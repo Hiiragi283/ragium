@@ -15,7 +15,7 @@ class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSeparatingBlockEntity(RagiumBlockEntityTypes.ELECTROLYZER.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.ELECTROLYZING,
-        HTSoundInstance(SoundEvents.FIREWORK_ROCKET_TWINKLE)
+        HTSoundInstance(SoundEvents.FIREWORK_ROCKET_TWINKLE),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.electrolyzer

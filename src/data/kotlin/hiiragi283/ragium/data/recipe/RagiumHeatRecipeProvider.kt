@@ -89,8 +89,8 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                     nelOf(
                         CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL),
                         CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.CHARCOAL),
-                        RagiumTags.Items.COALS
-                    )
+                        RagiumTags.Items.COALS,
+                    ),
                 )
             }
             result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
@@ -251,7 +251,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                         false,
                         DataComponents.OMINOUS_BOTTLE_AMPLIFIER,
                         OminousBottleAmplifier(amplifier),
-                        Items.OMINOUS_BOTTLE
+                        Items.OMINOUS_BOTTLE,
                     )
                 }
                 result {

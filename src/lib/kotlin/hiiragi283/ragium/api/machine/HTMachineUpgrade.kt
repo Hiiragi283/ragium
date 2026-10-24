@@ -28,12 +28,8 @@ import java.util.function.Consumer
  * @since 26.1.9
  */
 @JvmRecord
-data class HTMachineUpgrade(
-    val speed: Int = 0,
-    val efficiency: Int = 0,
-    val capacity: Int = 0,
-    val customKeys: Set<String> = setOf()
-) : TooltipProvider {
+data class HTMachineUpgrade(val speed: Int = 0, val efficiency: Int = 0, val capacity: Int = 0, val customKeys: Set<String> = setOf()) :
+    TooltipProvider {
     companion object {
         @JvmField
         val CODEC: Codec<HTMachineUpgrade> = HTCodecs.record { instance ->
@@ -43,7 +39,7 @@ data class HTMachineUpgrade(
                 Codec.INT.optionalFieldOf(HTConstants.CAPACITY, 0).forGetter(HTMachineUpgrade::capacity),
                 NeoForgeExtraCodecs.setOf(Codec.STRING)
                     .optionalFieldOf("custom_keys", setOf())
-                    .forGetter(HTMachineUpgrade::customKeys)
+                    .forGetter(HTMachineUpgrade::customKeys),
             ).apply(instance, ::HTMachineUpgrade)
         }
 
@@ -57,16 +53,11 @@ data class HTMachineUpgrade(
             HTMachineUpgrade::capacity,
             ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.collection(::LinkedHashSet)),
             HTMachineUpgrade::customKeys,
-            ::HTMachineUpgrade
+            ::HTMachineUpgrade,
         )
     }
 
-    override fun addToTooltip(
-        context: Item.TooltipContext,
-        consumer: Consumer<Component>,
-        flag: TooltipFlag,
-        components: DataComponentGetter
-    ) {
+    override fun addToTooltip(context: Item.TooltipContext, consumer: Consumer<Component>, flag: TooltipFlag, components: DataComponentGetter) {
         addToTooltip(consumer)
     }
 
@@ -74,7 +65,7 @@ data class HTMachineUpgrade(
         setOf(
             this.speed to RagiumTranslation.TOOLTIPS_UPGRADE_SPEED,
             this.efficiency to RagiumTranslation.TOOLTIPS_UPGRADE_EFFICIENCY,
-            this.capacity to RagiumTranslation.TOOLTIPS_UPGRADE_CAPACITY
+            this.capacity to RagiumTranslation.TOOLTIPS_UPGRADE_CAPACITY,
         ).forEach { (value: Int, translation: RagiumTranslation) ->
             getText(value)?.let { consumer.accept(translation.translateColored(ChatFormatting.YELLOW, it)) }
         }

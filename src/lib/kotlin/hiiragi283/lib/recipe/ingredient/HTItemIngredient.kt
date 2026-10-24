@@ -35,9 +35,9 @@ data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
                 NeoForgeExtraCodecs.aliasedFieldOf(
                     Ingredient.CODEC,
                     HTConstants.ITEMS,
-                    HTConstants.INGREDIENT
+                    HTConstants.INGREDIENT,
                 ).forGetter(HTItemIngredient::unsized),
-                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.COUNT).forGetter(HTItemIngredient::count)
+                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.COUNT).forGetter(HTItemIngredient::count),
             ).apply(instance, ::HTItemIngredient)
         }
 
@@ -47,7 +47,7 @@ data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
             HTItemIngredient::unsized,
             ByteBufCodecs.VAR_INT,
             HTItemIngredient::count,
-            ::HTItemIngredient
+            ::HTItemIngredient,
         )
     }
 
@@ -75,5 +75,4 @@ fun Optional<HTItemIngredient>.test(instance: ItemInstance): Boolean = this.getO
  * @author Hiiragi Tsubasa
  * @since 26.1.9
  */
-fun HTItemIngredient?.testOrEmpty(instance: ItemInstance): Boolean =
-    this?.test(instance) ?: HTIngredientHelper.isEmpty(instance)
+fun HTItemIngredient?.testOrEmpty(instance: ItemInstance): Boolean = this?.test(instance) ?: HTIngredientHelper.isEmpty(instance)

@@ -158,19 +158,15 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
     // Block
     @Suppress("DEPRECATION")
-    private fun <T : Any> Builder<T, Block>.add(
-        block: Block,
-        value: T,
-        replace: Boolean = false,
-        vararg conditions: ICondition
-    ): Builder<T, Block> = this.add(block.builtInRegistryHolder(), value, replace, *conditions)
+    private fun <T : Any> Builder<T, Block>.add(block: Block, value: T, replace: Boolean = false, vararg conditions: ICondition): Builder<T, Block> =
+        this.add(block.builtInRegistryHolder(), value, replace, *conditions)
 
     @JvmName("addBlock")
     private fun <T : Any> Builder<T, Block>.add(
         tag: BlockItemTag,
         value: T,
         replace: Boolean = false,
-        vararg conditions: ICondition
+        vararg conditions: ICondition,
     ): Builder<T, Block> = this.add(tag.block, value, replace, *conditions)
 
     @JvmName("addBlock")
@@ -179,24 +175,20 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         material: HTMaterialLike,
         value: T,
         replace: Boolean = false,
-        vararg conditions: ICondition
+        vararg conditions: ICondition,
     ): Builder<T, Block> = this.add(prefix.materialTag(material), value, replace, *conditions)
 
     // Item
     @Suppress("DEPRECATION")
-    private fun <T : Any> Builder<T, Item>.add(
-        item: Item,
-        value: T,
-        replace: Boolean = false,
-        vararg conditions: ICondition
-    ): Builder<T, Item> = this.add(item.builtInRegistryHolder(), value, replace, *conditions)
+    private fun <T : Any> Builder<T, Item>.add(item: Item, value: T, replace: Boolean = false, vararg conditions: ICondition): Builder<T, Item> =
+        this.add(item.builtInRegistryHolder(), value, replace, *conditions)
 
     @JvmName("addItem")
     private fun <T : Any> Builder<T, Item>.add(
         tag: BlockItemTag,
         value: T,
         replace: Boolean = false,
-        vararg conditions: ICondition
+        vararg conditions: ICondition,
     ): Builder<T, Item> = this.add(tag.item, value, replace, *conditions)
 
     @JvmName("addItem")
@@ -205,6 +197,6 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         material: HTMaterialLike,
         value: T,
         replace: Boolean = false,
-        vararg conditions: ICondition
+        vararg conditions: ICondition,
     ): Builder<T, Item> = this.add(prefix.materialTag(material), value, replace, *conditions)
 }

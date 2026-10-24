@@ -37,20 +37,20 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
     private val title: Text,
     private val icon: IDrawable,
     private val width: Int,
-    private val height: Int
+    private val height: Int,
 ) : IRecipeCategory<RECIPE> {
     constructor(
         recipeType: IRecipeType<RECIPE>,
         recipeType1: RecipeType<*>,
         icon: IDrawable,
         width: Int,
-        height: Int
+        height: Int,
     ) : this(
         recipeType,
         translatableText(BuiltInRegistries.RECIPE_TYPE.wrapAsHolder(recipeType1).getKeyOrThrow().toLanguageKey()),
         icon,
         width,
-        height
+        height,
     )
 
     //    IRecipeCategory    //
@@ -101,12 +101,10 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
     protected fun IRecipeExtrasBuilder.addRecipePlus(x: Int, y: Int = getPosition(0)): IDrawableWidget =
         this.addRecipePlusSignWidget().setPosition(x + 2, y + 2)
 
-    protected fun IRecipeExtrasBuilder.addRecipeArrow(progressData: HTProgressData): IDrawableWidget =
-        when (progressData) {
-            is HTProgressData.Energy -> this.addRecipeArrowWidget()
-            is HTProgressData.Time -> this.addAnimatedRecipeArrowWidget(progressData.value)
-        }.setTooltip(progressData.getText())
+    protected fun IRecipeExtrasBuilder.addRecipeArrow(progressData: HTProgressData): IDrawableWidget = when (progressData) {
+        is HTProgressData.Energy -> this.addRecipeArrowWidget()
+        is HTProgressData.Time -> this.addAnimatedRecipeArrowWidget(progressData.value)
+    }.setTooltip(progressData.getText())
 
-    protected fun IRecipeExtrasBuilder.addRecipeArrow(recipe: HTProgressRecipe.Holder): IDrawableWidget =
-        this.addRecipeArrow(recipe.progressData)
+    protected fun IRecipeExtrasBuilder.addRecipeArrow(recipe: HTProgressRecipe.Holder): IDrawableWidget = this.addRecipeArrow(recipe.progressData)
 }

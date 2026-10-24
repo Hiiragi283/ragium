@@ -29,7 +29,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addAdvancement(
             RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
             "Mechanical Machines",
-            "Craft a Machine Casing (Mechanical)"
+            "Craft a Machine Casing (Mechanical)",
         )
         addAdvancement(RagiumAdvancementKeys.ASSEMBLER, "Rava(n)gers, assemble!", "Acquire Assembler")
         addAdvancement(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")

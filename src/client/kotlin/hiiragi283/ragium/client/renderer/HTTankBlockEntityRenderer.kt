@@ -28,18 +28,13 @@ class HTTankBlockEntityRenderer(context: BlockEntityRendererProvider.Context) :
         state: HTFluidBERenderState,
         partialTicks: Float,
         cameraPosition: Vec3,
-        breakProgress: ModelFeatureRenderer.CrumblingOverlay?
+        breakProgress: ModelFeatureRenderer.CrumblingOverlay?,
     ) {
         super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress)
         state.extractRenderState(blockEntity.tank)
     }
 
-    override fun submit(
-        state: HTFluidBERenderState,
-        poseStack: PoseStack,
-        submitNodeCollector: SubmitNodeCollector,
-        camera: CameraRenderState
-    ) {
+    override fun submit(state: HTFluidBERenderState, poseStack: PoseStack, submitNodeCollector: SubmitNodeCollector, camera: CameraRenderState) {
         val sprite: TextureAtlasSprite = state.sprite ?: return
         val fillingLevel: Float = state.fillingLevel
         if (fillingLevel <= 0f) return
@@ -51,7 +46,7 @@ class HTTankBlockEntityRenderer(context: BlockEntityRendererProvider.Context) :
             Vector3f(14 / 16f, fillingLevel, 14 / 16f).add(-0.01f, -0.01f, -0.01f),
             sprite,
             state.color,
-            state.lightCoords
+            state.lightCoords,
         )
     }
 }

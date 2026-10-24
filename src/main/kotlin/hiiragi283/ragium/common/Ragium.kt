@@ -71,7 +71,7 @@ data object Ragium : HTCommonMod() {
                 RagiumAPI.id("common"),
                 HTCreativeModeTabHelper.createSimpleTab(
                     RagiumTranslation.RAGIUM,
-                    Items.RED_DYE
+                    Items.RED_DYE,
                 ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     // Items
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumItems.REGISTER.asSequence())
@@ -79,15 +79,15 @@ data object Ragium : HTCommonMod() {
                     HTCreativeModeTabHelper.addToDisplay(
                         parameters,
                         output,
-                        items = RagiumBlocks.REGISTER.asItemSequence()
+                        items = RagiumBlocks.REGISTER.asItemSequence(),
                     )
                     // Fluids
                     HTCreativeModeTabHelper.addToDisplay(
                         parameters,
                         output,
-                        items = RagiumFluids.REGISTER.asItemSequence()
+                        items = RagiumFluids.REGISTER.asItemSequence(),
                     )
-                }
+                },
             )
         }
         event.register(Registries.DATA_COMPONENT_TYPE) { helper ->
@@ -101,7 +101,7 @@ data object Ragium : HTCommonMod() {
         event.register(Registries.MENU) { helper ->
             helper.register(
                 HTBlockWidgetHolderContext.MENU_TYPE.id,
-                IMenuTypeExtension.create(HTBlockWidgetHolderContext::create)
+                IMenuTypeExtension.create(HTBlockWidgetHolderContext::create),
             )
             // helper.register(HTItemWidgetHolderContext.MENU_TYPE.getId(), IMenuTypeExtension.create(HTItemWidgetHolderContext::create)) TODO
         }
@@ -132,7 +132,7 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumRegistries.Keys.ITEM_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id(HTConstants.TAG), HTItemResult.TagEntry.TYPE)
-            helper.register(RagiumAPI.id("enchanted_book"), HTItemResult.EnchantedBookEntry.TYPE)
+            helper.register(RagiumAPI.id("enchanted_book"), HTItemResult.EnchantedBookEntryN.TYPE)
             helper.register(RagiumAPI.id("with_fallback"), HTItemResult.WithFallbackEntry.TYPE)
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
@@ -152,7 +152,7 @@ data object Ragium : HTCommonMod() {
         registrar.playBidirectional(
             HTUpdateMenuPacket.TYPE,
             HTUpdateMenuPacket.STREAM_CODEC,
-            HTPayloadHandlers::handleC2S
+            HTPayloadHandlers::handleC2S,
         )
     }
 }

@@ -27,7 +27,7 @@ data class HTMemoryDiscData private constructor(val item: Holder<Item>, val comp
                 Item.CODEC.fieldOf(ItemInstance.FIELD_ID).forGetter(HTMemoryDiscData::item),
                 DataComponentPatch.CODEC
                     .optionalFieldOf(ItemInstance.FIELD_COMPONENTS, DataComponentPatch.EMPTY)
-                    .forGetter(HTMemoryDiscData::components)
+                    .forGetter(HTMemoryDiscData::components),
             ).apply(instance, ::HTMemoryDiscData)
         }
 
@@ -37,12 +37,11 @@ data class HTMemoryDiscData private constructor(val item: Holder<Item>, val comp
             HTMemoryDiscData::item,
             DataComponentPatch.STREAM_CODEC,
             HTMemoryDiscData::components,
-            ::HTMemoryDiscData
+            ::HTMemoryDiscData,
         )
 
         @JvmStatic
-        fun from(template: ItemStackTemplate): HTMemoryDiscData =
-            HTMemoryDiscData(template.item(), template.components())
+        fun from(template: ItemStackTemplate): HTMemoryDiscData = HTMemoryDiscData(template.item(), template.components())
 
         @JvmStatic
         fun from(stack: ItemStack): HTMemoryDiscData? = when {

@@ -16,8 +16,7 @@ import java.util.function.Predicate
  * @author Hiiragi Tsubasa
  * @since 26.1.11
  */
-abstract class HTSingleRecipeHandler<INPUT : Any, OUTPUT : Any, RECIPE : Function<INPUT, OUTPUT>> :
-    HTRecipeHandler() {
+abstract class HTSingleRecipeHandler<INPUT : Any, OUTPUT : Any, RECIPE : Function<INPUT, OUTPUT>> : HTRecipeHandler() {
     protected val progressor: Progressor<INPUT, RECIPE> = createProgressor()
 
     protected abstract fun createProgressor(): Progressor<INPUT, RECIPE>

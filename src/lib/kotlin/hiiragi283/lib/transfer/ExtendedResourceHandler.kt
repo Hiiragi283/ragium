@@ -14,7 +14,7 @@ interface ExtendedResourceHandler<T : Resource> : ResourceHandler<T> {
 
     @Deprecated(
         "Use 'insert(Int, T, Int, TransactionContext, HTTransferAccess)' instead",
-        ReplaceWith("this.insert(index, resource, amount, transaction, HTTransferAccess.EXTERNAL)")
+        ReplaceWith("this.insert(index, resource, amount, transaction, HTTransferAccess.EXTERNAL)"),
     )
     override fun insert(index: Int, resource: T, amount: Int, transaction: TransactionContext): Int =
         insert(index, resource, amount, transaction, HTTransferAccess.EXTERNAL)
@@ -23,7 +23,7 @@ interface ExtendedResourceHandler<T : Resource> : ResourceHandler<T> {
 
     @Deprecated(
         "Use 'extract(Int, T, Int, TransactionContext, HTTransferAccess)' instead",
-        ReplaceWith("this.extract(index, resource, amount, transaction, HTTransferAccess.EXTERNAL)")
+        ReplaceWith("this.extract(index, resource, amount, transaction, HTTransferAccess.EXTERNAL)"),
     )
     override fun extract(index: Int, resource: T, amount: Int, transaction: TransactionContext): Int =
         extract(index, resource, amount, transaction, HTTransferAccess.EXTERNAL)

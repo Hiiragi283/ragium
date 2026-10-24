@@ -31,12 +31,9 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    protected fun createRecipeHandler(
-        lookup: HTRecipeLookup<HTDoubleItemToItemRecipe>,
-        sound: HTSoundInstance
-    ): HTRecipeHandler =
+    protected fun createRecipeHandler(lookup: HTRecipeLookup<HTDoubleItemToItemRecipe>, sound: HTSoundInstance): HTRecipeHandler =
         object : HTDoubleRecipeHandler.Cached<ItemInstance, ItemInstance, ItemStack, HTDoubleItemToItemRecipe>(
-            HTRecipeCacheHelper.DoubleItem(lookup, true)
+            HTRecipeCacheHelper.DoubleItem(lookup, true),
         ) {
             private val primarySlot: HTInputSlot<ItemInstance> by lazy {
                 HTInputHandlerHelper.forItem(this@HTDoubleItemToItemBlockEntity.primarySlot)
@@ -48,33 +45,23 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
                 HTOutputSlotHelper.forItem(this@HTDoubleItemToItemBlockEntity.outputSlot)
             }
 
-            override fun createProgressor(): Progressor<ItemInstance, ItemInstance, HTDoubleItemToItemRecipe> =
-                DoubleProgressor()
+            override fun createProgressor(): Progressor<ItemInstance, ItemInstance, HTDoubleItemToItemRecipe> = DoubleProgressor()
 
             override fun getFirstInput(): ItemInstance = primarySlot.getStoredInput()
 
             override fun getSecondInput(): ItemInstance = secondarySlot.getStoredInput()
 
-            override fun canComplete(
-                recipe: HTDoubleItemToItemRecipe,
-                first: ItemInstance,
-                second: ItemInstance,
-                output: ItemStack
-            ): Boolean = useTransaction { transaction: Transaction ->
-                val (firstConsume: ItemInstance, secondConsume: ItemInstance) = recipe.getMatchingStack(first, second)
-                when {
-                    primarySlot.use(firstConsume, transaction).failed -> false
-                    secondarySlot.use(secondConsume, transaction).failed -> false
-                    else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+            override fun canComplete(recipe: HTDoubleItemToItemRecipe, first: ItemInstance, second: ItemInstance, output: ItemStack): Boolean =
+                useTransaction { transaction: Transaction ->
+                    val (firstConsume: ItemInstance, secondConsume: ItemInstance) = recipe.getMatchingStack(first, second)
+                    when {
+                        primarySlot.use(firstConsume, transaction).failed -> false
+                        secondarySlot.use(secondConsume, transaction).failed -> false
+                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+                    }
                 }
-            }
 
-            override fun onComplete(
-                recipe: HTDoubleItemToItemRecipe,
-                first: ItemInstance,
-                second: ItemInstance,
-                output: ItemStack
-            ) {
+            override fun onComplete(recipe: HTDoubleItemToItemRecipe, first: ItemInstance, second: ItemInstance, output: ItemStack) {
                 val (firstConsume: ItemInstance, secondConsume: ItemInstance) = recipe.getMatchingStack(first, second)
                 useTransaction { transaction: Transaction ->
                     primarySlot.use(firstConsume, transaction)
@@ -107,7 +94,7 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
             0,
             HTSlotHelper.getSlotPosX(0.5),
             HTSlotHelper.getSlotPosY(0.5),
-            HTBackgroundType.INPUT
+            HTBackgroundType.INPUT,
         )
         widgetHolder.track(primarySlot)
         widgetHolder += HTTextureWidget(
@@ -115,14 +102,14 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
             HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(0.5),
             18,
-            18
+            18,
         )
         widgetHolder += HTItemWidget.Container(
             secondarySlot,
             1,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
-            HTBackgroundType.EXTRA_INPUT
+            HTBackgroundType.EXTRA_INPUT,
         )
         widgetHolder.track(secondarySlot)
         // output
@@ -131,7 +118,7 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
             2,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT
+            HTBackgroundType.OUTPUT,
         )
         widgetHolder.track(outputSlot)
     }

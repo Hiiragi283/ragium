@@ -35,12 +35,7 @@ data class HTItemTooltip(override val translationKey: String) :
         fun wrap(delegate: HTHasTranslationKey): HTItemTooltip = HTItemTooltip(delegate.translationKey)
     }
 
-    override fun addToTooltip(
-        context: Item.TooltipContext,
-        consumer: Consumer<Component>,
-        flag: TooltipFlag,
-        components: DataComponentGetter
-    ) {
+    override fun addToTooltip(context: Item.TooltipContext, consumer: Consumer<Component>, flag: TooltipFlag, components: DataComponentGetter) {
         consumer.accept(this.translateColored(ChatFormatting.AQUA))
     }
 }

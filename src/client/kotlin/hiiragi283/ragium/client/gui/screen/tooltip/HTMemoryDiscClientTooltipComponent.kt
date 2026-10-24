@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack
 @JvmRecord
 data class HTMemoryDiscClientTooltipComponent private constructor(
     val data: ItemStack,
-    val text: Text = RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA.translateColored(ChatFormatting.YELLOW, data)
+    val text: Text = RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA.translateColored(ChatFormatting.YELLOW, data),
 ) : ClientTooltipComponent {
     constructor(tooltip: HTMemoryDiscTooltipComponent) : this(tooltip.data.toStack())
 
@@ -31,7 +31,7 @@ data class HTMemoryDiscClientTooltipComponent private constructor(
 
     override fun equals(other: Any?): Boolean = ItemStack.isSameItemSameComponents(
         (other as? HTMemoryDiscClientTooltipComponent)?.data ?: ItemStack.EMPTY,
-        this.data
+        this.data,
     )
 
     override fun hashCode(): Int = ItemStack.hashItemAndComponents(this.data)

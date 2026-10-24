@@ -19,18 +19,14 @@ import net.minecraft.sounds.SoundEvent
  * @since 26.1.0
  */
 @JvmRecord
-data class HTSoundInstance @JvmOverloads constructor(
-    val sound: Holder<SoundEvent>,
-    val volume: Float = 1f,
-    val pitch: Float = 1f
-) {
+data class HTSoundInstance @JvmOverloads constructor(val sound: Holder<SoundEvent>, val volume: Float = 1f, val pitch: Float = 1f) {
     companion object {
         @JvmField
         val MAP_CODEC: MapCodec<HTSoundInstance> = HTCodecs.recordMap { instance ->
             instance.group(
                 SoundEvent.CODEC.fieldOf("sound").forGetter(HTSoundInstance::sound),
                 Codec.floatRange(0f, 1f).optionalFieldOf("volume", 1f).forGetter(HTSoundInstance::volume),
-                Codec.floatRange(0f, 1f).optionalFieldOf("pitch", 1f).forGetter(HTSoundInstance::pitch)
+                Codec.floatRange(0f, 1f).optionalFieldOf("pitch", 1f).forGetter(HTSoundInstance::pitch),
             ).apply(instance, ::HTSoundInstance)
         }
 
@@ -45,7 +41,7 @@ data class HTSoundInstance @JvmOverloads constructor(
             HTSoundInstance::volume,
             ByteBufCodecs.FLOAT,
             HTSoundInstance::pitch,
-            ::HTSoundInstance
+            ::HTSoundInstance,
         )
     }
 
@@ -53,6 +49,6 @@ data class HTSoundInstance @JvmOverloads constructor(
     constructor(
         sound: SoundEvent,
         volume: Float = 1f,
-        pitch: Float = 1f
+        pitch: Float = 1f,
     ) : this(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), volume, pitch)
 }

@@ -13,11 +13,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.MIXER.get(), pos, state) {
+class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.MIXER.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.MIXING.mapNotNull(RTMixingRecipe::asSimple),
-        HTSoundInstance(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE)
+        HTSoundInstance(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.mixer

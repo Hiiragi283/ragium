@@ -20,7 +20,7 @@ import kotlin.reflect.KProperty
 class HTFluidSyncSlot(property: ReadWriteProperty<Any?, FluidStack>) : HTIntSyncSlot {
     constructor(
         getter: Supplier<FluidStack>,
-        setter: Consumer<FluidStack>
+        setter: Consumer<FluidStack>,
     ) : this(HTDelegates.LazyDelegate(getter, setter))
 
     constructor(property: KMutableProperty0<FluidStack>) : this(HTDelegates.LazyDelegate(property::get, property::set))
@@ -53,11 +53,10 @@ class HTFluidSyncSlot(property: ReadWriteProperty<Any?, FluidStack>) : HTIntSync
         return null
     }
 
-    override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTSyncablePayload =
-        when (changeType) {
-            HTChangeType.PARTIAL -> HTIntSyncPayload(this.amountAsInt)
-            HTChangeType.FULL -> HTFluidSyncPayload(this.asFluidStack.copy())
-        }
+    override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTSyncablePayload = when (changeType) {
+        HTChangeType.PARTIAL -> HTIntSyncPayload(this.amountAsInt)
+        HTChangeType.FULL -> HTFluidSyncPayload(this.asFluidStack.copy())
+    }
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): FluidStack = asFluidStack
 

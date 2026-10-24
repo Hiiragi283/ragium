@@ -33,7 +33,7 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
         toolSlot = HTBasicItemSlot.create(
             listener,
             limit = 1,
-            filter = { resource: ItemResource -> resource.`is`(RagiumTags.Items.SUPPORT_UPGRADES) }
+            filter = { resource: ItemResource -> resource.`is`(RagiumTags.Items.SUPPORT_UPGRADES) },
         )
         return object : HTResourceSlotHolder<HTItemSlot> {
             override fun getSlots(side: Direction?): List<HTItemSlot> = listOf(toolSlot)
@@ -53,14 +53,14 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
             0,
             HTSlotHelper.getSlotPosX(4),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.NONE
+            HTBackgroundType.NONE,
         )
         widgetHolder.track(toolSlot)
         // Upgrades
         for (index: Int in 0..3) {
             widgetHolder += HTItemWidget.Container(
                 UpgradeSlot(index, HTSlotHelper.getSlotPosX(6 + index % 2), HTSlotHelper.getSlotPosY(0.5 + index / 2)),
-                HTBackgroundType.NONE
+                HTBackgroundType.NONE,
             )
         }
     }

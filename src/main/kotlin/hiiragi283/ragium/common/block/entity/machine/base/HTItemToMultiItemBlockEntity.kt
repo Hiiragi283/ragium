@@ -28,43 +28,38 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTItemToMultiItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    protected fun createRecipeHandler(
-        lookup: HTRecipeLookup<HTItemToMultiItemRecipe>,
-        sound: HTSoundInstance
-    ): HTRecipeHandler = object : HTSingleRecipeHandler.Cached<ItemInstance, List<ItemStack>, HTItemToMultiItemRecipe>(
-        HTRecipeCacheHelper.SingleItem(lookup)
-    ) {
-        private val inputSlot: HTInputSlot<ItemInstance> by lazy {
-            HTInputHandlerHelper.forItem(this@HTItemToMultiItemBlockEntity.inputSlot)
-        }
-        private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-            HTOutputSlotHelper.forItems(this@HTItemToMultiItemBlockEntity.primarySlot)
-        }
+    protected fun createRecipeHandler(lookup: HTRecipeLookup<HTItemToMultiItemRecipe>, sound: HTSoundInstance): HTRecipeHandler =
+        object : HTSingleRecipeHandler.Cached<ItemInstance, List<ItemStack>, HTItemToMultiItemRecipe>(
+            HTRecipeCacheHelper.SingleItem(lookup),
+        ) {
+            private val inputSlot: HTInputSlot<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItem(this@HTItemToMultiItemBlockEntity.inputSlot)
+            }
+            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
+                HTOutputSlotHelper.forItems(this@HTItemToMultiItemBlockEntity.primarySlot)
+            }
 
-        override fun createProgressor(): Progressor<ItemInstance, HTItemToMultiItemRecipe> = SingleProgressor()
+            override fun createProgressor(): Progressor<ItemInstance, HTItemToMultiItemRecipe> = SingleProgressor()
 
-        override fun getInput(): ItemInstance = inputSlot.getStoredInput()
+            override fun getInput(): ItemInstance = inputSlot.getStoredInput()
 
-        override fun canComplete(
-            recipe: HTItemToMultiItemRecipe,
-            input: ItemInstance,
-            output: List<ItemStack>
-        ): Boolean = useTransaction { transaction: Transaction ->
-            when {
-                inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
-                else -> outputSlot.takeAll(output, transaction).fullOrNoneTaken
+            override fun canComplete(recipe: HTItemToMultiItemRecipe, input: ItemInstance, output: List<ItemStack>): Boolean =
+                useTransaction { transaction: Transaction ->
+                    when {
+                        inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
+                        else -> outputSlot.takeAll(output, transaction).fullOrNoneTaken
+                    }
+                }
+
+            override fun onComplete(recipe: HTItemToMultiItemRecipe, input: ItemInstance, output: List<ItemStack>) {
+                useTransaction { transaction: Transaction ->
+                    inputSlot.use(recipe.getMatchingStack(input), transaction)
+                    outputSlot.takeAll(output, transaction)
+                    transaction.commit()
+                }
+                playSound(sound)
             }
         }
-
-        override fun onComplete(recipe: HTItemToMultiItemRecipe, input: ItemInstance, output: List<ItemStack>) {
-            useTransaction { transaction: Transaction ->
-                inputSlot.use(recipe.getMatchingStack(input), transaction)
-                outputSlot.takeAll(output, transaction)
-                transaction.commit()
-            }
-            playSound(sound)
-        }
-    }
 
     private lateinit var inputSlot: HTBasicItemSlot
     private lateinit var primarySlot: List<HTBasicItemSlot>
@@ -85,7 +80,7 @@ abstract class HTItemToMultiItemBlockEntity(type: BlockEntityType<*>, pos: Block
             0,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(0.5),
-            HTBackgroundType.INPUT
+            HTBackgroundType.INPUT,
         )
         widgetHolder.track(inputSlot)
         // outputs
@@ -95,7 +90,7 @@ abstract class HTItemToMultiItemBlockEntity(type: BlockEntityType<*>, pos: Block
                 1 + index,
                 HTSlotHelper.getSlotPosX(6 + index % 2),
                 HTSlotHelper.getSlotPosY(0.5 + index / 2),
-                HTBackgroundType.OUTPUT
+                HTBackgroundType.OUTPUT,
             )
             widgetHolder.track(slot)
         }

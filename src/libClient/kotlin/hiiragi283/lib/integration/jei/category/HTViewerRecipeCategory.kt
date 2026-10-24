@@ -20,7 +20,7 @@ abstract class HTViewerRecipeCategory<VIEWER : HTViewerRecipe>(
     icon: IDrawable,
     width: Int,
     height: Int,
-    private val codec: Codec<VIEWER>
+    private val codec: Codec<VIEWER>,
 ) : HTBasicRecipeCategory<VIEWER>(recipeType, recipeType1, icon, width, height) {
     final override fun getIdentifier(recipe: VIEWER): Identifier? = recipe.id
 

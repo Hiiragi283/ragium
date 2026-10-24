@@ -26,7 +26,7 @@ open class HTBasicItemSlot(
     canExtract: BiPredicate<ItemResource, HTTransferAccess>,
     canInsert: BiPredicate<ItemResource, HTTransferAccess>,
     filter: Predicate<ItemResource>,
-    listener: Runnable?
+    listener: Runnable?,
 ) : HTStackResourceSlot.Basic<ItemStack, ItemResource>(capacity, canExtract, canInsert, filter, listener) {
     companion object {
         @JvmStatic
@@ -35,27 +35,25 @@ open class HTBasicItemSlot(
             limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
             canExtract: BiPredicate<ItemResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<ItemResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
-            filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue()
-        ): HTBasicItemSlot =
-            HTBasicItemSlot(HTTransferValidators.validateLimit(limit), canExtract, canInsert, filter, listener)
+            filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue(),
+        ): HTBasicItemSlot = HTBasicItemSlot(HTTransferValidators.validateLimit(limit), canExtract, canInsert, filter, listener)
 
         @JvmStatic
         fun input(
             listener: Runnable?,
             limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
             canInsert: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue(),
-            filter: Predicate<ItemResource> = canInsert
+            filter: Predicate<ItemResource> = canInsert,
         ): HTBasicItemSlot = create(
             listener,
             limit,
             HTTransferPredicates.notExternal(),
             { stack: ItemResource, _ -> canInsert.test(stack) },
-            filter
+            filter,
         )
 
         @JvmStatic
-        fun output(listener: Runnable?): HTBasicItemSlot =
-            create(listener, canInsert = HTTransferPredicates.internalOnly())
+        fun output(listener: Runnable?): HTBasicItemSlot = create(listener, canInsert = HTTransferPredicates.internalOnly())
     }
 
     private var stackIn: ItemStack = ItemStack.EMPTY

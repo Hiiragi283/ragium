@@ -101,7 +101,7 @@ class HTAdvancementBuilder(val key: AdvancementKey) {
             rewards,
             criterions,
             this.requirements ?: strategy.create(criterions.keys),
-            true
+            true,
         )
         return exporter.accept(key, adv, conditions)
     }

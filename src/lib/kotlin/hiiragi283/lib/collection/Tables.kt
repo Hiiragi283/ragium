@@ -49,10 +49,7 @@ private data object EmptyTable : Table<Any?, Any?, Nothing> {
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <R : Any, C : Any, V : Any> buildTable(
-    initialCapacity: Int = 10,
-    builderAction: Table.Builder<R, C, V>.() -> Unit
-): Table<R, C, V> {
+inline fun <R : Any, C : Any, V : Any> buildTable(initialCapacity: Int = 10, builderAction: Table.Builder<R, C, V>.() -> Unit): Table<R, C, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -69,7 +66,7 @@ inline fun <R : Any, C : Any, V : Any> buildTable(
  */
 inline fun <R : Any, C : Any, V : Any> buildTable(
     parent: com.google.common.collect.Table<R, C, V>,
-    builderAction: Table.Builder<R, C, V>.() -> Unit
+    builderAction: Table.Builder<R, C, V>.() -> Unit,
 ): Table<R, C, V> {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
@@ -110,10 +107,7 @@ fun <R : Any, C : Any, V1, V2 : Any> Table<R, C, V1>.mapValue(transform: (Triple
  * @author Hiiragi Tsubasa
  * @since 26.1.2
  */
-fun <R, C, V1, V2, T : Table.Builder<R, C, V2>> Table<R, C, V1>.mapValueTo(
-    destination: T,
-    transform: (Triple<R, C, V1>) -> V2
-): Table<R, C, V2> {
+fun <R, C, V1, V2, T : Table.Builder<R, C, V2>> Table<R, C, V1>.mapValueTo(destination: T, transform: (Triple<R, C, V1>) -> V2): Table<R, C, V2> {
     this.forEach { triple: Triple<R, C, V1> -> destination.put(triple.first, triple.second, transform(triple)) }
     return destination.build()
 }

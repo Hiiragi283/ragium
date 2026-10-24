@@ -24,7 +24,7 @@ open class HTBasicFluidTank(
     canExtract: BiPredicate<FluidResource, HTTransferAccess>,
     canInsert: BiPredicate<FluidResource, HTTransferAccess>,
     filter: Predicate<FluidResource>,
-    listener: Runnable?
+    listener: Runnable?,
 ) : HTStackResourceSlot.Basic<FluidStack, FluidResource>(capacity, canExtract, canInsert, filter, listener) {
     companion object {
         @JvmStatic
@@ -33,27 +33,25 @@ open class HTBasicFluidTank(
             listener: Runnable?,
             canExtract: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
-            filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue()
-        ): HTBasicFluidTank =
-            HTBasicFluidTank(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, filter, listener)
+            filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
+        ): HTBasicFluidTank = HTBasicFluidTank(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, filter, listener)
 
         @JvmStatic
         fun input(
             capacity: Int,
             listener: Runnable?,
             canInsert: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
-            filter: Predicate<FluidResource> = canInsert
+            filter: Predicate<FluidResource> = canInsert,
         ): HTBasicFluidTank = create(
             capacity,
             listener,
             HTTransferPredicates.notExternal(),
             { resource: FluidResource, _ -> canInsert.test(resource) },
-            filter
+            filter,
         )
 
         @JvmStatic
-        fun output(capacity: Int, listener: Runnable?): HTBasicFluidTank =
-            create(capacity, listener, canInsert = HTTransferPredicates.internalOnly())
+        fun output(capacity: Int, listener: Runnable?): HTBasicFluidTank = create(capacity, listener, canInsert = HTTransferPredicates.internalOnly())
     }
 
     private var stackIn: FluidStack = FluidStack.EMPTY

@@ -21,7 +21,7 @@ data class HTItemOrFluidResult(val content: Ior<HTItemResult, HTFluidResult>) : 
         @JvmField
         val MAP_CODEC: MapCodec<HTItemOrFluidResult> = HTCodecs.ior(
             HTItemResult.CODEC.fieldOf(HTConstants.ITEM),
-            HTFluidResult.CODEC.fieldOf(HTConstants.FLUID)
+            HTFluidResult.CODEC.fieldOf(HTConstants.FLUID),
         ).xmap(::HTItemOrFluidResult, HTItemOrFluidResult::content)
 
         @JvmField
@@ -35,7 +35,7 @@ data class HTItemOrFluidResult(val content: Ior<HTItemResult, HTFluidResult>) : 
 
     override fun getId(): Identifier? = content.fold(
         HTItemResult::getId,
-        HTFluidResult::getId
+        HTFluidResult::getId,
     ) { item: HTItemResult, fluid: HTFluidResult -> item.getId() ?: fluid.getId() }
 
     override fun create(): HTItemAndFluidStack {

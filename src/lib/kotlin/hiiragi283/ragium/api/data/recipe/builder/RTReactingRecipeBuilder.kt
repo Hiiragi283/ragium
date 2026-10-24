@@ -28,8 +28,7 @@ import kotlin.contracts.contract
 class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe>(RagiumConstants.REACTING) {
     override fun getRecipeId(): Identifier? = result.getId()
 
-    override fun createRecipe(): RTReactingRecipe =
-        RTReactingRecipe(fluidIngredients.toNel(), catalyst, result, progressData)
+    override fun createRecipe(): RTReactingRecipe = RTReactingRecipe(fluidIngredients.toNel(), catalyst, result, progressData)
 
     // Ingredients
     private val fluidIngredients: MutableList<HTFluidIngredient> = ObjectArrayList()

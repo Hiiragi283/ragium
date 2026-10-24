@@ -15,7 +15,7 @@ class HTCentrifugeBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemSeparatingBlockEntity(RagiumBlockEntityTypes.CENTRIFUGE.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.CENTRIFUGING,
-        HTSoundInstance(SoundEvents.WIND_CHARGE_THROW)
+        HTSoundInstance(SoundEvents.WIND_CHARGE_THROW),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.centrifuge

@@ -26,7 +26,7 @@ data class HTColoredCollection<out T>(
     val brown: T,
     val green: T,
     val red: T,
-    val black: T
+    val black: T,
 ) : Collection<T> {
     companion object {
         @JvmField
@@ -46,7 +46,7 @@ data class HTColoredCollection<out T>(
             DyeColor.BROWN,
             DyeColor.GREEN,
             DyeColor.RED,
-            DyeColor.BLACK
+            DyeColor.BLACK,
         )
 
         @JvmField
@@ -66,7 +66,7 @@ data class HTColoredCollection<out T>(
             HTLangName("Brown", "茶色"),
             HTLangName("Green", "緑色"),
             HTLangName("Red", "赤色"),
-            HTLangName("Black", "黒色")
+            HTLangName("Black", "黒色"),
         )
     }
 
@@ -105,28 +105,27 @@ data class HTColoredCollection<out T>(
         transform(brown),
         transform(green),
         transform(red),
-        transform(black)
+        transform(black),
     )
 
-    inline fun <U, R> zip(other: HTColoredCollection<U>, transform: (T, U) -> R): HTColoredCollection<R> =
-        HTColoredCollection(
-            transform(white, other.white),
-            transform(orange, other.orange),
-            transform(magenta, other.magenta),
-            transform(lightBlue, other.lightBlue),
-            transform(yellow, other.yellow),
-            transform(lime, other.lime),
-            transform(pink, other.pink),
-            transform(gray, other.gray),
-            transform(lightGray, other.lightGray),
-            transform(cyan, other.cyan),
-            transform(purple, other.purple),
-            transform(blue, other.blue),
-            transform(brown, other.brown),
-            transform(green, other.green),
-            transform(red, other.red),
-            transform(black, other.black)
-        )
+    inline fun <U, R> zip(other: HTColoredCollection<U>, transform: (T, U) -> R): HTColoredCollection<R> = HTColoredCollection(
+        transform(white, other.white),
+        transform(orange, other.orange),
+        transform(magenta, other.magenta),
+        transform(lightBlue, other.lightBlue),
+        transform(yellow, other.yellow),
+        transform(lime, other.lime),
+        transform(pink, other.pink),
+        transform(gray, other.gray),
+        transform(lightGray, other.lightGray),
+        transform(cyan, other.cyan),
+        transform(purple, other.purple),
+        transform(blue, other.blue),
+        transform(brown, other.brown),
+        transform(green, other.green),
+        transform(red, other.red),
+        transform(black, other.black),
+    )
 
     override val size: Int get() = 16
 
@@ -150,7 +149,7 @@ data class HTColoredCollection<out T>(
         brown,
         green,
         red,
-        black
+        black,
     )
 
     override fun iterator(): Iterator<T> = asSequence().iterator()
@@ -162,5 +161,4 @@ data class HTColoredCollection<out T>(
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun <T> HTColoredCollection(init: (color: DyeColor) -> T): HTColoredCollection<T> =
-    HTColoredCollection.VALUES.map(init)
+inline fun <T> HTColoredCollection(init: (color: DyeColor) -> T): HTColoredCollection<T> = HTColoredCollection.VALUES.map(init)

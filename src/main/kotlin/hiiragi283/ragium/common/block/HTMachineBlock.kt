@@ -28,13 +28,7 @@ open class HTMachineBlock(type: HTDeferredBlockEntityType<*>, properties: Proper
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(IS_ACTIVE, false))
     }
 
-    override fun useWithoutItem(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult
-    ): InteractionResult {
+    override fun useWithoutItem(state: BlockState, level: Level, pos: BlockPos, player: Player, hitResult: BlockHitResult): InteractionResult {
         if (player is ServerPlayer) {
             HTBlockWidgetHolderContext.openMenu(player, pos)
         }

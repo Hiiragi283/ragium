@@ -15,7 +15,7 @@ class HTChemicalBathBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemAndFluidToItemBlockEntity(RagiumBlockEntityTypes.CHEMICAL_BATH.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.BATHING,
-        HTSoundInstance(SoundEvents.SPONGE_ABSORB)
+        HTSoundInstance(SoundEvents.SPONGE_ABSORB),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.chemicalBath

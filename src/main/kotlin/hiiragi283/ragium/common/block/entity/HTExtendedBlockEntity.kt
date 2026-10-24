@@ -57,10 +57,9 @@ abstract class HTExtendedBlockEntity(type: BlockEntityType<*>, pos: BlockPos, bl
     /**
      * [writeReducedUpdateTag]に基づいた更新用のNBTを作成します。
      */
-    fun createReducedUpdateTag(registries: HolderLookup.Provider): CompoundTag =
-        TagValueOutput.createWithContext(createReporter(), registries)
-            .also(::writeReducedUpdateTag)
-            .buildResult()
+    fun createReducedUpdateTag(registries: HolderLookup.Provider): CompoundTag = TagValueOutput.createWithContext(createReporter(), registries)
+        .also(::writeReducedUpdateTag)
+        .buildResult()
 
     /**
      * 更新時に値を書き込みます。
@@ -123,14 +122,7 @@ abstract class HTExtendedBlockEntity(type: BlockEntityType<*>, pos: BlockPos, bl
     /**
      * 隣接ブロックが更新された時に呼び出されます。
      */
-    open fun neighborChanged(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        block: Block,
-        orientation: Orientation?,
-        movedByPiston: Boolean
-    ) {}
+    open fun neighborChanged(state: BlockState, level: Level, pos: BlockPos, block: Block, orientation: Orientation?, movedByPiston: Boolean) {}
 
     //    BlockEntity    //
 
@@ -144,8 +136,7 @@ abstract class HTExtendedBlockEntity(type: BlockEntityType<*>, pos: BlockPos, bl
         readValue(input)
     }
 
-    final override fun getUpdatePacket(): ClientboundBlockEntityDataPacket =
-        ClientboundBlockEntityDataPacket.create(this)
+    final override fun getUpdatePacket(): ClientboundBlockEntityDataPacket = ClientboundBlockEntityDataPacket.create(this)
 
     final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag = createReducedUpdateTag(registries)
 

@@ -59,7 +59,7 @@ class HTDisplayInfoBuilder {
         type,
         showToast,
         showChat,
-        hidden
+        hidden,
     )
 
     operator fun HTItemInstanceLike.unaryPlus() {

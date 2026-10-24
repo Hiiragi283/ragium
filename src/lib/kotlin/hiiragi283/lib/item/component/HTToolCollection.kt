@@ -4,8 +4,7 @@ package hiiragi283.lib.item.component
  * @author Hiiragi Tsubasa
  * @since 26.1.4
  */
-data class HTToolCollection<out T>(val sword: T, val shovel: T, val pickaxe: T, val axe: T, val hoe: T) :
-    AbstractCollection<T>() {
+data class HTToolCollection<out T>(val sword: T, val shovel: T, val pickaxe: T, val axe: T, val hoe: T) : AbstractCollection<T>() {
     companion object {
         @JvmField
         val VALUES: HTToolCollection<HTToolType> =
@@ -33,7 +32,7 @@ data class HTToolCollection<out T>(val sword: T, val shovel: T, val pickaxe: T, 
         transform(shovel),
         transform(pickaxe),
         transform(axe),
-        transform(hoe)
+        transform(hoe),
     )
 
     inline fun <U, R> zip(other: HTToolCollection<U>, transform: (T, U) -> R): HTToolCollection<R> = HTToolCollection(
@@ -41,7 +40,7 @@ data class HTToolCollection<out T>(val sword: T, val shovel: T, val pickaxe: T, 
         transform(shovel, other.shovel),
         transform(pickaxe, other.pickaxe),
         transform(axe, other.axe),
-        transform(hoe, other.hoe)
+        transform(hoe, other.hoe),
     )
 }
 
@@ -49,5 +48,4 @@ data class HTToolCollection<out T>(val sword: T, val shovel: T, val pickaxe: T, 
  * @author Hiiragi Tsubasa
  * @since 26.1.4
  */
-inline fun <T> HTToolCollection(init: (toolType: HTToolType) -> T): HTToolCollection<T> =
-    HTToolCollection.VALUES.map(init)
+inline fun <T> HTToolCollection(init: (toolType: HTToolType) -> T): HTToolCollection<T> = HTToolCollection.VALUES.map(init)

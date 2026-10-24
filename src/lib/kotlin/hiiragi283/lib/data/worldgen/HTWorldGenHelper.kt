@@ -27,7 +27,7 @@ data object HTWorldGenHelper {
         context: BootstrapContext<ConfiguredFeature<*, *>>,
         data: HTWorldGenData,
         feature: F,
-        config: FC
+        config: FC,
     ) {
         context.register(data.configuredKey, ConfiguredFeature(feature, config))
     }
@@ -49,12 +49,7 @@ data object HTWorldGenHelper {
     }
 
     @JvmStatic
-    fun register(
-        context: BootstrapContext<BiomeModifier>,
-        data: HTWorldGenData,
-        biome: TagKey<Biome>,
-        decoration: GenerationStep.Decoration
-    ) {
+    fun register(context: BootstrapContext<BiomeModifier>, data: HTWorldGenData, biome: TagKey<Biome>, decoration: GenerationStep.Decoration) {
         val biomes: HolderSet<Biome> = context.lookup(Registries.BIOME).getOrThrow(biome)
         val placement: HolderSet<PlacedFeature> =
             context.lookup(Registries.PLACED_FEATURE).getOrThrow(data.placedKey).let(HolderSet<PlacedFeature>::direct)

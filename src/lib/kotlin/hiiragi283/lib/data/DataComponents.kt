@@ -20,10 +20,7 @@ import kotlin.contracts.contract
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <T : Any> DataComponentType(
-    codec: Codec<T>,
-    streamCodec: StreamCodec<in RegistryFriendlyByteBuf, T>?
-): DataComponentType<T> {
+fun <T : Any> DataComponentType(codec: Codec<T>, streamCodec: StreamCodec<in RegistryFriendlyByteBuf, T>?): DataComponentType<T> {
     val builder: DataComponentType.Builder<T> = DataComponentType.builder<T>().persistent(codec)
     if (streamCodec != null) builder.networkSynchronized(streamCodec)
     return builder.build()
@@ -61,9 +58,7 @@ inline fun buildDataPatch(builderAction: DataComponentPatch.Builder.() -> Unit):
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun buildDataPredicate(
-    builderAction: DataComponentExactPredicate.Builder.() -> Unit
-): DataComponentExactPredicate {
+inline fun buildDataPredicate(builderAction: DataComponentExactPredicate.Builder.() -> Unit): DataComponentExactPredicate {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }

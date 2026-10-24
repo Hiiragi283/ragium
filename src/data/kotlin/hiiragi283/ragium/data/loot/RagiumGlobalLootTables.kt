@@ -8,8 +8,7 @@ import net.minecraft.world.level.storage.loot.LootTable
 
 data object RagiumGlobalLootTables {
     @JvmStatic
-    private fun create(path: String): ResourceKey<LootTable> =
-        Registries.LOOT_TABLE.createKey(RagiumAPI.id("modifiers", path))
+    private fun create(path: String): ResourceKey<LootTable> = Registries.LOOT_TABLE.createKey(RagiumAPI.id("modifiers", path))
 
     //    Block    //
 

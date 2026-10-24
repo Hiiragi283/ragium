@@ -18,3 +18,6 @@ ij_json_array_wrapping = split_into_lines
 
 [*.md]
 trim_trailing_whitespace = false
+
+[{*.kt,*.kts}]
+ktlint_standard_no-unused-imports = enabled
