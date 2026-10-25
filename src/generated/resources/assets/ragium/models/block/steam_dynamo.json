@@ -1,6 +1,8 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "all": "ragium:block/steam_dynamo"
+    "bottom": "ragium:block/steam_dynamo_bottom",
+    "side": "ragium:block/steam_dynamo_side",
+    "top": "ragium:block/steam_dynamo_top"
   }
 }

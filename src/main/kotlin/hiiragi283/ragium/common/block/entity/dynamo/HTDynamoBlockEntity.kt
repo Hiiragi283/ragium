@@ -28,7 +28,7 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
     override fun createEnergyHandler(listener: Runnable): HTEnergyHandlerHolder? {
         val builder: HTBasicEnergyHandlerHolder.Builder = HTBasicEnergyHandlerHolder.builder(this)
         handler = builder.addHandler(
-            HTSlotInfo.INPUT,
+            HTSlotInfo.OUTPUT,
             HTBasicEnergyHandler.output(
                 HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
                 listener,

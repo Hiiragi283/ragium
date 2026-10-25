@@ -1,11 +1,19 @@
 package hiiragi283.ragium.common.block.entity.dynamo
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.capability.HTEnergyCapabilities
+import hiiragi283.lib.gui.HTBackgroundType
+import hiiragi283.lib.gui.HTSlotHelper
+import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
+import hiiragi283.lib.util.fixedFraction
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.gui.widget.HTFluidWidget
+import hiiragi283.ragium.common.gui.widget.HTItemWidget
+import hiiragi283.ragium.common.gui.widget.HTProgressWidget
 import hiiragi283.ragium.common.transfer.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
@@ -13,12 +21,14 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.FuelValues
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.transfer.energy.EnergyHandlerUtil
 import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
@@ -57,6 +67,15 @@ class HTSteamDynamoBlockEntity(pos: BlockPos, state: BlockState) : HTDynamoBlock
     }
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+        // 周囲にエネルギーを自動搬出 TODO
+        for (direction: Direction in Direction.entries) {
+            EnergyHandlerUtil.move(
+                handler,
+                HTEnergyCapabilities.getCapability(level, pos.relative(direction), direction.opposite),
+                Int.MAX_VALUE,
+                null,
+            )
+        }
         // 進捗が0の場合，燃料スロットから燃焼時間を取得する
         if (progress <= 0) {
             val burnTime: Int = fuelSlot.getStackCopy().getBurnTime(null, level.fuelValues())
@@ -110,5 +129,34 @@ class HTSteamDynamoBlockEntity(pos: BlockPos, state: BlockState) : HTDynamoBlock
                 },
             ),
         )
+    }
+
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        super.setupMenu(widgetHolder)
+        // progress
+        widgetHolder += HTProgressWidget(
+            { fixedFraction(maxProgress - progress, maxProgress) },
+            HTSlotHelper.getSlotPosX(3.75),
+            HTSlotHelper.getSlotPosY(1),
+        )
+        // inputs
+        widgetHolder += HTItemWidget.Container(
+            fuelSlot,
+            0,
+            HTSlotHelper.getSlotPosX(2.5),
+            HTSlotHelper.getSlotPosY(0.5),
+            HTBackgroundType.INPUT,
+        )
+        widgetHolder.track(fuelSlot)
+        widgetHolder += HTFluidWidget.Tank(
+            waterTank,
+            HTSlotHelper.getSlotPosX(1),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+            false,
+        )
+        widgetHolder.track(waterTank)
+        // output
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1))
     }
 }

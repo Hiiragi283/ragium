@@ -76,7 +76,15 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         RagiumBlocks.ALL_DECORATIONS.forEach { generators.createDecoration(it) }
 
         // Dynamo
-        RagiumBlocks.DYNAMOS.values.flatten().forEach { generators.createTrivialCube(it.getOrThrow()) } // TODO
+        RagiumBlocks.DYNAMOS.values.flatten().forEach {
+            val block: Block = it.getOrThrow()
+            generators.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(
+                    block,
+                    BlockModelGenerators.plainVariant(TexturedModel.CUBE_TOP_BOTTOM.create(block, generators.modelOutput)),
+                ).with(BlockModelGenerators.ROTATION_FACING),
+            )
+        }
         // Machine
         val inactiveModels: MutableMap<HTMachineType, Identifier> = hashMapOf()
         RagiumBlocks.MACHINES

@@ -38,7 +38,6 @@ import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntit
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTPotionTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
-import net.minecraft.core.Direction
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
@@ -203,15 +202,9 @@ data object RagiumBlockEntityTypes {
     @JvmStatic
     private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
         fun <BE : HTBlockEntity> registerBlockEntity(type: BlockEntityType<BE>) {
-            event.registerBlockEntity(HTEnergyCapabilities.block, type) { blockEntity: BE, side: Direction? ->
-                blockEntity.getEnergyHandler(side)
-            }
-            event.registerBlockEntity(HTFluidCapabilities.block, type) { blockEntity: BE, side: Direction? ->
-                blockEntity.getFluidHandler(side)
-            }
-            event.registerBlockEntity(HTItemCapabilities.block, type) { blockEntity: BE, side: Direction? ->
-                blockEntity.getItemHandler(side)
-            }
+            event.registerBlockEntity(HTEnergyCapabilities.block, type, HTBlockEntity::getEnergyHandler)
+            event.registerBlockEntity(HTFluidCapabilities.block, type, HTBlockEntity::getFluidHandler)
+            event.registerBlockEntity(HTItemCapabilities.block, type, HTBlockEntity::getItemHandler)
         }
 
         // Dynamo
