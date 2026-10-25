@@ -7,12 +7,10 @@ import hiiragi283.lib.capability.HTItemCapabilities
 import hiiragi283.lib.registry.HTDeferredBlock
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.registry.HTDeferredBlockEntityTypeRegister
-import hiiragi283.lib.transfer.HTHandlerProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
-import hiiragi283.ragium.common.block.entity.dynamo.HTDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTSteamDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
@@ -30,7 +28,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPressMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTResourcePumpBlockEntity
@@ -43,7 +40,6 @@ import hiiragi283.ragium.common.block.entity.storage.HTPotionTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
@@ -206,55 +202,48 @@ data object RagiumBlockEntityTypes {
 
     @JvmStatic
     private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
-        fun <BE> registerBlockEntity(type: BlockEntityType<BE>) where BE : BlockEntity, BE : HTHandlerProvider {
-            event.registerBlockEntity(HTItemCapabilities.block, type) { blockEntity: BE, side: Direction? ->
-                blockEntity.getItemHandler(side)
+        fun <BE : HTBlockEntity> registerBlockEntity(type: BlockEntityType<BE>) {
+            event.registerBlockEntity(HTEnergyCapabilities.block, type) { blockEntity: BE, side: Direction? ->
+                blockEntity.getEnergyHandler(side)
             }
             event.registerBlockEntity(HTFluidCapabilities.block, type) { blockEntity: BE, side: Direction? ->
                 blockEntity.getFluidHandler(side)
             }
-        }
-
-        fun <BE : HTDynamoBlockEntity> registerDynamo(type: BlockEntityType<BE>) {
-            registerBlockEntity(type)
-            event.registerBlockEntity(HTEnergyCapabilities.block, type) { processor: BE, _ -> processor.handler }
-        }
-
-        fun <BE : HTProcessorBlockEntity.Energized> registerProcessor(type: BlockEntityType<BE>) {
-            registerBlockEntity(type)
-            event.registerBlockEntity(HTEnergyCapabilities.block, type) { processor: BE, _ -> processor.handler }
+            event.registerBlockEntity(HTItemCapabilities.block, type) { blockEntity: BE, side: Direction? ->
+                blockEntity.getItemHandler(side)
+            }
         }
 
         // Dynamo
-        registerDynamo(STEAM_DYNAMO.get())
+        registerBlockEntity(STEAM_DYNAMO.get())
 
         // Machine
-        registerProcessor(ASSEMBLER.get())
-        registerProcessor(CENTRIFUGE.get())
-        registerProcessor(CRUSHER.get())
-        registerProcessor(COMPRESSOR.get())
-        registerProcessor(CUTTING_MACHINE.get())
-        registerProcessor(PRESS_MACHINE.get())
+        registerBlockEntity(ASSEMBLER.get())
+        registerBlockEntity(CENTRIFUGE.get())
+        registerBlockEntity(CRUSHER.get())
+        registerBlockEntity(COMPRESSOR.get())
+        registerBlockEntity(CUTTING_MACHINE.get())
+        registerBlockEntity(PRESS_MACHINE.get())
 
-        registerProcessor(ALLOY_SMELTER.get())
-        registerProcessor(FREEZER.get())
-        registerProcessor(MELTER.get())
-        registerProcessor(PYROLYZER.get())
-        registerProcessor(REFINERY.get())
-        registerProcessor(SMELTER.get())
+        registerBlockEntity(ALLOY_SMELTER.get())
+        registerBlockEntity(FREEZER.get())
+        registerBlockEntity(MELTER.get())
+        registerBlockEntity(PYROLYZER.get())
+        registerBlockEntity(REFINERY.get())
+        registerBlockEntity(SMELTER.get())
 
-        registerProcessor(CHEMICAL_BATH.get())
-        registerProcessor(MIXER.get())
+        registerBlockEntity(CHEMICAL_BATH.get())
+        registerBlockEntity(MIXER.get())
 
-        registerProcessor(BREWERY.get())
-        registerProcessor(PLANTER.get())
-        registerProcessor(RESOURCE_PUMP.get())
+        registerBlockEntity(BREWERY.get())
+        registerBlockEntity(PLANTER.get())
+        registerBlockEntity(RESOURCE_PUMP.get())
 
-        registerProcessor(ELECTROLYZER.get())
-        registerProcessor(ENGRAVER.get())
-        registerProcessor(SCANNER.get())
+        registerBlockEntity(ELECTROLYZER.get())
+        registerBlockEntity(ENGRAVER.get())
+        registerBlockEntity(SCANNER.get())
 
-        registerProcessor(ENCHANTER.get())
+        registerBlockEntity(ENCHANTER.get())
         // Storage
         registerBlockEntity(TANK.get())
         registerBlockEntity(POTION_TANK.get())

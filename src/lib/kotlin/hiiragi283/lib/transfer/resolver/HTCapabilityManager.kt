@@ -1,27 +1,42 @@
 package hiiragi283.lib.transfer.resolver
 
+import hiiragi283.lib.collection.mutableEnumMapOf
+import hiiragi283.lib.transfer.holder.HTCapabilityHolder
 import net.minecraft.core.Direction
 
 /**
- * 向きに応じたキャパビリティを取得するインターフェース
+ * [HTCapabilityResolver]の実装クラスです。
  *
- * 参照 : [Mekanism - ICapabilityHandlerManager](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/resolver/manager/ICapabilityHandlerManager.java)
- *       [Mekanism - ICapabilityResolver](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/resolver/ICapabilityResolver.java)
- * @param SLOT 要素を保持するクラス
+ * 参照 : [Mekanism - BasicSidedCapabilityResolver](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/resolver/BasicSidedCapabilityResolver.java)
  * @author Hiiragi Tsubasa
- * @since 26.1.0
+ * @since 26.1.12
  */
-interface HTCapabilityManager<SLOT> {
-    /**
-     * 指定された引数からキャパビリティを取得します。
-     * @param T キャパビリティのクラス
-     * @param side アクセスする面
-     * @return 見つからない場合は`null`
-     */
-    fun <T : Any> resolve(side: Direction?): T?
+abstract class HTCapabilityManager<HOLDER : HTCapabilityHolder, HANDLER : Any>(
+    protected val holder: HOLDER,
+    private val proxyCreator: ProxyCreator<HOLDER, HANDLER>,
+) : HTCapabilityResolver {
+    private val handlers: MutableMap<Direction, HANDLER> = mutableEnumMapOf()
+    private var readOnlyHandler: HANDLER? = null
 
-    /**
-     * 指定された[side]から[SLOT]の一覧を返します。
-     */
-    fun getContainers(side: Direction?): List<SLOT>
+    override fun <T : Any> resolve(side: Direction?): T? = when {
+        isEmpty(side) -> null
+        else -> resolveInternal(side)
+    }
+
+    protected abstract fun isEmpty(side: Direction?): Boolean
+
+    @Suppress("UNCHECKED_CAST")
+    private fun <T : Any> resolveInternal(side: Direction?): T? {
+        if (side == null) {
+            if (readOnlyHandler == null) {
+                readOnlyHandler = proxyCreator.create(null, holder)
+            }
+            return readOnlyHandler as? T
+        }
+        return handlers.computeIfAbsent(side) { proxyCreator.create(it, holder) } as? T
+    }
+
+    fun interface ProxyCreator<HOLDER, HANDLER> {
+        fun create(side: Direction?, holder: HOLDER): HANDLER
+    }
 }

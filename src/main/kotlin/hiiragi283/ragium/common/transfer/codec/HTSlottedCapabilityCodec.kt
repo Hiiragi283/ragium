@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.transfer
+package hiiragi283.ragium.common.transfer.codec
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.transfer.fluid.HTFluidTank
@@ -17,16 +17,16 @@ import net.neoforged.neoforge.common.util.ValueIOSerializable
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTCapabilityCodec<CONTAINER : ValueIOSerializable>(
+class HTSlottedCapabilityCodec<CONTAINER : ValueIOSerializable>(
     private val containerTag: String,
     private val containerKey: String,
     private val blockEntityGetter: (HTBlockEntity, Direction?) -> List<CONTAINER>,
-    private val canHandle: (HTBlockEntity) -> Boolean,
-) {
+    canHandle: (HTBlockEntity) -> Boolean,
+) : HTCapabilityCodec(canHandle) {
     companion object {
         @JvmField
-        val ITEM: HTCapabilityCodec<HTItemSlot> =
-            HTCapabilityCodec(
+        val ITEM: HTSlottedCapabilityCodec<HTItemSlot> =
+            HTSlottedCapabilityCodec(
                 HTConstants.ITEMS,
                 HTConstants.SLOT,
                 HTBlockEntity::getItemSlots,
@@ -34,25 +34,22 @@ class HTCapabilityCodec<CONTAINER : ValueIOSerializable>(
             )
 
         @JvmField
-        val FLUID: HTCapabilityCodec<HTFluidTank> =
-            HTCapabilityCodec(
+        val FLUID: HTSlottedCapabilityCodec<HTFluidTank> =
+            HTSlottedCapabilityCodec(
                 HTConstants.FLUIDS,
                 HTConstants.TANK,
                 HTBlockEntity::getFluidTanks,
                 HTBlockEntity::hasFluidHandler,
             )
-
-        @JvmField
-        val TYPES: List<HTCapabilityCodec<*>> = listOf(ITEM, FLUID)
     }
 
     //    Save & Read    //
 
-    fun saveTo(output: ValueOutput, blockEntity: HTBlockEntity) {
+    override fun saveTo(output: ValueOutput, blockEntity: HTBlockEntity) {
         saveTo(output, getContainers(blockEntity))
     }
 
-    fun saveTo(output: ValueOutput, containers: List<CONTAINER>) {
+    private fun saveTo(output: ValueOutput, containers: List<CONTAINER>) {
         save(output.childrenList(containerTag), containers)
     }
 
@@ -69,11 +66,11 @@ class HTCapabilityCodec<CONTAINER : ValueIOSerializable>(
         }
     }
 
-    fun loadFrom(input: ValueInput, blockEntity: HTBlockEntity) {
+    override fun loadFrom(input: ValueInput, blockEntity: HTBlockEntity) {
         loadFrom(input, getContainers(blockEntity))
     }
 
-    fun loadFrom(input: ValueInput, containers: List<CONTAINER>) {
+    private fun loadFrom(input: ValueInput, containers: List<CONTAINER>) {
         load(input.childrenListOrEmpty(containerTag), containers)
     }
 
@@ -87,7 +84,5 @@ class HTCapabilityCodec<CONTAINER : ValueIOSerializable>(
         }
     }
 
-    fun getContainers(blockEntity: HTBlockEntity): List<CONTAINER> = blockEntityGetter(blockEntity, null)
-
-    fun canHandle(blockEntity: HTBlockEntity): Boolean = canHandle.invoke(blockEntity)
+    private fun getContainers(blockEntity: HTBlockEntity): List<CONTAINER> = blockEntityGetter(blockEntity, null)
 }

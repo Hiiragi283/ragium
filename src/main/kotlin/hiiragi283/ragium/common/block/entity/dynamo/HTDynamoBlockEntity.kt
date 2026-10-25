@@ -1,36 +1,40 @@
 package hiiragi283.ragium.common.block.entity.dynamo
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
 import hiiragi283.lib.transfer.fluid.HTFluidTank
+import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
+import hiiragi283.ragium.common.transfer.holder.HTBasicEnergyHandlerHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTBaseMachineBlockEntity(type, pos, state) {
     // Energy
-    lateinit var handler: HTBasicEnergyHandler
+    protected lateinit var handler: HTBasicEnergyHandler
         private set
 
-    override fun initializeVariables(listener: Runnable) {
-        super.initializeVariables(listener)
-        handler = HTBasicEnergyHandler.output(
-            HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
-            listener,
+    override fun createEnergyHandler(listener: Runnable): HTEnergyHandlerHolder? {
+        val builder: HTBasicEnergyHandlerHolder.Builder = HTBasicEnergyHandlerHolder.builder(this)
+        handler = builder.addHandler(
+            HTSlotInfo.INPUT,
+            HTBasicEnergyHandler.output(
+                HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
+                listener,
+            ),
         )
+        return builder.build()
     }
 
     protected abstract fun getConfig(): HTEnergyConfig
@@ -44,16 +48,6 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
     fun addEnergySlot(widgetHolder: HTWidgetHolder, x: Int, y: Int) {
         widgetHolder += HTEnergySlotWidget(handler, x, y)
         widgetHolder.track(handler)
-    }
-
-    override fun writeValue(output: ValueOutput) {
-        super.writeValue(output)
-        output.putChild(HTConstants.ENERGY, handler)
-    }
-
-    override fun readValue(input: ValueInput) {
-        super.readValue(input)
-        input.readChild(HTConstants.ENERGY, handler)
     }
 
     // Fluid

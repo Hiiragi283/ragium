@@ -7,6 +7,8 @@ import net.minecraft.core.Direction
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.EntityCapability
@@ -40,6 +42,10 @@ data object HTEnergyCapabilities : HTMultiCapability<EnergyHandler> {
             override fun insert(amount: Int, transaction: TransactionContext): Int = super<DelegatingEnergyHandler>.insert(amount, transaction)
 
             override fun extract(amount: Int, transaction: TransactionContext): Int = super<DelegatingEnergyHandler>.extract(amount, transaction)
+
+            override fun serialize(output: ValueOutput): Unit = Unit
+
+            override fun deserialize(input: ValueInput): Unit = Unit
         }
     }
 

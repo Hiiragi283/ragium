@@ -10,14 +10,14 @@ import net.neoforged.neoforge.transfer.ResourceHandler
 import net.neoforged.neoforge.transfer.resource.Resource
 
 /**
- * [ResourceHandler]向けの[HTCapabilityManagerImpl]の実装クラスです。
+ * [ResourceHandler]向けの[HTSlottedCapabilityManager]の実装クラスです。
  *
  * 参照 : [Mekanism - ResourceHandlerManager](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/resolver/manager/ResourceHandlerManager.java)
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  **/
 class HTResourceCapabilityManager<RESOURCE : Resource, SLOT : HTResourceSlot<RESOURCE>>(holder: HTResourceSlotHolder<SLOT>) :
-    HTCapabilityManagerImpl<HTResourceSlotHolder<SLOT>, SLOT, ResourceHandler<RESOURCE>>(
+    HTSlottedCapabilityManager<HTResourceSlotHolder<SLOT>, SLOT, ResourceHandler<RESOURCE>>(
         holder,
         { side: Direction?, holderIn: HTResourceSlotHolder<SLOT> ->
             val slots: List<SLOT> = holderIn.getSlots(side)

@@ -6,7 +6,6 @@ import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
-import net.neoforged.neoforge.common.util.ValueIOSerializable
 import net.neoforged.neoforge.transfer.TransferPreconditions
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
@@ -18,8 +17,7 @@ open class HTBasicEnergyHandler(
     protected val canInsert: Predicate<HTTransferAccess>,
     private val listener: Runnable?,
 ) : SnapshotJournal<Int>(),
-    HTEnergyHandler,
-    ValueIOSerializable {
+    HTEnergyHandler {
     companion object {
         @JvmStatic
         fun input(capacity: Int, listener: Runnable?): HTBasicEnergyHandler =

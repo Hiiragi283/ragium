@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTProgressRecipe
@@ -10,6 +9,7 @@ import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
 import hiiragi283.lib.transfer.fluid.HTFluidTank
+import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -17,8 +17,10 @@ import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.gui.widget.HTProgressWidget
+import hiiragi283.ragium.common.transfer.holder.HTBasicEnergyHandlerHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -86,15 +88,19 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
     //    Energized    //
 
     abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
-        lateinit var handler: HTBasicEnergyHandler
+        protected lateinit var handler: HTBasicEnergyHandler
             private set
 
-        override fun initializeVariables(listener: Runnable) {
-            super.initializeVariables(listener)
-            handler = HTBasicEnergyHandler.input(
-                HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
-                listener,
+        override fun createEnergyHandler(listener: Runnable): HTEnergyHandlerHolder? {
+            val builder: HTBasicEnergyHandlerHolder.Builder = HTBasicEnergyHandlerHolder.builder(this)
+            handler = builder.addHandler(
+                HTSlotInfo.INPUT,
+                HTBasicEnergyHandler.input(
+                    HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
+                    listener,
+                ),
             )
+            return builder.build()
         }
 
         protected abstract fun getConfig(): HTEnergyConfig
@@ -102,16 +108,6 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
         fun addEnergySlot(widgetHolder: HTWidgetHolder, x: Int, y: Int) {
             widgetHolder += HTEnergySlotWidget(handler, x, y)
             widgetHolder.track(handler)
-        }
-
-        override fun writeValue(output: ValueOutput) {
-            super.writeValue(output)
-            output.putChild(HTConstants.ENERGY, handler)
-        }
-
-        override fun readValue(input: ValueInput) {
-            super.readValue(input)
-            input.readChild(HTConstants.ENERGY, handler)
         }
 
         //    EnergizedProgressor    //

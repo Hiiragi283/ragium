@@ -2,6 +2,7 @@ package hiiragi283.lib.transfer.energy
 
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.util.fixedFraction
+import net.neoforged.neoforge.common.util.ValueIOSerializable
 import net.neoforged.neoforge.transfer.energy.EnergyHandler
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
@@ -10,7 +11,9 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
  * @author Hiiragi Tsubasa
  * @since 26.1.9
  */
-interface HTEnergyHandler : EnergyHandler {
+interface HTEnergyHandler :
+    EnergyHandler,
+    ValueIOSerializable {
     fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int
 
     @Deprecated(
