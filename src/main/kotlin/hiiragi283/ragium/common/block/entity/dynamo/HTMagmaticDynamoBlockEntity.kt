@@ -31,8 +31,6 @@ class HTMagmaticDynamoBlockEntity(pos: BlockPos, state: BlockState) :
         return fuelTank.extract(resourceIn, FluidType.BUCKET_VOLUME, transaction, HTTransferAccess.INTERNAL) * tickPerMb
     }
 
-    override fun generateEnergy(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: Transaction): Int = generateEnergy(transaction)
-
     private lateinit var fuelTank: HTBasicFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {

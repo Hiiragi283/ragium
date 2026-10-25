@@ -28,6 +28,7 @@
     "ragium:fluorite_stairs",
     "ragium:fluorite_wall",
     "ragium:freezer",
+    "ragium:fuel_dynamo",
     "ragium:heat_machine_casing",
     "ragium:machine_casing",
     "ragium:magmatic_dynamo",
@@ -49,7 +50,6 @@
     "ragium:silver_block",
     "ragium:smelter",
     "ragium:sooty_iron_block",
-    "ragium:steam_dynamo",
     "ragium:tank",
     "ragium:upgrade_station",
     "ragium:void_tank"

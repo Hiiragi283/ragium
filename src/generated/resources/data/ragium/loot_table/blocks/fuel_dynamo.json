@@ -22,11 +22,11 @@
               "source": "block_entity"
             }
           ],
-          "name": "ragium:steam_dynamo"
+          "name": "ragium:fuel_dynamo"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/steam_dynamo"
+  "random_sequence": "ragium:blocks/fuel_dynamo"
 }

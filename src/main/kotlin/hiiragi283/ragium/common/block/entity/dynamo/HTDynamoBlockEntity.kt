@@ -161,6 +161,7 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
 
         protected abstract fun getMaxProgress(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: Transaction): Int
 
-        protected abstract fun generateEnergy(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: Transaction): Int
+        protected open fun generateEnergy(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: Transaction): Int =
+            generateEnergy(transaction)
     }
 }

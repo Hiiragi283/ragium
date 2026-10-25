@@ -224,7 +224,7 @@ data object RagiumBlocks {
     ): HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerWithBE(type, ::HTDynamoBlock, properties)
 
     @JvmField
-    val STEAM_DYNAMO: HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerDynamo(RagiumBlockEntityTypes.STEAM_DYNAMO)
+    val FUEL_DYNAMO: HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerDynamo(RagiumBlockEntityTypes.FUEL_DYNAMO)
 
     @JvmField
     val MAGMATIC_DYNAMO: HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerDynamo(RagiumBlockEntityTypes.MAGMATIC_DYNAMO)
@@ -233,7 +233,7 @@ data object RagiumBlocks {
     val DYNAMOS: Map<HTMachineType, List<HTBasicDeferredBlockAndItem<HTDynamoBlock>>> = buildListMultiMap(
         sortedMapOf(HTMachineType.COMPARATOR),
         {
-            put(HTMachineType.MECHANICAL, STEAM_DYNAMO)
+            put(HTMachineType.MECHANICAL, FUEL_DYNAMO)
             put(HTMachineType.HEAT, MAGMATIC_DYNAMO)
         },
     )

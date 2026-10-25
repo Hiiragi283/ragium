@@ -96,7 +96,7 @@ data object RagiumConfig {
         class Dynamo(builder: ModConfigSpec.Builder) {
             // Mechanical
             @JvmField
-            val steamDynamo: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.STEAM_DYNAMO, 32)
+            val fuelDynamo: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.FUEL_DYNAMO, 32)
 
             @JvmField
             val steamDynamoWaterPerTick: ModConfigSpec.IntValue
@@ -106,7 +106,7 @@ data object RagiumConfig {
             val magmaticDynamo: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.MAGMATIC_DYNAMO, 64)
 
             init {
-                builder.push(RagiumConstants.STEAM_DYNAMO)
+                builder.push(RagiumConstants.FUEL_DYNAMO)
                 steamDynamoWaterPerTick = builder.definePositiveInt("water_per_tick", 2)
                 builder.pop()
             }

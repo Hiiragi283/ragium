@@ -12,7 +12,7 @@ data object RagiumConstants {
     const val MACHINE = "machine"
 
     // Mechanical
-    const val STEAM_DYNAMO = "steam_$DYNAMO"
+    const val FUEL_DYNAMO = "fuel_$DYNAMO"
 
     const val ASSEMBLER = "assembler"
     const val CENTRIFUGE = "centrifuge"
