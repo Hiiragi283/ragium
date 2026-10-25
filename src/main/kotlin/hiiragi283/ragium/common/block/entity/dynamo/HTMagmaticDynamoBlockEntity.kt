@@ -22,8 +22,6 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTMagmaticDynamoBlockEntity(pos: BlockPos, state: BlockState) :
     HTDynamoBlockEntity.Progressed(RagiumBlockEntityTypes.MAGMATIC_DYNAMO.get(), pos, state) {
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.dynamo.magmaticDynamo
-
     override fun getMaxProgress(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: Transaction): Int {
         val resourceIn: FluidResource = fuelTank.resource
         if (resourceIn.isEmpty) return 0
@@ -31,12 +29,14 @@ class HTMagmaticDynamoBlockEntity(pos: BlockPos, state: BlockState) :
         return fuelTank.extract(resourceIn, FluidType.BUCKET_VOLUME, transaction, HTTransferAccess.INTERNAL) * tickPerMb
     }
 
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.dynamo.magmaticDynamo
+
     private lateinit var fuelTank: HTBasicFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
         fuelTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(getTankCapacity(), listener),
+            HTVariableFluidTank.input(getTankCapacity(), listener, filter = { it.getData(RagiumDataMaps.MAGMATIC_FUEL) != null }),
         )
     }
 

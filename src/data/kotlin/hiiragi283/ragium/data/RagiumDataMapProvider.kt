@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
@@ -8,6 +9,7 @@ import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -15,6 +17,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.data.DataMapProvider
@@ -28,7 +31,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         furnaceFuel()
 
         // chemical(provider)
-        magmaticFuel()
+        fluidFuel()
         mortarRepair()
     }
 
@@ -149,9 +152,19 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         }
     }*/
 
-    private fun magmaticFuel() {
+    private fun fluidFuel() {
         builder(RagiumDataMaps.MAGMATIC_FUEL)
             .add(Tags.Fluids.LAVA, HTFluidFuel(5), false)
+
+        builder(RagiumDataMaps.COMBUSTION_FUEL)
+            .add(RagiumFluids.CRUDE_OIL, HTFluidFuel(5), false)
+            .add(RagiumFluids.CREOSOTE, HTFluidFuel(10), false)
+            .add(RagiumFluids.NAPHTHA, HTFluidFuel(15), false)
+            .add(RagiumFluids.AROMATIC_COMPOUND, HTFluidFuel(15), false)
+            .add(RagiumFluids.FUEL, HTFluidFuel(20), false)
+
+        builder(RagiumDataMaps.COOLANT)
+            .add(Tags.Fluids.WATER, HTFluidFuel(5), false)
     }
 
     private fun mortarRepair() {
@@ -185,6 +198,14 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         replace: Boolean = false,
         vararg conditions: ICondition,
     ): Builder<T, Block> = this.add(prefix.materialTag(material), value, replace, *conditions)
+
+    // Fluid
+    private fun <T : Any> Builder<T, Fluid>.add(
+        content: HTFluidContent,
+        value: T,
+        replace: Boolean = false,
+        vararg conditions: ICondition,
+    ): Builder<T, Fluid> = this.add(content.fluidTag, value, replace, *conditions)
 
     // Item
     @Suppress("DEPRECATION")

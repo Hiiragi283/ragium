@@ -45,6 +45,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.FUEL_DYNAMO, "Fuel Dynamo")
         add(RagiumBlocks.MAGMATIC_DYNAMO, "Magmatic Dynamo")
+        add(RagiumBlocks.COMBUSTION_DYNAMO, "Combustion Dynamo")
 
         add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.CENTRIFUGE, "Centrifuge")

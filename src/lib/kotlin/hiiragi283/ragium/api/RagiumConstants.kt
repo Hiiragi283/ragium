@@ -32,6 +32,8 @@ data object RagiumConstants {
     const val SMELTER = "smelter"
 
     // Chemical
+    const val COMBUSTION_DYNAMO = "combustion_$DYNAMO"
+
     const val CHEMICAL_BATH = "chemical_bath"
     const val CHEMICAL_REACTOR = "chemical_reactor"
     const val MIXER = "mixer"

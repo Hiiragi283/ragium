@@ -230,11 +230,15 @@ data object RagiumBlocks {
     val MAGMATIC_DYNAMO: HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerDynamo(RagiumBlockEntityTypes.MAGMATIC_DYNAMO)
 
     @JvmField
+    val COMBUSTION_DYNAMO: HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerDynamo(RagiumBlockEntityTypes.COMBUSTION_DYNAMO)
+
+    @JvmField
     val DYNAMOS: Map<HTMachineType, List<HTBasicDeferredBlockAndItem<HTDynamoBlock>>> = buildListMultiMap(
         sortedMapOf(HTMachineType.COMPARATOR),
         {
             put(HTMachineType.MECHANICAL, FUEL_DYNAMO)
             put(HTMachineType.HEAT, MAGMATIC_DYNAMO)
+            put(HTMachineType.CHEMICAL, COMBUSTION_DYNAMO)
         },
     )
 

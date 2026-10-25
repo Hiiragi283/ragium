@@ -105,6 +105,10 @@ data object RagiumConfig {
             @JvmField
             val magmaticDynamo: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.MAGMATIC_DYNAMO, 64)
 
+            // Chemical
+            @JvmField
+            val combustionDynamo: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.COMBUSTION_DYNAMO, 96)
+
             init {
                 builder.push(RagiumConstants.FUEL_DYNAMO)
                 steamDynamoWaterPerTick = builder.definePositiveInt("water_per_tick", 2)

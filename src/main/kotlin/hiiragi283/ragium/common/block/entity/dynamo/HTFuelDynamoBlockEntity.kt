@@ -20,14 +20,14 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTFuelDynamoBlockEntity(pos: BlockPos, state: BlockState) :
     HTDynamoBlockEntity.Progressed(RagiumBlockEntityTypes.FUEL_DYNAMO.get(), pos, state) {
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.dynamo.fuelDynamo
-
     override fun getMaxProgress(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: Transaction): Int {
         val burnTime: Int = fuelSlot.resource.toStack(1).getBurnTime(null, level.fuelValues())
         if (burnTime <= 0) return 0
         val extracted: Int = fuelSlot.extractSelf(1, transaction, HTTransferAccess.INTERNAL)
         return if (extracted == 1) burnTime else 0
     }
+
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.dynamo.fuelDynamo
 
     private lateinit var fuelSlot: HTBasicItemSlot
 

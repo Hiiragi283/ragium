@@ -31,6 +31,18 @@ data object RagiumDataMaps {
     val MAGMATIC_FUEL: DataMapType<Fluid, HTFluidFuel> = fluidFuel("magmatic")
 
     /**
+     * @since 26.1.12
+     */
+    @JvmField
+    val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuel> = fluidFuel("combustion")
+
+    /**
+     * @since 26.1.12
+     */
+    @JvmField
+    val COOLANT: DataMapType<Fluid, HTFluidFuel> = fluidFuel("coolant")
+
+    /**
      * モルタルによるブロックの修復
      */
     @JvmField
@@ -44,6 +56,9 @@ data object RagiumDataMaps {
     @SubscribeEvent
     fun registerDataMapType(event: RegisterDataMapTypesEvent) {
         event.register(MAGMATIC_FUEL)
+        event.register(COMBUSTION_FUEL)
+        event.register(COOLANT)
+
         event.register(MORTAR_REPAIR)
     }
 }

@@ -41,6 +41,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.FUEL_DYNAMO, "燃料ダイナモ")
         add(RagiumBlocks.MAGMATIC_DYNAMO, "溶岩ダイナモ")
+        add(RagiumBlocks.COMBUSTION_DYNAMO, "燃焼ダイナモ")
 
         add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.CENTRIFUGE, "遠心分離機")

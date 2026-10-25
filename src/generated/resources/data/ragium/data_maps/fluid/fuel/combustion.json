@@ -1,0 +1,9 @@
+{
+  "values": {
+    "#c:aromatic_compound": 15,
+    "#c:creosote": 10,
+    "#c:crude_oil": 5,
+    "#c:fuel": 20,
+    "#c:naphtha": 15
+  }
+}
