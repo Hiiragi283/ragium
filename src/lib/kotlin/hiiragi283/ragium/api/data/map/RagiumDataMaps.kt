@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.registries.datamaps.DataMapType
@@ -17,6 +18,18 @@ import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
  */
 @EventBusSubscriber
 data object RagiumDataMaps {
+    @JvmStatic
+    private fun fluidFuel(name: String): DataMapType<Fluid, HTFluidFuel> =
+        DataMapType.builder(RagiumAPI.id("fuel/$name"), Registries.FLUID, HTFluidFuel.CODEC)
+            .synced(HTFluidFuel.CODEC, false)
+            .build()
+
+    /**
+     * @since 26.1.12
+     */
+    @JvmField
+    val MAGMATIC_FUEL: DataMapType<Fluid, HTFluidFuel> = fluidFuel("magmatic")
+
     /**
      * モルタルによるブロックの修復
      */
@@ -30,7 +43,7 @@ data object RagiumDataMaps {
 
     @SubscribeEvent
     fun registerDataMapType(event: RegisterDataMapTypesEvent) {
-        // event.register(CHEMICAL)
+        event.register(MAGMATIC_FUEL)
         event.register(MORTAR_REPAIR)
     }
 }

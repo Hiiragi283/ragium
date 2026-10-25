@@ -3,6 +3,7 @@ package hiiragi283.ragium.data
 import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import hiiragi283.ragium.api.data.map.HTFluidFuel
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -14,6 +15,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
@@ -26,6 +28,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         furnaceFuel()
 
         // chemical(provider)
+        magmaticFuel()
         mortarRepair()
     }
 
@@ -145,6 +148,11 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             }
         }
     }*/
+
+    private fun magmaticFuel() {
+        builder(RagiumDataMaps.MAGMATIC_FUEL)
+            .add(Tags.Fluids.LAVA, HTFluidFuel(5), false)
+    }
 
     private fun mortarRepair() {
         builder(RagiumDataMaps.MORTAR_REPAIR)

@@ -24,7 +24,6 @@ import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.util.HTStorageHelper
-import hiiragi283.ragium.common.block.dynamo.HTSteamDynamoBlock
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock
 import hiiragi283.ragium.common.block.storage.HTPotionTankBlock
@@ -225,13 +224,17 @@ data object RagiumBlocks {
     ): HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerWithBE(type, ::HTDynamoBlock, properties)
 
     @JvmField
-    val STEAM_DYNAMO: HTBasicDeferredBlockAndItem<HTSteamDynamoBlock> = registerWithBE(RagiumBlockEntityTypes.STEAM_DYNAMO, ::HTSteamDynamoBlock)
+    val STEAM_DYNAMO: HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerDynamo(RagiumBlockEntityTypes.STEAM_DYNAMO)
+
+    @JvmField
+    val MAGMATIC_DYNAMO: HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerDynamo(RagiumBlockEntityTypes.MAGMATIC_DYNAMO)
 
     @JvmField
     val DYNAMOS: Map<HTMachineType, List<HTBasicDeferredBlockAndItem<HTDynamoBlock>>> = buildListMultiMap(
         sortedMapOf(HTMachineType.COMPARATOR),
         {
             put(HTMachineType.MECHANICAL, STEAM_DYNAMO)
+            put(HTMachineType.HEAT, MAGMATIC_DYNAMO)
         },
     )
 

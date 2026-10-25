@@ -91,13 +91,13 @@ abstract class HTCatalysedFluidToItemBlockEntity(type: BlockEntityType<*>, pos: 
         addProgressBar(widgetHolder)
         // input
         widgetHolder += HTFluidWidget.Tank(
-            this@HTCatalysedFluidToItemBlockEntity.inputTank,
+            inputTank,
             HTSlotHelper.getSlotPosX(1),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
             false,
         )
-        widgetHolder.track(this@HTCatalysedFluidToItemBlockEntity.inputTank)
+        widgetHolder.track(inputTank)
         // catalyst
         widgetHolder += HTItemWidget.Container(
             catalystSlot,

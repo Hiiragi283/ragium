@@ -40,6 +40,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.QUARTZ_GLASS_PANE, "クォーツガラス板")
 
         add(RagiumBlocks.STEAM_DYNAMO, "蒸気ダイナモ")
+        add(RagiumBlocks.MAGMATIC_DYNAMO, "溶岩ダイナモ")
 
         add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.CENTRIFUGE, "遠心分離機")

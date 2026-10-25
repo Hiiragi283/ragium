@@ -7,8 +7,10 @@ import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -21,6 +23,16 @@ open class HTDynamoBlock(type: HTDeferredBlockEntityType<*>, properties: Propert
     init {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.UP).setValue(RagiumBlockStateProperties.IS_ACTIVE, false))
     }
+
+    override fun useItemOn(
+        itemStack: ItemStack,
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hand: InteractionHand,
+        hitResult: BlockHitResult,
+    ): InteractionResult = RagiumBlockBehaviors.interactWithTank(itemStack, level, pos, player, hand, hitResult)
 
     override fun useWithoutItem(state: BlockState, level: Level, pos: BlockPos, player: Player, hitResult: BlockHitResult): InteractionResult {
         if (player is ServerPlayer) {

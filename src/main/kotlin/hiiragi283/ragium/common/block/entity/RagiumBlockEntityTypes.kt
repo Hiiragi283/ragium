@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.block.entity.dynamo.HTMagmaticDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTSteamDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
@@ -68,6 +69,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val STEAM_DYNAMO: HTDeferredBlockEntityType<HTSteamDynamoBlockEntity> =
         registerTick(RagiumConstants.STEAM_DYNAMO, ::HTSteamDynamoBlockEntity)
+
+    @JvmField
+    val MAGMATIC_DYNAMO: HTDeferredBlockEntityType<HTMagmaticDynamoBlockEntity> =
+        registerTick(RagiumConstants.MAGMATIC_DYNAMO, ::HTMagmaticDynamoBlockEntity)
 
     //    Machine    //
 
@@ -209,6 +214,7 @@ data object RagiumBlockEntityTypes {
 
         // Dynamo
         registerBlockEntity(STEAM_DYNAMO.get())
+        registerBlockEntity(MAGMATIC_DYNAMO.get())
 
         // Machine
         registerBlockEntity(ASSEMBLER.get())

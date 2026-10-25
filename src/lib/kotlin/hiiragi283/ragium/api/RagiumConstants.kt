@@ -22,6 +22,8 @@ data object RagiumConstants {
     const val PRESS_MACHINE = "press_machine"
 
     // Heat
+    const val MAGMATIC_DYNAMO = "magmatic_$DYNAMO"
+
     const val ALLOY_SMELTER = "alloy_smelter"
     const val FREEZER = "freezer"
     const val MELTER = "melter"
