@@ -91,7 +91,7 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
             RagiumRecipeBuilders.bathing {
                 itemIngredient { +contents.excludeWhites() }
                 fluidIngredient {
-                    +holderSet(RagiumFluids.BLEACH)
+                    +holderSet(RagiumFluids.CHLORINE)
                     amount /= 8
                 }
                 result { +contents.white.asItem() }

@@ -36,6 +36,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         mechanical()
         heat()
         chemical()
+        resource()
         electronics()
     }
 
@@ -414,21 +415,18 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun resin() {
         // Natural Gas + H2O -> Alcohol
-        RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.NATURAL_GAS) }
-            ingredient {
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.NATURAL_GAS) }
+            fluidIngredient {
                 +waterSet()
                 amount /= 2
             }
             fluidResult { +RagiumFluids.ALCOHOL }
         }.save(exporter)
-        // Alcohol + O2 -> Aldehyde
+        // Alcohol + (Ag) -> Aldehyde
         RagiumRecipeBuilders.reacting {
             ingredient { +holderSet(RagiumTags.Fluids.ALCOHOLS) }
-            ingredient {
-                +holderSet(RagiumFluids.OXYGEN)
-                amount /= 2
-            }
+            catalyst { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.SILVER) }
             fluidResult { +RagiumFluids.ALDEHYDE }
         }.save(exporter)
         // Aromatic Compound + Aldehyde -> Synthetic Resin
@@ -492,30 +490,16 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun nitrogen() {
-        // 3x H2 + N2 -> 2x NH3
-        RagiumRecipeBuilders.reacting {
+        // Gunpowder -> C + S + KNO3
+        RagiumRecipeBuilders.centrifuging {
             ingredient {
-                +holderSet(RagiumFluids.HYDROGEN)
-                amount *= 3
+                +holderSet(Tags.Items.GUNPOWDERS)
+                count = 3
             }
-            ingredient { +holderSet(RagiumFluids.NITROGEN) }
-            catalyst { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.IRON) }
-            fluidResult {
-                +RagiumFluids.AMMONIA
-                amount *= 2
-            }
-        }.save(exporter)
-        // NH3 + O2 -> HNO3
-        RagiumRecipeBuilders.reacting {
-            ingredient {
-                +holderSet(RagiumFluids.AMMONIA)
-                amount /= 2
-            }
-            ingredient { +holderSet(RagiumFluids.OXYGEN) }
-            fluidResult {
-                +RagiumFluids.NITRIC_ACID
-                amount /= 2
-            }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CARBON) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.NITER) }
+            recipeId suffix "_from_gunpowder"
         }.save(exporter)
         // 1/2 H2SO4 + KNO3 -> HNO3
         RagiumRecipeBuilders.mixing {
@@ -824,16 +808,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidIngredient { +waterSet() }
             fluidResult { +RagiumFluids.HYDROCHLORIC_ACID }
         }.save(exporter)
-
-        // Cl2 + 2x NaOH(aq) -> 2x NaClO(aq) + H2
-        RagiumRecipeBuilders.reacting {
-            ingredient {
-                +holderSet(RagiumFluids.CHLORINE)
-                amount /= 2
-            }
-            ingredient { +holderSet(RagiumFluids.NAOH_SOLUTION) }
-            fluidResult { +RagiumFluids.BLEACH }
-        }.save(exporter)
     }
 
     private fun calcium() {
@@ -850,6 +824,29 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.QUICK_LIME) }
             fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
             time *= 4
+        }.save(exporter)
+    }
+
+    //    Resource    //
+
+    private fun resource() {
+        bioFuel()
+    }
+
+    private fun bioFuel() {
+        // Plant Oil + R-OH + NaOH -> Fuel + Glycerol
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { items { +RagiumItems.SODIUM_HYDROXIDE } }
+            fluidIngredient { +holderSet(RagiumFluids.PLANT_OIL) }
+            fluidIngredient {
+                +holderSet(RagiumTags.Fluids.ALCOHOLS)
+                amount *= 6
+            }
+            fluidResult {
+                +RagiumFluids.FUEL
+                amount *= 6
+            }
+            recipeId prefix "bio_"
         }.save(exporter)
     }
 

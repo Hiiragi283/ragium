@@ -106,6 +106,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.CHLORINE, "Chlorine")
 
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
+        addFluid(RagiumFluids.PLANT_OIL, "Plant Oil")
         addFluid(RagiumFluids.ALCOHOL, "Alcohol")
         addFluid(RagiumFluids.ALDEHYDE, "Aldehyde")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "Aromatic Compound")
@@ -116,7 +117,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "Molten Plastic")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "Synthetic Resin")
-        addFluid(RagiumFluids.AMMONIA, "Ammonia")
         addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "Liquid Explosive")
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
@@ -129,7 +129,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "Hydrogen Chloride")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
-        addFluid(RagiumFluids.BLEACH, "Bleach")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")

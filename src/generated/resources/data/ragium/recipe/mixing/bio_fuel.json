@@ -1,0 +1,26 @@
+{
+  "type": "ragium:mixing",
+  "ingredient": {
+    "fluids": [
+      {
+        "amount": 6000,
+        "fluids": "#c:plant_oil"
+      },
+      {
+        "amount": 1000,
+        "fluids": "#ragium:alcohols"
+      }
+    ],
+    "item": {
+      "count": 1,
+      "items": "ragium:sodium_hydroxide"
+    }
+  },
+  "result": {
+    "fluid": {
+      "amount": 6000,
+      "id": "ragium:fuel"
+    }
+  },
+  "time": 200
+}

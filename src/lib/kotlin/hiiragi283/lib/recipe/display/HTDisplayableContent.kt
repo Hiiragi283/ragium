@@ -20,4 +20,10 @@ interface HTDisplayableContent {
  * @author Hiiragi Tsubasa
  * @since 26.1.12
  */
+fun HTDisplayableContent?.displayOrEmpty(): SlotDisplay = this?.display() ?: SlotDisplay.Empty.INSTANCE
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.12
+ */
 fun Optional<out HTDisplayableContent>.display(): SlotDisplay = this.fold(SlotDisplay.Empty::INSTANCE, HTDisplayableContent::display)

@@ -102,6 +102,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.CHLORINE, "塩素")
 
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
+        addFluid(RagiumFluids.PLANT_OIL, "植物油")
         addFluid(RagiumFluids.ALCOHOL, "アルコール")
         addFluid(RagiumFluids.ALDEHYDE, "アルデヒド")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "芳香族化合物")
@@ -112,7 +113,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "溶融プラスチック")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "合成樹脂")
-        addFluid(RagiumFluids.AMMONIA, "アンモニア")
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "液体爆薬")
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "フッ化水素")
@@ -125,7 +125,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
-        addFluid(RagiumFluids.BLEACH, "漂白剤")
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")

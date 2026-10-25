@@ -163,13 +163,17 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0x663333))
         }
+        register.register(RagiumFluids.PLANT_OIL) {
+            transparent()
+            colorTint(Color(0x669900))
+        }
         register.register(RagiumFluids.ALCOHOL) {
             transparent()
-            colorTint(Color(0xcc99ff))
+            colorTint(Color(0xccccff))
         }
         register.register(RagiumFluids.ALDEHYDE) {
             transparent()
-            colorTint(Color(0xcc66ff))
+            colorTint(Color(0xcc99ff))
         }
         register.register(RagiumFluids.AROMATIC_COMPOUND) {
             transparent()
@@ -202,10 +206,6 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.SYNTHETIC_RESIN) {
             molten()
             colorTint(Color(0xff6633))
-        }
-        register.register(RagiumFluids.AMMONIA) {
-            transparent()
-            colorTint(Color(0x9999cc))
         }
         register.register(RagiumFluids.NITRIC_ACID) {
             dull()
@@ -255,10 +255,6 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.HYDROCHLORIC_ACID) {
             dull()
             colorTint(Color(0x99cc66))
-        }
-        register.register(RagiumFluids.BLEACH) {
-            dull()
-            colorTint(Color(0xccff99))
         }
     }
 
