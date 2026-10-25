@@ -97,7 +97,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             )
         }
 
-        abstract fun getConfig(): HTEnergyConfig
+        protected abstract fun getConfig(): HTEnergyConfig
 
         fun addEnergySlot(widgetHolder: HTWidgetHolder, x: Int, y: Int) {
             widgetHolder += HTEnergySlotWidget(handler, x, y)

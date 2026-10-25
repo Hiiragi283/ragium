@@ -4,7 +4,6 @@ import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.base.HTBasicSingleRecipe
 import hiiragi283.lib.recipe.base.HTCatalysedSingleRecipe
-import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
@@ -73,18 +72,6 @@ data object HTViewerRecipeHelper {
             id.identifier(),
             recipe.ingredient.display(),
             recipe.catalyst.display(),
-            recipe.result.display(),
-            recipe.progressData,
-        )
-    }
-
-    @JvmStatic
-    fun doubleItemToItem(holder: HTRecipeHolder<HTDoubleItemToItemRecipe.Basic>): HTDoubleToSingleViewerRecipe {
-        val (id: RecipeKey, recipe: HTDoubleItemToItemRecipe.Basic) = holder
-        return HTDoubleToSingleViewerRecipe(
-            id.identifier(),
-            recipe.primary.display(),
-            recipe.secondary.display(),
             recipe.result.display(),
             recipe.progressData,
         )

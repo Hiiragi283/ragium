@@ -49,17 +49,17 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun writeValue(output: ValueOutput) {
         super.writeValue(output)
         val child: ValueOutput = output.child(HTConstants.LAST_RECIPE)
-        child.putChild("smelting", smeltingCache)
-        child.putChild("blasting", blastingCache)
-        child.putChild("smoking", smokingCache)
+        child.putChild(HTConstants.SMELTING, smeltingCache)
+        child.putChild(HTConstants.BLASTING, blastingCache)
+        child.putChild(HTConstants.SMOKING, smokingCache)
     }
 
-    override fun readUpdateTag(input: ValueInput) {
-        super.readUpdateTag(input)
+    override fun readValue(input: ValueInput) {
+        super.readValue(input)
         input.child(HTConstants.LAST_RECIPE).ifPresent { child: ValueInput ->
-            child.readChild("smelting", smeltingCache)
-            child.readChild("blasting", blastingCache)
-            child.readChild("smoking", smokingCache)
+            child.readChild(HTConstants.SMELTING, smeltingCache)
+            child.readChild(HTConstants.BLASTING, blastingCache)
+            child.readChild(HTConstants.SMOKING, smokingCache)
         }
     }
 

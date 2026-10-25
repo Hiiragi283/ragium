@@ -8,7 +8,12 @@ package hiiragi283.ragium.api
 data object RagiumConstants {
     //    Blocks    //
 
+    const val DYNAMO = "dynamo"
+    const val MACHINE = "machine"
+
     // Mechanical
+    const val STEAM_DYNAMO = "steam_$DYNAMO"
+
     const val ASSEMBLER = "assembler"
     const val CENTRIFUGE = "centrifuge"
     const val COMPRESSOR = "compressor"

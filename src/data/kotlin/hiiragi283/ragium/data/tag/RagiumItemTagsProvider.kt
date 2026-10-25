@@ -93,6 +93,6 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(RagiumTags.Items.SUPPORT_UPGRADES)
             .add(RagiumBlocks.TANK)
             .add(RagiumBlocks.POTION_TANK)
-            .addTag(HTMachineType.PREFIX.rawCommonTag.item)
+            .addTag(HTMachineType.MACHINE_PREFIX.rawCommonTag.item)
     }
 }

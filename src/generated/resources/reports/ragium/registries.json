@@ -74,6 +74,7 @@
     "smelter",
     "sodium_hydroxide_solution",
     "sooty_iron_block",
+    "steam_dynamo",
     "sulfuric_acid",
     "tank",
     "upgrade_station",
@@ -106,6 +107,7 @@
     "resource_pump",
     "scanner",
     "smelter",
+    "steam_dynamo",
     "tank",
     "upgrade_station"
   ],
@@ -402,6 +404,7 @@
     "sooty_iron_shovel",
     "sooty_iron_sword",
     "splash_bottle",
+    "steam_dynamo",
     "sticky_ball",
     "sulfur_dioxide_bucket",
     "sulfur_dust",

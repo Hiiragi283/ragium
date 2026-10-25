@@ -33,7 +33,7 @@ abstract class HTSingleRecipeHandler<INPUT : Any, OUTPUT : Any, RECIPE : Functio
     override fun tick(level: ServerLevel): Boolean {
         if (!shouldCheck) return false
         // インプットに一致するレシピを探索する
-        val input: INPUT = getInput()
+        val input: INPUT = inputCache ?: getInput()
         inputCache = input
         val recipe: RECIPE = findRecipe(input, level) ?: return run {
             shouldCheck = false
@@ -42,7 +42,7 @@ abstract class HTSingleRecipeHandler<INPUT : Any, OUTPUT : Any, RECIPE : Functio
             false
         }
         // アウトプットに完成品を搬出できるか判定する
-        val output: OUTPUT = recipe.apply(input)
+        val output: OUTPUT = outputCache ?: recipe.apply(input)
         outputCache = output
         if (!canProgress) {
             if (canComplete(recipe, input, output)) {

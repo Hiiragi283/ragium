@@ -12,6 +12,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
+import hiiragi283.ragium.common.block.entity.dynamo.HTDynamoBlockEntity
+import hiiragi283.ragium.common.block.entity.dynamo.HTSteamDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
@@ -65,6 +67,14 @@ data object RagiumBlockEntityTypes {
     @JvmStatic
     private fun <BE : HTBlockEntity> registerTick(name: String, factory: BlockEntityType.BlockEntitySupplier<BE>): HTDeferredBlockEntityType<BE> =
         REGISTER.registerType(name, factory, HTBlockEntity::tickServer, HTBlockEntity::tickClient)
+
+    //    Dynamo    //
+
+    @JvmField
+    val STEAM_DYNAMO: HTDeferredBlockEntityType<HTSteamDynamoBlockEntity> =
+        registerTick(RagiumConstants.STEAM_DYNAMO, ::HTSteamDynamoBlockEntity)
+
+    //    Machine    //
 
     // Mechanical
     @JvmField
@@ -205,12 +215,18 @@ data object RagiumBlockEntityTypes {
             }
         }
 
+        fun <BE : HTDynamoBlockEntity> registerDynamo(type: BlockEntityType<BE>) {
+            registerBlockEntity(type)
+            event.registerBlockEntity(HTEnergyCapabilities.block, type) { processor: BE, _ -> processor.handler }
+        }
+
         fun <BE : HTProcessorBlockEntity.Energized> registerProcessor(type: BlockEntityType<BE>) {
             registerBlockEntity(type)
-            event.registerBlockEntity(HTEnergyCapabilities.block, type) { processor: BE, _ ->
-                processor.handler
-            }
+            event.registerBlockEntity(HTEnergyCapabilities.block, type) { processor: BE, _ -> processor.handler }
         }
+
+        // Dynamo
+        registerDynamo(STEAM_DYNAMO.get())
 
         // Machine
         registerProcessor(ASSEMBLER.get())

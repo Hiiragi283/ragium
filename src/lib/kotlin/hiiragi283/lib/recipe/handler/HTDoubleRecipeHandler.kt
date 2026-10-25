@@ -37,8 +37,8 @@ abstract class HTDoubleRecipeHandler<INPUT_A : Any, INPUT_B : Any, OUTPUT : Any,
     override fun tick(level: ServerLevel): Boolean {
         if (!shouldCheck) return false
         // インプットに一致するレシピを探索する
-        val firstInput: INPUT_A = getFirstInput()
-        val secondInput: INPUT_B = getSecondInput()
+        val firstInput: INPUT_A = firstInputCache ?: getFirstInput()
+        val secondInput: INPUT_B = secondInputCache ?: getSecondInput()
         firstInputCache = firstInput
         secondInputCache = secondInput
         val recipe: RECIPE = findRecipe(firstInput, secondInput, level) ?: return run {
@@ -49,7 +49,7 @@ abstract class HTDoubleRecipeHandler<INPUT_A : Any, INPUT_B : Any, OUTPUT : Any,
             false
         }
         // アウトプットに完成品を搬出できるか判定する
-        val output: OUTPUT = recipe.apply(firstInput, secondInput)
+        val output: OUTPUT = outputCache ?: recipe.apply(firstInput, secondInput)
         outputCache = output
         if (!canProgress) {
             if (canComplete(recipe, firstInput, secondInput, output)) {

@@ -43,6 +43,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.QUARTZ_GLASS, "Quartz Glass")
         add(RagiumBlocks.QUARTZ_GLASS_PANE, "Quartz Glass Pane")
 
+        add(RagiumBlocks.STEAM_DYNAMO, "Steam Dynamo")
+
         add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.CENTRIFUGE, "Centrifuge")
         add(RagiumBlocks.CRUSHER, "Crusher")
