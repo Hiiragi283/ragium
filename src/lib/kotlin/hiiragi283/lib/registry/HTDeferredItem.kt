@@ -1,5 +1,6 @@
 package hiiragi283.lib.registry
 
+import com.mojang.serialization.DataResult
 import hiiragi283.lib.item.HTItemInstanceLike
 import hiiragi283.lib.text.Text
 import net.minecraft.core.component.DataComponentPatch
@@ -38,10 +39,10 @@ class HTDeferredItem<out ITEM : Item> :
 
     override fun asItem(): ITEM = get()
 
-    override fun asTemplate(count: Int, patch: DataComponentPatch): Result<ItemStackTemplate> = when {
-        this.isAir -> Result.failure(IllegalStateException("Could not create ItemStackTemplate with air item"))
+    override fun asTemplate(count: Int, patch: DataComponentPatch): DataResult<ItemStackTemplate> = when {
+        this.isAir -> DataResult.error { "Could not create ItemStackTemplate with air item" }
         else -> asResult().map { ItemStackTemplate(it, count, patch) }
     }
 
-    override fun asResource(patch: DataComponentPatch): Result<ItemResource> = asResult().map { ItemResource.of(it, patch) }
+    override fun asResource(patch: DataComponentPatch): DataResult<ItemResource> = asResult().map { ItemResource.of(it, patch) }
 }

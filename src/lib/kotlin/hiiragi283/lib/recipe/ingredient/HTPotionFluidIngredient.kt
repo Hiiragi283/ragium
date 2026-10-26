@@ -9,6 +9,7 @@ import hiiragi283.lib.recipe.display.toDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.fold
+import hiiragi283.lib.util.getOrNull
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries

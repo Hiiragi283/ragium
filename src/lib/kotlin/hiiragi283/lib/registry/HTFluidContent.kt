@@ -1,5 +1,6 @@
 package hiiragi283.lib.registry
 
+import com.mojang.serialization.DataResult
 import hiiragi283.lib.fluid.HTFluidInstanceLike
 import hiiragi283.lib.resource.HTSimpleValueWithKey
 import net.minecraft.core.TypedInstance
@@ -40,10 +41,8 @@ sealed class HTFluidContent(
      */
     fun isOf(instance: TypedInstance<Fluid>): Boolean = sourceHolder.isOf(instance)
 
-    override fun asTemplate(amount: Int, patch: DataComponentPatch): Result<FluidStackTemplate> = when {
-        sourceHolder.isEmpty ->
-            Result.failure(IllegalStateException("Could not create FluidStackTemplate with empty fluid"))
-
+    override fun asTemplate(amount: Int, patch: DataComponentPatch): DataResult<FluidStackTemplate> = when {
+        sourceHolder.isEmpty -> DataResult.error { "Could not create FluidStackTemplate with empty fluid" }
         else -> sourceHolder.asResult().map { FluidStackTemplate(it, amount, patch) }
     }
 

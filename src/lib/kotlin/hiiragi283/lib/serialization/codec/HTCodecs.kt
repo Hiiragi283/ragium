@@ -14,6 +14,7 @@ import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
+import hiiragi283.lib.util.dataResult
 import hiiragi283.lib.util.java
 import hiiragi283.lib.util.kotlin
 import net.minecraft.core.Holder
@@ -166,14 +167,8 @@ data object HTCodecs {
      */
     @JvmStatic
     inline fun <reified V : Enum<V>> stringEnum(crossinline factory: (V) -> String?): Codec<V> = Codec.STRING.flatXmap<V>(
-        { name: String ->
-            enumEntries<V>().firstOrNull { factory(it) == name }?.let { DataResult.success(it) }
-                ?: DataResult.error { "Unknown element name: $name" }
-        },
-        { value: V ->
-            factory(value)?.let { DataResult.success(it) }
-                ?: DataResult.error { "Element with unknown name: $value" }
-        },
+        { name: String -> enumEntries<V>().firstOrNull { factory(it) == name }.dataResult { "Unknown element name: $name" } },
+        { value: V -> factory(value).dataResult { "Element with unknown name: $value" } },
     )
 
     /**

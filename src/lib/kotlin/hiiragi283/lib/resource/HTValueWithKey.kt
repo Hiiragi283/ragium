@@ -1,5 +1,7 @@
 package hiiragi283.lib.resource
 
+import com.mojang.serialization.DataResult
+import hiiragi283.lib.util.getOrNull
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 
@@ -31,17 +33,15 @@ interface HTValueWithKey<R : Any, out T : R> {
      */
     fun id(): Identifier = key().identifier()
 
-    fun asResult(): Result<T>
+    fun asResult(): DataResult<@UnsafeVariance T>
 
     /**
      * 値を取得します。
-     * @return [asResult]の戻り値が[Result.isFailure]の場合`null`
      */
     fun getOrNull(): T? = asResult().getOrNull()
 
     /**
      * 値を取得します。
-     * @throws IllegalStateException [asResult]の戻り値が[Result.isFailure]の場合
      */
     fun getOrThrow(): T = asResult().getOrThrow()
 }

@@ -26,8 +26,7 @@ data class RTPotionBottleCentrifugingRecipe(val bottleType: HTBottleType, overri
 
     override fun apply(input: ItemInstance): HTItemSeparatingRecipe.Output = HTItemSeparatingRecipe.Output(
         bottleType.emptyItem.asStackOrEmpty(),
-        HTPotionHelper.createFluid(input, HTPotionHelper.BOTTLE_AMOUNT)
-            .fold(FluidStackTemplate::create) { FluidStack.EMPTY },
+        HTPotionHelper.createFluid(input, HTPotionHelper.BOTTLE_AMOUNT).mapOrElse(FluidStackTemplate::create) { FluidStack.EMPTY },
     )
 
     override fun getMatchingStack(input: ItemInstance): ItemInstance = when {

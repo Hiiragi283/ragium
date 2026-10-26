@@ -9,6 +9,7 @@ import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.fluid.toResourcePair
 import hiiragi283.lib.transfer.useTransaction
+import hiiragi283.lib.util.getOrNull
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionHand
@@ -42,7 +43,7 @@ class HTPotionTankBlock(type: HTDeferredBlockEntityType<*>, properties: Properti
                 HTPotionHelper.createFluid(
                     itemStack,
                     HTPotionHelper.BOTTLE_AMOUNT,
-                ).onSuccess { template: FluidStackTemplate ->
+                ).getOrNull()?.let { template: FluidStackTemplate ->
                     val (resource: FluidResource, amount: Int) = template.toResourcePair()
                     if (tank.insert(resource, amount, transaction, HTTransferAccess.EXTERNAL) == amount) {
                         val newStack: ItemStack = itemStack.transmuteCopy(emptyBottle, 1)
@@ -60,9 +61,7 @@ class HTPotionTankBlock(type: HTDeferredBlockEntityType<*>, properties: Properti
             val filledBottle: HTBottleType = HTBottleType.getFromEmpty(itemStack) ?: return false
             val bottleAmount: Int = HTPotionHelper.BOTTLE_AMOUNT
             if (tank.extract(resourceIn, bottleAmount, transaction, HTTransferAccess.EXTERNAL) == bottleAmount) {
-                HTPotionHelper.createFilled(resourceIn, filledBottle).onSuccess {
-                    HTItemDropHelper.giveStackTo(player, it)
-                }
+                HTPotionHelper.createFilled(resourceIn, filledBottle).ifSuccess { HTItemDropHelper.giveStackTo(player, it) }
                 itemStack.shrink(1)
                 transaction.commit()
                 return true

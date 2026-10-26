@@ -23,7 +23,7 @@ class HTPotionTankBlockItem(block: Block, properties: Properties) :
             val stack = ItemStack(baseItem)
             HTPotionHelper
                 .createFluid(potion, amount = RagiumConfig.SERVER.tankCapacity.asInt)
-                .onSuccess { HTStorageHelper.updateFluid(stack, it.createOrEmpty()) }
+                .ifSuccess { HTStorageHelper.updateFluid(stack, it.createOrEmpty()) }
             output.accept(stack)
         }
     }

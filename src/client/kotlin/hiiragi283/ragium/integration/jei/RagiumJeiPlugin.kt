@@ -19,6 +19,7 @@ import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTSingleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTViewerRecipeHelper
 import hiiragi283.lib.registry.asHolderSequence
+import hiiragi283.lib.util.getOrNull
 import hiiragi283.lib.util.toOptional
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents

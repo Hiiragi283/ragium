@@ -177,7 +177,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     +dust
                     count = 4
                 }
-                extraDust?.asTemplate()?.getOrNull()?.let { result { from(it) } }
+                extraDust?.asTemplate()?.ifSuccess { result { from(it) } }
                 recipeId suffix "_from_raw"
                 condition { itemTagPresent(CommonTagPrefixes.RAW_MATERIALS, metal) }
             }.save(exporter)
@@ -188,7 +188,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     +dust
                     count = 12
                 }
-                extraDust?.asTemplate(3)?.getOrNull()?.let { result { from(it) } }
+                extraDust?.asTemplate(3)?.ifSuccess { result { from(it) } }
                 recipeId suffix "_from_raw_block"
                 condition { itemTagPresent(CommonTagPrefixes.RAW_STORAGE_BLOCK, metal) }
             }.save(exporter)

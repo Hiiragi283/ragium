@@ -200,7 +200,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
         override fun type(): HTFluidResultType<*> = TYPE
 
         override fun create(amount: Int): FluidStack =
-            HTPotionHelper.createFluid(toVanilla(), amount).fold(FluidStackTemplate::create) { FluidStack.EMPTY }
+            HTPotionHelper.createFluid(toVanilla(), amount).mapOrElse(FluidStackTemplate::create) { FluidStack.EMPTY }
 
         private fun toVanilla(): PotionContents = PotionContents(
             Optional.ofNullable(content.getRight()),

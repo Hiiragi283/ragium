@@ -1,5 +1,7 @@
 package hiiragi283.lib.fluid
 
+import com.mojang.serialization.DataResult
+import hiiragi283.lib.util.getOrElse
 import net.minecraft.core.component.DataComponentPatch
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
@@ -14,12 +16,12 @@ interface HTFluidInstanceLike {
     /**
      * 新しい[FluidStackTemplate]のインスタンスを作成します。
      */
-    fun asTemplate(amount: Int = FluidType.BUCKET_VOLUME, patch: DataComponentPatch = DataComponentPatch.EMPTY): Result<FluidStackTemplate>
+    fun asTemplate(amount: Int = FluidType.BUCKET_VOLUME, patch: DataComponentPatch = DataComponentPatch.EMPTY): DataResult<FluidStackTemplate>
 
     /**
      * 新しい[FluidStack]のインスタンスを作成します。
      */
-    fun asStack(amount: Int = FluidType.BUCKET_VOLUME, patch: DataComponentPatch = DataComponentPatch.EMPTY): Result<FluidStack> =
+    fun asStack(amount: Int = FluidType.BUCKET_VOLUME, patch: DataComponentPatch = DataComponentPatch.EMPTY): DataResult<FluidStack> =
         asTemplate(amount, patch).map(FluidStackTemplate::create)
 
     /**

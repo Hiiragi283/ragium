@@ -1,5 +1,7 @@
 package hiiragi283.lib.item
 
+import com.mojang.serialization.DataResult
+import hiiragi283.lib.util.getOrElse
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
@@ -14,12 +16,12 @@ interface HTItemInstanceLike {
     /**
      * 新しい[ItemStackTemplate]のインスタンスを作成します。
      */
-    fun asTemplate(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): Result<ItemStackTemplate>
+    fun asTemplate(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): DataResult<ItemStackTemplate>
 
     /**
      * 新しい[ItemStack]のインスタンスを作成します。
      */
-    fun asStack(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): Result<ItemStack> =
+    fun asStack(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): DataResult<ItemStack> =
         asTemplate(count, patch).map(ItemStackTemplate::create)
 
     /**
@@ -32,7 +34,7 @@ interface HTItemInstanceLike {
     /**
      * @since 26.1.12
      */
-    fun asResource(patch: DataComponentPatch = DataComponentPatch.EMPTY): Result<ItemResource>
+    fun asResource(patch: DataComponentPatch = DataComponentPatch.EMPTY): DataResult<ItemResource>
 
     /**
      * @since 26.1.12
