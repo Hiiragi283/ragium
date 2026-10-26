@@ -18,11 +18,11 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.transfer.fluid.FluidResource
-import net.neoforged.neoforge.transfer.transaction.Transaction
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 class HTMagmaticDynamoBlockEntity(pos: BlockPos, state: BlockState) :
     HTDynamoBlockEntity.Progressed(RagiumBlockEntityTypes.MAGMATIC_DYNAMO.get(), pos, state) {
-    override fun getMaxProgress(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: Transaction): Int {
+    override fun getMaxProgress(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: TransactionContext): Int {
         val resourceIn: FluidResource = fuelTank.resource
         if (resourceIn.isEmpty) return 0
         val tickPerMb: Int = resourceIn.getData(RagiumDataMaps.MAGMATIC_FUEL)?.tickPerMb ?: return 0

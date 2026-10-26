@@ -1,6 +1,5 @@
 package hiiragi283.lib.recipe.base
 
-import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
@@ -11,14 +10,14 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
+import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.nelOf
-import hiiragi283.lib.serialization.network.optionalOf
+import hiiragi283.lib.util.IorNel
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.Optional
 
 /**
  * @author Hiiragi Tsubasa
@@ -43,29 +42,25 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
      * @since 26.1.12
      */
     @JvmRecord
-    data class Result(val items: Nel<HTItemResult>, val fluid: Optional<HTFluidResult>) {
+    data class Result(val content: IorNel<HTItemResult, HTFluidResult>) {
         companion object {
             @JvmField
-            val CODEC: Codec<Result> = HTCodecs.record { instance ->
-                instance.group(
-                    HTItemResult.CODEC
-                        .compactNelFieldOf(HTConstants.ITEM, HTConstants.ITEMS, 4)
-                        .forGetter(Result::items),
-                    HTFluidResult.CODEC.optionalFieldOf(HTConstants.FLUID).forGetter(Result::fluid),
-                ).apply(instance, ::Result)
-            }
+            val CODEC: MapCodec<Result> = HTCodecs.ior(
+                HTItemResult.CODEC.compactNelFieldOf(HTConstants.ITEM, HTConstants.ITEMS, 4),
+                HTFluidResult.CODEC.fieldOf(HTConstants.FLUID),
+            ).xmap(::Result, Result::content)
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Result> = StreamCodec.composite(
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Result> = HTStreamCodecs.ior(
                 HTItemResult.STREAM_CODEC.nelOf(),
-                Result::items,
-                HTFluidResult.STREAM_CODEC.optionalOf(),
-                Result::fluid,
-                ::Result,
-            )
+                HTFluidResult.STREAM_CODEC,
+            ).map(::Result, Result::content)
         }
 
-        fun create(): Output = Output(items.map(HTItemResult::create), fluid.createOrEmpty())
+        fun create(): Output {
+            val (items: Nel<HTItemResult>?, fluid: HTFluidResult?) = content.toPair()
+            return Output(items?.map(HTItemResult::create) ?: listOf(), fluid.createOrEmpty())
+        }
     }
 
     //    Basic    //

@@ -56,8 +56,7 @@ data object HTViewerRecipeHelper {
         return HTItemSeparatingViewerRecipe(
             id.identifier(),
             recipe.ingredient.display(),
-            recipe.result.items.map(HTItemResult::display),
-            recipe.result.fluid.display(),
+            recipe.result.content.mapLeft { it.map(HTItemResult::display) }.mapRight(HTFluidResult::display),
             recipe.progressData,
         )
     }

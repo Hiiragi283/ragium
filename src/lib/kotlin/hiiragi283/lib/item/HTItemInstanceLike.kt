@@ -3,6 +3,7 @@ package hiiragi283.lib.item
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
+import net.neoforged.neoforge.transfer.item.ItemResource
 
 /**
  * [ItemStackTemplate]や[ItemStack]に変換可能なオブジェクトを表すインターフェースです。
@@ -27,4 +28,14 @@ interface HTItemInstanceLike {
      */
     fun asStackOrEmpty(count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): ItemStack =
         asStack(count, patch).getOrElse { ItemStack.EMPTY }
+
+    /**
+     * @since 26.1.12
+     */
+    fun asResource(patch: DataComponentPatch = DataComponentPatch.EMPTY): Result<ItemResource>
+
+    /**
+     * @since 26.1.12
+     */
+    fun asResourceOrEmpty(patch: DataComponentPatch = DataComponentPatch.EMPTY): ItemResource = asResource(patch).getOrElse { ItemResource.EMPTY }
 }

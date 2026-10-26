@@ -3,11 +3,11 @@
   "ingredient": {
     "fluids": [
       {
-        "amount": 6000,
+        "amount": 1000,
         "fluids": "#c:plant_oil"
       },
       {
-        "amount": 1000,
+        "amount": 6000,
         "fluids": "#ragium:alcohols"
       }
     ],

@@ -139,6 +139,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         // add(RagiumItems.ALCLAD_PLATE, "アルクラッド板")
         add(RagiumItems.BEESWAX, "密猟")
+        add(RagiumItems.BIO_CHAFF, "バイオチャフ")
         add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
         add(RagiumItems.LINGERING_BOTTLE, "残留瓶")
         add(RagiumItems.CRUDE_SILICON, "粗製シリコン")

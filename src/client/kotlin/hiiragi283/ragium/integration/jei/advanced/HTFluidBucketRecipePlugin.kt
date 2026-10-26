@@ -1,11 +1,13 @@
 package hiiragi283.ragium.integration.jei.advanced
 
+import hiiragi283.lib.collection.nel
 import hiiragi283.lib.fluid.createBucket
 import hiiragi283.lib.integration.jei.getIngredient
 import hiiragi283.lib.item.toTemplateOrNull
 import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
+import hiiragi283.lib.util.Ior
 import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTBucketFillingRecipe
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
@@ -58,8 +60,7 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
                         HTItemSeparatingViewerRecipe(
                             null,
                             HTSlotDisplayHelper.create(filledBucket),
-                            listOf(HTSlotDisplayHelper.create(remainder)),
-                            HTSlotDisplayHelper.create(fluidIn),
+                            Ior.Both(HTSlotDisplayHelper.create(remainder).nel(), HTSlotDisplayHelper.create(fluidIn)),
                             RTBucketCentrifugingRecipe.progressData,
                         )
 
@@ -95,8 +96,7 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
                 HTItemSeparatingViewerRecipe(
                     null,
                     HTSlotDisplayHelper.create(bucket),
-                    listOf(HTSlotDisplayHelper.create(remainder)),
-                    HTSlotDisplayHelper.create(fluid),
+                    Ior.Both(HTSlotDisplayHelper.create(remainder).nel(), HTSlotDisplayHelper.create(fluid)),
                     RTBucketCentrifugingRecipe.progressData,
                 )
 

@@ -18,18 +18,18 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.transfer.fluid.FluidResource
-import net.neoforged.neoforge.transfer.transaction.Transaction
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 class HTCombustionDynamoBlockEntity(pos: BlockPos, state: BlockState) :
     HTDynamoBlockEntity.Progressed(RagiumBlockEntityTypes.COMBUSTION_DYNAMO.get(), pos, state) {
-    override fun getMaxProgress(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: Transaction): Int {
+    override fun getMaxProgress(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: TransactionContext): Int {
         val resourceIn: FluidResource = fuelTank.resource
         if (resourceIn.isEmpty) return 0
         val tickPerMb: Int = resourceIn.getData(RagiumDataMaps.COMBUSTION_FUEL)?.tickPerMb ?: return 0
         return fuelTank.extract(resourceIn, FluidType.BUCKET_VOLUME, transaction, HTTransferAccess.INTERNAL) * tickPerMb
     }
 
-    override fun generateEnergy(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: Transaction): Int {
+    override fun generateEnergy(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: TransactionContext): Int {
         val coolantIn: FluidResource = coolantTank.resource
         if (coolantIn.isEmpty) return 0
         val tickPerMb: Int = coolantIn.getData(RagiumDataMaps.COOLANT)?.tickPerMb ?: return 0

@@ -2,8 +2,7 @@
 
 package hiiragi283.lib.data.recipe.builder
 
-import hiiragi283.lib.collection.Nel
-import hiiragi283.lib.collection.toNel
+import hiiragi283.lib.collection.toNelOrNull
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
 import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
@@ -13,6 +12,7 @@ import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
+import hiiragi283.lib.util.Ior
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
@@ -20,15 +20,15 @@ import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.jvm.optionals.getOrNull
 
 class HTItemSeparatingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
     HTProgressRecipeBuilder<RECIPE>(prefix) {
-    override fun getRecipeId(): Identifier? = itemResults.first().getId()
+    override fun getRecipeId(): Identifier? = itemResults.firstOrNull()?.getId() ?: fluidResult.getOrNull()?.getId()
 
     override fun createRecipe(): RECIPE = factory.create(
         ingredient,
-        itemResults.toNel(),
-        fluidResult,
+        result,
         progressData,
     )
 
@@ -50,6 +50,10 @@ class HTItemSeparatingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, priv
     @PublishedApi internal var itemResults: MutableList<HTItemResult> = ObjectArrayList()
 
     @PublishedApi internal var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
+
+    val result: HTItemSeparatingRecipe.Result get() = Ior.fromNullable(itemResults.toNelOrNull(), fluidResult.getOrNull())
+        ?.let(HTItemSeparatingRecipe::Result)
+        ?: error("Either item or fluid result required")
 
     operator fun HTItemResult.unaryPlus() {
         itemResults += this
@@ -81,13 +85,6 @@ class HTItemSeparatingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, priv
      * @since 26.1.12
      */
     fun interface Factory<out RECIPE : Any> {
-        fun create(ingredient: HTItemIngredient, items: Nel<HTItemResult>, fluid: Optional<HTFluidResult>, progressData: HTProgressData): RECIPE =
-            create(
-                ingredient,
-                HTItemSeparatingRecipe.Result(items, fluid),
-                progressData,
-            )
-
         fun create(ingredient: HTItemIngredient, result: HTItemSeparatingRecipe.Result, progressData: HTProgressData): RECIPE
     }
 }

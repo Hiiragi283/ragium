@@ -37,7 +37,7 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
     protected lateinit var handler: HTBasicEnergyHandler
         private set
 
-    override fun createEnergyHandler(listener: Runnable): HTEnergyHandlerHolder? {
+    final override fun createEnergyHandler(listener: Runnable): HTEnergyHandlerHolder? {
         val builder: HTBasicEnergyHandlerHolder.Builder = HTBasicEnergyHandlerHolder.builder(this)
         handler = builder.addHandler(
             HTSlotInfo.OUTPUT,
@@ -55,9 +55,9 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
     protected val currentEnergyPerTick: Int
         get() = HTMachineUpgradeHelper.modifySpeed(components(), this.baseEnergyPerTick)
 
-    fun generateEnergy(transaction: TransactionContext): Int = handler.insert(currentEnergyPerTick, transaction, HTTransferAccess.INTERNAL)
+    protected fun generateEnergy(transaction: TransactionContext): Int = handler.insert(currentEnergyPerTick, transaction, HTTransferAccess.INTERNAL)
 
-    fun addEnergySlot(widgetHolder: HTWidgetHolder, x: Int, y: Int) {
+    protected fun addEnergySlot(widgetHolder: HTWidgetHolder, x: Int, y: Int) {
         widgetHolder += HTEnergySlotWidget(handler, x, y)
         widgetHolder.track(handler)
     }
@@ -151,6 +151,7 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
                     val energyGenerated: Int = generateEnergy(level, pos, state, transaction)
                     if (energyGenerated > 0) {
                         progress--
+                        onEnergyGenerated(level, pos, state)
                         transaction.commit()
                         return true
                     }
@@ -159,9 +160,11 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
             return false
         }
 
-        protected abstract fun getMaxProgress(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: Transaction): Int
+        protected abstract fun getMaxProgress(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: TransactionContext): Int
 
-        protected open fun generateEnergy(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: Transaction): Int =
+        protected open fun generateEnergy(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: TransactionContext): Int =
             generateEnergy(transaction)
+
+        protected open fun onEnergyGenerated(level: ServerLevel, pos: BlockPos, state: BlockState) {}
     }
 }

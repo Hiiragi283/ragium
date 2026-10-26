@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.transfer.item.ItemResource
 
 /**
  * シンプルな[HTDeferredItem]のエイリアスです。
@@ -41,4 +42,6 @@ class HTDeferredItem<out ITEM : Item> :
         this.isAir -> Result.failure(IllegalStateException("Could not create ItemStackTemplate with air item"))
         else -> asResult().map { ItemStackTemplate(it, count, patch) }
     }
+
+    override fun asResource(patch: DataComponentPatch): Result<ItemResource> = asResult().map { ItemResource.of(it, patch) }
 }

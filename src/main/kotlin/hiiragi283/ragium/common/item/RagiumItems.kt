@@ -181,6 +181,9 @@ data object RagiumItems {
     val BEESWAX: HTSimpleDeferredItem = REGISTER.registerItem("beeswax", ::HoneycombItem)
 
     @JvmField
+    val BIO_CHAFF: HTSimpleDeferredItem = REGISTER.registerSimpleItem("bio_chaff")
+
+    @JvmField
     val SPLASH_BOTTLE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("splash_bottle")
 
     @JvmField

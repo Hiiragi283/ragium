@@ -1,11 +1,13 @@
 package hiiragi283.ragium.integration.jei.advanced
 
+import hiiragi283.lib.collection.nel
 import hiiragi283.lib.integration.jei.getIngredient
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
+import hiiragi283.lib.util.Ior
 import hiiragi283.ragium.common.recipe.RTPotionBottleCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
@@ -59,8 +61,7 @@ data object HTPotionFluidRecipePlugin : IRecipeManagerPlugin {
                     HTItemSeparatingViewerRecipe(
                         null,
                         HTSlotDisplayHelper.create(bottleType.filledItem.asTemplate(patch = potionPatch).getOrThrow()),
-                        listOf(HTSlotDisplayHelper.create(bottleType.emptyItem)),
-                        FluidStackSlotDisplay(stackFocused),
+                        Ior.Both(HTSlotDisplayHelper.create(bottleType.emptyItem).nel(), FluidStackSlotDisplay(stackFocused)),
                         RTPotionBottleCentrifugingRecipe.PROGRESS_DATA,
                     )
                 }

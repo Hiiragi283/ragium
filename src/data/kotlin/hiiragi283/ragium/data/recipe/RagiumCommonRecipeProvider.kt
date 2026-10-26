@@ -737,10 +737,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun sulfur() {
         // S -> SO2
-        RagiumRecipeBuilders.melting {
+        RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
-            result { +RagiumFluids.SULFUR_DIOXIDE }
-        } // TODO
+            fluidResult { +RagiumFluids.SULFUR_DIOXIDE }
+        }.save(exporter)
         // SO2 + 1/2 O2 -> SO3
         RagiumRecipeBuilders.mixing {
             fluidIngredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
@@ -751,10 +751,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
         }.save(exporter)
         // Blaze Powder -> SO3
-        RagiumRecipeBuilders.melting {
+        RagiumRecipeBuilders.pyrolyzing {
             ingredient { items { +Items.BLAZE_POWDER } }
-            result { +RagiumFluids.SULFUR_TRIOXIDE }
-        } // TODO
+            fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
+        }.save(exporter)
         // SO3 + H2O -> H2SO4
         RagiumRecipeBuilders.mixing {
             fluidIngredient { +holderSet(RagiumFluids.SULFUR_TRIOXIDE) }
@@ -834,6 +834,39 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun bioFuel() {
+        // Seed -> Plant Oil + Bio Chaff
+        RagiumRecipeBuilders.centrifuging {
+            ingredient {
+                +holderSet(Tags.Items.SEEDS)
+                count *= 8
+            }
+            itemResult { +RagiumItems.BIO_CHAFF }
+            fluidResult { +RagiumFluids.PLANT_OIL }
+        }.save(exporter)
+        // Bio Chaff -> Dirt
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +RagiumItems.BIO_CHAFF }
+                count *= 4
+            }
+            result { +Items.DIRT }
+            recipeId suffix "_from_chaff"
+        }.save(exporter)
+
+        // Water + Potato / Sugarcane -> Alcohol
+        RagiumRecipeBuilders.brewing {
+            itemIngredient { +holderSet(setOf(Tags.Items.CROPS_POTATO, Tags.Items.CROPS_SUGAR_CANE)) }
+            fluidIngredient {
+                +waterSet()
+                amount /= 4
+            }
+            result {
+                +RagiumFluids.ALCOHOL
+                amount /= 4
+            }
+            recipeId prefix "bio_"
+        }.save(exporter)
+
         // Plant Oil + R-OH + NaOH -> Fuel + Glycerol
         RagiumRecipeBuilders.mixing {
             itemIngredient { items { +RagiumItems.SODIUM_HYDROXIDE } }

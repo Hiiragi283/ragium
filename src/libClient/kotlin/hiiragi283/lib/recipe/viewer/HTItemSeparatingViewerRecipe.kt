@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.serialization.codec.HTCodecs
+import hiiragi283.lib.serialization.codec.compactNelFieldOf
+import hiiragi283.lib.util.IorNel
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import java.util.Optional
@@ -17,8 +19,7 @@ import kotlin.jvm.optionals.getOrNull
 data class HTItemSeparatingViewerRecipe(
     override val id: Identifier?,
     val ingredient: SlotDisplay,
-    val itemResults: List<SlotDisplay>,
-    val fluidResult: SlotDisplay,
+    val results: IorNel<SlotDisplay, SlotDisplay>,
     override val progressData: HTProgressData,
 ) : HTViewerRecipe.Progressed {
     companion object {
@@ -27,8 +28,10 @@ data class HTItemSeparatingViewerRecipe(
             instance.group(
                 HTViewerRecipe.idCodec(),
                 SlotDisplay.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(HTItemSeparatingViewerRecipe::ingredient),
-                SlotDisplay.CODEC.listOf().fieldOf("item_results").forGetter(HTItemSeparatingViewerRecipe::itemResults),
-                SlotDisplay.CODEC.fieldOf("fluid_result").forGetter(HTItemSeparatingViewerRecipe::fluidResult),
+                HTCodecs.ior(
+                    SlotDisplay.CODEC.compactNelFieldOf(HTConstants.ITEM, HTConstants.ITEMS),
+                    SlotDisplay.CODEC.fieldOf(HTConstants.FLUID),
+                ).fieldOf(HTConstants.RESULT).forGetter(HTItemSeparatingViewerRecipe::results),
                 HTViewerRecipe.Progressed.progressCodec(),
             ).apply(instance, ::HTItemSeparatingViewerRecipe)
         }
@@ -37,10 +40,7 @@ data class HTItemSeparatingViewerRecipe(
     private constructor(
         id: Optional<Identifier>,
         ingredient: SlotDisplay,
-        itemResults: List<SlotDisplay>,
-        fluidResult: SlotDisplay,
+        results: IorNel<SlotDisplay, SlotDisplay>,
         progressData: HTProgressData,
-    ) : this(id.getOrNull(), ingredient, itemResults, fluidResult, progressData)
-
-    override fun isHandled(): Boolean = itemResults.isNotEmpty()
+    ) : this(id.getOrNull(), ingredient, results, progressData)
 }
