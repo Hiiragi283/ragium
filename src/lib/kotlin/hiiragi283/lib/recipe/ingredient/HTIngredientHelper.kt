@@ -1,6 +1,8 @@
 package hiiragi283.lib.recipe.ingredient
 
 import hiiragi283.lib.data.HTDataComponentHelper
+import hiiragi283.lib.fluid.toTemplateOrNull
+import hiiragi283.lib.item.toTemplateOrNull
 import hiiragi283.lib.registry.isAir
 import hiiragi283.lib.registry.isEmpty
 import net.minecraft.core.TypedInstance
@@ -30,6 +32,21 @@ data object HTIngredientHelper {
         is FluidStack -> instance.copy()
         is FluidStackTemplate -> instance.create()
         else -> FluidStack(instance.typeHolder(), instance.amount(), HTDataComponentHelper.createPatch(instance))
+    }
+
+    /**
+     * [FluidInstance]を[FluidStackTemplate]に変換します。
+     * @since 26.1.12
+     */
+    @JvmStatic
+    fun unwrapAsTemplate(instance: FluidInstance): FluidStackTemplate? = if (isEmpty(instance)) {
+        null
+    } else {
+        when (instance) {
+            is FluidStack -> instance.toTemplateOrNull()
+            is FluidStackTemplate -> instance
+            else -> FluidStackTemplate(instance.typeHolder(), instance.amount(), HTDataComponentHelper.createPatch(instance))
+        }
     }
 
     /**
@@ -117,6 +134,21 @@ data object HTIngredientHelper {
         is ItemStack -> instance.copy()
         is ItemStackTemplate -> instance.create()
         else -> ItemStack(instance.typeHolder(), instance.count(), HTDataComponentHelper.createPatch(instance))
+    }
+
+    /**
+     * [ItemInstance]を[ItemStackTemplate]に変換します。
+     * @since 26.1.12
+     */
+    @JvmStatic
+    fun unwrapAsTemplate(instance: ItemInstance): ItemStackTemplate? = if (isEmpty(instance)) {
+        null
+    } else {
+        when (instance) {
+            is ItemStack -> instance.toTemplateOrNull()
+            is ItemStackTemplate -> instance
+            else -> ItemStackTemplate(instance.typeHolder(), instance.count(), HTDataComponentHelper.createPatch(instance))
+        }
     }
 
     /**

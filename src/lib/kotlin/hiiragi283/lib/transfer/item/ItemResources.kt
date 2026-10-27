@@ -21,7 +21,7 @@ fun ItemStack.toResourcePair(): Pair<ItemResource, Int> = ItemResource.of(this) 
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun ItemStackTemplate.toResourcePair(): Pair<ItemResource, Int> = ItemResource.of(this) to this.count
+fun ItemStackTemplate?.toResourcePair(): Pair<ItemResource, Int> = ItemResource.of(this) to (this?.count ?: 0)
 
 //    ResourceHandler    //
 

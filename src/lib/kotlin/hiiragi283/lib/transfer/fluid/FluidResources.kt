@@ -21,7 +21,7 @@ fun FluidStack.toResourcePair(): Pair<FluidResource, Int> = FluidResource.of(thi
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun FluidStackTemplate.toResourcePair(): Pair<FluidResource, Int> = FluidResource.of(this) to this.amount
+fun FluidStackTemplate?.toResourcePair(): Pair<FluidResource, Int> = FluidResource.of(this) to (this?.amount ?: 0)
 
 //    ResourceHandler    //
 

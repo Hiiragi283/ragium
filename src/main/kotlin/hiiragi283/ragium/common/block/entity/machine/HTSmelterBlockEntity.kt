@@ -13,7 +13,6 @@ import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
 import hiiragi283.lib.recipe.handler.input.HTInputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
-import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.lookup.HTVanillaRecipeLookup
 import hiiragi283.lib.recipe.lookup.map
@@ -41,6 +40,11 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.SMELTER.get(), pos, state) {
+    companion object {
+        @JvmStatic
+        private val FAKE_INPUT = SingleRecipeInput(ItemStack.EMPTY)
+    }
+
     private val smeltingCache: HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> = createCache(RecipeType.SMELTING)
     private val blastingCache: HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> = createCache(RecipeType.BLASTING)
     private val smokingCache: HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> = createCache(RecipeType.SMOKING)
@@ -49,11 +53,11 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         HTRecipeCacheHelper.SingleItem(HTVanillaRecipeLookup(recipeType).map(::wrapRecipe))
 
     private fun wrapRecipe(recipe: AbstractCookingRecipe): HTItemToItemRecipe = object : HTItemToItemRecipe {
-        val ingredient = HTItemIngredient(recipe.input(), 1)
+        private val ingredient = HTItemIngredient(recipe.input(), 1)
 
         override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
-        override fun apply(input: ItemInstance): ItemStack = HTIngredientHelper.unwrap(input).let(::SingleRecipeInput).let(recipe::assemble)
+        override fun apply(input: ItemInstance): ItemStack = recipe.assemble(FAKE_INPUT)
 
         override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
 

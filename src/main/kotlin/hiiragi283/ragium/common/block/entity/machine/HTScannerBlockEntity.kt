@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.item.toTemplateOrNull
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTRecipeFactories
 import hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
@@ -146,9 +145,7 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
         override fun apply(first: ItemInstance, second: ItemInstance): ItemStack {
-            val template: ItemStackTemplate = HTIngredientHelper.unwrap(first)
-                .toTemplateOrNull()
-                ?: return ItemStack.EMPTY
+            val template: ItemStackTemplate = HTIngredientHelper.unwrapAsTemplate(first) ?: return ItemStack.EMPTY
             val result: ItemStack = HTIngredientHelper.unwrap(second).copyWithCount(1)
             result[RagiumDataComponents.MEMORY_DISC_DATA] = HTMemoryDiscData.from(template)
             return result
