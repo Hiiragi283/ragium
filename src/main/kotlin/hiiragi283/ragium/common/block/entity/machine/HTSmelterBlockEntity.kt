@@ -8,13 +8,15 @@ import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
+import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
 import hiiragi283.lib.recipe.handler.input.HTInputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.lookup.HTVanillaRecipeCache
+import hiiragi283.lib.recipe.lookup.HTVanillaRecipeLookup
+import hiiragi283.lib.recipe.lookup.map
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -39,12 +41,24 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.SMELTER.get(), pos, state) {
-    private val smeltingCache: HTVanillaRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> =
-        HTVanillaRecipeCache(RecipeType.SMELTING)
-    private val blastingCache: HTVanillaRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> =
-        HTVanillaRecipeCache(RecipeType.BLASTING)
-    private val smokingCache: HTVanillaRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> =
-        HTVanillaRecipeCache(RecipeType.SMOKING)
+    private val smeltingCache: HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> = createCache(RecipeType.SMELTING)
+    private val blastingCache: HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> = createCache(RecipeType.BLASTING)
+    private val smokingCache: HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> = createCache(RecipeType.SMOKING)
+
+    private fun createCache(recipeType: RecipeType<out AbstractCookingRecipe>): HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> =
+        HTRecipeCacheHelper.SingleItem(HTVanillaRecipeLookup(recipeType).map(::wrapRecipe))
+
+    private fun wrapRecipe(recipe: AbstractCookingRecipe): HTItemToItemRecipe = object : HTItemToItemRecipe {
+        val ingredient = HTItemIngredient(recipe.input(), 1)
+
+        override fun test(input: ItemInstance): Boolean = ingredient.test(input)
+
+        override fun apply(input: ItemInstance): ItemStack = HTIngredientHelper.unwrap(input).let(::SingleRecipeInput).let(recipe::assemble)
+
+        override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
+
+        override fun getProgressData(input: ItemInstance): HTProgressData = HTProgressData.time(recipe.cookingTime())
+    }
 
     override fun writeValue(output: ValueOutput) {
         super.writeValue(output)
@@ -77,25 +91,11 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
         override fun findRecipe(input: ItemInstance, level: ServerLevel): HTItemToItemRecipe? {
             val stackIn: ItemStack = typeSlot.getStackCopy()
-            val cache: HTVanillaRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when {
+            return when {
                 stackIn.`is`(Items.BLAST_FURNACE) -> blastingCache
                 stackIn.`is`(Items.SMOKER) -> smokingCache
                 else -> smeltingCache
-            }
-            val input1: SingleRecipeInput = input.let(HTIngredientHelper::unwrap).let(::SingleRecipeInput)
-            return cache.findFirstHolder(input1, level)?.value()?.let(::wrapRecipe)
-        }
-
-        private fun wrapRecipe(recipe: AbstractCookingRecipe): HTItemToItemRecipe = object : HTItemToItemRecipe {
-            val ingredient = HTItemIngredient(recipe.input(), 1)
-
-            override fun test(input: ItemInstance): Boolean = ingredient.test(input)
-
-            override fun apply(input: ItemInstance): ItemStack = HTIngredientHelper.unwrap(input).let(::SingleRecipeInput).let(recipe::assemble)
-
-            override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
-
-            override fun getProgressData(input: ItemInstance): HTProgressData = HTProgressData.time(recipe.cookingTime())
+            }.findFirstRecipe(input, level)
         }
 
         override fun canComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack): Boolean =

@@ -149,6 +149,15 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             catalyst { items { +RagiumItems.BLOCK_MOLD } }
             result { +Items.HONEY_BLOCK }
         }.save(exporter)
+        // Beeswax
+        RagiumRecipeBuilders.freezing {
+            ingredient {
+                +holderSet(RagiumFluids.MOLTEN_BEESWAX)
+                amount /= 4
+            }
+            catalyst { items { +RagiumItems.BALL_MOLD } }
+            result { +RagiumItems.BEESWAX }
+        }.save(exporter)
 
         // Sticky Ball
         RagiumRecipeBuilders.freezing {
@@ -224,6 +233,14 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             ingredient { items { +Items.HONEY_BLOCK } }
             result { +RagiumFluids.HONEY }
             recipeId suffix "_from_block"
+        }.save(exporter)
+        // Beeswax
+        RagiumRecipeBuilders.melting {
+            ingredient { items { +RagiumItems.BEESWAX } }
+            result {
+                +RagiumFluids.MOLTEN_BEESWAX
+                amount /= 4
+            }
         }.save(exporter)
         // Resin
         RagiumRecipeBuilders.melting {

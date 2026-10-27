@@ -2,7 +2,6 @@ package hiiragi283.lib.integration.jei
 
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.recipe.HTRecipeHolder
-import hiiragi283.lib.recipe.lookup.HTVanillaRecipeLookup
 import hiiragi283.lib.resource.toId
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.recipe.types.IRecipeType
@@ -31,7 +30,7 @@ abstract class HTJeiPlugin(protected val modId: String) : IModPlugin {
         recipeType1: RecipeType<RECIPE>,
         transform: (HTRecipeHolder<RECIPE>) -> VIEWER,
     ) {
-        val viewers: List<VIEWER> = HTVanillaRecipeLookup(recipeType1).getAllRecipes(HTPhysicalSideHelper.createLookupContext())
+        val viewers: List<VIEWER> = HTPhysicalSideHelper.createLookupContext().byType(recipeType1)
             .map(transform)
             .toList()
         if (viewers.isEmpty()) return

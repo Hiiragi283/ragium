@@ -91,6 +91,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add("death.attack.chemicalBurn.player", $$"%1$s was injured chemical burn while fighting %2$s")
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")
+        addFluid(RagiumFluids.MOLTEN_BEESWAX, "Molten Beeswax")
         addFluid(RagiumFluids.RESIN, "Resin")
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")

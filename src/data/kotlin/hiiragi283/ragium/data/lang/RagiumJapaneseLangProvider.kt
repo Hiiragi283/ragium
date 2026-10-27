@@ -87,6 +87,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add("death.attack.chemicalBurn.player", $$"%1$sは%2$sと戦いながら化学火傷を負った")
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
+        addFluid(RagiumFluids.MOLTEN_BEESWAX, "溶けた蜜蠟")
         addFluid(RagiumFluids.RESIN, "樹脂")
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
@@ -138,7 +139,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         // add(RagiumItems.ALCLAD_PLATE, "アルクラッド板")
-        add(RagiumItems.BEESWAX, "密猟")
+        add(RagiumItems.BEESWAX, "蜜蠟")
         add(RagiumItems.BIO_CHAFF, "バイオチャフ")
         add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
         add(RagiumItems.LINGERING_BOTTLE, "残留瓶")

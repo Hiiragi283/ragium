@@ -111,6 +111,9 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.HONEY) {
             still = Material(vanillaId(HTConstants.BLOCK, "honey_block_top"), true)
         }
+        register.register(RagiumFluids.MOLTEN_BEESWAX) {
+            still = Material(vanillaId(HTConstants.BLOCK, "honeycomb_block"))
+        }
         register.register(RagiumFluids.RESIN) {
             still = Material(vanillaId(HTConstants.BLOCK, "resin_block"))
         }

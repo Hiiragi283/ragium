@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "items": "ragium:beeswax"
+  },
+  "result": {
+    "amount": 250,
+    "id": "ragium:molten_beeswax"
+  },
+  "time": 200
+}

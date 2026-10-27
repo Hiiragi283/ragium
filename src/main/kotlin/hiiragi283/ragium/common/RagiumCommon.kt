@@ -18,6 +18,7 @@ import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTBucketFillingRecipe
@@ -132,8 +133,7 @@ internal data object RagiumCommon {
                 }
         }
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
-            val hydrogen: HolderSet<Fluid> =
-                registries.getOrNull(RagiumFluids.HYDROGEN) ?: return@addSubLookup sequenceOf()
+            val hydrogen: HolderSet<Fluid> = registries.getOrNull(RagiumFluids.HYDROGEN) ?: return@addSubLookup sequenceOf()
             BuiltInRegistries.BLOCK
                 .getDataMap(NeoForgeDataMaps.OXIDIZABLES)
                 .asSequence()
@@ -150,8 +150,7 @@ internal data object RagiumCommon {
                 }
         }
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
-            val antiRustOil: HolderSet<Fluid> =
-                registries.getOrNull(RagiumFluids.ANTI_RUST_OIL) ?: return@addSubLookup sequenceOf()
+            val waxes: HolderSet<Fluid> = registries.getOrNull(RagiumTags.Fluids.WAXES) ?: return@addSubLookup sequenceOf()
             BuiltInRegistries.BLOCK
                 .getDataMap(NeoForgeDataMaps.WAXABLES)
                 .asSequence()
@@ -159,7 +158,7 @@ internal data object RagiumCommon {
                     RagiumRecipeBuilders.bathing {
                         itemIngredient { items { +BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem() } }
                         fluidIngredient {
-                            +antiRustOil
+                            +waxes
                             amount = 125
                         }
                         result { +value.waxed().asItem() }

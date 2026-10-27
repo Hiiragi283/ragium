@@ -29,5 +29,8 @@ class RagiumFluidTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             .addContentTag(RagiumFluids.ALDEHYDE)
             .addTag(HTConstants.COMMON.toId("formaldehyde"), type = HTTagDependType.OPTIONAL)
             .addTag(HTConstants.COMMON.toId("acetaldehyde"), type = HTTagDependType.OPTIONAL)
+        builder(RagiumTags.Fluids.WAXES)
+            .addContentTag(RagiumFluids.MOLTEN_BEESWAX)
+            .addContentTag(RagiumFluids.ANTI_RUST_OIL)
     }
 }
