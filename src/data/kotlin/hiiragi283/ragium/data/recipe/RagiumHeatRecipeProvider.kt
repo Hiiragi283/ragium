@@ -280,7 +280,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }
         // Molten Redstone
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             result {
                 +RagiumFluids.MOLTEN_REDSTONE
                 amount = 90
@@ -288,7 +288,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Molten Glowstone
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.GLOWSTONE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE) }
             result {
                 +RagiumFluids.MOLTEN_GLOWSTONE
                 amount = 90

@@ -32,7 +32,7 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
                 RagiumGlobalLootTables.SULFUR_FROM_COAL_ORES,
                 buildTable {
                     pool {
-                        +item(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR)
+                        +item(HTItemPart.DUST, RagiumMaterial.Chemical.SULFUR)
                             .apply(ApplyBonusCount.addOreBonusCount(fortune))
                     }
                 },
@@ -59,7 +59,7 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
                 RagiumGlobalLootTables.CARBON_FROM_DIAMOND_ORES,
                 buildTable {
                     pool {
-                        +item(HTItemPart.DUST, RagiumMaterial.Other.CARBON)
+                        +item(HTItemPart.DUST, RagiumMaterial.Chemical.CARBON)
                             .apply(ApplyBonusCount.addOreBonusCount(fortune))
                     }
                 },

@@ -245,6 +245,11 @@ data object RagiumClient : HTClientMod() {
             transparent()
             colorTint(Color(0xffcccc))
         }
+        // P
+        register.register(RagiumFluids.PHOSPHORIC_ACID) {
+            dull()
+            colorTint(Color(0xffcc99))
+        }
         // S
         register.register(RagiumFluids.SULFUR_DIOXIDE) {
             transparent()

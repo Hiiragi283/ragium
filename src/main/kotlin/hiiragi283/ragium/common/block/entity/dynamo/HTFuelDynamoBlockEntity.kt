@@ -28,7 +28,7 @@ class HTFuelDynamoBlockEntity(pos: BlockPos, state: BlockState) :
     HTDynamoBlockEntity.Progressed(RagiumBlockEntityTypes.FUEL_DYNAMO.get(), pos, state) {
     companion object {
         @JvmStatic
-        private val ASH_RESOURCE: ItemResource by lazy { RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.ASH).asResourceOrEmpty() }
+        private val ASH_RESOURCE: ItemResource by lazy { RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.ASH).asResourceOrEmpty() }
 
         const val MAX_ASH_TICKS: Int = 20 * 10
     }

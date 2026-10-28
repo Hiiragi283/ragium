@@ -10,9 +10,9 @@ sealed interface RagiumMaterial :
         @JvmField
         val entries: Sequence<RagiumMaterial> = sequence {
             yieldAll(Fuel.entries)
-            yieldAll(DustLike.entries)
             yieldAll(Gem.entries)
             yieldAll(MetalLike.entries)
+            yieldAll(DustLike.entries)
         }
 
         @JvmField
@@ -40,53 +40,6 @@ sealed interface RagiumMaterial :
         override val materialName: String = name.lowercase()
     }
 
-    /**
-     * @since 26.1.8
-     */
-    sealed interface DustLike : RagiumMaterial {
-        companion object {
-            @JvmField
-            val entries: Sequence<DustLike> = sequence {
-                yieldAll(Mineral.entries)
-                yieldAll(Other.entries)
-            }
-        }
-    }
-
-    enum class Mineral(langName: HTLangName) :
-        DustLike,
-        HTLangName by langName {
-        // Minecraft
-        REDSTONE("Redstone", "レッドストーン"),
-        GLOWSTONE("Glowstone", "グロウストーン"),
-
-        // Common
-        SALT("Salt", "食塩"),
-
-        /**
-         * @since 26.1.7
-         */
-        BAUXITE("Bauxite", "ボーキサイト"),
-
-        SULFUR("Sulfur", "硫黄"),
-        NITER("Niter", "硝石"),
-
-        /**
-         * @since 26.1.8
-         */
-        GYPSUM("Gypsum", "石膏"),
-
-        // Ragium
-        RAGINITE("Raginite", "ラギナイト"),
-        ;
-
-        constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
-
-        val isVanilla: Boolean get() = this == REDSTONE || this == GLOWSTONE
-
-        override val materialName: String = name.lowercase()
-    }
-
     enum class Gem(langName: HTLangName) :
         RagiumMaterial,
         HTLangName by langName {
@@ -97,19 +50,24 @@ sealed interface RagiumMaterial :
         DIAMOND("Diamond", "ダイヤモンド"),
         EMERALD("Emerald", "エメラルド"),
         ECHO("Echo", "残響"),
-        PRISMARINE("Prismarine", "プリズマリン"),
+        // PRISMARINE("Prismarine", "プリズマリン"),
 
         // Common
 
         /**
          * @since 26.1.8
          */
-        CINNABAR("Cinnabar", "辰砂"),
+        CINNABAR("Cinnabar", "辰砂"), // HgS
 
         /**
          * @since 26.1.7
          */
-        FLUORITE("Fluorite", "蛍石"),
+        FLUORITE("Fluorite", "蛍石"), // CaF2
+
+        /**
+         * @since 26.1.12
+         */
+        APATITE("Apatite", "燐灰石"), // Ca3(PO4)2
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
@@ -197,55 +155,97 @@ sealed interface RagiumMaterial :
         override val materialName: String = name.lowercase()
     }
 
-    enum class Other(langName: HTLangName) :
+    /**
+     * @since 26.1.8
+     */
+    sealed interface DustLike : RagiumMaterial {
+        companion object {
+            @JvmField
+            val entries: Sequence<DustLike> = sequence {
+                yieldAll(Chemical.entries)
+                yieldAll(Other.entries)
+            }
+        }
+    }
+
+    enum class Chemical(langName: HTLangName) :
         DustLike,
         HTLangName by langName {
-        // Minecraft
-        WOOD("Wood", "木") {
-            override val isPulp: Boolean = true
-        },
-        OBSIDIAN("Obsidian", "黒曜石"),
-        PAPER("Paper", "紙") {
-            override val isPulp: Boolean = true
-        },
-
         // Common
-        CARBON("Carbon", "炭素"),
+        CARBON("Carbon", "炭素"), // C
+
+        SALT("Salt", "食塩"), // NaCl
 
         /**
          * @since 26.1.7
          */
-        ALUMINA("Alumina", "アルミナ"),
+        BAUXITE("Bauxite", "ボーキサイト"), // Al2O3
 
         /**
          * @since 26.1.7
          */
-        SILICON("Silicon", "シリコン"),
+        ALUMINA("Alumina", "アルミナ"), // Al2O3
+
+        /**
+         * @since 26.1.7
+         */
+        SILICON("Silicon", "シリコン"), // Si
 
         /**
          * @since 26.1.11
          */
-        SILICA("Silica", "シリカ"),
+        SILICA("Silica", "シリカ"), // SiO2
+
+        SULFUR("Sulfur", "硫黄"), // S
+
+        NITER("Niter", "硝石"), // KNO3
 
         /**
          * @since 26.1.9
          */
-        ASH("Ash", "灰"),
+        ASH("Ash", "灰"), // K2CO3
 
         /**
          * @since 26.1.8
          */
-        LIME("Lime", "石灰"),
+        LIME("Lime", "石灰"), // CaCO3
 
         /**
          * @since 26.1.8
          */
-        QUICK_LIME("Quick Lime", "生石灰"),
+        QUICK_LIME("Quick Lime", "生石灰"), // CaO
+
+        /**
+         * @since 26.1.8
+         */
+        GYPSUM("Gypsum", "石膏"), // CaSO4
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
 
-        open val isPulp: Boolean = false
+        override val materialName: String = name.lowercase()
+    }
+
+    enum class Other(langName: HTLangName) :
+        DustLike,
+        HTLangName by langName {
+        // Minecraft
+        WOOD("Wood", "木"),
+        PAPER("Paper", "紙"),
+
+        OBSIDIAN("Obsidian", "黒曜石"),
+        REDSTONE("Redstone", "レッドストーン"),
+        GLOWSTONE("Glowstone", "グロウストーン"),
+
+        // Ragium
+        RAGINITE("Raginite", "ラギナイト"),
+        ;
+
+        constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
+
+        val isPulp: Boolean get() = this == WOOD || this == PAPER
+
+        val isVanilla: Boolean get() = this == REDSTONE || this == GLOWSTONE
 
         override val materialName: String = name.lowercase()
     }

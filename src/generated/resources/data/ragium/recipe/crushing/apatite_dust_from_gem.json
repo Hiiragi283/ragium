@@ -2,11 +2,11 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "items": "#c:gems/prismarine"
+    "items": "#c:gems/apatite"
   },
   "result": {
     "count": 1,
-    "id": "ragium:prismarine_dust"
+    "id": "ragium:apatite_dust"
   },
   "time": 200
 }

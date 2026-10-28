@@ -127,6 +127,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFATE_SOLUTION, "アルカリ硫酸塩溶液")
         // Al
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "アルミナ水溶液")
+        // P
+        addFluid(RagiumFluids.PHOSPHORIC_ACID, "リン酸")
         // S
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "二酸化硫黄")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "三酸化硫黄")

@@ -68,7 +68,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         // Root
         HTAdvancementBuilder.create(RagiumAdvancementKeys.ROOT) {
             display {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.RAGINITE)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.RAGINITE)
                 +ClientAsset.ResourceTexture(vanillaId(HTConstants.BLOCK, "smooth_stone"))
                 showToast = false
                 showChat = false

@@ -17,8 +17,8 @@ data object RagiumMaterialHelper {
 
     @JvmStatic
     fun getDust(dustLike: RagiumMaterial.DustLike): HTSimpleDeferredItem = when (dustLike) {
-        RagiumMaterial.Mineral.REDSTONE -> HTSimpleDeferredItem(vanillaId("redstone"))
-        RagiumMaterial.Mineral.GLOWSTONE -> HTSimpleDeferredItem(vanillaId("glowstone_dust"))
+        RagiumMaterial.Other.REDSTONE -> HTSimpleDeferredItem(vanillaId("redstone"))
+        RagiumMaterial.Other.GLOWSTONE -> HTSimpleDeferredItem(vanillaId("glowstone_dust"))
         else -> RagiumItems.getOrThrow(HTItemPart.DUST, dustLike)
     }
 
@@ -30,7 +30,6 @@ data object RagiumMaterialHelper {
         RagiumMaterial.Gem.DIAMOND -> HTSimpleDeferredItem(vanillaId("diamond"))
         RagiumMaterial.Gem.EMERALD -> HTSimpleDeferredItem(vanillaId("emerald"))
         RagiumMaterial.Gem.ECHO -> HTSimpleDeferredItem(vanillaId("echo_shard"))
-        RagiumMaterial.Gem.PRISMARINE -> HTSimpleDeferredItem(vanillaId("prismarine_crystals"))
         else -> RagiumItems.getOrThrow(HTItemPart.GEM, gem)
     }
 

@@ -131,6 +131,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFATE_SOLUTION, "Alkali Sulfate Solution")
         // Al
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "Alumina Solution")
+        // P
+        addFluid(RagiumFluids.PHOSPHORIC_ACID, "Phosphoric Acid")
         // S
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")

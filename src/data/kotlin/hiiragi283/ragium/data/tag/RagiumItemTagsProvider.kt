@@ -65,6 +65,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(Tags.Items.LEATHERS).add(RagiumItems.SYNTHETIC_LEATHER)
         builder(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
         builder(Tags.Items.SLIME_BALLS).add(RagiumItems.STICKY_BALL)
+        builder(Tags.Items.FERTILIZERS).add(RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.APATITE))
         for (color: DyeColor in DyeColor.entries) {
             builder(color.dyedTag).add(VanillaColoredCollections.HARNESS[color])
         }

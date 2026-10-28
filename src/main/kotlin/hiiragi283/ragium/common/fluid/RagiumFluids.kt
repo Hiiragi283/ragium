@@ -219,6 +219,10 @@ data object RagiumFluids {
     @JvmField
     val ALUMINA_SOLUTION: HTFluidContent.Virtual = REGISTER.registerVirtual("alumina_solution") { properties = liquid() }
 
+    // P
+    @JvmField
+    val PHOSPHORIC_ACID: HTFluidContent.Virtual = REGISTER.registerVirtual("phosphoric_acid") { properties = liquid() }
+
     // S
     @JvmField
     val SULFUR_DIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("sulfur_dioxide") { properties = gaseous() }
