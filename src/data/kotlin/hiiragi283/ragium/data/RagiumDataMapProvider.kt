@@ -159,6 +159,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         builder(RagiumDataMaps.COMBUSTION_FUEL)
             .add(RagiumFluids.CRUDE_OIL, HTFluidFuel(5), false)
             .add(RagiumFluids.CREOSOTE, HTFluidFuel(10), false)
+            .add(RagiumFluids.BLACK_LIQUOR, HTFluidFuel(10), false)
             .add(RagiumFluids.NAPHTHA, HTFluidFuel(15), false)
             .add(RagiumFluids.AROMATIC_COMPOUND, HTFluidFuel(15), false)
             .add(RagiumFluids.FUEL, HTFluidFuel(20), false)

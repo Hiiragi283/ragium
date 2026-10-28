@@ -149,10 +149,6 @@ data object RagiumClient : HTClientMod() {
             transparent()
             colorTint(Color(0x003399))
         }
-        register.register(RagiumFluids.NITROGEN) {
-            transparent()
-            colorTint(Color(0x009999))
-        }
         register.register(RagiumFluids.OXYGEN) {
             transparent()
             colorTint(Color(0x3399cc))
@@ -165,6 +161,10 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.CREOSOTE) {
             dull()
             colorTint(Color(0x663333))
+        }
+        register.register(RagiumFluids.BLACK_LIQUOR) {
+            dull()
+            colorTint(Color(0x333333))
         }
         register.register(RagiumFluids.PLANT_OIL) {
             transparent()
@@ -252,7 +252,7 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0xcc9900))
         }
         register.register(RagiumFluids.SULFURIC_ACID) {
-            sticky()
+            dull()
             colorTint(Color(0xcc9900))
         }
         register.register(RagiumFluids.HYDROGEN_CHLORIDE) {

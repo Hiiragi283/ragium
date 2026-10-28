@@ -199,6 +199,11 @@ abstract class ExporterDataProvider<R : Any>(
      */
     protected fun holderSet(content: HTFluidContent): HolderSet<Fluid> = holderSet(content.fluidTag)
 
+    /**
+     * @since 26.1.12
+     */
+    protected fun holderSet(contents: Set<HTFluidContent>): HolderSet<Fluid> = holderSet(contents.map(HTFluidContent::fluidTag))
+
     protected fun waterSet(): HolderSet<Fluid> = holderSet(Tags.Fluids.WATER)
 
     protected fun lavaSet(): HolderSet<Fluid> = holderSet(Tags.Fluids.LAVA)

@@ -1,6 +1,7 @@
 {
   "values": {
     "#c:aromatic_compound": 15,
+    "#c:black_liquor": 10,
     "#c:creosote": 10,
     "#c:crude_oil": 5,
     "#c:fuel": 20,

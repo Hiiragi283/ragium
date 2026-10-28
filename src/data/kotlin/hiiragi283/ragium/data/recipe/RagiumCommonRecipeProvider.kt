@@ -592,14 +592,18 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
 
-        // Wood Pulp + NaOH aq -> Paper Pulp
-        RagiumRecipeBuilders.bathing {
+        // Wood Pulp + Alkali aq -> Paper Pulp + Black Liquor
+        RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD) }
             fluidIngredient {
-                +holderSet(RagiumFluids.HYDROXIDE_SOLUTION)
+                +holderSet(setOf(RagiumFluids.HYDROXIDE_SOLUTION, RagiumFluids.SULFATE_SOLUTION))
                 amount = 250
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.PAPER) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.PAPER) }
+            fluidResult {
+                +RagiumFluids.BLACK_LIQUOR
+                amount = 250
+            }
             recipeId suffix "_from_wood"
         }.save(exporter)
         // Paper Pulp + Water -> Paper

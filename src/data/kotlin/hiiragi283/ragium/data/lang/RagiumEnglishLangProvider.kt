@@ -102,11 +102,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_ENDER, "Resonant Ender")
 
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
-        addFluid(RagiumFluids.NITROGEN, "Nitrogen")
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
         addFluid(RagiumFluids.CHLORINE, "Chlorine")
 
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
+        addFluid(RagiumFluids.BLACK_LIQUOR, "Black Liquor")
         addFluid(RagiumFluids.PLANT_OIL, "Plant Oil")
         addFluid(RagiumFluids.ALCOHOL, "Alcohol")
         addFluid(RagiumFluids.ALDEHYDE, "Aldehyde")

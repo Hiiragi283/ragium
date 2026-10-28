@@ -98,11 +98,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
 
         addFluid(RagiumFluids.HYDROGEN, "水素")
-        addFluid(RagiumFluids.NITROGEN, "窒素")
         addFluid(RagiumFluids.OXYGEN, "酸素")
         addFluid(RagiumFluids.CHLORINE, "塩素")
 
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
+        addFluid(RagiumFluids.BLACK_LIQUOR, "黒液")
         addFluid(RagiumFluids.PLANT_OIL, "植物油")
         addFluid(RagiumFluids.ALCOHOL, "アルコール")
         addFluid(RagiumFluids.ALDEHYDE, "アルデヒド")
