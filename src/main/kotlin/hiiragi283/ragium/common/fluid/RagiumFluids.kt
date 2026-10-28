@@ -116,22 +116,14 @@ data object RagiumFluids {
     @JvmField
     val MOLTEN_ENDER: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_ender") { properties = molten() }
 
-    //    Element    //
+    //    Chemical    //
 
     // 1st
+    // H
     @JvmField
     val HYDROGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen") { properties = gaseous() }
 
-    // 3rd
-    @JvmField
-    val OXYGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("oxygen") { properties = gaseous() }
-
-    // 4th
-    @JvmField
-    val CHLORINE: HTFluidContent.Virtual = REGISTER.registerVirtual("chlorine") { properties = gaseous() }
-
-    //    Chemical    //
-
+    // 2rd
     // C
     @JvmField
     val CREOSOTE: HTFluidContent.Virtual = REGISTER.registerVirtual("creosote") { properties = liquid() }
@@ -201,6 +193,10 @@ data object RagiumFluids {
         typeFactory = { HTExplosiveFluidType(6f, it) }
     }
 
+    // O
+    @JvmField
+    val OXYGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("oxygen") { properties = gaseous() }
+
     // F
     @JvmField
     val HYDROGEN_FLUORIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen_fluoride") { properties = gaseous() }
@@ -208,6 +204,7 @@ data object RagiumFluids {
     @JvmField
     val HYDROFLUORIC_ACID: HTFluidContent.Flowing = REGISTER.registerFlowing("hydrofluoric_acid") { properties = liquid() }
 
+    // 3rd
     // Na
     @JvmField
     val SALT_WATER: HTFluidContent.Flowing = REGISTER.registerFlowing("salt_water") { properties = liquid() }
@@ -236,6 +233,9 @@ data object RagiumFluids {
     }
 
     // Cl
+    @JvmField
+    val CHLORINE: HTFluidContent.Virtual = REGISTER.registerVirtual("chlorine") { properties = gaseous() }
+
     @JvmField
     val HYDROGEN_CHLORIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen_chloride") {
         properties = gaseous()

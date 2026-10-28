@@ -97,10 +97,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "活性グロウストーン")
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
 
+        // H
         addFluid(RagiumFluids.HYDROGEN, "水素")
-        addFluid(RagiumFluids.OXYGEN, "酸素")
-        addFluid(RagiumFluids.CHLORINE, "塩素")
-
+        // C
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
         addFluid(RagiumFluids.BLACK_LIQUOR, "黒液")
         addFluid(RagiumFluids.PLANT_OIL, "植物油")
@@ -114,17 +113,26 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "溶融プラスチック")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "合成樹脂")
+        // N
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "液体爆薬")
+        // O
+        addFluid(RagiumFluids.OXYGEN, "酸素")
+        // F
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "フッ化水素")
         addFluid(RagiumFluids.HYDROFLUORIC_ACID, "フッ化水素酸")
+        // Na
         addFluid(RagiumFluids.SALT_WATER, "塩水")
         addFluid(RagiumFluids.HYDROXIDE_SOLUTION, "アルカリ水酸化物溶液")
         addFluid(RagiumFluids.SULFATE_SOLUTION, "アルカリ硫酸塩溶液")
+        // Al
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "アルミナ水溶液")
+        // S
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "二酸化硫黄")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
+        // Cl
+        addFluid(RagiumFluids.CHLORINE, "塩素")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
         // Item

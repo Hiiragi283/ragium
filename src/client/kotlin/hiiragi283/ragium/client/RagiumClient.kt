@@ -145,19 +145,12 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0x006666))
         }
 
+        // H
         register.register(RagiumFluids.HYDROGEN) {
             transparent()
             colorTint(Color(0x003399))
         }
-        register.register(RagiumFluids.OXYGEN) {
-            transparent()
-            colorTint(Color(0x3399cc))
-        }
-        register.register(RagiumFluids.CHLORINE) {
-            transparent()
-            colorTint(Color(0x66cc33))
-        }
-
+        // C
         register.register(RagiumFluids.CREOSOTE) {
             dull()
             colorTint(Color(0x663333))
@@ -210,6 +203,7 @@ data object RagiumClient : HTClientMod() {
             molten()
             colorTint(Color(0xff6633))
         }
+        // N
         register.register(RagiumFluids.NITRIC_ACID) {
             dull()
             colorTint(Color(0x9999cc))
@@ -218,6 +212,12 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0xcc3333))
         }
+        // O
+        register.register(RagiumFluids.OXYGEN) {
+            transparent()
+            colorTint(Color(0x3399cc))
+        }
+        // F
         register.register(RagiumFluids.HYDROGEN_FLUORIDE) {
             transparent()
             colorTint(Color(0x33cc66))
@@ -227,6 +227,7 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0x33cc66))
         }
 
+        // Na
         register.register(RagiumFluids.SALT_WATER) {
             dull()
             tintSource = FluidTintSources.water()
@@ -239,10 +240,12 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0x336666))
         }
+        // Al
         register.register(RagiumFluids.ALUMINA_SOLUTION) {
             transparent()
             colorTint(Color(0xffcccc))
         }
+        // S
         register.register(RagiumFluids.SULFUR_DIOXIDE) {
             transparent()
             colorTint(Color(0x996600))
@@ -254,6 +257,11 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.SULFURIC_ACID) {
             dull()
             colorTint(Color(0xcc9900))
+        }
+        // Cl
+        register.register(RagiumFluids.CHLORINE) {
+            transparent()
+            colorTint(Color(0x66cc33))
         }
         register.register(RagiumFluids.HYDROGEN_CHLORIDE) {
             transparent()

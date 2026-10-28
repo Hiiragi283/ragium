@@ -101,10 +101,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "Energized Glowstone")
         addFluid(RagiumFluids.MOLTEN_ENDER, "Resonant Ender")
 
+        // H
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
-        addFluid(RagiumFluids.OXYGEN, "Oxygen")
-        addFluid(RagiumFluids.CHLORINE, "Chlorine")
-
+        // C
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
         addFluid(RagiumFluids.BLACK_LIQUOR, "Black Liquor")
         addFluid(RagiumFluids.PLANT_OIL, "Plant Oil")
@@ -118,19 +117,29 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "Molten Plastic")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "Synthetic Resin")
+        // N
         addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "Liquid Explosive")
+        // O
+        addFluid(RagiumFluids.OXYGEN, "Oxygen")
+        // F
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
         addFluid(RagiumFluids.HYDROFLUORIC_ACID, "Hydrofluoric Acid")
+        // Na
         addFluid(RagiumFluids.SALT_WATER, "Salt Water")
         addFluid(RagiumFluids.HYDROXIDE_SOLUTION, "Alkali Hydroxide Solution")
         addFluid(RagiumFluids.SULFATE_SOLUTION, "Alkali Sulfate Solution")
+        // Al
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "Alumina Solution")
+        // S
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
+        // Cl
+        addFluid(RagiumFluids.CHLORINE, "Chlorine")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "Hydrogen Chloride")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
+
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
