@@ -55,6 +55,13 @@ open class HTBasicItemSlot(
 
         @JvmStatic
         fun output(listener: Runnable?): HTBasicItemSlot = create(listener, canInsert = HTTransferPredicates.internalOnly())
+
+        /**
+         * @since 26.1.12
+         */
+        @JvmStatic
+        fun catalyst(listener: Runnable?, filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue()): HTBasicItemSlot =
+            create(listener, 1, HTTransferPredicates.manualOnly(), HTTransferPredicates.manualOnly(), filter)
     }
 
     private var stackIn: ItemStack = ItemStack.EMPTY

@@ -151,7 +151,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.ALKALI_CARBONATE, "Alkali Carbonate")
         add(RagiumItems.ALKALI_NITRATE, "Alkali Nitrate")
         add(RagiumItems.ALKALI_SULFATE, "Alkali Sulfate")
-        add(RagiumItems.ALKALI_CHLORIDE, "Alkali Chloride")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")

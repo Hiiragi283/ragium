@@ -93,7 +93,7 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
         )
         discSlot = builder.addSlot(
             HTSlotInfo.NONE,
-            HTBasicItemSlot.input(
+            HTBasicItemSlot.catalyst(
                 listener,
                 filter = { RagiumItems.MEMORY_DISC.isOf(it) && !it.has(RagiumDataComponents.MEMORY_DISC_DATA) },
             ),

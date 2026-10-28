@@ -50,6 +50,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun ore() {
+        val oreProcessing = "ore_processing/"
         // Crushing
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Fuel.COAL) }
@@ -57,7 +58,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.COAL)
                 count = 2
             }
-            recipeId suffix "_from_ore"
+            recipeId prefix oreProcessing
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Mineral.REDSTONE) }
@@ -66,7 +67,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 6
             }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.CINNABAR) }
-            recipeId suffix "_from_ore"
+            recipeId prefix oreProcessing
         }.save(exporter)
 
         RagiumRecipeBuilders.crushing {
@@ -76,7 +77,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 6
             }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.FLUORITE) }
-            recipeId suffix "_from_ore"
+            recipeId prefix oreProcessing
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.QUARTZ) }
@@ -85,7 +86,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 4
             }
             result { +Items.GOLD_NUGGET }
-            recipeId suffix "_from_ore"
+            recipeId prefix oreProcessing
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.DIAMOND) }
@@ -94,7 +95,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 2
             }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CARBON) }
-            recipeId suffix "_from_ore"
+            recipeId prefix oreProcessing
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Gem.EMERALD) }
@@ -102,7 +103,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.EMERALD)
                 count = 2
             }
-            recipeId suffix "_from_ore"
+            recipeId prefix oreProcessing
         }.save(exporter)
 
         RagiumRecipeBuilders.crushing {
@@ -112,7 +113,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 3
             }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.NICKEL) }
-            recipeId suffix "_from_ore"
+            recipeId prefix oreProcessing
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Metal.IRON) }
@@ -121,7 +122,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 2
             }
             result { +Items.FLINT }
-            recipeId suffix "_from_ore"
+            recipeId prefix oreProcessing
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.ORE, RagiumMaterial.Metal.GOLD) }
@@ -130,7 +131,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 2
             }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.SILVER) }
-            recipeId suffix "_from_ore"
+            recipeId prefix oreProcessing
         }.save(exporter)
         // Alloying
         buildTable {
@@ -153,7 +154,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     +result
                     this.count = count
                 }
-                recipeId suffix "_from_ore"
+                recipeId prefix oreProcessing
             }.save(exporter)
         }
     }

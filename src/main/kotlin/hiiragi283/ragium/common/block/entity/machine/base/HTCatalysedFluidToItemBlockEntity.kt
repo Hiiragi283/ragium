@@ -80,7 +80,7 @@ abstract class HTCatalysedFluidToItemBlockEntity(type: BlockEntityType<*>, pos: 
     private lateinit var outputSlot: HTBasicItemSlot
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {
-        catalystSlot = builder.addSlot(HTSlotInfo.NONE, HTBasicItemSlot.input(listener, limit = 1))
+        catalystSlot = builder.addSlot(HTSlotInfo.NONE, HTBasicItemSlot.catalyst(listener))
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 

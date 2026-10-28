@@ -27,6 +27,7 @@ import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
 import hiiragi283.ragium.api.recipe.RTWashingRecipe
+import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -212,22 +213,22 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
     override fun registerRecipes(registration: IRecipeRegistration) {
         // Mechanical
-        registration.addRecipes(RagiumJeiRecipeTypes.ASSEMBLING, RagiumRecipeTypes.ASSEMBLING, HTViewerRecipeHelper::sizedShapeless)
-        registration.addRecipes(RagiumJeiRecipeTypes.CENTRIFUGING, RagiumRecipeTypes.CENTRIFUGING, HTViewerRecipeHelper::itemSeparating)
-        registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING, RagiumRecipeTypes.COMPRESSING, HTViewerRecipeHelper::singleToSingle)
-        registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeTypes.CRUSHING, HTViewerRecipeHelper::singleItemToMultiItem)
-        registration.addRecipes(RagiumJeiRecipeTypes.CUTTING, RagiumRecipeTypes.CUTTING, HTViewerRecipeHelper::singleItemToMultiItem)
-        registration.addRecipes(RagiumJeiRecipeTypes.FILLING, RagiumRecipeTypes.FILLING, HTViewerRecipeHelper::itemAndFluidToItem)
-        registration.addRecipes(RagiumJeiRecipeTypes.PRESSING, RagiumRecipeTypes.PRESSING, HTViewerRecipeHelper::catalysedSingleToSingle)
+        registration.addRecipes(RagiumJeiRecipeTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING, HTViewerRecipeHelper::sizedShapeless)
+        registration.addRecipes(RagiumJeiRecipeTypes.CENTRIFUGING, RagiumRecipeLookups.CENTRIFUGING, HTViewerRecipeHelper::itemSeparating)
+        registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING, HTViewerRecipeHelper::singleToSingle)
+        registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeLookups.CRUSHING, HTViewerRecipeHelper::singleItemToMultiItem)
+        registration.addRecipes(RagiumJeiRecipeTypes.CUTTING, RagiumRecipeLookups.CUTTING, HTViewerRecipeHelper::singleItemToMultiItem)
+        registration.addRecipes(RagiumJeiRecipeTypes.FILLING, RagiumRecipeLookups.FILLING, HTViewerRecipeHelper::itemAndFluidToItem)
+        registration.addRecipes(RagiumJeiRecipeTypes.PRESSING, RagiumRecipeLookups.PRESSING, HTViewerRecipeHelper::catalysedSingleToSingle)
         // Heat
-        registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING, RagiumRecipeTypes.ALLOYING, HTViewerRecipeHelper::sizedShapeless)
-        registration.addRecipes(RagiumJeiRecipeTypes.FREEZING, RagiumRecipeTypes.FREEZING, HTViewerRecipeHelper::catalysedSingleToSingle)
-        registration.addRecipes(RagiumJeiRecipeTypes.MELTING, RagiumRecipeTypes.MELTING, HTViewerRecipeHelper::singleToSingle)
-        registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING, RagiumRecipeTypes.PYROLYZING, HTViewerRecipeHelper::itemSeparating)
-        registration.addRecipes(RagiumJeiRecipeTypes.REFINING, RagiumRecipeTypes.REFINING, HTViewerRecipeHelper::fluidSeparating)
+        registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING, RagiumRecipeLookups.ALLOYING, HTViewerRecipeHelper::sizedShapeless)
+        registration.addRecipes(RagiumJeiRecipeTypes.FREEZING, RagiumRecipeLookups.FREEZING, HTViewerRecipeHelper::catalysedSingleToSingle)
+        registration.addRecipes(RagiumJeiRecipeTypes.MELTING, RagiumRecipeLookups.MELTING, HTViewerRecipeHelper::singleToSingle)
+        registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING, HTViewerRecipeHelper::itemSeparating)
+        registration.addRecipes(RagiumJeiRecipeTypes.REFINING, RagiumRecipeLookups.REFINING, HTViewerRecipeHelper::fluidSeparating)
         // Chemical
-        registration.addRecipes(RagiumJeiRecipeTypes.BATHING, RagiumRecipeTypes.BATHING, HTViewerRecipeHelper::itemAndFluidToItem)
-        registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeTypes.MIXING) { (key: RecipeKey, recipe: RTMixingRecipe) ->
+        registration.addRecipes(RagiumJeiRecipeTypes.BATHING, RagiumRecipeLookups.BATHING, HTViewerRecipeHelper::itemAndFluidToItem)
+        registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING) { (key: RecipeKey, recipe: RTMixingRecipe) ->
             RTMixingViewerRecipe(
                 key.identifier(),
                 recipe.ingredients.getLeft()?.map(HTDisplayableContent::display) ?: listOf(),
@@ -238,7 +239,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             )
         }
         // registration.addRecipes(RagiumJeiRecipeTypes.REACTING, RagiumRecipeLookups.REACTING)
-        registration.addRecipes(RagiumJeiRecipeTypes.WASHING, RagiumRecipeTypes.WASHING) { (key: RecipeKey, recipe: RTWashingRecipe) ->
+        registration.addRecipes(RagiumJeiRecipeTypes.WASHING, RagiumRecipeLookups.WASHING) { (key: RecipeKey, recipe: RTWashingRecipe) ->
             RTWashingViewerRecipe(
                 key.identifier(),
                 recipe.itemIngredient.display(),
@@ -248,14 +249,14 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             )
         }
         // Resource
-        registration.addRecipes(RagiumJeiRecipeTypes.BREWING, RagiumRecipeTypes.BREWING, HTViewerRecipeHelper::itemAndFluidToFluid)
-        registration.addRecipes(RagiumJeiRecipeTypes.PLANTING, RagiumRecipeTypes.PLANTING, HTViewerRecipeHelper::singleToSingle)
+        registration.addRecipes(RagiumJeiRecipeTypes.BREWING, RagiumRecipeLookups.BREWING, HTViewerRecipeHelper::itemAndFluidToFluid)
+        registration.addRecipes(RagiumJeiRecipeTypes.PLANTING, RagiumRecipeLookups.PLANTING, HTViewerRecipeHelper::singleToSingle)
         // Electronics
-        registration.addRecipes(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumRecipeTypes.ELECTROLYZING, HTViewerRecipeHelper::fluidSeparating)
-        registration.addRecipes(RagiumJeiRecipeTypes.ENGRAVING, RagiumRecipeTypes.ENGRAVING, HTViewerRecipeHelper::catalysedSingleToSingle)
+        registration.addRecipes(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumRecipeLookups.ELECTROLYZING, HTViewerRecipeHelper::fluidSeparating)
+        registration.addRecipes(RagiumJeiRecipeTypes.ENGRAVING, RagiumRecipeLookups.ENGRAVING, HTViewerRecipeHelper::catalysedSingleToSingle)
         registration.addRecipes(
             RagiumJeiRecipeTypes.RESOURCE_PUMPING,
-            RagiumRecipeTypes.RESOURCE_PUMPING,
+            RagiumRecipeLookups.RESOURCE_PUMPING,
         ) { (key: RecipeKey, recipe: RTResourcePumpingRecipe) ->
             HTSingleToSingleViewerRecipe(
                 key.identifier(),
@@ -267,7 +268,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Arcane
         registration.addRecipes(
             RagiumJeiRecipeTypes.ENCHANTING,
-            RagiumRecipeTypes.ENCHANTING,
+            RagiumRecipeLookups.ENCHANTING,
         ) { (key: RecipeKey, recipe: RTEnchantingRecipe) ->
             HTDoubleToSingleViewerRecipe(
                 key.identifier(),

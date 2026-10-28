@@ -2,14 +2,13 @@ package hiiragi283.lib.integration.jei
 
 import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.recipe.HTRecipeHolder
+import hiiragi283.lib.recipe.RecipeKey
+import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.resource.toId
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.resources.Identifier
-import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.RecipeType
 
 /**
  * Hiiragi Seriesで使用される[IModPlugin]の抽象クラスです。
@@ -25,13 +24,18 @@ abstract class HTJeiPlugin(protected val modId: String) : IModPlugin {
     /**
      * @since 26.1.12
      */
-    protected fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>, VIEWER : Any> IRecipeRegistration.addRecipes(
+    protected inline fun <RECIPE_A : Any, reified RECIPE_B : Any, VIEWER : Any> IRecipeRegistration.addRecipes(
         recipeType: IRecipeType<VIEWER>,
-        recipeType1: RecipeType<RECIPE>,
-        transform: (HTRecipeHolder<RECIPE>) -> VIEWER,
+        lookup: HTRecipeLookup<RECIPE_A>,
+        crossinline transform: (HTRecipeHolder<RECIPE_B>) -> VIEWER,
     ) {
-        val viewers: List<VIEWER> = HTPhysicalSideHelper.createLookupContext().byType(recipeType1)
-            .map(transform)
+        val viewers: List<VIEWER> = lookup.getAllRecipes(HTPhysicalSideHelper.createLookupContext())
+            .mapNotNull { (key: RecipeKey, recipe: RECIPE_A) ->
+                when (recipe) {
+                    is RECIPE_B -> HTRecipeHolder(key, recipe).let(transform)
+                    else -> null
+                }
+            }
             .toList()
         if (viewers.isEmpty()) return
         this.addRecipes(recipeType, viewers)

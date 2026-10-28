@@ -146,7 +146,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.ALKALI_CARBONATE, "アルカリ炭酸塩")
         add(RagiumItems.ALKALI_NITRATE, "アルカリ硝酸塩")
         add(RagiumItems.ALKALI_SULFATE, "アルカリ硫酸塩")
-        add(RagiumItems.ALKALI_CHLORIDE, "アルカリ塩化物")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
