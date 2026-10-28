@@ -34,6 +34,7 @@ data object RagiumFluids {
         REGISTER.addAlias("coal_tar", "creosote")
         REGISTER.addAlias("bleach", "chlorine")
         REGISTER.addAlias("ammonia", "nitric_acid")
+        REGISTER.addAlias("sodium_hydroxide_solution", "alkali_hydroxide_solution")
 
         REGISTER.register(eventBus)
     }
@@ -212,7 +213,10 @@ data object RagiumFluids {
     val SALT_WATER: HTFluidContent.Flowing = REGISTER.registerFlowing("salt_water") { properties = liquid() }
 
     @JvmField
-    val NAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("sodium_hydroxide_solution") { properties = liquid() }
+    val HYDROXIDE_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("alkali_hydroxide_solution") { properties = liquid() }
+
+    @JvmField
+    val SULFATE_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("alkali_sulfate_solution") { properties = liquid() }
 
     // Al
     @JvmField

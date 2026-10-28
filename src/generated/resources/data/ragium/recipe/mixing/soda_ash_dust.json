@@ -1,8 +1,10 @@
 {
-  "type": "ragium:refining",
+  "type": "ragium:mixing",
   "ingredient": {
-    "amount": 1000,
-    "fluids": "#c:sodium_hydroxide_solution"
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:alkali_hydroxide_solution"
+    }
   },
   "result": {
     "fluid": {
@@ -11,7 +13,7 @@
     },
     "item": {
       "count": 1,
-      "id": "ragium:soda_ash_dust"
+      "id": "ragium:alkali_carbonate"
     }
   },
   "time": 200

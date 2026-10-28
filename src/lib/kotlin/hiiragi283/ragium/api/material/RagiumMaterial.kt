@@ -99,11 +99,6 @@ sealed interface RagiumMaterial :
         CARBON("Carbon", "炭素"),
 
         /**
-         * @since 26.1.8
-         */
-        SODA_ASH("Soda Ash", "ソーダ灰"),
-
-        /**
          * @since 26.1.7
          */
         ALUMINA("Alumina", "アルミナ"),

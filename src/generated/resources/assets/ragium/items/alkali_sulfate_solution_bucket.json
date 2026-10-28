@@ -2,7 +2,7 @@
   "model": {
     "type": "neoforge:fluid_container",
     "apply_fluid_luminosity": false,
-    "fluid": "ragium:sodium_hydroxide_solution",
+    "fluid": "ragium:alkali_sulfate_solution",
     "textures": {
       "base": "minecraft:item/bucket",
       "fluid": "neoforge:item/mask/bucket_fluid",

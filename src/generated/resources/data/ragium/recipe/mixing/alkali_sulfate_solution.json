@@ -3,17 +3,17 @@
   "ingredient": {
     "fluid": {
       "amount": 1000,
-      "fluids": "#c:sulfuric_acid"
+      "fluids": "#c:water"
     },
     "item": {
       "count": 1,
-      "items": "#c:dusts/fluorite"
+      "items": "ragium:alkali_sulfate"
     }
   },
   "result": {
     "fluid": {
-      "amount": 2000,
-      "id": "ragium:hydrogen_fluoride"
+      "amount": 1000,
+      "id": "ragium:alkali_sulfate_solution"
     }
   },
   "time": 200

@@ -57,6 +57,8 @@ data object RagiumItems {
             val name: String = machineType.materialName
             REGISTER.addAlias("${name}_machine_parts", "machine_parts/$name")
         }
+        REGISTER.addAlias("sodium_hydroxide", "alkali_hydroxide")
+        REGISTER.addAlias("soda_ash_dust", "alkali_carbonate")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -160,7 +162,19 @@ data object RagiumItems {
 
     // Chemical
     @JvmField
-    val SODIUM_HYDROXIDE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("sodium_hydroxide")
+    val ALKALI_HYDROXIDE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alkali_hydroxide")
+
+    @JvmField
+    val ALKALI_CARBONATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alkali_carbonate")
+
+    @JvmField
+    val ALKALI_NITRATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alkali_nitrate")
+
+    @JvmField
+    val ALKALI_SULFATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alkali_sulfate")
+
+    @JvmField
+    val ALKALI_CHLORIDE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alkali_chloride")
 
     @JvmField
     val PLASTIC_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plastic_plate")

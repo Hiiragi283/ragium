@@ -2,7 +2,7 @@
   "type": "ragium:refining",
   "ingredient": {
     "amount": 1000,
-    "fluids": "#c:sodium_hydroxide_solution"
+    "fluids": "#c:alkali_hydroxide_solution"
   },
   "result": {
     "fluid": {
@@ -11,7 +11,7 @@
     },
     "item": {
       "count": 1,
-      "id": "ragium:sodium_hydroxide"
+      "id": "ragium:alkali_hydroxide"
     }
   },
   "time": 200

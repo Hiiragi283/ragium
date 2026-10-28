@@ -231,9 +231,13 @@ data object RagiumClient : HTClientMod() {
             dull()
             tintSource = FluidTintSources.water()
         }
-        register.register(RagiumFluids.NAOH_SOLUTION) {
+        register.register(RagiumFluids.HYDROXIDE_SOLUTION) {
             dull()
             colorTint(Color(0x003366))
+        }
+        register.register(RagiumFluids.SULFATE_SOLUTION) {
+            dull()
+            colorTint(Color(0x336666))
         }
         register.register(RagiumFluids.ALUMINA_SOLUTION) {
             transparent()

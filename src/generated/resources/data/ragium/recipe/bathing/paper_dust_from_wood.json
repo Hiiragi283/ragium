@@ -3,7 +3,7 @@
   "ingredient": {
     "fluid": {
       "amount": 250,
-      "fluids": "#c:sodium_hydroxide_solution"
+      "fluids": "#c:alkali_hydroxide_solution"
     },
     "item": {
       "count": 1,
