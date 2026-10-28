@@ -59,7 +59,7 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
                 RagiumGlobalLootTables.CARBON_FROM_DIAMOND_ORES,
                 buildTable {
                     pool {
-                        +item(HTItemPart.DUST, RagiumMaterial.Chemicals.CARBON)
+                        +item(HTItemPart.DUST, RagiumMaterial.Other.CARBON)
                             .apply(ApplyBonusCount.addOreBonusCount(fortune))
                     }
                 },

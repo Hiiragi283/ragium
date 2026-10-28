@@ -48,7 +48,6 @@ sealed interface RagiumMaterial :
             @JvmField
             val entries: Sequence<DustLike> = sequence {
                 yieldAll(Mineral.entries)
-                yieldAll(Chemicals.entries)
                 yieldAll(Other.entries)
             }
         }
@@ -62,7 +61,6 @@ sealed interface RagiumMaterial :
         GLOWSTONE("Glowstone", "グロウストーン"),
 
         // Common
-        BORAX("Borax", "ホウ砂"),
         SALT("Salt", "食塩"),
 
         /**
@@ -85,51 +83,6 @@ sealed interface RagiumMaterial :
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
 
         val isVanilla: Boolean get() = this == REDSTONE || this == GLOWSTONE
-
-        override val materialName: String = name.lowercase()
-    }
-
-    /**
-     * @since 26.1.8
-     */
-    enum class Chemicals(langName: HTLangName) :
-        DustLike,
-        HTLangName by langName {
-        // Common
-        CARBON("Carbon", "炭素"),
-
-        /**
-         * @since 26.1.7
-         */
-        ALUMINA("Alumina", "アルミナ"),
-
-        /**
-         * @since 26.1.7
-         */
-        SILICON("Silicon", "シリコン"),
-
-        /**
-         * @since 26.1.11
-         */
-        SILICA("Silica", "シリカ"),
-
-        /**
-         * @since 26.1.9
-         */
-        ASH("Ash", "灰"),
-
-        /**
-         * @since 26.1.8
-         */
-        LIME("Lime", "石灰"),
-
-        /**
-         * @since 26.1.8
-         */
-        QUICK_LIME("Quick Lime", "生石灰"),
-        ;
-
-        constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
 
         override val materialName: String = name.lowercase()
     }
@@ -254,7 +207,41 @@ sealed interface RagiumMaterial :
         OBSIDIAN("Obsidian", "黒曜石"),
         PAPER("Paper", "紙") {
             override val isPulp: Boolean = true
-        }, ;
+        },
+
+        // Common
+        CARBON("Carbon", "炭素"),
+
+        /**
+         * @since 26.1.7
+         */
+        ALUMINA("Alumina", "アルミナ"),
+
+        /**
+         * @since 26.1.7
+         */
+        SILICON("Silicon", "シリコン"),
+
+        /**
+         * @since 26.1.11
+         */
+        SILICA("Silica", "シリカ"),
+
+        /**
+         * @since 26.1.9
+         */
+        ASH("Ash", "灰"),
+
+        /**
+         * @since 26.1.8
+         */
+        LIME("Lime", "石灰"),
+
+        /**
+         * @since 26.1.8
+         */
+        QUICK_LIME("Quick Lime", "生石灰"),
+        ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))
 

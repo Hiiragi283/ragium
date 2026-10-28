@@ -87,7 +87,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Cement
         VanillaRecipeBuilders.shapeless {
             ingredient { +holderSet(Tags.Items.SANDS) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.QUICK_LIME) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.QUICK_LIME) }
             result {
                 +RagiumItems.CEMENT
                 count = 2

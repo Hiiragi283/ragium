@@ -86,7 +86,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             fluidIngredient { +waterSet() }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.SILICA)
                 count = 3
             }
             recipeId suffix "_from_sands"
@@ -99,7 +99,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             fluidIngredient { +waterSet() }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.SILICA)
                 count = 3
             }
             recipeId suffix "_from_clay_ball"
@@ -112,7 +112,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             fluidIngredient { +waterSet() }
             result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.SILICA)
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.SILICA)
                 count = 3
             }
             recipeId suffix "_from_clay"
