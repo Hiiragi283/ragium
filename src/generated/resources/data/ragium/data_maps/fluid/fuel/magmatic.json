@@ -1,5 +1,7 @@
 {
   "values": {
-    "#c:lava": 5
+    "#c:lava": {
+      "tick/mb": 5
+    }
   }
 }

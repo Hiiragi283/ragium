@@ -25,6 +25,7 @@ data object RagiumConstants {
     const val MAGMATIC_DYNAMO = "magmatic_$DYNAMO"
 
     const val ALLOY_SMELTER = "alloy_smelter"
+    const val DRYER = "dryer"
     const val FREEZER = "freezer"
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
@@ -78,6 +79,7 @@ data object RagiumConstants {
 
     // Heat
     const val ALLOYING = "alloying"
+    const val DRYING = "drying"
     const val FREEZING = "freezing"
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"

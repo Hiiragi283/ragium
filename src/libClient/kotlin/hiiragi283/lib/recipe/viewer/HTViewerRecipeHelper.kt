@@ -11,8 +11,10 @@ import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.recipe.display.display
+import hiiragi283.lib.recipe.display.displayOrEmpty
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
+import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 
 /**
@@ -28,12 +30,27 @@ data object HTViewerRecipeHelper {
     }
 
     @JvmStatic
-    fun singleItemToMultiItem(holder: HTRecipeHolder<HTItemToRecipe.BasicMultiItem>): HTSingleToMultiViewerRecipe {
+    fun singleToMultiItem(holder: HTRecipeHolder<HTItemToRecipe.BasicMultiItem>): HTSingleToMultiViewerRecipe {
         val (id: RecipeKey, recipe: HTItemToRecipe.BasicMultiItem) = holder
         return HTSingleToMultiViewerRecipe(
             id.identifier(),
             recipe.ingredient.display(),
             recipe.results.map(HTItemResult::display),
+            recipe.progressData,
+        )
+    }
+
+    @JvmStatic
+    fun singleToItemAndFluid(
+        holder: HTRecipeHolder<HTBasicSingleRecipe<HTDisplayableContent, HTItemOrFluidResult>>,
+    ): HTSingleToItemAndFluidViewerRecipe {
+        val (id: RecipeKey, recipe: HTBasicSingleRecipe<HTDisplayableContent, HTItemOrFluidResult>) = holder
+        val (item: HTItemResult?, fluid: HTFluidResult?) = recipe.result.content.toPair()
+        return HTSingleToItemAndFluidViewerRecipe(
+            id.identifier(),
+            recipe.ingredient.display(),
+            item.displayOrEmpty(),
+            fluid.displayOrEmpty(),
             recipe.progressData,
         )
     }

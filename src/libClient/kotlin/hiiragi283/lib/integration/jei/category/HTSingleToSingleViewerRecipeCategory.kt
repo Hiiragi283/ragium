@@ -9,7 +9,7 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.types.IRecipeType
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTSingletToSingleViewerRecipeCategory(recipeType: IRecipeType<HTSingleToSingleViewerRecipe>, recipeType1: RecipeType<*>, icon: IDrawable) :
+class HTSingleToSingleViewerRecipeCategory(recipeType: IRecipeType<HTSingleToSingleViewerRecipe>, recipeType1: RecipeType<*>, icon: IDrawable) :
     HTViewerRecipeCategory<HTSingleToSingleViewerRecipe>(
         recipeType,
         recipeType1,

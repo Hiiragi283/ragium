@@ -40,7 +40,9 @@ data object RagiumDataMaps {
      * @since 26.1.12
      */
     @JvmField
-    val COOLANT: DataMapType<Fluid, HTFluidFuel> = fluidFuel("coolant")
+    val COOLANT: DataMapType<Fluid, HTCoolantData> = DataMapType.builder(RagiumAPI.id("coolant"), Registries.FLUID, HTCoolantData.CODEC)
+        .synced(HTCoolantData.CODEC, false)
+        .build()
 
     /**
      * モルタルによるブロックの修復

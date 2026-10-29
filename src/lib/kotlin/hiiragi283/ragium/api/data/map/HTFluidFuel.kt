@@ -7,6 +7,8 @@ import hiiragi283.lib.serialization.codec.HTCodecs
 data class HTFluidFuel(val tickPerMb: Int) {
     companion object {
         @JvmField
-        val CODEC: Codec<HTFluidFuel> = HTCodecs.POSITIVE_INT.xmap(::HTFluidFuel, HTFluidFuel::tickPerMb)
+        val CODEC: Codec<HTFluidFuel> = HTCodecs.record { instance ->
+            instance.group(HTCodecs.POSITIVE_INT.fieldOf("tick/mb").forGetter(HTFluidFuel::tickPerMb)).apply(instance, ::HTFluidFuel)
+        }
     }
 }

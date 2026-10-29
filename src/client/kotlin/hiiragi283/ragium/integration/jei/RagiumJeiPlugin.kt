@@ -9,7 +9,7 @@ import hiiragi283.lib.integration.jei.category.HTDoubleToSingleViewerRecipeCateg
 import hiiragi283.lib.integration.jei.category.HTFluidSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToMultiViewerRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTSingletToSingleViewerRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTSingleToSingleViewerRecipeCategory
 import hiiragi283.lib.integration.jei.ingredient.HTIngredientTypes
 import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTPotionHelper
@@ -119,7 +119,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumRecipeTypes.CENTRIFUGING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.CENTRIFUGE),
             ),
-            HTSingletToSingleViewerRecipeCategory(
+            HTSingleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.COMPRESSING,
                 RagiumRecipeTypes.COMPRESSING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.COMPRESSOR),
@@ -152,7 +152,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumRecipeTypes.FREEZING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.FREEZER),
             ),
-            HTSingletToSingleViewerRecipeCategory(
+            HTSingleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.MELTING,
                 RagiumRecipeTypes.MELTING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.MELTER),
@@ -185,7 +185,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 HTBackgroundType.INPUT,
             ),
             RTPlantingRecipeCategory(guiHelper),
-            HTSingletToSingleViewerRecipeCategory(
+            HTSingleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.RESOURCE_PUMPING,
                 RagiumRecipeTypes.RESOURCE_PUMPING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.RESOURCE_PUMP),
@@ -216,8 +216,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING, HTViewerRecipeHelper::sizedShapeless)
         registration.addRecipes(RagiumJeiRecipeTypes.CENTRIFUGING, RagiumRecipeLookups.CENTRIFUGING, HTViewerRecipeHelper::itemSeparating)
         registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING, HTViewerRecipeHelper::singleToSingle)
-        registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeLookups.CRUSHING, HTViewerRecipeHelper::singleItemToMultiItem)
-        registration.addRecipes(RagiumJeiRecipeTypes.CUTTING, RagiumRecipeLookups.CUTTING, HTViewerRecipeHelper::singleItemToMultiItem)
+        registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeLookups.CRUSHING, HTViewerRecipeHelper::singleToMultiItem)
+        registration.addRecipes(RagiumJeiRecipeTypes.CUTTING, RagiumRecipeLookups.CUTTING, HTViewerRecipeHelper::singleToMultiItem)
         registration.addRecipes(RagiumJeiRecipeTypes.FILLING, RagiumRecipeLookups.FILLING, HTViewerRecipeHelper::itemAndFluidToItem)
         registration.addRecipes(RagiumJeiRecipeTypes.PRESSING, RagiumRecipeLookups.PRESSING, HTViewerRecipeHelper::catalysedSingleToSingle)
         // Heat

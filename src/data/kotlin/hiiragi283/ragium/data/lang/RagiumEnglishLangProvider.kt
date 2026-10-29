@@ -104,6 +104,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         // H
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
         // C
+        addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
         addFluid(RagiumFluids.BLACK_LIQUOR, "Black Liquor")
         addFluid(RagiumFluids.PLANT_OIL, "Plant Oil")

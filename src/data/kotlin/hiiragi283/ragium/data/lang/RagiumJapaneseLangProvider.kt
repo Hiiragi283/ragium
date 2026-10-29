@@ -100,6 +100,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         // H
         addFluid(RagiumFluids.HYDROGEN, "水素")
         // C
+        addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
         addFluid(RagiumFluids.BLACK_LIQUOR, "黒液")
         addFluid(RagiumFluids.PLANT_OIL, "植物油")

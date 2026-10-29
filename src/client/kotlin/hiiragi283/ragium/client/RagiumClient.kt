@@ -151,6 +151,10 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0x003399))
         }
         // C
+        register.register(RagiumFluids.CARBON_DIOXIDE) {
+            transparent()
+            colorTint(Color(0x336699))
+        }
         register.register(RagiumFluids.CREOSOTE) {
             dull()
             colorTint(Color(0x663333))

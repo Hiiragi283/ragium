@@ -4,6 +4,7 @@ import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.tag.BlockItemTag
 import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
+import hiiragi283.ragium.api.data.map.HTCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuel
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.material.HTItemPart
@@ -165,7 +166,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             .add(RagiumFluids.FUEL, HTFluidFuel(20), false)
 
         builder(RagiumDataMaps.COOLANT)
-            .add(Tags.Fluids.WATER, HTFluidFuel(5), false)
+            .add(Tags.Fluids.WATER, HTCoolantData(5), false)
     }
 
     private fun mortarRepair() {

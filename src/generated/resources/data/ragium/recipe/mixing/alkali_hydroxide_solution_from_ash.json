@@ -6,8 +6,8 @@
       "fluids": "#c:water"
     },
     "item": {
-      "count": 1,
-      "items": "ragium:alkali_hydroxide"
+      "count": 4,
+      "items": "#c:dusts/ash"
     }
   },
   "result": {

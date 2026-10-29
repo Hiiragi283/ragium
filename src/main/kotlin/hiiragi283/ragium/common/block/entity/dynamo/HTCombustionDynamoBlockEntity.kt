@@ -32,10 +32,10 @@ class HTCombustionDynamoBlockEntity(pos: BlockPos, state: BlockState) :
     override fun generateEnergy(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: TransactionContext): Int {
         val coolantIn: FluidResource = coolantTank.resource
         if (coolantIn.isEmpty) return 0
-        val tickPerMb: Int = coolantIn.getData(RagiumDataMaps.COOLANT)?.tickPerMb ?: return 0
-        val coolantExtracted: Int = coolantTank.extractSelf(tickPerMb, transaction, HTTransferAccess.INTERNAL)
+        val mbPerTick: Int = coolantIn.getData(RagiumDataMaps.COOLANT)?.mbPerTick ?: return 0
+        val coolantExtracted: Int = coolantTank.extractSelf(mbPerTick, transaction, HTTransferAccess.INTERNAL)
         return when (coolantExtracted) {
-            tickPerMb -> generateEnergy(transaction)
+            mbPerTick -> generateEnergy(transaction)
             else -> 0
         }
     }
