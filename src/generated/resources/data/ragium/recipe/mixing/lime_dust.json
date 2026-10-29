@@ -1,0 +1,26 @@
+{
+  "type": "ragium:mixing",
+  "ingredient": {
+    "fluids": [
+      {
+        "amount": 1000,
+        "fluids": "#c:limewater"
+      },
+      {
+        "amount": 1000,
+        "fluids": "#c:carbon_dioxide"
+      }
+    ]
+  },
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "minecraft:water"
+    },
+    "item": {
+      "count": 1,
+      "id": "ragium:lime_dust"
+    }
+  },
+  "time": 200
+}

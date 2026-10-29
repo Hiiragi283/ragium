@@ -8,6 +8,7 @@ import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
@@ -457,7 +458,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         calcium()
     }
 
-    /*private fun saltAndSolution(fluid: HTFluidContent, item: HTSimpleDeferredItem) {
+    private fun saltAndSolution(fluid: HTFluidContent, item: HTSimpleDeferredItem) {
         // Salt + Water -> Salt (aq)
         RagiumRecipeBuilders.mixing {
             itemIngredient { items { +item } }
@@ -488,7 +489,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             itemResult { +item }
             recipeId replace item.id.withSuffix("_from_solution")
         }.save(exporter)
-    }*/
+    }
 
     private fun nitrogen() {
         // Gunpowder -> C + S + KNO3
@@ -562,16 +563,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun alkali() {
-        // KOH (aq)
-        RagiumRecipeBuilders.mixing {
-            itemIngredient {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.ASH)
-                count = 4
-            }
-            fluidIngredient { +waterSet() }
-            fluidResult { +RagiumFluids.HYDROXIDE_SOLUTION }
-            recipeId suffix "_from_ash"
-        }.save(exporter)
+        // NaOH (aq)
+        saltAndSolution(RagiumFluids.HYDROXIDE_SOLUTION, RagiumItems.ALKALI_HYDROXIDE)
+        // Na2SO4 (aq)
+        saltAndSolution(RagiumFluids.SULFATE_SOLUTION, RagiumItems.ALKALI_SULFATE)
 
         // Dried Kelp -> Na2CO3
         VanillaRecipeBuilders.smeltingAndBlasting(exporter) {
@@ -601,6 +596,17 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +Items.GLASS
                 count = 6
             }
+        }.save(exporter)
+
+        // KOH (aq)
+        RagiumRecipeBuilders.mixing {
+            itemIngredient {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.ASH)
+                count = 4
+            }
+            fluidIngredient { +waterSet() }
+            fluidResult { +RagiumFluids.HYDROXIDE_SOLUTION }
+            recipeId suffix "_from_ash"
         }.save(exporter)
 
         // Wood Pulp + Alkali aq -> Paper Pulp + Black Liquor
@@ -813,19 +819,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun chlorine() {
-        // NaCl(aq) <-> NaCl + H2O
-        RagiumRecipeBuilders.mixing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SALT) }
-            fluidIngredient { +waterSet() }
-            fluidResult { +RagiumFluids.SALT_WATER }
-        }.save(exporter)
-        val item: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SALT)
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.SALT_WATER) }
-            fluidResult { water() }
-            itemResult { +item }
-            recipeId replace item.id.withSuffix("_from_solution")
-        }.save(exporter)
+        // NaCl(aq)
+        saltAndSolution(RagiumFluids.SALT_WATER, RagiumMaterial.Chemical.SALT)
 
         // 2x NaCl + H2SO4 -> 2x HCl + Na2SO4
         RagiumRecipeBuilders.mixing {
@@ -879,7 +874,31 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.CARBON_DIOXIDE }
             recipeId suffix "_from_lime"
         }.save(exporter)
+        // CaO + H2O -> Ca(OH)2
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.QUICK_LIME) }
+            fluidIngredient { +waterSet() }
+            fluidResult { +RagiumFluids.LIMEWATER }
+        }.save(exporter)
+        // Ca(OH)2 + CO2 -> CaCO3 + H2O
+        RagiumRecipeBuilders.mixing {
+            fluidIngredient { +holderSet(RagiumFluids.LIMEWATER) }
+            fluidIngredient { +holderSet(RagiumFluids.CARBON_DIOXIDE) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.LIME) }
+            fluidResult { water() }
+        }.save(exporter)
 
+        // (Na,K)2SO4 + Ca(OH)2 -> CaSO4 + 2x KOH
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { items { +RagiumItems.ALKALI_SULFATE } }
+            fluidIngredient { +holderSet(RagiumFluids.LIMEWATER) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.GYPSUM) }
+            fluidResult {
+                +RagiumFluids.HYDROXIDE_SOLUTION
+                amount *= 2
+            }
+            recipeId suffix "_from_limewater"
+        }.save(exporter)
         // CaSO4 -> CaO + SO3
         RagiumRecipeBuilders.pyrolyzing {
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.GYPSUM) }

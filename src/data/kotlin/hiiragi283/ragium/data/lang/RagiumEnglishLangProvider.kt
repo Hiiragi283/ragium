@@ -142,6 +142,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.CHLORINE, "Chlorine")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "Hydrogen Chloride")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
+        // Ca
+        addFluid(RagiumFluids.LIMEWATER, "Limewater")
 
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
@@ -152,7 +154,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.STICKY_BALL, "Sticky Ball")
         add(RagiumItems.ALKALI_HYDROXIDE, "Alkali Hydroxide")
         add(RagiumItems.ALKALI_CARBONATE, "Alkali Carbonate")
-        add(RagiumItems.ALKALI_NITRATE, "Alkali Nitrate")
         add(RagiumItems.ALKALI_SULFATE, "Alkali Sulfate")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")

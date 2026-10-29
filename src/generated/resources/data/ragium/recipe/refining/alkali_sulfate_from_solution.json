@@ -1,0 +1,18 @@
+{
+  "type": "ragium:refining",
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:alkali_sulfate_solution"
+  },
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "minecraft:water"
+    },
+    "item": {
+      "count": 1,
+      "id": "ragium:alkali_sulfate"
+    }
+  },
+  "time": 200
+}

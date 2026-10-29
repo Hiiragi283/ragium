@@ -138,6 +138,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.CHLORINE, "塩素")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
+        // Ca
+        addFluid(RagiumFluids.LIMEWATER, "石灰水")
+
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
@@ -147,7 +150,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.STICKY_BALL, "粘着質な塊")
         add(RagiumItems.ALKALI_HYDROXIDE, "アルカリ水酸化物")
         add(RagiumItems.ALKALI_CARBONATE, "アルカリ炭酸塩")
-        add(RagiumItems.ALKALI_NITRATE, "アルカリ硝酸塩")
         add(RagiumItems.ALKALI_SULFATE, "アルカリ硫酸塩")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")

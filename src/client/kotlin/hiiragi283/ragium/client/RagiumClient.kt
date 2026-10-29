@@ -280,6 +280,12 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0x99cc66))
         }
+
+        // Ca
+        register.register(RagiumFluids.LIMEWATER) {
+            dull()
+            colorTint(Color(0x006699))
+        }
     }
 
     override fun registerScreens(event: RegisterMenuScreensEvent) {
