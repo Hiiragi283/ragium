@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.transfer.holder
 
 import hiiragi283.lib.collection.mutableEnumMapOf
-import hiiragi283.lib.transfer.energy.HTEnergyHandler
+import hiiragi283.lib.transfer.energy.HTEnergyStorage
 import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.core.Direction
@@ -10,8 +10,8 @@ import kotlin.jvm.optionals.getOrNull
 
 class HTBasicEnergyHandlerHolder(
     configGetter: HTSlotInfoProvider?,
-    private val handler: HTEnergyHandler?,
-    private val handlerMap: Map<HTSlotInfo, HTEnergyHandler>,
+    private val handler: HTEnergyStorage?,
+    private val handlerMap: Map<HTSlotInfo, HTEnergyStorage>,
 ) : HTConfigCapabilityHolder(configGetter),
     HTEnergyHandlerHolder {
     companion object {
@@ -19,17 +19,17 @@ class HTBasicEnergyHandlerHolder(
         fun builder(configGetter: HTSlotInfoProvider?): Builder = Builder(configGetter)
     }
 
-    override fun getHandler(side: Direction?): HTEnergyHandler? = when {
+    override fun getHandler(side: Direction?): HTEnergyStorage? = when {
         side == null || this.configGetter == null -> handler
         else -> configGetter.getSlotInfo(side).let(handlerMap::get)
     }
 
     class Builder(val configGetter: HTSlotInfoProvider?) {
         private var hasBuilt = false
-        private var handler: Optional<HTEnergyHandler> by HTDelegates.optionalInitialize()
-        private val handlerMap: MutableMap<HTSlotInfo, HTEnergyHandler> = mutableEnumMapOf()
+        private var handler: Optional<HTEnergyStorage> by HTDelegates.optionalInitialize()
+        private val handlerMap: MutableMap<HTSlotInfo, HTEnergyStorage> = mutableEnumMapOf()
 
-        fun <T : HTEnergyHandler> addHandler(info: HTSlotInfo, handler: T): T {
+        fun <T : HTEnergyStorage> addHandler(info: HTSlotInfo, handler: T): T {
             check(!hasBuilt) { "Builder has already built" }
             this.handler = Optional.of(handler)
             when (info) {

@@ -3,12 +3,11 @@ package hiiragi283.lib.transfer.item
 import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
-import hiiragi283.lib.transfer.energy.HTEnergyHandler
+import hiiragi283.lib.transfer.energy.HTEnergyStorage
 import hiiragi283.lib.transfer.useTransaction
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.transfer.access.ItemAccess
 import net.neoforged.neoforge.transfer.energy.EnergyHandler
-import net.neoforged.neoforge.transfer.energy.EnergyHandlerUtil
 import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.transaction.Transaction
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
@@ -23,7 +22,7 @@ import java.util.function.Predicate
  * @since 26.1.9
  */
 class HTEnergyItemSlot(
-    private val handler: HTEnergyHandler,
+    private val storage: HTEnergyStorage,
     canExtract: BiPredicate<ItemResource, HTTransferAccess>,
     canInsert: BiPredicate<ItemResource, HTTransferAccess>,
     filter: Predicate<ItemResource>,
@@ -32,11 +31,11 @@ class HTEnergyItemSlot(
     companion object {
         @JvmStatic
         fun fill(
-            handler: HTEnergyHandler,
+            storage: HTEnergyStorage,
             listener: Runnable?,
             filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue(),
         ): HTEnergyItemSlot = HTEnergyItemSlot(
-            handler,
+            storage,
             HTTransferPredicates.notExternal<ItemResource>().or { resource: ItemResource, _ -> !canFill(resource) },
             HTTransferPredicates.internalOnly<ItemResource>().or { resource: ItemResource, _ -> canFill(resource) },
             filter,
@@ -45,36 +44,34 @@ class HTEnergyItemSlot(
 
         @JvmStatic
         fun drain(
-            handler: HTEnergyHandler,
+            storage: HTEnergyStorage,
             listener: Runnable?,
             filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue(),
         ): HTEnergyItemSlot = HTEnergyItemSlot(
-            handler,
+            storage,
             HTTransferPredicates.notExternal<ItemResource>().or { resource: ItemResource, _ ->
-                !canDrain(handler, resource)
+                !canDrain(storage, resource)
             },
             HTTransferPredicates.internalOnly<ItemResource>().or { resource: ItemResource, _ ->
-                canDrain(handler, resource)
+                canDrain(storage, resource)
             },
             filter,
             listener,
         )
 
         @JvmStatic
-        fun canDrain(handler: EnergyHandler, resource: ItemResource): Boolean {
-            val handler1: EnergyHandler =
-                resource.toStack().let(ItemAccess::forStack).let(HTEnergyCapabilities::getCapability) ?: return false
-            return canDrain(handler, handler1)
+        fun canDrain(storage: HTEnergyStorage, resource: ItemResource): Boolean {
+            val handler: EnergyHandler = resource.toStack().let(ItemAccess::forStack).let(HTEnergyCapabilities::getCapability) ?: return false
+            return canDrain(storage, handler)
         }
 
         @JvmStatic
-        private fun canDrain(handler: EnergyHandler, handler1: EnergyHandler): Boolean {
-            if (handler.amountAsLong == 0L) {
+        private fun canDrain(storage: HTEnergyStorage, handler1: EnergyHandler): Boolean {
+            if (storage.amount == 0) {
                 return handler1.amountAsLong < handler1.capacityAsLong
             }
-            val unwrapped: HTEnergyHandler = HTEnergyCapabilities.unwrap(handler)
             return useTransaction { transaction: Transaction ->
-                handler1.insert(handler.capacityAsInt, transaction) > 0
+                handler1.insert(storage.capacity, transaction) > 0
             }
         }
 
@@ -90,18 +87,18 @@ class HTEnergyItemSlot(
      * スロット内のアイテムからエネルギーを移動します
      */
     fun fillContainerFromSlot(parent: TransactionContext?): Boolean {
-        if (this.isEmpty || EnergyHandlerUtil.isFull(this.handler)) {
+        if (this.isEmpty || this.storage.needed == 0) {
             return false
         }
         val handlerInItem: EnergyHandler = HTEnergyCapabilities.getCapability(this.itemAccess) ?: return false
         var maxExtract: Int
         useTransaction(parent) { transaction: Transaction ->
-            maxExtract = this.handler.insert(this.handler.neededAsInt, transaction, HTTransferAccess.INTERNAL)
+            maxExtract = this.storage.insert(this.storage.needed, transaction, HTTransferAccess.INTERNAL)
             if (maxExtract == 0) return false
         }
         useTransaction(parent) { transaction: Transaction ->
             val extracted: Int = handlerInItem.extract(maxExtract, transaction)
-            if (extracted > 0 && this.handler.insert(extracted, transaction, HTTransferAccess.INTERNAL) == extracted) {
+            if (extracted > 0 && this.storage.insert(extracted, transaction, HTTransferAccess.INTERNAL) == extracted) {
                 transaction.commit()
                 return true
             }
@@ -113,18 +110,18 @@ class HTEnergyItemSlot(
      * スロット内のアイテムにエネルギーを移動します
      */
     fun drainContainerToSlot(parent: TransactionContext?): Boolean {
-        if (this.isEmpty || this.handler.isEmpty) {
+        if (this.isEmpty || this.storage.isEmpty) {
             return false
         }
         val handlerInItem: EnergyHandler = HTEnergyCapabilities.getCapability(this.itemAccess) ?: return false
         var maxInsert: Int
         useTransaction(parent) { transaction: Transaction ->
-            maxInsert = this.handler.extract(this.handler.amountAsInt, transaction, HTTransferAccess.INTERNAL)
+            maxInsert = this.storage.extract(this.storage.amount, transaction, HTTransferAccess.INTERNAL)
             if (maxInsert == 0) return false
         }
         useTransaction(parent) { transaction: Transaction ->
             val inserted: Int = handlerInItem.insert(maxInsert, transaction)
-            if (inserted > 0 && this.handler.extract(inserted, transaction, HTTransferAccess.INTERNAL) == inserted) {
+            if (inserted > 0 && this.storage.extract(inserted, transaction, HTTransferAccess.INTERNAL) == inserted) {
                 transaction.commit()
                 return true
             }

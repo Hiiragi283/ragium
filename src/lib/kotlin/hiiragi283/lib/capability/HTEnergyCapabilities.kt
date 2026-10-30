@@ -2,6 +2,7 @@ package hiiragi283.lib.capability
 
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTEnergyHandler
+import hiiragi283.lib.transfer.energy.HTEnergyStorage
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.Entity
@@ -14,7 +15,6 @@ import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
 import net.neoforged.neoforge.transfer.access.ItemAccess
-import net.neoforged.neoforge.transfer.energy.DelegatingEnergyHandler
 import net.neoforged.neoforge.transfer.energy.EnergyHandler
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
@@ -29,19 +29,18 @@ data object HTEnergyCapabilities : HTMultiCapability<EnergyHandler> {
     override val item: ItemCapability<EnergyHandler, ItemAccess> = Capabilities.Energy.ITEM
 
     /**
-     * 指定された[handler]を[HTEnergyHandler]に展開します。
+     * 指定された[handler]を[HTEnergyStorage]に展開します。
      */
-    fun unwrap(handler: EnergyHandler): HTEnergyHandler = when (handler) {
-        is HTEnergyHandler -> handler
+    fun unwrap(handler: EnergyHandler): HTEnergyStorage = when (handler) {
+        is HTEnergyHandler -> handler.storage
 
-        else -> object : DelegatingEnergyHandler(handler), HTEnergyHandler {
-            override fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = this.insert(amount, transaction)
+        else -> object : HTEnergyStorage {
+            override fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = handler.insert(amount, transaction)
 
-            override fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = this.extract(amount, transaction)
+            override fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = handler.extract(amount, transaction)
 
-            override fun insert(amount: Int, transaction: TransactionContext): Int = super<DelegatingEnergyHandler>.insert(amount, transaction)
-
-            override fun extract(amount: Int, transaction: TransactionContext): Int = super<DelegatingEnergyHandler>.extract(amount, transaction)
+            override val amount: Int get() = handler.amountAsInt
+            override val capacity: Int get() = handler.capacityAsInt
 
             override fun serialize(output: ValueOutput): Unit = Unit
 
@@ -52,30 +51,30 @@ data object HTEnergyCapabilities : HTMultiCapability<EnergyHandler> {
     //    Block    //
 
     /**
-     * 指定した引数から[HTEnergyHandler]を返します。
-     * @return [HTEnergyHandler]が見つからない場合は`null`
+     * 指定した引数から[HTEnergyStorage]を返します。
+     * @return [HTEnergyStorage]が見つからない場合は`null`
      */
-    fun getHandler(level: Level, pos: BlockPos, side: Direction?): HTEnergyHandler? = getCapability(level, pos, side)?.let(::unwrap)
+    fun getStorage(level: Level, pos: BlockPos, side: Direction?): HTEnergyStorage? = getCapability(level, pos, side)?.let(::unwrap)
 
     //    Entity    //
 
     /**
-     * 指定した引数から[HTEnergyHandler]を返します。
-     * @return [HTEnergyHandler]が見つからない場合は`null`
+     * 指定した引数から[HTEnergyStorage]を返します。
+     * @return [HTEnergyStorage]が見つからない場合は`null`
      */
-    fun getHandler(entity: Entity, side: Direction?): HTEnergyHandler? = getCapability(entity, side)?.let(::unwrap)
+    fun getStorage(entity: Entity, side: Direction?): HTEnergyStorage? = getCapability(entity, side)?.let(::unwrap)
 
     //    Item    //
 
     /**
-     * 指定した引数から[HTEnergyHandler]を返します。
-     * @return [HTEnergyHandler]が見つからない場合は`null`
+     * 指定した引数から[HTEnergyStorage]を返します。
+     * @return [HTEnergyStorage]が見つからない場合は`null`
      */
-    fun getHandler(access: ItemAccess): HTEnergyHandler? = getCapability(access)?.let(::unwrap)
+    fun getStorage(access: ItemAccess): HTEnergyStorage? = getCapability(access)?.let(::unwrap)
 
     /**
-     * 指定した引数から[HTEnergyHandler]を返します。
-     * @return [HTEnergyHandler]が見つからない場合は`null`
+     * 指定した引数から[HTEnergyStorage]を返します。
+     * @return [HTEnergyStorage]が見つからない場合は`null`
      */
-    fun getHandler(stack: ItemStack): HTEnergyHandler? = getCapability(stack)?.let(::unwrap)
+    fun getStorage(stack: ItemStack): HTEnergyStorage? = getCapability(stack)?.let(::unwrap)
 }

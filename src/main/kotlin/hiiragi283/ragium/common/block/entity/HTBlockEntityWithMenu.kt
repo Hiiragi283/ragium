@@ -5,7 +5,7 @@ import hiiragi283.lib.gui.sync.HTIntSyncSlot
 import hiiragi283.lib.gui.sync.HTItemSyncSlot
 import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
+import hiiragi283.lib.transfer.energy.HTBasicEnergyStorage
 import hiiragi283.lib.transfer.fluid.HTFluidStackTank
 import hiiragi283.lib.transfer.item.HTItemStackSlot
 
@@ -20,7 +20,7 @@ fun interface HTBlockEntityWithMenu {
         this.track(HTItemSyncSlot(slot), syncType)
     }
 
-    fun HTWidgetHolder.track(handler: HTBasicEnergyHandler, syncType: HTSyncType = HTSyncType.S2C) {
-        this.track(HTIntSyncSlot.create(handler::getAmountAsInt, handler::setAmount), syncType)
+    fun HTWidgetHolder.track(handler: HTBasicEnergyStorage, syncType: HTSyncType = HTSyncType.S2C) {
+        this.track(HTIntSyncSlot.create(handler::amount, handler::setAmount), syncType)
     }
 }

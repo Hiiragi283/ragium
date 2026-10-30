@@ -5,7 +5,7 @@ import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTTransferAccess
-import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
+import hiiragi283.lib.transfer.energy.HTBasicEnergyStorage
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
@@ -34,14 +34,14 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTBaseMachineBlockEntity(type, pos, state) {
     // Energy
-    protected lateinit var handler: HTBasicEnergyHandler
+    protected lateinit var handler: HTBasicEnergyStorage
         private set
 
-    final override fun createEnergyHandler(listener: Runnable): HTEnergyHandlerHolder? {
+    final override fun createEnergyStorage(listener: Runnable): HTEnergyHandlerHolder? {
         val builder: HTBasicEnergyHandlerHolder.Builder = HTBasicEnergyHandlerHolder.builder(this)
         handler = builder.addHandler(
             HTSlotInfo.OUTPUT,
-            HTBasicEnergyHandler.output(
+            HTBasicEnergyStorage.output(
                 HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
                 listener,
             ),
@@ -65,7 +65,7 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
     protected fun exportEnergy(level: ServerLevel, pos: BlockPos) {
         for (direction: Direction in Direction.entries) {
             EnergyHandlerUtil.move(
-                handler,
+                getEnergyHandler(null),
                 HTEnergyCapabilities.getCapability(level, pos.relative(direction), direction.opposite),
                 Int.MAX_VALUE,
                 null,

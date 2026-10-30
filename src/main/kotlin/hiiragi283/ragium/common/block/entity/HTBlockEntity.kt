@@ -7,7 +7,7 @@ import hiiragi283.lib.item.HTItemDropHelper
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.HTHandlerProvider
-import hiiragi283.lib.transfer.energy.HTEnergyHandler
+import hiiragi283.lib.transfer.energy.HTEnergyStorage
 import hiiragi283.lib.transfer.fluid.FluidResourceHandler
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.item.ItemResource
 import java.util.UUID
@@ -153,7 +154,7 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
 
     init {
         initializeVariables(::setOnlySave)
-        energyHandlerManager = createEnergyHandler(::setOnlySave)?.let(::HTEnergyCapabilityManager)
+        energyHandlerManager = createEnergyStorage(::setOnlySave)?.let(::HTEnergyCapabilityManager)
         fluidHandlerManager = createFluidHandler(::setOnlySave)?.let(::HTResourceCapabilityManager)
         itemHandlerManager = createItemHandler(::setOnlySave)?.let(::HTResourceCapabilityManager)
     }
@@ -164,11 +165,13 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
     protected open fun initializeVariables(listener: Runnable) {}
 
     // Energy
-    fun hasEnergyHandler(): Boolean = energyHandlerManager != null
+    fun hasEnergyStorage(): Boolean = energyHandlerManager != null
 
-    protected open fun createEnergyHandler(listener: Runnable): HTEnergyHandlerHolder? = null
+    protected open fun createEnergyStorage(listener: Runnable): HTEnergyHandlerHolder? = null
 
-    fun getEnergyHandler(side: Direction?): HTEnergyHandler? = energyHandlerManager?.getHandler(side)
+    fun getEnergyStorage(side: Direction?): HTEnergyStorage? = energyHandlerManager?.getStorage(side)
+
+    fun getEnergyHandler(side: Direction?): EnergyHandler? = energyHandlerManager?.resolve(side)
 
     // Fluid
     fun hasFluidHandler(): Boolean = fluidHandlerManager != null

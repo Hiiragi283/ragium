@@ -11,20 +11,20 @@ import net.neoforged.neoforge.transfer.transaction.SnapshotJournal
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 import java.util.function.Predicate
 
-open class HTBasicEnergyHandler(
-    private val capacity: Int,
+open class HTBasicEnergyStorage(
+    override val capacity: Int,
     protected val canExtract: Predicate<HTTransferAccess>,
     protected val canInsert: Predicate<HTTransferAccess>,
     private val listener: Runnable?,
 ) : SnapshotJournal<Int>(),
-    HTEnergyHandler {
+    HTEnergyStorage {
     companion object {
         @JvmStatic
-        fun input(capacity: Int, listener: Runnable?): HTBasicEnergyHandler =
+        fun input(capacity: Int, listener: Runnable?): HTBasicEnergyStorage =
             create(capacity, listener, HTTransferAccess.NOT_EXTERNAL, HTTransferPredicates.alwaysTrue())
 
         @JvmStatic
-        fun output(capacity: Int, listener: Runnable?): HTBasicEnergyHandler =
+        fun output(capacity: Int, listener: Runnable?): HTBasicEnergyStorage =
             create(capacity, listener, HTTransferPredicates.alwaysTrue(), HTTransferAccess.INTERNAL_ONLY)
 
         @JvmStatic
@@ -33,20 +33,12 @@ open class HTBasicEnergyHandler(
             listener: Runnable?,
             canExtract: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue(),
             canInsert: Predicate<HTTransferAccess> = HTTransferPredicates.alwaysTrue(),
-        ): HTBasicEnergyHandler = HTBasicEnergyHandler(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, listener)
+        ): HTBasicEnergyStorage = HTBasicEnergyStorage(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, listener)
     }
 
     private var amountIn: Int = 0
 
-    override fun getAmountAsLong(): Long = amountAsInt.toLong()
-
-    @Suppress("NonExtendableApiUsage")
-    override fun getAmountAsInt(): Int = amountIn
-
-    override fun getCapacityAsLong(): Long = capacityAsInt.toLong()
-
-    @Suppress("NonExtendableApiUsage")
-    override fun getCapacityAsInt(): Int = capacity
+    override val amount: Int get() = this.amountIn
 
     fun setAmount(amount: Int) {
         setAmountUnchecked(amount, true)
@@ -71,7 +63,7 @@ open class HTBasicEnergyHandler(
     override fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
         TransferPreconditions.checkNonNegative(amount)
         if (!this.canInsert.test(access)) return 0
-        val inserted: Int = minOf(neededAsInt, amount)
+        val inserted: Int = minOf(needed, amount)
         if (inserted > 0) {
             this.updateSnapshots(transaction)
             amountIn += inserted

@@ -24,7 +24,7 @@ class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) :
 
     override fun shouldRender(): Boolean = !widget.isEmpty
 
-    override fun getFilledLevel(): Float = widget.filledLevelAsFloat
+    override fun getFilledLevel(): Float = widget.filledLevel
 
     override fun getSpriteId(): Identifier = SPRITE
 

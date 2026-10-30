@@ -7,7 +7,7 @@ import hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.transfer.HTTransferAccess
-import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
+import hiiragi283.lib.transfer.energy.HTBasicEnergyStorage
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
@@ -88,14 +88,14 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
     //    Energized    //
 
     abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
-        protected lateinit var handler: HTBasicEnergyHandler
+        protected lateinit var handler: HTBasicEnergyStorage
             private set
 
-        override fun createEnergyHandler(listener: Runnable): HTEnergyHandlerHolder? {
+        override fun createEnergyStorage(listener: Runnable): HTEnergyHandlerHolder? {
             val builder: HTBasicEnergyHandlerHolder.Builder = HTBasicEnergyHandlerHolder.builder(this)
             handler = builder.addHandler(
                 HTSlotInfo.INPUT,
-                HTBasicEnergyHandler.input(
+                HTBasicEnergyStorage.input(
                     HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
                     listener,
                 ),
