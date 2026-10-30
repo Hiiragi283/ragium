@@ -4,11 +4,12 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTSnapshotStackResourceSlot
-import hiiragi283.lib.transfer.HTTransferPredicates
+import hiiragi283.lib.transfer.HTStackResourceHelper
+import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.item.HTItemSlot
-import hiiragi283.lib.transfer.item.HTItemStackResourceSlot
+import hiiragi283.lib.transfer.item.HTItemStackSlot
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.api.machine.HTMachineUpgradeList
@@ -76,14 +77,8 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
     //    UpgradeItemSlot    //
 
     inner class UpgradeItemSlot(val slotIndex: Int) :
-        HTSnapshotStackResourceSlot.Basic<ItemStack, ItemResource>(
-            1,
-            HTTransferPredicates.notExternal(),
-            HTTransferPredicates.notExternal(),
-            { !this@HTUpgradeStationBlockEntity.toolSlot.isEmpty && it.has(RagiumDataComponents.UPGRADE) },
-            this@HTUpgradeStationBlockEntity::setOnlySave,
-        ),
-        HTItemStackResourceSlot {
+        HTSnapshotStackResourceSlot<ItemStack, ItemResource>(),
+        HTItemStackSlot {
         private fun getUpgrades(): HTMachineUpgradeList = this@HTUpgradeStationBlockEntity
             .toolSlot
             .resource
@@ -102,6 +97,22 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
             HTMachineUpgradeHelper.setUpgrades(toolStack, mutable)
             this@HTUpgradeStationBlockEntity.toolSlot.setStack(toolStack)
         }
+
+        override fun getHelper(): HTStackResourceHelper.Item = HTStackResourceHelper.Item
+
+        override fun isValidForInsert(resource: ItemResource, access: HTTransferAccess): Boolean =
+            isValid(resource) && access != HTTransferAccess.EXTERNAL
+
+        override fun canResourceExtract(resource: ItemResource, access: HTTransferAccess): Boolean = access != HTTransferAccess.EXTERNAL
+
+        override fun onRootCommit(originalState: ItemStack) {
+            this@HTUpgradeStationBlockEntity.setOnlySave()
+        }
+
+        override fun isValid(resource: ItemResource): Boolean =
+            !this@HTUpgradeStationBlockEntity.toolSlot.isEmpty && resource.has(RagiumDataComponents.UPGRADE)
+
+        override fun getCapacity(resource: ItemResource): Int = 1
 
         override fun serialize(output: ValueOutput): Unit = Unit
 

@@ -2,6 +2,7 @@ package hiiragi283.lib.transfer.item
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.transfer.HTSnapshotStackResourceSlot
+import hiiragi283.lib.transfer.HTStackResourceHelper
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
@@ -28,7 +29,7 @@ open class HTBasicItemSlot(
     filter: Predicate<ItemResource>,
     listener: Runnable?,
 ) : HTSnapshotStackResourceSlot.Basic<ItemStack, ItemResource>(capacity, canExtract, canInsert, filter, listener),
-    HTItemStackResourceSlot {
+    HTItemStackSlot {
     companion object {
         @JvmStatic
         fun create(
@@ -77,7 +78,7 @@ open class HTBasicItemSlot(
     }
 
     private fun setStackUnchecked(other: ItemStack, validate: Boolean) {
-        val resource: ItemResource = getResourceFrom(other)
+        val resource: ItemResource = getHelper().getResourceFrom(other)
         if (resource.isEmpty) {
             if (this.stackIn.isEmpty) return
             this.stackIn = ItemStack.EMPTY
@@ -88,6 +89,8 @@ open class HTBasicItemSlot(
         }
         onRootCommit(getStackCopy())
     }
+
+    override fun getHelper(): HTStackResourceHelper.Item = HTStackResourceHelper.Item
 
     override fun getCapacity(resource: ItemResource): Int = when (resource.isEmpty) {
         true -> capacity

@@ -8,7 +8,7 @@ import java.util.function.BiPredicate
 import java.util.function.Predicate
 
 /**
- * スタックをスナップショットとして保存する[HTStackResourceSlot]の抽象クラスです。
+ * スタックをスナップショットとして保存する[HTStackSlot]の抽象クラスです。
  * @param S リソースと量を束ねたクラス
  * @param T 保持するリソースのクラス
  * @author Hiiragi Tsubasa
@@ -16,7 +16,9 @@ import java.util.function.Predicate
  */
 abstract class HTSnapshotStackResourceSlot<S : Any, T : Resource> :
     SnapshotJournal<S>(),
-    HTStackResourceSlot<S, T> {
+    HTStackSlot<S, T> {
+    protected abstract fun getHelper(): HTStackResourceHelper<S, T>
+
     /**
      * 保持しているスタックを置き換えます。
      */
@@ -39,13 +41,13 @@ abstract class HTSnapshotStackResourceSlot<S : Any, T : Resource> :
     override fun insert(resource: T, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount)
         val amountIn: Int = this.amount
-        if (amountIn == 0 || isSame(getStackCopy(), resource)) {
+        if (amountIn == 0 || getHelper().isSame(getStackCopy(), resource)) {
             if (isValidForInsert(resource, access)) {
                 val needed: Int = minOf(inputRate(access), getNeeded(resource))
                 val inserted: Int = minOf(amount, needed)
                 if (inserted > 0) {
                     this.updateSnapshots(transaction)
-                    setStackInternal(createStack(resource, amountIn + inserted))
+                    setStackInternal(getHelper().createStack(resource, amountIn + inserted))
                     return inserted
                 }
             }
@@ -55,22 +57,22 @@ abstract class HTSnapshotStackResourceSlot<S : Any, T : Resource> :
 
     override fun extract(resource: T, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount)
-        if (isSame(getStackCopy(), resource) && canResourceExtract(resource, access)) {
+        if (getHelper().isSame(getStackCopy(), resource) && canResourceExtract(resource, access)) {
             val amountIn: Int = this.amount
             val stored: Int = minOf(outputRate(access), amountIn)
             val extracted: Int = minOf(amount, stored)
             if (extracted > 0) {
                 this.updateSnapshots(transaction)
-                setStackInternal(createStack(resource, amountIn - extracted))
+                setStackInternal(getHelper().createStack(resource, amountIn - extracted))
                 return extracted
             }
         }
         return 0
     }
 
-    final override val resource: T get() = getStackCopy().let(::getResourceFrom)
+    final override val resource: T get() = getStackCopy().let(getHelper()::getResourceFrom)
 
-    final override val amount: Int get() = getStackCopy().let(::getAmountFrom)
+    final override val amount: Int get() = getStackCopy().let(getHelper()::getAmountFrom)
 
     //    SnapshotJournal    //
 

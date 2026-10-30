@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.gui.slot
 
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.item.HTItemSlot
-import hiiragi283.lib.transfer.item.HTItemStackResourceSlot
+import hiiragi283.lib.transfer.item.HTItemStackSlot
 import hiiragi283.lib.transfer.item.getItemStack
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.Slot
@@ -25,7 +25,7 @@ open class HTItemContainerSlot(val slot: HTItemSlot, x: Int, y: Int, private val
     HTTransactionSlot {
     companion object {
         @JvmStatic
-        fun create(slot: HTItemStackResourceSlot, x: Int, y: Int): HTItemContainerSlot = HTItemContainerSlot(slot, x, y, slot::setStack)
+        fun create(slot: HTItemStackSlot, x: Int, y: Int): HTItemContainerSlot = HTItemContainerSlot(slot, x, y, slot::setStack)
     }
 
     override fun insert(resource: ItemResource, amount: Int, transaction: TransactionContext): Int =

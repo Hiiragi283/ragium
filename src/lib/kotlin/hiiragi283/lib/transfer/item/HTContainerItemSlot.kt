@@ -1,6 +1,7 @@
 package hiiragi283.lib.transfer.item
 
 import hiiragi283.lib.transfer.HTSnapshotStackResourceSlot
+import hiiragi283.lib.transfer.HTStackResourceHelper
 import net.minecraft.world.Container
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.storage.ValueInput
@@ -15,7 +16,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource
  */
 class HTContainerItemSlot(val container: Container, val index: Int) :
     HTSnapshotStackResourceSlot<ItemStack, ItemResource>(),
-    HTItemStackResourceSlot {
+    HTItemStackSlot {
     init {
         val maxSlot: Int = container.containerSize - 1
         require(index in (0..maxSlot)) { "Index: $index is out of max container slot index: $maxSlot" }
@@ -30,6 +31,8 @@ class HTContainerItemSlot(val container: Container, val index: Int) :
     override fun setStackInternal(stack: ItemStack) {
         container.setItem(index, stack)
     }
+
+    override fun getHelper(): HTStackResourceHelper.Item = HTStackResourceHelper.Item
 
     override fun onRootCommit(originalState: ItemStack) {
         container.setChanged()

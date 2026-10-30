@@ -2,6 +2,7 @@ package hiiragi283.lib.transfer.fluid
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.transfer.HTSnapshotStackResourceSlot
+import hiiragi283.lib.transfer.HTStackResourceHelper
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
@@ -26,7 +27,7 @@ open class HTBasicFluidTank(
     filter: Predicate<FluidResource>,
     listener: Runnable?,
 ) : HTSnapshotStackResourceSlot.Basic<FluidStack, FluidResource>(capacity, canExtract, canInsert, filter, listener),
-    HTFluidStackResourceSlot {
+    HTFluidStackTank {
     companion object {
         @JvmStatic
         fun create(
@@ -68,7 +69,7 @@ open class HTBasicFluidTank(
     }
 
     private fun setStackUnchecked(other: FluidStack, validate: Boolean) {
-        val resource: FluidResource = getResourceFrom(other)
+        val resource: FluidResource = getHelper().getResourceFrom(other)
         if (resource.isEmpty) {
             if (this.stackIn.isEmpty) return
             this.stackIn = FluidStack.EMPTY
@@ -79,6 +80,8 @@ open class HTBasicFluidTank(
         }
         onRootCommit(getStackCopy())
     }
+
+    override fun getHelper(): HTStackResourceHelper.Fluid = HTStackResourceHelper.Fluid
 
     //    ValueIOSerializable    //
 
