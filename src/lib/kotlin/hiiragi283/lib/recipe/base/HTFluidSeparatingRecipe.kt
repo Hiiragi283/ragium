@@ -30,7 +30,7 @@ open class HTFluidSeparatingRecipe(val ingredient: HTFluidIngredient, val result
                 instance.group(
                     HTFluidIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(HTFluidSeparatingRecipe::ingredient),
                     Result.CODEC.fieldOf(HTConstants.RESULT).forGetter(HTFluidSeparatingRecipe::result),
-                    HTProgressData.CODEC.forGetter(HTFluidSeparatingRecipe::progressData),
+                    HTProgressRecipe.Holder.progressCodec(),
                 ).apply(instance, factory::create)
             }
 

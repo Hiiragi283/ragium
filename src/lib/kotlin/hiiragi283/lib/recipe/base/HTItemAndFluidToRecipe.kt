@@ -38,7 +38,7 @@ typealias HTItemAndFluidToItemRecipe = HTItemAndFluidToRecipe<ItemStack>
  * @author Hiiragi Tsubasa
  * @since 26.1.9
  */
-typealias HTItemOrFluidRecipe = HTItemAndFluidToRecipe<HTItemAndFluidStack>
+typealias HTItemAndFluidRecipe = HTItemAndFluidToRecipe<HTItemAndFluidStack>
 
 /**
  * 1種類のアイテムと液体から1種類の完成品を作成するレシピを表すインターフェースです。
@@ -72,7 +72,7 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
                         HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID),
                     ).fieldOf(HTConstants.INGREDIENT).forGetter { it.itemIngredient to it.fluidIngredient },
                     resultCodec.fieldOf(HTConstants.RESULT).forGetter(Basic<OUTPUT, RESULT>::result),
-                    HTProgressData.CODEC.forGetter(Basic<OUTPUT, RESULT>::progressData),
+                    HTProgressRecipe.Holder.progressCodec(),
                 ).apply(instance, factory::create)
             }
 

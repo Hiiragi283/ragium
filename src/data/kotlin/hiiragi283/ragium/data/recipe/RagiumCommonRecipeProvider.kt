@@ -466,8 +466,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +fluid }
         }.save(exporter)
         // Salt (aq) -> Salt + Water
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(fluid) }
+        RagiumRecipeBuilders.drying {
+            fluidIngredient { +holderSet(fluid) }
             fluidResult { water() }
             itemResult { +item }
             recipeId replace item.id.withSuffix("_from_solution")
@@ -483,8 +483,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // Salt (aq) -> Salt + Water
         val item: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, material)
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(fluid) }
+        RagiumRecipeBuilders.drying {
+            fluidIngredient { +holderSet(fluid) }
             fluidResult { water() }
             itemResult { +item }
             recipeId replace item.id.withSuffix("_from_solution")

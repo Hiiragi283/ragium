@@ -61,6 +61,9 @@ data object RagiumRecipeTypes {
     val ALLOYING: RecipeType<RTAlloyingRecipe> = create(RagiumConstants.ALLOYING)
 
     @JvmField
+    val DRYING: RecipeType<RTDryingRecipe> = create(RagiumConstants.DRYING)
+
+    @JvmField
     val FREEZING: RecipeType<RTFreezingRecipe> = create(RagiumConstants.FREEZING)
 
     @JvmField
@@ -75,9 +78,6 @@ data object RagiumRecipeTypes {
     // Chemical
     @JvmField
     val BATHING: RecipeType<RTBathingRecipe> = create(RagiumConstants.BATHING)
-
-    @JvmField
-    val EXCHANGING: RecipeType<RTExchangingRecipe> = create(RagiumConstants.EXCHANGING)
 
     @JvmField
     val MIXING: RecipeType<RTMixingRecipe> = create(RagiumConstants.MIXING)

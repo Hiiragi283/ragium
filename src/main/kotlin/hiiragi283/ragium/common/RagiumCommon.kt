@@ -82,12 +82,12 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.PRESSING.fromRecipeType(RagiumRecipeTypes.PRESSING, identity())
 
         RagiumRecipeLookups.ALLOYING.fromRecipeType(RagiumRecipeTypes.ALLOYING, identity())
+        RagiumRecipeLookups.DRYING.fromRecipeType(RagiumRecipeTypes.DRYING, identity())
         RagiumRecipeLookups.MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())
         RagiumRecipeLookups.PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING, identity())
         RagiumRecipeLookups.REFINING.fromRecipeType(RagiumRecipeTypes.REFINING, identity())
 
         RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
-        RagiumRecipeLookups.EXCHANGING.fromRecipeType(RagiumRecipeTypes.EXCHANGING, identity())
         RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING, identity())
 
         RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())

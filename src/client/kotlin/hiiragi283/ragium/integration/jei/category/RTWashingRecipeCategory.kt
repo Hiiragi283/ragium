@@ -1,13 +1,13 @@
 package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
+import hiiragi283.lib.integration.jei.addOptional
 import hiiragi283.lib.integration.jei.category.HTViewerRecipeCategory
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.recipe.viewer.RTWashingViewerRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
-import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
@@ -36,11 +36,10 @@ class RTWashingRecipeCategory(guiHelper: IGuiHelper) :
             .addOutputSlot(getPosition(5), getPosition(0))
             .add(recipe.results.first())
             .setSlotBackground(HTBackgroundType.OUTPUT)
-
-        val slot: IRecipeSlotBuilder = builder
+        builder
             .addOutputSlot(getPosition(7), getPosition(0))
+            .addOptional(recipe.results.getOrNull(1))
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
-        recipe.results.getOrNull(1)?.let(slot::add)
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTWashingViewerRecipe, focuses: IFocusGroup) {

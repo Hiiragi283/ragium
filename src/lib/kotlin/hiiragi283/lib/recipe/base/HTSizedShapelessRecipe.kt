@@ -39,7 +39,7 @@ interface HTSizedShapelessRecipe :
                             .compactNelFieldOf(HTConstants.INGREDIENT, HTConstants.INGREDIENTS)
                             .forGetter(Basic::ingredients),
                         HTItemResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
-                        HTProgressData.CODEC.forGetter(Basic::progressData),
+                        HTProgressRecipe.Holder.progressCodec(),
                     ).apply(instance, factory)
                 }
 

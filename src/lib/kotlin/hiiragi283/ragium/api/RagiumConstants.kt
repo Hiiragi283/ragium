@@ -87,7 +87,6 @@ data object RagiumConstants {
 
     // Chemical
     const val BATHING = "bathing"
-    const val EXCHANGING = "exchanging"
     const val MIXING = "mixing"
     const val REACTING = "reacting"
     const val WASHING = "washing"

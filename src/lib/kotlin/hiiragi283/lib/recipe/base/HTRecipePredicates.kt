@@ -2,9 +2,11 @@ package hiiragi283.lib.recipe.base
 
 import hiiragi283.lib.recipe.HTRecipePredicate
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTItemOrFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.lib.recipe.input.asList
 import hiiragi283.lib.recipe.input.getItemOrEmpty
+import hiiragi283.lib.util.Either
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -52,6 +54,13 @@ data object HTRecipePredicates {
      */
     fun interface MultiItem : SingleInput<RecipeInput, List<ItemInstance>> {
         override fun matches(input: RecipeInput): Boolean = test(input.asList())
+    }
+
+    /**
+     * @since 26.1.13
+     */
+    fun interface ItemOrFluid : SingleInput<HTItemOrFluidRecipeInput, Either<ItemInstance, FluidInstance>> {
+        override fun matches(input: HTItemOrFluidRecipeInput): Boolean = test(input.content)
     }
 
     //    Double Input    //

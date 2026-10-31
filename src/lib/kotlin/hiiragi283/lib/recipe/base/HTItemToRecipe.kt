@@ -147,7 +147,7 @@ interface HTItemToRecipe<OUTPUT : Any> :
                         HTItemResult.CODEC
                             .compactNelFieldOf(HTConstants.RESULT, HTConstants.RESULTS, 4)
                             .forGetter(BasicMultiItem::results),
-                        HTProgressData.CODEC.forGetter(BasicMultiItem::progressData),
+                        HTProgressRecipe.Holder.progressCodec(),
                     ).apply(instance, factory::create)
                 }
 

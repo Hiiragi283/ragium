@@ -33,7 +33,7 @@ data class RTEnchantingRecipe(val ingredient: HTItemIngredient, val result: HTIt
             instance.group(
                 HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(RTEnchantingRecipe::ingredient),
                 HTItemResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(RTEnchantingRecipe::result),
-                HTProgressData.CODEC.forGetter(RTEnchantingRecipe::progressData),
+                HTProgressRecipe.Holder.progressCodec(),
             ).apply(instance, ::RTEnchantingRecipe)
         }
 

@@ -1,8 +1,8 @@
 {
-  "type": "ragium:refining",
+  "type": "ragium:drying",
   "ingredient": {
     "amount": 1000,
-    "fluids": "#c:alkali_sulfate_solution"
+    "fluids": "#c:alkali_hydroxide_solution"
   },
   "result": {
     "fluid": {
@@ -11,7 +11,7 @@
     },
     "item": {
       "count": 1,
-      "id": "ragium:alkali_sulfate"
+      "id": "ragium:alkali_hydroxide"
     }
   },
   "time": 200

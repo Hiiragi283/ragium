@@ -78,7 +78,7 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
                 instance.group(
                     HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
                     Result.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
-                    HTProgressData.CODEC.forGetter(Basic::progressData),
+                    HTProgressRecipe.Holder.progressCodec(),
                 ).apply(instance, factory::create)
             }
 

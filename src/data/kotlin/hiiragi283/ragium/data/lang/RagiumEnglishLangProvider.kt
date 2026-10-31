@@ -219,13 +219,13 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.PRESSING, "Pressing")
 
         addRecipeType(RagiumRecipeTypes.ALLOYING, "Alloying")
+        addRecipeType(RagiumRecipeTypes.DRYING, "Drying")
         addRecipeType(RagiumRecipeTypes.FREEZING, "Freezing")
         addRecipeType(RagiumRecipeTypes.MELTING, "Melting")
         addRecipeType(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
         addRecipeType(RagiumRecipeTypes.REFINING, "Refining")
 
         addRecipeType(RagiumRecipeTypes.BATHING, "Chemical Bathing")
-        addRecipeType(RagiumRecipeTypes.EXCHANGING, "Exchanging")
         addRecipeType(RagiumRecipeTypes.MIXING, "Mixing")
         addRecipeType(RagiumRecipeTypes.REACTING, "Chemical Reacting")
         addRecipeType(RagiumRecipeTypes.WASHING, "Washing")

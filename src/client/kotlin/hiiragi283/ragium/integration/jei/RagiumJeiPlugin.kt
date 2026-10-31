@@ -7,6 +7,7 @@ import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.category.HTCatalysedSingleToSingleViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTDoubleToSingleViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTFluidSeparatingRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTItemOrFluidViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTItemSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToMultiViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToSingleViewerRecipeCategory
@@ -150,6 +151,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             ),
             // Heat
             RTAlloyingRecipeCategory(guiHelper),
+            HTItemOrFluidViewerRecipeCategory(
+                RagiumJeiRecipeTypes.DRYING,
+                RagiumRecipeTypes.DRYING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING),
+            ),
             HTCatalysedSingleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.FREEZING,
                 RagiumRecipeTypes.FREEZING,
@@ -225,6 +231,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.PRESSING, RagiumRecipeLookups.PRESSING, HTViewerRecipeHelper::catalysedSingleToSingle)
         // Heat
         registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING, RagiumRecipeLookups.ALLOYING, HTViewerRecipeHelper::sizedShapeless)
+        registration.addRecipes(RagiumJeiRecipeTypes.DRYING, RagiumRecipeLookups.DRYING, HTViewerRecipeHelper::itemOrFluid)
         registration.addRecipes(RagiumJeiRecipeTypes.FREEZING, RagiumRecipeLookups.FREEZING, HTViewerRecipeHelper::catalysedSingleToSingle)
         registration.addRecipes(RagiumJeiRecipeTypes.MELTING, RagiumRecipeLookups.MELTING, HTViewerRecipeHelper::singleToSingle)
         registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING, HTViewerRecipeHelper::itemSeparating)

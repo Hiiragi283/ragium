@@ -26,7 +26,7 @@ open class HTBasicSingleRecipe<out ING : Any, out RES : Any>(val ingredient: ING
             instance.group(
                 ingredient.fieldOf(HTConstants.INGREDIENT).forGetter { it.ingredient },
                 result.fieldOf(HTConstants.RESULT).forGetter { it.result },
-                HTProgressData.CODEC.forGetter { it.progressData },
+                HTProgressRecipe.Holder.progressCodec(),
             ).apply(instance, factory::create)
         }
 

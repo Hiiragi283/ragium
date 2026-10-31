@@ -45,7 +45,7 @@ data class RTMixingRecipe(
                     HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID),
                 ).fieldOf(HTConstants.INGREDIENTS).forGetter { it.itemIngredients to it.fluidIngredient },
                 HTItemOrFluidResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(RTMixingRecipe::result),
-                HTProgressData.CODEC.forGetter(RTMixingRecipe::progressData),
+                HTProgressRecipe.Holder.progressCodec(),
             ).apply(instance, ::RTMixingRecipe)
         }
 

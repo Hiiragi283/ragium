@@ -45,7 +45,7 @@ interface HTLocationToRecipe<OUTPUT : Any> :
                     instance.group(
                         HTBiomeCondition.CODEC.fieldOf("condition").forGetter(BasicFluid::condition),
                         HTFluidResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(BasicFluid::result),
-                        HTProgressData.CODEC.forGetter(BasicFluid::progressData),
+                        HTProgressRecipe.Holder.progressCodec(),
                     ).apply(instance, factory::create)
                 }
 

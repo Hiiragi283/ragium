@@ -24,10 +24,10 @@ import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
+import hiiragi283.ragium.api.recipe.RTDryingRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTEngravingRecipe
-import hiiragi283.ragium.api.recipe.RTExchangingRecipe
 import hiiragi283.ragium.api.recipe.RTFillingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
@@ -123,6 +123,14 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
+    inline fun drying(builderAction: HTItemOrFluidRecipeBuilder<RTDryingRecipe>.() -> Unit): HTItemOrFluidRecipeBuilder<RTDryingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemOrFluidRecipeBuilder(RagiumConstants.DRYING, ::RTDryingRecipe).apply(builderAction)
+    }
+
+    @JvmStatic
     inline fun freezing(
         builderAction: HTSingleRecipeBuilder.Catalysed<HTFluidIngredient, HTItemResult, RTFreezingRecipe>.() -> Unit,
     ): HTSingleRecipeBuilder.Catalysed<HTFluidIngredient, HTItemResult, RTFreezingRecipe> {
@@ -169,14 +177,6 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTItemAndFluidToRecipeBuilder.ToItem(RagiumConstants.BATHING, ::RTBathingRecipe).apply(builderAction)
-    }
-
-    @JvmStatic
-    inline fun exchanging(builderAction: HTItemOrFluidRecipeBuilder<RTExchangingRecipe>.() -> Unit): HTItemOrFluidRecipeBuilder<RTExchangingRecipe> {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTItemOrFluidRecipeBuilder(RagiumConstants.EXCHANGING, ::RTExchangingRecipe).apply(builderAction)
     }
 
     @JvmStatic

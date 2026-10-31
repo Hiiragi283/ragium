@@ -215,13 +215,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.PRESSING, "プレス加工")
 
         addRecipeType(RagiumRecipeTypes.ALLOYING, "合金")
+        addRecipeType(RagiumRecipeTypes.DRYING, "乾燥")
         addRecipeType(RagiumRecipeTypes.FREEZING, "冷凍")
         addRecipeType(RagiumRecipeTypes.MELTING, "溶融")
         addRecipeType(RagiumRecipeTypes.PYROLYZING, "熱分解")
         addRecipeType(RagiumRecipeTypes.REFINING, "蒸留")
 
         addRecipeType(RagiumRecipeTypes.BATHING, "化学洗浄")
-        addRecipeType(RagiumRecipeTypes.EXCHANGING, "交換")
         addRecipeType(RagiumRecipeTypes.MIXING, "混合")
         addRecipeType(RagiumRecipeTypes.REACTING, "化学反応")
         addRecipeType(RagiumRecipeTypes.WASHING, "洗浄")

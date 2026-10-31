@@ -43,7 +43,7 @@ data class RTWashingRecipe(
                 HTItemResult.CODEC
                     .compactNelFieldOf(HTConstants.RESULT, HTConstants.RESULTS, 2)
                     .forGetter(RTWashingRecipe::results),
-                HTProgressData.CODEC.forGetter(RTWashingRecipe::progressData),
+                HTProgressRecipe.Holder.progressCodec(),
             ).apply(instance, ::RTWashingRecipe)
         }
 

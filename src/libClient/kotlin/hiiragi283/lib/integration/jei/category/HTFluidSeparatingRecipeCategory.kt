@@ -1,9 +1,9 @@
 package hiiragi283.lib.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
+import hiiragi283.lib.integration.jei.addOptional
 import hiiragi283.lib.recipe.viewer.HTFluidSeparatingViewerRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
-import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.recipe.IFocusGroup
@@ -28,17 +28,17 @@ class HTFluidSeparatingRecipeCategory(recipeType: IRecipeType<HTFluidSeparatingV
         // outputs
         builder
             .addOutputSlot(getPosition(3), getPosition(0))
-            .add(recipe.itemResult)
+            .addOptional(recipe.itemResult)
             .setSlotBackground(HTBackgroundType.OUTPUT)
 
         builder
             .addOutputSlot(getPosition(5), getPosition(0))
             .add(recipe.fluidResults.first())
             .setSlotBackground(HTBackgroundType.OUTPUT)
-        val fluidOutput: IRecipeSlotBuilder = builder
+        builder
             .addOutputSlot(getPosition(6), getPosition(0))
+            .addOptional(recipe.fluidResults.getOrNull(1))
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
-        recipe.fluidResults.getOrNull(1)?.let(fluidOutput::add)
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTFluidSeparatingViewerRecipe, focuses: IFocusGroup) {

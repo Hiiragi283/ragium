@@ -27,6 +27,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
         alloying()
+        drying()
         freezing()
         melting()
     }
@@ -118,6 +119,41 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 count = 2
             }
             result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
+        }.save(exporter)
+    }
+
+    private fun drying() {
+        // Wet Sponge -> Sponge + Water
+        RagiumRecipeBuilders.drying {
+            itemIngredient { items { +Items.WET_SPONGE } }
+            itemResult { +Items.SPONGE }
+            fluidResult { water() }
+        }.save(exporter)
+        // Mud -> Dirt + Water
+        RagiumRecipeBuilders.drying {
+            itemIngredient { items { +Items.MUD } }
+            itemResult { +Items.DIRT }
+            fluidResult {
+                water()
+                amount /= 4
+            }
+            time /= 4
+            recipeId suffix "_from_mud"
+        }.save(exporter)
+        // Kelp -> Dried Kelp + Water
+        RagiumRecipeBuilders.drying {
+            itemIngredient { items { +Items.KELP } }
+            itemResult { +Items.DRIED_KELP }
+            fluidResult {
+                water()
+                amount /= 8
+            }
+            time /= 4
+        }.save(exporter)
+        // Rotten Flesh -> Leather
+        RagiumRecipeBuilders.drying {
+            itemIngredient { items { +Items.ROTTEN_FLESH } }
+            itemResult { +Items.LEATHER }
         }.save(exporter)
     }
 

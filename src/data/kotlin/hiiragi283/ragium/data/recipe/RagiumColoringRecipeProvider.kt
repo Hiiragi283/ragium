@@ -3,14 +3,11 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.color.HTColoredCollection
 import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.recipe.HTRecipeProvider
-import hiiragi283.lib.data.recipe.builder.ingredient
-import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.and
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.common.fluid.RagiumFluids
-import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.data.PackOutput
@@ -43,14 +40,17 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 time /= 2
                 recipeId replace id("$name/liquid_dye")
             }.save(exporter)
-            // Liquid Dye -> Solid Dye
-            RagiumRecipeBuilders.freezing {
-                ingredient {
+            // Liquid Dye -> Solid Dye + Water
+            RagiumRecipeBuilders.drying {
+                fluidIngredient {
                     +holderSet(dyeContent)
                     amount /= 4
                 }
-                catalyst { items { +RagiumItems.BALL_MOLD } }
-                result { +VanillaColoredCollections.DYE[color] }
+                itemResult { +VanillaColoredCollections.DYE[color] }
+                fluidResult {
+                    water()
+                    amount /= 4
+                }
                 time /= 4
                 recipeId replace id("dye/$name")
             }.save(exporter)

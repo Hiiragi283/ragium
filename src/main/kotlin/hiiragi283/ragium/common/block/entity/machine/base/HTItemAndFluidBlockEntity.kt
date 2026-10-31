@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.machine.base
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.recipe.base.HTItemOrFluidRecipe
+import hiiragi283.lib.recipe.base.HTItemAndFluidRecipe
 import hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
@@ -32,32 +32,32 @@ import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
-abstract class HTItemOrFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTItemAndFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    fun createRecipeHandler(lookup: HTRecipeLookup<HTItemOrFluidRecipe>, sound: HTSoundInstance): HTRecipeHandler =
-        object : HTDoubleRecipeHandler.Cached<ItemInstance, FluidInstance, HTItemAndFluidStack, HTItemOrFluidRecipe>(
+    fun createRecipeHandler(lookup: HTRecipeLookup<HTItemAndFluidRecipe>, sound: HTSoundInstance): HTRecipeHandler =
+        object : HTDoubleRecipeHandler.Cached<ItemInstance, FluidInstance, HTItemAndFluidStack, HTItemAndFluidRecipe>(
             HTRecipeCacheHelper.ItemAndFluid(lookup, true),
         ) {
             private val inputTank: HTInputSlot<FluidInstance> by lazy {
-                HTInputHandlerHelper.forFluid(this@HTItemOrFluidBlockEntity.inputTank)
+                HTInputHandlerHelper.forFluid(this@HTItemAndFluidBlockEntity.inputTank)
             }
             private val inputSlot: HTInputSlot<ItemInstance> by lazy {
-                HTInputHandlerHelper.forItem(this@HTItemOrFluidBlockEntity.inputSlot)
+                HTInputHandlerHelper.forItem(this@HTItemAndFluidBlockEntity.inputSlot)
             }
             private val outputTank: HTOutputSlot<FluidStack> by lazy {
-                HTOutputSlotHelper.forFluid(this@HTItemOrFluidBlockEntity.outputTank)
+                HTOutputSlotHelper.forFluid(this@HTItemAndFluidBlockEntity.outputTank)
             }
             private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-                HTOutputSlotHelper.forItem(this@HTItemOrFluidBlockEntity.outputSlot)
+                HTOutputSlotHelper.forItem(this@HTItemAndFluidBlockEntity.outputSlot)
             }
 
-            override fun createProgressor(): Progressor<ItemInstance, FluidInstance, HTItemOrFluidRecipe> = DoubleProgressor()
+            override fun createProgressor(): Progressor<ItemInstance, FluidInstance, HTItemAndFluidRecipe> = DoubleProgressor()
 
             override fun getFirstInput(): ItemInstance = inputSlot.getStoredInput()
 
             override fun getSecondInput(): FluidInstance = inputTank.getStoredInput()
 
-            override fun canComplete(recipe: HTItemOrFluidRecipe, first: ItemInstance, second: FluidInstance, output: HTItemAndFluidStack): Boolean =
+            override fun canComplete(recipe: HTItemAndFluidRecipe, first: ItemInstance, second: FluidInstance, output: HTItemAndFluidStack): Boolean =
                 useTransaction { transaction: Transaction ->
                     val (itemInput: ItemInstance, fluidInput: FluidInstance) = recipe.getMatchingStack(first, second)
                     val (itemOutput: ItemStack, fluidOutput: FluidStack) = output
@@ -69,7 +69,7 @@ abstract class HTItemOrFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
                     }
                 }
 
-            override fun onComplete(recipe: HTItemOrFluidRecipe, first: ItemInstance, second: FluidInstance, output: HTItemAndFluidStack) {
+            override fun onComplete(recipe: HTItemAndFluidRecipe, first: ItemInstance, second: FluidInstance, output: HTItemAndFluidStack) {
                 useTransaction { transaction: Transaction ->
                     val (itemInput: ItemInstance, fluidInput: FluidInstance) = recipe.getMatchingStack(first, second)
                     val (itemOutput: ItemStack, fluidOutput: FluidStack) = output

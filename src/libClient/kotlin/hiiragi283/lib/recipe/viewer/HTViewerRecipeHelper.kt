@@ -6,16 +6,15 @@ import hiiragi283.lib.recipe.base.HTBasicSingleRecipe
 import hiiragi283.lib.recipe.base.HTCatalysedSingleRecipe
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
+import hiiragi283.lib.recipe.base.HTItemOrFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.recipe.display.display
 import hiiragi283.lib.recipe.display.displayOrEmpty
-import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
-import hiiragi283.lib.recipe.result.HTItemResult
+import hiiragi283.lib.util.toOptional
 
 /**
  * @author Hiiragi Tsubasa
@@ -35,7 +34,7 @@ data object HTViewerRecipeHelper {
         return HTSingleToMultiViewerRecipe(
             id.identifier(),
             recipe.ingredient.display(),
-            recipe.results.map(HTItemResult::display),
+            recipe.results.map(HTDisplayableContent::display),
             recipe.progressData,
         )
     }
@@ -45,7 +44,7 @@ data object HTViewerRecipeHelper {
         holder: HTRecipeHolder<HTBasicSingleRecipe<HTDisplayableContent, HTItemOrFluidResult>>,
     ): HTSingleToItemAndFluidViewerRecipe {
         val (id: RecipeKey, recipe: HTBasicSingleRecipe<HTDisplayableContent, HTItemOrFluidResult>) = holder
-        val (item: HTItemResult?, fluid: HTFluidResult?) = recipe.result.content.toPair()
+        val (item: HTDisplayableContent?, fluid: HTDisplayableContent?) = recipe.result.content.toPair()
         return HTSingleToItemAndFluidViewerRecipe(
             id.identifier(),
             recipe.ingredient.display(),
@@ -62,7 +61,7 @@ data object HTViewerRecipeHelper {
             id.identifier(),
             recipe.ingredient.display(),
             recipe.result.item.display(),
-            recipe.result.fluids.map(HTFluidResult::display),
+            recipe.result.fluids.map(HTDisplayableContent::display),
             recipe.progressData,
         )
     }
@@ -73,7 +72,21 @@ data object HTViewerRecipeHelper {
         return HTItemSeparatingViewerRecipe(
             id.identifier(),
             recipe.ingredient.display(),
-            recipe.result.content.mapLeft { it.map(HTItemResult::display) }.mapRight(HTFluidResult::display),
+            recipe.result.content.mapLeft { it.map(HTDisplayableContent::display) }.mapRight(HTDisplayableContent::display),
+            recipe.progressData,
+        )
+    }
+
+    @JvmStatic
+    fun itemOrFluid(holder: HTRecipeHolder<HTItemOrFluidToRecipe.BasicItemAndFluid>): HTItemOrFluidViewerRecipe {
+        val (id: RecipeKey, recipe: HTItemOrFluidToRecipe.BasicItemAndFluid) = holder
+        val (item: HTDisplayableContent?, fluid: HTDisplayableContent?) = recipe.result.content.toPair()
+        return HTItemOrFluidViewerRecipe(
+            id.identifier(),
+            recipe.ingredient.mapLeft(HTDisplayableContent::display).leftOrNull().toOptional(),
+            recipe.ingredient.map(HTDisplayableContent::display).getOrNull().toOptional(),
+            item.displayOrEmpty(),
+            fluid.displayOrEmpty(),
             recipe.progressData,
         )
     }
@@ -123,7 +136,7 @@ data object HTViewerRecipeHelper {
         val (id: RecipeKey, recipe: HTSizedShapelessRecipe.Basic) = holder
         return HTMultiToSingleViewerRecipe(
             id.identifier(),
-            recipe.ingredients.map(HTItemIngredient::display),
+            recipe.ingredients.map(HTDisplayableContent::display),
             recipe.result.display(),
             recipe.progressData,
         )

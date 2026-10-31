@@ -1,6 +1,7 @@
 package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
+import hiiragi283.lib.integration.jei.addOptional
 import hiiragi283.lib.integration.jei.category.HTViewerRecipeCategory
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -36,14 +37,14 @@ class RTMixingRecipeCategory(guiHelper: IGuiHelper) :
             recipe.itemIngredients.getOrNull(index)?.let(builder::add)
         }
         // outputs
-        val itemOutput: IRecipeSlotBuilder = builder
+        builder
             .addOutputSlot(getPosition(6), getPosition(0))
+            .addOptional(recipe.itemResult)
             .setSlotBackground(HTBackgroundType.OUTPUT)
-        val fluidOutput: IRecipeSlotBuilder = builder
+        builder
             .addOutputSlot(getPosition(6), getPosition(1))
+            .addOptional(recipe.fluidResult)
             .setSlotBackground(HTBackgroundType.OUTPUT)
-        recipe.itemResult.ifPresent(itemOutput::add)
-        recipe.fluidResult.ifPresent(fluidOutput::add)
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTMixingViewerRecipe, focuses: IFocusGroup) {

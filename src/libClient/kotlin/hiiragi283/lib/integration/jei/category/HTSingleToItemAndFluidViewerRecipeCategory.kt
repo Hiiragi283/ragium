@@ -1,6 +1,7 @@
 package hiiragi283.lib.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
+import hiiragi283.lib.integration.jei.addOptional
 import hiiragi283.lib.recipe.viewer.HTSingleToItemAndFluidViewerRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable
@@ -30,11 +31,11 @@ class HTSingleToItemAndFluidViewerRecipeCategory(
         // outputs
         builder
             .addOutputSlot(getPosition(3), getPosition(0))
-            .add(recipe.itemResult)
+            .addOptional(recipe.itemResult)
             .setSlotBackground(HTBackgroundType.OUTPUT)
         builder
             .addOutputSlot(getPosition(5), getPosition(0))
-            .add(recipe.fluidResult)
+            .addOptional(recipe.fluidResult)
             .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 

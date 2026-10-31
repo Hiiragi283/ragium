@@ -2,9 +2,11 @@ package hiiragi283.lib.recipe.base
 
 import hiiragi283.lib.recipe.HTRecipeFactory
 import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTItemOrFluidRecipeInput
 import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.lib.recipe.input.asList
 import hiiragi283.lib.recipe.input.getItemOrEmpty
+import hiiragi283.lib.util.Either
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -59,6 +61,15 @@ data object HTRecipeFactories {
         override fun produce(input: RecipeInput): OUTPUT = apply(input.asList())
 
         override fun getProgressData(input: RecipeInput): HTProgressData = getProgressData(input.asList())
+    }
+
+    /**
+     * @since 26.1.13
+     */
+    interface ItemOrFluid<OUTPUT : Any> : SingleInput<HTItemOrFluidRecipeInput, Either<ItemInstance, FluidInstance>, OUTPUT> {
+        override fun produce(input: HTItemOrFluidRecipeInput): OUTPUT = apply(input.content)
+
+        override fun getProgressData(input: HTItemOrFluidRecipeInput): HTProgressData = getProgressData(input.content)
     }
 
     //    Double Input    //

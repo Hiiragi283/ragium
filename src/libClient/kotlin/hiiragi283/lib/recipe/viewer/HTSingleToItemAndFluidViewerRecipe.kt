@@ -17,8 +17,8 @@ import kotlin.jvm.optionals.getOrNull
 data class HTSingleToItemAndFluidViewerRecipe(
     override val id: Identifier?,
     val ingredient: SlotDisplay,
-    val itemResult: SlotDisplay,
-    val fluidResult: SlotDisplay,
+    val itemResult: Optional<SlotDisplay>,
+    val fluidResult: Optional<SlotDisplay>,
     override val progressData: HTProgressData,
 ) : HTViewerRecipe.Progressed {
     companion object {
@@ -27,8 +27,8 @@ data class HTSingleToItemAndFluidViewerRecipe(
             instance.group(
                 HTViewerRecipe.idCodec(),
                 SlotDisplay.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(HTSingleToItemAndFluidViewerRecipe::ingredient),
-                SlotDisplay.CODEC.fieldOf("item_result").forGetter(HTSingleToItemAndFluidViewerRecipe::itemResult),
-                SlotDisplay.CODEC.fieldOf("fluid_result").forGetter(HTSingleToItemAndFluidViewerRecipe::fluidResult),
+                SlotDisplay.CODEC.optionalFieldOf("item_result").forGetter(HTSingleToItemAndFluidViewerRecipe::itemResult),
+                SlotDisplay.CODEC.optionalFieldOf("fluid_result").forGetter(HTSingleToItemAndFluidViewerRecipe::fluidResult),
                 HTViewerRecipe.Progressed.progressCodec(),
             ).apply(instance, ::HTSingleToItemAndFluidViewerRecipe)
         }
@@ -37,8 +37,8 @@ data class HTSingleToItemAndFluidViewerRecipe(
     private constructor(
         id: Optional<Identifier>,
         ingredient: SlotDisplay,
-        itemResult: SlotDisplay,
-        fluidResult: SlotDisplay,
+        itemResult: Optional<SlotDisplay>,
+        fluidResult: Optional<SlotDisplay>,
         progressData: HTProgressData,
     ) : this(id.getOrNull(), ingredient, itemResult, fluidResult, progressData)
 }

@@ -1,0 +1,14 @@
+{
+  "type": "ragium:drying",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:rotten_flesh"
+  },
+  "result": {
+    "item": {
+      "count": 1,
+      "id": "minecraft:leather"
+    }
+  },
+  "time": 200
+}

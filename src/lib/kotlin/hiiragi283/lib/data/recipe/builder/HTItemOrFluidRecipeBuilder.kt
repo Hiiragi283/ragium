@@ -11,6 +11,7 @@ import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
+import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.lib.util.Ior
 import net.minecraft.resources.Identifier
@@ -21,30 +22,29 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * 1種類のアイテムと液体から1種類のアイテムと液体を作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
+ * 1種類のアイテムと液体から1種類の完成品を作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
  * @param RECIPE 生成するレシピのクラス
  * @author Hiiragi Tsubasa
- * @since 26.1.9
+ * @since 26.1.13
  */
 class HTItemOrFluidRecipeBuilder<out RECIPE : Recipe<*>>(
     prefix: String,
-    private val factory: HTItemAndFluidToRecipeBuilder.Factory<HTItemOrFluidResult, RECIPE>,
+    private val factory: HTItemOrFluidToRecipeBuilder.Factory<HTItemOrFluidResult, RECIPE>,
 ) : HTProgressRecipeBuilder<RECIPE>(prefix) {
     override fun getRecipeId(): Identifier? = result.getId()
 
-    override fun createRecipe(): RECIPE = factory.create(itemIngredient, fluidIngredient, result, progressData)
+    override fun createRecipe(): RECIPE = factory.create(ingredient, result, progressData)
 
     // Ingredients
-    @PublishedApi internal var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()
-
-    @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
+    @PublishedApi
+    internal var ingredient: Either<HTItemIngredient, HTFluidIngredient> by HTDelegates.onceInitialize()
 
     operator fun HTItemIngredient.unaryPlus() {
-        itemIngredient = this
+        ingredient = Either.Left(this)
     }
 
     operator fun HTFluidIngredient.unaryPlus() {
-        fluidIngredient = this
+        ingredient = Either.Right(this)
     }
 
     inline fun itemIngredient(builderAction: HTItemIngredientBuilder.() -> Unit) {
@@ -62,9 +62,9 @@ class HTItemOrFluidRecipeBuilder<out RECIPE : Recipe<*>>(
     }
 
     // Results
-    @PublishedApi internal var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
+    var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
 
-    @PublishedApi internal var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
+    var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
 
     val result: HTItemOrFluidResult get() = Ior.fromNullable(itemResult, fluidResult)
         .map(::HTItemOrFluidResult)

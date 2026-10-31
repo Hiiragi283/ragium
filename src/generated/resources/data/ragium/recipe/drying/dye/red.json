@@ -1,0 +1,18 @@
+{
+  "type": "ragium:drying",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:dyes/red"
+  },
+  "result": {
+    "fluid": {
+      "amount": 250,
+      "id": "minecraft:water"
+    },
+    "item": {
+      "count": 1,
+      "id": "minecraft:red_dye"
+    }
+  },
+  "time": 50
+}
