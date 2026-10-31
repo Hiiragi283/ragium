@@ -1,7 +1,6 @@
 {
-  "parent": "minecraft:block/cube_bottom_top",
+  "parent": "ragium:block/dynamo_template",
   "textures": {
-    "bottom": "ragium:block/fuel_dynamo_bottom",
     "side": "ragium:block/fuel_dynamo_side",
     "top": "ragium:block/fuel_dynamo_top"
   }

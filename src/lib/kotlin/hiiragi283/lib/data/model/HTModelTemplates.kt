@@ -3,7 +3,6 @@ package hiiragi283.lib.data.model
 import hiiragi283.lib.HTConstants
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.client.data.models.model.TextureMapping
-import net.minecraft.client.data.models.model.TextureMapping.cubeTop
 import net.minecraft.client.data.models.model.TextureSlot
 import net.minecraft.client.data.models.model.TexturedModel
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplate
@@ -33,6 +32,16 @@ data object HTModelTemplates {
         .build()
 
     /**
+     * @since 26.1.12
+     */
+    @JvmField
+    val DYNAMO_TEMPLATE: ExtendedModelTemplate = ExtendedModelTemplateBuilder.builder()
+        .parent(RagiumAPI.id(HTConstants.BLOCK, "dynamo_template"))
+        .requiredTextureSlot(TextureSlot.TOP)
+        .requiredTextureSlot(TextureSlot.SIDE)
+        .build()
+
+    /**
      * Hiiragi Seriesで使用される[TexturedModel.Provider]をまとめたクラスです。
      *
      * 参照 : [Minecraft - TexturedModel.Provider][TexturedModel.Provider]
@@ -43,5 +52,12 @@ data object HTModelTemplates {
         @JvmField
         val TANK_TEMPLATE: TexturedModel.Provider =
             TexturedModel.createDefault(TextureMapping::cubeTop, HTModelTemplates.TANK_TEMPLATE)
+
+        /**
+         * @since 26.1.12
+         */
+        @JvmField
+        val DYNAMO_TEMPLATE: TexturedModel.Provider =
+            TexturedModel.createDefault(TextureMapping::cubeTop, HTModelTemplates.DYNAMO_TEMPLATE)
     }
 }

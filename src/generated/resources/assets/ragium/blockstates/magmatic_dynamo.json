@@ -2,25 +2,28 @@
   "variants": {
     "facing=down": {
       "model": "ragium:block/magmatic_dynamo",
-      "x": 90
+      "x": 180
     },
     "facing=east": {
       "model": "ragium:block/magmatic_dynamo",
+      "x": 90,
       "y": 90
     },
     "facing=north": {
-      "model": "ragium:block/magmatic_dynamo"
+      "model": "ragium:block/magmatic_dynamo",
+      "x": 90
     },
     "facing=south": {
       "model": "ragium:block/magmatic_dynamo",
+      "x": 90,
       "y": 180
     },
     "facing=up": {
-      "model": "ragium:block/magmatic_dynamo",
-      "x": 270
+      "model": "ragium:block/magmatic_dynamo"
     },
     "facing=west": {
       "model": "ragium:block/magmatic_dynamo",
+      "x": 90,
       "y": 270
     }
   }

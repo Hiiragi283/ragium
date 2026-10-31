@@ -220,7 +220,7 @@ data object RagiumBlocks {
     @JvmStatic
     private fun registerDynamo(
         type: HTDeferredBlockEntityType<*>,
-        properties: BlockBehaviour.Properties = machine(),
+        properties: BlockBehaviour.Properties = machine().noOcclusion(),
     ): HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerWithBE(type, ::HTDynamoBlock, properties)
 
     @JvmField

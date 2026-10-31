@@ -82,8 +82,8 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             generators.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(
                     block,
-                    BlockModelGenerators.plainVariant(TexturedModel.CUBE_TOP_BOTTOM.create(block, generators.modelOutput)),
-                ).with(BlockModelGenerators.ROTATION_FACING),
+                    BlockModelGenerators.plainVariant(HTModelTemplates.Providers.DYNAMO_TEMPLATE.create(block, generators.modelOutput)),
+                ).with(BlockModelGenerators.ROTATIONS_COLUMN_WITH_FACING),
             )
         }
         // Machine
