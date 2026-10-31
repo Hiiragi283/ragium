@@ -88,12 +88,12 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
     //    Energized    //
 
     abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
-        protected lateinit var handler: HTBasicEnergyStorage
+        protected lateinit var storage: HTBasicEnergyStorage
             private set
 
         override fun createEnergyStorage(listener: Runnable): HTEnergyHandlerHolder? {
             val builder: HTBasicEnergyHandlerHolder.Builder = HTBasicEnergyHandlerHolder.builder(this)
-            handler = builder.addHandler(
+            storage = builder.addHandler(
                 HTSlotInfo.INPUT,
                 HTBasicEnergyStorage.input(
                     HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
@@ -106,8 +106,8 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
         protected abstract fun getConfig(): HTEnergyConfig
 
         fun addEnergySlot(widgetHolder: HTWidgetHolder, x: Int, y: Int) {
-            widgetHolder += HTEnergySlotWidget(handler, x, y)
-            widgetHolder.track(handler)
+            widgetHolder += HTEnergySlotWidget(storage, x, y)
+            widgetHolder.track(storage)
         }
 
         //    EnergizedProgressor    //
@@ -118,7 +118,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
                 get() = HTMachineUpgradeHelper.modifySpeed(components(), this.baseEnergyPerTick)
 
             final override fun getProgress(): Int = useTransaction { transaction: Transaction ->
-                val extracted: Int = handler.extract(currentEnergyPerTick, transaction, HTTransferAccess.INTERNAL)
+                val extracted: Int = storage.extract(currentEnergyPerTick, transaction, HTTransferAccess.INTERNAL)
                 if (extracted > 0) {
                     transaction.commit()
                 }

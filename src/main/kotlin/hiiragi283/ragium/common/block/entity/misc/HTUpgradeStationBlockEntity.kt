@@ -24,8 +24,6 @@ import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.item.ItemResource
 
 class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockState) :
@@ -113,9 +111,5 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
             !this@HTUpgradeStationBlockEntity.toolSlot.isEmpty && resource.has(RagiumDataComponents.UPGRADE)
 
         override fun getCapacity(resource: ItemResource): Int = 1
-
-        override fun serialize(output: ValueOutput): Unit = Unit
-
-        override fun deserialize(input: ValueInput): Unit = Unit
     }
 }

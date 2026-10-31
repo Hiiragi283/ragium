@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
+import net.neoforged.neoforge.common.util.ValueIOSerializable
 
 abstract class HTBaseTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTConfigurableBlockEntity(type, pos, state) {
     abstract val tank: HTFluidTank
@@ -34,11 +35,11 @@ abstract class HTBaseTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, st
 
     override fun writeReducedUpdateTag(output: ValueOutput) {
         super.writeReducedUpdateTag(output)
-        tank.serialize(output)
+        (tank as? ValueIOSerializable)?.serialize(output)
     }
 
     override fun readUpdateTag(input: ValueInput) {
-        tank.deserialize(input)
+        (tank as? ValueIOSerializable)?.deserialize(input)
     }
 
     //    Ticking    //

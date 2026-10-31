@@ -8,8 +8,6 @@ import net.minecraft.core.Direction
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.ResourceHandler
 import net.neoforged.neoforge.transfer.access.ItemAccess
 import net.neoforged.neoforge.transfer.resource.Resource
@@ -42,10 +40,6 @@ interface HTResourceMultiCapability<T : Resource> : HTMultiCapability<ResourceHa
                 override val amount: Int get() = handler.getAmountAsInt(index)
 
                 override fun getCapacity(resource: T): Int = handler.getCapacityAsInt(index, resource)
-
-                override fun serialize(output: ValueOutput): Unit = Unit
-
-                override fun deserialize(input: ValueInput): Unit = Unit
             }
         }
     }

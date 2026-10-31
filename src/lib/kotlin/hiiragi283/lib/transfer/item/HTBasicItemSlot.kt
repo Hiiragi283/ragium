@@ -11,6 +11,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
+import net.neoforged.neoforge.common.util.ValueIOSerializable
 import net.neoforged.neoforge.transfer.item.ItemResource
 import java.util.function.BiPredicate
 import java.util.function.Predicate
@@ -29,7 +30,8 @@ open class HTBasicItemSlot(
     filter: Predicate<ItemResource>,
     listener: Runnable?,
 ) : HTSnapshotStackResourceSlot.Basic<ItemStack, ItemResource>(capacity, canExtract, canInsert, filter, listener),
-    HTItemStackSlot {
+    HTItemStackSlot,
+    ValueIOSerializable {
     companion object {
         @JvmStatic
         fun create(
