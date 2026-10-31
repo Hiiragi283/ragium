@@ -12,7 +12,7 @@
       }
     ]
   },
-  "result": {
+  "results": {
     "fluid": {
       "amount": 1000,
       "id": "ragium:liquid_explosive"

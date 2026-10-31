@@ -7,7 +7,7 @@
       "fluids": "#ragium:alcohols"
     }
   },
-  "result": {
+  "results": {
     "fluid": {
       "amount": 1000,
       "id": "ragium:aldehyde"

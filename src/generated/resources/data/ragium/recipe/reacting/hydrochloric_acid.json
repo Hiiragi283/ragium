@@ -1,21 +1,21 @@
 {
-  "type": "ragium:mixing",
+  "type": "ragium:reacting",
   "ingredients": {
     "fluids": [
       {
         "amount": 1000,
-        "fluids": "#c:natural_gas"
+        "fluids": "#c:hydrogen_chloride"
       },
       {
-        "amount": 500,
+        "amount": 1000,
         "fluids": "#c:water"
       }
     ]
   },
-  "result": {
+  "results": {
     "fluid": {
       "amount": 1000,
-      "id": "ragium:alcohol"
+      "id": "ragium:hydrochloric_acid"
     }
   },
   "time": 200

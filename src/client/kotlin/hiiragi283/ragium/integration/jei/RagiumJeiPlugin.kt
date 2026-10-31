@@ -234,8 +234,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING) { (key: RecipeKey, recipe: RTMixingRecipe) ->
             RTMixingViewerRecipe(
                 key.identifier(),
-                recipe.ingredients.itemDisplays(),
-                recipe.ingredients.fluidDisplays(),
+                recipe.itemIngredients.map(HTDisplayableContent::display),
+                recipe.fluidIngredient.display(),
                 recipe.result.itemDisplay().toOptional(),
                 recipe.result.fluidDisplay().toOptional(),
                 recipe.progressData,
@@ -247,8 +247,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 recipe.ingredients.itemDisplays(),
                 recipe.ingredients.fluidDisplays(),
                 recipe.catalyst.display(),
-                recipe.result.itemDisplay().toOptional(),
-                recipe.result.fluidDisplay().toOptional(),
+                recipe.result.itemDisplays(),
+                recipe.result.fluidDisplays(),
                 recipe.progressData,
             )
         }
@@ -412,7 +412,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RecipeTypes.SMOKING, RagiumBlocks.SMELTER)
         // Chemical
         registration.addCraftingStation(RagiumJeiRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
-        // registration.addCraftingStation(RagiumJeiRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.REACTING, RagiumBlocks.CHEMICAL_REACTOR)
         registration.addCraftingStation(RagiumJeiRecipeTypes.MIXING, RagiumBlocks.MIXER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.MIXING, RagiumBlocks.BLENDER)
         // Resource

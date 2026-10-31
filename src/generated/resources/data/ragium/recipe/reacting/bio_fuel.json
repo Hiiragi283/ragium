@@ -1,5 +1,5 @@
 {
-  "type": "ragium:mixing",
+  "type": "ragium:reacting",
   "ingredients": {
     "fluids": [
       {
@@ -16,7 +16,7 @@
       "items": "ragium:alkali_hydroxide"
     }
   },
-  "result": {
+  "results": {
     "fluid": {
       "amount": 6000,
       "id": "ragium:fuel"

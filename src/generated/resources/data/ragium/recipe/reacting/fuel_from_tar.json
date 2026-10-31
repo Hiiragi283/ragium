@@ -1,5 +1,5 @@
 {
-  "type": "ragium:mixing",
+  "type": "ragium:reacting",
   "ingredients": {
     "fluid": {
       "amount": 1000,
@@ -10,7 +10,7 @@
       "items": "ragium:tar"
     }
   },
-  "result": {
+  "results": {
     "fluid": {
       "amount": 500,
       "id": "ragium:fuel"

@@ -265,3 +265,15 @@ typealias IorNel<E, A> = Ior<Nel<E>, A>
  * @since 26.1.8
  */
 fun <A, B> Ior<A, B>.toIorNel(): IorNel<A, B> = this.mapLeft { it.nel() }
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.12
+ */
+fun <A, B> Ior<List<A>, B>.getLeftList(): List<A> = this.getLeft() ?: listOf()
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.12
+ */
+fun <A, B> Ior<A, List<B>>.getRightList(): List<B> = this.getRight() ?: listOf()

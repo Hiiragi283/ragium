@@ -17,6 +17,7 @@ import hiiragi283.lib.util.DFUEither
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.IorNel
 import hiiragi283.lib.util.fold
+import hiiragi283.lib.util.getLeftList
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
@@ -205,7 +206,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
         private fun toVanilla(): PotionContents = PotionContents(
             Optional.ofNullable(content.getRight()),
             customColor,
-            content.getLeft() ?: listOf(),
+            content.getLeftList(),
             customName,
         )
 

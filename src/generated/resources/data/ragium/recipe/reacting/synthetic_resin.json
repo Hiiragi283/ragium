@@ -12,7 +12,7 @@
       }
     ]
   },
-  "result": {
+  "results": {
     "fluid": {
       "amount": 2000,
       "id": "ragium:synthetic_resin"

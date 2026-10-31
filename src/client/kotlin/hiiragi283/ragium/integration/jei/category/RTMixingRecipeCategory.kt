@@ -23,18 +23,14 @@ class RTMixingRecipeCategory(guiHelper: IGuiHelper) :
     ) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: RTMixingViewerRecipe, focuses: IFocusGroup) {
         // inputs
-        val fluidInputs: List<IRecipeSlotBuilder> = List(2) { index: Int ->
-            builder
-                .addInputSlot(getPosition(0), getPosition(index))
-                .setSlotBackground(HTBackgroundType.INPUT)
-        }
+        builder
+            .addInputSlot(getPosition(0), getPosition(0.5))
+            .add(recipe.fluidIngredient)
+            .setSlotBackground(HTBackgroundType.INPUT)
         val itemInputs: List<IRecipeSlotBuilder> = List(4) { index: Int ->
             builder
                 .addInputSlot(getPosition(2 + index % 2), getPosition(index / 2))
                 .setSlotBackground(HTBackgroundType.INPUT)
-        }
-        fluidInputs.forEachIndexed { index: Int, builder: IRecipeSlotBuilder ->
-            recipe.fluidIngredients.getOrNull(index)?.let(builder::add)
         }
         itemInputs.forEachIndexed { index: Int, builder: IRecipeSlotBuilder ->
             recipe.itemIngredients.getOrNull(index)?.let(builder::add)

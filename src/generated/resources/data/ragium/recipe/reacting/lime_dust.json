@@ -1,5 +1,5 @@
 {
-  "type": "ragium:mixing",
+  "type": "ragium:reacting",
   "ingredients": {
     "fluids": [
       {
@@ -12,7 +12,7 @@
       }
     ]
   },
-  "result": {
+  "results": {
     "fluid": {
       "amount": 1000,
       "id": "minecraft:water"

@@ -17,7 +17,7 @@ import kotlin.jvm.optionals.getOrNull
 data class RTMixingViewerRecipe(
     override val id: Identifier?,
     val itemIngredients: List<SlotDisplay>,
-    val fluidIngredients: List<SlotDisplay>,
+    val fluidIngredient: SlotDisplay,
     val itemResult: Optional<SlotDisplay>,
     val fluidResult: Optional<SlotDisplay>,
     override val progressData: HTProgressData,
@@ -28,7 +28,7 @@ data class RTMixingViewerRecipe(
             instance.group(
                 HTViewerRecipe.idCodec(),
                 SlotDisplay.CODEC.listOf().fieldOf("item_ingredients").forGetter(RTMixingViewerRecipe::itemIngredients),
-                SlotDisplay.CODEC.listOf().fieldOf("fluid_ingredients").forGetter(RTMixingViewerRecipe::fluidIngredients),
+                SlotDisplay.CODEC.fieldOf("fluid_ingredient").forGetter(RTMixingViewerRecipe::fluidIngredient),
                 SlotDisplay.CODEC.optionalFieldOf("item_result").forGetter(RTMixingViewerRecipe::itemResult),
                 SlotDisplay.CODEC.optionalFieldOf("fluid_result").forGetter(RTMixingViewerRecipe::fluidResult),
                 HTViewerRecipe.Progressed.progressCodec(),
@@ -39,14 +39,14 @@ data class RTMixingViewerRecipe(
     private constructor(
         id: Optional<Identifier>,
         itemIngredients: List<SlotDisplay>,
-        fluidIngredients: List<SlotDisplay>,
+        fluidIngredient: SlotDisplay,
         itemResult: Optional<SlotDisplay>,
         fluidResult: Optional<SlotDisplay>,
         progressData: HTProgressData,
-    ) : this(id.getOrNull(), itemIngredients, fluidIngredients, itemResult, fluidResult, progressData)
+    ) : this(id.getOrNull(), itemIngredients, fluidIngredient, itemResult, fluidResult, progressData)
 
     override fun isHandled(): Boolean = when {
-        itemIngredients.isEmpty() && fluidIngredients.isEmpty() -> false
+        itemIngredients.isEmpty() -> false
         else -> itemResult.isPresent || fluidResult.isPresent
     }
 }

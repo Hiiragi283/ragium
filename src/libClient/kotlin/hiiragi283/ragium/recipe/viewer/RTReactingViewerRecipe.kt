@@ -20,20 +20,21 @@ data class RTReactingViewerRecipe(
     val itemIngredients: List<SlotDisplay>,
     val fluidIngredients: List<SlotDisplay>,
     val catalyst: SlotDisplay,
-    val itemResult: Optional<SlotDisplay>,
-    val fluidResult: Optional<SlotDisplay>,
+    val itemResults: List<SlotDisplay>,
+    val fluidResults: List<SlotDisplay>,
     override val progressData: HTProgressData,
 ) : HTViewerRecipe.Progressed {
     companion object {
         @JvmField
         val CODEC: Codec<RTReactingViewerRecipe> = HTCodecs.record { instance ->
+            val listCodec: Codec<List<SlotDisplay>> = SlotDisplay.CODEC.listOf()
             instance.group(
                 HTViewerRecipe.idCodec(),
-                SlotDisplay.CODEC.listOf().fieldOf("item_ingredients").forGetter(RTReactingViewerRecipe::itemIngredients),
-                SlotDisplay.CODEC.listOf().fieldOf("fluid_ingredients").forGetter(RTReactingViewerRecipe::fluidIngredients),
+                listCodec.fieldOf("item_ingredients").forGetter(RTReactingViewerRecipe::itemIngredients),
+                listCodec.fieldOf("fluid_ingredients").forGetter(RTReactingViewerRecipe::fluidIngredients),
                 SlotDisplay.CODEC.fieldOf(HTConstants.CATALYST).forGetter(RTReactingViewerRecipe::catalyst),
-                SlotDisplay.CODEC.optionalFieldOf("item_result").forGetter(RTReactingViewerRecipe::itemResult),
-                SlotDisplay.CODEC.optionalFieldOf("fluid_result").forGetter(RTReactingViewerRecipe::fluidResult),
+                listCodec.fieldOf("item_results").forGetter(RTReactingViewerRecipe::itemResults),
+                listCodec.fieldOf("fluid_results").forGetter(RTReactingViewerRecipe::fluidResults),
                 HTViewerRecipe.Progressed.progressCodec(),
             ).apply(instance, ::RTReactingViewerRecipe)
         }
@@ -44,13 +45,14 @@ data class RTReactingViewerRecipe(
         itemIngredients: List<SlotDisplay>,
         fluidIngredients: List<SlotDisplay>,
         catalyst: SlotDisplay,
-        itemResult: Optional<SlotDisplay>,
-        fluidResult: Optional<SlotDisplay>,
+        itemResults: List<SlotDisplay>,
+        fluidResults: List<SlotDisplay>,
         progressData: HTProgressData,
-    ) : this(id.getOrNull(), itemIngredients, fluidIngredients, catalyst, itemResult, fluidResult, progressData)
+    ) : this(id.getOrNull(), itemIngredients, fluidIngredients, catalyst, itemResults, fluidResults, progressData)
 
     override fun isHandled(): Boolean = when {
         itemIngredients.isEmpty() && fluidIngredients.isEmpty() -> false
-        else -> itemResult.isPresent || fluidResult.isPresent
+        itemResults.isEmpty() && fluidResults.isEmpty() -> false
+        else -> true
     }
 }

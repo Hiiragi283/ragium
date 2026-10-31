@@ -18,7 +18,7 @@ class RTReactingRecipeCategory(guiHelper: IGuiHelper) :
         RagiumJeiRecipeTypes.REACTING,
         RagiumRecipeTypes.REACTING,
         guiHelper.createDrawableItemLike(RagiumBlocks.CHEMICAL_REACTOR),
-        18 * 6,
+        18 * 8,
         18 * 2,
         RTReactingViewerRecipe.CODEC,
     ) {
@@ -46,18 +46,27 @@ class RTReactingRecipeCategory(guiHelper: IGuiHelper) :
             .add(recipe.catalyst)
             .setSlotBackground(HTBackgroundType.NONE)
         // outputs
-        val itemOutput: IRecipeSlotBuilder = builder
-            .addOutputSlot(getPosition(5), getPosition(0))
-            .setSlotBackground(HTBackgroundType.OUTPUT)
-        val fluidOutput: IRecipeSlotBuilder = builder
-            .addOutputSlot(getPosition(5), getPosition(1))
-            .setSlotBackground(HTBackgroundType.OUTPUT)
-        recipe.itemResult.ifPresent(itemOutput::add)
-        recipe.fluidResult.ifPresent(fluidOutput::add)
+        val itemOutputs: List<IRecipeSlotBuilder> = List(2) { index: Int ->
+            builder
+                .addOutputSlot(getPosition(5), getPosition(index))
+                .setSlotBackground(HTBackgroundType.OUTPUT)
+        }
+        val fluidOutputs: List<IRecipeSlotBuilder> = List(2) { index: Int ->
+            builder
+                .addOutputSlot(getPosition(7), getPosition(index))
+                .setSlotBackground(HTBackgroundType.OUTPUT)
+        }
+        itemOutputs.forEachIndexed { index: Int, builder: IRecipeSlotBuilder ->
+            recipe.itemResults.getOrNull(index)?.let(builder::add)
+        }
+        fluidOutputs.forEachIndexed { index: Int, builder: IRecipeSlotBuilder ->
+            recipe.fluidResults.getOrNull(index)?.let(builder::add)
+        }
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTReactingViewerRecipe, focuses: IFocusGroup) {
         builder.addRecipePlus(getPosition(1), getPosition(0.5))
         builder.addRecipeArrow(recipe).setPosition(getPosition(3.25), getPosition(1))
+        builder.addRecipePlus(getPosition(6), getPosition(0.5))
     }
 }
