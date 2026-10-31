@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:dusts/redstone",
+    "B": "#c:ingots/sooty_iron",
+    "C": "#c:gears/copper",
+    "D": "ragium:machine_parts/mechanical",
+    "E": "#c:player_workstations/furnaces"
+  },
+  "pattern": [
+    " A ",
+    "BCB",
+    "DEC"
+  ],
+  "result": {
+    "id": "ragium:fuel_dynamo"
+  }
+}

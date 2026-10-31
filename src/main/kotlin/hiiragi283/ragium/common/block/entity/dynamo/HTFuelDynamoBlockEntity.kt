@@ -63,10 +63,10 @@ class HTFuelDynamoBlockEntity(pos: BlockPos, state: BlockState) :
     override fun onEnergyGenerated(level: ServerLevel, pos: BlockPos, state: BlockState) {
         if (ashProgress == MAX_ASH_TICKS) {
             ashProgress = 0
+            playSound(SoundEvents.FIRECHARGE_USE)
         } else {
             ashProgress++
         }
-        playSound(SoundEvents.FIRECHARGE_USE)
     }
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.dynamo.fuelDynamo

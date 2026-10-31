@@ -6,18 +6,20 @@ import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
+import net.neoforged.neoforge.common.util.ValueIOSerializable
 import net.neoforged.neoforge.transfer.TransferPreconditions
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 import java.util.function.Predicate
 
 open class HTBasicEnergyStorage(
-    override val capacity: Int,
+    private val capacityIn: Int,
     protected val canExtract: Predicate<HTTransferAccess>,
     protected val canInsert: Predicate<HTTransferAccess>,
     private val listener: Runnable?,
 ) : SnapshotJournal<Int>(),
-    HTEnergyStorage {
+    HTEnergyStorage,
+    ValueIOSerializable {
     companion object {
         @JvmStatic
         fun input(capacity: Int, listener: Runnable?): HTBasicEnergyStorage =
@@ -38,7 +40,7 @@ open class HTBasicEnergyStorage(
 
     private var amountIn: Int = 0
 
-    override val amount: Int get() = this.amountIn
+    final override val amount: Int get() = this.amountIn
 
     fun setAmount(amount: Int) {
         setAmountUnchecked(amount, true)
@@ -59,6 +61,8 @@ open class HTBasicEnergyStorage(
         }
         onRootCommit(this.amountIn)
     }
+
+    override val capacity: Int get() = this.capacityIn
 
     override fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
         TransferPreconditions.checkNonNegative(amount)
@@ -106,5 +110,5 @@ open class HTBasicEnergyStorage(
         listener?.run()
     }
 
-    override fun toString(): String = "HTBasicEnergyHandler(amount=$amountIn, capacity=$capacity)"
+    override fun toString(): String = "HTBasicEnergyStorage(amount=$amountIn, capacity=$capacity)"
 }

@@ -1,7 +1,6 @@
 package hiiragi283.lib.transfer.energy
 
 import hiiragi283.lib.transfer.HTTransferAccess
-import net.neoforged.neoforge.common.util.ValueIOSerializable
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 /**
@@ -11,9 +10,7 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
  * @author Hiiragi Tsubasa
  * @since 26.1.12
  */
-interface HTEnergyStorage :
-    HTEnergyView,
-    ValueIOSerializable {
+interface HTEnergyStorage : HTEnergyView {
     fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int
 
     fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int

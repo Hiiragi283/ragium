@@ -34,12 +34,12 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTBaseMachineBlockEntity(type, pos, state) {
     // Energy
-    protected lateinit var handler: HTBasicEnergyStorage
+    protected lateinit var storage: HTBasicEnergyStorage
         private set
 
     final override fun createEnergyStorage(listener: Runnable): HTEnergyHandlerHolder? {
         val builder: HTBasicEnergyHandlerHolder.Builder = HTBasicEnergyHandlerHolder.builder(this)
-        handler = builder.addHandler(
+        storage = builder.addHandler(
             HTSlotInfo.OUTPUT,
             HTBasicEnergyStorage.output(
                 HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
@@ -55,11 +55,11 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
     protected val currentEnergyPerTick: Int
         get() = HTMachineUpgradeHelper.modifySpeed(components(), this.baseEnergyPerTick)
 
-    protected fun generateEnergy(transaction: TransactionContext): Int = handler.insert(currentEnergyPerTick, transaction, HTTransferAccess.INTERNAL)
+    protected fun generateEnergy(transaction: TransactionContext): Int = storage.insert(currentEnergyPerTick, transaction, HTTransferAccess.INTERNAL)
 
     protected fun addEnergySlot(widgetHolder: HTWidgetHolder, x: Int, y: Int) {
-        widgetHolder += HTEnergySlotWidget(handler, x, y)
-        widgetHolder.track(handler)
+        widgetHolder += HTEnergySlotWidget(storage, x, y)
+        widgetHolder.track(storage)
     }
 
     protected fun exportEnergy(level: ServerLevel, pos: BlockPos) {

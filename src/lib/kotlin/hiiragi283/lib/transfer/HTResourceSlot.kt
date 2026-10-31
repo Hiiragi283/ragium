@@ -1,6 +1,5 @@
 package hiiragi283.lib.transfer
 
-import net.neoforged.neoforge.common.util.ValueIOSerializable
 import net.neoforged.neoforge.transfer.resource.Resource
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
@@ -12,9 +11,7 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-interface HTResourceSlot<T : Resource> :
-    HTResourceView<T>,
-    ValueIOSerializable {
+interface HTResourceSlot<T : Resource> : HTResourceView<T> {
     /**
      * 指定したリソースを保持できるかどうか判定します。
      */

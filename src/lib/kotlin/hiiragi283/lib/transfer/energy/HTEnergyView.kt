@@ -28,7 +28,7 @@ interface HTEnergyView {
     /**
      * 空き容量を取得します。
      */
-    val needed: Int get() = amount - capacity
+    val needed: Int get() = maxOf(0, capacity - amount)
 
     /**
      * 占有率を取得します。

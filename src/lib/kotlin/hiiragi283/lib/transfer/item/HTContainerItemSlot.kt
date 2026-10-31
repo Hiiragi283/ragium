@@ -4,8 +4,6 @@ import hiiragi283.lib.transfer.HTSnapshotStackResourceSlot
 import hiiragi283.lib.transfer.HTStackResourceHelper
 import net.minecraft.world.Container
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.item.ItemResource
 
 /**
@@ -41,10 +39,6 @@ class HTContainerItemSlot(val container: Container, val index: Int) :
     override fun isValid(resource: ItemResource): Boolean = container.canPlaceItem(index, resource.toStack())
 
     override fun getCapacity(resource: ItemResource): Int = container.getMaxStackSize(resource.toStack())
-
-    override fun serialize(output: ValueOutput): Unit = Unit
-
-    override fun deserialize(input: ValueInput): Unit = Unit
 
     operator fun component1(): Container = container
 

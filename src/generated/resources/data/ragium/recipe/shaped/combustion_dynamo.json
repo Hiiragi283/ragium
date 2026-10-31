@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:dusts/redstone",
+    "B": "#c:ingots/black_steel",
+    "C": "#c:gears/gold",
+    "D": "ragium:machine_parts/chemical",
+    "E": "ragium:tank"
+  },
+  "pattern": [
+    " A ",
+    "BCB",
+    "DEC"
+  ],
+  "result": {
+    "id": "ragium:combustion_dynamo"
+  }
+}

@@ -102,7 +102,7 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Alloy.SHADOW_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
                 // Other
                 for (dustLike: RagiumMaterial.DustLike in RagiumMaterial.DustLike.entries) {
-                    if (dustLike is RagiumMaterial.Other && dustLike.isVanilla) continue
+                    if (dustLike is RagiumMaterial.Other && dustLike.hasExistingDust) continue
                     putAll(dustLike, HTItemPart.DUST)
                 }
                 putAll(RagiumMaterial.Other.WOOD, HTItemPart.GEAR)

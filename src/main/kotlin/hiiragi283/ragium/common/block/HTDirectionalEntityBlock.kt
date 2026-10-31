@@ -17,8 +17,7 @@ open class HTDirectionalEntityBlock(type: HTDeferredBlockEntityType<*>, properti
         val FACING: EnumProperty<Direction> = DirectionalBlock.FACING
     }
 
-    override fun getStateForPlacement(context: BlockPlaceContext): BlockState? =
-        this.defaultBlockState().setValue(FACING, context.clickedFace.opposite)
+    override fun getStateForPlacement(context: BlockPlaceContext): BlockState? = this.defaultBlockState().setValue(FACING, context.clickedFace)
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(FACING)

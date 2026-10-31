@@ -2,25 +2,28 @@
   "variants": {
     "facing=down": {
       "model": "ragium:block/combustion_dynamo",
-      "x": 90
+      "x": 180
     },
     "facing=east": {
       "model": "ragium:block/combustion_dynamo",
+      "x": 90,
       "y": 90
     },
     "facing=north": {
-      "model": "ragium:block/combustion_dynamo"
+      "model": "ragium:block/combustion_dynamo",
+      "x": 90
     },
     "facing=south": {
       "model": "ragium:block/combustion_dynamo",
+      "x": 90,
       "y": 180
     },
     "facing=up": {
-      "model": "ragium:block/combustion_dynamo",
-      "x": 270
+      "model": "ragium:block/combustion_dynamo"
     },
     "facing=west": {
       "model": "ragium:block/combustion_dynamo",
+      "x": 90,
       "y": 270
     }
   }
