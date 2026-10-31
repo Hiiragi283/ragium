@@ -11,7 +11,7 @@
   "pattern": [
     " A ",
     "BCB",
-    "DEC"
+    "DED"
   ],
   "result": {
     "id": "ragium:fuel_dynamo"

@@ -618,7 +618,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         VanillaRecipeBuilders.shaped {
             +" A "
             +"BCB"
-            +"DEC"
+            +"DED"
             define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.COPPER) }
@@ -630,7 +630,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         VanillaRecipeBuilders.shaped {
             +" A "
             +"BCB"
-            +"DEC"
+            +"DED"
             define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.IRON) }
@@ -642,7 +642,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         VanillaRecipeBuilders.shaped {
             +" A "
             +"BCB"
-            +"DEC"
+            +"DED"
             define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
             define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.GOLD) }
