@@ -288,6 +288,8 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     }
 
     private fun centrifuging() {
+        dyes()
+
         // Honey Bottle -> Glass Bottle + Honey
         RagiumRecipeBuilders.centrifuging {
             ingredient { +holderSet(Tags.Items.DRINKS_HONEY) }
@@ -314,6 +316,111 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 amount = 250
             }
             recipeId replace id("honey_from_comb")
+        }.save(exporter)
+    }
+
+    private fun dyes() {
+        // Single
+        val single = HTColoredCollection<(HTItemIngredientBuilder.() -> Unit)?>(
+            white = {
+                items {
+                    +Items.BONE_MEAL
+                    +Items.LILY_OF_THE_VALLEY
+                }
+            },
+            orange = {
+                items {
+                    +Items.ORANGE_TULIP
+                    +Items.TORCHFLOWER
+                    +Items.OPEN_EYEBLOSSOM
+                }
+            },
+            magenta = { items { +Items.ALLIUM } },
+            lightBlue = { items { +Items.BLUE_ORCHID } },
+            yellow = {
+                items {
+                    +Items.DANDELION
+                    +Items.GOLDEN_DANDELION
+                    +Items.WILDFLOWERS
+                }
+            },
+            lime = { items { +Items.SEA_PICKLE } },
+            pink = {
+                items {
+                    +Items.CACTUS_FLOWER
+                    +Items.PINK_PETALS
+                    +Items.PINK_TULIP
+                }
+            },
+            gray = { items { +Items.CLOSED_EYEBLOSSOM } },
+            lightGray = {
+                items {
+                    +Items.AZURE_BLUET
+                    +Items.OXEYE_DAISY
+                    +Items.WHITE_TULIP
+                }
+            },
+            cyan = null,
+            purple = null,
+            blue = { items { +Items.CORNFLOWER } },
+            brown = { items { +Items.COCOA_BEANS } },
+            green = { items { +Items.CACTUS } },
+            red = {
+                items {
+                    +Items.POPPY
+                    +Items.BEETROOT
+                }
+            },
+            black = {
+                items {
+                    +Items.INK_SAC
+                    +Items.WITHER_ROSE
+                }
+            },
+        )
+        for (color: DyeColor in DyeColor.entries) {
+            val builder: HTItemIngredientBuilder.() -> Unit = single[color] ?: continue
+            RagiumRecipeBuilders.centrifuging {
+                ingredient(builder)
+                itemResult {
+                    +VanillaColoredCollections.DYE[color]
+                    count = 2
+                }
+                recipeId replace id("dyes", color.serializedName)
+            }.save(exporter)
+        }
+        // Double
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.ROSE_BUSH } }
+            itemResult {
+                +Items.RED_DYE
+                count = 4
+            }
+            recipeId replace id("dyes", "red_double")
+        }.save(exporter)
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.SUNFLOWER } }
+            itemResult {
+                +Items.YELLOW_DYE
+                count = 4
+            }
+            recipeId replace id("dyes", "yellow_double")
+        }.save(exporter)
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.PITCHER_PLANT } }
+            itemResult {
+                +Items.CYAN_DYE
+                count = 4
+            }
+            recipeId replace id("dyes", "cyan_double")
+        }.save(exporter)
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.LILAC } }
+            itemResult {
+                +Items.PINK_DYE
+                count = 4
+            }
+            recipeId replace id("dyes", "pink_double")
         }.save(exporter)
     }
 
@@ -453,7 +560,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     private fun crushing() {
         crushMaterial()
         crushWood()
-        dyes()
 
         // XX Block -> XX
         setOf(
@@ -533,6 +639,14 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             ingredient { +holderSet(Tags.Items.RODS_BREEZE) }
             result {
                 +Items.WIND_CHARGE
+                count = 6
+            }
+        }.save(exporter)
+        // Bone -> 6x Bone Meal
+        RagiumRecipeBuilders.crushing {
+            ingredient { +holderSet(Tags.Items.BONES) }
+            result {
+                +Items.BONE_MEAL
                 count = 6
             }
         }.save(exporter)
@@ -689,110 +803,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 5
             }
             recipeId suffix "_from_boats"
-        }.save(exporter)
-    }
-
-    private fun dyes() {
-        // Single
-        val single = HTColoredCollection<(HTItemIngredientBuilder.() -> Unit)?>(
-            white = {
-                items {
-                    +Items.BONE_MEAL
-                    +Items.LILY_OF_THE_VALLEY
-                }
-            },
-            orange = {
-                items {
-                    +Items.ORANGE_TULIP
-                    +Items.TORCHFLOWER
-                    +Items.OPEN_EYEBLOSSOM
-                }
-            },
-            magenta = { items { +Items.ALLIUM } },
-            lightBlue = { items { +Items.BLUE_ORCHID } },
-            yellow = {
-                items {
-                    +Items.DANDELION
-                    +Items.GOLDEN_DANDELION
-                    +Items.WILDFLOWERS
-                }
-            },
-            lime = { items { +Items.SEA_PICKLE } },
-            pink = {
-                items {
-                    +Items.CACTUS_FLOWER
-                    +Items.PINK_PETALS
-                    +Items.PINK_TULIP
-                }
-            },
-            gray = { items { +Items.CLOSED_EYEBLOSSOM } },
-            lightGray = {
-                items {
-                    +Items.AZURE_BLUET
-                    +Items.OXEYE_DAISY
-                    +Items.WHITE_TULIP
-                }
-            },
-            cyan = null,
-            purple = null,
-            blue = { items { +Items.CORNFLOWER } },
-            brown = { items { +Items.COCOA_BEANS } },
-            green = { items { +Items.CACTUS } },
-            red = {
-                items {
-                    +Items.POPPY
-                    +Items.BEETROOT
-                }
-            },
-            black = {
-                items {
-                    +Items.INK_SAC
-                    +Items.WITHER_ROSE
-                }
-            },
-        )
-        for (color: DyeColor in DyeColor.entries) {
-            val builder: HTItemIngredientBuilder.() -> Unit = single[color] ?: continue
-            RagiumRecipeBuilders.crushing {
-                ingredient(builder)
-                result {
-                    +VanillaColoredCollections.DYE[color]
-                    count = 2
-                }
-            }.save(exporter)
-        }
-        // Double
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.ROSE_BUSH } }
-            result {
-                +Items.RED_DYE
-                count = 4
-            }
-            recipeId prefix "double_"
-        }.save(exporter)
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.SUNFLOWER } }
-            result {
-                +Items.YELLOW_DYE
-                count = 4
-            }
-            recipeId prefix "double_"
-        }.save(exporter)
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.PITCHER_PLANT } }
-            result {
-                +Items.CYAN_DYE
-                count = 4
-            }
-            recipeId prefix "double_"
-        }.save(exporter)
-        RagiumRecipeBuilders.crushing {
-            ingredient { items { +Items.LILAC } }
-            result {
-                +Items.PINK_DYE
-                count = 4
-            }
-            recipeId prefix "double_"
         }.save(exporter)
     }
 

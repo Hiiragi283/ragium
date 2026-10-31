@@ -1,12 +1,14 @@
 {
-  "type": "ragium:crushing",
+  "type": "ragium:centrifuging",
   "ingredient": {
     "count": 1,
     "items": "minecraft:rose_bush"
   },
   "result": {
-    "count": 4,
-    "id": "minecraft:red_dye"
+    "item": {
+      "count": 4,
+      "id": "minecraft:red_dye"
+    }
   },
   "time": 200
 }

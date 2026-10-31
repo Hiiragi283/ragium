@@ -1,0 +1,14 @@
+{
+  "type": "ragium:centrifuging",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:sunflower"
+  },
+  "result": {
+    "item": {
+      "count": 4,
+      "id": "minecraft:yellow_dye"
+    }
+  },
+  "time": 200
+}

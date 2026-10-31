@@ -2,11 +2,11 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "items": "minecraft:sunflower"
+    "items": "#c:bones"
   },
   "result": {
-    "count": 4,
-    "id": "minecraft:yellow_dye"
+    "count": 6,
+    "id": "minecraft:bone_meal"
   },
   "time": 200
 }

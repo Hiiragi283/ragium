@@ -1,12 +1,14 @@
 {
-  "type": "ragium:crushing",
+  "type": "ragium:centrifuging",
   "ingredient": {
     "count": 1,
     "items": "minecraft:pitcher_plant"
   },
   "result": {
-    "count": 4,
-    "id": "minecraft:cyan_dye"
+    "item": {
+      "count": 4,
+      "id": "minecraft:cyan_dye"
+    }
   },
   "time": 200
 }
