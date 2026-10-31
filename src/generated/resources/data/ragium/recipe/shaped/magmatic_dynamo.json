@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:dusts/redstone",
+    "B": "#c:ingots/sooty_iron",
+    "C": "#c:gears/iron",
+    "D": "ragium:machine_parts/heat",
+    "E": "#c:buckets/lava"
+  },
+  "pattern": [
+    " A ",
+    "BCB",
+    "DEC"
+  ],
+  "result": {
+    "id": "ragium:magmatic_dynamo"
+  }
+}

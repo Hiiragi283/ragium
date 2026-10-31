@@ -46,6 +46,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         vanilla()
         decoration()
         machine()
+        dynamo()
         storage()
         upgrade()
         material()
@@ -608,6 +609,51 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result,
             builderAction,
         )
+    }
+
+    //    Dynamo    //
+
+    private fun dynamo() {
+        // Fuel
+        VanillaRecipeBuilders.shaped {
+            +" A "
+            +"BCB"
+            +"DEC"
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
+            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.COPPER) }
+            define('D') { items { +RagiumItems.getParts(HTMachineType.MECHANICAL) } }
+            define('E') { +holderSet(Tags.Items.PLAYER_WORKSTATIONS_FURNACES) }
+            result { +RagiumBlocks.FUEL_DYNAMO }
+        }.save(exporter)
+        // Magmatic
+        VanillaRecipeBuilders.shaped {
+            +" A "
+            +"BCB"
+            +"DEC"
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
+            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.IRON) }
+            define('D') { items { +RagiumItems.getParts(HTMachineType.HEAT) } }
+            define('E') { +holderSet(Tags.Items.BUCKETS_LAVA) }
+            result { +RagiumBlocks.MAGMATIC_DYNAMO }
+        }.save(exporter)
+        // Combustion
+        VanillaRecipeBuilders.shaped {
+            +" A "
+            +"BCB"
+            +"DEC"
+            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
+            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
+            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.GOLD) }
+            define('D') { items { +RagiumItems.getParts(HTMachineType.CHEMICAL) } }
+            define('E') { items { +RagiumBlocks.TANK } }
+            result { +RagiumBlocks.COMBUSTION_DYNAMO }
+        }.save(exporter)
+        // Thermal Generator
+        // Photovoltaic
+        // Fission
+        // Disenchantment
     }
 
     //    Storage    //

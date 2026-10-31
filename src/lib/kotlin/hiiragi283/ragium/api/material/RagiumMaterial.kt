@@ -245,7 +245,7 @@ sealed interface RagiumMaterial :
 
         val isPulp: Boolean get() = this == WOOD || this == PAPER
 
-        val isVanilla: Boolean get() = this == REDSTONE || this == GLOWSTONE
+        val hasExistingDust: Boolean get() = this == REDSTONE || this == GLOWSTONE
 
         override val materialName: String = name.lowercase()
     }

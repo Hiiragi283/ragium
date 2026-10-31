@@ -5,6 +5,7 @@ import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
+import net.neoforged.neoforge.common.util.ValueIOSerializable
 import net.neoforged.neoforge.transfer.TransferPreconditions
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
@@ -12,7 +13,9 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 /**
  * @see net.neoforged.neoforge.transfer.InfiniteResourceHandler
  */
-class HTCreativeFluidTank : HTFluidTank {
+class HTCreativeFluidTank :
+    HTFluidTank,
+    ValueIOSerializable {
     override fun isValid(resource: FluidResource): Boolean = resource == this.resource
 
     override fun insert(resource: FluidResource, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
