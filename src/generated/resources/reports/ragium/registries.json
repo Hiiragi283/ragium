@@ -28,7 +28,6 @@
     "cutting_machine",
     "cyan_dye",
     "echo_block",
-    "electrolyzer",
     "electronics_machine_casing",
     "enchanter",
     "engraver",
@@ -98,7 +97,6 @@
     "creative_tank",
     "crusher",
     "cutting_machine",
-    "electrolyzer",
     "enchanter",
     "engraver",
     "freezer",
@@ -259,7 +257,6 @@
     "brown_dye_bucket",
     "carbon_dioxide_bucket",
     "carbon_dust",
-    "cement",
     "centrifuge",
     "charcoal_block",
     "charcoal_dust",
@@ -296,7 +293,6 @@
     "echo_dust",
     "elder_heart",
     "electric_circuit",
-    "electrolyzer",
     "electronics_machine_casing",
     "elite_upgrade",
     "emerald_dust",
@@ -478,7 +474,6 @@
     "crushing",
     "cutting",
     "drying",
-    "electrolyzing",
     "enchanting",
     "engraving",
     "filling",
@@ -490,8 +485,7 @@
     "pyrolyzing",
     "reacting",
     "refining",
-    "resource/pumping",
-    "washing"
+    "resource/pumping"
   ],
   "minecraft:recipe_type": [
     "alloying",
@@ -503,7 +497,6 @@
     "crushing",
     "cutting",
     "drying",
-    "electrolyzing",
     "enchanting",
     "engraving",
     "filling",
@@ -515,8 +508,7 @@
     "pyrolyzing",
     "reacting",
     "refining",
-    "resource/pumping",
-    "washing"
+    "resource/pumping"
   ],
   "minecraft:slot_display": [
     "sized"

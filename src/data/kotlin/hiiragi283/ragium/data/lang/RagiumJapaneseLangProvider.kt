@@ -66,7 +66,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.RESOURCE_PUMP, "資源ポンプ")
 
         add(RagiumBlocks.BLENDER, "大型混合機")
-        add(RagiumBlocks.ELECTROLYZER, "電解機")
         add(RagiumBlocks.ENGRAVER, "レーザー加工機")
         add(RagiumBlocks.SCANNER, "レーザースキャナ")
 
@@ -144,7 +143,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
-        add(RagiumItems.CEMENT, "セメント")
         add(RagiumItems.MORTAR, "モルタル")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.STICKY_BALL, "粘着質な塊")
@@ -224,13 +222,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.BATHING, "化学洗浄")
         addRecipeType(RagiumRecipeTypes.MIXING, "混合")
         addRecipeType(RagiumRecipeTypes.REACTING, "化学反応")
-        addRecipeType(RagiumRecipeTypes.WASHING, "洗浄")
 
         addRecipeType(RagiumRecipeTypes.BREWING, "醸造")
         addRecipeType(RagiumRecipeTypes.PLANTING, "栽培")
         addRecipeType(RagiumRecipeTypes.RESOURCE_PUMPING, "資源汲み上げ")
 
-        addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
         addRecipeType(RagiumRecipeTypes.ENGRAVING, "レーザー加工")
 
         addRecipeType(RagiumRecipeTypes.ENCHANTING, "エンチャント")

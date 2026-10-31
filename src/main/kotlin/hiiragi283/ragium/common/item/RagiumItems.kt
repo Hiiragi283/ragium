@@ -58,6 +58,7 @@ data object RagiumItems {
         }
         REGISTER.addAlias("sodium_hydroxide", "alkali_hydroxide")
         REGISTER.addAlias("soda_ash_dust", "alkali_carbonate")
+        REGISTER.addAlias("cement", "mortar")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -139,9 +140,6 @@ data object RagiumItems {
 
     @JvmField
     val PARTICLE_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("particle_board")
-
-    @JvmField
-    val CEMENT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cement")
 
     @JvmField
     val MORTAR: HTSimpleDeferredItem = REGISTER.registerItem("mortar", ::HTMortarItem)

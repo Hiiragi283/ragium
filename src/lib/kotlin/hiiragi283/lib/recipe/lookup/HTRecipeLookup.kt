@@ -18,6 +18,14 @@ import net.minecraft.world.item.crafting.RecipeType
  * @since 26.1.0
  */
 fun interface HTRecipeLookup<out RECIPE : Any> {
+    companion object {
+        /**
+         * @since 26.1.13
+         */
+        @JvmField
+        val EMPTY: HTRecipeLookup<Nothing> = HTRecipeLookup { sequenceOf() }
+    }
+
     /**
      * レシピの一覧を取得します。
      */

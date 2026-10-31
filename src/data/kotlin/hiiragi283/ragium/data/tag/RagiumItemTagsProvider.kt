@@ -76,6 +76,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         builder(HTCommonTags.Items.PLASTICS).add(RagiumItems.PLASTIC_PLATE)
         builder(HTCommonTags.Items.SILICON).add(RagiumItems.CRUDE_SILICON)
 
+        builder(RagiumTags.Items.CATALYSTS_ELECTROLYZE).add(vanillaId("heart_of_the_sea"))
         builder(RagiumTags.Items.COALS)
             .add(RagiumItems.BAMBOO_CHARCOAL)
             .add(vanillaId("charcoal"))

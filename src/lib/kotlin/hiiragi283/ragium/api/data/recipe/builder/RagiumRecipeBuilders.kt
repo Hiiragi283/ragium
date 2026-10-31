@@ -25,7 +25,6 @@ import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
 import hiiragi283.ragium.api.recipe.RTDryingRecipe
-import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTEngravingRecipe
 import hiiragi283.ragium.api.recipe.RTFillingRecipe
@@ -195,14 +194,6 @@ data object RagiumRecipeBuilders {
         return RTReactingRecipeBuilder().apply(builderAction)
     }
 
-    @JvmStatic
-    inline fun washing(builderAction: RTWashingRecipeBuilder.() -> Unit): RTWashingRecipeBuilder {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return RTWashingRecipeBuilder().apply(builderAction)
-    }
-
     // Resource
     @JvmStatic
     inline fun brewing(
@@ -234,19 +225,6 @@ data object RagiumRecipeBuilders {
     }
 
     // Electronics
-    @JvmStatic
-    inline fun electrolyzing(
-        builderAction: HTFluidSeparatingRecipeBuilder<RTElectrolyzingRecipe>.() -> Unit,
-    ): HTFluidSeparatingRecipeBuilder<RTElectrolyzingRecipe> {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTFluidSeparatingRecipeBuilder(
-            RagiumConstants.ELECTROLYZING,
-            ::RTElectrolyzingRecipe,
-        ).apply(builderAction)
-    }
-
     @JvmStatic
     inline fun engraving(
         builderAction: HTSingleRecipeBuilder.Catalysed<HTItemIngredient, HTItemResult, RTEngravingRecipe>.() -> Unit,

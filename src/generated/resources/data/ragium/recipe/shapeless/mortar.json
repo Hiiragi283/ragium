@@ -3,10 +3,10 @@
   "category": "misc",
   "ingredients": [
     "#c:buckets/water",
-    "ragium:cement",
-    "ragium:cement",
-    "ragium:cement",
-    "ragium:cement"
+    "#c:sands",
+    "#c:sands",
+    "#c:dusts/quick_lime",
+    "#c:dusts/quick_lime"
   ],
   "result": {
     "count": 4,

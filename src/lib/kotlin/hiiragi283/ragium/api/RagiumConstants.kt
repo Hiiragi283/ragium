@@ -38,7 +38,6 @@ data object RagiumConstants {
     const val CHEMICAL_BATH = "chemical_bath"
     const val CHEMICAL_REACTOR = "chemical_reactor"
     const val MIXER = "mixer"
-    const val WASHER = "washer"
 
     // Resource
     const val SOLAR_GENERATOR = "solar_generator"
@@ -55,7 +54,6 @@ data object RagiumConstants {
     const val NUCLEAR_DYNAMO = "nuclear_$DYNAMO"
 
     const val BLENDER = "blender"
-    const val ELECTROLYZER = "electrolyzer"
     const val ENGRAVER = "engraver"
     const val SCANNER = "scanner"
 
@@ -89,7 +87,6 @@ data object RagiumConstants {
     const val BATHING = "bathing"
     const val MIXING = "mixing"
     const val REACTING = "reacting"
-    const val WASHING = "washing"
 
     // Resource
     const val BREWING = "brewing"
@@ -99,7 +96,6 @@ data object RagiumConstants {
     const val RESOURCE_PUMPING = "resource/pumping"
 
     // Electronics
-    const val ELECTROLYZING = "electrolyzing"
     const val ENGRAVING = "engraving"
     const val PRINTING = "printing"
 

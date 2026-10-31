@@ -1,0 +1,26 @@
+{
+  "type": "ragium:mixing",
+  "ingredients": {
+    "fluid": {
+      "amount": 500,
+      "fluids": "#c:water"
+    },
+    "items": [
+      {
+        "count": 1,
+        "items": "#c:sands"
+      },
+      {
+        "count": 1,
+        "items": "#c:dusts/quick_lime"
+      }
+    ]
+  },
+  "result": {
+    "item": {
+      "count": 2,
+      "id": "ragium:mortar"
+    }
+  },
+  "time": 200
+}

@@ -456,6 +456,18 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         chlorine()
 
         calcium()
+
+        // 2x H2O -> 2x H2 + O2
+        RagiumRecipeBuilders.reacting {
+            fluidIngredient { +waterSet() }
+            catalyst { +holderSet(RagiumTags.Items.CATALYSTS_ELECTROLYZE) }
+            fluidResult { +RagiumFluids.HYDROGEN }
+            fluidResult {
+                +RagiumFluids.OXYGEN
+                amount /= 2
+            }
+            recipeId replace id("water")
+        }.save(exporter)
     }
 
     private fun saltAndSolution(fluid: HTFluidContent, item: HTSimpleDeferredItem) {
@@ -835,8 +847,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
-        RagiumRecipeBuilders.electrolyzing {
-            ingredient { +holderSet(RagiumFluids.SALT_WATER) }
+        RagiumRecipeBuilders.reacting {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SALT) }
+            fluidIngredient { +waterSet() }
+            catalyst { +holderSet(RagiumTags.Items.CATALYSTS_ELECTROLYZE) }
             fluidResult {
                 +RagiumFluids.HYDROGEN
                 amount /= 2

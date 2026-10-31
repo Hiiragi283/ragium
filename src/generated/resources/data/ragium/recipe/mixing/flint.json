@@ -1,6 +1,6 @@
 {
-  "type": "ragium:washing",
-  "ingredient": {
+  "type": "ragium:mixing",
+  "ingredients": {
     "fluid": {
       "amount": 1000,
       "fluids": "#c:water"
@@ -11,8 +11,10 @@
     }
   },
   "result": {
-    "count": 1,
-    "id": "minecraft:flint"
+    "item": {
+      "count": 1,
+      "id": "minecraft:flint"
+    }
   },
   "time": 200
 }

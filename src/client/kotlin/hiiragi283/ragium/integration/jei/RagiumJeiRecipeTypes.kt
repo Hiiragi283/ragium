@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.recipe.viewer.RTMixingViewerRecipe
 import hiiragi283.ragium.recipe.viewer.RTReactingViewerRecipe
-import hiiragi283.ragium.recipe.viewer.RTWashingViewerRecipe
 import mezz.jei.api.recipe.types.IRecipeType
 
 data object RagiumJeiRecipeTypes {
@@ -71,9 +70,6 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val REACTING: IRecipeType<RTReactingViewerRecipe> = create(RagiumConstants.REACTING)
 
-    @JvmField
-    val WASHING: IRecipeType<RTWashingViewerRecipe> = create(RagiumConstants.WASHING)
-
     // Resource
     @JvmField
     val BREWING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.BREWING)
@@ -85,9 +81,6 @@ data object RagiumJeiRecipeTypes {
     val RESOURCE_PUMPING: IRecipeType<HTSingleToSingleViewerRecipe> = create(RagiumConstants.RESOURCE_PUMPING)
 
     // Electronics
-    @JvmField
-    val ELECTROLYZING: IRecipeType<HTFluidSeparatingViewerRecipe> = create(RagiumConstants.ELECTROLYZING)
-
     @JvmField
     val ENGRAVING: IRecipeType<HTCatalysedSingleToSingleViewerRecipe> = create(RagiumConstants.ENGRAVING)
 

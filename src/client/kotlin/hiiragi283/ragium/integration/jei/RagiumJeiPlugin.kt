@@ -28,7 +28,6 @@ import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
-import hiiragi283.ragium.api.recipe.RTWashingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
@@ -41,10 +40,8 @@ import hiiragi283.ragium.integration.jei.category.RTAssemblingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTMixingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTPlantingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTReactingRecipeCategory
-import hiiragi283.ragium.integration.jei.category.RTWashingRecipeCategory
 import hiiragi283.ragium.recipe.viewer.RTMixingViewerRecipe
 import hiiragi283.ragium.recipe.viewer.RTReactingViewerRecipe
-import hiiragi283.ragium.recipe.viewer.RTWashingViewerRecipe
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
@@ -185,7 +182,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             ),
             RTMixingRecipeCategory(guiHelper),
             RTReactingRecipeCategory(guiHelper),
-            RTWashingRecipeCategory(guiHelper),
             // Resource
             HTDoubleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.BREWING,
@@ -200,11 +196,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 guiHelper.createDrawableItemLike(RagiumBlocks.RESOURCE_PUMP),
             ),
             // Electronics
-            HTFluidSeparatingRecipeCategory(
-                RagiumJeiRecipeTypes.ELECTROLYZING,
-                RagiumRecipeTypes.ELECTROLYZING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.ELECTROLYZER),
-            ),
             HTCatalysedSingleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.ENGRAVING,
                 RagiumRecipeTypes.ENGRAVING,
@@ -259,20 +250,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 recipe.progressData,
             )
         }
-        registration.addRecipes(RagiumJeiRecipeTypes.WASHING, RagiumRecipeLookups.WASHING) { (key: RecipeKey, recipe: RTWashingRecipe) ->
-            RTWashingViewerRecipe(
-                key.identifier(),
-                recipe.itemIngredient.display(),
-                recipe.fluidIngredient.display(),
-                recipe.results.map(HTDisplayableContent::display),
-                recipe.progressData,
-            )
-        }
         // Resource
         registration.addRecipes(RagiumJeiRecipeTypes.BREWING, RagiumRecipeLookups.BREWING, HTViewerRecipeHelper::itemAndFluidToFluid)
         registration.addRecipes(RagiumJeiRecipeTypes.PLANTING, RagiumRecipeLookups.PLANTING, HTViewerRecipeHelper::singleToSingle)
         // Electronics
-        registration.addRecipes(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumRecipeLookups.ELECTROLYZING, HTViewerRecipeHelper::fluidSeparating)
         registration.addRecipes(RagiumJeiRecipeTypes.ENGRAVING, RagiumRecipeLookups.ENGRAVING, HTViewerRecipeHelper::catalysedSingleToSingle)
         registration.addRecipes(
             RagiumJeiRecipeTypes.RESOURCE_PUMPING,
@@ -428,7 +409,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RagiumJeiRecipeTypes.RESOURCE_PUMPING, RagiumBlocks.RESOURCE_PUMP)
         // Electronics
         registration.addCraftingStation(RagiumJeiRecipeTypes.ENGRAVING, RagiumBlocks.ENGRAVER)
-        registration.addCraftingStation(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
         // Arcane
         registration.addCraftingStation(RagiumJeiRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
     }

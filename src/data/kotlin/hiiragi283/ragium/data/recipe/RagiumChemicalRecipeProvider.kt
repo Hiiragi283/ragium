@@ -5,10 +5,8 @@ import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
-import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
-import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -20,8 +18,6 @@ import java.util.concurrent.CompletableFuture
 class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
-        washing()
-
         // Wood Pulp + Resin -> Particle Board
         RagiumRecipeBuilders.bathing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD) }
@@ -41,14 +37,19 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             result { +Items.STICKY_PISTON }
         }.save(exporter)
 
-        // Cement + Water -> Mortar
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { items { +RagiumItems.CEMENT } }
+        // Sand + CaO + Water -> Mortar
+        RagiumRecipeBuilders.mixing {
+            itemIngredient { +holderSet(Tags.Items.SANDS) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.QUICK_LIME) }
             fluidIngredient {
                 +waterSet()
-                amount /= 4
+                amount /= 2
             }
-            result { +RagiumItems.MORTAR }
+            itemResult {
+                +RagiumItems.MORTAR
+                count = 2
+            }
+            time /= 2
         }.save(exporter)
 
         // Poison + Spider Eye -> Fermented Spider Eye
@@ -69,67 +70,16 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             result { +Items.POISONOUS_POTATO }
         }.save(exporter)
-    }
 
-    private fun washing() {
         // Gravel + Water -> Flint
-        RagiumRecipeBuilders.washing {
+        RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(Tags.Items.GRAVELS) }
-            fluidIngredient { +waterSet() }
-            result { +Items.FLINT }
-        }.save(exporter)
-        // Sand + Water -> SiO2
-        RagiumRecipeBuilders.washing {
-            itemIngredient {
-                +holderSet(Tags.Items.SANDS)
-                count = 8
-            }
-            fluidIngredient { +waterSet() }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SILICA)
-                count = 3
-            }
-            recipeId suffix "_from_sands"
-        }.save(exporter)
-        // Clay + Water -> Al2O3 + SiO2
-        RagiumRecipeBuilders.washing {
-            itemIngredient {
-                items { +Items.CLAY_BALL }
-                count = 16
-            }
-            fluidIngredient { +waterSet() }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SILICA)
-                count = 3
-            }
-            recipeId suffix "_from_clay_ball"
-        }.save(exporter)
-
-        RagiumRecipeBuilders.washing {
-            itemIngredient {
-                items { +Items.CLAY }
-                count = 4
-            }
-            fluidIngredient { +waterSet() }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SILICA)
-                count = 3
-            }
-            recipeId suffix "_from_clay"
-        }.save(exporter)
-
-        // Ancient Debris -> Netherite Scrap
-        RagiumRecipeBuilders.washing {
-            itemIngredient { items { +Items.ANCIENT_DEBRIS } }
             fluidIngredient {
-                +holderSet(RagiumFluids.HYDROFLUORIC_ACID)
+                +waterSet()
                 amount /= 4
             }
-            result {
-                +Items.NETHERITE_SCRAP
-                count = 3
-            }
-            recipeId suffix "_from_debris"
+            itemResult { +Items.FLINT }
+            time /= 4
         }.save(exporter)
     }
 

@@ -183,9 +183,6 @@ data object RagiumConfig {
             val blender: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.BLENDER, 64)
 
             @JvmField
-            val electrolyzer: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.ELECTROLYZER, 64)
-
-            @JvmField
             val engraver: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.ENGRAVER, 64)
 
             @JvmField

@@ -71,6 +71,12 @@ data object RagiumTags {
      */
     data object Items {
         /**
+         * @since 26.1.13
+         */
+        @JvmField
+        val CATALYSTS_ELECTROLYZE: TagKey<Item> = create("catalysts", "electrolyze")
+
+        /**
          * @since 26.1.7
          */
         @JvmField

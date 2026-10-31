@@ -70,7 +70,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.RESOURCE_PUMP, "Resource Pump")
 
         add(RagiumBlocks.BLENDER, "Blender")
-        add(RagiumBlocks.ELECTROLYZER, "Electrolyzer")
         add(RagiumBlocks.ENGRAVER, "Laser Engraver")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
@@ -148,7 +147,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
-        add(RagiumItems.CEMENT, "Cement")
         add(RagiumItems.MORTAR, "Mortar")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.STICKY_BALL, "Sticky Ball")
@@ -228,13 +226,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.BATHING, "Chemical Bathing")
         addRecipeType(RagiumRecipeTypes.MIXING, "Mixing")
         addRecipeType(RagiumRecipeTypes.REACTING, "Chemical Reacting")
-        addRecipeType(RagiumRecipeTypes.WASHING, "Washing")
 
         addRecipeType(RagiumRecipeTypes.BREWING, "Brewing")
         addRecipeType(RagiumRecipeTypes.PLANTING, "Planting")
         addRecipeType(RagiumRecipeTypes.RESOURCE_PUMPING, "Resource Pumping")
 
-        addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
         addRecipeType(RagiumRecipeTypes.ENGRAVING, "Laser Engraving")
 
         addRecipeType(RagiumRecipeTypes.ENCHANTING, "Enchanting")

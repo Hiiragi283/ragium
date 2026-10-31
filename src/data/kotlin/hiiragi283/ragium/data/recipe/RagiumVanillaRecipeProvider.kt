@@ -85,19 +85,11 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 count = 4
             }
         }.save(exporter)
-        // Cement
-        VanillaRecipeBuilders.shapeless {
-            ingredient { +holderSet(Tags.Items.SANDS) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.QUICK_LIME) }
-            result {
-                +RagiumItems.CEMENT
-                count = 2
-            }
-        }.save(exporter)
         // Mortar
         VanillaRecipeBuilders.shapeless {
             ingredient { +holderSet(Tags.Items.BUCKETS_WATER) }
-            repeat(4) { ingredient { items { +RagiumItems.CEMENT } } }
+            repeat(2) { ingredient { +holderSet(Tags.Items.SANDS) } }
+            repeat(2) { ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.QUICK_LIME) } }
             result {
                 +RagiumItems.MORTAR
                 count = 4
@@ -499,7 +491,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
 
         electronics(RagiumBlocks.BLENDER) { items { +RagiumBlocks.MIXER } }
-        electronics(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
         // Arcane
         arcane(RagiumBlocks.ENCHANTER) { items { +Items.ENCHANTING_TABLE } }
         // Other

@@ -93,7 +93,6 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
         RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
 
-        RagiumRecipeLookups.ELECTROLYZING.fromRecipeType(RagiumRecipeTypes.ELECTROLYZING, identity())
         RagiumRecipeLookups.ENGRAVING.fromRecipeType(RagiumRecipeTypes.ENGRAVING, identity())
         // runtime recipes
         RagiumRecipeLookups.CENTRIFUGING.addRecipes(
