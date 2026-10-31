@@ -11,6 +11,7 @@ import hiiragi283.lib.recipe.viewer.HTSingleToSingleViewerRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.recipe.viewer.RTMixingViewerRecipe
+import hiiragi283.ragium.recipe.viewer.RTReactingViewerRecipe
 import hiiragi283.ragium.recipe.viewer.RTWashingViewerRecipe
 import mezz.jei.api.recipe.types.IRecipeType
 
@@ -63,7 +64,8 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val MIXING: IRecipeType<RTMixingViewerRecipe> = create(RagiumConstants.MIXING)
 
-    // val REACTING: IRecipeType<RTReactingViewerRecipe> = create(RagiumConstants.REACTING) TODO
+    @JvmField
+    val REACTING: IRecipeType<RTReactingViewerRecipe> = create(RagiumConstants.REACTING)
 
     @JvmField
     val WASHING: IRecipeType<RTWashingViewerRecipe> = create(RagiumConstants.WASHING)

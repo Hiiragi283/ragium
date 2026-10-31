@@ -10,6 +10,7 @@ import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.ingredient.HTListItemOrFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -29,6 +30,7 @@ class RTMixingRecipeBuilder : HTProgressRecipeBuilder<RTMixingRecipe>(RagiumCons
 
     override fun createRecipe(): RTMixingRecipe = RTMixingRecipe(
         Ior.fromNullable(itemIngredients.toNelOrNull(), fluidIngredients.toNelOrNull())
+            ?.let(::HTListItemOrFluidIngredient)
             ?: error("Either item or fluid ingredient required"),
         result,
         progressData,

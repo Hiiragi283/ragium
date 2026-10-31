@@ -1,15 +1,17 @@
 {
   "type": "ragium:reacting",
-  "ingredients": [
-    {
-      "amount": 1000,
-      "fluids": "#c:aromatic_compound"
-    },
-    {
-      "amount": 1000,
-      "fluids": "#c:nitric_acid"
-    }
-  ],
+  "ingredients": {
+    "fluids": [
+      {
+        "amount": 1000,
+        "fluids": "#c:aromatic_compound"
+      },
+      {
+        "amount": 1000,
+        "fluids": "#c:nitric_acid"
+      }
+    ]
+  },
   "result": {
     "fluid": {
       "amount": 1000,

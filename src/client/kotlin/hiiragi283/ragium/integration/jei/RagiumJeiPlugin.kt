@@ -25,6 +25,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
+import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
 import hiiragi283.ragium.api.recipe.RTWashingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
@@ -38,8 +39,10 @@ import hiiragi283.ragium.integration.jei.category.RTAlloyingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTAssemblingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTMixingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTPlantingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTReactingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTWashingRecipeCategory
 import hiiragi283.ragium.recipe.viewer.RTMixingViewerRecipe
+import hiiragi283.ragium.recipe.viewer.RTReactingViewerRecipe
 import hiiragi283.ragium.recipe.viewer.RTWashingViewerRecipe
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
@@ -175,7 +178,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 HTBackgroundType.INPUT,
             ),
             RTMixingRecipeCategory(guiHelper),
-            // RTReactingRecipeCategory(guiHelper),
+            RTReactingRecipeCategory(guiHelper),
             RTWashingRecipeCategory(guiHelper),
             // Resource
             HTDoubleToSingleViewerRecipeCategory(
@@ -231,14 +234,24 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING) { (key: RecipeKey, recipe: RTMixingRecipe) ->
             RTMixingViewerRecipe(
                 key.identifier(),
-                recipe.ingredients.getLeft()?.map(HTDisplayableContent::display) ?: listOf(),
-                recipe.ingredients.getRight()?.map(HTDisplayableContent::display) ?: listOf(),
-                recipe.result.content.getLeft()?.display().toOptional(),
-                recipe.result.content.getRight()?.display().toOptional(),
+                recipe.ingredients.itemDisplays(),
+                recipe.ingredients.fluidDisplays(),
+                recipe.result.itemDisplay().toOptional(),
+                recipe.result.fluidDisplay().toOptional(),
                 recipe.progressData,
             )
         }
-        // registration.addRecipes(RagiumJeiRecipeTypes.REACTING, RagiumRecipeLookups.REACTING)
+        registration.addRecipes(RagiumJeiRecipeTypes.REACTING, RagiumRecipeLookups.REACTING) { (key: RecipeKey, recipe: RTReactingRecipe) ->
+            RTReactingViewerRecipe(
+                key.identifier(),
+                recipe.ingredients.itemDisplays(),
+                recipe.ingredients.fluidDisplays(),
+                recipe.catalyst.display(),
+                recipe.result.itemDisplay().toOptional(),
+                recipe.result.fluidDisplay().toOptional(),
+                recipe.progressData,
+            )
+        }
         registration.addRecipes(RagiumJeiRecipeTypes.WASHING, RagiumRecipeLookups.WASHING) { (key: RecipeKey, recipe: RTWashingRecipe) ->
             RTWashingViewerRecipe(
                 key.identifier(),

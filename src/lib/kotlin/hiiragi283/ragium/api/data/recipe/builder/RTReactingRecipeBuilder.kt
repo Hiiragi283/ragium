@@ -2,14 +2,17 @@
 
 package hiiragi283.ragium.api.data.recipe.builder
 
-import hiiragi283.lib.collection.toNel
+import hiiragi283.lib.collection.toNelOrNull
 import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
+import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
 import hiiragi283.lib.data.recipe.ingredient.IngredientBuilder
 import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
+import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.ingredient.HTListItemOrFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -28,16 +31,35 @@ import kotlin.contracts.contract
 class RTReactingRecipeBuilder : HTProgressRecipeBuilder<RTReactingRecipe>(RagiumConstants.REACTING) {
     override fun getRecipeId(): Identifier? = result.getId()
 
-    override fun createRecipe(): RTReactingRecipe = RTReactingRecipe(fluidIngredients.toNel(), catalyst, result, progressData)
+    override fun createRecipe(): RTReactingRecipe = RTReactingRecipe(
+        Ior.fromNullable(itemIngredients.toNelOrNull(), fluidIngredients.toNelOrNull())
+            ?.let(::HTListItemOrFluidIngredient)
+            ?: error("Either item or fluid ingredient required"),
+        catalyst,
+        result,
+        progressData,
+    )
 
     // Ingredients
+    private val itemIngredients: MutableList<HTItemIngredient> = ObjectArrayList()
     private val fluidIngredients: MutableList<HTFluidIngredient> = ObjectArrayList()
+
+    operator fun HTItemIngredient.unaryPlus() {
+        itemIngredients += this
+    }
 
     operator fun HTFluidIngredient.unaryPlus() {
         fluidIngredients += this
     }
 
-    inline fun ingredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
+    inline fun itemIngredient(builderAction: HTItemIngredientBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        +HTItemIngredientBuilder.build(builderAction)
+    }
+
+    inline fun fluidIngredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }

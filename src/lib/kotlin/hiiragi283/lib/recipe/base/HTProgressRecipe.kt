@@ -35,6 +35,16 @@ interface HTProgressRecipe<INPUT : RecipeInput> {
         fun getProgressData(first: INPUT_A, second: INPUT_B): HTProgressData
     }
 
+    //    Triple    //
+
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.12
+     */
+    interface Triple<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, INPUT_C : Any> : HTProgressRecipe<INPUT> {
+        fun getProgressData(first: INPUT_A, second: INPUT_B, third: INPUT_C): HTProgressData
+    }
+
     //    Static    //
 
     /**

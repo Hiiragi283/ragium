@@ -354,11 +354,11 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     private fun plastic() {
         // Natural Gas + O2 -> Molten Plastic
         RagiumRecipeBuilders.reacting {
-            ingredient {
+            fluidIngredient {
                 +holderSet(RagiumFluids.NATURAL_GAS)
                 amount /= 2
             }
-            ingredient {
+            fluidIngredient {
                 +holderSet(RagiumFluids.OXYGEN)
                 amount /= 4
             }
@@ -426,14 +426,14 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
         // Alcohol + (Ag) -> Aldehyde
         RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumTags.Fluids.ALCOHOLS) }
+            fluidIngredient { +holderSet(RagiumTags.Fluids.ALCOHOLS) }
             catalyst { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.SILVER) }
             fluidResult { +RagiumFluids.ALDEHYDE }
         }.save(exporter)
         // Aromatic Compound + Aldehyde -> Synthetic Resin
         RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
-            ingredient { +holderSet(RagiumTags.Fluids.ALDEHYDES) }
+            fluidIngredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
+            fluidIngredient { +holderSet(RagiumTags.Fluids.ALDEHYDES) }
             fluidResult {
                 +RagiumFluids.SYNTHETIC_RESIN
                 amount *= 2
@@ -522,8 +522,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     private fun explosive() {
         // Aromatic Compound + HNO3 -> Liquid Explosive
         RagiumRecipeBuilders.reacting {
-            ingredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
-            ingredient { +holderSet(RagiumFluids.NITRIC_ACID) }
+            fluidIngredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
+            fluidIngredient { +holderSet(RagiumFluids.NITRIC_ACID) }
             fluidResult { +RagiumFluids.LIQUID_EXPLOSIVE }
         }.save(exporter)
 

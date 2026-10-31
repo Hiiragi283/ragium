@@ -9,6 +9,7 @@ import hiiragi283.lib.util.Ior
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.crafting.display.SlotDisplay
 
 /**
  * アイテムまたは液体の完成品を保持するクラスです。
@@ -42,4 +43,8 @@ data class HTItemOrFluidResult(val content: Ior<HTItemResult, HTFluidResult>) : 
         val (item: HTItemResult?, fluid: HTFluidResult?) = content.toPair()
         return HTItemAndFluidStack(item.createOrEmpty(), fluid.createOrEmpty())
     }
+
+    fun itemDisplay(): SlotDisplay? = content.getLeft()?.display()
+
+    fun fluidDisplay(): SlotDisplay? = content.getRight()?.display()
 }

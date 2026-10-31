@@ -1,9 +1,11 @@
 {
   "type": "ragium:reacting",
   "catalyst": "#c:dusts/silver",
-  "ingredient": {
-    "amount": 1000,
-    "fluids": "#ragium:alcohols"
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#ragium:alcohols"
+    }
   },
   "result": {
     "fluid": {

@@ -1,6 +1,6 @@
 {
   "type": "ragium:mixing",
-  "ingredient": {
+  "ingredients": {
     "fluids": [
       {
         "amount": 1000,

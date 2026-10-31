@@ -1,15 +1,17 @@
 {
   "type": "ragium:reacting",
-  "ingredients": [
-    {
-      "amount": 500,
-      "fluids": "#c:natural_gas"
-    },
-    {
-      "amount": 250,
-      "fluids": "#c:oxygen"
-    }
-  ],
+  "ingredients": {
+    "fluids": [
+      {
+        "amount": 500,
+        "fluids": "#c:natural_gas"
+      },
+      {
+        "amount": 250,
+        "fluids": "#c:oxygen"
+      }
+    ]
+  },
   "result": {
     "fluid": {
       "amount": 180,
