@@ -265,8 +265,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumTranslation.TOOLTIPS_SULFUR, "石炭鉱石からドロップします")
         add(RagiumTranslation.TOOLTIPS_CINNABAR, "レッドストーン鉱石からドロップします")
-        add(RagiumTranslation.TOOLTIPS_FLUORITE, "ラピスラズリ鉱石からドロップします")
+        add(RagiumTranslation.TOOLTIPS_APATITE, "ラピスラズリ鉱石からドロップします")
         add(RagiumTranslation.TOOLTIPS_CARBON, "ダイヤモンド鉱石からドロップします")
+        add(RagiumTranslation.TOOLTIPS_FLUORITE, "水晶鉱石からドロップします")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"スキャン済み: %1$s")
         add(RagiumTranslation.TOOLTIPS_UPGRADE_SPEED, $$"処理速度: %1$s")

@@ -362,7 +362,8 @@ data object RagiumItems {
 
         setTooltip(getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SULFUR), RagiumTranslation.TOOLTIPS_SULFUR)
         setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CINNABAR), RagiumTranslation.TOOLTIPS_CINNABAR)
-        setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE), RagiumTranslation.TOOLTIPS_FLUORITE)
+        setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.APATITE), RagiumTranslation.TOOLTIPS_APATITE)
         setTooltip(getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.CARBON), RagiumTranslation.TOOLTIPS_CARBON)
+        setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE), RagiumTranslation.TOOLTIPS_FLUORITE)
     }
 }

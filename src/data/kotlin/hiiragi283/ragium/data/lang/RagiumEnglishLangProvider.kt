@@ -269,8 +269,9 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumTranslation.TOOLTIPS_SULFUR, "Dropped from Coal Ores")
         add(RagiumTranslation.TOOLTIPS_CINNABAR, "Dropped from Redstone Ores")
-        add(RagiumTranslation.TOOLTIPS_FLUORITE, "Dropped from Lapis Lazuri Ores")
+        add(RagiumTranslation.TOOLTIPS_APATITE, "Dropped from Lapis Lazuri Ores")
         add(RagiumTranslation.TOOLTIPS_CARBON, "Dropped from Diamond Ores")
+        add(RagiumTranslation.TOOLTIPS_FLUORITE, "Dropped from Quartz Ores")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"Scanned Item: %1$s")
         add(RagiumTranslation.TOOLTIPS_UPGRADE_SPEED, $$"Speed: %1$s")

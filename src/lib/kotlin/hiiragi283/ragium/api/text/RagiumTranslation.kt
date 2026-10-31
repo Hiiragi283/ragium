@@ -20,8 +20,9 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     // Tooltips
     TOOLTIPS_SULFUR(HTConstants.TOOLTIP, "sulfur"),
     TOOLTIPS_CINNABAR(HTConstants.TOOLTIP, "cinnabar"),
-    TOOLTIPS_FLUORITE(HTConstants.TOOLTIP, "fluorite"),
+    TOOLTIPS_APATITE(HTConstants.TOOLTIP, "apatite"),
     TOOLTIPS_CARBON(HTConstants.TOOLTIP, "carbon"),
+    TOOLTIPS_FLUORITE(HTConstants.TOOLTIP, "fluorite"),
 
     TOOLTIPS_MEMORY_DISC_DATA(HTConstants.TOOLTIP, "memory_disc_data"),
     TOOLTIPS_UPGRADE_SPEED(HTConstants.TOOLTIP, HTConstants.UPGRADE, HTConstants.SPEED),

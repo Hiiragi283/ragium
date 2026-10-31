@@ -19,10 +19,13 @@ data object RagiumGlobalLootTables {
     val CINNABAR_FROM_REDSTONE_ORES: ResourceKey<LootTable> = create("cinnabar_from_redstone_ores")
 
     @JvmField
-    val FLUORITE_FROM_LAPIS_ORES: ResourceKey<LootTable> = create("fluorite_from_lapis_ores")
+    val APATITE_FROM_LAPIS_ORES: ResourceKey<LootTable> = create("apatite_from_lapis_ores")
 
     @JvmField
     val CARBON_FROM_DIAMOND_ORES: ResourceKey<LootTable> = create("carbon_from_diamond_ores")
+
+    @JvmField
+    val FLUORITE_FROM_QUARTZ_ORES: ResourceKey<LootTable> = create("fluorite_from_quartz_ores")
 
     //    Entity    //
 

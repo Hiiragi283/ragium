@@ -2,7 +2,7 @@
   "type": "ragium:mixing",
   "ingredients": {
     "fluid": {
-      "amount": 1000,
+      "amount": 250,
       "fluids": "#c:water"
     },
     "item": {
@@ -16,5 +16,5 @@
       "id": "minecraft:flint"
     }
   },
-  "time": 200
+  "time": 50
 }

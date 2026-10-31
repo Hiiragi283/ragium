@@ -2,7 +2,7 @@
   "type": "neoforge:add_table",
   "conditions": [
     {
-      "blocks": "#minecraft:diamond_ores",
+      "blocks": "#c:ores/diamond",
       "condition": "ragium:block_set"
     }
   ],

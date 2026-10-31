@@ -2,10 +2,10 @@
   "type": "neoforge:add_table",
   "conditions": [
     {
-      "blocks": "#minecraft:lapis_ores",
+      "blocks": "#c:ores/quartz",
       "condition": "ragium:block_set"
     }
   ],
   "priority": 0,
-  "table": "ragium:modifiers/fluorite_from_lapis_ores"
+  "table": "ragium:modifiers/fluorite_from_quartz_ores"
 }

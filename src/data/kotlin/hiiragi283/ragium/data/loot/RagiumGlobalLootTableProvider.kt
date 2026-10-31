@@ -47,10 +47,10 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
                 },
             )
             output.accept(
-                RagiumGlobalLootTables.FLUORITE_FROM_LAPIS_ORES,
+                RagiumGlobalLootTables.APATITE_FROM_LAPIS_ORES,
                 buildTable {
                     pool {
-                        +item(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE)
+                        +item(HTItemPart.GEM, RagiumMaterial.Gem.APATITE)
                             .apply(ApplyBonusCount.addOreBonusCount(fortune))
                     }
                 },
@@ -60,6 +60,15 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
                 buildTable {
                     pool {
                         +item(HTItemPart.DUST, RagiumMaterial.Chemical.CARBON)
+                            .apply(ApplyBonusCount.addOreBonusCount(fortune))
+                    }
+                },
+            )
+            output.accept(
+                RagiumGlobalLootTables.FLUORITE_FROM_QUARTZ_ORES,
+                buildTable {
+                    pool {
+                        +item(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE)
                             .apply(ApplyBonusCount.addOreBonusCount(fortune))
                     }
                 },
