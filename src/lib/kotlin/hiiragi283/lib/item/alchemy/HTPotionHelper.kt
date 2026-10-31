@@ -1,5 +1,6 @@
 package hiiragi283.lib.item.alchemy
 
+import com.mojang.serialization.DataResult
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.text.Text
@@ -34,8 +35,7 @@ data object HTPotionHelper {
      * @return 値を保持していない場合は[PotionContents.EMPTY]
      */
     @JvmStatic
-    fun getContentsOrEmpty(getter: DataComponentGetter): PotionContents =
-        getter.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
+    fun getContentsOrEmpty(getter: DataComponentGetter): PotionContents = getter.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
 
     /**
      * 指定した[getter]から[PotionContents]を取得します。
@@ -43,8 +43,7 @@ data object HTPotionHelper {
      * @since 26.1.8
      */
     @JvmStatic
-    fun getContentsNotEmpty(getter: DataComponentGetter): PotionContents? =
-        getContentsOrEmpty(getter).takeUnless(::isEmpty)
+    fun getContentsNotEmpty(getter: DataComponentGetter): PotionContents? = getContentsOrEmpty(getter).takeUnless(::isEmpty)
 
     /**
      * 指定した[contents]が空かどうか判定します。
@@ -98,66 +97,62 @@ data object HTPotionHelper {
     // Name
 
     @JvmStatic
-    fun getPotionName(getter: DataComponentGetter, bottleType: HTBottleType): Text =
-        getPotionName(getContentsOrEmpty(getter), bottleType)
+    fun getPotionName(getter: DataComponentGetter, bottleType: HTBottleType): Text = getPotionName(getContentsOrEmpty(getter), bottleType)
 
     @JvmStatic
-    fun getPotionName(contents: PotionContents, bottleType: HTBottleType): Text =
-        contents.getName("${bottleType.filledItem.translationKey}.effect.")
+    fun getPotionName(contents: PotionContents, bottleType: HTBottleType): Text = contents.getName("${bottleType.filledItem.translationKey}.effect.")
 
     //    ItemStack    //
 
     // Filled Bottle
 
     @JvmStatic
-    fun createFilled(getter: DataComponentGetter, bottleType: HTBottleType): Result<ItemStackTemplate> =
+    fun createFilled(getter: DataComponentGetter, bottleType: HTBottleType): DataResult<ItemStackTemplate> =
         createFilled(getContentsOrEmpty(getter), bottleType)
 
     @JvmStatic
-    fun createFilled(potion: Holder<Potion>, bottleType: HTBottleType): Result<ItemStackTemplate> =
+    fun createFilled(potion: Holder<Potion>, bottleType: HTBottleType): DataResult<ItemStackTemplate> =
         createFilled(PotionContents(potion), bottleType)
 
     @JvmStatic
-    fun createFilled(contents: PotionContents, bottleType: HTBottleType): Result<ItemStackTemplate> =
+    fun createFilled(contents: PotionContents, bottleType: HTBottleType): DataResult<ItemStackTemplate> =
         bottleType.filledItem.asTemplate(patch = createPotionPatch(contents))
 
     // Bucket
 
     @JvmStatic
-    fun createBuket(getter: DataComponentGetter): Result<ItemStackTemplate> =
-        getContentsOrEmpty(getter).let(::createBuket)
+    fun createBuket(getter: DataComponentGetter): DataResult<ItemStackTemplate> = getContentsOrEmpty(getter).let(::createBuket)
 
     @JvmStatic
-    fun createBuket(potion: Holder<Potion>): Result<ItemStackTemplate> = createBuket(PotionContents(potion))
+    fun createBuket(potion: Holder<Potion>): DataResult<ItemStackTemplate> = createBuket(PotionContents(potion))
 
     @JvmStatic
-    fun createBuket(contents: PotionContents): Result<ItemStackTemplate> = when {
-        isEmpty(contents) -> Result.failure(IllegalStateException("Could not create Filled Bucket for empty potion"))
+    fun createBuket(contents: PotionContents): DataResult<ItemStackTemplate> = when {
+        isEmpty(contents) -> DataResult.error { "Could not create Filled Bucket for empty potion" }
 
-        isWater(contents) -> Result.success(ItemStackTemplate(Items.WATER_BUCKET))
+        isWater(contents) -> DataResult.success(ItemStackTemplate(Items.WATER_BUCKET))
 
         else -> HTPotionFluidAccess.INSTANCE.fluidContent.bucketHolder.asTemplate(
-            patch = createPotionPatch(contents)
+            patch = createPotionPatch(contents),
         )
     }
 
     //    FluidStack    //
 
     @JvmStatic
-    fun createFluid(getter: DataComponentGetter, amount: Int = FluidType.BUCKET_VOLUME): Result<FluidStackTemplate> =
+    fun createFluid(getter: DataComponentGetter, amount: Int = FluidType.BUCKET_VOLUME): DataResult<FluidStackTemplate> =
         createFluid(getContentsOrEmpty(getter), amount)
 
     @JvmStatic
-    fun createFluid(potion: Holder<Potion>, amount: Int = FluidType.BUCKET_VOLUME): Result<FluidStackTemplate> = when {
-        isWater(potion) -> Result.success(FluidStackTemplate(Fluids.WATER, amount))
+    fun createFluid(potion: Holder<Potion>, amount: Int = FluidType.BUCKET_VOLUME): DataResult<FluidStackTemplate> = when {
+        isWater(potion) -> DataResult.success(FluidStackTemplate(Fluids.WATER, amount))
         else -> HTPotionFluidAccess.INSTANCE.fluidContent.asTemplate(amount, createPotionPatch(potion))
     }
 
     @JvmStatic
-    fun createFluid(contents: PotionContents, amount: Int = FluidType.BUCKET_VOLUME): Result<FluidStackTemplate> =
-        when {
-            isEmpty(contents) -> Result.failure(IllegalStateException("Could not create FluidStack for empty potion"))
-            isWater(contents) -> Result.success(FluidStackTemplate(Fluids.WATER, amount))
-            else -> HTPotionFluidAccess.INSTANCE.fluidContent.asTemplate(amount, createPotionPatch(contents))
-        }
+    fun createFluid(contents: PotionContents, amount: Int = FluidType.BUCKET_VOLUME): DataResult<FluidStackTemplate> = when {
+        isEmpty(contents) -> DataResult.error { "Could not create FluidStack for empty potion" }
+        isWater(contents) -> DataResult.success(FluidStackTemplate(Fluids.WATER, amount))
+        else -> HTPotionFluidAccess.INSTANCE.fluidContent.asTemplate(amount, createPotionPatch(contents))
+    }
 }

@@ -14,10 +14,7 @@ import net.minecraft.world.level.block.Block
  */
 @JvmRecord
 data class BlockItemKey(val block: ResourceKey<Block>, val item: ResourceKey<Item>) {
-    constructor(location: Identifier) : this(
-        Registries.BLOCK.createKey(location),
-        Registries.ITEM.createKey(location)
-    )
+    constructor(location: Identifier) : this(Registries.BLOCK.createKey(location), Registries.ITEM.createKey(location))
 
     constructor(namespace: String, path: String) : this(namespace.toId(path))
 }

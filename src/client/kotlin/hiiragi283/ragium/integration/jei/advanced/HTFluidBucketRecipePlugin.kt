@@ -1,10 +1,13 @@
 package hiiragi283.ragium.integration.jei.advanced
 
+import hiiragi283.lib.collection.nel
 import hiiragi283.lib.fluid.createBucket
-import hiiragi283.lib.integration.jei.HTJeiRecipeHelper
-import hiiragi283.lib.integration.jei.HTJeiRecipeHolder
 import hiiragi283.lib.integration.jei.getIngredient
-import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
+import hiiragi283.lib.item.toTemplateOrNull
+import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
+import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
+import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
+import hiiragi283.lib.util.Ior
 import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTBucketFillingRecipe
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
@@ -54,21 +57,22 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
                 return when (focus.role) {
                     // Filled Bucket -> Empty Bucket + Fluid
                     RecipeIngredientRole.INPUT if recipeType == RagiumJeiRecipeTypes.CENTRIFUGING ->
-                        RagiumRecipeBuilders.centrifuging {
-                            +HTJeiRecipeHelper.fakeItem(filledBucket)
-                            itemResult { from(remainder) }
-                            fluidResult { from(fluidIn) }
-                            progressData = RTBucketCentrifugingRecipe.progressData
-                        }.buildSynthetic(::HTJeiRecipeHolder)
+                        HTItemSeparatingViewerRecipe(
+                            null,
+                            HTSlotDisplayHelper.create(filledBucket),
+                            Ior.Both(HTSlotDisplayHelper.create(remainder).nel(), HTSlotDisplayHelper.create(fluidIn)),
+                            RTBucketCentrifugingRecipe.progressData,
+                        )
 
                     // Empty Bucket + Fluid -> Filled Bucket
                     RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.FILLING ->
-                        RagiumRecipeBuilders.filling {
-                            +HTJeiRecipeHelper.fakeItem(remainder)
-                            +HTJeiRecipeHelper.fakeFluid(fluidIn)
-                            result { from(filledBucket) }
-                            progressData = RTBucketFillingRecipe.progressData
-                        }.buildSynthetic(::HTJeiRecipeHolder)
+                        HTDoubleToSingleViewerRecipe(
+                            null,
+                            HTSlotDisplayHelper.create(remainder),
+                            HTSlotDisplayHelper.create(fluidIn),
+                            HTSlotDisplayHelper.create(filledBucket),
+                            RTBucketFillingRecipe.progressData,
+                        )
 
                     else -> null
                 }.let(::listOfNotNull).filterIsInstance(recipeType.recipeClass)
@@ -76,24 +80,25 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
         }
         // 液体を選択中の場合
         val fluid: FluidStack = focus.getIngredient(NeoForgeTypes.FLUID_STACK) ?: return listOf()
-        val bucket: ItemStack = fluid.createBucket()
+        val bucket: ItemStackTemplate = fluid.createBucket().toTemplateOrNull() ?: return listOf()
         val remainder: ItemStackTemplate = bucket.craftingRemainder ?: return listOf()
         return when (focus.role) {
             RecipeIngredientRole.INPUT if recipeType == RagiumJeiRecipeTypes.FILLING ->
-                RagiumRecipeBuilders.filling {
-                    +HTJeiRecipeHelper.fakeItem(remainder)
-                    +HTJeiRecipeHelper.fakeFluid(fluid)
-                    result { from(bucket) }
-                    progressData = RTBucketFillingRecipe.progressData
-                }.buildSynthetic(::HTJeiRecipeHolder)
+                HTDoubleToSingleViewerRecipe(
+                    null,
+                    HTSlotDisplayHelper.create(remainder),
+                    HTSlotDisplayHelper.create(fluid),
+                    HTSlotDisplayHelper.create(bucket),
+                    RTBucketFillingRecipe.progressData,
+                )
 
             RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.CENTRIFUGING ->
-                RagiumRecipeBuilders.centrifuging {
-                    +HTJeiRecipeHelper.fakeItem(bucket)
-                    itemResult { from(remainder) }
-                    fluidResult { from(fluid) }
-                    progressData = RTBucketCentrifugingRecipe.progressData
-                }.buildSynthetic(::HTJeiRecipeHolder)
+                HTItemSeparatingViewerRecipe(
+                    null,
+                    HTSlotDisplayHelper.create(bucket),
+                    Ior.Both(HTSlotDisplayHelper.create(remainder).nel(), HTSlotDisplayHelper.create(fluid)),
+                    RTBucketCentrifugingRecipe.progressData,
+                )
 
             else -> null
         }.let(::listOfNotNull).filterIsInstance(recipeType.recipeClass)

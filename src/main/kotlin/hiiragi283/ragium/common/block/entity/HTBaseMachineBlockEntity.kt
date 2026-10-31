@@ -3,11 +3,9 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.ragium.api.machine.HTMachineUpgrade
 import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
-import hiiragi283.ragium.common.block.HTHorizontalEntityBlock
-import hiiragi283.ragium.common.block.HTMachineBlock
+import hiiragi283.ragium.common.block.RagiumBlockStateProperties
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -16,13 +14,11 @@ import java.util.function.IntSupplier
 abstract class HTBaseMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(type, pos, state),
     HTBlockEntityWithMenu {
-    protected fun getTankCapacity(): IntSupplier = RagiumConfig.SERVER.machine.tankCapacity
-
-    fun getFront(): Direction = this.blockState.getValue(HTHorizontalEntityBlock.FACING)
+    protected fun getTankCapacity(): IntSupplier = RagiumConfig.SERVER.machineTankCapacity
 
     fun isActive(): Boolean = isActive(this.blockState)
 
-    fun isActive(state: BlockState): Boolean = state.getOptionalValue(HTMachineBlock.IS_ACTIVE).orElseGet { false }
+    fun isActive(state: BlockState): Boolean = state.getOptionalValue(RagiumBlockStateProperties.IS_ACTIVE).orElseGet { false }
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {}
 
@@ -44,7 +40,7 @@ abstract class HTBaseMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
         // 以前の結果と異なる場合は更新する
         if (result != lastActive) {
             val newState: BlockState = when {
-                state.hasProperty(HTMachineBlock.IS_ACTIVE) -> state.setValue(HTMachineBlock.IS_ACTIVE, result)
+                state.hasProperty(RagiumBlockStateProperties.IS_ACTIVE) -> state.setValue(RagiumBlockStateProperties.IS_ACTIVE, result)
                 else -> state
             }
             level.setBlockAndUpdate(pos, newState)

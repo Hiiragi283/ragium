@@ -1,8 +1,10 @@
 package hiiragi283.lib.registry
 
+import com.mojang.serialization.DataResult
 import hiiragi283.lib.resource.HTValueWithKey
 import hiiragi283.lib.resource.toLanguageKey
 import hiiragi283.lib.text.HTHasText
+import hiiragi283.lib.util.dataResult
 import net.minecraft.core.TypedInstance
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
@@ -36,7 +38,7 @@ open class HTDeferredHolder<R : Any, out T : R> :
 
     final override fun key(): ResourceKey<R> = this.key
 
-    final override fun asResult(): Result<T> = runCatching { get() }
+    final override fun asResult(): DataResult<@UnsafeVariance T> = getOrNull().dataResult { "Trying to access unbound value: $key" }
 
     final override fun getOrNull(): T? = when (this.isBound) {
         true -> get()

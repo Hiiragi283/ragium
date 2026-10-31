@@ -12,5 +12,5 @@ class HTPotionFluidType(properties: Properties) : HTFluidType(properties) {
     override fun getDescription(stack: FluidStack): Text = HTPotionHelper.getPotionName(stack, HTBottleType.DEFAULT)
 
     override fun getBucket(stack: FluidStack): ItemStack =
-        HTPotionHelper.createBuket(stack).fold(ItemStackTemplate::create) { super.getBucket(stack) }
+        HTPotionHelper.createBuket(stack).mapOrElse(ItemStackTemplate::create) { super.getBucket(stack) }
 }

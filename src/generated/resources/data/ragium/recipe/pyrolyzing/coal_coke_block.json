@@ -7,12 +7,18 @@
   "result": {
     "fluid": {
       "amount": 4500,
-      "id": "ragium:coal_tar"
+      "id": "ragium:creosote"
     },
-    "item": {
-      "count": 1,
-      "id": "ragium:coal_coke_block"
-    }
+    "items": [
+      {
+        "count": 1,
+        "id": "ragium:coal_coke_block"
+      },
+      {
+        "count": 9,
+        "id": "ragium:tar"
+      }
+    ]
   },
   "time": 900
 }

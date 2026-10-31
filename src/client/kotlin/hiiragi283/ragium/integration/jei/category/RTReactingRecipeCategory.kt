@@ -1,54 +1,72 @@
 package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
-import hiiragi283.lib.integration.jei.add
-import hiiragi283.lib.integration.jei.category.HTHolderRecipeCategory
-import hiiragi283.ragium.api.recipe.RTReactingRecipe
+import hiiragi283.lib.integration.jei.category.HTViewerRecipeCategory
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
+import hiiragi283.ragium.recipe.viewer.RTReactingViewerRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
+import mezz.jei.api.recipe.RecipeIngredientRole
 
 class RTReactingRecipeCategory(guiHelper: IGuiHelper) :
-    HTHolderRecipeCategory<RTReactingRecipe>(
+    HTViewerRecipeCategory<RTReactingViewerRecipe>(
         RagiumJeiRecipeTypes.REACTING,
         RagiumRecipeTypes.REACTING,
         guiHelper.createDrawableItemLike(RagiumBlocks.CHEMICAL_REACTOR),
-        18 * 9,
-        18 * 1,
-        RTReactingRecipe.CODEC
+        18 * 8,
+        18 * 2,
+        RTReactingViewerRecipe.CODEC,
     ) {
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTReactingRecipe, focuses: IFocusGroup) {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: RTReactingViewerRecipe, focuses: IFocusGroup) {
         // inputs
+        val fluidInputs: List<IRecipeSlotBuilder> = List(2) { index: Int ->
+            builder
+                .addInputSlot(getPosition(0), getPosition(index))
+                .setSlotBackground(HTBackgroundType.INPUT)
+        }
+        val itemInputs: List<IRecipeSlotBuilder> = List(2) { index: Int ->
+            builder
+                .addInputSlot(getPosition(2), getPosition(index))
+                .setSlotBackground(HTBackgroundType.INPUT)
+        }
+        fluidInputs.forEachIndexed { index: Int, builder: IRecipeSlotBuilder ->
+            recipe.fluidIngredients.getOrNull(index)?.let(builder::add)
+        }
+        itemInputs.forEachIndexed { index: Int, builder: IRecipeSlotBuilder ->
+            recipe.itemIngredients.getOrNull(index)?.let(builder::add)
+        }
+        // catalyst
         builder
-            .addInputSlot(getPosition(0), getPosition(0))
-            .add(recipe.fluidIngredients.head)
-            .setSlotBackground(HTBackgroundType.INPUT)
-        val secondInput: IRecipeSlotBuilder = builder
-            .addInputSlot(getPosition(1), getPosition(0))
-            .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
-        recipe.fluidIngredients.getOrNull(1)?.let(secondInput::add)
-        builder
-            .addInputSlot(getPosition(3), getPosition(0))
+            .addSlot(RecipeIngredientRole.CRAFTING_STATION, getPosition(3.5), getPosition(0))
             .add(recipe.catalyst)
             .setSlotBackground(HTBackgroundType.NONE)
         // outputs
-        val itemOutput: IRecipeSlotBuilder = builder
-            .addOutputSlot(getPosition(6), getPosition(0))
-            .setSlotBackground(HTBackgroundType.OUTPUT)
-        val fluidOutput: IRecipeSlotBuilder = builder
-            .addOutputSlot(getPosition(8), getPosition(0))
-            .setSlotBackground(HTBackgroundType.OUTPUT)
-        recipe.result.content.mapLeft(itemOutput::add).mapRight(fluidOutput::add)
+        val itemOutputs: List<IRecipeSlotBuilder> = List(2) { index: Int ->
+            builder
+                .addOutputSlot(getPosition(5), getPosition(index))
+                .setSlotBackground(HTBackgroundType.OUTPUT)
+        }
+        val fluidOutputs: List<IRecipeSlotBuilder> = List(2) { index: Int ->
+            builder
+                .addOutputSlot(getPosition(7), getPosition(index))
+                .setSlotBackground(HTBackgroundType.OUTPUT)
+        }
+        itemOutputs.forEachIndexed { index: Int, builder: IRecipeSlotBuilder ->
+            recipe.itemResults.getOrNull(index)?.let(builder::add)
+        }
+        fluidOutputs.forEachIndexed { index: Int, builder: IRecipeSlotBuilder ->
+            recipe.fluidResults.getOrNull(index)?.let(builder::add)
+        }
     }
 
-    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTReactingRecipe, focuses: IFocusGroup) {
-        builder.addRecipePlus(getPosition(2))
-        builder.addRecipeArrow(recipe).setPosition(getPosition(4.25), getPosition(0))
-        builder.addRecipePlus(getPosition(7))
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTReactingViewerRecipe, focuses: IFocusGroup) {
+        builder.addRecipePlus(getPosition(1), getPosition(0.5))
+        builder.addRecipeArrow(recipe).setPosition(getPosition(3.25), getPosition(1))
+        builder.addRecipePlus(getPosition(6), getPosition(0.5))
     }
 }

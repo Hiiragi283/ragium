@@ -9,6 +9,7 @@ import hiiragi283.lib.util.Ior
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.crafting.display.SlotDisplay
 
 /**
  * アイテムまたは液体の完成品を保持するクラスです。
@@ -21,7 +22,7 @@ data class HTItemOrFluidResult(val content: Ior<HTItemResult, HTFluidResult>) : 
         @JvmField
         val MAP_CODEC: MapCodec<HTItemOrFluidResult> = HTCodecs.ior(
             HTItemResult.CODEC.fieldOf(HTConstants.ITEM),
-            HTFluidResult.CODEC.fieldOf(HTConstants.FLUID)
+            HTFluidResult.CODEC.fieldOf(HTConstants.FLUID),
         ).xmap(::HTItemOrFluidResult, HTItemOrFluidResult::content)
 
         @JvmField
@@ -35,11 +36,15 @@ data class HTItemOrFluidResult(val content: Ior<HTItemResult, HTFluidResult>) : 
 
     override fun getId(): Identifier? = content.fold(
         HTItemResult::getId,
-        HTFluidResult::getId
+        HTFluidResult::getId,
     ) { item: HTItemResult, fluid: HTFluidResult -> item.getId() ?: fluid.getId() }
 
     override fun create(): HTItemAndFluidStack {
         val (item: HTItemResult?, fluid: HTFluidResult?) = content.toPair()
         return HTItemAndFluidStack(item.createOrEmpty(), fluid.createOrEmpty())
     }
+
+    fun itemDisplay(): SlotDisplay? = content.getLeft()?.display()
+
+    fun fluidDisplay(): SlotDisplay? = content.getRight()?.display()
 }

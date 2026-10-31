@@ -1,6 +1,6 @@
 {
   "type": "ragium:mixing",
-  "ingredient": {
+  "ingredients": {
     "fluid": {
       "amount": 250,
       "fluids": "#c:dyes/light_blue"

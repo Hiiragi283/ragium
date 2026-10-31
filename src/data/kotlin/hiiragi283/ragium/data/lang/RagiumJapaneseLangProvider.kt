@@ -4,8 +4,6 @@ import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
-import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
@@ -40,6 +38,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         // Block
         add(RagiumBlocks.QUARTZ_GLASS, "クォーツガラス")
         add(RagiumBlocks.QUARTZ_GLASS_PANE, "クォーツガラス板")
+
+        add(RagiumBlocks.FUEL_DYNAMO, "燃料ダイナモ")
+        add(RagiumBlocks.MAGMATIC_DYNAMO, "溶岩ダイナモ")
+        add(RagiumBlocks.COMBUSTION_DYNAMO, "燃焼ダイナモ")
 
         add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.CENTRIFUGE, "遠心分離機")
@@ -85,6 +87,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add("death.attack.chemicalBurn.player", $$"%1$sは%2$sと戦いながら化学火傷を負った")
         // Fluid
         addFluid(RagiumFluids.HONEY, "ハチミツ")
+        addFluid(RagiumFluids.MOLTEN_BEESWAX, "溶けた蜜蠟")
         addFluid(RagiumFluids.RESIN, "樹脂")
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
@@ -94,13 +97,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "活性グロウストーン")
         addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
 
+        // H
         addFluid(RagiumFluids.HYDROGEN, "水素")
-        addFluid(RagiumFluids.NITROGEN, "窒素")
-        addFluid(RagiumFluids.OXYGEN, "酸素")
-        addFluid(RagiumFluids.CHLORINE, "塩素")
-
-        addFluid(RagiumFluids.WOOD_TAR, "木タール")
-        addFluid(RagiumFluids.COAL_TAR, "石炭タール")
+        // C
+        addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
+        addFluid(RagiumFluids.CREOSOTE, "クレオソート")
+        addFluid(RagiumFluids.BLACK_LIQUOR, "黒液")
+        addFluid(RagiumFluids.PLANT_OIL, "植物油")
         addFluid(RagiumFluids.ALCOHOL, "アルコール")
         addFluid(RagiumFluids.ALDEHYDE, "アルデヒド")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "芳香族化合物")
@@ -111,20 +114,33 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "溶融プラスチック")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "合成樹脂")
-        addFluid(RagiumFluids.AMMONIA, "アンモニア")
+        // N
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "液体爆薬")
+        // O
+        addFluid(RagiumFluids.OXYGEN, "酸素")
+        // F
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "フッ化水素")
         addFluid(RagiumFluids.HYDROFLUORIC_ACID, "フッ化水素酸")
+        // Na
         addFluid(RagiumFluids.SALT_WATER, "塩水")
-        addFluid(RagiumFluids.NAOH_SOLUTION, "水酸化ナトリウム水溶液")
+        addFluid(RagiumFluids.HYDROXIDE_SOLUTION, "アルカリ水酸化物溶液")
+        addFluid(RagiumFluids.SULFATE_SOLUTION, "アルカリ硫酸塩溶液")
+        // Al
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "アルミナ水溶液")
+        // P
+        addFluid(RagiumFluids.PHOSPHORIC_ACID, "リン酸")
+        // S
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "二酸化硫黄")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
+        // Cl
+        addFluid(RagiumFluids.CHLORINE, "塩素")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
-        addFluid(RagiumFluids.BLEACH, "漂白剤")
+        // Ca
+        addFluid(RagiumFluids.LIMEWATER, "石灰水")
+
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
@@ -132,13 +148,16 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.MORTAR, "モルタル")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.STICKY_BALL, "粘着質な塊")
-        add(RagiumItems.SODIUM_HYDROXIDE, "水酸化ナトリウム")
+        add(RagiumItems.ALKALI_HYDROXIDE, "アルカリ水酸化物")
+        add(RagiumItems.ALKALI_CARBONATE, "アルカリ炭酸塩")
+        add(RagiumItems.ALKALI_SULFATE, "アルカリ硫酸塩")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         // add(RagiumItems.ALCLAD_PLATE, "アルクラッド板")
-        add(RagiumItems.BEESWAX, "密猟")
+        add(RagiumItems.BEESWAX, "蜜蠟")
+        add(RagiumItems.BIO_CHAFF, "バイオチャフ")
         add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
         add(RagiumItems.LINGERING_BOTTLE, "残留瓶")
         add(RagiumItems.CRUDE_SILICON, "粗製シリコン")
@@ -258,89 +277,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.TOOLTIPS_UPGRADE_EFFICIENCY, $$"エネルギー効率: %1$s")
         add(RagiumTranslation.TOOLTIPS_UPGRADE_CAPACITY, $$"エネルギー容量: %1$s")
 
-        addDataTranslations()
-
         // Jade Config
         addJadeConfig(HTMachineOwnerProvider.ID, "Machine Owner")
         addJadeConfig(HTMachineUpgradeProvider.ID, "Machine Upgrades")
-    }
-
-    private fun addDataTranslations() {
-        // Chemical
-        addFromKey(RagiumChemicals.HYDROGEN, "水素")
-
-        addFromKey(RagiumChemicals.CARBON, "炭素")
-        addFromKey(RagiumChemicals.DIAMOND, "ダイヤモンド")
-        addFromKey(RagiumChemicals.NITROGEN, "窒素")
-        addFromKey(RagiumChemicals.OXYGEN, "酸素")
-
-        addFromKey(RagiumChemicals.ALUMINUM, "アルミニウム")
-        addFromKey(RagiumChemicals.SILICON, "ケイ素")
-        addFromKey(RagiumChemicals.SULFUR, "硫黄")
-        addFromKey(RagiumChemicals.CHLORINE, "塩素")
-
-        addFromKey(RagiumChemicals.IRON, "鉄")
-        addFromKey(RagiumChemicals.COPPER, "銅")
-        addFromKey(RagiumChemicals.NICKEL, "ニッケル")
-        addFromKey(RagiumChemicals.SILVER, "銀")
-        addFromKey(RagiumChemicals.GOLD, "金")
-        addFromKey(RagiumChemicals.MERCURY, "水銀")
-
-        addFromKey(RagiumChemicals.HYDROXIDE, "水酸化物")
-        addFromKey(RagiumChemicals.WATER, "水")
-
-        addFromKey(RagiumChemicals.CARBONATE, "炭酸塩")
-        addFromKey(RagiumChemicals.NITRATE, "硝酸塩")
-        addFromKey(RagiumChemicals.NITRIC_ACID, "硝酸")
-        addFromKey(RagiumChemicals.HYDROGEN_FLUORIDE, "フッ化水素")
-        addFromKey(RagiumChemicals.FLUORITE, "蛍石")
-        addFromKey(RagiumChemicals.CRYOLITE, "氷晶石")
-
-        addFromKey(RagiumChemicals.SODIUM_HYDROXIDE, "水酸化ナトリウム")
-        addFromKey(RagiumChemicals.SODIUM_CARBONATE, "炭酸ナトリウム")
-        addFromKey(RagiumChemicals.SODIUM_CHLORIDE, "塩化ナトリウム")
-        addFromKey(RagiumChemicals.ALUMINUM_OXIDE, "酸化アルミニウム")
-        addFromKey(RagiumChemicals.ALUMINUM_FLUORIDE, "フッ化アルミニウム")
-        addFromKey(RagiumChemicals.SILICON_DIOXIDE, "二酸化ケイ素")
-        addFromKey(RagiumChemicals.SULFUR_DIOXIDE, "二酸化硫黄")
-        addFromKey(RagiumChemicals.SULFUR_TRIOXIDE, "三酸化硫黄")
-        addFromKey(RagiumChemicals.SULFATE, "硫酸塩")
-        addFromKey(RagiumChemicals.SULFURIC_ACID, "硫酸")
-        addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "塩化水素")
-
-        addFromKey(RagiumChemicals.POTASSIUM_CARBONATE, "炭酸カリウム")
-        addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "硝酸カリウム")
-        addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "炭酸カルシウム")
-        addFromKey(RagiumChemicals.CALCIUM_OXIDE, "酸化カルシウム")
-        addFromKey(RagiumChemicals.CALCIUM_SULFATE, "硫酸カルシウム")
-
-        addFromKey(RagiumChemicals.MERCURY_SULFIDE, "硫化水銀")
-
-        addFromKey(RagiumChemicals.COAL, "石炭")
-        addFromKey(RagiumChemicals.CHARCOAL, "木炭")
-        // Element
-        addFromKey(RagiumElements.HYDROGEN, "水素")
-
-        addFromKey(RagiumElements.CARBON, "炭素")
-        addFromKey(RagiumElements.NITROGEN, "窒素")
-        addFromKey(RagiumElements.OXYGEN, "酸素")
-        addFromKey(RagiumElements.FLUORINE, "フッ素")
-
-        addFromKey(RagiumElements.SODIUM, "ナトリウム")
-        addFromKey(RagiumElements.ALUMINUM, "アルミニウム")
-        addFromKey(RagiumElements.SILICON, "ケイ素")
-        addFromKey(RagiumElements.SULFUR, "硫黄")
-        addFromKey(RagiumElements.CHLORINE, "塩素")
-
-        addFromKey(RagiumElements.POTASSIUM, "カリウム")
-        addFromKey(RagiumElements.CALCIUM, "カルシウム")
-        addFromKey(RagiumElements.IRON, "鉄")
-        addFromKey(RagiumElements.COPPER, "銅")
-        addFromKey(RagiumElements.NICKEL, "ニッケル")
-
-        addFromKey(RagiumElements.SILVER, "銀")
-
-        addFromKey(RagiumElements.GOLD, "金")
-        addFromKey(RagiumElements.MERCURY, "水銀")
     }
 }

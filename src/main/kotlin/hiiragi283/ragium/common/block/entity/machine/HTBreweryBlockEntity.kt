@@ -15,7 +15,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemAndFluidToFluidBlockEntity(RagiumBlockEntityTypes.BREWERY.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.BREWING,
-        HTSoundInstance(SoundEvents.BREWING_STAND_BREW)
+        HTSoundInstance(SoundEvents.BREWING_STAND_BREW),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.brewery

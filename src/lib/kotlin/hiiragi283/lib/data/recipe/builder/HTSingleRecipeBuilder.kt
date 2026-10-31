@@ -32,9 +32,8 @@ import kotlin.contracts.contract
  * @author Hiiragi Tsubasa
  * @since 26.1.8
  */
-abstract class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
-    prefix: String
-) : HTProgressRecipeBuilder<RECIPE>(prefix) {
+abstract class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, out RECIPE : Recipe<*>>(prefix: String) :
+    HTProgressRecipeBuilder<RECIPE>(prefix) {
     final override fun getRecipeId(): Identifier? = result.getId()
 
     // Ingredient
@@ -56,7 +55,7 @@ abstract class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeRes
      */
     class Basic<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
         prefix: String,
-        private val factory: HTBasicSingleRecipe.Factory<ING, RES, RECIPE>
+        private val factory: HTBasicSingleRecipe.Factory<ING, RES, RECIPE>,
     ) : HTSingleRecipeBuilder<ING, RES, RECIPE>(prefix) {
         override fun createRecipe(): RECIPE = factory.create(ingredient, result, progressData)
     }
@@ -66,7 +65,7 @@ abstract class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeRes
      */
     class Catalysed<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
         prefix: String,
-        private val factory: HTCatalysedSingleRecipe.Factory<ING, RES, RECIPE>
+        private val factory: HTCatalysedSingleRecipe.Factory<ING, RES, RECIPE>,
     ) : HTSingleRecipeBuilder<ING, RES, RECIPE>(prefix) {
         override fun createRecipe(): RECIPE = factory.create(ingredient, catalyst, result, progressData)
 

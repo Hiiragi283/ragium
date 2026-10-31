@@ -10,12 +10,8 @@ import hiiragi283.lib.recipe.result.HTFluidResult
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class RTBrewingRecipe(
-    itemIngredient: HTItemIngredient,
-    fluidIngredient: HTFluidIngredient,
-    result: HTFluidResult,
-    progressData: HTProgressData
-) : HTItemAndFluidToRecipe.BasicFluid(itemIngredient, fluidIngredient, result, progressData),
+class RTBrewingRecipe(itemIngredient: HTItemIngredient, fluidIngredient: HTFluidIngredient, result: HTFluidResult, progressData: HTProgressData) :
+    HTItemAndFluidToRecipe.BasicFluid(itemIngredient, fluidIngredient, result, progressData),
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField

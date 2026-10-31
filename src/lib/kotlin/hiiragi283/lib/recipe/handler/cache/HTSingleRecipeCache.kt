@@ -13,16 +13,14 @@ import java.util.function.Predicate
  * @author Hiiragi Tsubasa
  * @since 26.1.11
  */
-abstract class HTSingleRecipeCache<INPUT : Any, RECIPE : Predicate<INPUT>>(lookup: HTRecipeLookup<RECIPE>) :
-    HTBaseRecipeCache<RECIPE>(lookup) {
+abstract class HTSingleRecipeCache<INPUT : Any, RECIPE : Predicate<INPUT>>(lookup: HTRecipeLookup<RECIPE>) : HTBaseRecipeCache<RECIPE>(lookup) {
     /**
      * レシピを取得します。
      * @param input レシピの入力
      * @param level レシピ取得時のレベル
      * @return [input]に一致する最初のレシピ
      */
-    fun findFirstRecipe(input: INPUT, level: ServerLevel): RECIPE? =
-        findFirstRecipe(input, HTRecipeLookup.Context(level))
+    fun findFirstRecipe(input: INPUT, level: ServerLevel): RECIPE? = findFirstRecipe(input, HTRecipeLookup.Context(level))
 
     /**
      * レシピを取得します。
@@ -30,8 +28,7 @@ abstract class HTSingleRecipeCache<INPUT : Any, RECIPE : Predicate<INPUT>>(looku
      * @param context レシピ取得時のコンテキスト
      * @return [input]に一致する最初のレシピ
      */
-    fun findFirstRecipe(input: INPUT, context: HTRecipeLookup.Context): RECIPE? =
-        findFirstHolder(input, context)?.recipe
+    fun findFirstRecipe(input: INPUT, context: HTRecipeLookup.Context): RECIPE? = findFirstHolder(input, context)?.recipe
 
     /**
      * [HTRecipeHolder]を取得します。

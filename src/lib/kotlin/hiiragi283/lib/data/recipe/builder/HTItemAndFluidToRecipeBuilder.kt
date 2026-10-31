@@ -27,7 +27,7 @@ import kotlin.contracts.contract
  */
 abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
     prefix: String,
-    private val factory: Factory<RESULT, RECIPE>
+    private val factory: Factory<RESULT, RECIPE>,
 ) : HTProgressRecipeBuilder<RECIPE>(prefix) {
     final override fun getRecipeId(): Identifier? = result.getId()
 
@@ -112,17 +112,9 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
      * @since 26.1.0
      */
     fun interface Factory<RESULT : HTRecipeResult<*>, out RECIPE : Any> {
-        fun create(
-            itemIngredient: HTItemIngredient,
-            fluidIngredient: HTFluidIngredient,
-            result: RESULT,
-            progressData: HTProgressData
-        ): RECIPE
+        fun create(itemIngredient: HTItemIngredient, fluidIngredient: HTFluidIngredient, result: RESULT, progressData: HTProgressData): RECIPE
 
-        fun create(
-            ingredient: Pair<HTItemIngredient, HTFluidIngredient>,
-            result: RESULT,
-            progressData: HTProgressData
-        ): RECIPE = create(ingredient.first, ingredient.second, result, progressData)
+        fun create(ingredient: Pair<HTItemIngredient, HTFluidIngredient>, result: RESULT, progressData: HTProgressData): RECIPE =
+            create(ingredient.first, ingredient.second, result, progressData)
     }
 }

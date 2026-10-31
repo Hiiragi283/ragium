@@ -1,7 +1,8 @@
 package hiiragi283.lib.transfer.fluid
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.transfer.HTStackResourceSlot
+import hiiragi283.lib.transfer.HTSnapshotStackResourceSlot
+import hiiragi283.lib.transfer.HTStackResourceHelper
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
@@ -13,7 +14,7 @@ import java.util.function.BiPredicate
 import java.util.function.Predicate
 
 /**
- * [液体][FluidResource]向けの[HTStackResourceSlot]の実装クラスです。
+ * [液体][FluidResource]向けの[HTSnapshotStackResourceSlot]の実装クラスです。
  *
  * 参照 : [Mekanism - BasicFluidTank](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/fluid/BasicFluidTank.java)
  * @author Hiiragi Tsubasa
@@ -24,8 +25,9 @@ open class HTBasicFluidTank(
     canExtract: BiPredicate<FluidResource, HTTransferAccess>,
     canInsert: BiPredicate<FluidResource, HTTransferAccess>,
     filter: Predicate<FluidResource>,
-    listener: Runnable?
-) : HTStackResourceSlot.Basic<FluidStack, FluidResource>(capacity, canExtract, canInsert, filter, listener) {
+    listener: Runnable?,
+) : HTSnapshotStackResourceSlot.Basic<FluidStack, FluidResource>(capacity, canExtract, canInsert, filter, listener),
+    HTFluidStackTank {
     companion object {
         @JvmStatic
         fun create(
@@ -33,27 +35,25 @@ open class HTBasicFluidTank(
             listener: Runnable?,
             canExtract: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
-            filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue()
-        ): HTBasicFluidTank =
-            HTBasicFluidTank(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, filter, listener)
+            filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
+        ): HTBasicFluidTank = HTBasicFluidTank(HTTransferValidators.validateCapacity(capacity), canExtract, canInsert, filter, listener)
 
         @JvmStatic
         fun input(
             capacity: Int,
             listener: Runnable?,
             canInsert: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
-            filter: Predicate<FluidResource> = canInsert
+            filter: Predicate<FluidResource> = canInsert,
         ): HTBasicFluidTank = create(
             capacity,
             listener,
             HTTransferPredicates.notExternal(),
             { resource: FluidResource, _ -> canInsert.test(resource) },
-            filter
+            filter,
         )
 
         @JvmStatic
-        fun output(capacity: Int, listener: Runnable?): HTBasicFluidTank =
-            create(capacity, listener, canInsert = HTTransferPredicates.internalOnly())
+        fun output(capacity: Int, listener: Runnable?): HTBasicFluidTank = create(capacity, listener, canInsert = HTTransferPredicates.internalOnly())
     }
 
     private var stackIn: FluidStack = FluidStack.EMPTY
@@ -69,7 +69,7 @@ open class HTBasicFluidTank(
     }
 
     private fun setStackUnchecked(other: FluidStack, validate: Boolean) {
-        val resource: FluidResource = getResourceFrom(other)
+        val resource: FluidResource = getHelper().getResourceFrom(other)
         if (resource.isEmpty) {
             if (this.stackIn.isEmpty) return
             this.stackIn = FluidStack.EMPTY
@@ -81,13 +81,7 @@ open class HTBasicFluidTank(
         onRootCommit(getStackCopy())
     }
 
-    final override fun getResourceFrom(stack: FluidStack): FluidResource = FluidResource.of(stack)
-
-    final override fun getAmountFrom(stack: FluidStack): Int = stack.amount()
-
-    final override fun isSame(stack: FluidStack, resource: FluidResource): Boolean = resource.matches(stack)
-
-    final override fun createStack(resource: FluidResource, amount: Int): FluidStack = resource.toStack(amount)
+    override fun getHelper(): HTStackResourceHelper.Fluid = HTStackResourceHelper.Fluid
 
     //    ValueIOSerializable    //
 

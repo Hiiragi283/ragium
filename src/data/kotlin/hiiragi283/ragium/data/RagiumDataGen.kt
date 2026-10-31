@@ -1,9 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.lib.data.createLootTables
-import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
-import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.world.RagiumDamageTypes
 import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
 import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
@@ -41,9 +38,7 @@ data object RagiumDataGen {
         event.createDatapackRegistryObjects(
             RegistrySetBuilder()
                 .add(Registries.DAMAGE_TYPE, RagiumDamageTypes::bootstrap)
-                .add(RagiumRegistries.Keys.ELEMENT, RagiumElements::bootstrap)
-                .add(RagiumRegistries.Keys.CHEMICAL, RagiumChemicals::bootstrap)
-                .apply(RagiumWorldData::bootstrap)
+                .apply(RagiumWorldData::bootstrap),
         )
 
         // Server
@@ -54,7 +49,7 @@ data object RagiumDataGen {
         event.createLootTables(
             ::RagiumBlockLootTableProvider to LootContextParamSets.BLOCK,
             RagiumGlobalLootTableProvider::ForBlock to LootContextParamSets.BLOCK,
-            RagiumGlobalLootTableProvider::ForEntity to LootContextParamSets.ENTITY
+            RagiumGlobalLootTableProvider::ForEntity to LootContextParamSets.ENTITY,
         )
         event.createProvider(::RagiumGlobalLootModifierProvider)
 

@@ -89,8 +89,8 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                     nelOf(
                         CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL),
                         CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.CHARCOAL),
-                        RagiumTags.Items.COALS
-                    )
+                        RagiumTags.Items.COALS,
+                    ),
                 )
             }
             result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
@@ -148,6 +148,15 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             ingredient { +holderSet(RagiumFluids.HONEY) }
             catalyst { items { +RagiumItems.BLOCK_MOLD } }
             result { +Items.HONEY_BLOCK }
+        }.save(exporter)
+        // Beeswax
+        RagiumRecipeBuilders.freezing {
+            ingredient {
+                +holderSet(RagiumFluids.MOLTEN_BEESWAX)
+                amount /= 4
+            }
+            catalyst { items { +RagiumItems.BALL_MOLD } }
+            result { +RagiumItems.BEESWAX }
         }.save(exporter)
 
         // Sticky Ball
@@ -225,6 +234,14 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             result { +RagiumFluids.HONEY }
             recipeId suffix "_from_block"
         }.save(exporter)
+        // Beeswax
+        RagiumRecipeBuilders.melting {
+            ingredient { items { +RagiumItems.BEESWAX } }
+            result {
+                +RagiumFluids.MOLTEN_BEESWAX
+                amount /= 4
+            }
+        }.save(exporter)
         // Resin
         RagiumRecipeBuilders.melting {
             ingredient { +holderSet(Tags.Items.CLUMPS_RESIN) }
@@ -251,7 +268,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                         false,
                         DataComponents.OMINOUS_BOTTLE_AMPLIFIER,
                         OminousBottleAmplifier(amplifier),
-                        Items.OMINOUS_BOTTLE
+                        Items.OMINOUS_BOTTLE,
                     )
                 }
                 result {
@@ -263,7 +280,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }
         // Molten Redstone
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             result {
                 +RagiumFluids.MOLTEN_REDSTONE
                 amount = 90
@@ -271,7 +288,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         }.save(exporter)
         // Molten Glowstone
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.GLOWSTONE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE) }
             result {
                 +RagiumFluids.MOLTEN_GLOWSTONE
                 amount = 90

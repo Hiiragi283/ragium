@@ -21,7 +21,7 @@ class HTGuiWidget<WIDGET : HTWidget>(private val gui: HTGuiAccess, val widget: W
         widget.bounds.y + gui.getTopPos(),
         widget.bounds.width,
         widget.bounds.height,
-        Text.empty()
+        Text.empty(),
     ) {
     private val access = Access()
     private val renderer: Renderable? by lazy { HTWidgetRendererManager.create(gui, widget) }
@@ -51,11 +51,9 @@ class HTGuiWidget<WIDGET : HTWidget>(private val gui: HTGuiAccess, val widget: W
     override fun mouseScrolled(mouseX: Double, mouseY: Double, scrollX: Double, scrollY: Double): Boolean =
         widget.mouseScrolled(mouseX, mouseY, scrollX, scrollY)
 
-    override fun keyPressed(event: KeyEvent): Boolean =
-        widget.keyPressed(event.key(), event.scancode(), event.modifiers())
+    override fun keyPressed(event: KeyEvent): Boolean = widget.keyPressed(event.key(), event.scancode(), event.modifiers())
 
-    override fun keyReleased(event: KeyEvent): Boolean =
-        widget.keyReleased(event.key(), event.scancode(), event.modifiers())
+    override fun keyReleased(event: KeyEvent): Boolean = widget.keyReleased(event.key(), event.scancode(), event.modifiers())
 
     override fun charTyped(event: CharacterEvent): Boolean = widget.charTyped(event.codepointAsString()[0])
 

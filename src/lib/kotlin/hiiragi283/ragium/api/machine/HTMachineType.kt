@@ -23,7 +23,10 @@ sealed interface HTMachineType :
         val COMPARATOR: Comparator<HTMachineType> = compareBy(HTMachineType::materialName)
 
         @JvmField
-        val PREFIX = HTTagPrefix("machines", "machines/%s", RagiumAPI.MOD_ID)
+        val DYNAMO_PREFIX = HTTagPrefix("dynamos", "dynamos/%s", RagiumAPI.MOD_ID)
+
+        @JvmField
+        val MACHINE_PREFIX = HTTagPrefix("machines", "machines/%s", RagiumAPI.MOD_ID)
 
         @JvmField
         val MECHANICAL: HTMachineType = Mechanical

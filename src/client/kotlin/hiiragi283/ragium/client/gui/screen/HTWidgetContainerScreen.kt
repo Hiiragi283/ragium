@@ -42,7 +42,7 @@ class HTWidgetContainerScreen(menu: HTWidgetContainerMenu, inventory: Inventory,
             imageWidth,
             slotHeight,
             256,
-            256
+            256,
         )
         graphics.blit(
             RenderPipelines.GUI_TEXTURED,
@@ -54,7 +54,7 @@ class HTWidgetContainerScreen(menu: HTWidgetContainerMenu, inventory: Inventory,
             imageWidth,
             96,
             256,
-            256
+            256,
         )
     }
 }

@@ -1,6 +1,6 @@
 package hiiragi283.lib.gui.sync
 
-import hiiragi283.lib.transfer.item.HTBasicItemSlot
+import hiiragi283.lib.transfer.item.HTItemStackSlot
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.core.RegistryAccess
 import net.minecraft.world.item.ItemStack
@@ -20,12 +20,12 @@ import kotlin.reflect.KProperty
 class HTItemSyncSlot(property: ReadWriteProperty<Any?, ItemStack>) : HTIntSyncSlot {
     constructor(
         getter: Supplier<ItemStack>,
-        setter: Consumer<ItemStack>
+        setter: Consumer<ItemStack>,
     ) : this(HTDelegates.LazyDelegate(getter, setter))
 
     constructor(property: KMutableProperty0<ItemStack>) : this(HTDelegates.LazyDelegate(property::get, property::set))
 
-    constructor(slot: HTBasicItemSlot) : this(slot::getStackCopy, slot::setStack)
+    constructor(slot: HTItemStackSlot) : this(slot::getStackCopy, slot::setStack)
 
     private var lastStack: ItemStack = ItemStack.EMPTY
 
@@ -53,11 +53,10 @@ class HTItemSyncSlot(property: ReadWriteProperty<Any?, ItemStack>) : HTIntSyncSl
         return null
     }
 
-    override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTSyncablePayload? =
-        when (changeType) {
-            HTChangeType.PARTIAL -> HTIntSyncPayload(this.amountAsInt)
-            HTChangeType.FULL -> HTItemSyncPayload(this.asItemStack.copy())
-        }
+    override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTSyncablePayload? = when (changeType) {
+        HTChangeType.PARTIAL -> HTIntSyncPayload(this.amountAsInt)
+        HTChangeType.FULL -> HTItemSyncPayload(this.asItemStack.copy())
+    }
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): ItemStack = asItemStack
 

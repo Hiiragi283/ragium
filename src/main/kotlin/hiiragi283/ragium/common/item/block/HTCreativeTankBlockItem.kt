@@ -16,11 +16,7 @@ import net.minecraft.world.level.block.Block
 class HTCreativeTankBlockItem(block: Block, properties: Properties) :
     BlockItem(block, properties),
     HTSubCreativeTabContents {
-    override fun addItems(
-        baseItem: Holder<Item>,
-        parameters: CreativeModeTab.ItemDisplayParameters,
-        output: CreativeModeTab.Output
-    ) {
+    override fun addItems(baseItem: Holder<Item>, parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output) {
         parameters.holders
             .lookupOrThrow(Registries.FLUID)
             .asHolderSequence()

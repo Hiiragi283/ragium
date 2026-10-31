@@ -21,7 +21,7 @@ class HTItemAccessFluidHandler(
     capacity: Int,
     private val canExtract: BiPredicate<FluidResource, HTTransferAccess>,
     private val canInsert: BiPredicate<FluidResource, HTTransferAccess>,
-    private val filter: Predicate<FluidResource>
+    private val filter: Predicate<FluidResource>,
 ) : ItemAccessFluidHandler(itemAccess, RagiumDataComponents.FLUID, capacity),
     ExtendedResourceHandler<FluidResource> {
     companion object {
@@ -31,7 +31,7 @@ class HTItemAccessFluidHandler(
             capacity: Int,
             canExtract: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<FluidResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
-            filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue()
+            filter: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
         ): HTItemAccessFluidHandler = HTItemAccessFluidHandler(itemAccess, capacity, canExtract, canInsert, filter)
 
         @JvmStatic
@@ -39,13 +39,13 @@ class HTItemAccessFluidHandler(
             itemAccess: ItemAccess,
             capacity: Int,
             canInsert: Predicate<FluidResource> = HTTransferPredicates.alwaysTrue(),
-            filter: Predicate<FluidResource> = canInsert
+            filter: Predicate<FluidResource> = canInsert,
         ): HTItemAccessFluidHandler = create(
             itemAccess,
             capacity,
             HTTransferPredicates.notExternal(),
             { resource: FluidResource, _ -> canInsert.test(resource) },
-            filter
+            filter,
         )
 
         @JvmStatic
@@ -53,30 +53,17 @@ class HTItemAccessFluidHandler(
             create(itemAccess, capacity, canInsert = HTTransferPredicates.internalOnly())
     }
 
-    override fun insert(
-        index: Int,
-        resource: FluidResource,
-        amount: Int,
-        transaction: TransactionContext,
-        access: HTTransferAccess
-    ): Int = when {
+    override fun insert(index: Int, resource: FluidResource, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = when {
         canInsert.test(resource, access) -> super<ItemAccessFluidHandler>.insert(index, resource, amount, transaction)
         else -> 0
     }
 
-    override fun extract(
-        index: Int,
-        resource: FluidResource,
-        amount: Int,
-        transaction: TransactionContext,
-        access: HTTransferAccess
-    ): Int = when {
+    override fun extract(index: Int, resource: FluidResource, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = when {
         canExtract.test(resource, access) -> super<ItemAccessFluidHandler>.extract(index, resource, amount, transaction)
         else -> 0
     }
 
-    override fun isValid(index: Int, resource: FluidResource): Boolean =
-        super.isValid(index, resource) && filter.test(resource)
+    override fun isValid(index: Int, resource: FluidResource): Boolean = super.isValid(index, resource) && filter.test(resource)
 
     override fun insert(index: Int, resource: FluidResource, amount: Int, transaction: TransactionContext): Int =
         this.insert(index, resource, amount, transaction, HTTransferAccess.EXTERNAL)

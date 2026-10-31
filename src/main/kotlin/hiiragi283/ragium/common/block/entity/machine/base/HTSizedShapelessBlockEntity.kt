@@ -24,44 +24,38 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTSizedShapelessBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    protected fun createRecipeHandler(
-        lookup: HTRecipeLookup<HTSizedShapelessRecipe>,
-        sound: HTSoundInstance
-    ): HTRecipeHandler = object : HTSingleRecipeHandler.Cached<List<ItemInstance>, ItemStack, HTSizedShapelessRecipe>(
-        HTRecipeCacheHelper.MultiItem(lookup)
-    ) {
-        private val inputSlots: HTInputHandler<ItemInstance> by lazy {
-            HTInputHandlerHelper.forItems(this@HTSizedShapelessBlockEntity.inputSlots)
-        }
-        private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-            HTOutputSlotHelper.forItem(this@HTSizedShapelessBlockEntity.outputSlot)
-        }
+    protected fun createRecipeHandler(lookup: HTRecipeLookup<HTSizedShapelessRecipe>, sound: HTSoundInstance): HTRecipeHandler =
+        object : HTSingleRecipeHandler.Cached<List<ItemInstance>, ItemStack, HTSizedShapelessRecipe>(
+            HTRecipeCacheHelper.MultiItem(lookup),
+        ) {
+            private val inputSlots: HTInputHandler<ItemInstance> by lazy {
+                HTInputHandlerHelper.forItems(this@HTSizedShapelessBlockEntity.inputSlots)
+            }
+            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
+                HTOutputSlotHelper.forItem(this@HTSizedShapelessBlockEntity.outputSlot)
+            }
 
-        override fun createProgressor(): Progressor<List<ItemInstance>, HTSizedShapelessRecipe> = SingleProgressor()
+            override fun createProgressor(): Progressor<List<ItemInstance>, HTSizedShapelessRecipe> = SingleProgressor()
 
-        override fun getInput(): List<ItemInstance> =
-            this@HTSizedShapelessBlockEntity.inputSlots.map(HTBasicItemSlot::getStackCopy)
+            override fun getInput(): List<ItemInstance> = this@HTSizedShapelessBlockEntity.inputSlots.map(HTBasicItemSlot::getStackCopy)
 
-        override fun canComplete(
-            recipe: HTSizedShapelessRecipe,
-            input: List<ItemInstance>,
-            output: ItemStack
-        ): Boolean = useTransaction { transaction: Transaction ->
-            when {
-                recipe.getMatchingStack(input).any { inputSlots.use(it, transaction).failed } -> false
-                else -> outputSlot.take(output, transaction).fullOrNoneTaken
+            override fun canComplete(recipe: HTSizedShapelessRecipe, input: List<ItemInstance>, output: ItemStack): Boolean =
+                useTransaction { transaction: Transaction ->
+                    when {
+                        recipe.getMatchingStack(input).any { inputSlots.use(it, transaction).failed } -> false
+                        else -> outputSlot.take(output, transaction).fullOrNoneTaken
+                    }
+                }
+
+            override fun onComplete(recipe: HTSizedShapelessRecipe, input: List<ItemInstance>, output: ItemStack) {
+                useTransaction { transaction: Transaction ->
+                    recipe.getMatchingStack(input).forEach { inputSlots.use(it, transaction) }
+                    outputSlot.take(output, transaction)
+                    transaction.commit()
+                }
+                playSound(sound)
             }
         }
-
-        override fun onComplete(recipe: HTSizedShapelessRecipe, input: List<ItemInstance>, output: ItemStack) {
-            useTransaction { transaction: Transaction ->
-                recipe.getMatchingStack(input).forEach { inputSlots.use(it, transaction) }
-                outputSlot.take(output, transaction)
-                transaction.commit()
-            }
-            playSound(sound)
-        }
-    }
 
     protected lateinit var inputSlots: List<HTBasicItemSlot>
         private set

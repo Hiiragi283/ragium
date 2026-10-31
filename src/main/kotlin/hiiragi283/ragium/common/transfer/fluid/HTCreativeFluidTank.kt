@@ -15,12 +15,7 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 class HTCreativeFluidTank : HTFluidTank {
     override fun isValid(resource: FluidResource): Boolean = resource == this.resource
 
-    override fun insert(
-        resource: FluidResource,
-        amount: Int,
-        transaction: TransactionContext,
-        access: HTTransferAccess
-    ): Int {
+    override fun insert(resource: FluidResource, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount)
         return when {
             this.resource.isEmpty -> {
@@ -34,12 +29,7 @@ class HTCreativeFluidTank : HTFluidTank {
         }
     }
 
-    override fun extract(
-        resource: FluidResource,
-        amount: Int,
-        transaction: TransactionContext,
-        access: HTTransferAccess
-    ): Int {
+    override fun extract(resource: FluidResource, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount)
         return when (resource) {
             this.resource -> amount

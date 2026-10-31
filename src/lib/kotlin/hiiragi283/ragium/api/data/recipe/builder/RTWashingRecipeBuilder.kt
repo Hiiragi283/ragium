@@ -22,8 +22,7 @@ import kotlin.contracts.contract
 class RTWashingRecipeBuilder : HTProgressRecipeBuilder<RTWashingRecipe>(RagiumConstants.WASHING) {
     override fun getRecipeId(): Identifier? = results.first().getId()
 
-    override fun createRecipe(): RTWashingRecipe =
-        RTWashingRecipe(itemIngredient, fluidIngredient, results.toNel(), progressData)
+    override fun createRecipe(): RTWashingRecipe = RTWashingRecipe(itemIngredient, fluidIngredient, results.toNel(), progressData)
 
     // Ingredient
     @PublishedApi internal var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()

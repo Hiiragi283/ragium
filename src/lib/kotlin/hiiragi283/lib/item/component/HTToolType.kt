@@ -19,30 +19,24 @@ enum class HTToolType(val toolTag: TagKey<Item>, provider: HTLangPatternProvider
     SHOVEL(ItemTags.SHOVELS, "%s Shovel", "%sのショベル"),
     PICKAXE(ItemTags.PICKAXES, "%s Pickaxe", "%sのツルハシ"),
     AXE(ItemTags.AXES, "%s Axe", "%sの斧"),
-    HOE(ItemTags.HOES, "%s Hoe", "%sのクワ")
+    HOE(ItemTags.HOES, "%s Hoe", "%sのクワ"),
     ;
 
     constructor(toolTag: TagKey<Item>, enPattern: String, jaPattern: String) : this(
         toolTag,
-        HTLangPatternProvider(enPattern, jaPattern)
+        HTLangPatternProvider(enPattern, jaPattern),
     )
 
     fun createPath(name: String): String = "${name}_${this.name.lowercase()}"
 
     fun createPath(material: HTMaterialLike): String = createPath(material.materialName)
 
-    fun createItem(
-        properties: Item.Properties,
-        material: ToolMaterial,
-        axeDamage: Float,
-        axeSpeed: Float,
-        hoeDamage: Float,
-        hoeSpeed: Float
-    ): Item = when (this) {
-        SWORD -> Item(properties.sword(material, 3f, -2.4f))
-        SHOVEL -> ShovelItem(material, 1.5f, -3f, properties)
-        PICKAXE -> Item(properties.pickaxe(material, 1f, -2.8f))
-        AXE -> AxeItem(material, axeDamage, axeSpeed, properties)
-        HOE -> HoeItem(material, hoeDamage, hoeSpeed, properties)
-    }
+    fun createItem(properties: Item.Properties, material: ToolMaterial, axeDamage: Float, axeSpeed: Float, hoeDamage: Float, hoeSpeed: Float): Item =
+        when (this) {
+            SWORD -> Item(properties.sword(material, 3f, -2.4f))
+            SHOVEL -> ShovelItem(material, 1.5f, -3f, properties)
+            PICKAXE -> Item(properties.pickaxe(material, 1f, -2.8f))
+            AXE -> AxeItem(material, axeDamage, axeSpeed, properties)
+            HOE -> HoeItem(material, hoeDamage, hoeSpeed, properties)
+        }
 }

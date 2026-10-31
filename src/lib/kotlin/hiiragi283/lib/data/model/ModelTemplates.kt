@@ -15,19 +15,13 @@ import kotlin.jvm.optionals.getOrElse
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun ModelTemplate.createBlock(
-    block: HTSimpleValueWithKey<*>,
-    textures: TextureMapping,
-    output: BiConsumer<Identifier, ModelInstance>
-): Identifier = this.create(block.id().blockId.withSuffix(this.suffix.getOrElse { "" }), textures, output)
+fun ModelTemplate.createBlock(block: HTSimpleValueWithKey<*>, textures: TextureMapping, output: BiConsumer<Identifier, ModelInstance>): Identifier =
+    this.create(block.id().blockId.withSuffix(this.suffix.getOrElse { "" }), textures, output)
 
 /**
  * `models/item`配下のモデルJSONを生成します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun ModelTemplate.createItem(
-    item: HTSimpleValueWithKey<*>,
-    textures: TextureMapping,
-    output: BiConsumer<Identifier, ModelInstance>
-): Identifier = this.create(item.id().itemId.withSuffix(this.suffix.getOrElse { "" }), textures, output)
+fun ModelTemplate.createItem(item: HTSimpleValueWithKey<*>, textures: TextureMapping, output: BiConsumer<Identifier, ModelInstance>): Identifier =
+    this.create(item.id().itemId.withSuffix(this.suffix.getOrElse { "" }), textures, output)

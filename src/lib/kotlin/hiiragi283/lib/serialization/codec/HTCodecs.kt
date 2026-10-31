@@ -14,6 +14,7 @@ import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
+import hiiragi283.lib.util.dataResult
 import hiiragi283.lib.util.java
 import hiiragi283.lib.util.kotlin
 import net.minecraft.core.Holder
@@ -47,8 +48,7 @@ data object HTCodecs {
     val UUID: Codec<UUID> = UUIDUtil.CODEC
 
     @JvmStatic
-    fun <K : Any, V : Any> mapOf(keyCodec: Codec<K>, valueCodec: Codec<V>): Codec<Map<K, V>> =
-        Codec.unboundedMap(keyCodec, valueCodec)
+    fun <K : Any, V : Any> mapOf(keyCodec: Codec<K>, valueCodec: Codec<V>): Codec<Map<K, V>> = Codec.unboundedMap(keyCodec, valueCodec)
 
     /**
      * [Optional]でラップされた[Codec]を作成します。
@@ -60,18 +60,17 @@ data object HTCodecs {
     fun <A : Any, B : Any> pair(first: Codec<A>, second: Codec<B>): MapCodec<Pair<A, B>> = recordMap { instance ->
         instance.group(
             first.fieldOf("first").forGetter(Pair<A, B>::first),
-            second.fieldOf("second").forGetter(Pair<A, B>::second)
+            second.fieldOf("second").forGetter(Pair<A, B>::second),
         ).apply(instance, ::Pair)
     }
 
     @JvmStatic
-    fun <A : Any, B : Any> mapPair(first: MapCodec<A>, second: MapCodec<B>): MapCodec<Pair<A, B>> =
-        recordMap { instance ->
-            instance.group(
-                first.forGetter(Pair<A, B>::first),
-                second.forGetter(Pair<A, B>::second)
-            ).apply(instance, ::Pair)
-        }
+    fun <A : Any, B : Any> mapPair(first: MapCodec<A>, second: MapCodec<B>): MapCodec<Pair<A, B>> = recordMap { instance ->
+        instance.group(
+            first.forGetter(Pair<A, B>::first),
+            second.forGetter(Pair<A, B>::second),
+        ).apply(instance, ::Pair)
+    }
 
     /**
      * [Either]の[Codec]を作成します。
@@ -82,8 +81,7 @@ data object HTCodecs {
      * @see Codec.either
      */
     @JvmStatic
-    fun <A : Any, B : Any> either(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> =
-        Codec.either(left, right).xmap({ it.kotlin }, { it.java })
+    fun <A : Any, B : Any> either(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> = Codec.either(left, right).xmap({ it.kotlin }, { it.java })
 
     /**
      * [Either]の[Codec]を作成します。
@@ -94,8 +92,7 @@ data object HTCodecs {
      * @see Codec.xor
      */
     @JvmStatic
-    fun <A : Any, B : Any> xor(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> =
-        Codec.xor(left, right).xmap({ it.kotlin }, { it.java })
+    fun <A : Any, B : Any> xor(left: Codec<A>, right: Codec<B>): Codec<Either<A, B>> = Codec.xor(left, right).xmap({ it.kotlin }, { it.java })
 
     /**
      * [Either]の[Codec]を作成します。
@@ -153,17 +150,13 @@ data object HTCodecs {
             }
         }
 
-        override fun <T : Any> encode(
-            input: Ior<A, B>,
-            ops: DynamicOps<T>,
-            prefix: RecordBuilder<T>
-        ): RecordBuilder<T> = input.fold(
+        override fun <T : Any> encode(input: Ior<A, B>, ops: DynamicOps<T>, prefix: RecordBuilder<T>): RecordBuilder<T> = input.fold(
             { left.encode(it, ops, prefix) },
             { right.encode(it, ops, prefix) },
             { left: A, right: B ->
                 this.left.encode(left, ops, prefix)
                 this.right.encode(right, ops, prefix)
-            }
+            },
         )
     }
 
@@ -173,25 +166,16 @@ data object HTCodecs {
      * @param factory [V]を[String]に変換するブロック
      */
     @JvmStatic
-    inline fun <reified V : Enum<V>> stringEnum(crossinline factory: (V) -> String?): Codec<V> =
-        Codec.STRING.flatXmap<V>(
-            { name: String ->
-                enumEntries<V>().firstOrNull { factory(it) == name }?.let { DataResult.success(it) }
-                    ?: DataResult.error { "Unknown element name: $name" }
-            },
-            { value: V ->
-                factory(value)?.let { DataResult.success(it) }
-                    ?: DataResult.error { "Element with unknown name: $value" }
-            }
-        )
+    inline fun <reified V : Enum<V>> stringEnum(crossinline factory: (V) -> String?): Codec<V> = Codec.STRING.flatXmap<V>(
+        { name: String -> enumEntries<V>().firstOrNull { factory(it) == name }.dataResult { "Unknown element name: $name" } },
+        { value: V -> factory(value).dataResult { "Element with unknown name: $value" } },
+    )
 
     /**
      * [RecordCodecBuilder.mapCodec]を最適化した代替
      */
     @JvmStatic
-    inline fun <O> recordMap(
-        builder: (RecordCodecBuilder.Instance<O>) -> App<RecordCodecBuilder.Mu<O>, O>
-    ): MapCodec<O> {
+    inline fun <O> recordMap(builder: (RecordCodecBuilder.Instance<O>) -> App<RecordCodecBuilder.Mu<O>, O>): MapCodec<O> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -257,16 +241,14 @@ data object HTCodecs {
      * @since 26.1.6
      */
     @JvmStatic
-    fun <T : Any> holder(registryKey: RegistryKey<T>, directCodec: Codec<T>): Codec<Holder<T>> =
-        RegistryFileCodec.create(registryKey, directCodec)
+    fun <T : Any> holder(registryKey: RegistryKey<T>, directCodec: Codec<T>): Codec<Holder<T>> = RegistryFileCodec.create(registryKey, directCodec)
 
     /**
      * 指定した[registryKey]から[HolderSet]の[Codec]を返します。
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> holderSet(registryKey: RegistryKey<T>): Codec<HolderSet<T>> =
-        RegistryCodecs.homogeneousList(registryKey)
+    fun <T : Any> holderSet(registryKey: RegistryKey<T>): Codec<HolderSet<T>> = RegistryCodecs.homogeneousList(registryKey)
 
     /**
      * 指定した[registryKey]から[HolderSet]の[Codec]を返します。

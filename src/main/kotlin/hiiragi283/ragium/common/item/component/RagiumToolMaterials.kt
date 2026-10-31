@@ -12,6 +12,6 @@ data object RagiumToolMaterials {
         5f,
         2f,
         14,
-        RagiumTags.Items.SOOTY_IRON_TOOL_MATERIALS
+        RagiumTags.Items.SOOTY_IRON_TOOL_MATERIALS,
     )
 }

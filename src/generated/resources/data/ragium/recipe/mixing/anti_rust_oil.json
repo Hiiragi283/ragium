@@ -1,6 +1,6 @@
 {
   "type": "ragium:mixing",
-  "ingredient": {
+  "ingredients": {
     "fluid": {
       "amount": 1000,
       "fluids": "#c:naphtha"

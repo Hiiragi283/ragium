@@ -15,7 +15,7 @@ class HTResourcePumpBlockEntity(pos: BlockPos, state: BlockState) :
     HTLocationToFluidBlockEntity(RagiumBlockEntityTypes.RESOURCE_PUMP.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.RESOURCE_PUMPING,
-        HTSoundInstance(SoundEvents.BUCKET_FILL)
+        HTSoundInstance(SoundEvents.BUCKET_FILL),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.resourcePump

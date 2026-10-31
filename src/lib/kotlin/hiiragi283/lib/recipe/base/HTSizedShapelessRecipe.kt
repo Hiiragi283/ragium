@@ -27,32 +27,25 @@ interface HTSizedShapelessRecipe :
      * @author Hiiragi Tsubasa
      * @since 26.1.11
      */
-    open class Basic(
-        val ingredients: Nel<HTItemIngredient>,
-        val result: HTItemResult,
-        override val progressData: HTProgressData
-    ) : HTSizedShapelessRecipe,
+    open class Basic(val ingredients: Nel<HTItemIngredient>, val result: HTItemResult, override val progressData: HTProgressData) :
+        HTSizedShapelessRecipe,
         HTProgressRecipe.Holder {
         companion object {
             @JvmStatic
-            fun <RECIPE : Basic> codec(
-                factory: (Nel<HTItemIngredient>, HTItemResult, HTProgressData) -> RECIPE
-            ): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
-                instance.group(
-                    HTItemIngredient.CODEC
-                        .compactNelFieldOf(HTConstants.INGREDIENT, HTConstants.INGREDIENTS)
-                        .forGetter(Basic::ingredients),
-                    HTItemResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
-                    HTProgressData.CODEC.forGetter(Basic::progressData)
-                ).apply(instance, factory)
-            }
-
-            @JvmField
-            val SIMPLE_CODEC: MapCodec<Basic> = codec(::Basic)
+            fun <RECIPE : Basic> codec(factory: (Nel<HTItemIngredient>, HTItemResult, HTProgressData) -> RECIPE): MapCodec<RECIPE> =
+                HTCodecs.recordMap { instance ->
+                    instance.group(
+                        HTItemIngredient.CODEC
+                            .compactNelFieldOf(HTConstants.INGREDIENT, HTConstants.INGREDIENTS)
+                            .forGetter(Basic::ingredients),
+                        HTItemResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
+                        HTProgressData.CODEC.forGetter(Basic::progressData),
+                    ).apply(instance, factory)
+                }
 
             @JvmStatic
             fun <RECIPE : Basic> streamCodec(
-                factory: (Nel<HTItemIngredient>, HTItemResult, HTProgressData) -> RECIPE
+                factory: (Nel<HTItemIngredient>, HTItemResult, HTProgressData) -> RECIPE,
             ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
                 HTItemIngredient.STREAM_CODEC.nelOf(),
                 Basic::ingredients,
@@ -60,7 +53,7 @@ interface HTSizedShapelessRecipe :
                 Basic::result,
                 HTProgressData.STREAM_CODEC,
                 Basic::progressData,
-                factory
+                factory,
             )
         }
 
@@ -68,8 +61,7 @@ interface HTSizedShapelessRecipe :
 
         override fun apply(input: List<ItemInstance>): ItemStack = result.create()
 
-        override fun getMatchingStack(input: List<ItemInstance>): List<ItemInstance> =
-            HTIngredientHelper.getMatchingStacks(ingredients, input)
+        override fun getMatchingStack(input: List<ItemInstance>): List<ItemInstance> = HTIngredientHelper.getMatchingStacks(ingredients, input)
 
         override fun getProgressData(input: List<ItemInstance>): HTProgressData = progressData
     }

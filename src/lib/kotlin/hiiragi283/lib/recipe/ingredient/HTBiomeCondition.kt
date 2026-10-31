@@ -2,6 +2,8 @@ package hiiragi283.lib.recipe.ingredient
 
 import com.mojang.serialization.Codec
 import hiiragi283.lib.data.buildDataPatch
+import hiiragi283.lib.recipe.display.HTDisplayableContent
+import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.recipe.display.toDisplay
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.text.HTCommonTranslation
@@ -28,7 +30,9 @@ import java.util.function.Predicate
  * @since 26.1.7
  */
 @JvmRecord
-data class HTBiomeCondition(val biomes: HolderSet<Biome>) : Predicate<Holder<Biome>> {
+data class HTBiomeCondition(val biomes: HolderSet<Biome>) :
+    Predicate<Holder<Biome>>,
+    HTDisplayableContent {
     companion object {
         @JvmField
         val CODEC: Codec<HTBiomeCondition> = Biome.LIST_CODEC.xmap(::HTBiomeCondition, HTBiomeCondition::biomes)
@@ -57,7 +61,7 @@ data class HTBiomeCondition(val biomes: HolderSet<Biome>) : Predicate<Holder<Bio
     /**
      * 一致するバイオームのプレビュー
      */
-    val display: SlotDisplay get() = this@HTBiomeCondition.biomes
+    override fun display(): SlotDisplay = this@HTBiomeCondition.biomes
         .asSequence()
         .mapNotNull { it.key?.identifier()?.toString() }
         .map(::createDisplay)
@@ -67,5 +71,5 @@ data class HTBiomeCondition(val biomes: HolderSet<Biome>) : Predicate<Holder<Bio
         .toText()
         .let(HTCommonTranslation.BIOME::translate)
         .let { ItemStackTemplate(Items.COMPASS, buildDataPatch { set(DataComponents.ITEM_NAME, it) }) }
-        .let(SlotDisplay::ItemStackSlotDisplay)
+        .let(HTSlotDisplayHelper::create)
 }

@@ -8,8 +8,7 @@ package hiiragi283.lib.collection
  * @author Hiiragi Tsubasa
  * @since 26.1.7
  */
-abstract class AbstractMultiMapBuilder<K, V, C : MutableCollection<V>>(protected val destination: MutableMap<K, C>) :
-    MultiMapBuilder<K, V> {
+abstract class AbstractMultiMapBuilder<K, V, C : MutableCollection<V>>(protected val destination: MutableMap<K, C>) : MultiMapBuilder<K, V> {
     /**
      * 空のコレクションを生成します。
      */

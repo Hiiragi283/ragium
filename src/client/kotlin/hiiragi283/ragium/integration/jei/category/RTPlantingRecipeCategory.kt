@@ -1,9 +1,8 @@
 package hiiragi283.ragium.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
-import hiiragi283.lib.integration.jei.add
-import hiiragi283.lib.integration.jei.category.HTHolderRecipeCategory
-import hiiragi283.ragium.api.recipe.RTPlantingRecipe
+import hiiragi283.lib.integration.jei.category.HTViewerRecipeCategory
+import hiiragi283.lib.recipe.viewer.HTSingleToSingleViewerRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
@@ -13,15 +12,15 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class RTPlantingRecipeCategory(guiHelper: IGuiHelper) :
-    HTHolderRecipeCategory<RTPlantingRecipe>(
+    HTViewerRecipeCategory<HTSingleToSingleViewerRecipe>(
         RagiumJeiRecipeTypes.PLANTING,
         RagiumRecipeTypes.PLANTING,
         guiHelper.createDrawableItemLike(RagiumBlocks.PLANTER),
         18 * 6,
         18 * 1,
-        RTPlantingRecipe.CODEC
+        HTSingleToSingleViewerRecipe.CODEC,
     ) {
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RTPlantingRecipe, focuses: IFocusGroup) {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTSingleToSingleViewerRecipe, focuses: IFocusGroup) {
         // input
         builder
             .addInputSlot(getPosition(0), getPosition(0))
@@ -39,7 +38,7 @@ class RTPlantingRecipeCategory(guiHelper: IGuiHelper) :
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
     }
 
-    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RTPlantingRecipe, focuses: IFocusGroup) {
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTSingleToSingleViewerRecipe, focuses: IFocusGroup) {
         builder.addRecipeArrow(recipe).setPosition(getPosition(1.25), getPosition(0))
         builder.addRecipePlus(getPosition(4))
     }

@@ -9,6 +9,7 @@ import hiiragi283.lib.recipe.display.toDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.fold
+import hiiragi283.lib.util.getOrNull
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
@@ -54,8 +55,7 @@ data class HTPotionFluidIngredient(val potions: HolderSet<Potion>) : FluidIngred
     }
 
     @Suppress("DEPRECATION")
-    override fun generateFluids(): Stream<Holder<Fluid>> =
-        Stream.of(HTPotionFluidAccess.INSTANCE.fluidContent.sourceHolder)
+    override fun generateFluids(): Stream<Holder<Fluid>> = Stream.of(HTPotionFluidAccess.INSTANCE.fluidContent.sourceHolder)
 
     override fun display(): SlotDisplay = potions
         .asSequence()

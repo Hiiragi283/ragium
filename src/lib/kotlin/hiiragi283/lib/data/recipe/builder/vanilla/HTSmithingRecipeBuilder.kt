@@ -52,6 +52,6 @@ class HTSmithingRecipeBuilder : HTVanillaRecipeBuilder<SmithingTransformRecipe>(
         template,
         base,
         addition,
-        result
+        result,
     )
 }

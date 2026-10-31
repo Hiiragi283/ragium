@@ -23,17 +23,10 @@ import java.util.function.Supplier
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTVirtualFluid(private val typeGetter: Supplier<out FluidType>, private val bucketGetter: Supplier<out Item>) :
-    Fluid() {
+class HTVirtualFluid(private val typeGetter: Supplier<out FluidType>, private val bucketGetter: Supplier<out Item>) : Fluid() {
     override fun getBucket(): Item = bucketGetter.get()
 
-    override fun canBeReplacedWith(
-        state: FluidState,
-        level: BlockGetter,
-        pos: BlockPos,
-        fluid: Fluid,
-        direction: Direction
-    ): Boolean = true
+    override fun canBeReplacedWith(state: FluidState, level: BlockGetter, pos: BlockPos, fluid: Fluid, direction: Direction): Boolean = true
 
     override fun getFlow(blockReader: BlockGetter, pos: BlockPos, fluidState: FluidState): Vec3 = Vec3.ZERO
 
@@ -57,6 +50,5 @@ class HTVirtualFluid(private val typeGetter: Supplier<out FluidType>, private va
 
     override fun getFluidType(): FluidType = typeGetter.get()
 
-    override fun getPickupSound(): Optional<SoundEvent> =
-        Optional.ofNullable(fluidType.getSound(SoundActions.BUCKET_FILL))
+    override fun getPickupSound(): Optional<SoundEvent> = Optional.ofNullable(fluidType.getSound(SoundActions.BUCKET_FILL))
 }

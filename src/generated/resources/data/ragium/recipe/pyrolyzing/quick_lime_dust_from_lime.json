@@ -1,0 +1,18 @@
+{
+  "type": "ragium:pyrolyzing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:dusts/lime"
+  },
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:carbon_dioxide"
+    },
+    "item": {
+      "count": 1,
+      "id": "ragium:quick_lime_dust"
+    }
+  },
+  "time": 200
+}

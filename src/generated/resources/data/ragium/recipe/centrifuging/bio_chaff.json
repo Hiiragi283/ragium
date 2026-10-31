@@ -1,0 +1,18 @@
+{
+  "type": "ragium:centrifuging",
+  "ingredient": {
+    "count": 8,
+    "items": "#c:seeds"
+  },
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:plant_oil"
+    },
+    "item": {
+      "count": 1,
+      "id": "ragium:bio_chaff"
+    }
+  },
+  "time": 200
+}

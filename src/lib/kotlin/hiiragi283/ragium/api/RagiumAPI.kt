@@ -32,6 +32,5 @@ data object RagiumAPI {
     fun id(vararg path: String): Identifier = MOD_ID.toId(*path)
 
     @JvmStatic
-    inline fun <reified T : Any> getService(): T =
-        ServiceLoader.load(T::class.java, RagiumAPI::class.java.classLoader).single()
+    inline fun <reified T : Any> getService(): T = ServiceLoader.load(T::class.java, RagiumAPI::class.java.classLoader).single()
 }

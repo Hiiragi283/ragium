@@ -43,7 +43,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
             result {
                 +PotionContents(
                     customEffects = listOf(MobEffectInstance(MobEffects.NAUSEA, 900)),
-                    customName = "nausea"
+                    customName = "nausea",
                 )
             }
             recipeId replace id("potion/nausea")
@@ -56,7 +56,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
             result {
                 +PotionContents(
                     customEffects = listOf(MobEffectInstance(MobEffects.BLINDNESS, 900)),
-                    customName = "blindness"
+                    customName = "blindness",
                 )
             }
             recipeId replace id("potion/blindness")
@@ -68,7 +68,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
             result {
                 +PotionContents(
                     customEffects = listOf(MobEffectInstance(MobEffects.HUNGER, 900)),
-                    customName = "hunger"
+                    customName = "hunger",
                 )
             }
             recipeId replace id("potion/hunger")
@@ -85,7 +85,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
             result {
                 +PotionContents(
                     customEffects = listOf(MobEffectInstance(MobEffects.WITHER, 900)),
-                    customName = "wither"
+                    customName = "wither",
                 )
             }
             recipeId replace id("potion/wither")
@@ -104,7 +104,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
             result {
                 +PotionContents(
                     customEffects = listOf(MobEffectInstance(MobEffects.DARKNESS, 900)),
-                    customName = "darkness"
+                    customName = "darkness",
                 )
             }
             recipeId replace id("potion/darkness")
@@ -118,7 +118,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +PotionContents(
                     customColor = 0xff9900,
                     customEffects = extractEffects(Consumables.GOLDEN_APPLE),
-                    customName = "golden_apple"
+                    customName = "golden_apple",
                 )
             }
             recipeId replace id("potion/golden_apple")
@@ -130,7 +130,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +PotionContents(
                     customColor = 0xff9900,
                     customEffects = extractEffects(Consumables.ENCHANTED_GOLDEN_APPLE),
-                    customName = "enchanted_golden_apple"
+                    customName = "enchanted_golden_apple",
                 )
             }
             recipeId replace id("potion/enchanted_golden_apple")
@@ -150,7 +150,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
             Pair(Tags.Items.SEEDS_PITCHER_PLANT, Items.PITCHER_PLANT),
             Pair(Tags.Items.SEEDS_PUMPKIN, Items.PUMPKIN),
             Pair(Tags.Items.SEEDS_TORCHFLOWER, Items.TORCHFLOWER),
-            Pair(Tags.Items.SEEDS_WHEAT, Items.WHEAT)
+            Pair(Tags.Items.SEEDS_WHEAT, Items.WHEAT),
         ).forEach { (seedIn: TagKey<Item>, crop: Item) ->
             RagiumRecipeBuilders.planting {
                 ingredient {
@@ -173,7 +173,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
             Items.COCOA_BEANS,
             Items.NETHER_WART,
             Items.BROWN_MUSHROOM,
-            Items.RED_MUSHROOM
+            Items.RED_MUSHROOM,
         )
         for (crop: Item in crops) {
             RagiumRecipeBuilders.planting {
@@ -213,7 +213,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
             Items.PALE_OAK_SAPLING to Items.PALE_OAK_LOG,
             Items.CRIMSON_FUNGUS to Items.CRIMSON_STEM,
             Items.WARPED_FUNGUS to Items.WARPED_STEM,
-            Items.CHORUS_FLOWER to Items.CHORUS_FRUIT
+            Items.CHORUS_FLOWER to Items.CHORUS_FRUIT,
         ).forEach { (sapling: Item, log: Item) ->
             RagiumRecipeBuilders.planting {
                 ingredient {

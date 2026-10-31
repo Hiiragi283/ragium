@@ -45,23 +45,21 @@ data object HTComparators {
      * @since 26.1.7
      */
     @JvmStatic
-    fun <T : Any> compressHolderSet(holderSets: Iterable<HolderSet<T>>): OrHolderSet<T> =
-        holderSets.flatMap { holderSet: HolderSet<T> ->
-            when (holderSet) {
-                is CompositeHolderSet -> holderSet.components.singleOrNull()?.let(::listOf) ?: listOf(holderSet)
-                else -> listOf(holderSet)
-            }
-        }.sortedWith(HOLDER_SET).let(::OrHolderSet)
+    fun <T : Any> compressHolderSet(holderSets: Iterable<HolderSet<T>>): OrHolderSet<T> = holderSets.flatMap { holderSet: HolderSet<T> ->
+        when (holderSet) {
+            is CompositeHolderSet -> holderSet.components.singleOrNull()?.let(::listOf) ?: listOf(holderSet)
+            else -> listOf(holderSet)
+        }
+    }.sortedWith(HOLDER_SET).let(::OrHolderSet)
 
     /**
      * @since 26.1.7
      */
     @JvmStatic
-    fun <T : Any> compressHolderSet(holderSets: Sequence<HolderSet<T>>): OrHolderSet<T> =
-        holderSets.flatMap { holderSet: HolderSet<T> ->
-            when (holderSet) {
-                is CompositeHolderSet -> holderSet.components.singleOrNull()?.let(::listOf) ?: listOf(holderSet)
-                else -> listOf(holderSet)
-            }
-        }.sortedWith(HOLDER_SET).toList().let(::OrHolderSet)
+    fun <T : Any> compressHolderSet(holderSets: Sequence<HolderSet<T>>): OrHolderSet<T> = holderSets.flatMap { holderSet: HolderSet<T> ->
+        when (holderSet) {
+            is CompositeHolderSet -> holderSet.components.singleOrNull()?.let(::listOf) ?: listOf(holderSet)
+            else -> listOf(holderSet)
+        }
+    }.sortedWith(HOLDER_SET).toList().let(::OrHolderSet)
 }

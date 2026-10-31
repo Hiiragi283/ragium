@@ -51,5 +51,5 @@ abstract class HTConfigurableBlockEntity(type: BlockEntityType<*>, pos: BlockPos
         input.read("slot_info", CONFIG_CODEC).ifPresent(slotInfoCache::putAll)
     }
 
-    final override fun getSlotInfo(side: Direction): HTSlotInfo = slotInfoCache.getOrPut(side) { HTSlotInfo.BOTH }
+    final override fun getSlotInfo(side: Direction): HTSlotInfo = slotInfoCache.getOrElse(side) { HTSlotInfo.BOTH }
 }

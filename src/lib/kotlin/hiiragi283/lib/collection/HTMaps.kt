@@ -18,12 +18,11 @@ fun <K, V : Any, C : MutableMap<K, V>> Map<K, Optional<out V>>.filterNotOptional
 
 //    Either    //
 
-fun <K, A, B> Map<K, Either<A, B>>.separateEither(): Pair<Map<K, A>, Map<K, B>> =
-    this.separateEitherTo(mutableMapOf(), mutableMapOf())
+fun <K, A, B> Map<K, Either<A, B>>.separateEither(): Pair<Map<K, A>, Map<K, B>> = this.separateEitherTo(mutableMapOf(), mutableMapOf())
 
 fun <K, A, B, CA : MutableMap<K, in A>, CB : MutableMap<K, in B>> Map<K, Either<A, B>>.separateEitherTo(
     destinationA: CA,
-    destinationB: CB
+    destinationB: CB,
 ): Pair<CA, CB> {
     for ((key: K, value: Either<A, B>) in this) {
         value.fold({ destinationA[key] = it }, { destinationB[key] = it })

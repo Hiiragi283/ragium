@@ -42,7 +42,7 @@ interface RagiumLangProvider {
         for (color: DyeColor in DyeColor.entries) {
             provider.addFluid(
                 RagiumFluids.DYES[color],
-                dyePattern.translate(langType, HTColoredCollection.TRANSLATED_NAMES[color])
+                dyePattern.translate(langType, HTColoredCollection.TRANSLATED_NAMES[color]),
             )
         }
         // Item

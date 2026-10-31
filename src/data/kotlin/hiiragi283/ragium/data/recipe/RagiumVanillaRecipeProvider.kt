@@ -87,7 +87,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Cement
         VanillaRecipeBuilders.shapeless {
             ingredient { +holderSet(Tags.Items.SANDS) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemicals.QUICK_LIME) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.QUICK_LIME) }
             result {
                 +RagiumItems.CEMENT
                 count = 2
@@ -195,8 +195,8 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                     .map(CommonTagPrefixes.DUST::itemTagKey)
                     .let(::holderSet)
             }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SULFUR) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.NITER) }
             result {
                 +Items.GUNPOWDER
                 count = 3
@@ -207,7 +207,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             layered()
             define('A') { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.AMETHYST) }
             define('B') { items { +Items.MAGMA_BLOCK } }
-            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.SULFUR) }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SULFUR) }
             result { +Items.BLAZE_ROD }
         }.save(exporter)
         // Breeze Rod
@@ -215,7 +215,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             layered()
             define('A') { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.AMETHYST) }
             define('B') { items { +Items.ICE } }
-            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.NITER) }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.NITER) }
             result { +Items.BREEZE_ROD }
         }.save(exporter)
         // Candle
@@ -226,6 +226,14 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('B') { items { +RagiumItems.BEESWAX } }
             result { +Items.CANDLE }
             category = RecipeCategory.DECORATIONS
+        }.save(exporter)
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(Tags.Items.STRINGS) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.MOLTEN_BEESWAX)
+                amount /= 4
+            }
+            result { +Items.CANDLE }
         }.save(exporter)
         // Torch
         VanillaRecipeBuilders.shaped {
@@ -398,7 +406,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         VanillaRecipeBuilders.shaped {
             layered2()
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             result { +RagiumItems.getParts(HTMachineType.MECHANICAL) }
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
@@ -406,7 +414,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON)
                 count = 2
             }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             result { +RagiumItems.getParts(HTMachineType.MECHANICAL) }
         }.save(exporter)
 
@@ -461,7 +469,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         RagiumRecipeBuilders.alloying {
             ingredient { items { +RagiumItems.getParts(HTMachineType.HEAT) } }
             ingredient { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.GLOWSTONE) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE) }
             result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
         }.save(exporter)
 
@@ -528,7 +536,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         material: HTMaterialLike,
         gear: HTMaterialLike,
         result: HTSimpleDeferredBlockAndItem,
-        builderAction: IngredientBuilder.() -> Unit
+        builderAction: IngredientBuilder.() -> Unit,
     ) {
         VanillaRecipeBuilders.shaped {
             +"ABA"
@@ -548,7 +556,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.SOOTY_IRON,
             RagiumMaterial.Metal.COPPER,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -558,7 +566,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.SOOTY_IRON,
             RagiumMaterial.Metal.IRON,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -568,7 +576,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.BLACK_STEEL,
             RagiumMaterial.Metal.GOLD,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -578,7 +586,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.BLACK_STEEL,
             RagiumMaterial.Gem.EMERALD,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -588,7 +596,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.BLACK_STEEL,
             RagiumMaterial.Gem.DIAMOND,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -598,7 +606,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             RagiumMaterial.Alloy.SHADOW_STEEL,
             RagiumMaterial.Alloy.NETHERITE,
             result,
-            builderAction
+            builderAction,
         )
     }
 
@@ -652,7 +660,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             crossLayered()
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON) }
             define('B') { +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP) }
-            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Mineral.REDSTONE) }
+            define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             define('D') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.COPPER) }
             result { +RagiumItems.BASIC_UPGRADE }
         }.save(exporter)
@@ -854,7 +862,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     private fun ingotToNugget(
         material: RagiumMaterial,
         ingot: HTSimpleDeferredItem? = RagiumItems.MATERIAL_ITEMS[HTItemPart.INGOT, material],
-        nugget: HTSimpleDeferredItem? = RagiumItems.MATERIAL_ITEMS[HTItemPart.NUGGET, material]
+        nugget: HTSimpleDeferredItem? = RagiumItems.MATERIAL_ITEMS[HTItemPart.NUGGET, material],
     ) {
         if (ingot == null || nugget == null) return
         VanillaRecipeBuilders.shapeless {

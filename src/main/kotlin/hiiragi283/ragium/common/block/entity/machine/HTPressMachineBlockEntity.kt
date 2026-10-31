@@ -15,7 +15,7 @@ class HTPressMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTCatalysedItemToItemBlockEntity(RagiumBlockEntityTypes.PRESS_MACHINE.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.PRESSING,
-        HTSoundInstance(SoundEvents.PISTON_EXTEND)
+        HTSoundInstance(SoundEvents.PISTON_EXTEND),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.pressMachine

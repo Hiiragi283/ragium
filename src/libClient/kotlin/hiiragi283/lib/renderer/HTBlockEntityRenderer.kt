@@ -12,6 +12,5 @@ import net.minecraft.world.level.block.entity.BlockEntity
  * @author Hiiragi Tsubasa
  * @since 26.1.7
  */
-abstract class HTBlockEntityRenderer<BE : BlockEntity, S : BlockEntityRenderState>(
-    context: BlockEntityRendererProvider.Context
-) : BlockEntityRenderer<BE, S>
+abstract class HTBlockEntityRenderer<BE : BlockEntity, S : BlockEntityRenderState>(context: BlockEntityRendererProvider.Context) :
+    BlockEntityRenderer<BE, S>

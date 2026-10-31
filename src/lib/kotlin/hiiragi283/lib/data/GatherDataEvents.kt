@@ -13,13 +13,12 @@ import java.util.concurrent.CompletableFuture
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun GatherDataEvent.createLootTables(
-    vararg pairs: Pair<(HolderLookup.Provider) -> LootTableSubProvider, ContextKeySet>
-): LootTableProvider = this.createProvider { output: PackOutput, future: CompletableFuture<HolderLookup.Provider> ->
-    LootTableProvider(
-        output,
-        emptySet(),
-        pairs.map { LootTableProvider.SubProviderEntry(it.first, it.second) },
-        future
-    )
-}
+fun GatherDataEvent.createLootTables(vararg pairs: Pair<(HolderLookup.Provider) -> LootTableSubProvider, ContextKeySet>): LootTableProvider =
+    this.createProvider { output: PackOutput, future: CompletableFuture<HolderLookup.Provider> ->
+        LootTableProvider(
+            output,
+            emptySet(),
+            pairs.map { LootTableProvider.SubProviderEntry(it.first, it.second) },
+            future,
+        )
+    }

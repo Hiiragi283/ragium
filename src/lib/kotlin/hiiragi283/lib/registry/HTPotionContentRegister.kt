@@ -71,7 +71,7 @@ class HTPotionContentRegister(modId: String) : RegistryAliasAcceptor {
         name: String,
         baseEffects: PotionEffectProvider,
         longEffects: PotionEffectProvider,
-        strongEffects: PotionEffectProvider? = null
+        strongEffects: PotionEffectProvider? = null,
     ): HTPotionContent {
         val baseHolder: HTSimpleDeferredHolder<Potion> = register.register(name) { _ -> Potion(name, *baseEffects()) }
         val longHolder: HTSimpleDeferredHolder<Potion> = register.register("long_$name") { _ ->
@@ -98,7 +98,7 @@ class HTPotionContentRegister(modId: String) : RegistryAliasAcceptor {
         name,
         { arrayOf(MobEffectInstance(effect, 3600)) },
         { arrayOf(MobEffectInstance(effect, 9600)) },
-        { arrayOf(MobEffectInstance(effect, 1800, 1)) }
+        { arrayOf(MobEffectInstance(effect, 1800, 1)) },
     )
 
     /**
@@ -111,6 +111,6 @@ class HTPotionContentRegister(modId: String) : RegistryAliasAcceptor {
         name,
         { arrayOf(MobEffectInstance(effect, 900)) },
         { arrayOf(MobEffectInstance(effect, 1800)) },
-        { arrayOf(MobEffectInstance(effect, 432, 1)) }
+        { arrayOf(MobEffectInstance(effect, 432, 1)) },
     )
 }

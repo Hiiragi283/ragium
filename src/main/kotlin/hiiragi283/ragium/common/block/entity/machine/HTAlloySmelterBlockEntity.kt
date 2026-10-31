@@ -20,7 +20,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTSizedShapelessBlockEntity(RagiumBlockEntityTypes.ALLOY_SMELTER.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.ALLOYING,
-        HTSoundInstance(SoundEvents.FIRE_EXTINGUISH)
+        HTSoundInstance(SoundEvents.FIRE_EXTINGUISH),
     )
 
     override fun getInputSize(): Int = 3
@@ -37,7 +37,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
                 index,
                 HTSlotHelper.getSlotPosX(0.5 + index),
                 HTSlotHelper.getSlotPosY(0.5),
-                HTBackgroundType.INPUT
+                HTBackgroundType.INPUT,
             )
             widgetHolder.track(slot)
         }
@@ -47,7 +47,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
             3,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT
+            HTBackgroundType.OUTPUT,
         )
         widgetHolder.track(outputSlot)
     }

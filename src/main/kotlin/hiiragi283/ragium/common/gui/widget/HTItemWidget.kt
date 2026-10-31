@@ -6,8 +6,8 @@ import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.lib.recipe.widget.HTGhostWidget
 import hiiragi283.lib.recipe.widget.HTIngredientWidget
-import hiiragi283.lib.transfer.item.HTBasicItemSlot
-import hiiragi283.ragium.common.gui.HTContainerItemSlot
+import hiiragi283.lib.transfer.item.HTItemStackSlot
+import hiiragi283.ragium.common.gui.slot.HTItemContainerSlot
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 
@@ -26,12 +26,19 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
 
     class Container(val slot: Slot, backgroundType: HTBackgroundType) : HTItemWidget(backgroundType) {
         constructor(
-            slot: HTBasicItemSlot,
+            slot: HTItemStackSlot,
+            x: Int,
+            y: Int,
+            backgroundType: HTBackgroundType,
+        ) : this(HTItemContainerSlot.create(slot, x, y), backgroundType)
+
+        constructor(
+            slot: HTItemStackSlot,
             index: Int,
             x: Int,
             y: Int,
-            backgroundType: HTBackgroundType
-        ) : this(HTContainerItemSlot.create(slot, index, x, y, backgroundType), backgroundType)
+            backgroundType: HTBackgroundType,
+        ) : this(HTItemContainerSlot.create(slot, x, y), backgroundType)
 
         override fun getStack(): ItemStack = slot.item
 
@@ -51,7 +58,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
         private val stackSetter: ItemStackSetter?,
         override val bounds: HTBounds,
         backgroundType: HTBackgroundType,
-        val isGhost: Boolean
+        val isGhost: Boolean,
     ) : HTItemWidget(backgroundType),
         HTGhostWidget {
         constructor(
@@ -60,22 +67,16 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
             x: Int,
             y: Int,
             backgroundType: HTBackgroundType,
-            isGhost: Boolean
+            isGhost: Boolean,
         ) : this(stackGetter, stackSetter, HTBounds.createSlot(x - 1, y - 1), backgroundType, isGhost)
 
-        constructor(slot: HTBasicItemSlot, bounds: HTBounds, backgroundType: HTBackgroundType, isGhost: Boolean) : this(
+        constructor(slot: HTItemStackSlot, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(
             slot::getStackCopy,
             slot::setStack,
-            bounds,
+            x,
+            y,
             backgroundType,
-            isGhost
-        )
-
-        constructor(slot: HTBasicItemSlot, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) : this(
-            slot,
-            HTBounds.createSlot(x - 1, y - 1),
-            backgroundType,
-            isGhost
+            isGhost,
         )
 
         override fun getStack(): ItemStack = stackGetter()
@@ -92,7 +93,6 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
             }
         }
 
-        override fun toString(): String =
-            "HTItemWidget.Fake(bounds=$bounds, stack=${getStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
+        override fun toString(): String = "HTItemWidget.Fake(bounds=$bounds, stack=${getStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
     }
 }

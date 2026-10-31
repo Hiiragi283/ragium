@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:gems/apatite"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:apatite_dust"
+  },
+  "time": 200
+}

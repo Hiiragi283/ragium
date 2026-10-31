@@ -1,0 +1,30 @@
+{
+  "type": "ragium:mixing",
+  "ingredients": {
+    "fluid": {
+      "amount": 250,
+      "fluids": {
+        "type": "neoforge:or",
+        "values": [
+          "#c:alkali_hydroxide_solution",
+          "#c:alkali_sulfate_solution"
+        ]
+      }
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:dusts/wood"
+    }
+  },
+  "result": {
+    "fluid": {
+      "amount": 250,
+      "id": "ragium:black_liquor"
+    },
+    "item": {
+      "count": 1,
+      "id": "ragium:paper_dust"
+    }
+  },
+  "time": 200
+}

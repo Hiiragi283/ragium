@@ -28,12 +28,9 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTCatalysedItemToItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    protected fun createRecipeHandler(
-        lookup: HTRecipeLookup<HTDoubleItemToItemRecipe>,
-        sound: HTSoundInstance
-    ): HTRecipeHandler = object :
+    protected fun createRecipeHandler(lookup: HTRecipeLookup<HTDoubleItemToItemRecipe>, sound: HTSoundInstance): HTRecipeHandler = object :
         HTDoubleRecipeHandler.Cached<ItemInstance, ItemInstance, ItemStack, HTDoubleItemToItemRecipe>(
-            HTRecipeCacheHelper.DoubleItem(lookup, false)
+            HTRecipeCacheHelper.DoubleItem(lookup, false),
         ) {
         private val inputSlot: HTInputSlot<ItemInstance> by lazy {
             HTInputHandlerHelper.forItem(this@HTCatalysedItemToItemBlockEntity.inputSlot)
@@ -45,31 +42,21 @@ abstract class HTCatalysedItemToItemBlockEntity(type: BlockEntityType<*>, pos: B
             HTOutputSlotHelper.forItem(this@HTCatalysedItemToItemBlockEntity.outputSlot)
         }
 
-        override fun createProgressor(): Progressor<ItemInstance, ItemInstance, HTDoubleItemToItemRecipe> =
-            DoubleProgressor()
+        override fun createProgressor(): Progressor<ItemInstance, ItemInstance, HTDoubleItemToItemRecipe> = DoubleProgressor()
 
         override fun getFirstInput(): ItemInstance = inputSlot.getStoredInput()
 
         override fun getSecondInput(): ItemInstance = catalystSlot.getStoredInput()
 
-        override fun canComplete(
-            recipe: HTDoubleItemToItemRecipe,
-            first: ItemInstance,
-            second: ItemInstance,
-            output: ItemStack
-        ): Boolean = useTransaction { transaction: Transaction ->
-            when {
-                inputSlot.use(recipe.getMatchingStack(first, second).first, transaction).failed -> false
-                else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+        override fun canComplete(recipe: HTDoubleItemToItemRecipe, first: ItemInstance, second: ItemInstance, output: ItemStack): Boolean =
+            useTransaction { transaction: Transaction ->
+                when {
+                    inputSlot.use(recipe.getMatchingStack(first, second).first, transaction).failed -> false
+                    else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+                }
             }
-        }
 
-        override fun onComplete(
-            recipe: HTDoubleItemToItemRecipe,
-            first: ItemInstance,
-            second: ItemInstance,
-            output: ItemStack
-        ) {
+        override fun onComplete(recipe: HTDoubleItemToItemRecipe, first: ItemInstance, second: ItemInstance, output: ItemStack) {
             useTransaction { transaction: Transaction ->
                 inputSlot.use(recipe.getMatchingStack(first, second).first, transaction)
                 outputSlot.take(output, transaction)
@@ -85,7 +72,7 @@ abstract class HTCatalysedItemToItemBlockEntity(type: BlockEntityType<*>, pos: B
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
-        catalystSlot = builder.addSlot(HTSlotInfo.NONE, HTBasicItemSlot.input(listener, limit = 1))
+        catalystSlot = builder.addSlot(HTSlotInfo.NONE, HTBasicItemSlot.catalyst(listener))
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
@@ -100,7 +87,7 @@ abstract class HTCatalysedItemToItemBlockEntity(type: BlockEntityType<*>, pos: B
             0,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0),
-            HTBackgroundType.INPUT
+            HTBackgroundType.INPUT,
         )
         widgetHolder.track(inputSlot)
         widgetHolder += HTItemWidget.Container(
@@ -108,7 +95,7 @@ abstract class HTCatalysedItemToItemBlockEntity(type: BlockEntityType<*>, pos: B
             1,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(2),
-            HTBackgroundType.NONE
+            HTBackgroundType.NONE,
         )
         widgetHolder.track(catalystSlot)
         // output
@@ -117,7 +104,7 @@ abstract class HTCatalysedItemToItemBlockEntity(type: BlockEntityType<*>, pos: B
             2,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT
+            HTBackgroundType.OUTPUT,
         )
         widgetHolder.track(outputSlot)
     }

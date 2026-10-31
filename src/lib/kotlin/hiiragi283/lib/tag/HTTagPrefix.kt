@@ -10,23 +10,18 @@ import net.minecraft.world.level.block.Block
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTTagPrefix(
-    val rawCommonTag: BlockItemTag,
-    private val tagPattern: String,
-    private val childNamespace: String = HTConstants.COMMON
-) {
+class HTTagPrefix(val rawCommonTag: BlockItemTag, private val tagPattern: String, private val childNamespace: String = HTConstants.COMMON) {
     constructor(
         commonTagId: String,
         tagPattern: String,
-        childNamespace: String = HTConstants.COMMON
+        childNamespace: String = HTConstants.COMMON,
     ) : this(BlockItemTag(childNamespace, commonTagId), tagPattern, childNamespace)
 
     /**
      * 素材の共通タグを生成します。
      * @param material 素材の種類
      */
-    fun materialTag(material: HTMaterialLike): BlockItemTag =
-        BlockItemTag(childNamespace, tagPattern.replace("%s", material.materialName))
+    fun materialTag(material: HTMaterialLike): BlockItemTag = BlockItemTag(childNamespace, tagPattern.replace("%s", material.materialName))
 
     /**
      * ブロックの素材の共通タグを生成します。

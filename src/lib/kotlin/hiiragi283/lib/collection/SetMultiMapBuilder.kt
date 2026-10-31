@@ -7,10 +7,8 @@ package hiiragi283.lib.collection
  * @author Hiiragi Tsubasa
  * @since 26.1.7
  */
-class SetMultiMapBuilder<K, V>(
-    destination: MutableMap<K, MutableSet<V>>,
-    private val collectionFactory: () -> MutableSet<V> = ::mutableSetOf
-) : AbstractMultiMapBuilder<K, V, MutableSet<V>>(destination) {
+class SetMultiMapBuilder<K, V>(destination: MutableMap<K, MutableSet<V>>, private val collectionFactory: () -> MutableSet<V> = ::mutableSetOf) :
+    AbstractMultiMapBuilder<K, V, MutableSet<V>>(destination) {
     override fun emptyCollection(): MutableSet<V> = collectionFactory()
 
     override fun build(): Map<K, Set<V>> = destination

@@ -183,7 +183,7 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
             val typeHolder: HTSimpleDeferredFluidType = typeRegister.registerType(
                 name,
                 properties.descriptionId("block.${typeRegister.namespace}.$name").isWaterLike(true),
-                typeFactory
+                typeFactory,
             )
             // Fluid Holder
             val sourceHolder: HTDeferredHolder<Fluid, FLUID> = HTDeferredHolder(fluidRegister.createKey(name))
@@ -191,14 +191,14 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
             val bucketHolder: HTSimpleDeferredItem = itemRegister.registerItem(
                 "${name}_bucket",
                 { bucketFactory(sourceHolder.get(), it) },
-                { bucketProperties(it).stacksTo(1).craftRemainder(Items.BUCKET) }
+                { bucketProperties(it).stacksTo(1).craftRemainder(Items.BUCKET) },
             )
             val content: CONTENT = createContent(
                 typeHolder,
                 sourceHolder,
                 bucketHolder,
                 Registries.FLUID.createTagKey(fluidTag),
-                Registries.ITEM.createTagKey(bucketTag)
+                Registries.ITEM.createTagKey(bucketTag),
             )
             entries += content
             contentsCache[sourceHolder.key] = content
@@ -213,7 +213,7 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
             sourceHolder: HTDeferredHolder<Fluid, FLUID>,
             bucketHolder: HTSimpleDeferredItem,
             fluidTag: TagKey<Fluid>,
-            bucketTag: TagKey<Item>
+            bucketTag: TagKey<Item>,
         ): CONTENT
     }
 
@@ -228,7 +228,7 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
             sourceHolder: HTDeferredHolder<Fluid, HTVirtualFluid>,
             bucketHolder: HTSimpleDeferredItem,
             fluidTag: TagKey<Fluid>,
-            bucketTag: TagKey<Item>
+            bucketTag: TagKey<Item>,
         ): HTFluidContent.Virtual {
             // Content
             fluidRegister.register(name) { _ -> HTVirtualFluid(typeHolder, bucketHolder) }
@@ -237,7 +237,7 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
                 sourceHolder,
                 bucketHolder,
                 fluidTag,
-                bucketTag
+                bucketTag,
             )
         }
     }
@@ -275,13 +275,13 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
             sourceHolder: HTDeferredHolder<Fluid, BaseFlowingFluid>,
             bucketHolder: HTSimpleDeferredItem,
             fluidTag: TagKey<Fluid>,
-            bucketTag: TagKey<Item>
+            bucketTag: TagKey<Item>,
         ): HTFluidContent.Flowing {
             // Liquid Block
             val blockHolder: HTDeferredBlock<LiquidBlock>? = blockFactory?.let {
                 blockRegister.registerBlock(
                     name,
-                    BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.WATER),
                 ) { prop: BlockBehaviour.Properties -> blockFactory!!(sourceHolder.get(), prop) }
             }
             // Fluid
@@ -302,7 +302,7 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
                 fluidTag,
                 bucketTag,
                 flowingHolder,
-                blockHolder
+                blockHolder,
             )
         }
     }

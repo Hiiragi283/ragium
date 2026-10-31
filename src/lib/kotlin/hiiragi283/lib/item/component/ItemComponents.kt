@@ -24,18 +24,15 @@ import kotlin.contracts.contract
  * @author Hiiragi Tsubasa
  * @since 26.1.4
  */
-fun <T : Any> Item.Properties.delayedHolderSetComponent(
-    type: DataComponentType<HolderSet<T>>,
-    key: TagKey<T>
-): Item.Properties = this.delayedComponent(type) { provider: HolderLookup.Provider -> provider.getOrThrow(key) }
+fun <T : Any> Item.Properties.delayedHolderSetComponent(type: DataComponentType<HolderSet<T>>, key: TagKey<T>): Item.Properties =
+    this.delayedComponent(type) { provider: HolderLookup.Provider -> provider.getOrThrow(key) }
 
 /**
  * [Consumable]を追加します。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun Item.Properties.consumables(consumable: Consumable): Item.Properties =
-    this.component(DataComponents.CONSUMABLE, consumable)
+fun Item.Properties.consumables(consumable: Consumable): Item.Properties = this.component(DataComponents.CONSUMABLE, consumable)
 
 //    ItemAttributeModifiers    //
 
@@ -43,9 +40,7 @@ fun Item.Properties.consumables(consumable: Consumable): Item.Properties =
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-inline fun buildItemAttributeModifiers(
-    builderAction: ItemAttributeModifiers.Builder.() -> Unit
-): ItemAttributeModifiers {
+inline fun buildItemAttributeModifiers(builderAction: ItemAttributeModifiers.Builder.() -> Unit): ItemAttributeModifiers {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
     }
@@ -60,7 +55,7 @@ inline fun buildItemAttributeModifiers(
  */
 inline fun buildItemEnchantments(
     parent: ItemEnchantments = ItemEnchantments.EMPTY,
-    builderAction: ItemEnchantments.Mutable.() -> Unit
+    builderAction: ItemEnchantments.Mutable.() -> Unit,
 ): ItemEnchantments {
     contract {
         callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
@@ -79,7 +74,7 @@ fun PotionContents(
     potion: Holder<Potion>? = null,
     customColor: Int? = null,
     customEffects: List<MobEffectInstance> = listOf(),
-    customName: String? = null
+    customName: String? = null,
 ): PotionContents = if (potion == null && customColor == null && customEffects.isEmpty() && customName == null) {
     PotionContents.EMPTY
 } else {
@@ -87,6 +82,6 @@ fun PotionContents(
         potion.toOptional(),
         customColor.toOptional(),
         customEffects,
-        customName.toOptional()
+        customName.toOptional(),
     )
 }

@@ -37,6 +37,6 @@ class HTShapelessRecipeBuilder : HTCraftingRecipeBuilder<ShapelessRecipe>(HTCons
         commonInfo(true),
         bookInfo(),
         result,
-        NonNullList.copyOf(ingredients)
+        NonNullList.copyOf(ingredients),
     )
 }

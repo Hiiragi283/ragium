@@ -5,22 +5,22 @@ import hiiragi283.lib.gui.sync.HTIntSyncSlot
 import hiiragi283.lib.gui.sync.HTItemSyncSlot
 import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.transfer.energy.HTBasicEnergyHandler
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
-import hiiragi283.lib.transfer.item.HTBasicItemSlot
+import hiiragi283.lib.transfer.energy.HTBasicEnergyStorage
+import hiiragi283.lib.transfer.fluid.HTFluidStackTank
+import hiiragi283.lib.transfer.item.HTItemStackSlot
 
 fun interface HTBlockEntityWithMenu {
     fun setupMenu(widgetHolder: HTWidgetHolder)
 
-    fun HTWidgetHolder.track(tank: HTBasicFluidTank, syncType: HTSyncType = HTSyncType.S2C) {
+    fun HTWidgetHolder.track(tank: HTFluidStackTank, syncType: HTSyncType = HTSyncType.S2C) {
         this.track(HTFluidSyncSlot(tank), syncType)
     }
 
-    fun HTWidgetHolder.track(slot: HTBasicItemSlot, syncType: HTSyncType = HTSyncType.S2C) {
+    fun HTWidgetHolder.track(slot: HTItemStackSlot, syncType: HTSyncType = HTSyncType.S2C) {
         this.track(HTItemSyncSlot(slot), syncType)
     }
 
-    fun HTWidgetHolder.track(handler: HTBasicEnergyHandler, syncType: HTSyncType = HTSyncType.S2C) {
-        this.track(HTIntSyncSlot.create(handler::getAmountAsInt, handler::setAmount), syncType)
+    fun HTWidgetHolder.track(handler: HTBasicEnergyStorage, syncType: HTSyncType = HTSyncType.S2C) {
+        this.track(HTIntSyncSlot.create(handler::amount, handler::setAmount), syncType)
     }
 }

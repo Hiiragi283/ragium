@@ -13,8 +13,7 @@ import java.util.Objects
 /**
  * @see net.neoforged.neoforge.transfer.fluid.BucketResourceHandler
  */
-abstract class HTCustomBucketItemHandler(itemAccess: ItemAccess) :
-    ItemAccessResourceHandler<FluidResource>(itemAccess, 1) {
+abstract class HTCustomBucketItemHandler(itemAccess: ItemAccess) : ItemAccessResourceHandler<FluidResource>(itemAccess, 1) {
     override fun getAmountFrom(accessResource: ItemResource, index: Int): Int {
         val resource: FluidResource = getResourceFrom(accessResource, index)
         return when (resource.isEmpty) {
@@ -23,19 +22,13 @@ abstract class HTCustomBucketItemHandler(itemAccess: ItemAccess) :
         }
     }
 
-    override fun update(
-        accessResource: ItemResource,
-        index: Int,
-        newResource: FluidResource,
-        newAmount: Int
-    ): ItemResource? = when {
+    override fun update(accessResource: ItemResource, index: Int, newResource: FluidResource, newAmount: Int): ItemResource? = when {
         newAmount == 0 -> ItemResource.of(Items.BUCKET)
         newAmount != FluidType.BUCKET_VOLUME -> ItemResource.EMPTY
         else -> update(accessResource, newResource.toStack(newAmount))
     }
 
-    protected open fun update(accessResource: ItemResource, newStack: FluidStack): ItemResource =
-        ItemResource.of(newStack.createBucket())
+    protected open fun update(accessResource: ItemResource, newStack: FluidStack): ItemResource = ItemResource.of(newStack.createBucket())
 
     override fun getCapacity(index: Int, resource: FluidResource): Int {
         Objects.checkIndex(index, size)

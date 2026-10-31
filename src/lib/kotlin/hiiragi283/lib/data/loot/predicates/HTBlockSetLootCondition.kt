@@ -25,6 +25,5 @@ data class HTBlockSetLootCondition(val blocks: HolderSet<Block>) : LootItemCondi
 
     override fun codec(): MapCodec<out LootItemCondition> = CODEC
 
-    override fun test(context: LootContext): Boolean =
-        context.getOptionalParameter(LootContextParams.BLOCK_STATE)?.`is`(blocks) ?: false
+    override fun test(context: LootContext): Boolean = context.getOptionalParameter(LootContextParams.BLOCK_STATE)?.`is`(blocks) ?: false
 }

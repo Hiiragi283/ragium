@@ -30,11 +30,8 @@ import java.util.concurrent.CompletableFuture
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTRecipeProvider(
-    packOutput: PackOutput,
-    future: CompletableFuture<HolderLookup.Provider>,
-    modId: String
-) : ExporterDataProvider<Recipe<*>>(packOutput, future, Registries.RECIPE, modId, Recipe.CONDITIONAL_CODEC) {
+abstract class HTRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>, modId: String) :
+    ExporterDataProvider<Recipe<*>>(packOutput, future, Registries.RECIPE, modId, Recipe.CONDITIONAL_CODEC) {
     //    Extension    //
 
     /**
@@ -45,13 +42,12 @@ abstract class HTRecipeProvider(
     /**
      * @since 26.1.7
      */
-    protected fun materialTags(prefixes: Nel<HTTagPrefix>, materials: Nel<HTMaterialLike>): HTMaterialTagsIngredient =
-        materialTags(
-            prefixes
-                .flatMap { prefix: HTTagPrefix -> materials.map(prefix::itemTagKey) }
-                .toSortedSet(HTComparators.TAG_KEY)
-                .toNel()
-        )
+    protected fun materialTags(prefixes: Nel<HTTagPrefix>, materials: Nel<HTMaterialLike>): HTMaterialTagsIngredient = materialTags(
+        prefixes
+            .flatMap { prefix: HTTagPrefix -> materials.map(prefix::itemTagKey) }
+            .toSortedSet(HTComparators.TAG_KEY)
+            .toNel(),
+    )
 
     /**
      * @since 26.1.7
@@ -90,12 +86,8 @@ abstract class HTRecipeProvider(
 
     //    Integration    //
 
-    abstract class Integration(
-        packOutput: PackOutput,
-        future: CompletableFuture<HolderLookup.Provider>,
-        modId: String,
-        integrationModId: String
-    ) : HTRecipeProvider(packOutput, future, modId) {
+    abstract class Integration(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>, modId: String, integrationModId: String) :
+        HTRecipeProvider(packOutput, future, modId) {
         val condition = ModLoadedCondition(integrationModId)
         private val builtInIds: Set<String> = HTConstants.getBuiltInIdSet(modId)
 

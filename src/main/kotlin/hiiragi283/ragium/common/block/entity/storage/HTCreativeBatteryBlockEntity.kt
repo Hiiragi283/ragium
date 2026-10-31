@@ -19,7 +19,7 @@ class HTCreativeBatteryBlockEntity(worldPosition: BlockPos, blockState: BlockSta
                 InfiniteEnergyHandler.INSTANCE,
                 HTEnergyCapabilities.getCapability(level, pos.relative(direction), direction.opposite),
                 Int.MAX_VALUE,
-                null
+                null,
             )
         }
         return false

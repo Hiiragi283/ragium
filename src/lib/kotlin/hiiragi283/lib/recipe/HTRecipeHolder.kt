@@ -16,8 +16,7 @@ data class HTRecipeHolder<out RECIPE : Any>(val key: RecipeKey, val recipe: RECI
 
     val id: Identifier get() = key.identifier()
 
-    inline fun <U : Any> map(transform: (RECIPE) -> U): HTRecipeHolder<U> =
-        HTRecipeHolder(this.key, transform(this.recipe))
+    inline fun <U : Any> map(transform: (RECIPE) -> U): HTRecipeHolder<U> = HTRecipeHolder(this.key, transform(this.recipe))
 
     inline fun <U : Any> mapNotNull(transform: (RECIPE) -> U?): HTRecipeHolder<U>? = transform(this.recipe)?.let {
         HTRecipeHolder(this.key, it)

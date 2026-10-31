@@ -16,7 +16,6 @@ import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.chemical.HTClientChemicalHelper
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.screen.tooltip.HTMemoryDiscClientTooltipComponent
@@ -95,7 +94,7 @@ data object RagiumClient : HTClientMod() {
                     gui.getLeftPos() + x - 1,
                     gui.getTopPos() + y - 1,
                     width,
-                    height
+                    height,
                 )
             }
         }
@@ -111,6 +110,9 @@ data object RagiumClient : HTClientMod() {
 
         register.register(RagiumFluids.HONEY) {
             still = Material(vanillaId(HTConstants.BLOCK, "honey_block_top"), true)
+        }
+        register.register(RagiumFluids.MOLTEN_BEESWAX) {
+            still = Material(vanillaId(HTConstants.BLOCK, "honeycomb_block"))
         }
         register.register(RagiumFluids.RESIN) {
             still = Material(vanillaId(HTConstants.BLOCK, "resin_block"))
@@ -143,38 +145,35 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0x006666))
         }
 
+        // H
         register.register(RagiumFluids.HYDROGEN) {
             transparent()
             colorTint(Color(0x003399))
         }
-        register.register(RagiumFluids.NITROGEN) {
+        // C
+        register.register(RagiumFluids.CARBON_DIOXIDE) {
             transparent()
-            colorTint(Color(0x009999))
+            colorTint(Color(0x336699))
         }
-        register.register(RagiumFluids.OXYGEN) {
-            transparent()
-            colorTint(Color(0x3399cc))
-        }
-        register.register(RagiumFluids.CHLORINE) {
-            transparent()
-            colorTint(Color(0x66cc33))
-        }
-
-        register.register(RagiumFluids.WOOD_TAR) {
-            molten()
+        register.register(RagiumFluids.CREOSOTE) {
+            dull()
             colorTint(Color(0x663333))
         }
-        register.register(RagiumFluids.COAL_TAR) {
-            molten()
-            colorTint(Color(0x333366))
+        register.register(RagiumFluids.BLACK_LIQUOR) {
+            dull()
+            colorTint(Color(0x333333))
+        }
+        register.register(RagiumFluids.PLANT_OIL) {
+            transparent()
+            colorTint(Color(0x669900))
         }
         register.register(RagiumFluids.ALCOHOL) {
             transparent()
-            colorTint(Color(0xcc99ff))
+            colorTint(Color(0xccccff))
         }
         register.register(RagiumFluids.ALDEHYDE) {
             transparent()
-            colorTint(Color(0xcc66ff))
+            colorTint(Color(0xcc99ff))
         }
         register.register(RagiumFluids.AROMATIC_COMPOUND) {
             transparent()
@@ -208,10 +207,7 @@ data object RagiumClient : HTClientMod() {
             molten()
             colorTint(Color(0xff6633))
         }
-        register.register(RagiumFluids.AMMONIA) {
-            transparent()
-            colorTint(Color(0x9999cc))
-        }
+        // N
         register.register(RagiumFluids.NITRIC_ACID) {
             dull()
             colorTint(Color(0x9999cc))
@@ -220,6 +216,12 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0xcc3333))
         }
+        // O
+        register.register(RagiumFluids.OXYGEN) {
+            transparent()
+            colorTint(Color(0x3399cc))
+        }
+        // F
         register.register(RagiumFluids.HYDROGEN_FLUORIDE) {
             transparent()
             colorTint(Color(0x33cc66))
@@ -229,18 +231,30 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0x33cc66))
         }
 
+        // Na
         register.register(RagiumFluids.SALT_WATER) {
             dull()
             tintSource = FluidTintSources.water()
         }
-        register.register(RagiumFluids.NAOH_SOLUTION) {
+        register.register(RagiumFluids.HYDROXIDE_SOLUTION) {
             dull()
             colorTint(Color(0x003366))
         }
+        register.register(RagiumFluids.SULFATE_SOLUTION) {
+            dull()
+            colorTint(Color(0x336666))
+        }
+        // Al
         register.register(RagiumFluids.ALUMINA_SOLUTION) {
             transparent()
             colorTint(Color(0xffcccc))
         }
+        // P
+        register.register(RagiumFluids.PHOSPHORIC_ACID) {
+            dull()
+            colorTint(Color(0xffcc99))
+        }
+        // S
         register.register(RagiumFluids.SULFUR_DIOXIDE) {
             transparent()
             colorTint(Color(0x996600))
@@ -250,8 +264,13 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0xcc9900))
         }
         register.register(RagiumFluids.SULFURIC_ACID) {
-            sticky()
+            dull()
             colorTint(Color(0xcc9900))
+        }
+        // Cl
+        register.register(RagiumFluids.CHLORINE) {
+            transparent()
+            colorTint(Color(0x66cc33))
         }
         register.register(RagiumFluids.HYDROGEN_CHLORIDE) {
             transparent()
@@ -261,9 +280,11 @@ data object RagiumClient : HTClientMod() {
             dull()
             colorTint(Color(0x99cc66))
         }
-        register.register(RagiumFluids.BLEACH) {
+
+        // Ca
+        register.register(RagiumFluids.LIMEWATER) {
             dull()
-            colorTint(Color(0xccff99))
+            colorTint(Color(0x006699))
         }
     }
 
@@ -280,7 +301,7 @@ data object RagiumClient : HTClientMod() {
     @JvmStatic
     private fun registerTooltipAppenders(event: RegisterTooltipAppendersEvent) {
         event.registerAppender(
-            TooltipLocation.HEAD
+            TooltipLocation.HEAD,
         ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
             if (!stack.`is`(RagiumTags.Items.SHOW_FLUID_TOOLTIPS)) return@registerAppender
             val view: HTFluidView = HTFluidCapabilities.getSlot(stack, 0) ?: return@registerAppender
@@ -294,14 +315,14 @@ data object RagiumClient : HTClientMod() {
                     ChatFormatting.LIGHT_PURPLE,
                     resource.hoverName,
                     ChatFormatting.GRAY,
-                    HTCommonTranslation.INFINITE
+                    HTCommonTranslation.INFINITE,
                 )
 
                 else -> HTCommonTranslation.STORED_MB.translateColored(
                     ChatFormatting.LIGHT_PURPLE,
                     resource.hoverName,
                     ChatFormatting.GRAY,
-                    view.amount
+                    view.amount,
                 )
             }.let(builder::accept)
             // Tank Capacity
@@ -309,33 +330,28 @@ data object RagiumClient : HTClientMod() {
                 true -> HTCommonTranslation.CAPACITY.translateColored(
                     ChatFormatting.BLUE,
                     ChatFormatting.GRAY,
-                    HTCommonTranslation.INFINITE
+                    HTCommonTranslation.INFINITE,
                 )
 
                 false -> HTCommonTranslation.CAPACITY_MB.translateColored(
                     ChatFormatting.BLUE,
                     ChatFormatting.GRAY,
-                    view.currentCapacity
+                    view.currentCapacity,
                 )
             }.let(builder::accept)
-        }
-        event.registerAppender(
-            TooltipLocation.HEAD
-        ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
-            HTClientChemicalHelper.addToTooltip(stack, builder::accept)
         }
 
         event.registerAppender(
             TooltipLocation.PRE_ITEM_INFO,
-            TooltipAppender.createComponentAppender(RagiumDataComponents.ITEM_TOOLTIP)
+            TooltipAppender.createComponentAppender(RagiumDataComponents.ITEM_TOOLTIP),
         )
         event.registerAppender(
             TooltipLocation.PRE_ITEM_INFO,
-            TooltipAppender.createComponentAppender(RagiumDataComponents.UPGRADE)
+            TooltipAppender.createComponentAppender(RagiumDataComponents.UPGRADE),
         )
         event.registerAppender(
             TooltipLocation.PRE_ITEM_INFO,
-            TooltipAppender.createComponentAppender(RagiumDataComponents.UPGRADES)
+            TooltipAppender.createComponentAppender(RagiumDataComponents.UPGRADES),
         )
     }
 }

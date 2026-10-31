@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "ragium:block/combustion_dynamo_bottom",
+    "side": "ragium:block/combustion_dynamo_side",
+    "top": "ragium:block/combustion_dynamo_top"
+  }
+}

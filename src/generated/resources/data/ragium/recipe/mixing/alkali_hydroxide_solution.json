@@ -1,0 +1,20 @@
+{
+  "type": "ragium:mixing",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": "ragium:alkali_hydroxide"
+    }
+  },
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:alkali_hydroxide_solution"
+    }
+  },
+  "time": 200
+}

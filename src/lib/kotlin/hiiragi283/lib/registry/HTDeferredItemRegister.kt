@@ -27,7 +27,7 @@ class HTDeferredItemRegister(namespace: String) : HTDeferredRegister<Item>(Regis
     fun <ITEM : Item> registerItem(
         name: String,
         factory: (Item.Properties) -> ITEM,
-        operator: Identity<Item.Properties> = identity()
+        operator: Identity<Item.Properties> = identity(),
     ): HTDeferredItem<ITEM> = this.register(name) { id: Identifier ->
         Item.Properties().setId(createKey(id)).let(operator).let(factory)
     }
@@ -54,20 +54,17 @@ class HTDeferredItemRegister(namespace: String) : HTDeferredRegister<Item>(Regis
         name: String,
         context: C,
         factory: ItemWithContextFactory<C, ITEM>,
-        operator: Identity<Item.Properties> = identity()
+        operator: Identity<Item.Properties> = identity(),
     ): HTDeferredItem<ITEM> = registerItem(name, { factory(context, it) }, operator)
 
     //    HTDeferredRegister    //
 
-    override fun <I : Item> createHolder(registryKey: RegistryKey<Item>, key: Identifier): HTDeferredItem<I> =
-        HTDeferredItem(key)
+    override fun <I : Item> createHolder(registryKey: RegistryKey<Item>, key: Identifier): HTDeferredItem<I> = HTDeferredItem(key)
 
-    override fun <I : Item> register(name: String, sup: Supplier<out I>): HTDeferredItem<I> =
-        super.register(name, sup) as HTDeferredItem<I>
+    override fun <I : Item> register(name: String, sup: Supplier<out I>): HTDeferredItem<I> = super.register(name, sup) as HTDeferredItem<I>
 
     override fun <I : Item> register(name: String, func: Function<Identifier, out I>): HTDeferredItem<I> =
         super.register(name, func) as HTDeferredItem<I>
 
-    override fun asSequence(): Sequence<HTSimpleDeferredItem> =
-        super.asSequence().filterIsInstance<HTSimpleDeferredItem>()
+    override fun asSequence(): Sequence<HTSimpleDeferredItem> = super.asSequence().filterIsInstance<HTSimpleDeferredItem>()
 }

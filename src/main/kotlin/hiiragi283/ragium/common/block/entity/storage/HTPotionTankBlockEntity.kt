@@ -14,8 +14,7 @@ import net.minecraft.core.component.DataComponentGetter
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.world.level.block.state.BlockState
 
-class HTPotionTankBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBaseTankBlockEntity(RagiumBlockEntityTypes.POTION_TANK.get(), pos, state) {
+class HTPotionTankBlockEntity(pos: BlockPos, state: BlockState) : HTBaseTankBlockEntity(RagiumBlockEntityTypes.POTION_TANK.get(), pos, state) {
     override lateinit var tank: HTBasicFluidTank
         private set
 
@@ -25,8 +24,8 @@ class HTPotionTankBlockEntity(pos: BlockPos, state: BlockState) :
             HTVariableFluidTank.create(
                 RagiumConfig.SERVER.tankCapacity,
                 listener,
-                filter = HTPotionHelper::hasAnyEffect
-            )
+                filter = HTPotionHelper::hasAnyEffect,
+            ),
         )
     }
 

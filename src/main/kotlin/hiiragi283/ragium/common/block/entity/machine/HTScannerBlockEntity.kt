@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.item.toTemplateOrNull
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTRecipeFactories
 import hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
@@ -39,35 +38,30 @@ import java.util.function.Predicate
 class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.SCANNER.get(), pos, state) {
 
-    override fun createRecipeHandler(): HTRecipeHandler =
-        object : HTDoubleRecipeHandler<ItemInstance, ItemInstance, ItemStack, FakeRecipe>() {
-            private val inputSlot: HTInputSlot<ItemInstance> by lazy {
-                HTInputHandlerHelper.forItem(this@HTScannerBlockEntity.inputSlot)
-            }
-            private val discSlot: HTInputSlot<ItemInstance> by lazy {
-                HTInputHandlerHelper.forItem(this@HTScannerBlockEntity.discSlot)
-            }
-            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-                HTOutputSlotHelper.forItem(this@HTScannerBlockEntity.outputSlot)
-            }
+    override fun createRecipeHandler(): HTRecipeHandler = object : HTDoubleRecipeHandler<ItemInstance, ItemInstance, ItemStack, FakeRecipe>() {
+        private val inputSlot: HTInputSlot<ItemInstance> by lazy {
+            HTInputHandlerHelper.forItem(this@HTScannerBlockEntity.inputSlot)
+        }
+        private val discSlot: HTInputSlot<ItemInstance> by lazy {
+            HTInputHandlerHelper.forItem(this@HTScannerBlockEntity.discSlot)
+        }
+        private val outputSlot: HTOutputSlot<ItemStack> by lazy {
+            HTOutputSlotHelper.forItem(this@HTScannerBlockEntity.outputSlot)
+        }
 
-            override fun createProgressor(): Progressor<ItemInstance, ItemInstance, FakeRecipe> = DoubleProgressor()
+        override fun createProgressor(): Progressor<ItemInstance, ItemInstance, FakeRecipe> = DoubleProgressor()
 
-            override fun getFirstInput(): ItemInstance = inputSlot.getStoredInput()
+        override fun getFirstInput(): ItemInstance = inputSlot.getStoredInput()
 
-            override fun getSecondInput(): ItemInstance = discSlot.getStoredInput()
+        override fun getSecondInput(): ItemInstance = discSlot.getStoredInput()
 
-            override fun findRecipe(first: ItemInstance, second: ItemInstance, level: ServerLevel): FakeRecipe? = when {
-                second.has(RagiumDataComponents.MEMORY_DISC_DATA) -> null
-                else -> FakeRecipe
-            }
+        override fun findRecipe(first: ItemInstance, second: ItemInstance, level: ServerLevel): FakeRecipe? = when {
+            second.has(RagiumDataComponents.MEMORY_DISC_DATA) -> null
+            else -> FakeRecipe
+        }
 
-            override fun canComplete(
-                recipe: FakeRecipe,
-                first: ItemInstance,
-                second: ItemInstance,
-                output: ItemStack
-            ): Boolean = useTransaction { transaction: Transaction ->
+        override fun canComplete(recipe: FakeRecipe, first: ItemInstance, second: ItemInstance, output: ItemStack): Boolean =
+            useTransaction { transaction: Transaction ->
                 val (target: ItemInstance, disc: ItemInstance) = recipe.getMatchingStack(first, second)
                 when {
                     inputSlot.use(target, transaction).failed -> false
@@ -76,17 +70,17 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
                 }
             }
 
-            override fun onComplete(recipe: FakeRecipe, first: ItemInstance, second: ItemInstance, output: ItemStack) {
-                useTransaction { transaction: Transaction ->
-                    val (target: ItemInstance, disc: ItemInstance) = recipe.getMatchingStack(first, second)
-                    inputSlot.use(target, transaction)
-                    discSlot.use(disc, transaction)
-                    outputSlot.take(output, transaction)
-                    transaction.commit()
-                }
-                playSound(SoundEvents.RESPAWN_ANCHOR_CHARGE)
+        override fun onComplete(recipe: FakeRecipe, first: ItemInstance, second: ItemInstance, output: ItemStack) {
+            useTransaction { transaction: Transaction ->
+                val (target: ItemInstance, disc: ItemInstance) = recipe.getMatchingStack(first, second)
+                inputSlot.use(target, transaction)
+                discSlot.use(disc, transaction)
+                outputSlot.take(output, transaction)
+                transaction.commit()
             }
+            playSound(SoundEvents.RESPAWN_ANCHOR_CHARGE)
         }
+    }
 
     private lateinit var inputSlot: HTBasicItemSlot
     private lateinit var discSlot: HTBasicItemSlot
@@ -95,14 +89,14 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {
         inputSlot = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTBasicItemSlot.input(listener, filter = Predicate.not(RagiumItems.MEMORY_DISC::isOf))
+            HTBasicItemSlot.input(listener, filter = Predicate.not(RagiumItems.MEMORY_DISC::isOf)),
         )
         discSlot = builder.addSlot(
             HTSlotInfo.NONE,
-            HTBasicItemSlot.input(
+            HTBasicItemSlot.catalyst(
                 listener,
-                filter = { RagiumItems.MEMORY_DISC.isOf(it) && !it.has(RagiumDataComponents.MEMORY_DISC_DATA) }
-            )
+                filter = { RagiumItems.MEMORY_DISC.isOf(it) && !it.has(RagiumDataComponents.MEMORY_DISC_DATA) },
+            ),
         )
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
@@ -118,7 +112,7 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
             0,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0),
-            HTBackgroundType.INPUT
+            HTBackgroundType.INPUT,
         )
         widgetHolder.track(inputSlot)
         widgetHolder += HTItemWidget.Container(
@@ -126,7 +120,7 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
             1,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(2),
-            HTBackgroundType.EXTRA_INPUT
+            HTBackgroundType.EXTRA_INPUT,
         )
         widgetHolder.track(discSlot)
         // output
@@ -135,7 +129,7 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
             2,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT
+            HTBackgroundType.OUTPUT,
         )
         widgetHolder.track(outputSlot)
     }
@@ -151,9 +145,7 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
         override fun apply(first: ItemInstance, second: ItemInstance): ItemStack {
-            val template: ItemStackTemplate = HTIngredientHelper.unwrap(first)
-                .toTemplateOrNull()
-                ?: return ItemStack.EMPTY
+            val template: ItemStackTemplate = HTIngredientHelper.unwrapAsTemplate(first) ?: return ItemStack.EMPTY
             val result: ItemStack = HTIngredientHelper.unwrap(second).copyWithCount(1)
             result[RagiumDataComponents.MEMORY_DISC_DATA] = HTMemoryDiscData.from(template)
             return result

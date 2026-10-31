@@ -26,8 +26,7 @@ fun <A : Any> Codec<A>.listOrElement(): Codec<List<A>> = ExtraCodecs.compactList
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-fun <A : Any> Codec<A>.listOrElement(min: Int, max: Int): Codec<List<A>> =
-    ExtraCodecs.compactListCodec(this, this.listOf(min, max))
+fun <A : Any> Codec<A>.listOrElement(min: Int, max: Int): Codec<List<A>> = ExtraCodecs.compactListCodec(this, this.listOf(min, max))
 
 /**
  * この[Codec][this]を[List]の[MapCodec]に変換します。
@@ -40,7 +39,7 @@ fun <A : Any> Codec<A>.compactListFieldOf(singleName: String, listName: String):
     .mapEither(this.listOf().fieldOf(listName), this.fieldOf(singleName))
     .xmap(
         { either: DFUEither<List<A>, A> -> DFUEither.unwrap(either.mapRight(::listOf)) },
-        { list: List<A> -> list.singleOrNull()?.let { DFUEither.right(it) } ?: DFUEither.left(list) }
+        { list: List<A> -> list.singleOrNull()?.let { DFUEither.right(it) } ?: DFUEither.left(list) },
     )
 
 /**
@@ -50,13 +49,12 @@ fun <A : Any> Codec<A>.compactListFieldOf(singleName: String, listName: String):
  * @author Hiiragi Tsubasa
  * @since 26.1.7
  */
-fun <A : Any> Codec<A>.compactListFieldOf(singleName: String, listName: String, min: Int, max: Int): MapCodec<List<A>> =
-    Codec
-        .mapEither(this.listOf(min, max).fieldOf(listName), this.fieldOf(singleName))
-        .xmap(
-            { either: DFUEither<List<A>, A> -> DFUEither.unwrap(either.mapRight(::listOf)) },
-            { list: List<A> -> list.singleOrNull()?.let { DFUEither.right(it) } ?: DFUEither.left(list) }
-        )
+fun <A : Any> Codec<A>.compactListFieldOf(singleName: String, listName: String, min: Int, max: Int): MapCodec<List<A>> = Codec
+    .mapEither(this.listOf(min, max).fieldOf(listName), this.fieldOf(singleName))
+    .xmap(
+        { either: DFUEither<List<A>, A> -> DFUEither.unwrap(either.mapRight(::listOf)) },
+        { list: List<A> -> list.singleOrNull()?.let { DFUEither.right(it) } ?: DFUEither.left(list) },
+    )
 
 //    NonEmptyList    //
 
@@ -67,8 +65,7 @@ fun <A : Any> Codec<A>.compactListFieldOf(singleName: String, listName: String, 
  * @author Hiiragi Tsubasa
  * @since 26.1.6
  */
-fun <A : Any> Codec<A>.nelOf(max: Int = Int.MAX_VALUE): Codec<Nel<A>> =
-    this.listOf(1, max).xmap(List<A>::toNel, identity())
+fun <A : Any> Codec<A>.nelOf(max: Int = Int.MAX_VALUE): Codec<Nel<A>> = this.listOf(1, max).xmap(List<A>::toNel, identity())
 
 /**
  * この[Codec][this]を，要素が一つの場合はそのままコーデックする[Nel]の[Codec]に変換します。
@@ -77,8 +74,7 @@ fun <A : Any> Codec<A>.nelOf(max: Int = Int.MAX_VALUE): Codec<Nel<A>> =
  * @author Hiiragi Tsubasa
  * @since 26.1.6
  */
-fun <A : Any> Codec<A>.nelOrElement(max: Int = Int.MAX_VALUE): Codec<Nel<A>> =
-    this.listOrElement(1, max).xmap(List<A>::toNel, identity())
+fun <A : Any> Codec<A>.nelOrElement(max: Int = Int.MAX_VALUE): Codec<Nel<A>> = this.listOrElement(1, max).xmap(List<A>::toNel, identity())
 
 /**
  * この[Codec][this]を[Nel]の[MapCodec]に変換します。
@@ -87,13 +83,9 @@ fun <A : Any> Codec<A>.nelOrElement(max: Int = Int.MAX_VALUE): Codec<Nel<A>> =
  * @author Hiiragi Tsubasa
  * @since 26.1.7
  */
-fun <A : Any> Codec<A>.compactNelFieldOf(
-    singleName: String,
-    nelName: String,
-    max: Int = Int.MAX_VALUE
-): MapCodec<Nel<A>> = Codec
+fun <A : Any> Codec<A>.compactNelFieldOf(singleName: String, nelName: String, max: Int = Int.MAX_VALUE): MapCodec<Nel<A>> = Codec
     .mapEither(this.nelOf(max).fieldOf(nelName), this.fieldOf(singleName))
     .xmap(
         { either: DFUEither<Nel<A>, A> -> DFUEither.unwrap(either.mapRight(::nelOf)) },
-        { list: Nel<A> -> list.singleOrNull()?.let { DFUEither.right(it) } ?: DFUEither.left(list) }
+        { list: Nel<A> -> list.singleOrNull()?.let { DFUEither.right(it) } ?: DFUEither.left(list) },
     )

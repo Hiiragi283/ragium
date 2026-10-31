@@ -17,17 +17,13 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidInstance
 
-class RTFreezingRecipe(
-    ingredient: HTFluidIngredient,
-    catalyst: HTItemCatalyst,
-    result: HTItemResult,
-    progressData: HTProgressData
-) : HTCatalysedSingleRecipe<HTFluidIngredient, HTItemResult>(
-    ingredient,
-    catalyst,
-    result,
-    progressData
-),
+class RTFreezingRecipe(ingredient: HTFluidIngredient, catalyst: HTItemCatalyst, result: HTItemResult, progressData: HTProgressData) :
+    HTCatalysedSingleRecipe<HTFluidIngredient, HTItemResult>(
+        ingredient,
+        catalyst,
+        result,
+        progressData,
+    ),
     HTItemAndFluidToItemRecipe,
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
@@ -42,8 +38,7 @@ class RTFreezingRecipe(
         val SERIALIZER: RecipeSerializer<RTFreezingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(first: ItemInstance, second: FluidInstance): Boolean =
-        catalyst.test(first) && ingredient.test(second)
+    override fun test(first: ItemInstance, second: FluidInstance): Boolean = catalyst.test(first) && ingredient.test(second)
 
     override fun apply(first: ItemInstance, second: FluidInstance): ItemStack = result.create()
 

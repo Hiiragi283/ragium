@@ -1,0 +1,18 @@
+{
+  "type": "ragium:bathing",
+  "ingredient": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:molten_beeswax"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:strings"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:candle"
+  },
+  "time": 200
+}

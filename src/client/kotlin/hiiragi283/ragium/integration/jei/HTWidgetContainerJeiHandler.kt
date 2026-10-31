@@ -33,7 +33,7 @@ data object HTWidgetContainerJeiHandler :
         builder: IClickableIngredientFactory,
         containerScreen: HTWidgetContainerScreen,
         mouseX: Double,
-        mouseY: Double
+        mouseY: Double,
     ): Optional<out IClickableIngredient<*>> = getWidgets(containerScreen)
         .filter { (bounds: HTBounds, _) -> bounds.contains(mouseX.toInt(), mouseY.toInt()) }
         .mapNotNull { (bounds: HTBounds, widget: HTWidget) ->
@@ -87,7 +87,7 @@ data object HTWidgetContainerJeiHandler :
     override fun <I : Any> getTargetsTyped(
         gui: HTWidgetContainerScreen,
         ingredient: ITypedIngredient<I>,
-        doStart: Boolean
+        doStart: Boolean,
     ): List<IGhostIngredientHandler.Target<I>> = getWidgets(gui)
         .mapNotNull { (bounds: HTBounds, widget: HTWidget) ->
             val consumer: HTGhostWidget.GhostIngredientConsumer = (widget as? HTGhostWidget)

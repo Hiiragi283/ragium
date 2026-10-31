@@ -11,8 +11,7 @@ import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.TooltipFlag
 
-class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) :
-    HTSpriteWidgetRenderer<HTEnergySlotWidget>(gui, widget) {
+class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) : HTSpriteWidgetRenderer<HTEnergySlotWidget>(gui, widget) {
     companion object {
         @JvmField
         val SPRITE: Identifier = RagiumAPI.id("energy_slot")
@@ -25,7 +24,7 @@ class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) :
 
     override fun shouldRender(): Boolean = !widget.isEmpty
 
-    override fun getFilledLevel(): Float = widget.filledLevelAsFloat
+    override fun getFilledLevel(): Float = widget.filledLevel
 
     override fun getSpriteId(): Identifier = SPRITE
 

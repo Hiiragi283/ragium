@@ -1,6 +1,6 @@
 package hiiragi283.lib.gui.sync
 
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
+import hiiragi283.lib.transfer.fluid.HTFluidStackTank
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.core.RegistryAccess
 import net.neoforged.neoforge.fluids.FluidStack
@@ -20,12 +20,12 @@ import kotlin.reflect.KProperty
 class HTFluidSyncSlot(property: ReadWriteProperty<Any?, FluidStack>) : HTIntSyncSlot {
     constructor(
         getter: Supplier<FluidStack>,
-        setter: Consumer<FluidStack>
+        setter: Consumer<FluidStack>,
     ) : this(HTDelegates.LazyDelegate(getter, setter))
 
     constructor(property: KMutableProperty0<FluidStack>) : this(HTDelegates.LazyDelegate(property::get, property::set))
 
-    constructor(tank: HTBasicFluidTank) : this(tank::getStackCopy, tank::setStack)
+    constructor(tank: HTFluidStackTank) : this(tank::getStackCopy, tank::setStack)
 
     private var lastStack: FluidStack = FluidStack.EMPTY
 
@@ -53,11 +53,10 @@ class HTFluidSyncSlot(property: ReadWriteProperty<Any?, FluidStack>) : HTIntSync
         return null
     }
 
-    override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTSyncablePayload =
-        when (changeType) {
-            HTChangeType.PARTIAL -> HTIntSyncPayload(this.amountAsInt)
-            HTChangeType.FULL -> HTFluidSyncPayload(this.asFluidStack.copy())
-        }
+    override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTSyncablePayload = when (changeType) {
+        HTChangeType.PARTIAL -> HTIntSyncPayload(this.amountAsInt)
+        HTChangeType.FULL -> HTFluidSyncPayload(this.asFluidStack.copy())
+    }
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): FluidStack = asFluidStack
 

@@ -1,9 +1,9 @@
 {
   "values": [
     "#c:dusts/alumina",
+    "#c:dusts/apatite",
     "#c:dusts/ash",
     "#c:dusts/bauxite",
-    "#c:dusts/borax",
     "#c:dusts/carbon",
     "#c:dusts/charcoal",
     "#c:dusts/cinnabar",
@@ -24,14 +24,12 @@
     "#c:dusts/niter",
     "#c:dusts/obsidian",
     "#c:dusts/paper",
-    "#c:dusts/prismarine",
     "#c:dusts/quick_lime",
     "#c:dusts/raginite",
     "#c:dusts/salt",
     "#c:dusts/silica",
     "#c:dusts/silicon",
     "#c:dusts/silver",
-    "#c:dusts/soda_ash",
     "#c:dusts/sulfur",
     "#c:dusts/wood"
   ]

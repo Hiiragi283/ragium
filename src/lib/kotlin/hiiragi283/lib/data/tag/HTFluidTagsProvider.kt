@@ -14,11 +14,8 @@ import java.util.concurrent.CompletableFuture
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTFluidTagsProvider(
-    output: PackOutput,
-    lookupProvider: CompletableFuture<HolderLookup.Provider>,
-    modId: String
-) : HTTagsProvider<Fluid>(output, Registries.FLUID, lookupProvider, modId) {
+abstract class HTFluidTagsProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, modId: String) :
+    HTTagsProvider<Fluid>(output, Registries.FLUID, lookupProvider, modId) {
     //    Extensions    //
 
     /**
@@ -51,8 +48,7 @@ abstract class HTFluidTagsProvider(
      * [HTFluidContent.fluidTag]に基づいて子タグをタグに追加します。
      * @param content 子タグの提供元
      */
-    protected fun HTTagBuilder<Fluid>.addContentTag(content: HTFluidContent): HTTagBuilder<Fluid> =
-        this.addTag(content.fluidTag)
+    protected fun HTTagBuilder<Fluid>.addContentTag(content: HTFluidContent): HTTagBuilder<Fluid> = this.addTag(content.fluidTag)
 
     /**
      * @since 26.1.5

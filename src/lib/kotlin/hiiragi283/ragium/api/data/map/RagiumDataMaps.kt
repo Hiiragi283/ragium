@@ -1,12 +1,11 @@
 package hiiragi283.ragium.api.data.map
 
 import com.mojang.serialization.Codec
-import hiiragi283.lib.HTConstants
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.registries.datamaps.DataMapType
@@ -19,14 +18,31 @@ import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
  */
 @EventBusSubscriber
 data object RagiumDataMaps {
+    @JvmStatic
+    private fun fluidFuel(name: String): DataMapType<Fluid, HTFluidFuel> =
+        DataMapType.builder(RagiumAPI.id("fuel/$name"), Registries.FLUID, HTFluidFuel.CODEC)
+            .synced(HTFluidFuel.CODEC, false)
+            .build()
+
     /**
-     * @since 26.1.11
+     * @since 26.1.12
      */
     @JvmField
-    val CHEMICAL: DataMapType<Item, HTChemicalData> =
-        DataMapType.builder(RagiumAPI.id(HTConstants.CHEMICAL), Registries.ITEM, HTChemicalData.CODEC)
-            .synced(HTChemicalData.CODEC, false)
-            .build()
+    val MAGMATIC_FUEL: DataMapType<Fluid, HTFluidFuel> = fluidFuel("magmatic")
+
+    /**
+     * @since 26.1.12
+     */
+    @JvmField
+    val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuel> = fluidFuel("combustion")
+
+    /**
+     * @since 26.1.12
+     */
+    @JvmField
+    val COOLANT: DataMapType<Fluid, HTCoolantData> = DataMapType.builder(RagiumAPI.id("coolant"), Registries.FLUID, HTCoolantData.CODEC)
+        .synced(HTCoolantData.CODEC, false)
+        .build()
 
     /**
      * モルタルによるブロックの修復
@@ -41,7 +57,10 @@ data object RagiumDataMaps {
 
     @SubscribeEvent
     fun registerDataMapType(event: RegisterDataMapTypesEvent) {
-        event.register(CHEMICAL)
+        event.register(MAGMATIC_FUEL)
+        event.register(COMBUSTION_FUEL)
+        event.register(COOLANT)
+
         event.register(MORTAR_REPAIR)
     }
 }

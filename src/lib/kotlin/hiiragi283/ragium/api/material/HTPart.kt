@@ -39,12 +39,12 @@ enum class HTOreBlockPart(private val idPattern: String, provider: HTLangPattern
     STONE("%s_ore", "%s Ore", "%s鉱石"),
     DEEPSLATE("deepslate_%s_ore", "Deepslate %s Ore", "深層%s鉱石"),
     NETHER("nether_%s_ore", "Nether %s Ore", "ネザー%s鉱石"),
-    END("end_%s_ore", "End %s Ore", "エンド%s鉱石")
+    END("end_%s_ore", "End %s Ore", "エンド%s鉱石"),
     ;
 
     constructor(idPattern: String, enPattern: String, jaPattern: String) : this(
         idPattern,
-        HTLangPatternProvider(enPattern, jaPattern)
+        HTLangPatternProvider(enPattern, jaPattern),
     )
 
     override val tagPrefix: HTTagPrefix = CommonTagPrefixes.ORE
@@ -60,12 +60,12 @@ enum class HTStorageBlockPart(private val idPattern: String, provider: HTLangPat
     HTBlockPart,
     HTLangPatternProvider by provider {
     DEFAULT("%s_block", "Block of %s", "%sブロック"),
-    RAW("raw_%s_block", "Block of Raw %s", "%sの原石ブロック")
+    RAW("raw_%s_block", "Block of Raw %s", "%sの原石ブロック"),
     ;
 
     constructor(idPattern: String, enPattern: String, jaPattern: String) : this(
         idPattern,
-        HTLangPatternProvider(enPattern, jaPattern)
+        HTLangPatternProvider(enPattern, jaPattern),
     )
 
     override val tagPrefix: HTTagPrefix = CommonTagPrefixes.STORAGE_BLOCK
@@ -77,11 +77,8 @@ enum class HTStorageBlockPart(private val idPattern: String, provider: HTLangPat
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-enum class HTItemPart(
-    private val idPattern: String,
-    override val tagPrefix: HTTagPrefix,
-    provider: HTLangPatternProvider
-) : HTPart,
+enum class HTItemPart(private val idPattern: String, override val tagPrefix: HTTagPrefix, provider: HTLangPatternProvider) :
+    HTPart,
     HTLangPatternProvider by provider {
     DUST("%s_dust", CommonTagPrefixes.DUST, "%s Dust", "%sの粉"),
     GEAR("%s_gear", CommonTagPrefixes.GEAR, "%s Gear", "%sの歯車"),
@@ -89,13 +86,13 @@ enum class HTItemPart(
     INGOT("%s_ingot", CommonTagPrefixes.INGOT, "%s Ingot", "%sインゴット"),
     NUGGET("%s_nugget", CommonTagPrefixes.NUGGET, "%s Nugget", "%sナゲット"),
     RAW("raw_%s", CommonTagPrefixes.RAW_MATERIALS, "Raw %s", "%sの原石"),
-    TINY("tiny_%s", CommonTagPrefixes.TINY, "Tiny %s", "小さな%s")
+    TINY("tiny_%s", CommonTagPrefixes.TINY, "Tiny %s", "小さな%s"),
     ;
 
     constructor(idPattern: String, tagPrefix: HTTagPrefix, enPattern: String, jaPattern: String) : this(
         idPattern,
         tagPrefix,
-        HTLangPatternProvider(enPattern, jaPattern)
+        HTLangPatternProvider(enPattern, jaPattern),
     )
 
     override fun createName(material: HTMaterialLike): String = idPattern.replace("%s", material.materialName)

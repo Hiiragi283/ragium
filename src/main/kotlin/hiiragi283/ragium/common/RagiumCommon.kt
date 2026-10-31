@@ -9,20 +9,16 @@ import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.fromRecipeType
 import hiiragi283.lib.registry.HTFluidContent
-import hiiragi283.lib.registry.createKey
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.resource.modifyPath
-import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
-import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.chemical.HTChemical
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
 import hiiragi283.ragium.common.recipe.RTBucketFillingRecipe
@@ -31,18 +27,13 @@ import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistryAccess
-import net.minecraft.core.component.DataComponentMap
-import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionBrewing
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -59,7 +50,6 @@ import net.neoforged.neoforge.registries.datamaps.builtin.Waxable
 internal data object RagiumCommon {
     fun initialize(event: FMLCommonSetupEvent) {
         event.enqueueWork(::initFluidInteractions)
-        event.enqueueWork(::initFluidComponents)
         event.enqueueWork(::initRecipeLookups)
     }
 
@@ -70,57 +60,15 @@ internal data object RagiumCommon {
             FluidInteractionRegistry.addInteraction(
                 NeoForgeMod.LAVA_TYPE.value(),
                 FluidInteractionRegistry.InteractionInformation(
-                    RagiumFluids.DYES[color].getFluidType()
+                    RagiumFluids.DYES[color].getFluidType(),
                 ) { state: FluidState ->
                     when (state.isSource) {
                         true -> Blocks.OBSIDIAN.defaultBlockState()
                         false -> VanillaColoredCollections.CONCRETE[color].defaultState
                     }
-                }
+                },
             )
         }
-    }
-
-    private fun initFluidComponents() {
-        fun setChemical(content: HTFluidContent, key: ResourceKey<HTChemical>) {
-            BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.add(
-                content.key()
-            ) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
-                builder.set(RagiumDataComponents.CHEMICAL, provider.getOrThrow(key))
-            }
-        }
-
-        BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.add(
-            Registries.FLUID.createKey(vanillaId("water"))
-        ) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
-            builder.set(RagiumDataComponents.CHEMICAL, provider.getOrThrow(RagiumChemicals.WATER))
-        }
-
-        BuiltInRegistries.DATA_COMPONENT_INITIALIZERS.add(
-            RagiumFluids.POTION.key()
-        ) { builder: DataComponentMap.Builder, _, _ ->
-            builder.set(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
-        }
-
-        setChemical(RagiumFluids.MOLTEN_GLASS, RagiumChemicals.SILICON_DIOXIDE)
-
-        setChemical(RagiumFluids.HYDROGEN, RagiumChemicals.HYDROGEN)
-        setChemical(RagiumFluids.NITROGEN, RagiumChemicals.NITROGEN)
-        setChemical(RagiumFluids.OXYGEN, RagiumChemicals.OXYGEN)
-        setChemical(RagiumFluids.CHLORINE, RagiumChemicals.CHLORINE)
-
-        setChemical(RagiumFluids.NITRIC_ACID, RagiumChemicals.NITRIC_ACID)
-        setChemical(RagiumFluids.HYDROGEN_FLUORIDE, RagiumChemicals.HYDROGEN_FLUORIDE)
-        setChemical(RagiumFluids.HYDROFLUORIC_ACID, RagiumChemicals.HYDROGEN_FLUORIDE)
-
-        setChemical(RagiumFluids.SALT_WATER, RagiumChemicals.SODIUM_CHLORIDE)
-        setChemical(RagiumFluids.NAOH_SOLUTION, RagiumChemicals.SODIUM_HYDROXIDE)
-        setChemical(RagiumFluids.ALUMINA_SOLUTION, RagiumChemicals.ALUMINUM_OXIDE)
-        setChemical(RagiumFluids.SULFUR_DIOXIDE, RagiumChemicals.SULFUR_DIOXIDE)
-        setChemical(RagiumFluids.SULFUR_TRIOXIDE, RagiumChemicals.SULFUR_TRIOXIDE)
-        setChemical(RagiumFluids.SULFURIC_ACID, RagiumChemicals.SULFURIC_ACID)
-        setChemical(RagiumFluids.HYDROGEN_CHLORIDE, RagiumChemicals.HYDROGEN_CHLORIDE)
-        setChemical(RagiumFluids.HYDROCHLORIC_ACID, RagiumChemicals.HYDROGEN_CHLORIDE)
     }
 
     private fun initRecipeLookups() {
@@ -155,7 +103,7 @@ internal data object RagiumCommon {
                         RTPotionBottleCentrifugingRecipe(bottleType)
                 }
                 this[RagiumAPI.id("/${RagiumConstants.CENTRIFUGING}/bucket")] = RTBucketCentrifugingRecipe
-            }
+            },
         )
         RagiumRecipeLookups.FILLING.addRecipes(
             buildMap {
@@ -164,7 +112,7 @@ internal data object RagiumCommon {
                         RTPotionBottleFillingRecipe(bottleType)
                 }
                 this[RagiumAPI.id("/${RagiumConstants.FILLING}/bucket")] = RTBucketFillingRecipe
-            }
+            },
         )
 
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
@@ -185,8 +133,7 @@ internal data object RagiumCommon {
                 }
         }
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
-            val hydrogen: HolderSet<Fluid> =
-                registries.getOrNull(RagiumFluids.HYDROGEN) ?: return@addSubLookup sequenceOf()
+            val hydrogen: HolderSet<Fluid> = registries.getOrNull(RagiumFluids.HYDROGEN) ?: return@addSubLookup sequenceOf()
             BuiltInRegistries.BLOCK
                 .getDataMap(NeoForgeDataMaps.OXIDIZABLES)
                 .asSequence()
@@ -203,8 +150,7 @@ internal data object RagiumCommon {
                 }
         }
         RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
-            val antiRustOil: HolderSet<Fluid> =
-                registries.getOrNull(RagiumFluids.ANTI_RUST_OIL) ?: return@addSubLookup sequenceOf()
+            val waxes: HolderSet<Fluid> = registries.getOrNull(RagiumTags.Fluids.WAXES) ?: return@addSubLookup sequenceOf()
             BuiltInRegistries.BLOCK
                 .getDataMap(NeoForgeDataMaps.WAXABLES)
                 .asSequence()
@@ -212,7 +158,7 @@ internal data object RagiumCommon {
                     RagiumRecipeBuilders.bathing {
                         itemIngredient { items { +BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem() } }
                         fluidIngredient {
-                            +antiRustOil
+                            +waxes
                             amount = 125
                         }
                         result { +value.waxed().asItem() }
@@ -249,6 +195,5 @@ internal data object RagiumCommon {
         }
     }
 
-    private fun HolderGetter.Provider.getOrNull(content: HTFluidContent): HolderSet<Fluid>? =
-        this.getOrNull(content.fluidTag)
+    private fun HolderGetter.Provider.getOrNull(content: HTFluidContent): HolderSet<Fluid>? = this.getOrNull(content.fluidTag)
 }

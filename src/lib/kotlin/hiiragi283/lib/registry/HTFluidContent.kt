@@ -1,5 +1,6 @@
 package hiiragi283.lib.registry
 
+import com.mojang.serialization.DataResult
 import hiiragi283.lib.fluid.HTFluidInstanceLike
 import hiiragi283.lib.resource.HTSimpleValueWithKey
 import net.minecraft.core.TypedInstance
@@ -27,7 +28,7 @@ sealed class HTFluidContent(
     val sourceHolder: HTDeferredHolder<Fluid, *>,
     val bucketHolder: HTSimpleDeferredItem,
     val fluidTag: TagKey<Fluid>,
-    val bucketTag: TagKey<Item>
+    val bucketTag: TagKey<Item>,
 ) : HTFluidInstanceLike,
     HTSimpleValueWithKey<Fluid> by sourceHolder {
     /**
@@ -40,10 +41,8 @@ sealed class HTFluidContent(
      */
     fun isOf(instance: TypedInstance<Fluid>): Boolean = sourceHolder.isOf(instance)
 
-    override fun asTemplate(amount: Int, patch: DataComponentPatch): Result<FluidStackTemplate> = when {
-        sourceHolder.isEmpty ->
-            Result.failure(IllegalStateException("Could not create FluidStackTemplate with empty fluid"))
-
+    override fun asTemplate(amount: Int, patch: DataComponentPatch): DataResult<FluidStackTemplate> = when {
+        sourceHolder.isEmpty -> DataResult.error { "Could not create FluidStackTemplate with empty fluid" }
         else -> sourceHolder.asResult().map { FluidStackTemplate(it, amount, patch) }
     }
 
@@ -57,7 +56,7 @@ sealed class HTFluidContent(
         sourceHolder: HTDeferredHolder<Fluid, *>,
         bucketHolder: HTSimpleDeferredItem,
         fluidTag: TagKey<Fluid>,
-        bucketTag: TagKey<Item>
+        bucketTag: TagKey<Item>,
     ) : HTFluidContent(typeHolder, sourceHolder, bucketHolder, fluidTag, bucketTag)
 
     /**
@@ -74,6 +73,6 @@ sealed class HTFluidContent(
         fluidTag: TagKey<Fluid>,
         bucketTag: TagKey<Item>,
         val flowingHolder: HTDeferredHolder<Fluid, FlowingFluid>,
-        val blockHolder: HTDeferredBlock<LiquidBlock>?
+        val blockHolder: HTDeferredBlock<LiquidBlock>?,
     ) : HTFluidContent(typeHolder, sourceHolder, bucketHolder, fluidTag, bucketTag)
 }

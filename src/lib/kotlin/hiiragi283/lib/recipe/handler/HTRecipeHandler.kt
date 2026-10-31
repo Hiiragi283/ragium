@@ -1,5 +1,6 @@
 package hiiragi283.lib.recipe.handler
 
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.util.fixedFraction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.storage.ValueInput
@@ -33,14 +34,14 @@ abstract class HTRecipeHandler :
     abstract fun tick(level: ServerLevel): Boolean
 
     override fun serialize(output: ValueOutput) {
-        output.putInt("progress", progress)
-        output.putInt("max_progress", maxProgress)
+        output.putInt(HTConstants.PROGRESS, progress)
+        output.putInt(HTConstants.MAX_PROGRESS, maxProgress)
     }
 
     override fun deserialize(input: ValueInput) {
-        input.getInt("max_progress").ifPresent { maxProgress: Int ->
+        input.getInt(HTConstants.MAX_PROGRESS).ifPresent { maxProgress: Int ->
             this.maxProgress = maxProgress
-            input.getInt("progress").ifPresent { progress: Int ->
+            input.getInt(HTConstants.PROGRESS).ifPresent { progress: Int ->
                 this.progress = progress
             }
         }

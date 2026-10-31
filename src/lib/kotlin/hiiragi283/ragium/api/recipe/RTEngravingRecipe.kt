@@ -10,12 +10,8 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class RTEngravingRecipe(
-    ingredient: HTItemIngredient,
-    catalyst: HTItemCatalyst,
-    result: HTItemResult,
-    progressData: HTProgressData
-) : HTDoubleItemToItemRecipe.Catalysed(ingredient, catalyst, result, progressData),
+class RTEngravingRecipe(ingredient: HTItemIngredient, catalyst: HTItemCatalyst, result: HTItemResult, progressData: HTProgressData) :
+    HTDoubleItemToItemRecipe.Catalysed(ingredient, catalyst, result, progressData),
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField

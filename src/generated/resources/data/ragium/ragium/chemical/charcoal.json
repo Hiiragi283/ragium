@@ -1,8 +1,0 @@
-{
-  "type": "ragium:mixture",
-  "elements": [
-    "ragium:hydrogen",
-    "ragium:carbon",
-    "ragium:oxygen"
-  ]
-}

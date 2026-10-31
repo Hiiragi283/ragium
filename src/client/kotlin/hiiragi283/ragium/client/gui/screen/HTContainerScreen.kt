@@ -16,13 +16,8 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.client.network.ClientPacketDistributor
 
-abstract class HTContainerScreen<MENU : HTContainerMenu<*>>(
-    menu: MENU,
-    inventory: Inventory,
-    title: Text,
-    width: Int,
-    height: Int
-) : AbstractContainerScreen<MENU>(menu, inventory, title, width, height),
+abstract class HTContainerScreen<MENU : HTContainerMenu<*>>(menu: MENU, inventory: Inventory, title: Text, width: Int, height: Int) :
+    AbstractContainerScreen<MENU>(menu, inventory, title, width, height),
     HTGuiAccess {
     override fun containerTick() {
         super.containerTick()
@@ -42,7 +37,7 @@ abstract class HTContainerScreen<MENU : HTContainerMenu<*>>(
                     .onEach { (index: Int, payload: HTSyncablePayload) ->
                         RagiumAPI.LOGGER.debug("Added sync value index: {}, payload: {}", index, payload)
                     }
-                    .toMap()
+                    .toMap(),
             )?.let(ClientPacketDistributor::sendToServer)
     }
 

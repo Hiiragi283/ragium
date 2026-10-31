@@ -22,7 +22,7 @@ sealed class HTFluidWidget(
     val backgroundType: HTBackgroundType,
     width: Int,
     height: Int,
-    val isGhost: Boolean
+    val isGhost: Boolean,
 ) : HTAbstractWidget(x - 1, y - 1, width, height),
     HTGhostWidget,
     HTIngredientWidget,
@@ -49,20 +49,14 @@ sealed class HTFluidWidget(
 
     //    Slot    //
 
-    class Slot(
-        view: HTFluidView,
-        stackSetter: FluidStackSetter?,
-        x: Int,
-        y: Int,
-        backgroundType: HTBackgroundType,
-        isGhost: Boolean
-    ) : HTFluidWidget(view, stackSetter, x, y, backgroundType, 18, 18, isGhost) {
+    class Slot(view: HTFluidView, stackSetter: FluidStackSetter?, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) :
+        HTFluidWidget(view, stackSetter, x, y, backgroundType, 18, 18, isGhost) {
         constructor(
             tank: HTBasicFluidTank,
             x: Int,
             y: Int,
             backgroundType: HTBackgroundType,
-            isGhost: Boolean
+            isGhost: Boolean,
         ) : this(tank, tank::setStack, x, y, backgroundType, isGhost)
 
         override fun toString(): String =
@@ -71,29 +65,23 @@ sealed class HTFluidWidget(
 
     //    Tank    //
 
-    class Tank(
-        view: HTFluidView,
-        stackSetter: FluidStackSetter?,
-        x: Int,
-        y: Int,
-        backgroundType: HTBackgroundType,
-        isGhost: Boolean
-    ) : HTFluidWidget(
-        view,
-        stackSetter,
-        x,
-        y,
-        backgroundType,
-        18,
-        18 * 3,
-        isGhost
-    ) {
+    class Tank(view: HTFluidView, stackSetter: FluidStackSetter?, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) :
+        HTFluidWidget(
+            view,
+            stackSetter,
+            x,
+            y,
+            backgroundType,
+            18,
+            18 * 3,
+            isGhost,
+        ) {
         constructor(
             tank: HTBasicFluidTank,
             x: Int,
             y: Int,
             backgroundType: HTBackgroundType,
-            isGhost: Boolean
+            isGhost: Boolean,
         ) : this(tank, tank::setStack, x, y, backgroundType, isGhost)
 
         override fun toString(): String =

@@ -37,7 +37,7 @@ data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: I
             builder,
             name,
             rate,
-            rate * 20 * 10 * 10
+            rate * 20 * 10 * 10,
         )
 
         @JvmStatic
@@ -49,13 +49,7 @@ data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: I
             create(builder, "${HTConstants.ITEM}.${RagiumAPI.MOD_ID}.$name", name, usage, capacity)
 
         @JvmStatic
-        fun create(
-            builder: ModConfigSpec.Builder,
-            translationKey: String,
-            name: String,
-            usage: Int,
-            capacity: Int
-        ): HTEnergyConfig {
+        fun create(builder: ModConfigSpec.Builder, translationKey: String, name: String, usage: Int, capacity: Int): HTEnergyConfig {
             builder.translation(translationKey).push(name)
             val config = HTEnergyConfig(energyCapacity(builder, capacity), energyRate(builder, usage))
             builder.pop()

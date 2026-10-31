@@ -1,7 +1,8 @@
 package hiiragi283.lib.transfer.item
 
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.transfer.HTStackResourceSlot
+import hiiragi283.lib.transfer.HTSnapshotStackResourceSlot
+import hiiragi283.lib.transfer.HTStackResourceHelper
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
@@ -15,7 +16,7 @@ import java.util.function.BiPredicate
 import java.util.function.Predicate
 
 /**
- * [アイテム][ItemResource]向けの[HTStackResourceSlot]の実装クラスです。
+ * [アイテム][ItemResource]向けの[HTSnapshotStackResourceSlot]の実装クラスです。
  *
  * 参照 : [Mekanism - BasicInventorySlot](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/inventory/slot/BasicInventorySlot.java)
  * @author Hiiragi Tsubasa
@@ -26,8 +27,9 @@ open class HTBasicItemSlot(
     canExtract: BiPredicate<ItemResource, HTTransferAccess>,
     canInsert: BiPredicate<ItemResource, HTTransferAccess>,
     filter: Predicate<ItemResource>,
-    listener: Runnable?
-) : HTStackResourceSlot.Basic<ItemStack, ItemResource>(capacity, canExtract, canInsert, filter, listener) {
+    listener: Runnable?,
+) : HTSnapshotStackResourceSlot.Basic<ItemStack, ItemResource>(capacity, canExtract, canInsert, filter, listener),
+    HTItemStackSlot {
     companion object {
         @JvmStatic
         fun create(
@@ -35,27 +37,32 @@ open class HTBasicItemSlot(
             limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
             canExtract: BiPredicate<ItemResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<ItemResource, HTTransferAccess> = HTTransferPredicates.alwaysTrueBi(),
-            filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue()
-        ): HTBasicItemSlot =
-            HTBasicItemSlot(HTTransferValidators.validateLimit(limit), canExtract, canInsert, filter, listener)
+            filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue(),
+        ): HTBasicItemSlot = HTBasicItemSlot(HTTransferValidators.validateLimit(limit), canExtract, canInsert, filter, listener)
 
         @JvmStatic
         fun input(
             listener: Runnable?,
             limit: Int = Item.ABSOLUTE_MAX_STACK_SIZE,
             canInsert: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue(),
-            filter: Predicate<ItemResource> = canInsert
+            filter: Predicate<ItemResource> = canInsert,
         ): HTBasicItemSlot = create(
             listener,
             limit,
             HTTransferPredicates.notExternal(),
             { stack: ItemResource, _ -> canInsert.test(stack) },
-            filter
+            filter,
         )
 
         @JvmStatic
-        fun output(listener: Runnable?): HTBasicItemSlot =
-            create(listener, canInsert = HTTransferPredicates.internalOnly())
+        fun output(listener: Runnable?): HTBasicItemSlot = create(listener, canInsert = HTTransferPredicates.internalOnly())
+
+        /**
+         * @since 26.1.12
+         */
+        @JvmStatic
+        fun catalyst(listener: Runnable?, filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue()): HTBasicItemSlot =
+            create(listener, 1, HTTransferPredicates.manualOnly(), HTTransferPredicates.manualOnly(), filter)
     }
 
     private var stackIn: ItemStack = ItemStack.EMPTY
@@ -71,7 +78,7 @@ open class HTBasicItemSlot(
     }
 
     private fun setStackUnchecked(other: ItemStack, validate: Boolean) {
-        val resource: ItemResource = getResourceFrom(other)
+        val resource: ItemResource = getHelper().getResourceFrom(other)
         if (resource.isEmpty) {
             if (this.stackIn.isEmpty) return
             this.stackIn = ItemStack.EMPTY
@@ -83,13 +90,7 @@ open class HTBasicItemSlot(
         onRootCommit(getStackCopy())
     }
 
-    final override fun getResourceFrom(stack: ItemStack): ItemResource = ItemResource.of(stack)
-
-    final override fun getAmountFrom(stack: ItemStack): Int = stack.count()
-
-    final override fun isSame(stack: ItemStack, resource: ItemResource): Boolean = resource.matches(stack)
-
-    final override fun createStack(resource: ItemResource, amount: Int): ItemStack = resource.toStack(amount)
+    override fun getHelper(): HTStackResourceHelper.Item = HTStackResourceHelper.Item
 
     override fun getCapacity(resource: ItemResource): Int = when (resource.isEmpty) {
         true -> capacity

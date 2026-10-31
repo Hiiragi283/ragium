@@ -19,7 +19,6 @@ import hiiragi283.ragium.api.text.HTItemTooltip
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.world.item.HoneycombItem
@@ -57,6 +56,8 @@ data object RagiumItems {
             val name: String = machineType.materialName
             REGISTER.addAlias("${name}_machine_parts", "machine_parts/$name")
         }
+        REGISTER.addAlias("sodium_hydroxide", "alkali_hydroxide")
+        REGISTER.addAlias("soda_ash_dust", "alkali_carbonate")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -76,19 +77,15 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Fuel.CHARCOAL, HTItemPart.DUST, HTItemPart.TINY)
                 putAll(RagiumMaterial.Fuel.COAL_COKE, HTItemPart.TINY)
                 putAll(RagiumMaterial.Fuel.PITCH_COKE, HTItemPart.TINY)
-                // Mineral
-                for (dustLike: RagiumMaterial.DustLike in RagiumMaterial.DustLike.entries) {
-                    if (dustLike is RagiumMaterial.Mineral && dustLike.isVanilla) continue
-                    putAll(dustLike, HTItemPart.DUST)
-                }
                 // Gem
                 putAll(RagiumMaterial.Gem.LAPIS, HTItemPart.DUST)
                 putAll(RagiumMaterial.Gem.DIAMOND, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Gem.EMERALD, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Gem.ECHO, HTItemPart.DUST)
-                putAll(RagiumMaterial.Gem.PRISMARINE, HTItemPart.DUST)
+                // putAll(RagiumMaterial.Gem.PRISMARINE, HTItemPart.DUST)
                 putAll(RagiumMaterial.Gem.CINNABAR, HTItemPart.DUST, HTItemPart.GEM)
                 putAll(RagiumMaterial.Gem.FLUORITE, HTItemPart.DUST, HTItemPart.GEM)
+                putAll(RagiumMaterial.Gem.APATITE, HTItemPart.DUST, HTItemPart.GEM)
                 // putAll(RagiumMaterial.Gem.CRYOLITE, HTItemPart.DUST, HTItemPart.GEM)
                 // Metal
                 putAll(RagiumMaterial.Metal.COPPER, HTItemPart.DUST, HTItemPart.GEAR)
@@ -104,9 +101,13 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Alloy.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.SHADOW_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
                 // Other
+                for (dustLike: RagiumMaterial.DustLike in RagiumMaterial.DustLike.entries) {
+                    if (dustLike is RagiumMaterial.Other && dustLike.isVanilla) continue
+                    putAll(dustLike, HTItemPart.DUST)
+                }
                 putAll(RagiumMaterial.Other.WOOD, HTItemPart.GEAR)
             },
-            ::sortedSetOf
+            ::sortedSetOf,
         ).flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
             parts.map { part: HTItemPart ->
                 Triple(
@@ -114,16 +115,16 @@ data object RagiumItems {
                     material,
                     REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties ->
                         when (material) {
-                            RagiumMaterial.Mineral.RAGINITE -> Rarity.EPIC
                             RagiumMaterial.Alloy.BLACK_STEEL -> Rarity.UNCOMMON
                             RagiumMaterial.Alloy.SHADOW_STEEL -> Rarity.RARE
+                            RagiumMaterial.Other.RAGINITE -> Rarity.EPIC
                             else -> null
                         }?.let(properties::rarity)
                         if (material == RagiumMaterial.Alloy.NETHERITE) {
                             properties.fireResistant()
                         }
                         properties
-                    }
+                    },
                 )
             }
         }
@@ -160,7 +161,13 @@ data object RagiumItems {
 
     // Chemical
     @JvmField
-    val SODIUM_HYDROXIDE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("sodium_hydroxide")
+    val ALKALI_HYDROXIDE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alkali_hydroxide")
+
+    @JvmField
+    val ALKALI_CARBONATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alkali_carbonate")
+
+    @JvmField
+    val ALKALI_SULFATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alkali_sulfate")
 
     @JvmField
     val PLASTIC_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plastic_plate")
@@ -179,6 +186,9 @@ data object RagiumItems {
     // Resource
     @JvmField
     val BEESWAX: HTSimpleDeferredItem = REGISTER.registerItem("beeswax", ::HoneycombItem)
+
+    @JvmField
+    val BIO_CHAFF: HTSimpleDeferredItem = REGISTER.registerSimpleItem("bio_chaff")
 
     @JvmField
     val SPLASH_BOTTLE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("splash_bottle")
@@ -300,7 +310,7 @@ data object RagiumItems {
     val SOOTY_IRON_TOOLS: HTToolCollection<HTSimpleDeferredItem> = HTToolCollection { toolType: HTToolType ->
         REGISTER.registerItem(
             toolType.createPath(RagiumMaterial.Alloy.SOOTY_IRON),
-            { prop: Item.Properties -> toolType.createItem(prop, RagiumToolMaterials.SOOTY_IRON, 6f, -3.1f, -2f, -1f) }
+            { prop: Item.Properties -> toolType.createItem(prop, RagiumToolMaterials.SOOTY_IRON, 6f, -3.1f, -2f, -1f) },
         )
     }
 
@@ -334,7 +344,7 @@ data object RagiumItems {
         event.registerItem(
             HTFluidCapabilities.item,
             { _, access: ItemAccess -> HTPotionBucketItem.BucketHandler(access) },
-            RagiumFluids.POTION.bucketHolder
+            RagiumFluids.POTION.bucketHolder,
         )
         // Item
     }
@@ -342,7 +352,7 @@ data object RagiumItems {
     @JvmStatic
     private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
         fun <T : Any> set(item: ItemLike, type: DataComponentType<T>, value: T) {
-            event.modify(item) { builder: DataComponentMap.Builder, provider: HolderLookup.Provider, _ ->
+            event.modify(item) { builder: DataComponentMap.Builder, _, _ ->
                 builder.set(type, value)
             }
         }
@@ -352,9 +362,9 @@ data object RagiumItems {
             set(item, RagiumDataComponents.ITEM_TOOLTIP, HTItemTooltip.wrap(delegate))
         }
 
-        setTooltip(getOrThrow(HTItemPart.DUST, RagiumMaterial.Mineral.SULFUR), RagiumTranslation.TOOLTIPS_SULFUR)
+        setTooltip(getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SULFUR), RagiumTranslation.TOOLTIPS_SULFUR)
         setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CINNABAR), RagiumTranslation.TOOLTIPS_CINNABAR)
         setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE), RagiumTranslation.TOOLTIPS_FLUORITE)
-        setTooltip(getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemicals.CARBON), RagiumTranslation.TOOLTIPS_CARBON)
+        setTooltip(getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.CARBON), RagiumTranslation.TOOLTIPS_CARBON)
     }
 }

@@ -1,0 +1,24 @@
+{
+  "type": "ragium:mixing",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:sulfuric_acid"
+    },
+    "item": {
+      "count": 2,
+      "items": "#c:dusts/niter"
+    }
+  },
+  "result": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:nitric_acid"
+    },
+    "item": {
+      "count": 2,
+      "id": "ragium:alkali_sulfate"
+    }
+  },
+  "time": 200
+}

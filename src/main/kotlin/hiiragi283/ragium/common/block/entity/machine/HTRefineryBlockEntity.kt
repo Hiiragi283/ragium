@@ -11,11 +11,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTFluidSeparatingBlockEntity(RagiumBlockEntityTypes.REFINERY.get(), pos, state) {
+class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTFluidSeparatingBlockEntity(RagiumBlockEntityTypes.REFINERY.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.REFINING,
-        HTSoundInstance(SoundEvents.FIRE_EXTINGUISH)
+        HTSoundInstance(SoundEvents.FIRE_EXTINGUISH),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.refinery

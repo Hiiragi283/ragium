@@ -26,7 +26,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     TOOLTIPS_MEMORY_DISC_DATA(HTConstants.TOOLTIP, "memory_disc_data"),
     TOOLTIPS_UPGRADE_SPEED(HTConstants.TOOLTIP, HTConstants.UPGRADE, HTConstants.SPEED),
     TOOLTIPS_UPGRADE_EFFICIENCY(HTConstants.TOOLTIP, HTConstants.UPGRADE, HTConstants.EFFICIENCY),
-    TOOLTIPS_UPGRADE_CAPACITY(HTConstants.TOOLTIP, HTConstants.UPGRADE, HTConstants.CAPACITY)
+    TOOLTIPS_UPGRADE_CAPACITY(HTConstants.TOOLTIP, HTConstants.UPGRADE, HTConstants.CAPACITY),
     ;
 
     override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".")).toLanguageKey(type)

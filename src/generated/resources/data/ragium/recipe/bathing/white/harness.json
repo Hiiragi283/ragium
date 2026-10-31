@@ -3,7 +3,7 @@
   "ingredient": {
     "fluid": {
       "amount": 125,
-      "fluids": "#c:bleach"
+      "fluids": "#c:chlorine"
     },
     "item": {
       "count": 1,

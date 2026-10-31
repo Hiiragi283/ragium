@@ -12,13 +12,9 @@ import java.util.function.Supplier
  * @since 26.1.0
  */
 class HTDeferredMobEffectRegister(namespace: String) : HTDeferredRegister<MobEffect>(Registries.MOB_EFFECT, namespace) {
-    override fun asSequence(): Sequence<HTDeferredMobEffect<*>> =
-        super.asSequence().filterIsInstance<HTDeferredMobEffect<*>>()
+    override fun asSequence(): Sequence<HTDeferredMobEffect<*>> = super.asSequence().filterIsInstance<HTDeferredMobEffect<*>>()
 
-    override fun <I : MobEffect> createHolder(
-        registryKey: RegistryKey<MobEffect>,
-        key: Identifier
-    ): HTDeferredMobEffect<I> = HTDeferredMobEffect(key)
+    override fun <I : MobEffect> createHolder(registryKey: RegistryKey<MobEffect>, key: Identifier): HTDeferredMobEffect<I> = HTDeferredMobEffect(key)
 
     override fun <I : MobEffect> register(name: String, sup: Supplier<out I>): HTDeferredMobEffect<I> =
         super.register(name, sup) as HTDeferredMobEffect<I>

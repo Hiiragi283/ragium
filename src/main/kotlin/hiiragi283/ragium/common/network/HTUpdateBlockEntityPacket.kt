@@ -23,8 +23,7 @@ import net.minecraft.world.level.storage.ValueInput
  */
 @ConsistentCopyVisibility
 @JvmRecord
-data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val updateTag: CompoundTag) :
-    HTCustomPayload.S2C {
+data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val updateTag: CompoundTag) : HTCustomPayload.S2C {
     companion object {
         @JvmField
         val TYPE = CustomPacketPayload.Type<HTUpdateBlockEntityPacket>(RagiumAPI.id("update_block_entity"))
@@ -35,7 +34,7 @@ data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val 
             HTUpdateBlockEntityPacket::pos,
             ByteBufCodecs.TRUSTED_COMPOUND_TAG,
             HTUpdateBlockEntityPacket::updateTag,
-            ::HTUpdateBlockEntityPacket
+            ::HTUpdateBlockEntityPacket,
         )
 
         @JvmStatic
@@ -52,7 +51,7 @@ data class HTUpdateBlockEntityPacket private constructor(val pos: BlockPos, val 
             val input: ValueInput = TagValueInput.create(
                 blockEntity.createReporter(),
                 level.registryAccess(),
-                updateTag
+                updateTag,
             )
             blockEntity.handleUpdateTag(input)
         }

@@ -15,6 +15,5 @@ data class HTItemAndFluidStack(val item: ItemStack, val fluid: FluidStack) {
         ItemStack.isSameItemSameComponents(it.item, this.item) && FluidStack.isSameFluid(it.fluid, this.fluid)
     } ?: false
 
-    override fun hashCode(): Int =
-        Objects.hash(ItemStack.hashItemAndComponents(item), FluidStack.hashFluidAndComponents(fluid))
+    override fun hashCode(): Int = Objects.hash(ItemStack.hashItemAndComponents(item), FluidStack.hashFluidAndComponents(fluid))
 }

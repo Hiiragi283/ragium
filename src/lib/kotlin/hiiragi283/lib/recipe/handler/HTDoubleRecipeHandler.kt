@@ -17,12 +17,7 @@ import java.util.function.BiPredicate
  * @author Hiiragi Tsubasa
  * @since 26.1.11
  */
-abstract class HTDoubleRecipeHandler<
-    INPUT_A : Any,
-    INPUT_B : Any,
-    OUTPUT : Any,
-    RECIPE : BiFunction<INPUT_A, INPUT_B, OUTPUT>
-    > : HTRecipeHandler() {
+abstract class HTDoubleRecipeHandler<INPUT_A : Any, INPUT_B : Any, OUTPUT : Any, RECIPE : BiFunction<INPUT_A, INPUT_B, OUTPUT>> : HTRecipeHandler() {
 
     protected val progressor: Progressor<INPUT_A, INPUT_B, RECIPE> = createProgressor()
 
@@ -42,8 +37,8 @@ abstract class HTDoubleRecipeHandler<
     override fun tick(level: ServerLevel): Boolean {
         if (!shouldCheck) return false
         // インプットに一致するレシピを探索する
-        val firstInput: INPUT_A = getFirstInput()
-        val secondInput: INPUT_B = getSecondInput()
+        val firstInput: INPUT_A = firstInputCache ?: getFirstInput()
+        val secondInput: INPUT_B = secondInputCache ?: getSecondInput()
         firstInputCache = firstInput
         secondInputCache = secondInput
         val recipe: RECIPE = findRecipe(firstInput, secondInput, level) ?: return run {
@@ -54,7 +49,7 @@ abstract class HTDoubleRecipeHandler<
             false
         }
         // アウトプットに完成品を搬出できるか判定する
-        val output: OUTPUT = recipe.apply(firstInput, secondInput)
+        val output: OUTPUT = outputCache ?: recipe.apply(firstInput, secondInput)
         outputCache = output
         if (!canProgress) {
             if (canComplete(recipe, firstInput, secondInput, output)) {
@@ -111,17 +106,10 @@ abstract class HTDoubleRecipeHandler<
      * @author Hiiragi Tsubasa
      * @since 26.1.11
      */
-    abstract class Cached<
-        INPUT_A : Any,
-        INPUT_B : Any,
-        OUTPUT : Any,
-        RECIPE
-        >(
-        val cache: HTDoubleRecipeCache<INPUT_A, INPUT_B, RECIPE>
-    ) : HTDoubleRecipeHandler<INPUT_A, INPUT_B, OUTPUT, RECIPE>()
+    abstract class Cached<INPUT_A : Any, INPUT_B : Any, OUTPUT : Any, RECIPE>(val cache: HTDoubleRecipeCache<INPUT_A, INPUT_B, RECIPE>) :
+        HTDoubleRecipeHandler<INPUT_A, INPUT_B, OUTPUT, RECIPE>()
         where RECIPE : BiPredicate<INPUT_A, INPUT_B>, RECIPE : BiFunction<INPUT_A, INPUT_B, OUTPUT> {
-        final override fun findRecipe(first: INPUT_A, second: INPUT_B, level: ServerLevel): RECIPE? =
-            cache.findFirstRecipe(first, second, level)
+        final override fun findRecipe(first: INPUT_A, second: INPUT_B, level: ServerLevel): RECIPE? = cache.findFirstRecipe(first, second, level)
 
         override fun serialize(output: ValueOutput) {
             super.serialize(output)

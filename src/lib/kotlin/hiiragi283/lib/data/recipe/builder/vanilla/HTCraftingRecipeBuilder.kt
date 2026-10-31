@@ -9,8 +9,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTCraftingRecipeBuilder<out RECIPE : CraftingRecipe>(prefix: String) :
-    HTVanillaRecipeBuilder<RECIPE>(prefix) {
+abstract class HTCraftingRecipeBuilder<out RECIPE : CraftingRecipe>(prefix: String) : HTVanillaRecipeBuilder<RECIPE>(prefix) {
     /**
      * レシピ本のカテゴリ
      */

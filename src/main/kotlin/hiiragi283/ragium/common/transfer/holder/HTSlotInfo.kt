@@ -5,14 +5,13 @@ import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.ChatFormatting
 import net.minecraft.util.StringRepresentable
 
-enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: ChatFormatting) :
-    StringRepresentable {
+enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: ChatFormatting) : StringRepresentable {
     BOTH(true, true, ChatFormatting.LIGHT_PURPLE),
     INPUT(true, false, ChatFormatting.RED),
     OUTPUT(false, true, ChatFormatting.BLUE),
     EXTRA_INPUT(true, false, ChatFormatting.YELLOW),
     EXTRA_OUTPUT(false, true, ChatFormatting.GREEN),
-    NONE(false, false, ChatFormatting.GRAY)
+    NONE(false, false, ChatFormatting.GRAY),
     ;
 
     companion object {

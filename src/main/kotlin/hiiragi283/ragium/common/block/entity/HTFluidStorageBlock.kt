@@ -15,8 +15,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
-open class HTFluidStorageBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) :
-    HTBasicEntityBlock(type, properties) {
+open class HTFluidStorageBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : HTBasicEntityBlock(type, properties) {
     override fun useItemOn(
         itemStack: ItemStack,
         state: BlockState,
@@ -24,7 +23,7 @@ open class HTFluidStorageBlock(type: HTDeferredBlockEntityType<*>, properties: P
         pos: BlockPos,
         player: Player,
         hand: InteractionHand,
-        hitResult: BlockHitResult
+        hitResult: BlockHitResult,
     ): InteractionResult {
         val result: InteractionResult = super.useItemOn(itemStack, state, level, pos, player, hand, hitResult)
         if (itemStack.isEmpty) return result
@@ -46,6 +45,6 @@ open class HTFluidStorageBlock(type: HTDeferredBlockEntityType<*>, properties: P
         player: Player,
         hand: InteractionHand,
         hitResult: BlockHitResult,
-        tank: HTFluidTank
+        tank: HTFluidTank,
     ): Boolean = FluidUtil.interactWithFluidHandler(player, hand, level, pos, hitResult.direction, null)
 }

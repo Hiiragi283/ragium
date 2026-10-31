@@ -21,16 +21,14 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
      * @param key 要素のキー
      * @param type このエントリの依存関係
      */
-    fun add(key: ResourceKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> =
-        add(key.identifier(), type)
+    fun add(key: ResourceKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = add(key.identifier(), type)
 
     /**
      * 指定した要素をタグに追加します。
      * @param value 要素のキーを提供する[HTSimpleValueWithKey]
      * @param type このエントリの依存関係
      */
-    fun add(value: HTSimpleValueWithKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> =
-        add(value.key(), type)
+    fun add(value: HTSimpleValueWithKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = add(value.key(), type)
 
     /**
      * 指定した要素をタグに追加します。
@@ -49,8 +47,7 @@ fun interface HTTagBuilder<R : Any> : Consumer<TagEntry> {
      * @param child 子タグ
      * @param type このエントリの依存関係
      */
-    fun addTag(child: TagKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> =
-        addTag(child.location, type)
+    fun addTag(child: TagKey<R>, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<R> = addTag(child.location, type)
 
     /**
      * 指定した子タグをタグに追加します。

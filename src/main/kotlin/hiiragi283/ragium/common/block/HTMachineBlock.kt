@@ -13,28 +13,16 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.phys.BlockHitResult
 
 open class HTMachineBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) :
     HTHorizontalEntityBlock(type, properties),
     HTBlockWidgetHolderContext.Factory {
-    companion object {
-        @JvmField
-        val IS_ACTIVE: BooleanProperty = BooleanProperty.create("is_active")
-    }
-
     init {
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(IS_ACTIVE, false))
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(RagiumBlockStateProperties.IS_ACTIVE, false))
     }
 
-    override fun useWithoutItem(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-        player: Player,
-        hitResult: BlockHitResult
-    ): InteractionResult {
+    override fun useWithoutItem(state: BlockState, level: Level, pos: BlockPos, player: Player, hitResult: BlockHitResult): InteractionResult {
         if (player is ServerPlayer) {
             HTBlockWidgetHolderContext.openMenu(player, pos)
         }
@@ -43,7 +31,7 @@ open class HTMachineBlock(type: HTDeferredBlockEntityType<*>, properties: Proper
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         super.createBlockStateDefinition(builder)
-        builder.add(IS_ACTIVE)
+        builder.add(RagiumBlockStateProperties.IS_ACTIVE)
     }
 
     override fun setup(context: HTBlockWidgetHolderContext, widgetHolder: HTWidgetHolder) {

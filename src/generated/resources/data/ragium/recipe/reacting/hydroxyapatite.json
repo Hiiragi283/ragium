@@ -1,0 +1,22 @@
+{
+  "type": "ragium:reacting",
+  "ingredients": {
+    "fluids": [
+      {
+        "amount": 600,
+        "fluids": "#c:phosphoric_acid"
+      },
+      {
+        "amount": 1000,
+        "fluids": "#c:alkali_hydroxide_solution"
+      }
+    ]
+  },
+  "results": {
+    "item": {
+      "count": 12,
+      "id": "minecraft:bone"
+    }
+  },
+  "time": 200
+}

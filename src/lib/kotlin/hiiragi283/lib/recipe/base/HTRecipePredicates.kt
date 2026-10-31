@@ -8,6 +8,7 @@ import hiiragi283.lib.recipe.input.getItemOrEmpty
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.neoforged.neoforge.common.util.TriPredicate
 import net.neoforged.neoforge.fluids.FluidInstance
 import java.util.function.BiPredicate
 import java.util.function.Predicate
@@ -82,5 +83,20 @@ data object HTRecipePredicates {
      */
     fun interface DoubleItem : DoubleInput<RecipeInput, ItemInstance, ItemInstance> {
         override fun matches(input: RecipeInput): Boolean = test(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
+    }
+
+    //    Triple Input    //
+
+    /**
+     * 3種類の入力を判定する[HTRecipePredicate]の拡張インターフェースです。
+     * @param INPUT [RecipeInput]を継承したクラス
+     * @param INPUT_A 1番目の入力を判定するクラス
+     * @param INPUT_B 2番目の入力を判定するクラス
+     * @param INPUT_C 3番目の入力を判定するクラス
+     */
+    interface TripleInput<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, INPUT_C : Any> :
+        HTRecipePredicate<INPUT>,
+        TriPredicate<INPUT_A, INPUT_B, INPUT_C> {
+        override fun test(first: INPUT_A, second: INPUT_B, third: INPUT_C): Boolean
     }
 }

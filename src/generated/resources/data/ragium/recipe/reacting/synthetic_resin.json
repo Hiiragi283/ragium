@@ -1,16 +1,18 @@
 {
   "type": "ragium:reacting",
-  "ingredients": [
-    {
-      "amount": 1000,
-      "fluids": "#c:aromatic_compound"
-    },
-    {
-      "amount": 1000,
-      "fluids": "#ragium:aldehydes"
-    }
-  ],
-  "result": {
+  "ingredients": {
+    "fluids": [
+      {
+        "amount": 1000,
+        "fluids": "#c:aromatic_compound"
+      },
+      {
+        "amount": 1000,
+        "fluids": "#ragium:aldehydes"
+      }
+    ]
+  },
+  "results": {
     "fluid": {
       "amount": 2000,
       "id": "ragium:synthetic_resin"

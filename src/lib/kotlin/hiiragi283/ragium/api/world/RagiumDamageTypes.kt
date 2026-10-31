@@ -24,7 +24,7 @@ data object RagiumDamageTypes {
     fun bootstrap(context: BootstrapContext<DamageType>) {
         context.register(
             CHEMICAL_BURN,
-            DamageType("chemicalBurn", DamageScaling.ALWAYS, 0.1f, DamageEffects.BURNING)
+            DamageType("chemicalBurn", DamageScaling.ALWAYS, 0.1f, DamageEffects.BURNING),
         )
     }
 }

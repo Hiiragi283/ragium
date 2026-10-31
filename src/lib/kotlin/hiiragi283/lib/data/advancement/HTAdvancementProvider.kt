@@ -12,14 +12,11 @@ import java.util.concurrent.CompletableFuture
  * @author Hiiragi Tsubasa
  * @since 26.1.3
  */
-abstract class HTAdvancementProvider(
-    packOutput: PackOutput,
-    future: CompletableFuture<HolderLookup.Provider>,
-    modId: String
-) : ExporterDataProvider<Advancement>(
-    packOutput,
-    future,
-    Registries.ADVANCEMENT,
-    modId,
-    Advancement.CONDITIONAL_CODEC
-)
+abstract class HTAdvancementProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>, modId: String) :
+    ExporterDataProvider<Advancement>(
+        packOutput,
+        future,
+        Registries.ADVANCEMENT,
+        modId,
+        Advancement.CONDITIONAL_CODEC,
+    )

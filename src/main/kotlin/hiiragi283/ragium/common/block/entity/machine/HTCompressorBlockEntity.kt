@@ -11,11 +11,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToItemBlockEntity(RagiumBlockEntityTypes.COMPRESSOR.get(), pos, state) {
+class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlockEntity(RagiumBlockEntityTypes.COMPRESSOR.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.COMPRESSING,
-        HTSoundInstance(SoundEvents.ANVIL_LAND)
+        HTSoundInstance(SoundEvents.ANVIL_LAND),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.compressor

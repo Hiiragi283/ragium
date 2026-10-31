@@ -28,7 +28,7 @@ import kotlin.contracts.contract
  */
 class HTItemOrFluidRecipeBuilder<out RECIPE : Recipe<*>>(
     prefix: String,
-    private val factory: HTItemAndFluidToRecipeBuilder.Factory<HTItemOrFluidResult, RECIPE>
+    private val factory: HTItemAndFluidToRecipeBuilder.Factory<HTItemOrFluidResult, RECIPE>,
 ) : HTProgressRecipeBuilder<RECIPE>(prefix) {
     override fun getRecipeId(): Identifier? = result.getId()
 

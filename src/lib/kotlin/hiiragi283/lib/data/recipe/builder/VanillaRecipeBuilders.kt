@@ -87,13 +87,10 @@ data object VanillaRecipeBuilders {
      * かまどレシピと溶鉱炉レシピを生成します。後者の処理時間は前者の半分で登録されます。
      */
     @JvmStatic
-    inline fun smeltingAndBlasting(
-        exporter: ConditionalExporter<Recipe<*>>,
-        builderAction: HTCookingRecipeBuilder.() -> Unit
-    ) {
+    inline fun smeltingAndBlasting(exporter: ConditionalExporter<Recipe<*>>, builderAction: HTCookingRecipeBuilder.() -> Unit) {
         sequenceOf(
             smelting(builderAction),
-            HTCookingRecipeBuilder(::BlastingRecipe, { it / 2 }, HTConstants.BLASTING).apply(builderAction)
+            HTCookingRecipeBuilder(::BlastingRecipe, { it / 2 }, HTConstants.BLASTING).apply(builderAction),
         ).forEach { it.save(exporter) }
     }
 
@@ -101,13 +98,10 @@ data object VanillaRecipeBuilders {
      * かまどレシピと燻製器レシピを生成します。後者の処理時間は前者の半分で登録されます。
      */
     @JvmStatic
-    inline fun smeltingAndSmoking(
-        exporter: ConditionalExporter<Recipe<*>>,
-        builderAction: HTCookingRecipeBuilder.() -> Unit
-    ) {
+    inline fun smeltingAndSmoking(exporter: ConditionalExporter<Recipe<*>>, builderAction: HTCookingRecipeBuilder.() -> Unit) {
         sequenceOf(
             smelting(builderAction),
-            HTCookingRecipeBuilder(::SmokingRecipe, { it / 2 }, HTConstants.SMOKING).apply(builderAction)
+            HTCookingRecipeBuilder(::SmokingRecipe, { it / 2 }, HTConstants.SMOKING).apply(builderAction),
         ).forEach { it.save(exporter) }
     }
 

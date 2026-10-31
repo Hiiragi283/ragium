@@ -2,16 +2,16 @@ package hiiragi283.lib.recipe.ingredient
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.util.fold
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.util.context.ContextMap
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.display.SlotDisplay
 import java.util.Optional
-import kotlin.jvm.optionals.toList
 
 /**
  * 消費されない[Item]向けの[HTIngredient]の実装クラスです。
@@ -22,7 +22,7 @@ import kotlin.jvm.optionals.toList
 @JvmRecord
 data class HTItemCatalyst(val content: Optional<Ingredient>) :
     HTIngredient<Item, ItemInstance>,
-    HTStackPreview<ItemStack> {
+    HTDisplayableContent {
     companion object {
         @JvmField
         val EMPTY = HTItemCatalyst(Optional.empty())
@@ -46,6 +46,5 @@ data class HTItemCatalyst(val content: Optional<Ingredient>) :
 
     override fun getMatchingStack(instance: ItemInstance): ItemInstance = ItemStack.EMPTY
 
-    override fun getPreviewStacks(contextMap: ContextMap): List<ItemStack> =
-        content.toList().flatMap { it.display().resolveForStacks(contextMap) }
+    override fun display(): SlotDisplay = content.fold(SlotDisplay.Empty::INSTANCE, Ingredient::display)
 }

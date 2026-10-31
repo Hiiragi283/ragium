@@ -11,8 +11,7 @@ import com.google.common.collect.ImmutableTable
  * @author Hiiragi Tsubasa
  * @since 26.1.7
  */
-class DelegatingTable<R : Any, C : Any, out V : Any>(private val delegate: com.google.common.collect.Table<R, C, V>) :
-    Table<R, C, V> {
+class DelegatingTable<R : Any, C : Any, out V : Any>(private val delegate: com.google.common.collect.Table<R, C, V>) : Table<R, C, V> {
     override val size: Int get() = delegate.size()
     override val isEmpty: Boolean get() = delegate.isEmpty
 
@@ -45,8 +44,7 @@ class DelegatingTable<R : Any, C : Any, out V : Any>(private val delegate: com.g
      * @author Hiiragi Tsubasa
      * @since 26.1.7
      */
-    class Builder<R : Any, C : Any, V : Any>(private val builder: com.google.common.collect.Table<R, C, V>) :
-        Table.Builder<R, C, V> {
+    class Builder<R : Any, C : Any, V : Any>(private val builder: com.google.common.collect.Table<R, C, V>) : Table.Builder<R, C, V> {
         constructor() : this(HashBasedTable.create())
 
         constructor(initialCapacity: Int = 10) : this(HashBasedTable.create(initialCapacity, initialCapacity))

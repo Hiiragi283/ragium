@@ -156,6 +156,6 @@ class HTShapedRecipeBuilder : HTCraftingRecipeBuilder<ShapedRecipe>(HTConstants.
         commonInfo(true),
         bookInfo(),
         ShapedRecipePattern.of(keys, patterns),
-        result
+        result,
     )
 }

@@ -7,15 +7,20 @@ import hiiragi283.lib.item.HTItemDropHelper
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.HTHandlerProvider
+import hiiragi283.lib.transfer.energy.HTEnergyStorage
 import hiiragi283.lib.transfer.fluid.FluidResourceHandler
 import hiiragi283.lib.transfer.fluid.HTFluidTank
+import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.lib.transfer.item.ItemResourceHandler
 import hiiragi283.lib.transfer.item.getItemStack
+import hiiragi283.lib.transfer.resolver.HTEnergyCapabilityManager
 import hiiragi283.lib.transfer.resolver.HTResourceCapabilityManager
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.common.transfer.HTCapabilityCodec
+import hiiragi283.ragium.common.transfer.codec.HTCapabilityCodec
+import hiiragi283.ragium.common.transfer.codec.HTEnergyCapabilityCodec
+import hiiragi283.ragium.common.transfer.codec.HTSlottedCapabilityCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentGetter
@@ -28,6 +33,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.item.ItemResource
 import java.util.UUID
@@ -63,6 +69,13 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
                 blockEntity.sendUpdatePacket(serverLevel)
             }
         }
+
+        @JvmField
+        val CAPABILITY_CODECS: List<HTCapabilityCodec> = listOf(
+            HTEnergyCapabilityCodec,
+            HTSlottedCapabilityCodec.FLUID,
+            HTSlottedCapabilityCodec.ITEM,
+        )
     }
 
     var ticks: Int = 0
@@ -84,9 +97,9 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
     override fun writeValue(output: ValueOutput) {
         super.writeValue(output)
         // Capability
-        for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
-            if (type.canHandle(this)) {
-                type.saveTo(output, this)
+        for (codec: HTCapabilityCodec in CAPABILITY_CODECS) {
+            if (codec.canHandle(this)) {
+                codec.saveTo(output, this)
             }
         }
         // Custom Name
@@ -98,9 +111,9 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
     override fun readValue(input: ValueInput) {
         super.readValue(input)
         // Capability
-        for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
-            if (type.canHandle(this)) {
-                type.loadFrom(input, this)
+        for (codec: HTCapabilityCodec in CAPABILITY_CODECS) {
+            if (codec.canHandle(this)) {
+                codec.loadFrom(input, this)
             }
         }
         // Custom Name
@@ -135,11 +148,13 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
 
     //    Capability    //
 
+    protected val energyHandlerManager: HTEnergyCapabilityManager?
     protected val fluidHandlerManager: HTResourceCapabilityManager<FluidResource, HTFluidTank>?
     protected val itemHandlerManager: HTResourceCapabilityManager<ItemResource, HTItemSlot>?
 
     init {
         initializeVariables(::setOnlySave)
+        energyHandlerManager = createEnergyStorage(::setOnlySave)?.let(::HTEnergyCapabilityManager)
         fluidHandlerManager = createFluidHandler(::setOnlySave)?.let(::HTResourceCapabilityManager)
         itemHandlerManager = createItemHandler(::setOnlySave)?.let(::HTResourceCapabilityManager)
     }
@@ -148,6 +163,15 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
      * [fluidHandlerManager]や[itemHandlerManager]が初期化される前に変数を初期化します。
      */
     protected open fun initializeVariables(listener: Runnable) {}
+
+    // Energy
+    fun hasEnergyStorage(): Boolean = energyHandlerManager != null
+
+    protected open fun createEnergyStorage(listener: Runnable): HTEnergyHandlerHolder? = null
+
+    fun getEnergyStorage(side: Direction?): HTEnergyStorage? = energyHandlerManager?.getStorage(side)
+
+    fun getEnergyHandler(side: Direction?): EnergyHandler? = energyHandlerManager?.resolve(side)
 
     // Fluid
     fun hasFluidHandler(): Boolean = fluidHandlerManager != null
@@ -158,8 +182,7 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
 
     fun getFluidTank(side: Direction?, index: Int): HTFluidTank? = getFluidTanks(side).getOrNull(index)
 
-    final override fun getFluidHandler(direction: Direction?): FluidResourceHandler? =
-        fluidHandlerManager?.resolve(direction)
+    final override fun getFluidHandler(direction: Direction?): FluidResourceHandler? = fluidHandlerManager?.resolve(direction)
 
     // Item
     fun hasItemHandler(): Boolean = itemHandlerManager != null
@@ -170,8 +193,7 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
 
     fun getItemSlot(side: Direction?, index: Int): HTItemSlot? = getItemSlots(side).getOrNull(index)
 
-    final override fun getItemHandler(direction: Direction?): ItemResourceHandler? =
-        itemHandlerManager?.resolve(direction)
+    final override fun getItemHandler(direction: Direction?): ItemResourceHandler? = itemHandlerManager?.resolve(direction)
 
     override fun preRemoveSideEffects(pos: BlockPos, state: BlockState) {
         val level: Level = this.level ?: return

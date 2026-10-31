@@ -2,7 +2,7 @@
 
 package hiiragi283.ragium.api.data.recipe.builder
 
-import hiiragi283.lib.collection.toNelOrNull
+import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
@@ -28,22 +28,22 @@ class RTMixingRecipeBuilder : HTProgressRecipeBuilder<RTMixingRecipe>(RagiumCons
     override fun getRecipeId(): Identifier? = result.getId()
 
     override fun createRecipe(): RTMixingRecipe = RTMixingRecipe(
-        Ior.fromNullable(itemIngredients.toNelOrNull(), fluidIngredients.toNelOrNull())
-            ?: error("Either item or fluid ingredient required"),
+        itemIngredients.toNel(),
+        fluidIngredient,
         result,
-        progressData
+        progressData,
     )
 
     // Ingredients
     private val itemIngredients: MutableList<HTItemIngredient> = ObjectArrayList()
-    private val fluidIngredients: MutableList<HTFluidIngredient> = ObjectArrayList()
+    private var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
     operator fun HTItemIngredient.unaryPlus() {
         itemIngredients += this
     }
 
     operator fun HTFluidIngredient.unaryPlus() {
-        fluidIngredients += this
+        fluidIngredient = this
     }
 
     inline fun itemIngredient(builderAction: HTItemIngredientBuilder.() -> Unit) {

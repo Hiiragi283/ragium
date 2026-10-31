@@ -43,7 +43,7 @@ sealed class Ior<out A, out B> {
         @JvmStatic
         fun <A : Any, B : Any> fromNullable(left: Optional<A>, right: Optional<B>): Optional<Ior<A, B>> = left.fold(
             { right.map { Right(it) } },
-            { leftValue: A -> Optional.of(right.fold({ Left(leftValue) }, { Both(leftValue, it) })) }
+            { leftValue: A -> Optional.of(right.fold({ Left(leftValue) }, { Both(leftValue, it) })) },
         )
 
         /**
@@ -158,7 +158,7 @@ sealed class Ior<out A, out B> {
     fun swap(): Ior<B, A> = fold(
         { Right(it) },
         { Left(it) },
-        { left: A, right: B -> Both(right, left) }
+        { left: A, right: B -> Both(right, left) },
     )
 
     /**
@@ -168,7 +168,7 @@ sealed class Ior<out A, out B> {
     fun unwrap(): Either<Either<A, B>, Pair<A, B>> = fold(
         { Either.Left(Either.Left(it)) },
         { Either.Left(Either.Right(it)) },
-        { left: A, right: B -> Either.Right(left to right) }
+        { left: A, right: B -> Either.Right(left to right) },
     )
 
     /**
@@ -178,7 +178,7 @@ sealed class Ior<out A, out B> {
     fun toPair(): Pair<A?, B?> = fold(
         { it to null },
         { null to it },
-        { left: A, right: B -> left to right }
+        { left: A, right: B -> left to right },
     )
 
     /**
@@ -188,7 +188,7 @@ sealed class Ior<out A, out B> {
     fun getRight(): B? = fold(
         { null },
         identity(),
-        { _: A, right: B -> right }
+        { _: A, right: B -> right },
     )
 
     /**
@@ -198,7 +198,7 @@ sealed class Ior<out A, out B> {
     fun getLeft(): A? = fold(
         identity(),
         { null },
-        { left: A, _: B -> left }
+        { left: A, _: B -> left },
     )
 
     /**
@@ -265,3 +265,15 @@ typealias IorNel<E, A> = Ior<Nel<E>, A>
  * @since 26.1.8
  */
 fun <A, B> Ior<A, B>.toIorNel(): IorNel<A, B> = this.mapLeft { it.nel() }
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.12
+ */
+fun <A, B> Ior<List<A>, B>.getLeftList(): List<A> = this.getLeft() ?: listOf()
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.12
+ */
+fun <A, B> Ior<A, List<B>>.getRightList(): List<B> = this.getRight() ?: listOf()

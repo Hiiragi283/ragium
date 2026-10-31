@@ -5,8 +5,8 @@ import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemOrFluidRecipe
+import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
-import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
@@ -26,20 +26,18 @@ import net.minecraft.world.item.crafting.RecipeType
  */
 data object RagiumRecipeLookups {
     @JvmStatic
-    private fun <RECIPE : Any> create(path: String): HTCompoundRecipeLookup<RECIPE> =
-        HTCompoundRecipeLookup.create(RagiumAPI.id(path))
+    private fun <RECIPE : Any> create(path: String): HTCompoundRecipeLookup<RECIPE> = HTCompoundRecipeLookup.create(RagiumAPI.id(path))
 
     @JvmStatic
-    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(
-        recipeType: RecipeType<RECIPE>
-    ): HTRecipeLookup<RECIPE> = HTVanillaRecipeLookup(recipeType)
+    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(recipeType: RecipeType<RECIPE>): HTRecipeLookup<RECIPE> =
+        HTVanillaRecipeLookup(recipeType)
 
     // Mechanical
     @JvmField
     val ASSEMBLING: HTCompoundRecipeLookup<HTSizedShapelessRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
-    val CENTRIFUGING: HTCompoundRecipeLookup<RTCentrifugingRecipe> = create(RagiumConstants.CENTRIFUGING)
+    val CENTRIFUGING: HTCompoundRecipeLookup<HTItemSeparatingRecipe> = create(RagiumConstants.CENTRIFUGING)
 
     @JvmField
     val COMPRESSING: HTCompoundRecipeLookup<HTItemToItemRecipe> = create(RagiumConstants.COMPRESSING)
@@ -67,7 +65,7 @@ data object RagiumRecipeLookups {
     val MELTING: HTCompoundRecipeLookup<HTItemToFluidRecipe> = create(RagiumConstants.MELTING)
 
     @JvmField
-    val PYROLYZING: HTCompoundRecipeLookup<HTItemToItemAndFluidRecipe> = create(RagiumConstants.PYROLYZING)
+    val PYROLYZING: HTCompoundRecipeLookup<HTItemSeparatingRecipe> = create(RagiumConstants.PYROLYZING)
 
     @JvmField
     val REFINING: HTCompoundRecipeLookup<HTFluidSeparatingRecipe> = create(RagiumConstants.REFINING)

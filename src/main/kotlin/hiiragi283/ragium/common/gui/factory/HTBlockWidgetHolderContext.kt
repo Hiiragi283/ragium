@@ -77,8 +77,7 @@ data class HTBlockWidgetHolderContext(val factory: Factory, val player: Player, 
     fun interface Factory {
         fun setup(context: HTBlockWidgetHolderContext, widgetHolder: HTWidgetHolder)
 
-        fun createContext(player: Player, pos: BlockPos): HTBlockWidgetHolderContext =
-            HTBlockWidgetHolderContext(this, player, pos)
+        fun createContext(player: Player, pos: BlockPos): HTBlockWidgetHolderContext = HTBlockWidgetHolderContext(this, player, pos)
 
         fun stillValid(context: HTBlockWidgetHolderContext): Boolean {
             if (!context.level.isInWorldBounds(context.pos)) return false
@@ -86,7 +85,6 @@ data class HTBlockWidgetHolderContext(val factory: Factory, val player: Player, 
             return !blockEntity.isRemoved
         }
 
-        fun getDisplayName(context: HTBlockWidgetHolderContext): Text =
-            (context.blockEntity as? Nameable)?.displayName ?: context.state.block.name
+        fun getDisplayName(context: HTBlockWidgetHolderContext): Text = (context.blockEntity as? Nameable)?.displayName ?: context.state.block.name
     }
 }

@@ -33,7 +33,7 @@ class HTInventoryChangeBuilder @PublishedApi internal constructor() {
     @PublishedApi internal val predicates: MutableList<ItemPredicate> = ObjectArrayList()
 
     @PublishedApi internal var slots: InventoryChangeTrigger.TriggerInstance.Slots by HTDelegates.onceInitialize(
-        InventoryChangeTrigger.TriggerInstance.Slots::ANY
+        InventoryChangeTrigger.TriggerInstance.Slots::ANY,
     )
 
     operator fun ItemPredicate.unaryPlus() {
@@ -63,10 +63,8 @@ class HTInventoryChangeBuilder @PublishedApi internal constructor() {
         var full: MinMaxBounds.Ints = MinMaxBounds.Ints.ANY
         var empty: MinMaxBounds.Ints = MinMaxBounds.Ints.ANY
 
-        fun build(): InventoryChangeTrigger.TriggerInstance.Slots =
-            InventoryChangeTrigger.TriggerInstance.Slots(occupied, full, empty)
+        fun build(): InventoryChangeTrigger.TriggerInstance.Slots = InventoryChangeTrigger.TriggerInstance.Slots(occupied, full, empty)
     }
 
-    fun build(): InventoryChangeTrigger.TriggerInstance =
-        InventoryChangeTrigger.TriggerInstance(Optional.empty(), slots, predicates)
+    fun build(): InventoryChangeTrigger.TriggerInstance = InventoryChangeTrigger.TriggerInstance(Optional.empty(), slots, predicates)
 }

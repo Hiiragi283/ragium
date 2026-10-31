@@ -19,7 +19,6 @@ import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ByIdMap
-import java.util.Optional
 import java.util.UUID
 
 /**
@@ -43,17 +42,8 @@ data object HTStreamCodecs {
      * @param valueCodec 値の[StreamCodec]
      */
     @JvmStatic
-    fun <B : ByteBuf, K : Any, V : Any> mapOf(
-        keyCodec: StreamCodec<in B, K>,
-        valueCodec: StreamCodec<in B, V>
-    ): StreamCodec<B, Map<K, V>> = ByteBufCodecs.map(::LinkedHashMap, keyCodec, valueCodec)
-
-    /**
-     * [Optional]でラップされた[StreamCodec]を作成します。
-     */
-    @JvmStatic
-    fun <B : ByteBuf, V : Any> optional(codec: StreamCodec<in B, V>): StreamCodec<B, Optional<V>> =
-        ByteBufCodecs.optional(codec)
+    fun <B : ByteBuf, K : Any, V : Any> mapOf(keyCodec: StreamCodec<in B, K>, valueCodec: StreamCodec<in B, V>): StreamCodec<B, Map<K, V>> =
+        ByteBufCodecs.map(::LinkedHashMap, keyCodec, valueCodec)
 
     /**
      * [Pair]の[StreamCodec]を作成します。
@@ -64,16 +54,14 @@ data object HTStreamCodecs {
      * @param right 右側の値の[StreamCodec]
      */
     @JvmStatic
-    fun <BUF : ByteBuf, A : Any, B : Any> pair(
-        left: StreamCodec<in BUF, A>,
-        right: StreamCodec<in BUF, B>
-    ): StreamCodec<BUF, Pair<A, B>> = StreamCodec.composite(
-        left,
-        Pair<A, B>::first,
-        right,
-        Pair<A, B>::second,
-        ::Pair
-    )
+    fun <BUF : ByteBuf, A : Any, B : Any> pair(left: StreamCodec<in BUF, A>, right: StreamCodec<in BUF, B>): StreamCodec<BUF, Pair<A, B>> =
+        StreamCodec.composite(
+            left,
+            Pair<A, B>::first,
+            right,
+            Pair<A, B>::second,
+            ::Pair,
+        )
 
     /**
      * [Either]の[StreamCodec]を作成します。
@@ -85,10 +73,8 @@ data object HTStreamCodecs {
      * @see ByteBufCodecs.either
      */
     @JvmStatic
-    fun <BUF : ByteBuf, A : Any, B : Any> either(
-        left: StreamCodec<in BUF, A>,
-        right: StreamCodec<in BUF, B>
-    ): StreamCodec<BUF, Either<A, B>> = ByteBufCodecs.either(left, right).map({ it.kotlin }, { it.java })
+    fun <BUF : ByteBuf, A : Any, B : Any> either(left: StreamCodec<in BUF, A>, right: StreamCodec<in BUF, B>): StreamCodec<BUF, Either<A, B>> =
+        ByteBufCodecs.either(left, right).map({ it.kotlin }, { it.java })
 
     /**
      * [Ior]の[StreamCodec]を作成します。
@@ -99,15 +85,11 @@ data object HTStreamCodecs {
      * @param right 右側の値の[StreamCodec]
      */
     @JvmStatic
-    fun <BUF : ByteBuf, A : Any, B : Any> ior(
-        left: StreamCodec<in BUF, A>,
-        right: StreamCodec<in BUF, B>
-    ): StreamCodec<BUF, Ior<A, B>> = HTIorStreamCodec(left, right)
+    fun <BUF : ByteBuf, A : Any, B : Any> ior(left: StreamCodec<in BUF, A>, right: StreamCodec<in BUF, B>): StreamCodec<BUF, Ior<A, B>> =
+        HTIorStreamCodec(left, right)
 
-    private class HTIorStreamCodec<B : ByteBuf, L : Any, R : Any>(
-        private val left: StreamCodec<in B, L>,
-        private val right: StreamCodec<in B, R>
-    ) : StreamCodec<B, Ior<L, R>> {
+    private class HTIorStreamCodec<B : ByteBuf, L : Any, R : Any>(private val left: StreamCodec<in B, L>, private val right: StreamCodec<in B, R>) :
+        StreamCodec<B, Ior<L, R>> {
         override fun decode(buffer: B): Ior<L, R> = when (buffer.readInt()) {
             1 -> Ior.Left(left.decode(buffer))
 
@@ -134,7 +116,7 @@ data object HTStreamCodecs {
                     buffer.writeInt(0)
                     this.left.encode(buffer, left)
                     this.right.encode(buffer, right)
-                }
+                },
             )
         }
     }
@@ -144,12 +126,11 @@ data object HTStreamCodecs {
      * @param V [Enum]を継承したクラス
      */
     @JvmStatic
-    inline fun <reified V : Enum<V>> enum(
-        strategy: ByIdMap.OutOfBoundsStrategy = ByIdMap.OutOfBoundsStrategy.WRAP
-    ): StreamCodec<ByteBuf, V> = ByteBufCodecs.idMapper(
-        ByIdMap.continuous(Enum<V>::ordinal, V::class.java.enumConstants, strategy),
-        Enum<V>::ordinal
-    )
+    inline fun <reified V : Enum<V>> enum(strategy: ByIdMap.OutOfBoundsStrategy = ByIdMap.OutOfBoundsStrategy.WRAP): StreamCodec<ByteBuf, V> =
+        ByteBufCodecs.idMapper(
+            ByIdMap.continuous(Enum<V>::ordinal, V::class.java.enumConstants, strategy),
+            Enum<V>::ordinal,
+        )
 
     //    Registry    //
 
@@ -158,8 +139,7 @@ data object HTStreamCodecs {
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> resourceKey(registryKey: RegistryKey<T>): StreamCodec<ByteBuf, ResourceKey<T>> =
-        ResourceKey.streamCodec(registryKey)
+    fun <T : Any> resourceKey(registryKey: RegistryKey<T>): StreamCodec<ByteBuf, ResourceKey<T>> = ResourceKey.streamCodec(registryKey)
 
     /**
      * [TagKey]の[StreamCodec]を作成します。
@@ -174,8 +154,7 @@ data object HTStreamCodecs {
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> holder(registryKey: RegistryKey<T>): StreamCodec<RegistryFriendlyByteBuf, Holder<T>> =
-        ByteBufCodecs.holderRegistry(registryKey)
+    fun <T : Any> holder(registryKey: RegistryKey<T>): StreamCodec<RegistryFriendlyByteBuf, Holder<T>> = ByteBufCodecs.holderRegistry(registryKey)
 
     /**
      * 指定した[registryKey]から[Holder]の[StreamCodec]を返します。
@@ -186,7 +165,7 @@ data object HTStreamCodecs {
     @JvmStatic
     fun <T : Any> holder(
         registryKey: RegistryKey<T>,
-        directCodec: StreamCodec<in RegistryFriendlyByteBuf, T>
+        directCodec: StreamCodec<in RegistryFriendlyByteBuf, T>,
     ): StreamCodec<RegistryFriendlyByteBuf, Holder<T>> = ByteBufCodecs.holder(registryKey, directCodec)
 
     /**
@@ -194,6 +173,5 @@ data object HTStreamCodecs {
      * @param T レジストリの要素のクラス
      */
     @JvmStatic
-    fun <T : Any> holderSet(registryKey: RegistryKey<T>): StreamCodec<RegistryFriendlyByteBuf, HolderSet<T>> =
-        ByteBufCodecs.holderSet(registryKey)
+    fun <T : Any> holderSet(registryKey: RegistryKey<T>): StreamCodec<RegistryFriendlyByteBuf, HolderSet<T>> = ByteBufCodecs.holderSet(registryKey)
 }

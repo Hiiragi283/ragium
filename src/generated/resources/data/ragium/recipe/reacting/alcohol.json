@@ -1,16 +1,18 @@
 {
   "type": "ragium:reacting",
-  "ingredients": [
-    {
-      "amount": 1000,
-      "fluids": "#c:natural_gas"
-    },
-    {
-      "amount": 500,
-      "fluids": "#c:water"
-    }
-  ],
-  "result": {
+  "ingredients": {
+    "fluids": [
+      {
+        "amount": 1000,
+        "fluids": "#c:natural_gas"
+      },
+      {
+        "amount": 500,
+        "fluids": "#c:water"
+      }
+    ]
+  },
+  "results": {
     "fluid": {
       "amount": 1000,
       "id": "ragium:alcohol"

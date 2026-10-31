@@ -5,15 +5,19 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.fluid.HTFlowingFluidHelper
 import hiiragi283.lib.item.alchemy.HTPotionHelper
+import hiiragi283.lib.recipe.display.HTDisplayableContent
+import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.nelOf
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.nelOf
+import hiiragi283.lib.serialization.network.optionalOf
 import hiiragi283.lib.util.DFUEither
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.IorNel
 import hiiragi283.lib.util.fold
+import hiiragi283.lib.util.getLeftList
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
@@ -24,11 +28,13 @@ import net.minecraft.resources.Identifier
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.fluids.crafting.display.FluidStackSlotDisplay
 import java.util.Optional
 
 /**
@@ -37,13 +43,15 @@ import java.util.Optional
  * @since 26.1.0
  */
 @JvmRecord
-data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<FluidStack> {
+data class HTFluidResult(val entry: Entry, val amount: Int) :
+    HTRecipeResult<FluidStack>,
+    HTDisplayableContent {
     companion object {
         @JvmField
         val MAP_CODEC: MapCodec<HTFluidResult> = HTCodecs.recordMap { instance ->
             instance.group(
                 Entry.MAP_CODEC.forGetter(HTFluidResult::entry),
-                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.AMOUNT).forGetter(HTFluidResult::amount)
+                HTCodecs.POSITIVE_INT.fieldOf(HTConstants.AMOUNT).forGetter(HTFluidResult::amount),
             ).apply(instance, ::HTFluidResult)
         }
 
@@ -57,7 +65,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
             HTFluidResult::entry,
             ByteBufCodecs.VAR_INT,
             HTFluidResult::amount,
-            ::HTFluidResult
+            ::HTFluidResult,
         )
     }
 
@@ -75,6 +83,8 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
 
     override fun getId(): Identifier? = entry.getId()
 
+    override fun display(): SlotDisplay = HTSizedSlotDisplay(entry.display(), amount)
+
     //    Entry    //
 
     interface Entry {
@@ -84,7 +94,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
                 RagiumRegistries.FLUID_RESULT_TYPE.byNameCodec(),
                 Entry::type,
                 HTFluidResultType<*>::codec,
-                SimpleEntry.CODEC
+                SimpleEntry.CODEC,
             ).xmap(
                 { DFUEither.unwrap(it) },
                 { entry: Entry ->
@@ -92,7 +102,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
                         is SimpleEntry -> DFUEither.right(entry)
                         else -> DFUEither.left(entry)
                     }
-                }
+                },
             )
 
             @JvmField
@@ -108,13 +118,13 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
         fun toResult(amount: Int = FluidType.BUCKET_VOLUME): HTFluidResult = HTFluidResult(this, amount)
 
         fun getId(): Identifier?
+
+        fun display(): SlotDisplay = FluidStackSlotDisplay(create())
     }
 
     @JvmRecord
-    data class SimpleEntry @JvmOverloads constructor(
-        val fluid: Holder<Fluid>,
-        val components: DataComponentPatch = DataComponentPatch.EMPTY
-    ) : Entry {
+    data class SimpleEntry @JvmOverloads constructor(val fluid: Holder<Fluid>, val components: DataComponentPatch = DataComponentPatch.EMPTY) :
+        Entry {
         companion object {
             @JvmField
             val CODEC: MapCodec<SimpleEntry> = HTCodecs.recordMap { instance ->
@@ -124,7 +134,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
                         .forGetter(SimpleEntry::fluid),
                     DataComponentPatch.CODEC
                         .optionalFieldOf(HTConstants.COMPONENTS, DataComponentPatch.EMPTY)
-                        .forGetter(SimpleEntry::components)
+                        .forGetter(SimpleEntry::components),
                 ).apply(instance, ::SimpleEntry)
             }
 
@@ -134,7 +144,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
                 SimpleEntry::fluid,
                 DataComponentPatch.STREAM_CODEC,
                 SimpleEntry::components,
-                ::SimpleEntry
+                ::SimpleEntry,
             )
 
             @JvmField
@@ -153,21 +163,18 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
     }
 
     @JvmRecord
-    data class PotionEntry(
-        val content: IorNel<MobEffectInstance, Holder<Potion>>,
-        val customColor: Optional<Int>,
-        val customName: Optional<String>
-    ) : Entry {
+    data class PotionEntry(val content: IorNel<MobEffectInstance, Holder<Potion>>, val customColor: Optional<Int>, val customName: Optional<String>) :
+        Entry {
         companion object {
             @JvmField
             val CODEC: MapCodec<PotionEntry> = HTCodecs.recordMap { instance ->
                 instance.group(
                     HTCodecs.ior(
                         MobEffectInstance.CODEC.nelOf().fieldOf("custom_effects"),
-                        Potion.CODEC.fieldOf("potion")
+                        Potion.CODEC.fieldOf("potion"),
                     ).forGetter(PotionEntry::content),
                     Codec.INT.optionalFieldOf("custom_color").forGetter(PotionEntry::customColor),
-                    Codec.STRING.optionalFieldOf("custom_name").forGetter(PotionEntry::customName)
+                    Codec.STRING.optionalFieldOf("custom_name").forGetter(PotionEntry::customName),
                 ).apply(instance, ::PotionEntry)
             }
 
@@ -175,14 +182,14 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
             val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, PotionEntry> = StreamCodec.composite(
                 HTStreamCodecs.ior(
                     MobEffectInstance.STREAM_CODEC.nelOf(),
-                    Potion.STREAM_CODEC
+                    Potion.STREAM_CODEC,
                 ),
                 PotionEntry::content,
-                ByteBufCodecs.optional(ByteBufCodecs.VAR_INT),
+                ByteBufCodecs.VAR_INT.optionalOf(),
                 PotionEntry::customColor,
-                ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8),
+                ByteBufCodecs.STRING_UTF8.optionalOf(),
                 PotionEntry::customName,
-                ::PotionEntry
+                ::PotionEntry,
             )
 
             @JvmField
@@ -194,13 +201,13 @@ data class HTFluidResult(val entry: Entry, val amount: Int) : HTRecipeResult<Flu
         override fun type(): HTFluidResultType<*> = TYPE
 
         override fun create(amount: Int): FluidStack =
-            HTPotionHelper.createFluid(toVanilla(), amount).fold(FluidStackTemplate::create) { FluidStack.EMPTY }
+            HTPotionHelper.createFluid(toVanilla(), amount).mapOrElse(FluidStackTemplate::create) { FluidStack.EMPTY }
 
         private fun toVanilla(): PotionContents = PotionContents(
             Optional.ofNullable(content.getRight()),
             customColor,
-            content.getLeft() ?: listOf(),
-            customName
+            content.getLeftList(),
+            customName,
         )
 
         override fun getId(): Identifier? = content.getRight()?.key?.identifier()

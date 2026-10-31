@@ -1,0 +1,24 @@
+{
+  "type": "ragium:brewing",
+  "ingredient": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": {
+        "type": "neoforge:or",
+        "values": [
+          "#c:crops/potato",
+          "#c:crops/sugar_cane"
+        ]
+      }
+    }
+  },
+  "result": {
+    "amount": 250,
+    "id": "ragium:alcohol"
+  },
+  "time": 200
+}

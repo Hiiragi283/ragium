@@ -4,8 +4,6 @@ import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.chemical.RagiumChemicals
-import hiiragi283.ragium.api.data.element.RagiumElements
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
@@ -31,7 +29,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addAdvancement(
             RagiumAdvancementKeys.MECHANICAL_MACHINE_PARTS,
             "Mechanical Machines",
-            "Craft a Machine Casing (Mechanical)"
+            "Craft a Machine Casing (Mechanical)",
         )
         addAdvancement(RagiumAdvancementKeys.ASSEMBLER, "Rava(n)gers, assemble!", "Acquire Assembler")
         addAdvancement(RagiumAdvancementKeys.CRUSHER, "Macerator, Pulverizer, or Crusher?", "Acquire Crusher")
@@ -44,6 +42,10 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         // Block
         add(RagiumBlocks.QUARTZ_GLASS, "Quartz Glass")
         add(RagiumBlocks.QUARTZ_GLASS_PANE, "Quartz Glass Pane")
+
+        add(RagiumBlocks.FUEL_DYNAMO, "Fuel Dynamo")
+        add(RagiumBlocks.MAGMATIC_DYNAMO, "Magmatic Dynamo")
+        add(RagiumBlocks.COMBUSTION_DYNAMO, "Combustion Dynamo")
 
         add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.CENTRIFUGE, "Centrifuge")
@@ -89,6 +91,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add("death.attack.chemicalBurn.player", $$"%1$s was injured chemical burn while fighting %2$s")
         // Fluid
         addFluid(RagiumFluids.HONEY, "Honey")
+        addFluid(RagiumFluids.MOLTEN_BEESWAX, "Molten Beeswax")
         addFluid(RagiumFluids.RESIN, "Resin")
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
@@ -98,13 +101,13 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "Energized Glowstone")
         addFluid(RagiumFluids.MOLTEN_ENDER, "Resonant Ender")
 
+        // H
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
-        addFluid(RagiumFluids.NITROGEN, "Nitrogen")
-        addFluid(RagiumFluids.OXYGEN, "Oxygen")
-        addFluid(RagiumFluids.CHLORINE, "Chlorine")
-
-        addFluid(RagiumFluids.WOOD_TAR, "Wood Tar")
-        addFluid(RagiumFluids.COAL_TAR, "Coal Tar")
+        // C
+        addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
+        addFluid(RagiumFluids.CREOSOTE, "Creosote")
+        addFluid(RagiumFluids.BLACK_LIQUOR, "Black Liquor")
+        addFluid(RagiumFluids.PLANT_OIL, "Plant Oil")
         addFluid(RagiumFluids.ALCOHOL, "Alcohol")
         addFluid(RagiumFluids.ALDEHYDE, "Aldehyde")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "Aromatic Compound")
@@ -115,20 +118,33 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "Molten Plastic")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "Synthetic Resin")
-        addFluid(RagiumFluids.AMMONIA, "Ammonia")
+        // N
         addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "Liquid Explosive")
+        // O
+        addFluid(RagiumFluids.OXYGEN, "Oxygen")
+        // F
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
         addFluid(RagiumFluids.HYDROFLUORIC_ACID, "Hydrofluoric Acid")
+        // Na
         addFluid(RagiumFluids.SALT_WATER, "Salt Water")
-        addFluid(RagiumFluids.NAOH_SOLUTION, "Sodium Hydroxide Solution")
+        addFluid(RagiumFluids.HYDROXIDE_SOLUTION, "Alkali Hydroxide Solution")
+        addFluid(RagiumFluids.SULFATE_SOLUTION, "Alkali Sulfate Solution")
+        // Al
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "Alumina Solution")
+        // P
+        addFluid(RagiumFluids.PHOSPHORIC_ACID, "Phosphoric Acid")
+        // S
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
+        // Cl
+        addFluid(RagiumFluids.CHLORINE, "Chlorine")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "Hydrogen Chloride")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
-        addFluid(RagiumFluids.BLEACH, "Bleach")
+        // Ca
+        addFluid(RagiumFluids.LIMEWATER, "Limewater")
+
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
@@ -136,13 +152,16 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.MORTAR, "Mortar")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.STICKY_BALL, "Sticky Ball")
-        add(RagiumItems.SODIUM_HYDROXIDE, "Sodium Hydroxide")
+        add(RagiumItems.ALKALI_HYDROXIDE, "Alkali Hydroxide")
+        add(RagiumItems.ALKALI_CARBONATE, "Alkali Carbonate")
+        add(RagiumItems.ALKALI_SULFATE, "Alkali Sulfate")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         // add(RagiumItems.ALCLAD_PLATE, "Alclad Plate")
         add(RagiumItems.BEESWAX, "Beeswax")
+        add(RagiumItems.BIO_CHAFF, "Bio Chaff")
         add(RagiumItems.SPLASH_BOTTLE, "Splash Bottle")
         add(RagiumItems.LINGERING_BOTTLE, "Lingering Bottle")
         add(RagiumItems.CRUDE_SILICON, "Crude Silicon")
@@ -262,89 +281,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.TOOLTIPS_UPGRADE_EFFICIENCY, $$"Energy Efficiency: %1$s")
         add(RagiumTranslation.TOOLTIPS_UPGRADE_CAPACITY, $$"Energy Capacity: %1$s")
 
-        addDataTranslations()
-
         // Jade Config
         addJadeConfig(HTMachineOwnerProvider.ID, "機械の所有者")
         addJadeConfig(HTMachineUpgradeProvider.ID, "機械のアップグレード")
-    }
-
-    private fun addDataTranslations() {
-        // Chemical
-        addFromKey(RagiumChemicals.HYDROGEN, "Hydrogen")
-
-        addFromKey(RagiumChemicals.CARBON, "Carbon")
-        addFromKey(RagiumChemicals.DIAMOND, "Diamond")
-        addFromKey(RagiumChemicals.NITROGEN, "Nitrogen")
-        addFromKey(RagiumChemicals.OXYGEN, "Oxygen")
-
-        addFromKey(RagiumChemicals.ALUMINUM, "Aluminum")
-        addFromKey(RagiumChemicals.SILICON, "Silicon")
-        addFromKey(RagiumChemicals.SULFUR, "Sulfur")
-        addFromKey(RagiumChemicals.CHLORINE, "Chlorine")
-
-        addFromKey(RagiumChemicals.IRON, "Iron")
-        addFromKey(RagiumChemicals.COPPER, "Copper")
-        addFromKey(RagiumChemicals.NICKEL, "Nickel")
-        addFromKey(RagiumChemicals.SILVER, "Silver")
-        addFromKey(RagiumChemicals.GOLD, "Gold")
-        addFromKey(RagiumChemicals.MERCURY, "Mercury")
-
-        addFromKey(RagiumChemicals.HYDROXIDE, "Hydroxide")
-        addFromKey(RagiumChemicals.WATER, "Water")
-
-        addFromKey(RagiumChemicals.CARBONATE, "Carbonate")
-        addFromKey(RagiumChemicals.NITRATE, "Nitrate")
-        addFromKey(RagiumChemicals.NITRIC_ACID, "Nitric Acid")
-        addFromKey(RagiumChemicals.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
-        addFromKey(RagiumChemicals.FLUORITE, "Fluorite")
-        addFromKey(RagiumChemicals.CRYOLITE, "Cryolite")
-
-        addFromKey(RagiumChemicals.SODIUM_HYDROXIDE, "Sodium Hydroxide")
-        addFromKey(RagiumChemicals.SODIUM_CARBONATE, "Sodium Carbonate")
-        addFromKey(RagiumChemicals.SODIUM_CHLORIDE, "Sodium Chloride")
-        addFromKey(RagiumChemicals.ALUMINUM_OXIDE, "Aluminum Oxide")
-        addFromKey(RagiumChemicals.ALUMINUM_FLUORIDE, "Aluminum Fluoride")
-        addFromKey(RagiumChemicals.SILICON_DIOXIDE, "Silicon Dioxide")
-        addFromKey(RagiumChemicals.SULFUR_DIOXIDE, "Sulfur Dioxide")
-        addFromKey(RagiumChemicals.SULFUR_TRIOXIDE, "Sulfur Trioxide")
-        addFromKey(RagiumChemicals.SULFATE, "Sulfate")
-        addFromKey(RagiumChemicals.SULFURIC_ACID, "Sulfuric Acid")
-        addFromKey(RagiumChemicals.HYDROGEN_CHLORIDE, "Hydrogen chloride")
-
-        addFromKey(RagiumChemicals.POTASSIUM_CARBONATE, "Potassium Carbonate")
-        addFromKey(RagiumChemicals.POTASSIUM_NITRATE, "Potassium Nitrate")
-        addFromKey(RagiumChemicals.CALCIUM_CARBONATE, "Calcium Carbonate")
-        addFromKey(RagiumChemicals.CALCIUM_OXIDE, "Calcium Oxide")
-        addFromKey(RagiumChemicals.CALCIUM_SULFATE, "Calcium Sulfate")
-
-        addFromKey(RagiumChemicals.MERCURY_SULFIDE, "Mercury Sulfide")
-
-        addFromKey(RagiumChemicals.COAL, "Coal")
-        addFromKey(RagiumChemicals.CHARCOAL, "Char Coal")
-        // Element
-        addFromKey(RagiumElements.HYDROGEN, "Hydrogen")
-
-        addFromKey(RagiumElements.CARBON, "Carbon")
-        addFromKey(RagiumElements.NITROGEN, "Nitrogen")
-        addFromKey(RagiumElements.OXYGEN, "Oxygen")
-        addFromKey(RagiumElements.FLUORINE, "Fluorine")
-
-        addFromKey(RagiumElements.SODIUM, "Sodium")
-        addFromKey(RagiumElements.ALUMINUM, "Aluminum")
-        addFromKey(RagiumElements.SILICON, "Silicon")
-        addFromKey(RagiumElements.SULFUR, "Sulfur")
-        addFromKey(RagiumElements.CHLORINE, "Chlorine")
-
-        addFromKey(RagiumElements.POTASSIUM, "Potassium")
-        addFromKey(RagiumElements.CALCIUM, "Calcium")
-        addFromKey(RagiumElements.IRON, "Iron")
-        addFromKey(RagiumElements.COPPER, "Copper")
-        addFromKey(RagiumElements.NICKEL, "Nickel")
-
-        addFromKey(RagiumElements.SILVER, "Silver")
-
-        addFromKey(RagiumElements.GOLD, "Gold")
-        addFromKey(RagiumElements.MERCURY, "Mercury")
     }
 }

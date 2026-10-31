@@ -18,8 +18,7 @@ import kotlin.contracts.contract
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTSingleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String) :
-    HTVanillaRecipeBuilder<RECIPE>(prefix) {
+abstract class HTSingleItemRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String) : HTVanillaRecipeBuilder<RECIPE>(prefix) {
     // Ingredient
     var ingredient: Ingredient by HTDelegates.onceInitialize()
 

@@ -23,11 +23,9 @@ import kotlin.contracts.contract
  * @since 26.1.7
  */
 abstract class HTVanillaRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String) : HTRecipeBuilder<RECIPE>(prefix) {
-    fun commonInfo(showNotification: Boolean): Recipe.CommonInfo =
-        RecipeBuilder.createCraftingCommonInfo(showNotification)
+    fun commonInfo(showNotification: Boolean): Recipe.CommonInfo = RecipeBuilder.createCraftingCommonInfo(showNotification)
 
-    fun bookInfo(category: RecipeCategory): CraftingRecipe.CraftingBookInfo =
-        RecipeBuilder.createCraftingBookInfo(category, group)
+    fun bookInfo(category: RecipeCategory): CraftingRecipe.CraftingBookInfo = RecipeBuilder.createCraftingBookInfo(category, group)
 
     /**
      * レシピ本でのグループ

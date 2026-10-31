@@ -9,6 +9,7 @@ import hiiragi283.lib.gui.sync.HTLongSyncPayload
 import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
+import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
@@ -16,9 +17,6 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.RagiumDataComponents
-import hiiragi283.ragium.api.data.chemical.HTCompoundChemical
-import hiiragi283.ragium.api.data.chemical.HTMixtureChemical
-import hiiragi283.ragium.api.data.chemical.HTSimpleChemical
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -73,7 +71,7 @@ data object Ragium : HTCommonMod() {
                 RagiumAPI.id("common"),
                 HTCreativeModeTabHelper.createSimpleTab(
                     RagiumTranslation.RAGIUM,
-                    Items.RED_DYE
+                    Items.RED_DYE,
                 ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     // Items
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumItems.REGISTER.asSequence())
@@ -81,19 +79,18 @@ data object Ragium : HTCommonMod() {
                     HTCreativeModeTabHelper.addToDisplay(
                         parameters,
                         output,
-                        items = RagiumBlocks.REGISTER.asItemSequence()
+                        items = RagiumBlocks.REGISTER.asItemSequence(),
                     )
                     // Fluids
                     HTCreativeModeTabHelper.addToDisplay(
                         parameters,
                         output,
-                        items = RagiumFluids.REGISTER.asItemSequence()
+                        items = RagiumFluids.REGISTER.asItemSequence(),
                     )
-                }
+                },
             )
         }
         event.register(Registries.DATA_COMPONENT_TYPE) { helper ->
-            helper.register(RagiumAPI.id(HTConstants.CHEMICAL), RagiumDataComponents.CHEMICAL)
             helper.register(RagiumAPI.id(HTConstants.ENERGY), RagiumDataComponents.ENERGY)
             helper.register(RagiumAPI.id(HTConstants.FLUID), RagiumDataComponents.FLUID)
             helper.register(RagiumAPI.id("memory_disc_data"), RagiumDataComponents.MEMORY_DISC_DATA)
@@ -104,7 +101,7 @@ data object Ragium : HTCommonMod() {
         event.register(Registries.MENU) { helper ->
             helper.register(
                 HTBlockWidgetHolderContext.MENU_TYPE.id,
-                IMenuTypeExtension.create(HTBlockWidgetHolderContext::create)
+                IMenuTypeExtension.create(HTBlockWidgetHolderContext::create),
             )
             // helper.register(HTItemWidgetHolderContext.MENU_TYPE.getId(), IMenuTypeExtension.create(HTItemWidgetHolderContext::create)) TODO
         }
@@ -113,6 +110,9 @@ data object Ragium : HTCommonMod() {
         }
         event.register(Registries.RECIPE_TYPE) { helper ->
             RagiumRecipeTypes.allTypes.forEach(helper::register)
+        }
+        event.register(Registries.SLOT_DISPLAY) { helper ->
+            helper.register(RagiumAPI.id("sized"), HTSizedSlotDisplay.TYPE)
         }
         event.register(Registries.LOOT_CONDITION_TYPE) { helper ->
             helper.register(RagiumAPI.id("block_set"), HTBlockSetLootCondition.CODEC)
@@ -125,11 +125,6 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id(HTConstants.POTION), HTPotionFluidIngredient.TYPE)
         }
 
-        event.register(RagiumRegistries.Keys.CHEMICAL_TYPE) { helper ->
-            helper.register(RagiumAPI.id("simple"), HTSimpleChemical.TYPE)
-            helper.register(RagiumAPI.id("compound"), HTCompoundChemical.TYPE)
-            helper.register(RagiumAPI.id("mixture"), HTMixtureChemical.TYPE)
-        }
         event.register(RagiumRegistries.Keys.FLUID_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTFluidResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id(HTConstants.POTION), HTFluidResult.PotionEntry.TYPE)
@@ -137,7 +132,7 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumRegistries.Keys.ITEM_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id(HTConstants.TAG), HTItemResult.TagEntry.TYPE)
-            helper.register(RagiumAPI.id("enchanted_book"), HTItemResult.EnchantedBookEntry.TYPE)
+            helper.register(RagiumAPI.id("enchanted_book"), HTItemResult.EnchantedBookEntryN.TYPE)
             helper.register(RagiumAPI.id("with_fallback"), HTItemResult.WithFallbackEntry.TYPE)
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
@@ -157,7 +152,7 @@ data object Ragium : HTCommonMod() {
         registrar.playBidirectional(
             HTUpdateMenuPacket.TYPE,
             HTUpdateMenuPacket.STREAM_CODEC,
-            HTPayloadHandlers::handleC2S
+            HTPayloadHandlers::handleC2S,
         )
     }
 }

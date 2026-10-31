@@ -34,11 +34,7 @@ fun FluidStackTemplate.transmuteCopy(newFluid: Fluid, newAmount: Int = this.amou
  * @author Hiiragi Tsubasa
  * @since 26.1.5
  */
-fun FluidStack(
-    fluid: Fluid,
-    amount: Int = FluidType.BUCKET_VOLUME,
-    patch: DataComponentPatch = DataComponentPatch.EMPTY
-): FluidStack {
+fun FluidStack(fluid: Fluid, amount: Int = FluidType.BUCKET_VOLUME, patch: DataComponentPatch = DataComponentPatch.EMPTY): FluidStack {
     val stack = FluidStack(fluid, amount)
     stack.applyComponents(patch)
     return stack
@@ -48,11 +44,7 @@ fun FluidStack(
  * @author Hiiragi Tsubasa
  * @since 26.1.5
  */
-fun FluidStack(
-    fluid: Holder<Fluid>,
-    amount: Int = FluidType.BUCKET_VOLUME,
-    patch: DataComponentPatch = DataComponentPatch.EMPTY
-): FluidStack {
+fun FluidStack(fluid: Holder<Fluid>, amount: Int = FluidType.BUCKET_VOLUME, patch: DataComponentPatch = DataComponentPatch.EMPTY): FluidStack {
     val stack = FluidStack(fluid, amount)
     stack.applyComponents(patch)
     return stack

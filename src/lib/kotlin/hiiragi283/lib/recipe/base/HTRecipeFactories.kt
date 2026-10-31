@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.fluids.FluidInstance
+import org.apache.commons.lang3.function.TriFunction
 import java.util.function.BiFunction
 import java.util.function.Function
 
@@ -80,8 +81,7 @@ data object HTRecipeFactories {
     interface ItemAndFluid<OUTPUT : Any> : DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance, OUTPUT> {
         override fun produce(input: HTItemAndFluidRecipeInput): OUTPUT = apply(input.item, input.fluid)
 
-        override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData =
-            getProgressData(input.item, input.fluid)
+        override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData = getProgressData(input.item, input.fluid)
     }
 
     /**
@@ -90,7 +90,20 @@ data object HTRecipeFactories {
     interface DoubleItem<OUTPUT : Any> : DoubleInput<RecipeInput, ItemInstance, ItemInstance, OUTPUT> {
         override fun produce(input: RecipeInput): OUTPUT = apply(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
 
-        override fun getProgressData(input: RecipeInput): HTProgressData =
-            getProgressData(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
+        override fun getProgressData(input: RecipeInput): HTProgressData = getProgressData(input.getItemOrEmpty(0), input.getItemOrEmpty(1))
+    }
+
+    //    Triple Input    //
+
+    interface TripleInput<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, INPUT_C : Any, OUTPUT : Any> :
+        HTRecipeFactory<INPUT, OUTPUT>,
+        HTProgressRecipe.Triple<INPUT, INPUT_A, INPUT_B, INPUT_C>,
+        TriFunction<INPUT_A, INPUT_B, INPUT_C, OUTPUT> {
+        override fun apply(first: INPUT_A, second: INPUT_B, third: INPUT_C): OUTPUT
+
+        /**
+         * 消費される入力を取得します。
+         */
+        fun getMatchingStack(first: INPUT_A, second: INPUT_B, third: INPUT_C): Triple<INPUT_A, INPUT_B, INPUT_C>
     }
 }

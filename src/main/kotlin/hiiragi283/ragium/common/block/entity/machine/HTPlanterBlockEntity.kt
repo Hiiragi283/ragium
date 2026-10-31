@@ -11,11 +11,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.PLANTER.get(), pos, state) {
+class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.PLANTER.get(), pos, state) {
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
         RagiumRecipeLookups.PLANTING,
-        HTSoundInstance(SoundEvents.BONE_MEAL_USE)
+        HTSoundInstance(SoundEvents.BONE_MEAL_USE),
     )
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.planter

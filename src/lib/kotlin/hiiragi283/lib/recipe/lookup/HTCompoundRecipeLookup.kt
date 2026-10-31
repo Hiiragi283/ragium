@@ -15,8 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTCompoundRecipeLookup<out RECIPE : Any> private constructor(private val id: Identifier) :
-    HTRecipeLookup<RECIPE> {
+class HTCompoundRecipeLookup<out RECIPE : Any> private constructor(private val id: Identifier) : HTRecipeLookup<RECIPE> {
     companion object {
         @JvmStatic
         private val instances: MutableMap<Identifier, HTCompoundRecipeLookup<*>> = Object2ObjectLinkedOpenHashMap()
@@ -87,7 +86,7 @@ class HTCompoundRecipeLookup<out RECIPE : Any> private constructor(private val i
  */
 fun <INPUT : RecipeInput, RECIPE : Any, VANILLA_RECIPE : Recipe<INPUT>> HTCompoundRecipeLookup<RECIPE>.fromRecipeType(
     recipeType: RecipeType<VANILLA_RECIPE>,
-    transform: (VANILLA_RECIPE) -> RECIPE?
+    transform: (VANILLA_RECIPE) -> RECIPE?,
 ) {
     this.addSubLookup { context: HTRecipeLookup.Context ->
         context

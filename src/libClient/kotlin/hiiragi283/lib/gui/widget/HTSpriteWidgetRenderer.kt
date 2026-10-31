@@ -11,15 +11,8 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.TooltipFlag
 import kotlin.math.roundToInt
 
-abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widget: WIDGET) :
-    HTAbstractWidgetRenderer<WIDGET>(gui, widget) {
-    override fun render(
-        bounds: HTBounds,
-        graphics: GuiGraphicsExtractor,
-        mouseX: Int,
-        mouseY: Int,
-        partialTick: Float
-    ) {
+abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widget: WIDGET) : HTAbstractWidgetRenderer<WIDGET>(gui, widget) {
+    override fun render(bounds: HTBounds, graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, partialTick: Float) {
         // Render background
         HTSpriteRenderHelper.blit(graphics, getBackgroundId(), bounds)
         // Render sprite
@@ -49,7 +42,7 @@ abstract class HTSpriteWidgetRenderer<WIDGET : HTWidget>(gui: HTGuiAccess, widge
             x,
             y + height - fixedY,
             width,
-            fixedY
+            fixedY,
         )
     }
 

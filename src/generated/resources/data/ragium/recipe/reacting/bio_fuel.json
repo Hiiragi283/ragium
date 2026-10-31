@@ -1,0 +1,26 @@
+{
+  "type": "ragium:reacting",
+  "ingredients": {
+    "fluids": [
+      {
+        "amount": 1000,
+        "fluids": "#c:plant_oil"
+      },
+      {
+        "amount": 6000,
+        "fluids": "#ragium:alcohols"
+      }
+    ],
+    "item": {
+      "count": 1,
+      "items": "ragium:alkali_hydroxide"
+    }
+  },
+  "results": {
+    "fluid": {
+      "amount": 6000,
+      "id": "ragium:fuel"
+    }
+  },
+  "time": 200
+}

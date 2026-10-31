@@ -67,13 +67,6 @@ class HTFluidModelBuilder {
     }
 
     /**
-     * @since 26.1.5
-     */
-    fun sticky() {
-        still = Material(RagiumAPI.id(HTConstants.BLOCK, HTConstants.FLUID, "sticky"))
-    }
-
-    /**
      * 指定した[色][color]から[FluidTintSource]を指定します。
      */
     fun colorTint(color: Int) {

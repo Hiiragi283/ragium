@@ -34,22 +34,18 @@ data object HTFluidSlotRenderer : IIngredientRenderer<FluidStack> {
         return getTooltip(ingredient, tooltipContext, minecraft.player, tooltipFlag)
     }
 
-    override fun getTooltip(
-        ingredient: FluidStack,
-        tooltipContext: Item.TooltipContext,
-        player: Player?,
-        tooltipFlag: TooltipFlag
-    ): List<Component> = when {
-        ingredient.isEmpty -> listOf()
+    override fun getTooltip(ingredient: FluidStack, tooltipContext: Item.TooltipContext, player: Player?, tooltipFlag: TooltipFlag): List<Component> =
+        when {
+            ingredient.isEmpty -> listOf()
 
-        else -> buildList {
-            addAll(ingredient.getTooltipLines(tooltipContext, player, tooltipFlag))
-            add(
-                translatableText(
-                    "jei.tooltip.liquid.amount",
-                    HTTextUtil.INT_FORMAT.format(ingredient.amount)
-                ).withStyle(ChatFormatting.GRAY)
-            )
+            else -> buildList {
+                addAll(ingredient.getTooltipLines(tooltipContext, player, tooltipFlag))
+                add(
+                    translatableText(
+                        "jei.tooltip.liquid.amount",
+                        HTTextUtil.INT_FORMAT.format(ingredient.amount),
+                    ).withStyle(ChatFormatting.GRAY),
+                )
+            }
         }
-    }
 }

@@ -8,7 +8,8 @@ import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.HTTextUtil
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.transfer.HTResourceView
-import hiiragi283.lib.transfer.energy.HTEnergyHandler
+import hiiragi283.lib.transfer.energy.HTEnergyStorage
+import hiiragi283.lib.transfer.energy.HTEnergyView
 import hiiragi283.lib.util.fixedFraction
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import net.minecraft.ChatFormatting
@@ -64,22 +65,15 @@ data object HTStorageHelper {
         Mth.lerpDiscrete(fixedFraction(amount, capacity), Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
 
     @JvmStatic
-    fun calculateRedstoneLevel(view: HTResourceView<*>): Int =
-        Mth.lerpDiscrete(view.currentFilledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+    fun calculateRedstoneLevel(view: HTResourceView<*>): Int = Mth.lerpDiscrete(view.currentFilledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
 
     @JvmStatic
-    fun calculateRedstoneLevel(handler: HTEnergyHandler): Int =
-        Mth.lerpDiscrete(handler.filledLevelAsFloat, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+    fun calculateRedstoneLevel(view: HTEnergyView): Int = Mth.lerpDiscrete(view.filledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
 
     //    Energy    //
 
     @JvmStatic
-    fun createStackWithEnergy(
-        item: ItemLike,
-        amount: Int,
-        count: Int = 1,
-        patch: DataComponentPatch = DataComponentPatch.EMPTY
-    ): ItemStack {
+    fun createStackWithEnergy(item: ItemLike, amount: Int, count: Int = 1, patch: DataComponentPatch = DataComponentPatch.EMPTY): ItemStack {
         val stack = ItemStack(item, count, patch)
         updateEnergy(stack, amount)
         return stack
@@ -106,19 +100,16 @@ data object HTStorageHelper {
     }
 
     @JvmStatic
-    inline fun addEnergyTooltip(handler: HTEnergyHandler, consumer: (Text) -> Unit, isCreative: Boolean) {
+    inline fun addEnergyTooltip(view: HTEnergyView, consumer: (Text) -> Unit, isCreative: Boolean) {
         // Empty name if amount is not positive
-        if (handler.isEmpty) {
+        if (view.isEmpty) {
             consumer(HTCommonTranslation.EMPTY.translate())
             return
         }
         // Fluid Name and Amount
         when {
             isCreative -> HTCommonTranslation.STORED_FE.translate(HTCommonTranslation.INFINITE)
-
-            else -> HTCommonTranslation.STORED_FE.translate(
-                HTCommonTranslation.FRACTION.translate(handler.amountAsInt, handler.capacityAsLong)
-            )
+            else -> HTCommonTranslation.STORED_FE.translate(HTCommonTranslation.FRACTION.translate(view.amount, view.capacity))
         }.let(consumer)
     }
 
@@ -130,8 +121,8 @@ data object HTStorageHelper {
 
     @JvmStatic
     private fun getEnergyDurability(container: ItemStack): Double {
-        val handler: HTEnergyHandler = HTEnergyCapabilities.getHandler(ItemAccess.forStack(container)) ?: return 1.0
-        return 1 - handler.filledLevelAsDouble
+        val handler: HTEnergyStorage = HTEnergyCapabilities.getStorage(ItemAccess.forStack(container)) ?: return 1.0
+        return 1.0 - handler.filledLevel
     }
 
     //    Fluid    //
@@ -141,7 +132,7 @@ data object HTStorageHelper {
         item: ItemLike,
         fluidStack: FluidStack,
         count: Int = 1,
-        patch: DataComponentPatch = DataComponentPatch.EMPTY
+        patch: DataComponentPatch = DataComponentPatch.EMPTY,
     ): ItemStack {
         val stack = ItemStack(item, count, patch)
         updateFluid(stack, fluidStack)
@@ -149,8 +140,7 @@ data object HTStorageHelper {
     }
 
     @JvmStatic
-    fun getFluid(container: DataComponentGetter): FluidStack =
-        container.getOrDefault(RagiumDataComponents.FLUID, SimpleFluidContent.EMPTY).copy()
+    fun getFluid(container: DataComponentGetter): FluidStack = container.getOrDefault(RagiumDataComponents.FLUID, SimpleFluidContent.EMPTY).copy()
 
     @JvmStatic
     fun updateFluid(container: ItemStack, newStack: FluidStack) {
@@ -168,18 +158,12 @@ data object HTStorageHelper {
     fun updateFluid(container: DataComponentMap.Builder, newStack: FluidStack) {
         container.set(
             RagiumDataComponents.FLUID,
-            newStack.takeUnless(FluidStack::isEmpty)?.let(SimpleFluidContent::copyOf)
+            newStack.takeUnless(FluidStack::isEmpty)?.let(SimpleFluidContent::copyOf),
         )
     }
 
     @JvmStatic
-    inline fun addFluidTooltip(
-        stack: FluidStack,
-        consumer: (Text) -> Unit,
-        context: Item.TooltipContext,
-        flag: TooltipFlag,
-        isCreative: Boolean
-    ) {
+    inline fun addFluidTooltip(stack: FluidStack, consumer: (Text) -> Unit, context: Item.TooltipContext, flag: TooltipFlag, isCreative: Boolean) {
         // Empty name if stack is empty
         if (stack.isEmpty) {
             consumer(HTCommonTranslation.EMPTY.translate())

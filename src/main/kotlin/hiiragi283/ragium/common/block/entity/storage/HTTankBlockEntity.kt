@@ -13,15 +13,14 @@ import net.minecraft.core.component.DataComponentGetter
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.world.level.block.state.BlockState
 
-class HTTankBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBaseTankBlockEntity(RagiumBlockEntityTypes.TANK.get(), pos, state) {
+class HTTankBlockEntity(pos: BlockPos, state: BlockState) : HTBaseTankBlockEntity(RagiumBlockEntityTypes.TANK.get(), pos, state) {
     override lateinit var tank: HTBasicFluidTank
         private set
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
         tank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.create(RagiumConfig.SERVER.tankCapacity, listener)
+            HTVariableFluidTank.create(RagiumConfig.SERVER.tankCapacity, listener),
         )
     }
 

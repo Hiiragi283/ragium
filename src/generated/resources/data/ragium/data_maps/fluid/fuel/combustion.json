@@ -1,0 +1,22 @@
+{
+  "values": {
+    "#c:aromatic_compound": {
+      "tick/mb": 15
+    },
+    "#c:black_liquor": {
+      "tick/mb": 10
+    },
+    "#c:creosote": {
+      "tick/mb": 10
+    },
+    "#c:crude_oil": {
+      "tick/mb": 5
+    },
+    "#c:fuel": {
+      "tick/mb": 20
+    },
+    "#c:naphtha": {
+      "tick/mb": 15
+    }
+  }
+}

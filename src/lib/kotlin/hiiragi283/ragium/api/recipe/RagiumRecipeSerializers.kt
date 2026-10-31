@@ -24,14 +24,11 @@ data object RagiumRecipeSerializers {
     private fun <RECIPE : Recipe<*>> register(
         name: String,
         codec: MapCodec<RECIPE>,
-        streamCodec: StreamCodec<RegistryFriendlyByteBuf, RECIPE>
+        streamCodec: StreamCodec<RegistryFriendlyByteBuf, RECIPE>,
     ): RecipeSerializer<RECIPE> = register(name, RecipeSerializer(codec, streamCodec))
 
     @JvmStatic
-    private fun <RECIPE : Recipe<*>> register(
-        name: String,
-        serializer: RecipeSerializer<RECIPE>
-    ): RecipeSerializer<RECIPE> {
+    private fun <RECIPE : Recipe<*>> register(name: String, serializer: RecipeSerializer<RECIPE>): RecipeSerializer<RECIPE> {
         allSerializers[RagiumAPI.id(name)] = serializer
         return serializer
     }
@@ -42,8 +39,8 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.ASSEMBLING, RTAssemblingRecipe.SERIALIZER)
 
     @JvmField
-    val CENTRIFUGING: RecipeSerializer<RTCentrifugingRecipe.Basic> =
-        register(RagiumConstants.CENTRIFUGING, RTCentrifugingRecipe.Basic.SERIALIZER)
+    val CENTRIFUGING: RecipeSerializer<RTCentrifugingRecipe> =
+        register(RagiumConstants.CENTRIFUGING, RTCentrifugingRecipe.SERIALIZER)
 
     @JvmField
     val COMPRESSING: RecipeSerializer<RTCompressingRecipe> =

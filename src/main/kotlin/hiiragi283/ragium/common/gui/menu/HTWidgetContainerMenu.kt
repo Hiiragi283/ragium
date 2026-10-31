@@ -16,12 +16,8 @@ import net.minecraft.world.inventory.MenuType
  * [HTWidgetHolder]に基づいた[HTContainerMenu]の拡張クラスです。
  * @see net.minecraft.world.inventory.ChestMenu
  */
-class HTWidgetContainerMenu(
-    menuType: MenuType<*>,
-    containerId: Int,
-    inventory: Inventory,
-    context: HTWidgetHolderContext
-) : HTContainerMenu<HTWidgetHolderContext>(menuType, containerId, inventory, context) {
+class HTWidgetContainerMenu(menuType: MenuType<*>, containerId: Int, inventory: Inventory, context: HTWidgetHolderContext) :
+    HTContainerMenu<HTWidgetHolderContext>(menuType, containerId, inventory, context) {
     private val widgets: MutableList<HTWidget> = ObjectArrayList()
     val widgetHolder: HTWidgetHolder = WidgetHolderImpl()
 

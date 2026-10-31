@@ -118,7 +118,7 @@ class HTFluidResultBuilder @PublishedApi internal constructor() {
         } else {
             val content: IorNel<MobEffectInstance, Holder<Potion>> = Ior.fromNullable(
                 this.customEffects().toNelOrNull(),
-                this.potion().getOrNull()
+                this.potion().getOrNull(),
             ) ?: error("Could not create fluid result with empty potion contents")
             +HTFluidResult.PotionEntry(content, this.customColor(), this.customName())
         }

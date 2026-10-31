@@ -8,7 +8,12 @@ package hiiragi283.ragium.api
 data object RagiumConstants {
     //    Blocks    //
 
+    const val DYNAMO = "dynamo"
+    const val MACHINE = "machine"
+
     // Mechanical
+    const val FUEL_DYNAMO = "fuel_$DYNAMO"
+
     const val ASSEMBLER = "assembler"
     const val CENTRIFUGE = "centrifuge"
     const val COMPRESSOR = "compressor"
@@ -17,7 +22,10 @@ data object RagiumConstants {
     const val PRESS_MACHINE = "press_machine"
 
     // Heat
+    const val MAGMATIC_DYNAMO = "magmatic_$DYNAMO"
+
     const val ALLOY_SMELTER = "alloy_smelter"
+    const val DRYER = "dryer"
     const val FREEZER = "freezer"
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
@@ -25,12 +33,18 @@ data object RagiumConstants {
     const val SMELTER = "smelter"
 
     // Chemical
+    const val COMBUSTION_DYNAMO = "combustion_$DYNAMO"
+
     const val CHEMICAL_BATH = "chemical_bath"
     const val CHEMICAL_REACTOR = "chemical_reactor"
     const val MIXER = "mixer"
     const val WASHER = "washer"
 
     // Resource
+    const val SOLAR_GENERATOR = "solar_generator"
+    const val THERMAL_GENERATOR = "thermal_generator"
+    const val WIND_GENERATOR = "wind_generator"
+
     const val BREWERY = "brewery"
     const val PLANTER = "planter"
 
@@ -38,12 +52,16 @@ data object RagiumConstants {
     const val RESOURCE_PUMP = "resource_pump"
 
     // Electronics
+    const val NUCLEAR_DYNAMO = "nuclear_$DYNAMO"
+
     const val BLENDER = "blender"
     const val ELECTROLYZER = "electrolyzer"
     const val ENGRAVER = "engraver"
     const val SCANNER = "scanner"
 
     // Arcane
+    const val ARCANE_DYNAMO = "arcane_$DYNAMO"
+
     const val ENCHANTER = "enchanter"
     const val FLUID_DUPLICATOR = "fluid_duplicator"
     const val MASS_FABRICATOR = "mass_fabricator"
@@ -61,6 +79,7 @@ data object RagiumConstants {
 
     // Heat
     const val ALLOYING = "alloying"
+    const val DRYING = "drying"
     const val FREEZING = "freezing"
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"

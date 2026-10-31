@@ -3,11 +3,9 @@ package hiiragi283.ragium.api.data
 import hiiragi283.lib.data.DataComponentType
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
-import hiiragi283.ragium.api.data.chemical.HTChemical
 import hiiragi283.ragium.api.machine.HTMachineUpgrade
 import hiiragi283.ragium.api.machine.HTMachineUpgradeList
 import hiiragi283.ragium.api.text.HTItemTooltip
-import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.codec.ByteBufCodecs
 import net.neoforged.neoforge.fluids.SimpleFluidContent
@@ -19,13 +17,6 @@ import java.util.UUID
  * @since 26.1.0
  */
 data object RagiumDataComponents {
-    /**
-     * @since 26.1.8
-     */
-    @JvmField
-    val CHEMICAL: DataComponentType<Holder<HTChemical>> =
-        DataComponentType(HTChemical.HOLDER_CODEC, HTChemical.HOLDER_STREAM_CODEC)
-
     @JvmField
     val ENERGY: DataComponentType<Int> =
         DataComponentType(HTCodecs.NON_NEGATIVE_INT, ByteBufCodecs.VAR_INT)

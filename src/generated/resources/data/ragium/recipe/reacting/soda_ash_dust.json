@@ -1,0 +1,26 @@
+{
+  "type": "ragium:reacting",
+  "ingredients": {
+    "fluids": [
+      {
+        "amount": 1000,
+        "fluids": "#c:alkali_hydroxide_solution"
+      },
+      {
+        "amount": 1000,
+        "fluids": "#c:carbon_dioxide"
+      }
+    ]
+  },
+  "results": {
+    "fluid": {
+      "amount": 2000,
+      "id": "minecraft:water"
+    },
+    "item": {
+      "count": 1,
+      "id": "ragium:alkali_carbonate"
+    }
+  },
+  "time": 200
+}
