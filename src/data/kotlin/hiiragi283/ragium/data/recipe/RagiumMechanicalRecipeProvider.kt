@@ -308,6 +308,16 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             recipeId replace id("honey_from_bottle")
         }.save(exporter)
+        // Exp Bottle -> Glass Bottle + Exp
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.EXPERIENCE_BOTTLE } }
+            itemResult { +Items.GLASS_BOTTLE }
+            fluidResult {
+                +RagiumFluids.EXPERIENCE
+                amount = 250
+            }
+            recipeId replace id("experience_from_bottle")
+        }.save(exporter)
         // Wet Sponge -> Sponge + Water
         RagiumRecipeBuilders.centrifuging {
             ingredient { items { +Items.WET_SPONGE } }
@@ -907,7 +917,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     }
 
     private fun filling() {
-        // Honey Bottle <- Glass Bottle + Honey
+        // Glass Bottle + Honey -> Honey Bottle
         RagiumRecipeBuilders.filling {
             itemIngredient { items { +Items.GLASS_BOTTLE } }
             fluidIngredient {
@@ -915,6 +925,15 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 amount = 250
             }
             result { +Items.HONEY_BOTTLE }
+        }.save(exporter)
+        // Glass Bottle + Exp -> Exp Bottle
+        RagiumRecipeBuilders.filling {
+            itemIngredient { items { +Items.GLASS_BOTTLE } }
+            fluidIngredient {
+                +holderSet(RagiumFluids.EXPERIENCE)
+                amount = 250
+            }
+            result { +Items.EXPERIENCE_BOTTLE }
         }.save(exporter)
         // Dirt + Water -> Mud
         RagiumRecipeBuilders.filling {

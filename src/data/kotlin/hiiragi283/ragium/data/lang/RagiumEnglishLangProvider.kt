@@ -79,6 +79,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.TANK, "Variable Tank")
         add(RagiumBlocks.POTION_TANK, "Potion Tank")
+        add(RagiumBlocks.EXPERIENCE_TANK, "Experience Tank")
         add(RagiumBlocks.VOID_TANK, "Void Tank")
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
 
@@ -91,16 +92,13 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add("death.attack.chemicalBurn", $$"%1$s was injured chemical burn")
         add("death.attack.chemicalBurn.player", $$"%1$s was injured chemical burn while fighting %2$s")
         // Fluid
+        addFluid(RagiumFluids.EXPERIENCE, "Experience")
+        // add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
+        add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
         addFluid(RagiumFluids.HONEY, "Honey")
         addFluid(RagiumFluids.MOLTEN_BEESWAX, "Molten Beeswax")
         addFluid(RagiumFluids.RESIN, "Resin")
-        // add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
-        add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
-        addFluid(RagiumFluids.OMINOUS_FLUX, "Ominous Flux")
         addFluid(RagiumFluids.MOLTEN_GLASS, "Molten Glass")
-        addFluid(RagiumFluids.MOLTEN_REDSTONE, "Destabilized Redstone")
-        addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "Energized Glowstone")
-        addFluid(RagiumFluids.MOLTEN_ENDER, "Resonant Ender")
 
         // H
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")

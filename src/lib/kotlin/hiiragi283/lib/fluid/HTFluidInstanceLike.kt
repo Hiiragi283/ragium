@@ -6,6 +6,7 @@ import net.minecraft.core.component.DataComponentPatch
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.transfer.fluid.FluidResource
 
 /**
  * [FluidStackTemplate]や[FluidStack]に変換可能なオブジェクトを表すインターフェースです。
@@ -30,4 +31,14 @@ interface HTFluidInstanceLike {
      */
     fun asStackOrEmpty(amount: Int = FluidType.BUCKET_VOLUME, patch: DataComponentPatch = DataComponentPatch.EMPTY): FluidStack =
         asStack(amount, patch).getOrElse { FluidStack.EMPTY }
+
+    /**
+     * @since 26.1.13
+     */
+    fun asResource(patch: DataComponentPatch = DataComponentPatch.EMPTY): DataResult<FluidResource>
+
+    /**
+     * @since 26.1.13
+     */
+    fun asResourceOrEmpty(patch: DataComponentPatch = DataComponentPatch.EMPTY): FluidResource = asResource(patch).getOrElse { FluidResource.EMPTY }
 }

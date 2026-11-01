@@ -1,0 +1,18 @@
+{
+  "type": "ragium:filling",
+  "ingredient": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "minecraft:glass_bottle"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:experience_bottle"
+  },
+  "time": 200
+}

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.transfer.item
+package hiiragi283.ragium.common.transfer.fluid
 
 import hiiragi283.lib.fluid.createBucket
 import net.minecraft.world.item.Items
@@ -13,7 +13,7 @@ import java.util.Objects
 /**
  * @see net.neoforged.neoforge.transfer.fluid.BucketResourceHandler
  */
-abstract class HTCustomBucketItemHandler(itemAccess: ItemAccess) : ItemAccessResourceHandler<FluidResource>(itemAccess, 1) {
+abstract class HTCustomBucketFluidHandler(itemAccess: ItemAccess) : ItemAccessResourceHandler<FluidResource>(itemAccess, 1) {
     override fun getAmountFrom(accessResource: ItemResource, index: Int): Int {
         val resource: FluidResource = getResourceFrom(accessResource, index)
         return when (resource.isEmpty) {

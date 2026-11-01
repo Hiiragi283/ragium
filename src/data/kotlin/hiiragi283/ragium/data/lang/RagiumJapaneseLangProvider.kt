@@ -75,6 +75,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.TANK, "可変タンク")
         add(RagiumBlocks.POTION_TANK, "ポーションタンク")
+        add(RagiumBlocks.EXPERIENCE_TANK, "経験値タンク")
         add(RagiumBlocks.VOID_TANK, "廃棄タンク")
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブ用タンク")
 
@@ -87,16 +88,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add("death.attack.chemicalBurn", $$"%1$sは化学火傷を負った")
         add("death.attack.chemicalBurn.player", $$"%1$sは%2$sと戦いながら化学火傷を負った")
         // Fluid
+        addFluid(RagiumFluids.EXPERIENCE, "経験値")
+        // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
+        add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
         addFluid(RagiumFluids.HONEY, "ハチミツ")
         addFluid(RagiumFluids.MOLTEN_BEESWAX, "溶けた蜜蠟")
         addFluid(RagiumFluids.RESIN, "樹脂")
-        // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
-        add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
-        addFluid(RagiumFluids.OMINOUS_FLUX, "不吉な流動体")
         addFluid(RagiumFluids.MOLTEN_GLASS, "溶融ガラス")
-        addFluid(RagiumFluids.MOLTEN_REDSTONE, "励起レッドストーン")
-        addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "活性グロウストーン")
-        addFluid(RagiumFluids.MOLTEN_ENDER, "共振エンダー")
 
         // H
         addFluid(RagiumFluids.HYDROGEN, "水素")

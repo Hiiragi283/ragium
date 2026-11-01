@@ -12,4 +12,6 @@ class RagiumConfigAccessImpl : RagiumConfigAccess {
                 else -> priority
             }
         }.thenBy(Identifier::getNamespace)
+
+    override val expRatio: Int get() = RagiumConfig.SERVER.expConversionRatio.asInt
 }

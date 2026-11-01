@@ -52,8 +52,10 @@ data object RagiumConfig {
                     { obj: Any -> obj is String },
                 )
 
+        val expConversionRatio: ModConfigSpec.IntValue = builder.definePositiveInt("expConversionRatio", 20)
+
         @JvmField
-        val machineTankCapacity: ModConfigSpec.IntValue = builder.definePositiveInt("machine_tank_capacity", 8000)
+        val machineTankCapacity: ModConfigSpec.IntValue = builder.definePositiveInt("machineTankCapacity", 8000)
 
         @JvmField
         val dynamo: Dynamo
@@ -86,10 +88,10 @@ data object RagiumConfig {
             builder.pop()
 
             builder.push("storage")
-            energyBarColor = builder.definePositiveInt("energy_bar_color", 0xFF0033, 0)
-            batteryCapacity = builder.definePositiveInt("battery_capacity", 1_024_000)
-            crateCapacity = builder.definePositiveInt("crate_capacity", 32 * 64)
-            tankCapacity = builder.definePositiveInt("tank_capacity", 16000)
+            energyBarColor = builder.definePositiveInt("energyBarColor", 0xFF0033, 0)
+            batteryCapacity = builder.definePositiveInt("batteryCapacity", 1_024_000)
+            crateCapacity = builder.definePositiveInt("crateCapacity", 32 * 64)
+            tankCapacity = builder.definePositiveInt("tankCapacity", 16000)
             builder.pop()
         }
 
@@ -111,7 +113,7 @@ data object RagiumConfig {
 
             init {
                 builder.push(RagiumConstants.FUEL_DYNAMO)
-                steamDynamoWaterPerTick = builder.definePositiveInt("water_per_tick", 2)
+                steamDynamoWaterPerTick = builder.definePositiveInt("waterPerTick", 2)
                 builder.pop()
             }
         }

@@ -14,13 +14,10 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponents
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.component.OminousBottleAmplifier
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 import java.util.concurrent.CompletableFuture
 
 class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
@@ -294,49 +291,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount = 90 * 9
             }
             recipeId suffix "_from_block"
-        }.save(exporter)
-
-        // Ominous Bottle -> Ominous Flux
-        (OminousBottleAmplifier.MIN_AMPLIFIER..OminousBottleAmplifier.MAX_AMPLIFIER).forEach { amplifier: Int ->
-            RagiumRecipeBuilders.melting {
-                ingredient {
-                    +DataComponentIngredient.of(
-                        false,
-                        DataComponents.OMINOUS_BOTTLE_AMPLIFIER,
-                        OminousBottleAmplifier(amplifier),
-                        Items.OMINOUS_BOTTLE,
-                    )
-                }
-                result {
-                    +RagiumFluids.OMINOUS_FLUX
-                    amount = 250 * (amplifier + 1)
-                }
-                recipeId prefix "${amplifier}x_"
-            }.save(exporter)
-        }
-        // Molten Redstone
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            result {
-                +RagiumFluids.MOLTEN_REDSTONE
-                amount = 90
-            }
-        }.save(exporter)
-        // Molten Glowstone
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE) }
-            result {
-                +RagiumFluids.MOLTEN_GLOWSTONE
-                amount = 90
-            }
-        }.save(exporter)
-        // Molten Ender
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.ENDER_PEARLS) }
-            result {
-                +RagiumFluids.MOLTEN_ENDER
-                amount = 90
-            }
         }.save(exporter)
     }
 

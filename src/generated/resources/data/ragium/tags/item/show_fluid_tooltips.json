@@ -1,6 +1,7 @@
 {
   "values": [
     "ragium:creative_tank",
+    "ragium:experience_tank",
     "ragium:potion_tank",
     "ragium:tank",
     "ragium:void_tank"

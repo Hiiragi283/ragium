@@ -103,13 +103,22 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerFluidModels(register: HTFluidModelRegister) {
+        register.register(RagiumFluids.POTION) {
+            dull()
+            tintSource = FluidStackTintSource { stack: FluidStack ->
+                ARGB.opaque(HTPotionHelper.getContentsOrEmpty(stack).color)
+            }
+        }
+        register.register(RagiumFluids.EXPERIENCE) {
+            transparent()
+            colorTint(Color(0x99ff00))
+        }
         for (color: DyeColor in DyeColor.entries) {
             register.register(RagiumFluids.DYES[color]) {
                 dull()
                 color.textureDiffuseColor.let(::colorTint)
             }
         }
-
         register.register(RagiumFluids.HONEY) {
             still = Material(vanillaId(HTConstants.BLOCK, "honey_block_top"), true)
         }
@@ -119,32 +128,9 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.RESIN) {
             still = Material(vanillaId(HTConstants.BLOCK, "resin_block"))
         }
-        register.register(RagiumFluids.POTION) {
-            dull()
-            tintSource = FluidStackTintSource { stack: FluidStack ->
-                ARGB.opaque(HTPotionHelper.getContentsOrEmpty(stack).color)
-            }
-        }
-        register.register(RagiumFluids.OMINOUS_FLUX) {
-            molten()
-            colorTint(Color(0x003366))
-        }
-
         register.register(RagiumFluids.MOLTEN_GLASS) {
             molten()
             colorTint(Color(0xffffff))
-        }
-        register.register(RagiumFluids.MOLTEN_REDSTONE) {
-            molten()
-            colorTint(Color(0xcc0000))
-        }
-        register.register(RagiumFluids.MOLTEN_GLOWSTONE) {
-            molten()
-            colorTint(Color(0xffcc66))
-        }
-        register.register(RagiumFluids.MOLTEN_ENDER) {
-            molten()
-            colorTint(Color(0x006666))
         }
 
         // H

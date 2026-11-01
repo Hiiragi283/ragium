@@ -12,6 +12,7 @@ import net.minecraft.world.level.material.FlowingFluid
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.transfer.fluid.FluidResource
 
 /**
  * 液体に関する要素を束ねたクラスです。
@@ -45,6 +46,8 @@ sealed class HTFluidContent(
         sourceHolder.isEmpty -> DataResult.error { "Could not create FluidStackTemplate with empty fluid" }
         else -> sourceHolder.asResult().map { FluidStackTemplate(it, amount, patch) }
     }
+
+    override fun asResource(patch: DataComponentPatch): DataResult<FluidResource> = asResult().map { FluidResource.of(it, patch) }
 
     /**
      * 基本的な[HTFluidContent]の実装クラスです。

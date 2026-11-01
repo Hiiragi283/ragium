@@ -36,11 +36,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             add(RagiumFluids.HONEY)
             add(RagiumFluids.MOLTEN_BEESWAX)
             add(RagiumFluids.RESIN)
-            add(RagiumFluids.OMINOUS_FLUX)
             add(RagiumFluids.MOLTEN_GLASS)
-            add(RagiumFluids.MOLTEN_REDSTONE)
-            add(RagiumFluids.MOLTEN_GLOWSTONE)
-            add(RagiumFluids.MOLTEN_ENDER)
 
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.MOLTEN_PLASTIC)

@@ -39,6 +39,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTUpgradeStationBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTExperienceTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTPotionTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import net.minecraft.world.level.block.Block
@@ -188,6 +189,10 @@ data object RagiumBlockEntityTypes {
         registerTick("potion_tank", ::HTPotionTankBlockEntity)
 
     @JvmField
+    val EXPERIENCE_TANK: HTDeferredBlockEntityType<HTExperienceTankBlockEntity> =
+        registerTick("experience_tank", ::HTExperienceTankBlockEntity)
+
+    @JvmField
     val CREATIVE_TANK: HTDeferredBlockEntityType<HTCreativeTankBlockEntity> =
         registerTick("creative_tank", ::HTCreativeTankBlockEntity)
 
@@ -258,6 +263,7 @@ data object RagiumBlockEntityTypes {
         // Storage
         registerBlockEntity(TANK.get())
         registerBlockEntity(POTION_TANK.get())
+        registerBlockEntity(EXPERIENCE_TANK.get())
         registerBlockEntity(CREATIVE_TANK.get())
 
         event.registerBlockEntity(

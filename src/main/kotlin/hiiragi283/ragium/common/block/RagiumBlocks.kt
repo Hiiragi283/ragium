@@ -397,6 +397,13 @@ data object RagiumBlocks {
     )
 
     @JvmField
+    val EXPERIENCE_TANK: HTBasicDeferredBlockAndItem<HTTankBlock> = registerWithBE(
+        RagiumBlockEntityTypes.EXPERIENCE_TANK,
+        ::HTTankBlock,
+        tankProperty,
+    )
+
+    @JvmField
     val VOID_TANK: HTBasicDeferredBlockAndItem<HTVoidTankBlock> = REGISTER.registerSimple(
         "void_tank",
         tankProperty,
@@ -412,7 +419,7 @@ data object RagiumBlocks {
     )
 
     @JvmField
-    val TANKS: List<HTSimpleDeferredBlockAndItem> = listOf(TANK, POTION_TANK, VOID_TANK, CREATIVE_TANK)
+    val TANKS: List<HTSimpleDeferredBlockAndItem> = listOf(TANK, POTION_TANK, EXPERIENCE_TANK, VOID_TANK, CREATIVE_TANK)
 
     // Battery
     @JvmField

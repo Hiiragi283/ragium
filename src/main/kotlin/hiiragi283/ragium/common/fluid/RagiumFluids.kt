@@ -63,6 +63,9 @@ data object RagiumFluids {
     //    Vanilla    //
 
     @JvmField
+    val EXPERIENCE: HTFluidContent.Flowing = REGISTER.registerFlowing("experience") { properties = liquid() }
+
+    @JvmField
     val POTION: HTFluidContent.Virtual = REGISTER.registerVirtual(HTConstants.POTION) {
         properties = liquid()
         typeFactory = ::HTPotionFluidType
@@ -102,19 +105,7 @@ data object RagiumFluids {
     }
 
     @JvmField
-    val OMINOUS_FLUX: HTFluidContent.Virtual = REGISTER.registerVirtual("ominous_flux") { properties = molten() }
-
-    @JvmField
     val MOLTEN_GLASS: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_glass") { properties = molten() }
-
-    @JvmField
-    val MOLTEN_REDSTONE: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_redstone") { properties = molten() }
-
-    @JvmField
-    val MOLTEN_GLOWSTONE: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_glowstone") { properties = molten() }
-
-    @JvmField
-    val MOLTEN_ENDER: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_ender") { properties = molten() }
 
     //    Chemical    //
 
