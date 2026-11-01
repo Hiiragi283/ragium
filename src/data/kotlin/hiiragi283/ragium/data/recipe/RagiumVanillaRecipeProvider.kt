@@ -492,6 +492,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         electronics(RagiumBlocks.BLENDER) { items { +RagiumBlocks.MIXER } }
         // Arcane
+        arcane(RagiumBlocks.ARCANE_TRANSFORMER) { +holderSet(Tags.Items.NETHER_STARS) }
         arcane(RagiumBlocks.ENCHANTER) { items { +Items.ENCHANTING_TABLE } }
         // Other
         VanillaRecipeBuilders.shaped {

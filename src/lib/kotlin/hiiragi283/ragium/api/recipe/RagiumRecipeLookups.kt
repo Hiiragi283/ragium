@@ -102,5 +102,5 @@ data object RagiumRecipeLookups {
     val ENCHANTING: HTCompoundRecipeLookup<RTEnchantingRecipe> = create(RagiumConstants.ENCHANTING)
 
     @JvmField
-    val TRANSFORMING: HTCompoundRecipeLookup<RTTransformingRecipe> = create(RagiumConstants.TRANSFORMING)
+    val TRANSFORMING: HTCompoundRecipeLookup<HTItemToItemRecipe> = create(RagiumConstants.TRANSFORMING)
 }

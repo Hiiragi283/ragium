@@ -60,6 +60,7 @@ data object RagiumConstants {
     // Arcane
     const val ARCANE_DYNAMO = "arcane_$DYNAMO"
 
+    const val ARCANE_TRANSFORMER = "arcane_transformer"
     const val ENCHANTER = "enchanter"
     const val FLUID_DUPLICATOR = "fluid_duplicator"
     const val MASS_FABRICATOR = "mass_fabricator"

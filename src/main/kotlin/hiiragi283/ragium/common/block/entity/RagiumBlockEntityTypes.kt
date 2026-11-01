@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.block.entity.dynamo.HTCombustionDynamoBlockEntit
 import hiiragi283.ragium.common.block.entity.dynamo.HTFuelDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTMagmaticDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTArcaneTransformerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCentrifugeBlockEntity
@@ -163,6 +164,10 @@ data object RagiumBlockEntityTypes {
 
     // Arcane
     @JvmField
+    val ARCANE_TRANSFORMER: HTDeferredBlockEntityType<HTArcaneTransformerBlockEntity> =
+        registerTick(RagiumConstants.ARCANE_TRANSFORMER, ::HTArcaneTransformerBlockEntity)
+
+    @JvmField
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
         registerTick(RagiumConstants.ENCHANTER, ::HTEnchanterBlockEntity)
 
@@ -242,6 +247,7 @@ data object RagiumBlockEntityTypes {
         registerBlockEntity(ENGRAVER.get())
         registerBlockEntity(SCANNER.get())
 
+        registerBlockEntity(ARCANE_TRANSFORMER.get())
         registerBlockEntity(ENCHANTER.get())
         // Storage
         registerBlockEntity(TANK.get())

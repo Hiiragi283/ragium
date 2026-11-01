@@ -327,6 +327,9 @@ data object RagiumBlocks {
 
     // Arcane
     @JvmField
+    val ARCANE_TRANSFORMER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ARCANE_TRANSFORMER)
+
+    @JvmField
     val ENCHANTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ENCHANTER)
 
     @JvmField
@@ -358,6 +361,7 @@ data object RagiumBlocks {
             put(HTMachineType.ELECTRONICS, ENGRAVER)
             put(HTMachineType.ELECTRONICS, SCANNER)
 
+            put(HTMachineType.ARCANE, ARCANE_TRANSFORMER)
             put(HTMachineType.ARCANE, ENCHANTER)
 
             put(HTMachineType.Custom("cryo", HTLangName("Cryo", "低温")), FREEZER)

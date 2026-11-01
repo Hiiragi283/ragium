@@ -89,5 +89,5 @@ data object RagiumJeiRecipeTypes {
     val ENCHANTING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.ENCHANTING)
 
     @JvmField
-    val TRANSFORMING: IRecipeType<HTCatalysedSingleToSingleViewerRecipe> = create(RagiumConstants.TRANSFORMING)
+    val TRANSFORMING: IRecipeType<HTSingleToSingleViewerRecipe> = create(RagiumConstants.TRANSFORMING)
 }

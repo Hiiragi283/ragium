@@ -5,6 +5,7 @@
     "alloy_smelter",
     "aluminum_block",
     "arcane_machine_casing",
+    "arcane_transformer",
     "aromatic_compound",
     "assembler",
     "black_dye",
@@ -87,6 +88,7 @@
   ],
   "minecraft:block_entity_type": [
     "alloy_smelter",
+    "arcane_transformer",
     "assembler",
     "brewery",
     "centrifuge",
@@ -238,6 +240,7 @@
     "apatite",
     "apatite_dust",
     "arcane_machine_casing",
+    "arcane_transformer",
     "aromatic_compound_bucket",
     "ash_dust",
     "assembler",

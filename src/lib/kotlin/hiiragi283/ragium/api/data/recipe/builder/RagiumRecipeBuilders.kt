@@ -35,6 +35,7 @@ import hiiragi283.ragium.api.recipe.RTPressingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
+import hiiragi283.ragium.api.recipe.RTTransformingRecipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -245,10 +246,12 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun transforming(builderAction: RTTransformingRecipeBuilder.() -> Unit): RTTransformingRecipeBuilder {
+    inline fun transforming(
+        builderAction: HTItemToItemRecipeBuilder<RTTransformingRecipe>.() -> Unit,
+    ): HTItemToItemRecipeBuilder<RTTransformingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTTransformingRecipeBuilder().apply(builderAction)
+        return HTSingleRecipeBuilder.Basic(RagiumConstants.TRANSFORMING, ::RTTransformingRecipe).apply(builderAction)
     }
 }

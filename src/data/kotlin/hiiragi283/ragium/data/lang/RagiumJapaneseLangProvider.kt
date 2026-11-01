@@ -69,6 +69,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.ENGRAVER, "レーザー加工機")
         add(RagiumBlocks.SCANNER, "レーザースキャナ")
 
+        add(RagiumBlocks.ARCANE_TRANSFORMER, "神秘的変異機")
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
 
         add(RagiumBlocks.TANK, "可変タンク")

@@ -73,6 +73,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.ENGRAVER, "Laser Engraver")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
+        add(RagiumBlocks.ARCANE_TRANSFORMER, "Arcane Transformer")
         add(RagiumBlocks.ENCHANTER, "Enchanter")
 
         add(RagiumBlocks.TANK, "Variable Tank")
