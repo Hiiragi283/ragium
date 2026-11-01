@@ -13,9 +13,15 @@
     "count": 3,
     "items": "#c:raw_materials/iron"
   },
-  "result": {
-    "count": 4,
-    "id": "ragium:iron_dust"
-  },
+  "results": [
+    {
+      "count": 4,
+      "id": "ragium:iron_dust"
+    },
+    {
+      "count": 3,
+      "id": "ragium:small_nickel_dust"
+    }
+  ],
   "time": 200
 }

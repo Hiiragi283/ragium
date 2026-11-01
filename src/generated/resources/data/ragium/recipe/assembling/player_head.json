@@ -1,0 +1,18 @@
+{
+  "type": "ragium:assembling",
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "minecraft:skeleton_skull"
+    },
+    {
+      "count": 8,
+      "items": "#c:leathers"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:player_head"
+  },
+  "time": 200
+}

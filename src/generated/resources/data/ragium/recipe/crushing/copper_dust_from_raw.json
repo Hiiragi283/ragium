@@ -13,15 +13,9 @@
     "count": 3,
     "items": "#c:raw_materials/copper"
   },
-  "results": [
-    {
-      "count": 4,
-      "id": "ragium:copper_dust"
-    },
-    {
-      "count": 1,
-      "id": "ragium:nickel_dust"
-    }
-  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:copper_dust"
+  },
   "time": 200
 }

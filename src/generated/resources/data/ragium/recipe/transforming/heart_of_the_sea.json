@@ -1,0 +1,12 @@
+{
+  "type": "ragium:transforming",
+  "energy": 6000,
+  "ingredient": {
+    "count": 1,
+    "items": "ragium:elder_heart"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:heart_of_the_sea"
+  }
+}

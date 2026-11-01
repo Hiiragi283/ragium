@@ -1,0 +1,12 @@
+{
+  "type": "ragium:transforming",
+  "energy": 4000,
+  "ingredient": {
+    "count": 1,
+    "items": "#c:storage_blocks/diamond"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

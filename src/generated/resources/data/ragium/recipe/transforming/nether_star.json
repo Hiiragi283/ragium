@@ -1,0 +1,12 @@
+{
+  "type": "ragium:transforming",
+  "energy": 12000,
+  "ingredient": {
+    "count": 1,
+    "items": "ragium:wither_star"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:nether_star"
+  }
+}

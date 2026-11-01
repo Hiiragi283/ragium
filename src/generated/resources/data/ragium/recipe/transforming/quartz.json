@@ -1,0 +1,12 @@
+{
+  "type": "ragium:transforming",
+  "energy": 2000,
+  "ingredient": {
+    "count": 1,
+    "items": "#c:glass_blocks/cheap"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:quartz"
+  }
+}

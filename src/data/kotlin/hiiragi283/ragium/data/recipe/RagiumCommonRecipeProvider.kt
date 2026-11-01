@@ -169,10 +169,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         for (metal: RagiumMaterial.Metal in RagiumMaterial.Metal.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metal] ?: continue
             val extraDust: HTSimpleDeferredItem? = when (metal) {
-                RagiumMaterial.Metal.COPPER -> RagiumMaterial.Metal.NICKEL
+                RagiumMaterial.Metal.IRON -> RagiumMaterial.Metal.NICKEL
                 RagiumMaterial.Metal.GOLD -> RagiumMaterial.Metal.SILVER
                 else -> null
-            }?.let { RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, it] }
+            }?.let { RagiumItems.MATERIAL_ITEMS[HTItemPart.SMALL_DUST, it] }
             // 3x Raw -> 4x Dust
             RagiumRecipeBuilders.crushing {
                 ingredient {
@@ -183,7 +183,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     +dust
                     count = 4
                 }
-                extraDust?.asTemplate()?.ifSuccess { result { from(it) } }
+                extraDust?.asTemplate(3)?.ifSuccess { result { from(it) } }
                 recipeId suffix "_from_raw"
                 condition { itemTagPresent(CommonTagPrefixes.RAW_MATERIALS, metal) }
             }.save(exporter)
@@ -194,7 +194,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                     +dust
                     count = 12
                 }
-                extraDust?.asTemplate(3)?.ifSuccess { result { from(it) } }
+                extraDust?.asTemplate(9)?.ifSuccess { result { from(it) } }
                 recipeId suffix "_from_raw_block"
                 condition { itemTagPresent(CommonTagPrefixes.RAW_STORAGE_BLOCK, metal) }
             }.save(exporter)

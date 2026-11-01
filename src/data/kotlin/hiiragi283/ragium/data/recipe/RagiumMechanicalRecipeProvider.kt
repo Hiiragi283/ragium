@@ -274,6 +274,14 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             result { +Items.PIGLIN_HEAD }
         }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +Items.SKELETON_SKULL } }
+            ingredient {
+                +holderSet(Tags.Items.LEATHERS)
+                count = 8
+            }
+            result { +Items.PLAYER_HEAD }
+        }.save(exporter)
 
         // Gold Block + Apple -> Enchanted Golden Apple
         RagiumRecipeBuilders.assembling {

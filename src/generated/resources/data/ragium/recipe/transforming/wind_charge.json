@@ -1,0 +1,12 @@
+{
+  "type": "ragium:transforming",
+  "energy": 2000,
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:snowball"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:wind_charge"
+  }
+}

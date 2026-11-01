@@ -1,0 +1,12 @@
+{
+  "type": "ragium:transforming",
+  "energy": 4000,
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:amethyst_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:budding_amethyst"
+  }
+}
