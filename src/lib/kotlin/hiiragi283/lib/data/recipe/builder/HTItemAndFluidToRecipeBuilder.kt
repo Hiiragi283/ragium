@@ -2,8 +2,6 @@
 
 package hiiragi283.lib.data.recipe.builder
 
-import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
-import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
 import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.base.HTProgressData
@@ -25,10 +23,11 @@ import kotlin.contracts.contract
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
+open class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
     prefix: String,
     private val factory: Factory<RESULT, RECIPE>,
-) : HTProgressRecipeBuilder<RECIPE>(prefix) {
+) : HTProgressRecipeBuilder<RECIPE>(prefix),
+    HTItemOrFluidIngredientAcceptor {
     final override fun getRecipeId(): Identifier? = result.getId()
 
     final override fun createRecipe(): RECIPE = factory.create(itemIngredient, fluidIngredient, result, progressData)
@@ -38,26 +37,12 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
 
     @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
-    operator fun HTItemIngredient.unaryPlus() {
+    override operator fun HTItemIngredient.unaryPlus() {
         itemIngredient = this
     }
 
-    operator fun HTFluidIngredient.unaryPlus() {
+    override operator fun HTFluidIngredient.unaryPlus() {
         fluidIngredient = this
-    }
-
-    inline fun itemIngredient(builderAction: HTItemIngredientBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        +HTItemIngredientBuilder.build(builderAction)
-    }
-
-    inline fun fluidIngredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        +HTFluidIngredientBuilder.build(builderAction)
     }
 
     // Result
@@ -65,42 +50,6 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
 
     operator fun RESULT.unaryPlus() {
         result = this
-    }
-
-    //    ToFluid    //
-
-    /**
-     * 1種類のアイテムと液体から1種類の液体を作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
-     * @param RECIPE 生成するレシピのクラス
-     * @author Hiiragi Tsubasa
-     * @since 26.1.0
-     */
-    class ToFluid<out RECIPE : Recipe<*>>(prefix: String, factory: Factory<HTFluidResult, RECIPE>) :
-        HTItemAndFluidToRecipeBuilder<HTFluidResult, RECIPE>(prefix, factory) {
-        inline fun result(builderAction: HTFluidResultBuilder.() -> Unit) {
-            contract {
-                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-            }
-            +HTFluidResultBuilder.build(builderAction)
-        }
-    }
-
-    //    ToItem    //
-
-    /**
-     * 1種類のアイテムと液体から1種類のアイテムを作成するレシピ向けの[HTProgressRecipeBuilder]の実装クラスです。
-     * @param RECIPE 生成するレシピのクラス
-     * @author Hiiragi Tsubasa
-     * @since 26.1.0
-     */
-    class ToItem<out RECIPE : Recipe<*>>(prefix: String, factory: Factory<HTItemResult, RECIPE>) :
-        HTItemAndFluidToRecipeBuilder<HTItemResult, RECIPE>(prefix, factory) {
-        inline fun result(builderAction: HTItemResultBuilder.() -> Unit) {
-            contract {
-                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-            }
-            +HTItemResultBuilder.build(builderAction)
-        }
     }
 
     //    Factory    //
@@ -117,4 +66,44 @@ abstract class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out REC
         fun create(ingredient: Pair<HTItemIngredient, HTFluidIngredient>, result: RESULT, progressData: HTProgressData): RECIPE =
             create(ingredient.first, ingredient.second, result, progressData)
     }
+}
+
+//    Extensions    //
+
+/**
+ * @param RECIPE 生成するレシピのクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.13
+ */
+typealias HTItemAndFluidToFluidRecipeBuilder<RECIPE> = HTItemAndFluidToRecipeBuilder<HTFluidResult, RECIPE>
+
+/**
+ * @param RECIPE 生成するレシピのクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.13
+ */
+typealias HTItemAndFluidToItemRecipeBuilder<RECIPE> = HTItemAndFluidToRecipeBuilder<HTItemResult, RECIPE>
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.13
+ */
+@JvmName("itemResult")
+fun HTItemAndFluidToFluidRecipeBuilder<*>.result(builderAction: HTFluidResultBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+    }
+    +HTFluidResultBuilder.build(builderAction)
+}
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.13
+ */
+@JvmName("fluidResult")
+fun HTItemAndFluidToItemRecipeBuilder<*>.result(builderAction: HTItemResultBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+    }
+    +HTItemResultBuilder.build(builderAction)
 }

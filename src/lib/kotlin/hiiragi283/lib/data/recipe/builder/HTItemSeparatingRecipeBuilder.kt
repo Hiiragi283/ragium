@@ -4,8 +4,6 @@ package hiiragi283.lib.data.recipe.builder
 
 import hiiragi283.lib.collection.toNelOrNull
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
-import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
-import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
@@ -23,7 +21,8 @@ import kotlin.contracts.contract
 import kotlin.jvm.optionals.getOrNull
 
 class HTItemSeparatingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
-    HTProgressRecipeBuilder<RECIPE>(prefix) {
+    HTProgressRecipeBuilder<RECIPE>(prefix),
+    HTItemOrFluidResultAcceptor {
     override fun getRecipeId(): Identifier? = itemResults.firstOrNull()?.getId() ?: fluidResult.getOrNull()?.getId()
 
     override fun createRecipe(): RECIPE = factory.create(
@@ -55,26 +54,12 @@ class HTItemSeparatingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, priv
         ?.let(HTItemSeparatingRecipe::Result)
         ?: error("Either item or fluid result required")
 
-    operator fun HTItemResult.unaryPlus() {
+    override operator fun HTItemResult.unaryPlus() {
         itemResults += this
     }
 
-    operator fun HTFluidResult.unaryPlus() {
+    override operator fun HTFluidResult.unaryPlus() {
         fluidResult = Optional.of(this)
-    }
-
-    inline fun itemResult(builderAction: HTItemResultBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        +HTItemResultBuilder.build(builderAction)
-    }
-
-    inline fun fluidResult(builderAction: HTFluidResultBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        +HTFluidResultBuilder.build(builderAction)
     }
 
     //    Factory    //

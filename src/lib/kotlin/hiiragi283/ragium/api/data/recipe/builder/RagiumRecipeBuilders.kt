@@ -3,7 +3,8 @@
 package hiiragi283.ragium.api.data.recipe.builder
 
 import hiiragi283.lib.data.recipe.builder.HTFluidSeparatingRecipeBuilder
-import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToFluidRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemOrFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
@@ -95,12 +96,12 @@ data object RagiumRecipeBuilders {
 
     @JvmStatic
     inline fun filling(
-        builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTFillingRecipe>.() -> Unit,
-    ): HTItemAndFluidToRecipeBuilder.ToItem<RTFillingRecipe> {
+        builderAction: HTItemAndFluidToItemRecipeBuilder<RTFillingRecipe>.() -> Unit,
+    ): HTItemAndFluidToItemRecipeBuilder<RTFillingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemAndFluidToRecipeBuilder.ToItem(RagiumConstants.FILLING, ::RTFillingRecipe).apply(builderAction)
+        return HTItemAndFluidToItemRecipeBuilder(RagiumConstants.FILLING, ::RTFillingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -171,12 +172,12 @@ data object RagiumRecipeBuilders {
     // Chemical
     @JvmStatic
     inline fun bathing(
-        builderAction: HTItemAndFluidToRecipeBuilder.ToItem<RTBathingRecipe>.() -> Unit,
-    ): HTItemAndFluidToRecipeBuilder.ToItem<RTBathingRecipe> {
+        builderAction: HTItemAndFluidToItemRecipeBuilder<RTBathingRecipe>.() -> Unit,
+    ): HTItemAndFluidToItemRecipeBuilder<RTBathingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemAndFluidToRecipeBuilder.ToItem(RagiumConstants.BATHING, ::RTBathingRecipe).apply(builderAction)
+        return HTItemAndFluidToItemRecipeBuilder(RagiumConstants.BATHING, ::RTBathingRecipe).apply(builderAction)
     }
 
     @JvmStatic
@@ -198,12 +199,12 @@ data object RagiumRecipeBuilders {
     // Resource
     @JvmStatic
     inline fun brewing(
-        builderAction: HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe>.() -> Unit,
-    ): HTItemAndFluidToRecipeBuilder.ToFluid<RTBrewingRecipe> {
+        builderAction: HTItemAndFluidToFluidRecipeBuilder<RTBrewingRecipe>.() -> Unit,
+    ): HTItemAndFluidToFluidRecipeBuilder<RTBrewingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemAndFluidToRecipeBuilder.ToFluid(RagiumConstants.BREWING, ::RTBrewingRecipe).apply(builderAction)
+        return HTItemAndFluidToFluidRecipeBuilder(RagiumConstants.BREWING, ::RTBrewingRecipe).apply(builderAction)
     }
 
     @JvmStatic

@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.color.HTColoredCollection
 import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.and
 import hiiragi283.ragium.api.RagiumAPI

@@ -5,6 +5,7 @@ import hiiragi283.lib.collection.asSequence
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.getOrPut
 import hiiragi283.lib.color.VanillaColoredCollections
+import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.lib.recipe.lookup.fromRecipeType
