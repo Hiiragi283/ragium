@@ -1,12 +1,18 @@
 {
   "type": "ragium:transforming",
-  "energy": 4000,
   "ingredient": {
-    "count": 1,
-    "items": "#c:obsidians/normal"
+    "fluid": {
+      "amount": 500,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:obsidians/normal"
+    }
   },
   "result": {
     "count": 1,
     "id": "minecraft:crying_obsidian"
-  }
+  },
+  "time": 200
 }

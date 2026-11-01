@@ -1,12 +1,18 @@
 {
   "type": "ragium:transforming",
-  "energy": 6000,
   "ingredient": {
-    "count": 1,
-    "items": "ragium:elder_heart"
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "ragium:elder_heart"
+    }
   },
   "result": {
     "count": 1,
     "id": "minecraft:heart_of_the_sea"
-  }
+  },
+  "time": 200
 }

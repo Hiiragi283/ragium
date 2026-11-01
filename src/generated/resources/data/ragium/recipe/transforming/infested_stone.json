@@ -1,12 +1,18 @@
 {
   "type": "ragium:transforming",
-  "energy": 2000,
   "ingredient": {
-    "count": 1,
-    "items": "minecraft:stone"
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "minecraft:stone"
+    }
   },
   "result": {
     "count": 1,
     "id": "minecraft:infested_stone"
-  }
+  },
+  "time": 200
 }

@@ -208,10 +208,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 guiHelper.createDrawableItemLike(RagiumBlocks.ENCHANTER),
                 HTBackgroundType.EXTRA_INPUT,
             ),
-            HTSingleToSingleViewerRecipeCategory(
+            HTDoubleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.TRANSFORMING,
                 RagiumRecipeTypes.TRANSFORMING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.ARCANE_TRANSFORMER),
+                HTBackgroundType.INPUT,
             ),
         )
     }
@@ -284,7 +285,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 recipe.progressData,
             )
         }
-        registration.addRecipes(RagiumJeiRecipeTypes.TRANSFORMING, RagiumRecipeLookups.TRANSFORMING, HTViewerRecipeHelper::singleToSingle)
+        registration.addRecipes(RagiumJeiRecipeTypes.TRANSFORMING, RagiumRecipeLookups.TRANSFORMING, HTViewerRecipeHelper::itemAndFluidToItem)
         // registerDynamicRecipes(registration)
     }
 

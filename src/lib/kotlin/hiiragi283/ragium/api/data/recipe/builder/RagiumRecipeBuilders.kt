@@ -248,11 +248,11 @@ data object RagiumRecipeBuilders {
 
     @JvmStatic
     inline fun transforming(
-        builderAction: HTItemToItemRecipeBuilder<RTTransformingRecipe>.() -> Unit,
-    ): HTItemToItemRecipeBuilder<RTTransformingRecipe> {
+        builderAction: HTItemAndFluidToItemRecipeBuilder<RTTransformingRecipe>.() -> Unit,
+    ): HTItemAndFluidToItemRecipeBuilder<RTTransformingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSingleRecipeBuilder.Basic(RagiumConstants.TRANSFORMING, ::RTTransformingRecipe).apply(builderAction)
+        return HTItemAndFluidToItemRecipeBuilder(RagiumConstants.TRANSFORMING, ::RTTransformingRecipe).apply(builderAction)
     }
 }

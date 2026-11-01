@@ -1,12 +1,18 @@
 {
   "type": "ragium:transforming",
-  "energy": 3000,
   "ingredient": {
-    "count": 1,
-    "items": "#c:drinks/honey"
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:drinks/honey"
+    }
   },
   "result": {
     "count": 1,
     "id": "minecraft:experience_bottle"
-  }
+  },
+  "time": 200
 }

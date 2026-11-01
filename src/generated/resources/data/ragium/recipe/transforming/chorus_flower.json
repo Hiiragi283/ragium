@@ -1,12 +1,18 @@
 {
   "type": "ragium:transforming",
-  "energy": 2000,
   "ingredient": {
-    "count": 1,
-    "items": "#c:flowers/small"
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:flowers/small"
+    }
   },
   "result": {
     "count": 1,
     "id": "minecraft:chorus_flower"
-  }
+  },
+  "time": 200
 }

@@ -198,6 +198,9 @@ data object RagiumConfig {
 
             // Arcane
             @JvmField
+            val arcaneTransformer: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.ARCANE_TRANSFORMER, 256)
+
+            @JvmField
             val enchanter: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.ENCHANTER, 256)
 
             @JvmField

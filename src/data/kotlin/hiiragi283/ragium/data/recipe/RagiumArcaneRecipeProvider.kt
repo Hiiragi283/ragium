@@ -7,6 +7,7 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -60,87 +61,114 @@ class RagiumArcaneRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             Items.DEEPSLATE to Items.INFESTED_DEEPSLATE,
         ).forEach { (base: Item, infested: Item) ->
             RagiumRecipeBuilders.transforming {
-                ingredient { items { +base } }
+                itemIngredient { items { +base } }
+                fluidIngredient {
+                    +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE)
+                    amount /= 8
+                }
                 result { +infested }
-                energy = 10 * 20 * 10
             }.save(exporter)
         }
         // Glass -> Quartz
         RagiumRecipeBuilders.transforming {
-            ingredient { +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP) }
+            itemIngredient { +holderSet(Tags.Items.GLASS_BLOCKS_CHEAP) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE)
+                amount /= 8
+            }
             result { +Items.QUARTZ }
-            energy = 10 * 20 * 10
-        }.save(exporter)
-        // Small Flower -> Chorus Flower
-        RagiumRecipeBuilders.transforming {
-            ingredient { +holderSet(Tags.Items.FLOWERS_SMALL) }
-            result { +Items.CHORUS_FLOWER }
-            energy = 10 * 20 * 10
         }.save(exporter)
         // Snowball -> Wind Charge
         RagiumRecipeBuilders.transforming {
-            ingredient { items { +Items.SNOWBALL } }
+            itemIngredient { items { +Items.SNOWBALL } }
+            fluidIngredient {
+                +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE)
+                amount /= 8
+            }
             result { +Items.WIND_CHARGE }
-            energy = 10 * 20 * 10
         }.save(exporter)
 
+        // Small Flower -> Chorus Flower
+        RagiumRecipeBuilders.transforming {
+            itemIngredient { +holderSet(Tags.Items.FLOWERS_SMALL) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE)
+                amount /= 4
+            }
+            result { +Items.CHORUS_FLOWER }
+        }.save(exporter)
         // Shroomlight -> Glowstone Dust
         RagiumRecipeBuilders.transforming {
-            ingredient { items { +Items.SHROOMLIGHT } }
+            itemIngredient { items { +Items.SHROOMLIGHT } }
+            fluidIngredient {
+                +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE)
+                amount /= 4
+            }
             result { +Items.GLOWSTONE }
-            energy = 15 * 20 * 10
         }.save(exporter)
         // Honey Bottle -> Exp Bottle
         RagiumRecipeBuilders.transforming {
-            ingredient { +holderSet(Tags.Items.DRINKS_HONEY) }
+            itemIngredient { +holderSet(Tags.Items.DRINKS_HONEY) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE)
+                amount /= 4
+            }
             result { +Items.EXPERIENCE_BOTTLE }
-            energy = 15 * 20 * 10
         }.save(exporter)
         // TODO: Ender Pearl
 
         // Amethyst Block -> Budding Amethyst
         RagiumRecipeBuilders.transforming {
-            ingredient { items { +Items.AMETHYST_BLOCK } }
+            itemIngredient { items { +Items.AMETHYST_BLOCK } }
+            fluidIngredient {
+                +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE)
+                amount /= 2
+            }
             result { +Items.BUDDING_AMETHYST }
-            energy = 20 * 20 * 10
         }.save(exporter)
         // Obsidian -> Crying Obsidian
         RagiumRecipeBuilders.transforming {
-            ingredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
+            itemIngredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE)
+                amount /= 2
+            }
             result { +Items.CRYING_OBSIDIAN }
-            energy = 20 * 20 * 10
         }.save(exporter)
         // Skull -> Wither Skull
         RagiumRecipeBuilders.transforming {
-            ingredient { items { +Items.SKELETON_SKULL } }
+            itemIngredient { items { +Items.SKELETON_SKULL } }
+            fluidIngredient {
+                +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE)
+                amount /= 2
+            }
             result { +Items.WITHER_SKELETON_SKULL }
-            energy = 20 * 20 * 10
         }.save(exporter)
+
         // Player Head -> Dragon Head
         RagiumRecipeBuilders.transforming {
-            ingredient { items { +Items.PLAYER_HEAD } }
+            itemIngredient { items { +Items.PLAYER_HEAD } }
+            fluidIngredient { +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE) }
             result { +Items.DRAGON_HEAD }
-            energy = 20 * 20 * 10
         }.save(exporter)
         // Diamond Block -> Netherite Smithing Template
         RagiumRecipeBuilders.transforming {
-            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Gem.DIAMOND) }
+            itemIngredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Gem.DIAMOND) }
+            fluidIngredient { +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE) }
             result { +Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE }
-            energy = 20 * 20 * 10
         }.save(exporter)
-
         // Elder Heart -> Heart of the Sea
         RagiumRecipeBuilders.transforming {
-            ingredient { items { +RagiumItems.ELDER_HEART } }
+            itemIngredient { items { +RagiumItems.ELDER_HEART } }
+            fluidIngredient { +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE) }
             result { +Items.HEART_OF_THE_SEA }
-            energy = 30 * 20 * 10
         }.save(exporter)
         // TODO: Heavy Core
         // Wither Star -> Nether Star
         RagiumRecipeBuilders.transforming {
-            ingredient { items { +RagiumItems.WITHER_STAR } }
+            itemIngredient { items { +RagiumItems.WITHER_STAR } }
+            fluidIngredient { +holderSet(RagiumFluids.ENCHANTED_EXPERIENCE) }
             result { +Items.NETHER_STAR }
-            energy = 30 * 20 * 20
         }.save(exporter)
     }
 
