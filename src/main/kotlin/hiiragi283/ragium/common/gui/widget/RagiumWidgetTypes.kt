@@ -18,6 +18,9 @@ data object RagiumWidgetTypes {
         REGISTER.register(name, HTWidgetType.Companion::simple)
 
     @JvmField
+    val ENCHANTMENT: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTEnchantmentWidget>> = register(HTConstants.ENCHANTMENT)
+
+    @JvmField
     val ENERGY: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTEnergySlotWidget>> = register(HTConstants.ENERGY)
 
     @JvmField

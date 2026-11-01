@@ -234,6 +234,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.ENGRAVING, "Laser Engraving")
 
         addRecipeType(RagiumRecipeTypes.ENCHANTING, "Enchanting")
+        addRecipeType(RagiumRecipeTypes.TRANSFORMING, "Transforming")
 
         // Text - Lib
         add(HTCommonTranslation.ERROR, "Error")
@@ -255,6 +256,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(HTCommonTranslation.SECONDS, $$"%1$s sec (%2$s ticks)")
 
         add(HTCommonTranslation.BIOME, $$"Biome: %1$s")
+        add(HTCommonTranslation.ENCHANTMENT_POWER, $$"Enchantment Power: %1$s")
 
         add(HTCommonTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(HTCommonTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")

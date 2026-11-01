@@ -487,7 +487,8 @@
     "pyrolyzing",
     "reacting",
     "refining",
-    "resource/pumping"
+    "resource/pumping",
+    "transforming"
   ],
   "minecraft:recipe_type": [
     "alloying",
@@ -510,7 +511,8 @@
     "pyrolyzing",
     "reacting",
     "refining",
-    "resource/pumping"
+    "resource/pumping",
+    "transforming"
   ],
   "minecraft:slot_display": [
     "sized"
@@ -606,6 +608,7 @@
     "long"
   ],
   "ragium:widget_type": [
+    "enchantment",
     "energy",
     "fluid",
     "item",

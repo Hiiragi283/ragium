@@ -94,6 +94,9 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
 
         RagiumRecipeLookups.ENGRAVING.fromRecipeType(RagiumRecipeTypes.ENGRAVING, identity())
+
+        RagiumRecipeLookups.ENCHANTING.fromRecipeType(RagiumRecipeTypes.ENCHANTING, identity())
+        RagiumRecipeLookups.TRANSFORMING.fromRecipeType(RagiumRecipeTypes.TRANSFORMING, identity())
         // runtime recipes
         RagiumRecipeLookups.CENTRIFUGING.addRecipes(
             buildMap {

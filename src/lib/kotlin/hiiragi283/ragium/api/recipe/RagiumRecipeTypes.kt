@@ -102,4 +102,7 @@ data object RagiumRecipeTypes {
     // Arcane
     @JvmField
     val ENCHANTING: RecipeType<RTEnchantingRecipe> = create(RagiumConstants.ENCHANTING)
+
+    @JvmField
+    val TRANSFORMING: RecipeType<RTTransformingRecipe> = create(RagiumConstants.TRANSFORMING)
 }

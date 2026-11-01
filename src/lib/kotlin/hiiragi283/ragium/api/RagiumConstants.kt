@@ -101,4 +101,5 @@ data object RagiumConstants {
 
     // Arcane
     const val ENCHANTING = "enchanting"
+    const val TRANSFORMING = "transforming"
 }

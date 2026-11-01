@@ -230,6 +230,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.ENGRAVING, "レーザー加工")
 
         addRecipeType(RagiumRecipeTypes.ENCHANTING, "エンチャント")
+        addRecipeType(RagiumRecipeTypes.TRANSFORMING, "変異")
 
         // Text - Lib
         add(HTCommonTranslation.ERROR, "エラー")
@@ -251,6 +252,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(HTCommonTranslation.SECONDS, $$"%1$s 秒 (%2$s ticks)")
 
         add(HTCommonTranslation.BIOME, $$"バイオーム: %1$s")
+        add(HTCommonTranslation.ENCHANTMENT_POWER, $$"エンチャントパワー: %1$s")
 
         add(HTCommonTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
         add(HTCommonTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")

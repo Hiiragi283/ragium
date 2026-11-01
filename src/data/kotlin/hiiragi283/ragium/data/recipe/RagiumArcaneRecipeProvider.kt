@@ -3,19 +3,23 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
+import hiiragi283.lib.recipe.ingredient.HTEnchantmentPowerCondition
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.RagiumMaterial
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantments
+import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
 class RagiumArcaneRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
         enchanting()
+        transforming()
     }
 
     private fun enchanting() {
@@ -40,6 +44,15 @@ class RagiumArcaneRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 }
             }
             recipeId replace id("diamond_armor")
+        }.save(exporter)
+    }
+
+    private fun transforming() {
+        // Honey Bottle -> Exp Bottle
+        RagiumRecipeBuilders.transforming {
+            ingredient { +holderSet(Tags.Items.DRINKS_HONEY) }
+            +HTEnchantmentPowerCondition.atLeast(15)
+            result { +Items.EXPERIENCE_BOTTLE }
         }.save(exporter)
     }
 

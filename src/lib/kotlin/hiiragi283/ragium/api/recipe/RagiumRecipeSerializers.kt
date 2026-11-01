@@ -122,4 +122,8 @@ data object RagiumRecipeSerializers {
     @JvmField
     val ENCHANTING: RecipeSerializer<RTEnchantingRecipe> =
         register(RagiumConstants.ENCHANTING, RTEnchantingRecipe.SERIALIZER)
+
+    @JvmField
+    val TRANSFORMING: RecipeSerializer<RTTransformingRecipe> =
+        register(RagiumConstants.TRANSFORMING, RTTransformingRecipe.SERIALIZER)
 }

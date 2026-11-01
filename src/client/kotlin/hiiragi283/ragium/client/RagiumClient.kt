@@ -19,6 +19,7 @@ import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.screen.tooltip.HTMemoryDiscClientTooltipComponent
+import hiiragi283.ragium.client.gui.widget.HTEnchantmentWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTItemWidgetRenderer
@@ -81,6 +82,7 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
+        event.register(RagiumWidgetTypes.ENCHANTMENT.get(), ::HTEnchantmentWidgetRenderer)
         event.register(RagiumWidgetTypes.ENERGY.get(), ::HTEnergySlotWidgetRenderer)
         event.register(RagiumWidgetTypes.FLUID.get(), ::HTFluidWidgetRenderer)
         event.register(RagiumWidgetTypes.ITEM.get(), ::HTItemWidgetRenderer)

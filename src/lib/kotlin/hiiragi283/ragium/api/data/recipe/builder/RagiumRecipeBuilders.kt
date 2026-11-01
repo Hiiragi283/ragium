@@ -243,4 +243,12 @@ data object RagiumRecipeBuilders {
         }
         return HTSingleRecipeBuilder.Basic(RagiumConstants.ENCHANTING, ::RTEnchantingRecipe).apply(builderAction)
     }
+
+    @JvmStatic
+    inline fun transforming(builderAction: RTTransformingRecipeBuilder.() -> Unit): RTTransformingRecipeBuilder {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return RTTransformingRecipeBuilder().apply(builderAction)
+    }
 }

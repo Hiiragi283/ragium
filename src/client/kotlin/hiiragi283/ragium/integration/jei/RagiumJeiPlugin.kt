@@ -16,6 +16,7 @@ import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.display.HTDisplayableContent
+import hiiragi283.lib.recipe.viewer.HTCatalysedSingleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTSingleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTViewerRecipeHelper
@@ -28,6 +29,7 @@ import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTReactingRecipe
 import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
+import hiiragi283.ragium.api.recipe.RTTransformingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
@@ -208,6 +210,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 guiHelper.createDrawableItemLike(RagiumBlocks.ENCHANTER),
                 HTBackgroundType.EXTRA_INPUT,
             ),
+            HTCatalysedSingleToSingleViewerRecipeCategory(
+                RagiumJeiRecipeTypes.TRANSFORMING,
+                RagiumRecipeTypes.TRANSFORMING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING),
+            ),
         )
     }
 
@@ -275,6 +282,18 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 key.identifier(),
                 RTEnchantingRecipe.BOOK_INGREDIENT.display(),
                 recipe.ingredient.display(),
+                recipe.result.display(),
+                recipe.progressData,
+            )
+        }
+        registration.addRecipes(
+            RagiumJeiRecipeTypes.TRANSFORMING,
+            RagiumRecipeLookups.TRANSFORMING,
+        ) { (key: RecipeKey, recipe: RTTransformingRecipe) ->
+            HTCatalysedSingleToSingleViewerRecipe(
+                key.identifier(),
+                recipe.ingredient.display(),
+                recipe.condition.display(),
                 recipe.result.display(),
                 recipe.progressData,
             )
