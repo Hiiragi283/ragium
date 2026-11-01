@@ -39,6 +39,7 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yield(RagiumBlocks.CREATIVE_BATTERY)
 
             yield(RagiumBlocks.UPGRADE_STATION)
+            yield(RagiumBlocks.ENCHANTMENT_ABSORBER)
         }.forEach(pickaxe::add)
     }
 }

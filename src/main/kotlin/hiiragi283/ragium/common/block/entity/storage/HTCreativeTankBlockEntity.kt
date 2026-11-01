@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.storage
 
-import hiiragi283.ragium.api.util.HTStorageHelper
+import hiiragi283.lib.transfer.fluid.HTFluidTankUtil
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.entity.storage.base.HTBaseTankBlockEntity
 import hiiragi283.ragium.common.transfer.fluid.HTCreativeFluidTank
@@ -25,11 +25,11 @@ class HTCreativeTankBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun applyImplicitComponents(components: DataComponentGetter) {
         super.applyImplicitComponents(components)
-        tank.resource = HTStorageHelper.getFluid(components).let(FluidResource::of)
+        tank.resource = HTFluidTankUtil.getFluid(components).let(FluidResource::of)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        HTStorageHelper.updateFluid(components, tank.resource.toStack(1))
+        HTFluidTankUtil.updateFluid(components, tank.resource.toStack(1))
     }
 }

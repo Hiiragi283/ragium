@@ -14,6 +14,7 @@ typealias ExpValue = Long
 typealias ExpLevel = Int
 
 /**
+ * @author Hiiragi Tsubasa
  * @since 26.1.13
  */
 data object HTExperienceHelper {

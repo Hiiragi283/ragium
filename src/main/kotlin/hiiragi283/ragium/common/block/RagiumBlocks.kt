@@ -16,6 +16,7 @@ import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.ItemWithContextFactory
 import hiiragi283.lib.resource.vanillaId
+import hiiragi283.lib.transfer.fluid.HTFluidTankUtil
 import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
@@ -23,8 +24,8 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.block.misc.HTEnchantmentAbsorberBlock
 import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock
 import hiiragi283.ragium.common.block.storage.HTPotionTankBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
@@ -432,6 +433,10 @@ data object RagiumBlocks {
     val UPGRADE_STATION: HTBasicDeferredBlockAndItem<HTUpgradeStationBlock> =
         registerWithBE(RagiumBlockEntityTypes.UPGRADE_STATION, ::HTUpgradeStationBlock)
 
+    @JvmField
+    val ENCHANTMENT_ABSORBER: HTBasicDeferredBlockAndItem<HTEnchantmentAbsorberBlock> =
+        registerWithBE(RagiumBlockEntityTypes.ENCHANTMENT_ABSORBER, ::HTEnchantmentAbsorberBlock)
+
     //    Decoration    //
 
     @JvmField
@@ -487,7 +492,7 @@ data object RagiumBlocks {
         event.registerItem(
             HTFluidCapabilities.item,
             { stack: ItemStack, _ ->
-                HTStorageHelper.getFluid(stack)
+                HTFluidTankUtil.getFluid(stack)
                     .let(FluidResource::of)
                     .takeUnless(FluidResource::isEmpty)
                     ?.let(::InfiniteResourceHandler)

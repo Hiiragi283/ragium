@@ -42,6 +42,11 @@ sealed class HTFluidContent(
      */
     fun isOf(instance: TypedInstance<Fluid>): Boolean = sourceHolder.isOf(instance)
 
+    /**
+     * @since 26.1.13
+     */
+    fun isOfTag(instance: TypedInstance<Fluid>): Boolean = instance.`is`(fluidTag)
+
     override fun asTemplate(amount: Int, patch: DataComponentPatch): DataResult<FluidStackTemplate> = when {
         sourceHolder.isEmpty -> DataResult.error { "Could not create FluidStackTemplate with empty fluid" }
         else -> sourceHolder.asResult().map { FluidStackTemplate(it, amount, patch) }

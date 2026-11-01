@@ -113,6 +113,10 @@ data object RagiumClient : HTClientMod() {
             transparent()
             colorTint(Color(0x99ff00))
         }
+        register.register(RagiumFluids.ENCHANTED_EXPERIENCE) {
+            transparent()
+            colorTint(Color(0xcc00ff))
+        }
         for (color: DyeColor in DyeColor.entries) {
             register.register(RagiumFluids.DYES[color]) {
                 dull()

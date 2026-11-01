@@ -5,8 +5,8 @@ import hiiragi283.lib.gui.HTGuiAccess
 import hiiragi283.lib.gui.HTGuiRenderHelper
 import hiiragi283.lib.gui.HTSpriteRenderHelper
 import hiiragi283.lib.gui.widget.HTAbstractWidgetRenderer
+import hiiragi283.lib.transfer.fluid.HTFluidTankUtil
 import hiiragi283.lib.transfer.fluid.getFluidStack
-import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.renderer.RenderPipelines
@@ -32,7 +32,7 @@ class HTFluidWidgetRenderer(gui: HTGuiAccess, widget: HTFluidWidget) : HTAbstrac
         renderFluid(bounds, graphics)
         // Render tooltip
         renderTooltips(bounds, graphics, mouseX, mouseY) { context: Item.TooltipContext, flag: TooltipFlag ->
-            buildList { HTStorageHelper.addFluidTooltip(widget.getFluidStack(), this::add, context, flag, false) }
+            buildList { HTFluidTankUtil.addFluidTooltip(widget.getFluidStack(), this::add, context, flag, false) }
         }
     }
 

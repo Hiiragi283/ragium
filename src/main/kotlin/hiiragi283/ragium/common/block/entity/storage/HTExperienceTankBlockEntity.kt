@@ -42,21 +42,19 @@ class HTExperienceTankBlockEntity(pos: BlockPos, state: BlockState) :
             player?.let { HTExperienceHelper.setPlayerExp(it, snapshot) }
         }
 
-        override fun isValid(resource: FluidResource): Boolean = RagiumFluids.EXPERIENCE.isOf(resource)
+        override fun isValid(resource: FluidResource): Boolean = RagiumFluids.EXPERIENCE.isOfTag(resource)
 
         override fun insert(resource: FluidResource, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
             TransferPreconditions.checkNonEmptyNonNegative(resource, amount)
             val amountIn: Int = this.amount
-            if (amountIn == 0 || this.resource == resource) {
-                if (isValid(resource)) {
-                    val needed: Int = getNeeded(resource)
-                    val inserted: Int = minOf(amount, needed)
-                    val inserted1: Int = inserted - (inserted % HTExperienceHelper.getExpRatio())
-                    if (inserted1 > 0) {
-                        updateSnapshots(transaction)
-                        player?.let { HTExperienceHelper.setPlayerExp(it, playerExp + HTExperienceHelper.expAmountFromFluid(inserted1)) }
-                        return inserted1
-                    }
+            if (amountIn == 0 || isValid(resource)) {
+                val needed: Int = getNeeded(resource)
+                val inserted: Int = minOf(amount, needed)
+                val inserted1: Int = inserted - (inserted % HTExperienceHelper.getExpRatio())
+                if (inserted1 > 0) {
+                    updateSnapshots(transaction)
+                    player?.let { HTExperienceHelper.setPlayerExp(it, playerExp + HTExperienceHelper.expAmountFromFluid(inserted1)) }
+                    return inserted1
                 }
             }
             return 0
@@ -64,7 +62,7 @@ class HTExperienceTankBlockEntity(pos: BlockPos, state: BlockState) :
 
         override fun extract(resource: FluidResource, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int {
             TransferPreconditions.checkNonEmptyNonNegative(resource, amount)
-            if (this.resource == resource) {
+            if (isValid(resource)) {
                 val amountIn: Int = this.amount
                 val extracted: Int = minOf(amount, amountIn)
                 val extracted1: Int = extracted - (extracted % HTExperienceHelper.getExpRatio())

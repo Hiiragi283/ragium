@@ -86,6 +86,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")
 
         add(RagiumBlocks.UPGRADE_STATION, "Upgrade Station")
+        add(RagiumBlocks.ENCHANTMENT_ABSORBER, "Enchantment Absorber")
 
         add(RagiumBlocks.MACHINE_CASING, "Machine Casing")
         // Damage Type
@@ -93,6 +94,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add("death.attack.chemicalBurn.player", $$"%1$s was injured chemical burn while fighting %2$s")
         // Fluid
         addFluid(RagiumFluids.EXPERIENCE, "Experience")
+        addFluid(RagiumFluids.ENCHANTED_EXPERIENCE, "Enchanted Experience")
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
         addFluid(RagiumFluids.HONEY, "Honey")

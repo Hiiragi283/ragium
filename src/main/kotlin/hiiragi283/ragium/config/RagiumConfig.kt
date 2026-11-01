@@ -58,6 +58,9 @@ data object RagiumConfig {
         val machineTankCapacity: ModConfigSpec.IntValue = builder.definePositiveInt("machineTankCapacity", 8000)
 
         @JvmField
+        val enchantmentAbsorberTankCapacity: ModConfigSpec.IntValue = builder.definePositiveInt("enchantmentAbsorberTankCapacity", 8000)
+
+        @JvmField
         val dynamo: Dynamo
 
         @JvmField

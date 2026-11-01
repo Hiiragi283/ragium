@@ -36,6 +36,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTResourcePumpBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTScannerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.misc.HTEnchantmentAbsorberBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTUpgradeStationBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
@@ -207,6 +208,10 @@ data object RagiumBlockEntityTypes {
     val UPGRADE_STATION: HTDeferredBlockEntityType<HTUpgradeStationBlockEntity> =
         registerTick("upgrade_station", ::HTUpgradeStationBlockEntity)
 
+    @JvmField
+    val ENCHANTMENT_ABSORBER: HTDeferredBlockEntityType<HTEnchantmentAbsorberBlockEntity> =
+        registerTick("enchantment_absorber", ::HTEnchantmentAbsorberBlockEntity)
+
     //    Events    //
 
     @JvmStatic
@@ -272,5 +277,6 @@ data object RagiumBlockEntityTypes {
         ) { _, _ -> InfiniteEnergyHandler.INSTANCE }
         // Misc
         registerBlockEntity(UPGRADE_STATION.get())
+        registerBlockEntity(ENCHANTMENT_ABSORBER.get())
     }
 }

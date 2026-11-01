@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.item.block
 import hiiragi283.lib.fluid.createOrEmpty
 import hiiragi283.lib.item.HTSubCreativeTabContents
 import hiiragi283.lib.item.alchemy.HTPotionHelper
-import hiiragi283.ragium.api.util.HTStorageHelper
+import hiiragi283.lib.transfer.fluid.HTFluidTankUtil
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
@@ -23,7 +23,7 @@ class HTPotionTankBlockItem(block: Block, properties: Properties) :
             val stack = ItemStack(baseItem)
             HTPotionHelper
                 .createFluid(potion, amount = RagiumConfig.SERVER.tankCapacity.asInt)
-                .ifSuccess { HTStorageHelper.updateFluid(stack, it.createOrEmpty()) }
+                .ifSuccess { stack.applyComponents(HTFluidTankUtil.createUpdatedPatch(it.createOrEmpty())) }
             output.accept(stack)
         }
     }

@@ -82,6 +82,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.CREATIVE_BATTERY, "クリエイティブ用バッテリー")
 
         add(RagiumBlocks.UPGRADE_STATION, "強化ステーション")
+        add(RagiumBlocks.ENCHANTMENT_ABSORBER, "エンチャントパワー吸収器")
 
         add(RagiumBlocks.MACHINE_CASING, "機械ケーシング")
         // Damage Type
@@ -89,6 +90,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add("death.attack.chemicalBurn.player", $$"%1$sは%2$sと戦いながら化学火傷を負った")
         // Fluid
         addFluid(RagiumFluids.EXPERIENCE, "経験値")
+        addFluid(RagiumFluids.ENCHANTED_EXPERIENCE, "エンチャントされた経験値")
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
         addFluid(RagiumFluids.HONEY, "ハチミツ")

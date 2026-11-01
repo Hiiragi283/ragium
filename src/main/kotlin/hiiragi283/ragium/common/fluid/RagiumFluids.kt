@@ -66,6 +66,9 @@ data object RagiumFluids {
     val EXPERIENCE: HTFluidContent.Flowing = REGISTER.registerFlowing("experience") { properties = liquid() }
 
     @JvmField
+    val ENCHANTED_EXPERIENCE: HTFluidContent.Flowing = REGISTER.registerFlowing("enchanted_experience") { properties = liquid() }
+
+    @JvmField
     val POTION: HTFluidContent.Virtual = REGISTER.registerVirtual(HTConstants.POTION) {
         properties = liquid()
         typeFactory = ::HTPotionFluidType

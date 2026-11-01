@@ -120,6 +120,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         }
         // Misc
         generators.createTrivialBlock(RagiumBlocks.UPGRADE_STATION.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
+        generators.createTrivialBlock(RagiumBlocks.ENCHANTMENT_ABSORBER.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
     }
 
     private fun createMachineBlock(generators: BlockModelGenerators, block: HTSimpleValueWithKey<Block>, inactive: Identifier, active: Identifier) {

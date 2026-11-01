@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
-import hiiragi283.ragium.api.util.HTStorageHelper
+import hiiragi283.lib.transfer.fluid.HTFluidTankUtil
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.entity.storage.base.HTBaseTankBlockEntity
 import hiiragi283.ragium.common.transfer.fluid.HTVariableFluidTank
@@ -33,11 +33,11 @@ class HTPotionTankBlockEntity(pos: BlockPos, state: BlockState) : HTBaseTankBloc
 
     override fun applyImplicitComponents(components: DataComponentGetter) {
         super.applyImplicitComponents(components)
-        tank.setStack(HTStorageHelper.getFluid(components))
+        tank.setStack(HTFluidTankUtil.getFluid(components))
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        HTStorageHelper.updateFluid(components, tank.getStackCopy())
+        HTFluidTankUtil.updateFluid(components, tank.getStackCopy())
     }
 }
