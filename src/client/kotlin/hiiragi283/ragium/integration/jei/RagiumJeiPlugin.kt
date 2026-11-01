@@ -151,7 +151,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemOrFluidViewerRecipeCategory(
                 RagiumJeiRecipeTypes.DRYING,
                 RagiumRecipeTypes.DRYING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING),
+                guiHelper.createDrawableItemLike(RagiumBlocks.DRYER),
             ),
             HTCatalysedSingleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.FREEZING,
@@ -396,6 +396,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RagiumJeiRecipeTypes.PRESSING, RagiumBlocks.PRESS_MACHINE)
         // Heat
         registration.addCraftingStation(RagiumJeiRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.DRYING, RagiumBlocks.DRYER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.MELTING, RagiumBlocks.MELTER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)

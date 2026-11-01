@@ -2,6 +2,7 @@ package hiiragi283.lib.recipe.handler.cache
 
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
+import hiiragi283.lib.util.Either
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
@@ -38,6 +39,16 @@ data object HTRecipeCacheHelper {
     class MultiItem<RECIPE : Predicate<List<ItemInstance>>>(lookup: HTRecipeLookup<RECIPE>) :
         HTSingleRecipeCache<List<ItemInstance>, RECIPE>(lookup) {
         override fun isEmpty(input: List<ItemInstance>): Boolean = input.isEmpty() || input.all(HTIngredientHelper::isEmpty)
+    }
+
+    /**
+     * 1種類のアイテムまたは液体に対する[HTSingleRecipeCache]の実装クラスです。
+     * @since 26.1.13
+     */
+    class ItemOrFluid<RECIPE : Predicate<Either<ItemInstance, FluidInstance>>>(lookup: HTRecipeLookup<RECIPE>) :
+        HTSingleRecipeCache<Either<ItemInstance, FluidInstance>, RECIPE>(lookup) {
+        override fun isEmpty(input: Either<ItemInstance, FluidInstance>): Boolean =
+            input.fold(HTIngredientHelper::isEmpty, HTIngredientHelper::isEmpty)
     }
 
     //    Double    //

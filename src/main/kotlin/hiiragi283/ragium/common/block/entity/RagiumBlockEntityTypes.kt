@@ -23,6 +23,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
@@ -110,6 +111,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> =
         registerTick(RagiumConstants.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
+
+    @JvmField
+    val DRYER: HTDeferredBlockEntityType<HTDryerBlockEntity> =
+        registerTick(RagiumConstants.DRYER, ::HTDryerBlockEntity)
 
     @JvmField
     val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
@@ -231,6 +236,7 @@ data object RagiumBlockEntityTypes {
         registerBlockEntity(PRESS_MACHINE.get())
 
         registerBlockEntity(ALLOY_SMELTER.get())
+        registerBlockEntity(DRYER.get())
         registerBlockEntity(FREEZER.get())
         registerBlockEntity(MELTER.get())
         registerBlockEntity(PYROLYZER.get())

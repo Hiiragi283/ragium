@@ -38,18 +38,10 @@ abstract class HTItemAndFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos
         object : HTDoubleRecipeHandler.Cached<ItemInstance, FluidInstance, HTItemAndFluidStack, HTItemAndFluidRecipe>(
             HTRecipeCacheHelper.ItemAndFluid(lookup, true),
         ) {
-            private val inputTank: HTInputSlot<FluidInstance> by lazy {
-                HTInputHandlerHelper.forFluid(this@HTItemAndFluidBlockEntity.inputTank)
-            }
-            private val inputSlot: HTInputSlot<ItemInstance> by lazy {
-                HTInputHandlerHelper.forItem(this@HTItemAndFluidBlockEntity.inputSlot)
-            }
-            private val outputTank: HTOutputSlot<FluidStack> by lazy {
-                HTOutputSlotHelper.forFluid(this@HTItemAndFluidBlockEntity.outputTank)
-            }
-            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-                HTOutputSlotHelper.forItem(this@HTItemAndFluidBlockEntity.outputSlot)
-            }
+            private val inputTank: HTInputSlot<FluidInstance> by lazy { HTInputHandlerHelper.forFluid(this@HTItemAndFluidBlockEntity.inputTank) }
+            private val inputSlot: HTInputSlot<ItemInstance> by lazy { HTInputHandlerHelper.forItem(this@HTItemAndFluidBlockEntity.inputSlot) }
+            private val outputTank: HTOutputSlot<FluidStack> by lazy { HTOutputSlotHelper.forFluid(this@HTItemAndFluidBlockEntity.outputTank) }
+            private val outputSlot: HTOutputSlot<ItemStack> by lazy { HTOutputSlotHelper.forItem(this@HTItemAndFluidBlockEntity.outputSlot) }
 
             override fun createProgressor(): Progressor<ItemInstance, FluidInstance, HTItemAndFluidRecipe> = DoubleProgressor()
 

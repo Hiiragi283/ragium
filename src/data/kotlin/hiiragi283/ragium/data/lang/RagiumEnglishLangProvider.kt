@@ -55,6 +55,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.PRESS_MACHINE, "Press Machine")
 
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
+        add(RagiumBlocks.DRYER, "Dryer")
         add(RagiumBlocks.FREEZER, "Freezer")
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")

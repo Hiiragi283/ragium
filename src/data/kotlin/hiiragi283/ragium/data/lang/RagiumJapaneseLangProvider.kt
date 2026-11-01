@@ -51,6 +51,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.PRESS_MACHINE, "プレス機")
 
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
+        add(RagiumBlocks.DRYER, "乾燥機")
         add(RagiumBlocks.FREEZER, "冷凍機")
         add(RagiumBlocks.MELTER, "溶融炉")
         add(RagiumBlocks.PYROLYZER, "熱分解炉")

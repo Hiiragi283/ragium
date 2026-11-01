@@ -455,6 +455,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
 
         heat(RagiumBlocks.ALLOY_SMELTER) { items { +Items.BLAST_FURNACE } }
+        heat(RagiumBlocks.DRYER) { items { +Items.SOUL_SAND } }
         heat(RagiumBlocks.MELTER) { +holderSet(Tags.Items.BUCKETS_LAVA) }
 
         heat(RagiumBlocks.SMELTER) { items { +Items.FURNACE } }
