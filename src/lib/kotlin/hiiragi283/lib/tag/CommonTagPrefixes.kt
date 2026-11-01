@@ -37,6 +37,12 @@ data object CommonTagPrefixes {
     @JvmField
     val RAW_MATERIALS = HTTagPrefix("raw_materials", "raw_materials/%s")
 
+    /**
+     * @since 26.1.13
+     */
+    @JvmField
+    val SMALL_DUST = HTTagPrefix("small_dusts", "small_dusts/%s")
+
     @JvmField
     val TINY = HTTagPrefix("tiny", "tiny/%s")
 }

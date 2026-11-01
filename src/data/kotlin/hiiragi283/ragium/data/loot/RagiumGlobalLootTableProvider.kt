@@ -13,8 +13,9 @@ import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction
+import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import java.util.function.BiConsumer
 
@@ -28,50 +29,33 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
     class ForBlock(provider: HolderLookup.Provider) : RagiumGlobalLootTableProvider(provider) {
         override fun generate(output: BiConsumer<ResourceKey<LootTable>, LootTable.Builder>) {
             // Extra minerals from ores
+            // 砂利と同じドロップテーブル
+            val extraDrop: LootItemCondition.Builder = BonusLevelTableCondition.bonusLevelFlatChance(
+                fortune,
+                0.1f,
+                0.14285715f,
+                0.25f,
+                1.0f,
+            )
             output.accept(
                 RagiumGlobalLootTables.SULFUR_FROM_COAL_ORES,
-                buildTable {
-                    pool {
-                        +item(HTItemPart.DUST, RagiumMaterial.Chemical.SULFUR)
-                            .apply(ApplyBonusCount.addOreBonusCount(fortune))
-                    }
-                },
+                buildTable { pool { +item(HTItemPart.DUST, RagiumMaterial.Chemical.SULFUR).`when`(extraDrop) } },
             )
             output.accept(
                 RagiumGlobalLootTables.CINNABAR_FROM_REDSTONE_ORES,
-                buildTable {
-                    pool {
-                        +item(HTItemPart.GEM, RagiumMaterial.Gem.CINNABAR)
-                            .apply(ApplyBonusCount.addOreBonusCount(fortune))
-                    }
-                },
+                buildTable { pool { +item(HTItemPart.GEM, RagiumMaterial.Gem.CINNABAR).`when`(extraDrop) } },
             )
             output.accept(
                 RagiumGlobalLootTables.APATITE_FROM_LAPIS_ORES,
-                buildTable {
-                    pool {
-                        +item(HTItemPart.GEM, RagiumMaterial.Gem.APATITE)
-                            .apply(ApplyBonusCount.addOreBonusCount(fortune))
-                    }
-                },
+                buildTable { pool { +item(HTItemPart.GEM, RagiumMaterial.Gem.APATITE).`when`(extraDrop) } },
             )
             output.accept(
                 RagiumGlobalLootTables.CARBON_FROM_DIAMOND_ORES,
-                buildTable {
-                    pool {
-                        +item(HTItemPart.DUST, RagiumMaterial.Chemical.CARBON)
-                            .apply(ApplyBonusCount.addOreBonusCount(fortune))
-                    }
-                },
+                buildTable { pool { +item(HTItemPart.DUST, RagiumMaterial.Chemical.CARBON).`when`(extraDrop) } },
             )
             output.accept(
                 RagiumGlobalLootTables.FLUORITE_FROM_QUARTZ_ORES,
-                buildTable {
-                    pool {
-                        +item(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE)
-                            .apply(ApplyBonusCount.addOreBonusCount(fortune))
-                    }
-                },
+                buildTable { pool { +item(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE).`when`(extraDrop) } },
             )
         }
 
@@ -90,12 +74,7 @@ sealed class RagiumGlobalLootTableProvider(protected val provider: HolderLookup.
                     pool {
                         +LootItem
                             .lootTableItem(RagiumItems.ELDER_HEART)
-                            .apply(
-                                EnchantedCountIncreaseFunction.lootingMultiplier(
-                                    provider,
-                                    UniformGenerator.between(0f, 1f),
-                                ),
-                            )
+                            .apply(EnchantedCountIncreaseFunction.lootingMultiplier(provider, UniformGenerator.between(0f, 1f)))
                     }
                 },
             )

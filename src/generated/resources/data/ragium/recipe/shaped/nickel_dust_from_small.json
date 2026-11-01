@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:small_dusts/nickel",
+    "B": "ragium:small_nickel_dust"
+  },
+  "pattern": [
+    "AA",
+    "AB"
+  ],
+  "result": {
+    "id": "ragium:nickel_dust"
+  }
+}

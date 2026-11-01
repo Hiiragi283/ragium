@@ -76,7 +76,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.LAPIS)
                 count = 6
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.FLUORITE) }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.APATITE) }
             recipeId prefix oreProcessing
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
@@ -85,7 +85,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SILICA)
                 count = 4
             }
-            result { +Items.GOLD_NUGGET }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.FLUORITE) }
             recipeId prefix oreProcessing
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
@@ -112,7 +112,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.COPPER)
                 count = 3
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.NICKEL) }
             recipeId prefix oreProcessing
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
@@ -121,7 +120,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.IRON)
                 count = 2
             }
-            result { +Items.FLINT }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.NICKEL)
+                count = 2
+            }
             recipeId prefix oreProcessing
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
@@ -130,7 +132,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.GOLD)
                 count = 2
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Metal.SILVER) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.SILVER)
+                count = 2
+            }
             recipeId prefix oreProcessing
         }.save(exporter)
         // Alloying

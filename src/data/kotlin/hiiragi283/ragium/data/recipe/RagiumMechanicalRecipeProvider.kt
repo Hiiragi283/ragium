@@ -503,7 +503,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                     +VanillaColoredCollections.WOOL[color]
                     count = 2
                 }
-                recipeId suffix "_from_carpet"
+                recipeId replace id("wool_from_carpet", color.serializedName)
             }.save(exporter)
         }
 

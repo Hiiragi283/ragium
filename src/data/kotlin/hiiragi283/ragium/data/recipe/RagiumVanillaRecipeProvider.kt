@@ -746,6 +746,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         ingotToNugget(RagiumMaterial.Alloy.SOOTY_IRON)
         ingotToNugget(RagiumMaterial.Alloy.BLACK_STEEL)
         ingotToNugget(RagiumMaterial.Alloy.SHADOW_STEEL)
+        // 4x Small Dust -> Dust
+        smallToDust(RagiumMaterial.Metal.NICKEL)
+        smallToDust(RagiumMaterial.Metal.SILVER)
         // Gear
         RagiumItems.getOrThrow(HTItemPart.GEAR, RagiumMaterial.Other.WOOD).let { gear: HTSimpleDeferredItem ->
             val inputs: HolderSet<Item> = holderSet(ItemTags.PLANKS)
@@ -918,6 +921,19 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +ingot }
             group = ingot.id.path
             recipeId suffix "_from_nugget"
+        }.save(exporter)
+    }
+
+    private fun smallToDust(material: RagiumMaterial) {
+        val smallDust: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, material)
+        val dust: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, material)
+        VanillaRecipeBuilders.shaped {
+            +"AA"
+            +"AB"
+            define('A') { +holderSet(CommonTagPrefixes.SMALL_DUST, material) }
+            define('B') { items { +smallDust } }
+            result { +dust }
+            recipeId suffix "_from_small"
         }.save(exporter)
     }
 

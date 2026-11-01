@@ -86,6 +86,11 @@ enum class HTItemPart(private val idPattern: String, override val tagPrefix: HTT
     INGOT("%s_ingot", CommonTagPrefixes.INGOT, "%s Ingot", "%sインゴット"),
     NUGGET("%s_nugget", CommonTagPrefixes.NUGGET, "%s Nugget", "%sナゲット"),
     RAW("raw_%s", CommonTagPrefixes.RAW_MATERIALS, "Raw %s", "%sの原石"),
+
+    /**
+     * @since 26.1.13
+     */
+    SMALL_DUST("small_%s_dust", CommonTagPrefixes.SMALL_DUST, "Small %s Dust", "小さな%sの粉"),
     TINY("tiny_%s", CommonTagPrefixes.TINY, "Tiny %s", "小さな%s"),
     ;
 
