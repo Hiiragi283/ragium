@@ -131,7 +131,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             EnergyProgressor(),
             HTSingleRecipeHandler.Progressor<INPUT, RECIPE> {
             override fun getMaxProgress(recipe: RECIPE, input: INPUT): Int {
-                val requiredEnergy: Int = recipe.getProgressData(input).getTotalEnergy(this.baseEnergyPerTick)
+                val requiredEnergy: Int = recipe.getProgressData(input).time * this.baseEnergyPerTick
                 return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
             }
         }
@@ -140,7 +140,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             EnergyProgressor(),
             HTDoubleRecipeHandler.Progressor<IN_A, IN_B, RECIPE> {
             override fun getMaxProgress(recipe: RECIPE, first: IN_A, second: IN_B): Int {
-                val requiredEnergy: Int = recipe.getProgressData(first, second).getTotalEnergy(this.baseEnergyPerTick)
+                val requiredEnergy: Int = recipe.getProgressData(first, second).time * this.baseEnergyPerTick
                 return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
             }
         }
@@ -149,7 +149,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             EnergyProgressor(),
             HTTripleRecipeHandler.Progressor<IN_A, IN_B, IN_C, RECIPE> {
             override fun getMaxProgress(recipe: RECIPE, first: IN_A, second: IN_B, third: IN_C): Int {
-                val requiredEnergy: Int = recipe.getProgressData(first, second, third).getTotalEnergy(this.baseEnergyPerTick)
+                val requiredEnergy: Int = recipe.getProgressData(first, second, third).time * this.baseEnergyPerTick
                 return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
             }
         }
