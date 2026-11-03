@@ -3,7 +3,13 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "#c:ores/gold"
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:ores/gold",
+          "c:raw_materials/gold"
+        ]
+      }
     },
     {
       "count": 1,

@@ -89,9 +89,9 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Gem.APATITE, HTItemPart.DUST, HTItemPart.GEM)
                 // putAll(RagiumMaterial.Gem.CRYOLITE, HTItemPart.DUST, HTItemPart.GEM)
                 // Metal
-                putAll(RagiumMaterial.Metal.COPPER, HTItemPart.DUST, HTItemPart.GEAR)
-                putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
-                putAll(RagiumMaterial.Metal.GOLD, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Metal.COPPER, HTItemPart.CRUSHED_ORES, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Metal.IRON, HTItemPart.CRUSHED_ORES, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Metal.GOLD, HTItemPart.CRUSHED_ORES, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Metal.NICKEL, HTItemPart.DUST, HTItemPart.SMALL_DUST)
                 putAll(RagiumMaterial.Metal.SILVER, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET, HTItemPart.SMALL_DUST)
@@ -107,6 +107,15 @@ data object RagiumItems {
                     putAll(dustLike, HTItemPart.DUST)
                 }
                 putAll(RagiumMaterial.Other.WOOD, HTItemPart.GEAR)
+                // Raws
+                setOf(
+                    RagiumMaterial.Fuel.COAL,
+                    RagiumMaterial.Gem.LAPIS,
+                    RagiumMaterial.Gem.QUARTZ,
+                    RagiumMaterial.Gem.DIAMOND,
+                    RagiumMaterial.Gem.EMERALD,
+                    RagiumMaterial.Other.REDSTONE,
+                ).forEach { putAll(it, HTItemPart.CRUSHED_ORES, HTItemPart.RAW) }
             },
             ::sortedSetOf,
         ).flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->

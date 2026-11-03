@@ -81,6 +81,11 @@ enum class HTItemPart(private val idPattern: String, override val tagPrefix: HTT
     HTPart,
     HTLangPatternProvider by provider {
     DUST("%s_dust", CommonTagPrefixes.DUST, "%s Dust", "%sの粉"),
+
+    /**
+     * @since 26.1.13
+     */
+    CRUSHED_ORES("crushed_%s_ore", CommonTagPrefixes.CRUSHED_ORES, "Crushed %s Ore", "粉砕された%s鉱石"),
     GEAR("%s_gear", CommonTagPrefixes.GEAR, "%s Gear", "%sの歯車"),
     GEM("%s", CommonTagPrefixes.GEM, HTLangPatternProvider.IDENTITY),
     INGOT("%s_ingot", CommonTagPrefixes.INGOT, "%s Ingot", "%sインゴット"),

@@ -2,17 +2,11 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "items": "#c:ores/quartz"
+    "items": "#c:crushed_ores/quartz"
   },
-  "results": [
-    {
-      "count": 4,
-      "id": "ragium:silica_dust"
-    },
-    {
-      "count": 1,
-      "id": "ragium:fluorite_dust"
-    }
-  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:silica_dust"
+  },
   "time": 200
 }

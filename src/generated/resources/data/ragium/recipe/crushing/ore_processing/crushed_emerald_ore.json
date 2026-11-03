@@ -1,0 +1,18 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:ores/emerald",
+        "c:raw_materials/emerald"
+      ]
+    }
+  },
+  "result": {
+    "count": 2,
+    "id": "ragium:crushed_emerald_ore"
+  },
+  "time": 200
+}

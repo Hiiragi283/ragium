@@ -2,17 +2,11 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "items": "#c:ores/redstone"
+    "items": "#c:crushed_ores/redstone"
   },
-  "results": [
-    {
-      "count": 6,
-      "id": "minecraft:redstone"
-    },
-    {
-      "count": 1,
-      "id": "ragium:cinnabar_dust"
-    }
-  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:redstone"
+  },
   "time": 200
 }

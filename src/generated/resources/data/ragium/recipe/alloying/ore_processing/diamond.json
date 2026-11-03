@@ -3,7 +3,13 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "#c:ores/diamond"
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:ores/diamond",
+          "c:raw_materials/diamond"
+        ]
+      }
     },
     {
       "count": 1,

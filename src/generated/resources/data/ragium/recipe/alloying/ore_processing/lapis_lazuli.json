@@ -3,7 +3,13 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "#c:ores/lapis"
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:ores/lapis",
+          "c:raw_materials/lapis"
+        ]
+      }
     },
     {
       "count": 1,

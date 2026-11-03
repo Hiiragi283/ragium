@@ -1,0 +1,24 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:ores/iron",
+        "c:raw_materials/iron"
+      ]
+    }
+  },
+  "results": [
+    {
+      "count": 2,
+      "id": "ragium:crushed_iron_ore"
+    },
+    {
+      "count": 1,
+      "id": "ragium:small_nickel_dust"
+    }
+  ],
+  "time": 200
+}

@@ -1,0 +1,10 @@
+{
+  "values": [
+    "#c:raw_materials/coal",
+    "#c:raw_materials/diamond",
+    "#c:raw_materials/emerald",
+    "#c:raw_materials/lapis",
+    "#c:raw_materials/quartz",
+    "#c:raw_materials/redstone"
+  ]
+}

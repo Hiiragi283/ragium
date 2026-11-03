@@ -16,9 +16,6 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
  * @see net.neoforged.neoforge.transfer.ResourceHandlerUtil
  */
 data object HTResourceSlotUtil {
-    /**
-     * 参照 : [NeoForge - ResourceHandlerUtil.getRedstoneSignalFromResourceHandler][net.neoforged.neoforge.transfer.ResourceHandlerUtil.getRedstoneSignalFromResourceHandler]
-     */
     @JvmStatic
     fun calculateRedstoneLevel(views: Iterable<HTResourceView<*>>): Int {
         var proportion = 0.0f
