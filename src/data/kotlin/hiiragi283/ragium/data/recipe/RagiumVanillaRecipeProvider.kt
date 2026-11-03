@@ -485,10 +485,17 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         RagiumRecipeBuilders.assembling {
             ingredient { items { +RagiumItems.getParts(HTMachineType.RESOURCE) } }
             ingredient {
-                items { +RagiumItems.ELECTRIC_CIRCUIT }
+                items { +RagiumItems.ADVANCED_CIRCUIT }
                 count = 2
             }
+            recipeId suffix "_advanced"
             result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.getParts(HTMachineType.RESOURCE) } }
+            ingredient { items { +RagiumItems.ELITE_CIRCUIT } }
+            result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
+            recipeId suffix "_elite"
         }.save(exporter)
 
         electronics(RagiumBlocks.BLENDER) { items { +RagiumBlocks.MIXER } }
@@ -749,6 +756,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         ingotToNugget(RagiumMaterial.Alloy.BLACK_STEEL)
         ingotToNugget(RagiumMaterial.Alloy.SHADOW_STEEL)
         // 4x Small Dust -> Dust
+        smallToDust(RagiumMaterial.Metal.GOLD)
         smallToDust(RagiumMaterial.Metal.NICKEL)
         smallToDust(RagiumMaterial.Metal.SILVER)
         // Gear

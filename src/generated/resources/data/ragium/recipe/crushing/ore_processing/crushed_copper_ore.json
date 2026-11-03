@@ -10,9 +10,15 @@
       ]
     }
   },
-  "result": {
-    "count": 2,
-    "id": "ragium:crushed_copper_ore"
-  },
+  "results": [
+    {
+      "count": 2,
+      "id": "ragium:crushed_copper_ore"
+    },
+    {
+      "count": 1,
+      "id": "ragium:small_gold_dust"
+    }
+  ],
   "time": 200
 }

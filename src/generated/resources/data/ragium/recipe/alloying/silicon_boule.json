@@ -1,0 +1,18 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 8,
+      "items": "#c:dusts/silicon"
+    },
+    {
+      "count": 1,
+      "items": "#c:dusts/raginite"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:silicon_boule"
+  },
+  "time": 3200
+}

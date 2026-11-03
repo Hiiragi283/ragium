@@ -1,0 +1,18 @@
+{
+  "type": "ragium:assembling",
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "ragium:circuit_board/blank"
+    },
+    {
+      "count": 3,
+      "items": "#c:nuggets/copper"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:circuit_board/basic"
+  },
+  "time": 200
+}

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": {
+    "count": 1,
+    "items": "ragium:silicon_boule"
+  },
+  "result": {
+    "count": 12,
+    "id": "ragium:silicon_wafer"
+  },
+  "time": 200
+}

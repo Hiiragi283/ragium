@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:dusts/lapis",
+    "B": "#c:dusts/redstone",
+    "C": "#c:dusts/glowstone",
+    "D": "ragium:circuit/basic"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "id": "ragium:circuit/advanced"
+  }
+}

@@ -59,6 +59,8 @@ data object RagiumItems {
         REGISTER.addAlias("sodium_hydroxide", "alkali_hydroxide")
         REGISTER.addAlias("soda_ash_dust", "alkali_carbonate")
         REGISTER.addAlias("cement", "mortar")
+        REGISTER.addAlias("circuit_board", "circuit_board/blank")
+        REGISTER.addAlias("electric_circuit", "circuit_board/advanced")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -91,7 +93,7 @@ data object RagiumItems {
                 // Metal
                 putAll(RagiumMaterial.Metal.COPPER, HTItemPart.CRUSHED_ORES, HTItemPart.DUST, HTItemPart.GEAR)
                 putAll(RagiumMaterial.Metal.IRON, HTItemPart.CRUSHED_ORES, HTItemPart.DUST, HTItemPart.GEAR)
-                putAll(RagiumMaterial.Metal.GOLD, HTItemPart.CRUSHED_ORES, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Metal.GOLD, HTItemPart.CRUSHED_ORES, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.SMALL_DUST)
                 putAll(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Metal.NICKEL, HTItemPart.DUST, HTItemPart.SMALL_DUST)
                 putAll(RagiumMaterial.Metal.SILVER, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET, HTItemPart.SMALL_DUST)
@@ -208,22 +210,34 @@ data object RagiumItems {
     val CRUDE_SILICON: HTSimpleDeferredItem = REGISTER.registerSimpleItem("crude_silicon")
 
     @JvmField
+    val SILICON_BOULE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_boule") { it.stacksTo(1) }
+
+    @JvmField
     val SILICON_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_wafer")
 
     @JvmField
-    val SILICON_CHIP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_chip")
+    val BLANK_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board/blank")
 
     @JvmField
-    val CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board")
+    val BASIC_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board/basic")
 
     @JvmField
-    val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit")
+    val ADVANCED_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board/advanced")
+
+    @JvmField
+    val ELITE_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board/elite")
+
+    @JvmField
+    val BASIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit/basic")
+
+    @JvmField
+    val ADVANCED_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit/advanced")
+
+    @JvmField
+    val ELITE_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit/elite")
 
     @JvmField
     val DIAMOND_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_wafer")
-
-    @JvmField
-    val DIAMOND_CHIP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_chip")
 
     // Arcane
     @JvmField

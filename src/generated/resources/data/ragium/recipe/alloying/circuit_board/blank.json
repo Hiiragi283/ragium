@@ -1,0 +1,18 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 1,
+      "items": "#c:plastics"
+    },
+    {
+      "count": 1,
+      "items": "#c:dusts/silica"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:circuit_board/blank"
+  },
+  "time": 200
+}
