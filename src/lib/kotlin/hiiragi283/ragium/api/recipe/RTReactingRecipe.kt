@@ -151,8 +151,8 @@ data class RTReactingRecipe(
         }
 
         fun test(items: List<ItemInstance>, fluids: List<FluidInstance>): Boolean = contents.fold(
-            { HTIngredientHelper.match(it, items) },
-            { HTIngredientHelper.match(it, fluids) },
+            { HTIngredientHelper.match(it, items) && HTIngredientHelper.isEmpty(fluids) },
+            { HTIngredientHelper.isEmpty(items) && HTIngredientHelper.match(it, fluids) },
             { items1: Nel<HTItemIngredient>, fluids1: Nel<HTFluidIngredient> ->
                 HTIngredientHelper.match(items1, items) && HTIngredientHelper.match(fluids1, fluids)
             },

@@ -6,6 +6,7 @@ import com.mojang.datafixers.kinds.App
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.DynamicOps
+import com.mojang.serialization.Keyable
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.MapLike
 import com.mojang.serialization.RecordBuilder
@@ -49,6 +50,13 @@ data object HTCodecs {
 
     @JvmStatic
     fun <K : Any, V : Any> mapOf(keyCodec: Codec<K>, valueCodec: Codec<V>): Codec<Map<K, V>> = Codec.unboundedMap(keyCodec, valueCodec)
+
+    /**
+     * @since 26.1.13
+     */
+    @JvmStatic
+    fun <K : Any, V : Any> mapMapOf(keyCodec: Codec<K>, valueCodec: Codec<V>, keys: Keyable): MapCodec<Map<K, V>> =
+        Codec.simpleMap(keyCodec, valueCodec, keys)
 
     /**
      * [Optional]でラップされた[Codec]を作成します。

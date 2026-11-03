@@ -60,6 +60,13 @@ data object HTIngredientHelper {
     }
 
     /**
+     * @since 26.1.13
+     */
+    @JvmName("isEmptyFluids")
+    @JvmStatic
+    fun isEmpty(instances: Iterable<FluidInstance>): Boolean = instances.none() || instances.all(::isEmpty)
+
+    /**
      * @since 26.1.7
      */
     @JvmStatic
@@ -160,6 +167,13 @@ data object HTIngredientHelper {
         is ItemStackTemplate -> false
         else -> instance.typeHolder().isAir || instance.count() <= 0
     }
+
+    /**
+     * @since 26.1.13
+     */
+    @JvmName("isEmptyItems")
+    @JvmStatic
+    fun isEmpty(instances: Iterable<ItemInstance>): Boolean = instances.none() || instances.all(::isEmpty)
 
     /**
      * @since 26.1.7

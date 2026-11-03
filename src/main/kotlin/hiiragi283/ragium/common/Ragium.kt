@@ -132,7 +132,7 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumRegistries.Keys.ITEM_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id(HTConstants.TAG), HTItemResult.TagEntry.TYPE)
-            helper.register(RagiumAPI.id("enchanted_book"), HTItemResult.EnchantedBookEntryN.TYPE)
+            helper.register(RagiumAPI.id("enchanted_book"), HTItemResult.EnchantedBookEntry.TYPE)
             helper.register(RagiumAPI.id("with_fallback"), HTItemResult.WithFallbackEntry.TYPE)
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->

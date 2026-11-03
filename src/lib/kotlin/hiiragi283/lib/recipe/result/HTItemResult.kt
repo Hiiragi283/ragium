@@ -224,21 +224,21 @@ data class HTItemResult(val entry: Entry, val count: Int) :
      * @since 26.1.6
      */
     @JvmRecord
-    data class EnchantedBookEntryN(val enchantments: Map<Holder<Enchantment>, Optional<Int>>) : Entry {
+    data class EnchantedBookEntry(val enchantments: Map<Holder<Enchantment>, Optional<Int>>) : Entry {
         companion object {
             @JvmField
-            val CODEC: MapCodec<EnchantedBookEntryN> = HTCodecs.mapOf(Enchantment.CODEC, HTCodecs.optional(HTCodecs.POSITIVE_INT))
+            val CODEC: MapCodec<EnchantedBookEntry> = HTCodecs.mapOf(Enchantment.CODEC, HTCodecs.optional(HTCodecs.POSITIVE_INT))
                 .fieldOf("enchantments")
-                .xmap(::EnchantedBookEntryN, EnchantedBookEntryN::enchantments)
+                .xmap(::EnchantedBookEntry, EnchantedBookEntry::enchantments)
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchantedBookEntryN> = HTStreamCodecs.mapOf(
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchantedBookEntry> = HTStreamCodecs.mapOf(
                 Enchantment.STREAM_CODEC,
                 ByteBufCodecs.VAR_INT.optionalOf(),
-            ).map(::EnchantedBookEntryN, EnchantedBookEntryN::enchantments)
+            ).map(::EnchantedBookEntry, EnchantedBookEntry::enchantments)
 
             @JvmField
-            val TYPE: HTItemResultType<EnchantedBookEntryN> = HTItemResultType(CODEC, STREAM_CODEC)
+            val TYPE: HTItemResultType<EnchantedBookEntry> = HTItemResultType(CODEC, STREAM_CODEC)
         }
 
         constructor(enchantment: Holder<Enchantment>) : this(mapOf(enchantment to Optional.empty()))

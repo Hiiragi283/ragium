@@ -93,14 +93,14 @@ class HTItemResultBuilder @PublishedApi internal constructor() {
      */
     @JvmName("unaryPlusEnchantment")
     operator fun Holder<Enchantment>.unaryPlus() {
-        +HTItemResult.EnchantedBookEntryN(this)
+        +HTItemResult.EnchantedBookEntry(this)
     }
 
     /**
      * @since 26.1.6
      */
     operator fun ItemEnchantments.unaryPlus() {
-        +HTItemResult.EnchantedBookEntryN(this.entrySet().associate { (holder: Holder<Enchantment>, level: Int) -> holder to level.toOptional() })
+        +HTItemResult.EnchantedBookEntry(this.entrySet().associate { (holder: Holder<Enchantment>, level: Int) -> holder to level.toOptional() })
     }
 
     /**
