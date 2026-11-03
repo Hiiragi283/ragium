@@ -304,6 +304,9 @@ data object RagiumBlocks {
     val CHEMICAL_BATH: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CHEMICAL_BATH)
 
     @JvmField
+    val CHEMICAL_LABO: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CHEMICAL_LABO)
+
+    @JvmField
     val CHEMICAL_REACTOR: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerFakeMachine(RagiumConstants.CHEMICAL_REACTOR)
 
     @JvmField
@@ -355,6 +358,7 @@ data object RagiumBlocks {
             put(HTMachineType.HEAT, SMELTER)
 
             put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
+            put(HTMachineType.CHEMICAL, CHEMICAL_LABO)
             put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
             put(HTMachineType.CHEMICAL, MIXER)
 

@@ -168,6 +168,9 @@ data object RagiumConfig {
             val chemicalBath: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CHEMICAL_BATH)
 
             @JvmField
+            val chemicalLabo: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CHEMICAL_LABO)
+
+            @JvmField
             val chemicalReactor: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CHEMICAL_REACTOR)
 
             @JvmField

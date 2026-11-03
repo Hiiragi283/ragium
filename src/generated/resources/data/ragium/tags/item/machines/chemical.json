@@ -1,6 +1,7 @@
 {
   "values": [
     "ragium:chemical_bath",
+    "ragium:chemical_labo",
     "ragium:chemical_reactor",
     "ragium:mixer"
   ]

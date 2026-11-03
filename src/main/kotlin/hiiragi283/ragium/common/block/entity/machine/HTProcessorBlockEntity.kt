@@ -6,6 +6,7 @@ import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
+import hiiragi283.lib.recipe.handler.HTTripleRecipeHandler
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTBasicEnergyStorage
 import hiiragi283.lib.transfer.fluid.HTFluidTank
@@ -57,8 +58,8 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
     protected open fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {}
 
-    fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(3.75)) {
-        widgetHolder += HTProgressWidget(recipeHandler::progression, x, HTSlotHelper.getSlotPosY(1))
+    fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(3.75), y: Int = HTSlotHelper.getSlotPosY(1)) {
+        widgetHolder += HTProgressWidget(recipeHandler::progression, x, y)
     }
 
     override fun writeValue(output: ValueOutput) {
@@ -135,15 +136,20 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             }
         }
 
-        protected inner class DoubleProgressor<
-            INPUT_A : Any,
-            INPUT_B : Any,
-            RECIPE : HTProgressRecipe.Double<*, INPUT_A, INPUT_B>,
-            > :
+        protected inner class DoubleProgressor<IN_A : Any, IN_B : Any, RECIPE : HTProgressRecipe.Double<*, IN_A, IN_B>> :
             EnergyProgressor(),
-            HTDoubleRecipeHandler.Progressor<INPUT_A, INPUT_B, RECIPE> {
-            override fun getMaxProgress(recipe: RECIPE, first: INPUT_A, second: INPUT_B): Int {
+            HTDoubleRecipeHandler.Progressor<IN_A, IN_B, RECIPE> {
+            override fun getMaxProgress(recipe: RECIPE, first: IN_A, second: IN_B): Int {
                 val requiredEnergy: Int = recipe.getProgressData(first, second).getTotalEnergy(this.baseEnergyPerTick)
+                return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
+            }
+        }
+
+        protected inner class TripleProgressor<IN_A : Any, IN_B : Any, IN_C : Any, RECIPE : HTProgressRecipe.Triple<*, IN_A, IN_B, IN_C>> :
+            EnergyProgressor(),
+            HTTripleRecipeHandler.Progressor<IN_A, IN_B, IN_C, RECIPE> {
+            override fun getMaxProgress(recipe: RECIPE, first: IN_A, second: IN_B, third: IN_C): Int {
+                val requiredEnergy: Int = recipe.getProgressData(first, second, third).getTotalEnergy(this.baseEnergyPerTick)
                 return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
             }
         }

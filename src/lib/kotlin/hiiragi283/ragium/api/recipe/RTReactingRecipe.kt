@@ -14,7 +14,10 @@ import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.input.HTFluidRecipeInput
 import hiiragi283.lib.recipe.input.asList
+import hiiragi283.lib.recipe.input.getItemOrEmpty
 import hiiragi283.lib.recipe.result.HTFluidResult
+import hiiragi283.lib.recipe.result.HTItemAndFluidStack
+import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -71,6 +74,17 @@ data class RTReactingRecipe(
 
         @JvmField
         val SERIALIZER: RecipeSerializer<RTReactingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
+    }
+
+    fun asSimple(): Simple? {
+        val ingredient: Ior<HTItemIngredient, HTFluidIngredient> = ingredients.contents
+            .mapLeft { it.singleOrNull() ?: return null }
+            .mapRight { it.singleOrNull() ?: return null }
+        val result: HTItemOrFluidResult = result.contents
+            .mapLeft { it.singleOrNull() ?: return null }
+            .mapRight { it.singleOrNull() ?: return null }
+            .let(::HTItemOrFluidResult)
+        return Simple(ingredient, catalyst, result, progressData)
     }
 
     override fun test(first: List<ItemInstance>, second: List<FluidInstance>, third: ItemInstance): Boolean =
@@ -178,5 +192,46 @@ data class RTReactingRecipe(
         fun itemDisplays(): List<SlotDisplay> = contents.getLeftList().map(HTItemResult::display)
 
         fun fluidDisplays(): List<SlotDisplay> = contents.getRightList().map(HTFluidResult::display)
+    }
+
+    //    Simple    //
+
+    @JvmRecord
+    data class Simple(
+        val ingredients: Ior<HTItemIngredient, HTFluidIngredient>,
+        val catalyst: HTItemCatalyst,
+        val result: HTItemOrFluidResult,
+        override val progressData: HTProgressData,
+    ) : HTRecipePredicates.TripleInput<Input, ItemInstance, FluidInstance, ItemInstance>,
+        HTRecipeFactories.TripleInput<Input, ItemInstance, FluidInstance, ItemInstance, HTItemAndFluidStack>,
+        HTProgressRecipe.Holder {
+        override fun test(first: ItemInstance, second: FluidInstance, third: ItemInstance): Boolean = ingredients.fold(
+            { it.test(first) && HTIngredientHelper.isEmpty(second) },
+            { HTIngredientHelper.isEmpty(first) && it.test(second) },
+            { item: HTItemIngredient, fluid: HTFluidIngredient -> item.test(first) && fluid.test(second) },
+        ) && catalyst.test(third)
+
+        override fun matches(input: Input): Boolean = test(input.getItemOrEmpty(0), input.getFluidOrEmpty(0), input.catalyst)
+
+        override fun apply(first: ItemInstance, second: FluidInstance, third: ItemInstance): HTItemAndFluidStack = result.create()
+
+        override fun getMatchingStack(
+            first: ItemInstance,
+            second: FluidInstance,
+            third: ItemInstance,
+        ): Triple<ItemInstance, FluidInstance, ItemInstance> {
+            val (item: HTItemIngredient?, fluid: HTFluidIngredient?) = ingredients.toPair()
+            return Triple(
+                item?.getMatchingStack(first) ?: ItemStack.EMPTY,
+                fluid?.getMatchingStack(second) ?: FluidStack.EMPTY,
+                catalyst.getMatchingStack(third),
+            )
+        }
+
+        override fun produce(input: Input): HTItemAndFluidStack = apply(input.getItemOrEmpty(0), input.getFluidOrEmpty(0), input.catalyst)
+
+        override fun getProgressData(first: ItemInstance, second: FluidInstance, third: ItemInstance): HTProgressData = progressData
+
+        override fun getProgressData(input: Input): HTProgressData = progressData
     }
 }

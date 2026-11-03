@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCentrifugeBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTChemicalLaboBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
@@ -144,6 +145,10 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.CHEMICAL_BATH, ::HTChemicalBathBlockEntity)
 
     @JvmField
+    val CHEMICAL_LABO: HTDeferredBlockEntityType<HTChemicalLaboBlockEntity> =
+        registerTick(RagiumConstants.CHEMICAL_LABO, ::HTChemicalLaboBlockEntity)
+
+    @JvmField
     val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> =
         registerTick(RagiumConstants.MIXER, ::HTMixerBlockEntity)
 
@@ -254,6 +259,7 @@ data object RagiumBlockEntityTypes {
         registerBlockEntity(SMELTER.get())
 
         registerBlockEntity(CHEMICAL_BATH.get())
+        registerBlockEntity(CHEMICAL_LABO.get())
         registerBlockEntity(MIXER.get())
 
         registerBlockEntity(BREWERY.get())

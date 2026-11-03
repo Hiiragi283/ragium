@@ -468,6 +468,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
 
         chemical(RagiumBlocks.CHEMICAL_BATH) { items { +Items.CAULDRON } }
+        chemical(RagiumBlocks.CHEMICAL_LABO) { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.DIAMOND) }
         chemical(RagiumBlocks.MIXER) { +holderSet(Tags.Items.BUCKETS_EMPTY) }
         // Resource
         RagiumRecipeBuilders.bathing {

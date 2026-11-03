@@ -63,6 +63,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.SMELTER, "Smelter")
 
         add(RagiumBlocks.CHEMICAL_BATH, "Chemical Bath")
+        add(RagiumBlocks.CHEMICAL_LABO, "Chemical Labo")
         add(RagiumBlocks.CHEMICAL_REACTOR, "Chemical Reactor")
         add(RagiumBlocks.MIXER, "Mixer")
 
