@@ -3,7 +3,9 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
+import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
+import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
@@ -17,10 +19,9 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) : HTSizedShapelessBlockEntity(RagiumBlockEntityTypes.ASSEMBLER.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
-        RagiumRecipeLookups.ASSEMBLING,
-        HTSoundInstance(SoundEvents.CRAFTER_CRAFT),
-    )
+    override fun getLookup(): HTRecipeLookup<HTSizedShapelessRecipe> = RagiumRecipeLookups.ASSEMBLING
+
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(HTSoundInstance(SoundEvents.CRAFTER_CRAFT))
 
     override fun getInputSize(): Int = 4
 

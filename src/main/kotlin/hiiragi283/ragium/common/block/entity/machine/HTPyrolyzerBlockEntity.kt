@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
+import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -12,10 +14,9 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) : HTItemSeparatingBlockEntity(RagiumBlockEntityTypes.PYROLYZER.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
-        RagiumRecipeLookups.PYROLYZING,
-        HTSoundInstance(SoundEvents.BLAZE_DEATH),
-    )
+    override fun getLookup(): HTRecipeLookup<HTItemSeparatingRecipe> = RagiumRecipeLookups.PYROLYZING
+
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(HTSoundInstance(SoundEvents.BLAZE_DEATH))
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.pyrolyzer
 }

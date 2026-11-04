@@ -29,7 +29,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.transfer.transaction.Transaction
@@ -145,8 +144,8 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
         override fun apply(first: ItemInstance, second: ItemInstance): ItemStack {
-            val template: ItemStackTemplate = HTIngredientHelper.unwrapAsTemplate(first) ?: return ItemStack.EMPTY
-            val result: ItemStack = HTIngredientHelper.unwrap(second).copyWithCount(1)
+            val template: ItemStack = HTIngredientHelper.unwrapAsStack(first)
+            val result: ItemStack = HTIngredientHelper.unwrapAsStack(second).copyWithCount(1)
             result[RagiumDataComponents.MEMORY_DISC_DATA] = HTMemoryDiscData.from(template)
             return result
         }

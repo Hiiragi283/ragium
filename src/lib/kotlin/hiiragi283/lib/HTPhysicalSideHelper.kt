@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.flag.FeatureElement
 import net.minecraft.world.flag.FeatureFlagSet
 import net.minecraft.world.flag.FeatureFlags
@@ -87,6 +88,17 @@ data object HTPhysicalSideHelper {
             HTRecipeLookup.Context(server.recipeManager.recipeMap(), server.registryAccess())
         },
     ) ?: HTRecipeLookup.Context.EMPTY
+
+    /**
+     * 現在の[HTRecipeLookup.Context]を作成します。
+     * @since 26.1.13
+     */
+    @JvmStatic
+    fun createLookupContext(level: Level?): HTRecipeLookup.Context = when (level) {
+        null -> HTRecipeLookup.Context.EMPTY
+        is ServerLevel -> HTRecipeLookup.Context(level)
+        else -> HTRecipeLookup.Context(cachedRecipes, level.registryAccess())
+    }
 
     @SubscribeEvent
     fun onRecipeSync(event: RecipesReceivedEvent) {

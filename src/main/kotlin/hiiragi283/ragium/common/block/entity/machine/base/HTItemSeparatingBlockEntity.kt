@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine.base
 
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
@@ -7,8 +8,10 @@ import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
+import hiiragi283.lib.recipe.handler.cache.HTSingleRecipeCache
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
 import hiiragi283.lib.recipe.handler.input.HTInputSlot
+import hiiragi283.lib.recipe.handler.lookup.HTSingleRecipeLookupHandler
 import hiiragi283.lib.recipe.handler.output.HTOutputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
@@ -23,19 +26,35 @@ import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(type, pos, state) {
-    protected fun createRecipeHandler(lookup: HTRecipeLookup<HTItemSeparatingRecipe>, sound: HTSoundInstance): HTRecipeHandler =
-        object : HTSingleRecipeHandler.Cached<ItemInstance, HTItemSeparatingRecipe.Output, HTItemSeparatingRecipe>(
-            HTRecipeCacheHelper.SingleItem(lookup),
-        ) {
+    HTProcessorBlockEntity.Energized(type, pos, state),
+    HTSingleRecipeLookupHandler.ForItem<HTItemSeparatingRecipe> {
+    final override val recipeCache: HTSingleRecipeCache<ItemInstance, HTItemSeparatingRecipe> = HTRecipeCacheHelper.SingleItem(getLookup())
+
+    protected abstract fun getLookup(): HTRecipeLookup<HTItemSeparatingRecipe>
+
+    override fun writeValue(output: ValueOutput) {
+        super.writeValue(output)
+        output.putChild(HTConstants.LAST_RECIPE, recipeCache)
+    }
+
+    override fun readValue(input: ValueInput) {
+        super.readValue(input)
+        input.readChild(HTConstants.LAST_RECIPE, recipeCache)
+    }
+
+    protected fun createRecipeHandler(sound: HTSoundInstance): HTRecipeHandler =
+        object : HTSingleRecipeHandler<ItemInstance, HTItemSeparatingRecipe.Output, HTItemSeparatingRecipe>() {
             private val inputSlot: HTInputSlot<ItemInstance> by lazy {
                 HTInputHandlerHelper.forItem(this@HTItemSeparatingBlockEntity.inputSlot)
             }
@@ -49,6 +68,8 @@ abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockP
             override fun createProgressor(): Progressor<ItemInstance, HTItemSeparatingRecipe> = SingleProgressor()
 
             override fun getInput(): ItemInstance = inputSlot.getStoredInput()
+
+            override fun findRecipe(input: ItemInstance, level: ServerLevel): HTItemSeparatingRecipe? = findFirstRecipe(input)
 
             override fun canComplete(recipe: HTItemSeparatingRecipe, input: ItemInstance, output: HTItemSeparatingRecipe.Output): Boolean =
                 useTransaction { transaction: Transaction ->
@@ -82,7 +103,7 @@ abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockP
     private lateinit var outputSlots: List<HTBasicItemSlot>
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {
-        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
+        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener, filter = ::hasRecipe))
         outputSlots = List(4) { builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener)) }
     }
 

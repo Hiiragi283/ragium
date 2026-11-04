@@ -12,13 +12,13 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
 
 data object RTBucketFillingRecipe : HTItemAndFluidToItemRecipe, HTProgressRecipe.Holder {
-    private fun getBucket(instance: FluidInstance): ItemStack = HTIngredientHelper.unwrap(instance).createBucket()
+    private fun getBucket(instance: FluidInstance): ItemStack = HTIngredientHelper.unwrapAsStack(instance).createBucket()
 
     override fun test(first: ItemInstance, second: FluidInstance): Boolean {
         val filled: ItemStack = getBucket(second)
         return when {
             filled.isEmpty -> false
-            ItemStack.isSameItemSameComponents(HTIngredientHelper.unwrap(first), filled.craftingRemainder) -> false
+            ItemStack.isSameItemSameComponents(HTIngredientHelper.unwrapAsStack(first), filled.craftingRemainder) -> false
             else -> second.amount() >= FluidType.BUCKET_VOLUME
         }
     }

@@ -21,7 +21,7 @@ interface HTIngredient<TYPE : Any, INSTANCE : TypedInstance<TYPE>> : Predicate<I
     /**
      * 数量を除いて条件を満たしているか判定します。
      */
-    fun testOnlyType(instance: INSTANCE): Boolean
+    fun testOnlyType(instance: TypedInstance<TYPE>): Boolean
 
     /**
      * 消費される入力を取得します。

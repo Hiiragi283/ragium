@@ -86,7 +86,7 @@ abstract class HTExtendedBlockEntity(type: BlockEntityType<*>, pos: BlockPos, bl
     /**
      * 赤石信号を更新せずに保存のフラグを立てます。
      */
-    protected fun setOnlySave() {
+    fun setOnlySave() {
         setChanged(false)
     }
 

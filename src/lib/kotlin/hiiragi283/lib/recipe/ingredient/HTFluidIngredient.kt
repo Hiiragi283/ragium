@@ -5,6 +5,8 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
+import hiiragi283.lib.util.unwrap
+import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -13,6 +15,7 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -53,9 +56,12 @@ data class HTFluidIngredient(val unsized: FluidIngredient, val amount: Int) :
 
     override fun test(instance: FluidInstance): Boolean = testOnlyType(instance) && instance.amount() >= amount
 
-    override fun testOnlyType(instance: FluidInstance): Boolean = HTIngredientHelper.unwrap(instance).let(unsized::test)
+    override fun testOnlyType(instance: TypedInstance<Fluid>): Boolean = when {
+        unsized.isSimple -> instance.typeHolder() in unsized.fluids()
+        else -> HTIngredientHelper.unwrapAsEither(instance).mapLeft { it.toStack(FluidType.BUCKET_VOLUME) }.unwrap().let(unsized::test)
+    }
 
-    override fun getMatchingStack(instance: FluidInstance): FluidInstance = when (testOnlyType(instance)) {
+    override fun getMatchingStack(instance: FluidInstance): FluidInstance = when (test(instance)) {
         true -> HTIngredientHelper.copyWithAmount(instance, amount)
         false -> FluidStack.EMPTY
     }

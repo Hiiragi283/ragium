@@ -1,11 +1,13 @@
 package hiiragi283.ragium.common.block.entity.machine.base
 
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
 import hiiragi283.lib.recipe.handler.input.HTInputHandler
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
+import hiiragi283.lib.recipe.handler.lookup.HTSingleRecipeLookupHandler
 import hiiragi283.lib.recipe.handler.output.HTOutputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
@@ -16,18 +18,34 @@ import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTSizedShapelessBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(type, pos, state) {
-    protected fun createRecipeHandler(lookup: HTRecipeLookup<HTSizedShapelessRecipe>, sound: HTSoundInstance): HTRecipeHandler =
-        object : HTSingleRecipeHandler.Cached<List<ItemInstance>, ItemStack, HTSizedShapelessRecipe>(
-            HTRecipeCacheHelper.MultiItem(lookup),
-        ) {
+    HTProcessorBlockEntity.Energized(type, pos, state),
+    HTSingleRecipeLookupHandler<List<ItemInstance>, HTSizedShapelessRecipe> {
+    final override val recipeCache: HTRecipeCacheHelper.MultiItem<HTSizedShapelessRecipe> = HTRecipeCacheHelper.MultiItem(getLookup())
+
+    protected abstract fun getLookup(): HTRecipeLookup<HTSizedShapelessRecipe>
+
+    override fun writeValue(output: ValueOutput) {
+        super.writeValue(output)
+        output.putChild(HTConstants.LAST_RECIPE, recipeCache)
+    }
+
+    override fun readValue(input: ValueInput) {
+        super.readValue(input)
+        input.readChild(HTConstants.LAST_RECIPE, recipeCache)
+    }
+
+    protected fun createRecipeHandler(sound: HTSoundInstance): HTRecipeHandler =
+        object : HTSingleRecipeHandler<List<ItemInstance>, ItemStack, HTSizedShapelessRecipe>() {
             private val inputSlots: HTInputHandler<ItemInstance> by lazy {
                 HTInputHandlerHelper.forItems(this@HTSizedShapelessBlockEntity.inputSlots)
             }
@@ -38,6 +56,8 @@ abstract class HTSizedShapelessBlockEntity(type: BlockEntityType<*>, pos: BlockP
             override fun createProgressor(): Progressor<List<ItemInstance>, HTSizedShapelessRecipe> = SingleProgressor()
 
             override fun getInput(): List<ItemInstance> = this@HTSizedShapelessBlockEntity.inputSlots.map(HTBasicItemSlot::getStackCopy)
+
+            override fun findRecipe(input: List<ItemInstance>, level: ServerLevel): HTSizedShapelessRecipe? = findFirstRecipe(input)
 
             override fun canComplete(recipe: HTSizedShapelessRecipe, input: List<ItemInstance>, output: ItemStack): Boolean =
                 useTransaction { transaction: Transaction ->

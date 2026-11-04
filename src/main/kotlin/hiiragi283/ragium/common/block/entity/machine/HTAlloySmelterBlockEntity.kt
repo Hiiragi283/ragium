@@ -3,7 +3,9 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
+import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
+import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
@@ -18,10 +20,9 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTSizedShapelessBlockEntity(RagiumBlockEntityTypes.ALLOY_SMELTER.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
-        RagiumRecipeLookups.ALLOYING,
-        HTSoundInstance(SoundEvents.FIRE_EXTINGUISH),
-    )
+    override fun getLookup(): HTRecipeLookup<HTSizedShapelessRecipe> = RagiumRecipeLookups.ALLOYING
+
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(HTSoundInstance(SoundEvents.FIRE_EXTINGUISH))
 
     override fun getInputSize(): Int = 3
 

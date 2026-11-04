@@ -62,7 +62,7 @@ data object HTInputHandlerHelper {
     private data class MultiFluids(private val tanks: List<HTFluidTank>) : HTInputHandler<FluidInstance> {
         override fun use(input: FluidInstance?, transaction: TransactionContext): HTInputHandler.UseResult {
             if (input == null || HTIngredientHelper.isEmpty(input)) return HTInputHandler.UseResult.EMPTY
-            val (resource: FluidResource, amount: Int) = HTIngredientHelper.unwrap(input).toResourcePair()
+            val (resource: FluidResource, amount: Int) = HTIngredientHelper.unwrapAsStack(input).toResourcePair()
             var extracted = 0
             for (tank: HTFluidTank in tanks) {
                 extracted += tank.extract(resource, amount - extracted, transaction, HTTransferAccess.INTERNAL)
@@ -111,7 +111,7 @@ data object HTInputHandlerHelper {
     private data class MultiItems(private val slots: List<HTItemSlot>) : HTInputHandler<ItemInstance> {
         override fun use(input: ItemInstance?, transaction: TransactionContext): HTInputHandler.UseResult {
             if (input == null || HTIngredientHelper.isEmpty(input)) return HTInputHandler.UseResult.EMPTY
-            val (resource: ItemResource, amount: Int) = HTIngredientHelper.unwrap(input).toResourcePair()
+            val (resource: ItemResource, amount: Int) = HTIngredientHelper.unwrapAsStack(input).toResourcePair()
             var extracted = 0
             for (slot: HTItemSlot in slots) {
                 extracted += slot.extract(resource, amount - extracted, transaction, HTTransferAccess.INTERNAL)

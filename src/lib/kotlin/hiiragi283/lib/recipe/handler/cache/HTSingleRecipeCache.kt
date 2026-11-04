@@ -54,4 +54,10 @@ abstract class HTSingleRecipeCache<INPUT : Any, RECIPE : Predicate<INPUT>>(looku
     }
 
     protected abstract fun isEmpty(input: INPUT): Boolean
+
+    /**
+     * @since 26.1.13
+     */
+    fun findAllHolder(input: INPUT, context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> =
+        lookup.getAllRecipes(context).filter { (_, recipe: RECIPE) -> recipe.test(input) }
 }

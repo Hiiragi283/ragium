@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
@@ -7,8 +8,10 @@ import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
+import hiiragi283.lib.recipe.handler.cache.HTSingleRecipeCache
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
 import hiiragi283.lib.recipe.handler.input.HTInputSlot
+import hiiragi283.lib.recipe.handler.lookup.HTSingleRecipeLookupHandler
 import hiiragi283.lib.recipe.handler.output.HTOutputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
@@ -24,16 +27,31 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
-class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler = object : HTSingleRecipeHandler.Cached<ItemInstance, FluidStack, HTItemToFluidRecipe>(
-        HTRecipeCacheHelper.SingleItem(RagiumRecipeLookups.MELTING),
-    ) {
+class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
+    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER.get(), pos, state),
+    HTSingleRecipeLookupHandler.ForItem<HTItemToFluidRecipe> {
+    override val recipeCache: HTSingleRecipeCache<ItemInstance, HTItemToFluidRecipe> = HTRecipeCacheHelper.SingleItem(RagiumRecipeLookups.MELTING)
+
+    override fun writeValue(output: ValueOutput) {
+        super.writeValue(output)
+        output.putChild(HTConstants.LAST_RECIPE, recipeCache)
+    }
+
+    override fun readValue(input: ValueInput) {
+        super.readValue(input)
+        input.readChild(HTConstants.LAST_RECIPE, recipeCache)
+    }
+
+    override fun createRecipeHandler(): HTRecipeHandler = object : HTSingleRecipeHandler<ItemInstance, FluidStack, HTItemToFluidRecipe>() {
         private val inputSlot: HTInputSlot<ItemInstance> by lazy {
             HTInputHandlerHelper.forItem(this@HTMelterBlockEntity.inputSlot)
         }
@@ -44,6 +62,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
         override fun createProgressor(): Progressor<ItemInstance, HTItemToFluidRecipe> = SingleProgressor()
 
         override fun getInput(): ItemInstance = inputSlot.getStoredInput()
+
+        override fun findRecipe(input: ItemInstance, level: ServerLevel): HTItemToFluidRecipe? = findFirstRecipe(input)
 
         override fun canComplete(recipe: HTItemToFluidRecipe, input: ItemInstance, output: FluidStack): Boolean =
             useTransaction { transaction: Transaction ->
@@ -74,7 +94,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
     private lateinit var inputSlot: HTBasicItemSlot
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {
-        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
+        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener, filter = ::hasRecipe))
     }
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {

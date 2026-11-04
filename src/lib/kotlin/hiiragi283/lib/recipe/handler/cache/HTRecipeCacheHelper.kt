@@ -38,7 +38,7 @@ data object HTRecipeCacheHelper {
      */
     class MultiItem<RECIPE : Predicate<List<ItemInstance>>>(lookup: HTRecipeLookup<RECIPE>) :
         HTSingleRecipeCache<List<ItemInstance>, RECIPE>(lookup) {
-        override fun isEmpty(input: List<ItemInstance>): Boolean = input.isEmpty() || input.all(HTIngredientHelper::isEmpty)
+        override fun isEmpty(input: List<ItemInstance>): Boolean = HTIngredientHelper.isEmpty(input)
     }
 
     /**

@@ -1,12 +1,7 @@
 package hiiragi283.lib.recipe.handler
 
-import hiiragi283.lib.HTConstants
-import hiiragi283.lib.recipe.handler.cache.HTSingleRecipeCache
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import java.util.function.Function
-import java.util.function.Predicate
 
 /**
  * 単一の入力に対する[HTRecipeHandler]の拡張クラスです。
@@ -87,28 +82,5 @@ abstract class HTSingleRecipeHandler<INPUT : Any, OUTPUT : Any, RECIPE : Functio
      */
     interface Progressor<INPUT : Any, RECIPE : Any> : HTRecipeHandler.Progressor {
         fun getMaxProgress(recipe: RECIPE, input: INPUT): Int
-    }
-
-    //    Cached    //
-
-    /**
-     * [HTSingleRecipeCache]に基づいてレシピを取得する[HTSingleRecipeHandler]の拡張クラスです。
-     * @author Hiiragi Tsubasa
-     * @since 26.1.11
-     */
-    abstract class Cached<INPUT : Any, OUTPUT : Any, RECIPE>(val cache: HTSingleRecipeCache<INPUT, RECIPE>) :
-        HTSingleRecipeHandler<INPUT, OUTPUT, RECIPE>()
-        where RECIPE : Predicate<INPUT>, RECIPE : Function<INPUT, OUTPUT> {
-        final override fun findRecipe(input: INPUT, level: ServerLevel): RECIPE? = cache.findFirstRecipe(input, level)
-
-        override fun serialize(output: ValueOutput) {
-            super.serialize(output)
-            output.putChild(HTConstants.LAST_RECIPE, cache)
-        }
-
-        override fun deserialize(input: ValueInput) {
-            super.deserialize(input)
-            input.readChild(HTConstants.LAST_RECIPE, cache)
-        }
     }
 }
