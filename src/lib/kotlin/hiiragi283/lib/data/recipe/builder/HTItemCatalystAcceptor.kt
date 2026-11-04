@@ -5,6 +5,7 @@ import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import net.minecraft.world.item.crafting.Ingredient
 
 /**
+ * 触媒を受け取るレシピビルダー向けのインターフェースです。
  * @author Hiiragi Tsubasa
  * @since 26.1.13
  */

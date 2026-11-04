@@ -146,8 +146,8 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
         override fun apply(first: ItemInstance, second: ItemInstance): ItemStack {
-            val template: ItemStack = HTIngredientHelper.unwrapAsStack(first)
-            val result: ItemStack = HTIngredientHelper.unwrapAsStack(second).copyWithCount(1)
+            val template: ItemStack = HTIngredientHelper.unwrap(first)
+            val result: ItemStack = HTIngredientHelper.unwrap(second).copyWithCount(1)
             result[RagiumDataComponents.MEMORY_DISC_DATA] = HTMemoryDiscData.from(template)
             return result
         }

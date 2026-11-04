@@ -24,6 +24,8 @@ private typealias MaxValue = Int
 
 /**
  * @see net.minecraft.advancements.criterion.MinMaxBounds.Ints
+ * @author Hiiragi Tsubasa
+ * @since 26.1.13
  */
 @JvmRecord
 data class HTEnchantmentPowerCondition(val range: Ior<MinValue, MaxValue>) :

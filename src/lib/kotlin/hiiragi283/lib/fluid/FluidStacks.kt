@@ -1,8 +1,6 @@
 package hiiragi283.lib.fluid
 
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 
@@ -15,16 +13,6 @@ import net.neoforged.neoforge.fluids.FluidStackTemplate
  */
 fun FluidStackTemplate?.createOrEmpty(): FluidStack = this?.create() ?: FluidStack.EMPTY
 
-/**
- * この[FluidStackTemplate][this]をコピーします。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-fun FluidStackTemplate.transmuteCopy(newFluid: Fluid, newAmount: Int = this.amount()): FluidStackTemplate? = when {
-    newFluid == Fluids.EMPTY -> null
-    else -> FluidStackTemplate(newFluid, newAmount, this.components())
-}
-
 //    FluidStack    //
 
 /**
@@ -36,16 +24,6 @@ fun FluidStackTemplate.transmuteCopy(newFluid: Fluid, newAmount: Int = this.amou
 fun FluidStack.toTemplateOrNull(): FluidStackTemplate? = when {
     this.isEmpty -> null
     else -> FluidStackTemplate.fromNonEmptyStack(this)
-}
-
-/**
- * この[FluidStack][this]をコピーします。
- * @author Hiiragi Tsubasa
- * @since 26.1.0
- */
-fun FluidStack.transmuteCopy(newFluid: Fluid, newAmount: Int = this.amount()): FluidStack = when {
-    newFluid == Fluids.EMPTY -> FluidStack.EMPTY
-    else -> FluidStack(newFluid, newAmount, this.componentsPatch)
 }
 
 /**

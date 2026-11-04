@@ -5,7 +5,6 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.util.unwrap
 import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -57,7 +56,7 @@ data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
 
     override fun testOnlyType(instance: TypedInstance<Item>): Boolean = when {
         unsized.isSimple -> unsized.acceptsItem(instance.typeHolder())
-        else -> HTIngredientHelper.unwrapAsEither(instance).mapLeft { it.toStack() }.unwrap().let(unsized::test)
+        else -> HTIngredientHelper.unwrap(instance).let(unsized::test)
     }
 
     override fun getMatchingStack(instance: ItemInstance): ItemInstance = when (test(instance)) {

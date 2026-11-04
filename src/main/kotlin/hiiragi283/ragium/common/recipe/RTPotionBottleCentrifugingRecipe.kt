@@ -31,7 +31,7 @@ data class RTPotionBottleCentrifugingRecipe(
             override fun test(instance: ItemInstance): Boolean = testOnlyType(instance) && instance.count() > 0
 
             override fun testOnlyType(instance: TypedInstance<Item>): Boolean =
-                bottleType.filledItem.isOf(instance) && HTIngredientHelper.unwrapAsStack(instance).let(HTPotionHelper::hasAnyEffect)
+                bottleType.filledItem.isOf(instance) && HTIngredientHelper.unwrap(instance).let(HTPotionHelper::hasAnyEffect)
 
             override fun getMatchingStack(instance: ItemInstance): ItemInstance = when (test(instance)) {
                 true -> HTIngredientHelper.copyWithCount(instance, 1)

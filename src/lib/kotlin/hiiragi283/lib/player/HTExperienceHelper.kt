@@ -14,27 +14,46 @@ typealias ExpValue = Long
 typealias ExpLevel = Int
 
 /**
+ * 経験値の処理を補助するヘルパークラスです。
  * @author Hiiragi Tsubasa
  * @since 26.1.13
  */
 data object HTExperienceHelper {
+    /**
+     * 経験値ポイントと液体経験値の変換レートを取得します。
+     */
     @JvmStatic
     fun getExpRatio(): Int = RagiumConfigAccess.INSTANCE.expRatio
 
+    /**
+     * 経験値ポイントを液体量に変換します。
+     */
     @JvmStatic
     fun fluidAmountFromExp(value: Int): Int = value * getExpRatio()
 
+    /**
+     * 経験値ポイントを液体量に変換します。
+     */
     @JvmStatic
     fun fluidAmountFromExp(value: ExpValue): Long = value * getExpRatio().toLong()
 
+    /**
+     * 液体量を経験値ポイントに変換します。
+     */
     @JvmStatic
     fun expAmountFromFluid(amount: Int): ExpValue = amount / getExpRatio().toLong()
 
+    /**
+     * 経験値オーブをスポーンさせます。
+     */
     @JvmStatic
     fun popExperienceOrb(level: Level, pos: Vec3i, amount: ExpValue) {
         popExperienceOrb(level, Vec3.atCenterOf(pos), amount)
     }
 
+    /**
+     * 経験値オーブをスポーンさせます。
+     */
     @JvmStatic
     fun popExperienceOrb(level: Level, pos: Vec3, amount: ExpValue) {
         if (level is ServerLevel) {
@@ -52,10 +71,16 @@ data object HTExperienceHelper {
 
     //    Player    //
 
+    /**
+     * 指定した[プレイヤー][player]の経験値ポイントを取得します。
+     */
     @JvmStatic
     fun getPlayerExp(player: Player): ExpValue =
         getExpForLevel(player.experienceLevel) + (player.experienceProgress * player.xpNeededForNextLevel).toLong()
 
+    /**
+     * 指定した[プレイヤー][player]の経験値ポイントを設定します。
+     */
     @JvmStatic
     fun setPlayerExp(player: Player, amount: Long) {
         val fixedAmount: Long = maxOf(0, amount)
@@ -65,6 +90,9 @@ data object HTExperienceHelper {
         player.experienceProgress = (fixedAmount - expForLevel) / player.xpNeededForNextLevel.toFloat()
     }
 
+    /**
+     * 経験値レベルを経験値ポイントに換算します。
+     */
     @JvmStatic
     fun getExpForLevel(level: ExpLevel): ExpValue = when {
         level == 0 -> 0L
@@ -86,6 +114,9 @@ data object HTExperienceHelper {
     @JvmStatic
     private val levelCache: MutableMap<Long, Int> = Long2IntArrayMap()
 
+    /**
+     * 経験値ポイントを経験値レベルに換算します。
+     */
     @JvmStatic
     fun getLevelForExp(amount: ExpValue): ExpLevel = levelCache.computeIfAbsent(amount, ::findLevelForExp)
 

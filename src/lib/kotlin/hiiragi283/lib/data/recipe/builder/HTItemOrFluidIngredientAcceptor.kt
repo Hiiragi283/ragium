@@ -6,6 +6,7 @@ import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 
 /**
+ * アイテムと液体の材料を受け取るレシピビルダー向けのインターフェースです。
  * @author Hiiragi Tsubasa
  * @since 26.1.13
  */

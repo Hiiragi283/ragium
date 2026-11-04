@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.util.fold
-import hiiragi283.lib.util.unwrap
 import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -48,7 +47,7 @@ data class HTItemCatalyst(val content: Optional<Ingredient>) :
         { ingredient: Ingredient ->
             when {
                 ingredient.isEmpty -> ingredient.acceptsItem(instance.typeHolder())
-                else -> HTIngredientHelper.unwrapAsEither(instance).mapLeft { it.toStack() }.unwrap().let(ingredient::test)
+                else -> HTIngredientHelper.unwrap(instance).let(ingredient::test)
             }
         },
     )

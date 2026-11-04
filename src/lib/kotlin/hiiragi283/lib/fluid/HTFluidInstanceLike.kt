@@ -33,11 +33,14 @@ interface HTFluidInstanceLike {
         asStack(amount, patch).getOrElse { FluidStack.EMPTY }
 
     /**
+     * 新しい[FluidResource]のインスタンスを作成します。
      * @since 26.1.13
      */
     fun asResource(patch: DataComponentPatch = DataComponentPatch.EMPTY): DataResult<FluidResource>
 
     /**
+     * 新しい[FluidResource]のインスタンスを作成します。
+     * @return [FluidResource]のインスタンスを作成できなかった場合は[FluidResource.EMPTY]
      * @since 26.1.13
      */
     fun asResourceOrEmpty(patch: DataComponentPatch = DataComponentPatch.EMPTY): FluidResource = asResource(patch).getOrElse { FluidResource.EMPTY }

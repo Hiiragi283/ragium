@@ -6,6 +6,7 @@ import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 
 /**
+ * アイテムと液体の完成品を受け取るレシピビルダー向けのインターフェースです。
  * @author Hiiragi Tsubasa
  * @since 26.1.13
  */

@@ -10,7 +10,7 @@ import kotlin.reflect.KMutableProperty0
  *
  * 参照 : [Mekanism - SyncableBoolean](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/inventory/container/sync/SyncableBoolean.java)
  * @author Hiiragi Tsubasa
- * @since 26.1.12
+ * @since 26.1.13
  */
 interface HTBoolSyncSlot : HTSyncableSlot {
     companion object {

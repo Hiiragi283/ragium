@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.util.TriPredicate
  * @param INPUT_C 3番目のレシピの入力となるクラス
  * @param RECIPE 提供するレシピのクラス
  * @author Hiiragi Tsubasa
- * @since 26.1.12
+ * @since 26.1.13
  */
 abstract class HTTripleRecipeCache<INPUT_A : Any, INPUT_B : Any, INPUT_C : Any, RECIPE : TriPredicate<INPUT_A, INPUT_B, INPUT_C>>(
     lookup: HTRecipeLookup<RECIPE>,

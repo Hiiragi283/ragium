@@ -19,7 +19,7 @@ data object RTBucketCentrifugingRecipe : HTItemSeparatingRecipe, HTProgressRecip
         override fun test(instance: ItemInstance): Boolean = testOnlyType(instance) && instance.count() > 0
 
         override fun testOnlyType(instance: TypedInstance<Item>): Boolean {
-            val input: ItemStack = HTIngredientHelper.unwrapAsStack(instance)
+            val input: ItemStack = HTIngredientHelper.unwrap(instance)
             return when {
                 input.craftingRemainder?.`is`(Tags.Items.BUCKETS_EMPTY) ?: false -> input.let(HTFluidCapabilities::getCapability)?.size() == 1
                 else -> false
@@ -34,7 +34,7 @@ data object RTBucketCentrifugingRecipe : HTItemSeparatingRecipe, HTProgressRecip
 
     override fun apply(input: ItemInstance): HTItemSeparatingRecipe.Output = HTItemSeparatingRecipe.Output(
         input.craftingRemainder.createOrEmpty(),
-        HTIngredientHelper.unwrapAsStack(input).let(FluidUtil::getFirstStackContained),
+        HTIngredientHelper.unwrap(input).let(FluidUtil::getFirstStackContained),
     )
 
     override fun getMatchingStack(input: ItemInstance): ItemInstance = when {
