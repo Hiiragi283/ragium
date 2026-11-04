@@ -6,6 +6,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.builder.HTItemOrFluidToRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.input.HTItemOrFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -46,9 +47,12 @@ typealias HTItemOrFluidRecipe = HTItemOrFluidToRecipe<HTItemAndFluidStack>
  * @author Hiiragi Tsubasa
  * @since 26.1.13
  */
-interface HTItemOrFluidToRecipe<OUTPUT : Any> :
-    HTRecipePredicates.ItemOrFluid,
-    HTRecipeFactories.ItemOrFluid<OUTPUT> {
+interface HTItemOrFluidToRecipe<OUTPUT : Any> : HTRecipeFactories.SingleInput<HTItemOrFluidRecipeInput, Either<ItemInstance, FluidInstance>, OUTPUT> {
+    override fun matches(input: HTItemOrFluidRecipeInput): Boolean = test(input.content)
+
+    override fun produce(input: HTItemOrFluidRecipeInput): OUTPUT = apply(input.content)
+
+    override fun getProgressData(input: HTItemOrFluidRecipeInput): HTProgressData = getProgressData(input.content)
 
     fun asSingleItemTo(): HTItemToRecipe<OUTPUT>? = null
 

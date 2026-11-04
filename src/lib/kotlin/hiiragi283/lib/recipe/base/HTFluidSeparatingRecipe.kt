@@ -20,7 +20,7 @@ import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.Optional
 
-open class HTFluidSeparatingRecipe(val ingredient: HTFluidIngredient, val result: Result, override val progressData: HTProgressData) :
+open class HTFluidSeparatingRecipe(override val ingredient: HTFluidIngredient, val result: Result, override val progressData: HTProgressData) :
     HTFluidToRecipe<HTFluidSeparatingRecipe.Output>,
     HTProgressRecipe.Holder {
     companion object {
@@ -47,8 +47,6 @@ open class HTFluidSeparatingRecipe(val ingredient: HTFluidIngredient, val result
             factory::create,
         )
     }
-
-    override fun test(input: FluidInstance): Boolean = ingredient.test(input)
 
     override fun apply(input: FluidInstance): Output = result.create()
 

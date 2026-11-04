@@ -69,7 +69,7 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
      * @author Hiiragi Tsubasa
      * @since 26.1.12
      */
-    open class Basic(val ingredient: HTItemIngredient, val result: Result, override val progressData: HTProgressData) :
+    open class Basic(override val ingredient: HTItemIngredient, val result: Result, override val progressData: HTProgressData) :
         HTItemSeparatingRecipe,
         HTProgressRecipe.Holder {
         companion object {
@@ -94,8 +94,6 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
                     factory::create,
                 )
         }
-
-        override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
         override fun apply(input: ItemInstance): Output = result.create()
 

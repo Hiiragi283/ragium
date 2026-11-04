@@ -7,7 +7,6 @@ import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTRecipeFactories
-import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
@@ -44,8 +43,7 @@ data class RTReactingRecipe(
     val catalyst: HTItemCatalyst,
     val result: Result,
     override val progressData: HTProgressData,
-) : HTRecipePredicates.TripleInput<RTReactingRecipe.Input, List<ItemInstance>, List<FluidInstance>, ItemInstance>,
-    HTRecipeFactories.TripleInput<RTReactingRecipe.Input, List<ItemInstance>, List<FluidInstance>, ItemInstance, RTReactingRecipe.Output>,
+) : HTRecipeFactories.TripleInput<RTReactingRecipe.Input, List<ItemInstance>, List<FluidInstance>, ItemInstance, RTReactingRecipe.Output>,
     HTProgressRecipe.Holder,
     HTSerializableRecipe<RTReactingRecipe.Input> {
     companion object {
@@ -202,8 +200,7 @@ data class RTReactingRecipe(
         val catalyst: HTItemCatalyst,
         val result: HTItemOrFluidResult,
         override val progressData: HTProgressData,
-    ) : HTRecipePredicates.TripleInput<Input, ItemInstance, FluidInstance, ItemInstance>,
-        HTRecipeFactories.TripleInput<Input, ItemInstance, FluidInstance, ItemInstance, HTItemAndFluidStack>,
+    ) : HTRecipeFactories.TripleInput<Input, ItemInstance, FluidInstance, ItemInstance, HTItemAndFluidStack>,
         HTProgressRecipe.Holder {
         override fun test(first: ItemInstance, second: FluidInstance, third: ItemInstance): Boolean = ingredients.fold(
             { it.test(first) && HTIngredientHelper.isEmpty(second) },

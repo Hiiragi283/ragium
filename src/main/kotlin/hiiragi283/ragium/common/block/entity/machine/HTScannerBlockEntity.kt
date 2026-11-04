@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
+import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
-import hiiragi283.lib.recipe.base.HTRecipeFactories
 import hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
@@ -137,7 +137,9 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    FakeRecipe    //
 
-    data object FakeRecipe : HTRecipeFactories.DoubleItem<ItemStack> {
+    data object FakeRecipe : HTDoubleItemToItemRecipe {
+        override fun test(first: ItemInstance, second: ItemInstance): Boolean = !second.has(RagiumDataComponents.MEMORY_DISC_DATA)
+
         override fun getProgressData(first: ItemInstance, second: ItemInstance): HTProgressData {
             val modifier: Int = first.getOrDefault(DataComponents.RARITY, Rarity.COMMON).ordinal + 1
             return HTProgressData.time(20 * 30 * modifier)

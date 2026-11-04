@@ -2,6 +2,8 @@ package hiiragi283.lib.recipe.base
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTIngredient
+import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
@@ -10,6 +12,7 @@ import hiiragi283.lib.recipe.result.HTRecipeResult
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 
@@ -39,9 +42,16 @@ typealias HTFluidToItemAndFluidRecipe = HTFluidToRecipe<HTItemAndFluidStack>
  * @author Hiiragi Tsubasa
  * @since 26.1.5
  */
-interface HTFluidToRecipe<OUTPUT : Any> :
-    HTRecipePredicates.SingleFluid,
-    HTRecipeFactories.SingleFluidTo<OUTPUT> {
+interface HTFluidToRecipe<OUTPUT : Any> : HTRecipeFactories.SingleInput<HTSingleFluidRecipeInput, FluidInstance, OUTPUT> {
+    val ingredient: HTIngredient<Fluid, FluidInstance>
+
+    override fun test(input: FluidInstance): Boolean = ingredient.test(input)
+
+    override fun matches(input: HTSingleFluidRecipeInput): Boolean = test(input.fluid)
+
+    override fun produce(input: HTSingleFluidRecipeInput): OUTPUT = apply(input.fluid)
+
+    override fun getProgressData(input: HTSingleFluidRecipeInput): HTProgressData = getProgressData(input.fluid)
 
     /**
      * @author Hiiragi Tsubasa
@@ -50,8 +60,6 @@ interface HTFluidToRecipe<OUTPUT : Any> :
     open class Basic<OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>>(ingredient: HTFluidIngredient, result: RESULT, progressData: HTProgressData) :
         HTBasicSingleRecipe<HTFluidIngredient, RESULT>(ingredient, result, progressData),
         HTFluidToRecipe<OUTPUT> {
-        override fun test(input: FluidInstance): Boolean = ingredient.test(input)
-
         override fun apply(input: FluidInstance): OUTPUT = result.create()
 
         override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)

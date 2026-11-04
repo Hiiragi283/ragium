@@ -14,6 +14,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.server.level.ServerLevel
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.BiFunction
+import java.util.function.BiPredicate
 
 /**
  * @author Hiiragi Tsubasa
@@ -26,9 +27,9 @@ typealias HTLocationToFluidRecipe = HTLocationToRecipe<FluidStack>
  * @since 26.1.11
  */
 interface HTLocationToRecipe<OUTPUT : Any> :
-    HTRecipePredicates.DoubleInput<HTLocationRecipeInput, ServerLevel, BlockPos>,
     HTRecipeFactory<HTLocationRecipeInput, OUTPUT>,
     HTProgressRecipe.Double<HTLocationRecipeInput, ServerLevel, BlockPos>,
+    BiPredicate<ServerLevel, BlockPos>,
     BiFunction<ServerLevel, BlockPos, OUTPUT> {
 
     /**

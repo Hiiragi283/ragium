@@ -33,8 +33,6 @@ class RTPlantingRecipe(ingredient: HTItemIngredient, result: HTItemResult, progr
         val SERIALIZER: RecipeSerializer<RTPlantingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(input: ItemInstance): Boolean = ingredient.test(input)
-
     override fun apply(input: ItemInstance): List<ItemStack> = listOf(
         result.create(),
         getMatchingStack(input).let(HTIngredientHelper::unwrapAsStack).copy(),

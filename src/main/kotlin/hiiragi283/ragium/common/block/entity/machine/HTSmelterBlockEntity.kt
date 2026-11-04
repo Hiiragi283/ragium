@@ -53,9 +53,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         HTRecipeCacheHelper.SingleItem(HTVanillaRecipeLookup(recipeType).map(::wrapRecipe))
 
     private fun wrapRecipe(recipe: AbstractCookingRecipe): HTItemToItemRecipe = object : HTItemToItemRecipe {
-        private val ingredient = HTItemIngredient(recipe.input(), 1)
-
-        override fun test(input: ItemInstance): Boolean = ingredient.test(input)
+        override val ingredient = HTItemIngredient(recipe.input(), 1)
 
         override fun apply(input: ItemInstance): ItemStack = recipe.assemble(FAKE_INPUT)
 

@@ -8,7 +8,6 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTRecipeFactories
-import hiiragi283.lib.recipe.base.HTRecipePredicates
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
@@ -32,8 +31,7 @@ data class RTMixingRecipe(
     val fluidIngredient: HTFluidIngredient,
     val result: HTItemOrFluidResult,
     override val progressData: HTProgressData,
-) : HTRecipePredicates.DoubleInput<HTFluidRecipeInput, List<ItemInstance>, FluidInstance>,
-    HTRecipeFactories.DoubleInput<HTFluidRecipeInput, List<ItemInstance>, FluidInstance, HTItemAndFluidStack>,
+) : HTRecipeFactories.DoubleInput<HTFluidRecipeInput, List<ItemInstance>, FluidInstance, HTItemAndFluidStack>,
     HTProgressRecipe.Holder,
     HTSerializableRecipe<HTFluidRecipeInput> {
     companion object {
