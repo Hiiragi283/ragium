@@ -1,11 +1,16 @@
 package hiiragi283.lib.recipe.handler.cache
 
+import hiiragi283.lib.recipe.base.HTFluidToRecipe
+import hiiragi283.lib.recipe.base.HTItemToRecipe
+import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.util.Either
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidInstance
 import java.util.function.BiPredicate
 import java.util.function.Predicate
@@ -19,26 +24,29 @@ data object HTRecipeCacheHelper {
     //    Single    //
 
     /**
-     * 1種類の液体に対する[HTSingleRecipeCache]の実装クラスです。
+     * 1種類の液体に対する[HTSingleRecipeCache.Typed]の実装クラスです。
      */
-    class SingleFluid<RECIPE : Predicate<FluidInstance>>(lookup: HTRecipeLookup<RECIPE>) :
-        HTSingleRecipeCache<FluidInstance, RECIPE>(lookup) {
+    class SingleFluid<RECIPE : HTFluidToRecipe<*>>(lookup: HTRecipeLookup<RECIPE>) :
+        HTSingleRecipeCache.Typed<Fluid, FluidInstance, RECIPE>(lookup, HTFluidToRecipe<*>::ingredient) {
         override fun isEmpty(input: FluidInstance): Boolean = HTIngredientHelper.isEmpty(input)
     }
 
     /**
-     * 1種類のアイテムに対する[HTSingleRecipeCache]の実装クラスです。
+     * 1種類のアイテムに対する[HTSingleRecipeCache.Typed]の実装クラスです。
      */
-    class SingleItem<RECIPE : Predicate<ItemInstance>>(lookup: HTRecipeLookup<RECIPE>) : HTSingleRecipeCache<ItemInstance, RECIPE>(lookup) {
+    class SingleItem<RECIPE : HTItemToRecipe<*>>(lookup: HTRecipeLookup<RECIPE>) :
+        HTSingleRecipeCache.Typed<Item, ItemInstance, RECIPE>(lookup, HTItemToRecipe<*>::ingredient) {
         override fun isEmpty(input: ItemInstance): Boolean = HTIngredientHelper.isEmpty(input)
     }
 
     /**
      * 複数のアイテムに対する[HTSingleRecipeCache]の実装クラスです。
      */
-    class MultiItem<RECIPE : Predicate<List<ItemInstance>>>(lookup: HTRecipeLookup<RECIPE>) :
+    class MultiItem<RECIPE : HTSizedShapelessRecipe>(lookup: HTRecipeLookup<RECIPE>) :
         HTSingleRecipeCache<List<ItemInstance>, RECIPE>(lookup) {
         override fun isEmpty(input: List<ItemInstance>): Boolean = HTIngredientHelper.isEmpty(input)
+
+        override fun matches(recipe: RECIPE, input: List<ItemInstance>): Boolean = recipe.test(input)
     }
 
     /**
@@ -49,6 +57,8 @@ data object HTRecipeCacheHelper {
         HTSingleRecipeCache<Either<ItemInstance, FluidInstance>, RECIPE>(lookup) {
         override fun isEmpty(input: Either<ItemInstance, FluidInstance>): Boolean =
             input.fold(HTIngredientHelper::isEmpty, HTIngredientHelper::isEmpty)
+
+        override fun matches(recipe: RECIPE, input: Either<ItemInstance, FluidInstance>): Boolean = recipe.test(input)
     }
 
     //    Double    //

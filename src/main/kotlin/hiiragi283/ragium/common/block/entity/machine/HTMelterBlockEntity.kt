@@ -8,7 +8,6 @@ import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
-import hiiragi283.lib.recipe.handler.cache.HTSingleRecipeCache
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
 import hiiragi283.lib.recipe.handler.input.HTInputSlot
 import hiiragi283.lib.recipe.handler.lookup.HTSingleRecipeLookupHandler
@@ -39,7 +38,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER.get(), pos, state),
     HTSingleRecipeLookupHandler.ForItem<HTItemToFluidRecipe> {
-    override val recipeCache: HTSingleRecipeCache<ItemInstance, HTItemToFluidRecipe> = HTRecipeCacheHelper.SingleItem(RagiumRecipeLookups.MELTING)
+    override val recipeCache: HTRecipeCacheHelper.SingleItem<HTItemToFluidRecipe> = HTRecipeCacheHelper.SingleItem(RagiumRecipeLookups.MELTING)
 
     override fun writeValue(output: ValueOutput) {
         super.writeValue(output)

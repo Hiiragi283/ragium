@@ -8,7 +8,6 @@ import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
-import hiiragi283.lib.recipe.handler.cache.HTSingleRecipeCache
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
 import hiiragi283.lib.recipe.handler.input.HTInputSlot
 import hiiragi283.lib.recipe.handler.lookup.HTSingleRecipeLookupHandler
@@ -41,7 +40,7 @@ import java.util.function.IntSupplier
 abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state),
     HTSingleRecipeLookupHandler.ForFluid<HTFluidSeparatingRecipe> {
-    final override val recipeCache: HTSingleRecipeCache<FluidInstance, HTFluidSeparatingRecipe> = HTRecipeCacheHelper.SingleFluid(getLookup())
+    final override val recipeCache: HTRecipeCacheHelper.SingleFluid<HTFluidSeparatingRecipe> = HTRecipeCacheHelper.SingleFluid(getLookup())
 
     override fun writeValue(output: ValueOutput) {
         super.writeValue(output)

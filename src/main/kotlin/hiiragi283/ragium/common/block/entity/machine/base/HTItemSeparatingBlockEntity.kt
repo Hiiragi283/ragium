@@ -8,7 +8,6 @@ import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
-import hiiragi283.lib.recipe.handler.cache.HTSingleRecipeCache
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
 import hiiragi283.lib.recipe.handler.input.HTInputSlot
 import hiiragi283.lib.recipe.handler.lookup.HTSingleRecipeLookupHandler
@@ -39,7 +38,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction
 abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state),
     HTSingleRecipeLookupHandler.ForItem<HTItemSeparatingRecipe> {
-    final override val recipeCache: HTSingleRecipeCache<ItemInstance, HTItemSeparatingRecipe> = HTRecipeCacheHelper.SingleItem(getLookup())
+    final override val recipeCache: HTRecipeCacheHelper.SingleItem<HTItemSeparatingRecipe> = HTRecipeCacheHelper.SingleItem(getLookup())
 
     protected abstract fun getLookup(): HTRecipeLookup<HTItemSeparatingRecipe>
 
