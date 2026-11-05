@@ -96,7 +96,7 @@ data object HTPhysicalSideHelper {
     @JvmStatic
     fun createLookupContext(level: Level?): HTRecipeLookup.Context = when (level) {
         null -> HTRecipeLookup.Context.EMPTY
-        is ServerLevel -> HTRecipeLookup.Context(level)
+        is ServerLevel -> HTRecipeLookup.Context(level.recipeAccess().recipeMap(), level.registryAccess())
         else -> HTRecipeLookup.Context(cachedRecipes, level.registryAccess())
     }
 

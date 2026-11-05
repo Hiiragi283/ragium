@@ -37,7 +37,10 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             result { +RagiumItems.BLANK_CIRCUIT_BOARD }
         }.save(exporter)
         RagiumRecipeBuilders.alloying {
-            ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
+            ingredient {
+                +holderSet(HTCommonTags.Items.PLASTICS)
+                count = 2
+            }
             ingredient { +holderSet(HTCommonTags.Items.SILICON) }
             result {
                 +RagiumItems.BLANK_CIRCUIT_BOARD
@@ -46,7 +49,10 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             recipeId suffix "_with_crude_silicon"
         }.save(exporter)
         RagiumRecipeBuilders.alloying {
-            ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
+            ingredient {
+                +holderSet(HTCommonTags.Items.PLASTICS)
+                count = 4
+            }
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SILICON) }
             result {
                 +RagiumItems.BLANK_CIRCUIT_BOARD

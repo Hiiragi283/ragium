@@ -1,12 +1,7 @@
 package hiiragi283.lib.recipe.handler
 
-import hiiragi283.lib.HTConstants
-import hiiragi283.lib.recipe.handler.cache.HTDoubleRecipeCache
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import java.util.function.BiFunction
-import java.util.function.BiPredicate
 
 /**
  * 2つの入力に対する[HTRecipeHandler]の拡張クラスです。
@@ -97,28 +92,5 @@ abstract class HTDoubleRecipeHandler<INPUT_A : Any, INPUT_B : Any, OUTPUT : Any,
      */
     interface Progressor<INPUT_A : Any, INPUT_B : Any, RECIPE : Any> : HTRecipeHandler.Progressor {
         fun getMaxProgress(recipe: RECIPE, first: INPUT_A, second: INPUT_B): Int
-    }
-
-    //    Cached    //
-
-    /**
-     * [HTDoubleRecipeCache]に基づいてレシピを取得する[HTDoubleRecipeHandler]の拡張クラスです。
-     * @author Hiiragi Tsubasa
-     * @since 26.1.11
-     */
-    abstract class Cached<INPUT_A : Any, INPUT_B : Any, OUTPUT : Any, RECIPE>(val cache: HTDoubleRecipeCache<INPUT_A, INPUT_B, RECIPE>) :
-        HTDoubleRecipeHandler<INPUT_A, INPUT_B, OUTPUT, RECIPE>()
-        where RECIPE : BiPredicate<INPUT_A, INPUT_B>, RECIPE : BiFunction<INPUT_A, INPUT_B, OUTPUT> {
-        final override fun findRecipe(first: INPUT_A, second: INPUT_B, level: ServerLevel): RECIPE? = cache.findFirstRecipe(first, second, level)
-
-        override fun serialize(output: ValueOutput) {
-            super.serialize(output)
-            output.putChild(HTConstants.LAST_RECIPE, cache)
-        }
-
-        override fun deserialize(input: ValueInput) {
-            super.deserialize(input)
-            input.readChild(HTConstants.LAST_RECIPE, cache)
-        }
     }
 }

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine.base
 
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
@@ -9,6 +10,7 @@ import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
 import hiiragi283.lib.recipe.handler.input.HTInputSlot
+import hiiragi283.lib.recipe.handler.lookup.HTDoubleRecipeLookupHandler
 import hiiragi283.lib.recipe.handler.output.HTOutputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
@@ -24,20 +26,37 @@ import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTItemAndFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(type, pos, state) {
-    fun createRecipeHandler(lookup: HTRecipeLookup<HTItemAndFluidRecipe>, sound: HTSoundInstance): HTRecipeHandler =
-        object : HTDoubleRecipeHandler.Cached<ItemInstance, FluidInstance, HTItemAndFluidStack, HTItemAndFluidRecipe>(
-            HTRecipeCacheHelper.ItemAndFluid(lookup, true),
-        ) {
+    HTProcessorBlockEntity.Energized(type, pos, state),
+    HTDoubleRecipeLookupHandler<ItemInstance, FluidInstance, HTItemAndFluidRecipe> {
+    final override val recipeCache: HTRecipeCacheHelper.ItemAndFluid<HTItemAndFluidRecipe> =
+        HTRecipeCacheHelper.ItemAndFluid(getLookup(), true)
+
+    protected abstract fun getLookup(): HTRecipeLookup<HTItemAndFluidRecipe>
+
+    override fun writeValue(output: ValueOutput) {
+        super.writeValue(output)
+        output.putChild(HTConstants.LAST_RECIPE, recipeCache)
+    }
+
+    override fun readValue(input: ValueInput) {
+        super.readValue(input)
+        input.readChild(HTConstants.LAST_RECIPE, recipeCache)
+    }
+
+    fun createRecipeHandler(sound: HTSoundInstance): HTRecipeHandler =
+        object : HTDoubleRecipeHandler<ItemInstance, FluidInstance, HTItemAndFluidStack, HTItemAndFluidRecipe>() {
             private val inputTank: HTInputSlot<FluidInstance> by lazy { HTInputHandlerHelper.forFluid(this@HTItemAndFluidBlockEntity.inputTank) }
             private val inputSlot: HTInputSlot<ItemInstance> by lazy { HTInputHandlerHelper.forItem(this@HTItemAndFluidBlockEntity.inputSlot) }
             private val outputTank: HTOutputSlot<FluidStack> by lazy { HTOutputSlotHelper.forFluid(this@HTItemAndFluidBlockEntity.outputTank) }
@@ -48,6 +67,9 @@ abstract class HTItemAndFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos
             override fun getFirstInput(): ItemInstance = inputSlot.getStoredInput()
 
             override fun getSecondInput(): FluidInstance = inputTank.getStoredInput()
+
+            override fun findRecipe(first: ItemInstance, second: FluidInstance, level: ServerLevel): HTItemAndFluidRecipe? =
+                findFirstRecipe(first, second)
 
             override fun canComplete(recipe: HTItemAndFluidRecipe, first: ItemInstance, second: FluidInstance, output: HTItemAndFluidStack): Boolean =
                 useTransaction { transaction: Transaction ->

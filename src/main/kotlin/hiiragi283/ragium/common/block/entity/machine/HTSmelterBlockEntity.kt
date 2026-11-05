@@ -10,14 +10,11 @@ import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
-import hiiragi283.lib.recipe.handler.input.HTInputSlot
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
+import hiiragi283.lib.recipe.handler.lookup.HTSingleRecipeLookupHandler
 import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.lookup.HTVanillaRecipeLookup
-import hiiragi283.lib.recipe.lookup.map
+import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
-import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.gui.widget.HTItemWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
@@ -25,7 +22,6 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
@@ -36,21 +32,24 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
-import net.neoforged.neoforge.transfer.transaction.Transaction
+import net.neoforged.neoforge.transfer.item.ItemResource
 
 class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.SMELTER.get(), pos, state) {
+    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.SMELTER.get(), pos, state),
+    HTSingleRecipeLookupHandler.ForItem<HTItemToItemRecipe> {
     companion object {
         @JvmStatic
         private val FAKE_INPUT = SingleRecipeInput(ItemStack.EMPTY)
     }
 
-    private val smeltingCache: HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> = createCache(RecipeType.SMELTING)
-    private val blastingCache: HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> = createCache(RecipeType.BLASTING)
-    private val smokingCache: HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> = createCache(RecipeType.SMOKING)
-
-    private fun createCache(recipeType: RecipeType<out AbstractCookingRecipe>): HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> =
-        HTRecipeCacheHelper.SingleItem(HTVanillaRecipeLookup(recipeType).map(::wrapRecipe))
+    override val recipeCache: HTRecipeCacheHelper.SingleItem<HTItemToItemRecipe> = HTRecipeCacheHelper.SingleItem { context: HTRecipeLookup.Context ->
+        val resourceIn: ItemResource = typeSlot.resource
+        when {
+            resourceIn.`is`(Items.BLAST_FURNACE) -> RecipeType.SMELTING
+            resourceIn.`is`(Items.SMOKER) -> RecipeType.BLASTING
+            else -> RecipeType.SMOKING
+        }.let(context::byType).map { it.map(::wrapRecipe) }
+    }
 
     private fun wrapRecipe(recipe: AbstractCookingRecipe): HTItemToItemRecipe = object : HTItemToItemRecipe {
         override val ingredient = HTItemIngredient(recipe.input(), 1)
@@ -64,59 +63,21 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeValue(output: ValueOutput) {
         super.writeValue(output)
-        val child: ValueOutput = output.child(HTConstants.LAST_RECIPE)
-        child.putChild(HTConstants.SMELTING, smeltingCache)
-        child.putChild(HTConstants.BLASTING, blastingCache)
-        child.putChild(HTConstants.SMOKING, smokingCache)
+        output.putChild(HTConstants.LAST_RECIPE, recipeCache)
     }
 
     override fun readValue(input: ValueInput) {
         super.readValue(input)
-        input.child(HTConstants.LAST_RECIPE).ifPresent { child: ValueInput ->
-            child.readChild(HTConstants.SMELTING, smeltingCache)
-            child.readChild(HTConstants.BLASTING, blastingCache)
-            child.readChild(HTConstants.SMOKING, smokingCache)
-        }
+        input.readChild(HTConstants.LAST_RECIPE, recipeCache)
     }
 
-    override fun createRecipeHandler(): HTRecipeHandler = object : HTSingleRecipeHandler<ItemInstance, ItemStack, HTItemToItemRecipe>() {
-        private val inputSlot: HTInputSlot<ItemInstance> by lazy {
-            HTInputHandlerHelper.forItem(this@HTSmelterBlockEntity.inputSlot)
-        }
-        private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-            HTOutputSlotHelper.forItem(this@HTSmelterBlockEntity.outputSlot)
-        }
-
-        override fun createProgressor(): Progressor<ItemInstance, HTItemToItemRecipe> = SingleProgressor()
-
-        override fun getInput(): ItemInstance = inputSlot.getStoredInput()
-
-        override fun findRecipe(input: ItemInstance, level: ServerLevel): HTItemToItemRecipe? {
-            val stackIn: ItemStack = typeSlot.getStackCopy()
-            return when {
-                stackIn.`is`(Items.BLAST_FURNACE) -> blastingCache
-                stackIn.`is`(Items.SMOKER) -> smokingCache
-                else -> smeltingCache
-            }.findFirstRecipe(input, level)
-        }
-
-        override fun canComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack): Boolean =
-            useTransaction { transaction: Transaction ->
-                when {
-                    inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
-                    else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
-                }
-            }
-
-        override fun onComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack) {
-            useTransaction { transaction: Transaction ->
-                inputSlot.use(recipe.getMatchingStack(input), transaction)
-                outputSlot.take(output, transaction)
-                transaction.commit()
-            }
-            playSound(SoundEvents.FIRE_EXTINGUISH)
-        }
-    }
+    override fun createRecipeHandler(): HTRecipeHandler = HTSingleRecipeHandler.Basic(
+        HTInputHandlerHelper.forItem(inputSlot),
+        HTOutputSlotHelper.forItem(outputSlot),
+        SingleProgressor(),
+        ::findFirstRecipe,
+        HTItemToItemRecipe::getMatchingStack,
+    ) { playSound(SoundEvents.FIRE_EXTINGUISH) }
 
     private lateinit var inputSlot: HTBasicItemSlot
     private lateinit var typeSlot: HTBasicItemSlot

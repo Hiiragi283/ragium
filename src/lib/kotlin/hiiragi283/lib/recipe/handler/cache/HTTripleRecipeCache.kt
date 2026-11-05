@@ -3,7 +3,6 @@ package hiiragi283.lib.recipe.handler.cache
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.util.right
-import net.minecraft.server.level.ServerLevel
 import net.neoforged.neoforge.common.util.TriPredicate
 
 /**
@@ -18,17 +17,6 @@ import net.neoforged.neoforge.common.util.TriPredicate
 abstract class HTTripleRecipeCache<INPUT_A : Any, INPUT_B : Any, INPUT_C : Any, RECIPE : TriPredicate<INPUT_A, INPUT_B, INPUT_C>>(
     lookup: HTRecipeLookup<RECIPE>,
 ) : HTBaseRecipeCache<RECIPE>(lookup) {
-    /**
-     * レシピを取得します。
-     * @param first レシピの1番目の入力
-     * @param second レシピの2番目の入力
-     * @param third レシピの3番目の入力
-     * @param level レシピ取得時のレベル
-     * @return [first]と[second]に一致する最初のレシピ
-     */
-    fun findFirstRecipe(first: INPUT_A, second: INPUT_B, third: INPUT_C, level: ServerLevel): RECIPE? =
-        findFirstRecipe(first, second, third, HTRecipeLookup.Context(level))
-
     /**
      * レシピを取得します。
      * @param first レシピの1番目の入力

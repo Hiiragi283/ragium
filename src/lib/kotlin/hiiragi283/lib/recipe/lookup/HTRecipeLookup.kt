@@ -3,7 +3,6 @@ package hiiragi283.lib.recipe.lookup
 import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.kotlin
 import net.minecraft.core.RegistryAccess
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeMap
@@ -43,8 +42,6 @@ fun interface HTRecipeLookup<out RECIPE : Any> {
             @JvmField
             val EMPTY = Context(RecipeMap.EMPTY, RegistryAccess.EMPTY)
         }
-
-        constructor(level: ServerLevel) : this(level.recipeAccess().recipeMap(), level.registryAccess())
 
         /**
          * @since 26.1.3

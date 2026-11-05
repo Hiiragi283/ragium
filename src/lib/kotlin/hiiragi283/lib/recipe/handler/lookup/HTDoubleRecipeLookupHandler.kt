@@ -1,0 +1,18 @@
+package hiiragi283.lib.recipe.handler.lookup
+
+import hiiragi283.lib.recipe.handler.cache.HTDoubleRecipeCache
+import java.util.function.BiPredicate
+
+/**
+ * ２つの入力に対する[HTRecipeLookupHandler]の拡張インターフェースです。
+ * @param INPUT_A 1番目のレシピの入力となるクラス
+ * @param INPUT_B 2番目のレシピの入力となるクラス
+ * @param RECIPE 提供するレシピのクラス
+ * @author Hiiragi Tsubasa
+ * @since 26.1.13
+ */
+interface HTDoubleRecipeLookupHandler<INPUT_A : Any, INPUT_B : Any, RECIPE : BiPredicate<INPUT_A, INPUT_B>> : HTRecipeLookupHandler {
+    val recipeCache: HTDoubleRecipeCache<INPUT_A, INPUT_B, RECIPE>
+
+    fun findFirstRecipe(first: INPUT_A, second: INPUT_B): RECIPE? = recipeCache.findFirstRecipe(first, second, createLookupContext())
+}

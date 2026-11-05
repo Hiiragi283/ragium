@@ -13,7 +13,6 @@ import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.registry.getOrNull
 import hiiragi283.lib.resource.modifyPath
-import hiiragi283.lib.util.identity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
@@ -74,30 +73,30 @@ internal data object RagiumCommon {
 
     private fun initRecipeLookups() {
         // from recipe types
-        RagiumRecipeLookups.ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING, identity())
-        RagiumRecipeLookups.CENTRIFUGING.fromRecipeType(RagiumRecipeTypes.CENTRIFUGING, identity())
-        RagiumRecipeLookups.COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING, identity())
-        RagiumRecipeLookups.CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING, identity())
-        RagiumRecipeLookups.CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING, identity())
-        RagiumRecipeLookups.FILLING.fromRecipeType(RagiumRecipeTypes.FILLING, identity())
-        RagiumRecipeLookups.PRESSING.fromRecipeType(RagiumRecipeTypes.PRESSING, identity())
+        RagiumRecipeLookups.ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING)
+        RagiumRecipeLookups.CENTRIFUGING.fromRecipeType(RagiumRecipeTypes.CENTRIFUGING)
+        RagiumRecipeLookups.COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING)
+        RagiumRecipeLookups.CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING)
+        RagiumRecipeLookups.CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING)
+        RagiumRecipeLookups.FILLING.fromRecipeType(RagiumRecipeTypes.FILLING)
+        RagiumRecipeLookups.PRESSING.fromRecipeType(RagiumRecipeTypes.PRESSING)
 
-        RagiumRecipeLookups.ALLOYING.fromRecipeType(RagiumRecipeTypes.ALLOYING, identity())
-        RagiumRecipeLookups.DRYING.fromRecipeType(RagiumRecipeTypes.DRYING, identity())
-        RagiumRecipeLookups.MELTING.fromRecipeType(RagiumRecipeTypes.MELTING, identity())
-        RagiumRecipeLookups.PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING, identity())
-        RagiumRecipeLookups.REFINING.fromRecipeType(RagiumRecipeTypes.REFINING, identity())
+        RagiumRecipeLookups.ALLOYING.fromRecipeType(RagiumRecipeTypes.ALLOYING)
+        RagiumRecipeLookups.DRYING.fromRecipeType(RagiumRecipeTypes.DRYING)
+        RagiumRecipeLookups.MELTING.fromRecipeType(RagiumRecipeTypes.MELTING)
+        RagiumRecipeLookups.PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING)
+        RagiumRecipeLookups.REFINING.fromRecipeType(RagiumRecipeTypes.REFINING)
 
-        RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING, identity())
-        RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING, identity())
+        RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING)
+        RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING)
 
-        RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING, identity())
-        RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING, identity())
+        RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING)
+        RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING)
 
-        RagiumRecipeLookups.ENGRAVING.fromRecipeType(RagiumRecipeTypes.ENGRAVING, identity())
+        RagiumRecipeLookups.ENGRAVING.fromRecipeType(RagiumRecipeTypes.ENGRAVING)
 
-        RagiumRecipeLookups.ENCHANTING.fromRecipeType(RagiumRecipeTypes.ENCHANTING, identity())
-        RagiumRecipeLookups.TRANSFORMING.fromRecipeType(RagiumRecipeTypes.TRANSFORMING, identity())
+        RagiumRecipeLookups.ENCHANTING.fromRecipeType(RagiumRecipeTypes.ENCHANTING)
+        RagiumRecipeLookups.TRANSFORMING.fromRecipeType(RagiumRecipeTypes.TRANSFORMING)
         // runtime recipes
         RagiumRecipeLookups.CENTRIFUGING.addRecipes(
             buildMap {

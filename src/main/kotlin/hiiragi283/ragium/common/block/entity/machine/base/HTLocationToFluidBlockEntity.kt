@@ -1,11 +1,14 @@
 package hiiragi283.ragium.common.block.entity.machine.base
 
+import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTLocationToFluidRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
+import hiiragi283.lib.recipe.handler.cache.HTDoubleRecipeCache
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
+import hiiragi283.lib.recipe.handler.lookup.HTDoubleRecipeLookupHandler
 import hiiragi283.lib.recipe.handler.output.HTOutputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
@@ -20,17 +23,29 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidStack
 
 abstract class HTLocationToFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(type, pos, state) {
+    HTProcessorBlockEntity.Energized(type, pos, state),
+    HTDoubleRecipeLookupHandler<ServerLevel, BlockPos, HTLocationToFluidRecipe> {
+    override val recipeCache: HTDoubleRecipeCache<ServerLevel, BlockPos, HTLocationToFluidRecipe> = HTRecipeCacheHelper.Located(getLookup())
 
-    fun createRecipeHandler(lookup: HTRecipeLookup<HTLocationToFluidRecipe>, sound: HTSoundInstance): HTRecipeHandler = object : HTRecipeHandler() {
-        private val cache: HTRecipeCacheHelper.Located<HTLocationToFluidRecipe> =
-            HTRecipeCacheHelper.Located(lookup)
-        private val outputTank: HTOutputSlot<FluidStack> by lazy {
-            HTOutputSlotHelper.forFluid(this@HTLocationToFluidBlockEntity.outputTank)
-        }
+    protected abstract fun getLookup(): HTRecipeLookup<HTLocationToFluidRecipe>
+
+    override fun writeValue(output: ValueOutput) {
+        super.writeValue(output)
+        output.putChild(HTConstants.LAST_RECIPE, recipeCache)
+    }
+
+    override fun readValue(input: ValueInput) {
+        super.readValue(input)
+        input.readChild(HTConstants.LAST_RECIPE, recipeCache)
+    }
+
+    fun createRecipeHandler(sound: HTSoundInstance): HTRecipeHandler = object : HTRecipeHandler() {
+        private val outputTank: HTOutputSlot<FluidStack> by lazy { HTOutputSlotHelper.forFluid(this@HTLocationToFluidBlockEntity.outputTank) }
 
         private var outputCache: FluidStack? = null
 
@@ -42,12 +57,11 @@ abstract class HTLocationToFluidBlockEntity(type: BlockEntityType<*>, pos: Block
         override fun tick(level: ServerLevel): Boolean {
             if (!shouldCheck) return false
             // インプットに一致するレシピを探索する
-            val recipe: HTLocationToFluidRecipe =
-                cache.findFirstRecipe(level, blockPos, level) ?: return run {
-                    shouldCheck = false
-                    updateProgress(-1)
-                    false
-                }
+            val recipe: HTLocationToFluidRecipe = findFirstRecipe(level, blockPos) ?: return run {
+                shouldCheck = false
+                updateProgress(-1)
+                false
+            }
             // アウトプットに完成品を搬出できるか判定する
             val output: FluidStack = recipe.apply(level, blockPos)
             outputCache = output

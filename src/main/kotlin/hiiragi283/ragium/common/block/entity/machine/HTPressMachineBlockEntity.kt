@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
+import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -13,10 +15,9 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTPressMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTCatalysedItemToItemBlockEntity(RagiumBlockEntityTypes.PRESS_MACHINE.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
-        RagiumRecipeLookups.PRESSING,
-        HTSoundInstance(SoundEvents.PISTON_EXTEND),
-    )
+    override fun getLookup(): HTRecipeLookup<HTDoubleItemToItemRecipe> = RagiumRecipeLookups.PRESSING
+
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(HTSoundInstance(SoundEvents.PISTON_EXTEND))
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.pressMachine
 }

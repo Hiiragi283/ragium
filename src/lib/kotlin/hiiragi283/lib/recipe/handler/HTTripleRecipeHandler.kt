@@ -1,11 +1,6 @@
 package hiiragi283.lib.recipe.handler
 
-import hiiragi283.lib.HTConstants
-import hiiragi283.lib.recipe.handler.cache.HTTripleRecipeCache
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
-import net.neoforged.neoforge.common.util.TriPredicate
 import org.apache.commons.lang3.function.TriFunction
 
 /**
@@ -105,29 +100,5 @@ abstract class HTTripleRecipeHandler<IN_A : Any, IN_B : Any, IN_C : Any, OUT : A
      */
     interface Progressor<IN_A : Any, IN_B : Any, IN_C : Any, RECIPE : Any> : HTRecipeHandler.Progressor {
         fun getMaxProgress(recipe: RECIPE, first: IN_A, second: IN_B, third: IN_C): Int
-    }
-
-    //    Cached    //
-
-    /**
-     * [HTTripleRecipeCache]に基づいてレシピを取得する[HTTripleRecipeHandler]の拡張クラスです。
-     * @author Hiiragi Tsubasa
-     * @since 26.1.12
-     */
-    abstract class Cached<IN_A : Any, IN_B : Any, IN_C : Any, OUT : Any, RECIPE>(val cache: HTTripleRecipeCache<IN_A, IN_B, IN_C, RECIPE>) :
-        HTTripleRecipeHandler<IN_A, IN_B, IN_C, OUT, RECIPE>()
-        where RECIPE : TriPredicate<IN_A, IN_B, IN_C>, RECIPE : TriFunction<IN_A, IN_B, IN_C, OUT> {
-        final override fun findRecipe(first: IN_A, second: IN_B, third: IN_C, level: ServerLevel): RECIPE? =
-            cache.findFirstRecipe(first, second, third, level)
-
-        override fun serialize(output: ValueOutput) {
-            super.serialize(output)
-            output.putChild(HTConstants.LAST_RECIPE, cache)
-        }
-
-        override fun deserialize(input: ValueInput) {
-            super.deserialize(input)
-            input.readChild(HTConstants.LAST_RECIPE, cache)
-        }
     }
 }

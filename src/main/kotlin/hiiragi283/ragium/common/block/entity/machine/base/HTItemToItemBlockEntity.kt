@@ -9,27 +9,20 @@ import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
-import hiiragi283.lib.recipe.handler.input.HTInputSlot
 import hiiragi283.lib.recipe.handler.lookup.HTSingleRecipeLookupHandler
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
-import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTItemWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.ItemInstance
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
-import net.neoforged.neoforge.transfer.transaction.Transaction
 
 abstract class HTItemToItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state),
@@ -48,38 +41,13 @@ abstract class HTItemToItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, 
         input.readChild(HTConstants.LAST_RECIPE, recipeCache)
     }
 
-    protected fun createRecipeHandler(sound: HTSoundInstance): HTRecipeHandler =
-        object : HTSingleRecipeHandler<ItemInstance, ItemStack, HTItemToItemRecipe>() {
-            private val inputSlot: HTInputSlot<ItemInstance> by lazy {
-                HTInputHandlerHelper.forItem(this@HTItemToItemBlockEntity.inputSlot)
-            }
-            private val outputSlot: HTOutputSlot<ItemStack> by lazy {
-                HTOutputSlotHelper.forItem(this@HTItemToItemBlockEntity.outputSlot)
-            }
-
-            override fun createProgressor(): Progressor<ItemInstance, HTItemToItemRecipe> = SingleProgressor()
-
-            override fun getInput(): ItemInstance = inputSlot.getStoredInput()
-
-            override fun findRecipe(input: ItemInstance, level: ServerLevel): HTItemToItemRecipe? = findFirstRecipe(input)
-
-            override fun canComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack): Boolean =
-                useTransaction { transaction: Transaction ->
-                    when {
-                        inputSlot.use(recipe.getMatchingStack(input), transaction).failed -> false
-                        else -> outputSlot.take(output, transaction) == HTOutputSlot.TakeResult.FULL
-                    }
-                }
-
-            override fun onComplete(recipe: HTItemToItemRecipe, input: ItemInstance, output: ItemStack) {
-                useTransaction { transaction: Transaction ->
-                    inputSlot.use(recipe.getMatchingStack(input), transaction)
-                    outputSlot.take(output, transaction)
-                    transaction.commit()
-                }
-                playSound(sound)
-            }
-        }
+    protected fun createRecipeHandler(sound: HTSoundInstance): HTRecipeHandler = HTSingleRecipeHandler.Basic(
+        HTInputHandlerHelper.forItem(inputSlot),
+        HTOutputSlotHelper.forItem(outputSlot),
+        SingleProgressor(),
+        ::findFirstRecipe,
+        HTItemToItemRecipe::getMatchingStack,
+    ) { playSound(sound) }
 
     private lateinit var inputSlot: HTBasicItemSlot
     private lateinit var outputSlot: HTBasicItemSlot

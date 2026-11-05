@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
+import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -13,10 +15,9 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemAndFluidToFluidBlockEntity(RagiumBlockEntityTypes.BREWERY.get(), pos, state) {
-    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(
-        RagiumRecipeLookups.BREWING,
-        HTSoundInstance(SoundEvents.BREWING_STAND_BREW),
-    )
+    override fun getLookup(): HTRecipeLookup<HTItemAndFluidToFluidRecipe> = RagiumRecipeLookups.BREWING
+
+    override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(HTSoundInstance(SoundEvents.BREWING_STAND_BREW))
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.brewery
 }

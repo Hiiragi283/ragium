@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.lib.HTConstants
+import hiiragi283.lib.HTPhysicalSideHelper
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
@@ -27,20 +29,31 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class HTChemicalLaboBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.CHEMICAL_LABO.get(), pos, state) {
+    override fun writeValue(output: ValueOutput) {
+        super.writeValue(output)
+        output.putChild(HTConstants.LAST_RECIPE, Cache)
+    }
+
+    override fun readValue(input: ValueInput) {
+        super.readValue(input)
+        input.readChild(HTConstants.LAST_RECIPE, Cache)
+    }
+
     override fun createRecipeHandler(): HTRecipeHandler =
-        object : HTTripleRecipeHandler.Cached<ItemInstance, FluidInstance, ItemInstance, HTItemAndFluidStack, RTReactingRecipe.Simple>(
-            Cache,
-        ) {
+        object : HTTripleRecipeHandler<ItemInstance, FluidInstance, ItemInstance, HTItemAndFluidStack, RTReactingRecipe.Simple>() {
             private val inputTank: HTInputSlot<FluidInstance> by lazy { HTInputHandlerHelper.forFluid(this@HTChemicalLaboBlockEntity.inputTank) }
             private val inputSlot: HTInputSlot<ItemInstance> by lazy { HTInputHandlerHelper.forItem(this@HTChemicalLaboBlockEntity.inputSlot) }
             private val outputTank: HTOutputSlot<FluidStack> by lazy { HTOutputSlotHelper.forFluid(this@HTChemicalLaboBlockEntity.outputTank) }
@@ -53,6 +66,9 @@ class HTChemicalLaboBlockEntity(pos: BlockPos, state: BlockState) :
             override fun getSecondInput(): FluidInstance = inputTank.getStoredInput()
 
             override fun getThirdInput(): ItemInstance = catalystSlot.getStackCopy()
+
+            override fun findRecipe(first: ItemInstance, second: FluidInstance, third: ItemInstance, level: ServerLevel): RTReactingRecipe.Simple? =
+                Cache.findFirstRecipe(first, second, third, HTPhysicalSideHelper.createLookupContext(level))
 
             override fun canComplete(
                 recipe: RTReactingRecipe.Simple,

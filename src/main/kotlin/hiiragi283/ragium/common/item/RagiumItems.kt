@@ -301,24 +301,16 @@ data object RagiumItems {
 
     // Electronics
     @JvmField
-    val QUARTZ_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("quartz_lens") {
-        it.stacksTo(1)
-    }
+    val QUARTZ_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("quartz_lens") { it.stacksTo(1) }
 
     @JvmField
-    val DIAMOND_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_lens") {
-        it.stacksTo(1).rarity(Rarity.UNCOMMON)
-    }
+    val DIAMOND_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_lens") { it.stacksTo(1).rarity(Rarity.UNCOMMON) }
 
     @JvmField
-    val SHADOW_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("shadow_lens") {
-        it.stacksTo(1).rarity(Rarity.RARE)
-    }
+    val SHADOW_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("shadow_lens") { it.stacksTo(1).rarity(Rarity.RARE) }
 
     @JvmField
-    val NETHER_STAR_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("nether_star_lens") {
-        it.stacksTo(1).rarity(Rarity.EPIC)
-    }
+    val NETHER_STAR_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("nether_star_lens") { it.stacksTo(1).rarity(Rarity.EPIC) }
 
     @JvmField
     val MEMORY_DISC: HTSimpleDeferredItem = REGISTER.registerItem("memory_disc", ::HTMemoryDiscItem)
@@ -373,9 +365,7 @@ data object RagiumItems {
     @JvmStatic
     private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
         fun <T : Any> set(item: ItemLike, type: DataComponentType<T>, value: T) {
-            event.modify(item) { builder: DataComponentMap.Builder, _, _ ->
-                builder.set(type, value)
-            }
+            event.modify(item) { builder: DataComponentMap.Builder, _, _ -> builder.set(type, value) }
         }
 
         // Tooltip

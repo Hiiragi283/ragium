@@ -2,7 +2,7 @@
   "type": "ragium:alloying",
   "ingredients": [
     {
-      "count": 1,
+      "count": 4,
       "items": "#c:plastics"
     },
     {

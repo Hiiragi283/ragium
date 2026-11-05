@@ -5,7 +5,6 @@ import hiiragi283.lib.recipe.ingredient.HTIngredient
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.util.right
 import net.minecraft.core.TypedInstance
-import net.minecraft.server.level.ServerLevel
 
 /**
  * 単一の入力に対する[HTBaseRecipeCache]の拡張クラスです。
@@ -15,14 +14,6 @@ import net.minecraft.server.level.ServerLevel
  * @since 26.1.11
  */
 abstract class HTSingleRecipeCache<INPUT : Any, RECIPE : Any>(lookup: HTRecipeLookup<RECIPE>) : HTBaseRecipeCache<RECIPE>(lookup) {
-    /**
-     * レシピを取得します。
-     * @param input レシピの入力
-     * @param level レシピ取得時のレベル
-     * @return [input]に一致する最初のレシピ
-     */
-    fun findFirstRecipe(input: INPUT, level: ServerLevel): RECIPE? = findFirstRecipe(input, HTRecipeLookup.Context(level))
-
     /**
      * レシピを取得します。
      * @param input レシピの入力
