@@ -236,6 +236,16 @@ inline fun <A, B> Ior<A, B>.getOrElse(default: (A) -> B): B {
 
 /**
  * @author Hiiragi Tsubasa
+ * @since 26.1.13
+ */
+inline fun <A, B> Ior<A, B>.toPair(emptyLeft: () -> A, emptyRight: () -> B): Pair<A, B> = fold(
+    { it to emptyRight() },
+    { emptyLeft() to it },
+    { left: A, right: B -> left to right },
+)
+
+/**
+ * @author Hiiragi Tsubasa
  * @since 26.1.8
  */
 fun <A, B> Pair<A, B>.bothIor(): Ior<A, B> = Ior.Both(this.first, this.second)

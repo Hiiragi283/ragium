@@ -49,6 +49,24 @@ data object HTRecipeFactories {
         fun getMatchingStack(first: INPUT_A, second: INPUT_B): Pair<INPUT_A, INPUT_B>
     }
 
+    /**
+     * @since 26.1.13
+     */
+    interface CatalysedSingleInput<INPUT : RecipeInput, INPUT_A : Any, CATALYST : Any, OUTPUT : Any> :
+        HTRecipeFactory<INPUT, OUTPUT>,
+        HTProgressRecipe.Double<INPUT, INPUT_A, CATALYST>,
+        BiPredicate<INPUT_A, CATALYST>,
+        BiFunction<INPUT_A, CATALYST, OUTPUT> {
+        override fun test(input: INPUT_A, catalyst: CATALYST): Boolean
+
+        override fun apply(input: INPUT_A, catalyst: CATALYST): OUTPUT
+
+        /**
+         * 消費される入力を取得します。
+         */
+        fun getMatchingStack(input: INPUT_A): INPUT_A
+    }
+
     //    Triple Input    //
 
     interface TripleInput<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, INPUT_C : Any, OUTPUT : Any> :

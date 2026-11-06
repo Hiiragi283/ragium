@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.HTSerializableRecipe
 import hiiragi283.lib.recipe.base.HTCatalysedSingleRecipe
-import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
+import hiiragi283.lib.recipe.base.HTItemFluidToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
@@ -18,13 +18,8 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidInstance
 
 class RTFreezingRecipe(ingredient: HTFluidIngredient, catalyst: HTItemCatalyst, result: HTItemResult, progressData: HTProgressData) :
-    HTCatalysedSingleRecipe<HTFluidIngredient, HTItemResult>(
-        ingredient,
-        catalyst,
-        result,
-        progressData,
-    ),
-    HTItemAndFluidToItemRecipe,
+    HTCatalysedSingleRecipe<HTFluidIngredient, HTItemResult>(ingredient, catalyst, result, progressData),
+    HTItemFluidToRecipe<ItemStack>,
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
         @JvmField
@@ -43,7 +38,7 @@ class RTFreezingRecipe(ingredient: HTFluidIngredient, catalyst: HTItemCatalyst, 
     override fun apply(first: ItemInstance, second: FluidInstance): ItemStack = result.create()
 
     override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> =
-        ItemStack.EMPTY to ingredient.getMatchingStack(second)
+        catalyst.getMatchingStack(first) to ingredient.getMatchingStack(second)
 
     override fun getProgressData(first: ItemInstance, second: FluidInstance): HTProgressData = progressData
 

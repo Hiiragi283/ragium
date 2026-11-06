@@ -313,10 +313,4 @@ data class HTItemResult(val entry: Entry, val count: Int) :
  * @author Hiiragi Tsubasa
  * @since 26.1.5
  */
-fun HTItemResult?.createOrEmpty(): ItemStack = this?.create() ?: ItemStack.EMPTY
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.5
- */
 fun Optional<HTItemResult>.createOrEmpty(): ItemStack = this.fold(ItemStack::EMPTY, HTItemResult::create)

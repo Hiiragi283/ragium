@@ -11,6 +11,8 @@ import java.util.Objects
  */
 @JvmRecord
 data class HTItemAndFluidStack(val item: ItemStack, val fluid: FluidStack) {
+    constructor(pair: Pair<ItemStack, FluidStack>) : this(pair.first, pair.second)
+
     override fun equals(other: Any?): Boolean = (other as? HTItemAndFluidStack)?.let {
         ItemStack.isSameItemSameComponents(it.item, this.item) && FluidStack.isSameFluid(it.fluid, this.fluid)
     } ?: false

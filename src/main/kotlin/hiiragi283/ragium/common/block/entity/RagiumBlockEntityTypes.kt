@@ -14,31 +14,30 @@ import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.dynamo.HTCombustionDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTFuelDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTMagmaticDynamoBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTArcaneTransformerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCentrifugeBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChemicalLaboBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPressMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTResourcePumpBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTScannerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTEnchantmentAbsorberBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTUpgradeStationBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTArcaneTransformerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAssemblerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCentrifugeBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTChemicalBathBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCompressorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCrusherBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTPyrolyzerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTExperienceTankBlockEntity
@@ -116,8 +115,8 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
 
     @JvmField
-    val DRYER: HTDeferredBlockEntityType<HTDryerBlockEntity> =
-        registerTick(RagiumConstants.DRYER, ::HTDryerBlockEntity)
+    val DRYER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
+        registerTick(RagiumConstants.DRYER, ::HTFreezerBlockEntity) // TODO
 
     @JvmField
     val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =

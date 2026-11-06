@@ -1,11 +1,6 @@
 package hiiragi283.lib.recipe.handler
 
-import hiiragi283.lib.recipe.handler.input.HTInputSlot
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
-import hiiragi283.lib.transfer.useTransaction
-import net.minecraft.core.TypedInstance
 import net.minecraft.server.level.ServerLevel
-import net.neoforged.neoforge.transfer.transaction.Transaction
 import java.util.function.Function
 
 /**
@@ -87,44 +82,5 @@ abstract class HTSingleRecipeHandler<INPUT : Any, OUTPUT : Any, RECIPE : Functio
      */
     interface Progressor<INPUT : Any, RECIPE : Any> : HTRecipeHandler.Progressor {
         fun getMaxProgress(recipe: RECIPE, input: INPUT): Int
-    }
-
-    //    Basic    //
-
-    /**
-     * @author Hiiragi Tsubasa
-     * @since 26.1.13
-     */
-    open class Basic<INPUT : TypedInstance<*>, OUTPUT : Any, RECIPE : Function<INPUT, OUTPUT>>(
-        private val inputHandler: HTInputSlot<INPUT>,
-        private val outputHandler: HTOutputSlot<OUTPUT>,
-        private val progressor1: Progressor<INPUT, RECIPE>,
-        private val recipeFinder: (INPUT) -> RECIPE?,
-        private val matchingStack: (RECIPE, INPUT) -> INPUT,
-        private val onComplete: Runnable,
-    ) : HTSingleRecipeHandler<INPUT, OUTPUT, RECIPE>() {
-        override fun createProgressor(): Progressor<INPUT, RECIPE> = progressor1
-
-        override fun getInput(): INPUT = inputHandler.getStoredInput()
-
-        override fun findRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeFinder(input)
-
-        protected fun getMatchingStack(recipe: RECIPE, input: INPUT): INPUT = matchingStack(recipe, input)
-
-        override fun canComplete(recipe: RECIPE, input: INPUT, output: OUTPUT): Boolean = useTransaction { transaction: Transaction ->
-            when {
-                inputHandler.use(getMatchingStack(recipe, input), transaction).failed -> false
-                else -> outputHandler.take(output, transaction) == HTOutputSlot.TakeResult.FULL
-            }
-        }
-
-        override fun onComplete(recipe: RECIPE, input: INPUT, output: OUTPUT) {
-            useTransaction { transaction: Transaction ->
-                inputHandler.use(getMatchingStack(recipe, input), transaction)
-                outputHandler.take(output, transaction)
-                transaction.commit()
-            }
-            onComplete.run()
-        }
     }
 }

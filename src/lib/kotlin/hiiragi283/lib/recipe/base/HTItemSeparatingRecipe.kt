@@ -2,17 +2,16 @@ package hiiragi283.lib.recipe.base
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
-import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.recipe.result.createOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.nelOf
 import hiiragi283.lib.util.IorNel
+import hiiragi283.lib.util.toPair
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
@@ -33,6 +32,8 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
     @JvmRecord
     data class Output(val items: List<ItemStack>, val fluid: FluidStack) {
         constructor(item: ItemStack, fluid: FluidStack) : this(listOf(item), fluid)
+
+        constructor(pair: Pair<List<ItemStack>, FluidStack>) : this(pair.first, pair.second)
     }
 
     //    Result    //
@@ -57,10 +58,11 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
             ).map(::Result, Result::content)
         }
 
-        fun create(): Output {
-            val (items: Nel<HTItemResult>?, fluid: HTFluidResult?) = content.toPair()
-            return Output(items?.map(HTItemResult::create) ?: listOf(), fluid.createOrEmpty())
-        }
+        fun create(): Output = content
+            .mapLeft { it.map(HTItemResult::create) }
+            .mapRight { it.create() }
+            .toPair(::listOf, FluidStack::EMPTY)
+            .let(::Output)
     }
 
     //    Basic    //

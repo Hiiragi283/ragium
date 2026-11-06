@@ -1,19 +1,21 @@
 package hiiragi283.lib.recipe.handler.cache
 
+import hiiragi283.lib.recipe.HTRecipeHolder
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
+import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
+import hiiragi283.lib.recipe.base.HTItemOrFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
-import hiiragi283.lib.util.Either
 import net.minecraft.core.BlockPos
+import net.minecraft.core.TypedInstance
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidInstance
 import java.util.function.BiPredicate
-import java.util.function.Predicate
 
 /**
  * Hiiragi Seriesで使用される[HTBaseRecipeCache]の実装をまとめたクラスです。
@@ -49,18 +51,6 @@ data object HTRecipeCacheHelper {
         override fun matches(recipe: RECIPE, input: List<ItemInstance>): Boolean = recipe.test(input)
     }
 
-    /**
-     * 1種類のアイテムまたは液体に対する[HTSingleRecipeCache]の実装クラスです。
-     * @since 26.1.13
-     */
-    class ItemOrFluid<RECIPE : Predicate<Either<ItemInstance, FluidInstance>>>(lookup: HTRecipeLookup<RECIPE>) :
-        HTSingleRecipeCache<Either<ItemInstance, FluidInstance>, RECIPE>(lookup) {
-        override fun isEmpty(input: Either<ItemInstance, FluidInstance>): Boolean =
-            input.fold(HTIngredientHelper::isEmpty, HTIngredientHelper::isEmpty)
-
-        override fun matches(recipe: RECIPE, input: Either<ItemInstance, FluidInstance>): Boolean = recipe.test(input)
-    }
-
     //    Double    //
 
     /**
@@ -72,6 +62,8 @@ data object HTRecipeCacheHelper {
             true -> HTIngredientHelper.isEmpty(first) || HTIngredientHelper.isEmpty(second)
             false -> HTIngredientHelper.isEmpty(first) && HTIngredientHelper.isEmpty(second)
         }
+
+        override fun matches(recipe: RECIPE, first: ItemInstance, second: ItemInstance): Boolean = recipe.test(first, second)
     }
 
     /**
@@ -83,10 +75,45 @@ data object HTRecipeCacheHelper {
             true -> HTIngredientHelper.isEmpty(first) || HTIngredientHelper.isEmpty(second)
             false -> HTIngredientHelper.isEmpty(first) && HTIngredientHelper.isEmpty(second)
         }
+
+        override fun matches(recipe: RECIPE, first: ItemInstance, second: FluidInstance): Boolean = recipe.test(first, second)
+    }
+
+    /**
+     * 1種類のアイテムと液体に対する[HTDoubleRecipeCache]の実装クラスです。
+     */
+    class ItemAndFluidN<RECIPE : HTItemAndFluidToRecipe<*>>(lookup: HTRecipeLookup<RECIPE>) :
+        HTDoubleRecipeCache.SimpleTyped<Item, ItemInstance, Fluid, FluidInstance, RECIPE>(
+            lookup,
+            HTItemAndFluidToRecipe<*>::itemIngredient,
+            HTItemAndFluidToRecipe<*>::fluidIngredient,
+        ) {
+        override fun isEmpty(first: ItemInstance, second: FluidInstance): Boolean =
+            HTIngredientHelper.isEmpty(first) || HTIngredientHelper.isEmpty(second)
+    }
+
+    /**
+     * 1種類のアイテムまたは液体に対する[HTSingleRecipeCache]の実装クラスです。
+     * @since 26.1.13
+     */
+    class ItemOrFluid<RECIPE : HTItemOrFluidToRecipe<*>>(lookup: HTRecipeLookup<RECIPE>) :
+        HTDoubleRecipeCache.Typed<Item, ItemInstance, Fluid, FluidInstance, RECIPE>(lookup) {
+        override fun isEmpty(first: ItemInstance, second: FluidInstance): Boolean =
+            HTIngredientHelper.isEmpty(first) || HTIngredientHelper.isEmpty(second)
+
+        override fun matches(recipe: RECIPE, first: ItemInstance, second: FluidInstance): Boolean = recipe.test(first, second)
+
+        override fun findAllHolderForFirst(input: TypedInstance<Item>, context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> =
+            lookup.getAllRecipes(context).filter { (_, recipe: RECIPE) -> recipe.ingredient.fold({ it.testOnlyType(input) }, { false }) }
+
+        override fun findAllHolderForSecond(input: TypedInstance<Fluid>, context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> =
+            lookup.getAllRecipes(context).filter { (_, recipe: RECIPE) -> recipe.ingredient.fold({ false }, { it.testOnlyType(input) }) }
     }
 
     class Located<RECIPE : BiPredicate<ServerLevel, BlockPos>>(lookup: HTRecipeLookup<RECIPE>) :
         HTDoubleRecipeCache<ServerLevel, BlockPos, RECIPE>(lookup) {
         override fun isEmpty(first: ServerLevel, second: BlockPos): Boolean = first.isOutsideBuildHeight(second)
+
+        override fun matches(recipe: RECIPE, first: ServerLevel, second: BlockPos): Boolean = recipe.test(first, second)
     }
 }

@@ -26,6 +26,7 @@ import hiiragi283.lib.serialization.network.nelOf
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.getLeftList
 import hiiragi283.lib.util.getRightList
+import hiiragi283.lib.util.toPair
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
@@ -216,14 +217,11 @@ data class RTReactingRecipe(
             first: ItemInstance,
             second: FluidInstance,
             third: ItemInstance,
-        ): Triple<ItemInstance, FluidInstance, ItemInstance> {
-            val (item: HTItemIngredient?, fluid: HTFluidIngredient?) = ingredients.toPair()
-            return Triple(
-                item?.getMatchingStack(first) ?: ItemStack.EMPTY,
-                fluid?.getMatchingStack(second) ?: FluidStack.EMPTY,
-                catalyst.getMatchingStack(third),
-            )
-        }
+        ): Triple<ItemInstance, FluidInstance, ItemInstance> = ingredients
+            .mapLeft { it.getMatchingStack(first) }
+            .mapRight { it.getMatchingStack(second) }
+            .toPair(ItemStack::EMPTY, FluidStack::EMPTY)
+            .let { (item: ItemInstance, fluid: FluidInstance) -> Triple(item, fluid, catalyst.getMatchingStack(third)) }
 
         override fun produce(input: Input): HTItemAndFluidStack = apply(input.getItemOrEmpty(0), input.getFluidOrEmpty(0), input.catalyst)
 

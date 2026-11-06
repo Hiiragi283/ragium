@@ -5,8 +5,8 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
@@ -15,8 +15,10 @@ import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 
@@ -46,25 +48,24 @@ typealias HTItemAndFluidRecipe = HTItemAndFluidToRecipe<HTItemAndFluidStack>
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-interface HTItemAndFluidToRecipe<OUTPUT : Any> : HTRecipeFactories.DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance, OUTPUT> {
-    override fun matches(input: HTItemAndFluidRecipeInput): Boolean {
-        val (item: ItemInstance, fluid: FluidInstance) = input
-        return test(item, fluid)
-    }
+interface HTItemAndFluidToRecipe<OUTPUT : Any> : HTItemFluidToRecipe<OUTPUT> {
+    val itemIngredient: HTIngredient<Item, ItemInstance>
+    val fluidIngredient: HTIngredient<Fluid, FluidInstance>
 
-    override fun produce(input: HTItemAndFluidRecipeInput): OUTPUT = apply(input.item, input.fluid)
+    override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.test(first) && fluidIngredient.test(second)
 
-    override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData = getProgressData(input.item, input.fluid)
+    override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> =
+        itemIngredient.getMatchingStack(first) to fluidIngredient.getMatchingStack(second)
 
     /**
      * @author Hiiragi Tsubasa
      * @since 26.1.0
      */
-    abstract class Basic<OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>>(
-        val itemIngredient: HTItemIngredient,
-        val fluidIngredient: HTFluidIngredient,
+    open class Basic<OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>>(
+        final override val itemIngredient: HTItemIngredient,
+        final override val fluidIngredient: HTFluidIngredient,
         val result: RESULT,
-        override val progressData: HTProgressData,
+        final override val progressData: HTProgressData,
     ) : HTItemAndFluidToRecipe<OUTPUT>,
         HTProgressRecipe.Holder {
         companion object {
@@ -100,14 +101,9 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> : HTRecipeFactories.DoubleInput<H
             )
         }
 
-        override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.test(first) && fluidIngredient.test(second)
+        final override fun getProgressData(first: ItemInstance, second: FluidInstance): HTProgressData = progressData
 
-        override fun apply(first: ItemInstance, second: FluidInstance): OUTPUT = result.create()
-
-        override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> =
-            itemIngredient.getMatchingStack(first) to fluidIngredient.getMatchingStack(second)
-
-        override fun getProgressData(first: ItemInstance, second: FluidInstance): HTProgressData = progressData
+        final override fun apply(first: ItemInstance, second: FluidInstance): OUTPUT = result.create()
     }
 
     /**

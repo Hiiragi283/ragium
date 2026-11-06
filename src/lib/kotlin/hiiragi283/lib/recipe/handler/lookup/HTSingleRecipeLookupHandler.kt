@@ -1,13 +1,11 @@
 package hiiragi283.lib.recipe.handler.lookup
 
 import hiiragi283.lib.recipe.handler.cache.HTSingleRecipeCache
-import hiiragi283.lib.util.Either
 import net.minecraft.core.TypedInstance
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidInstance
-import java.util.function.Predicate
 
 /**
  * 単一の入力に対する[HTRecipeLookupHandler]の拡張インターフェースです。
@@ -16,7 +14,7 @@ import java.util.function.Predicate
  * @author Hiiragi Tsubasa
  * @since 26.1.13
  */
-interface HTSingleRecipeLookupHandler<INPUT : Any, RECIPE : Predicate<INPUT>> : HTRecipeLookupHandler {
+interface HTSingleRecipeLookupHandler<INPUT : Any, RECIPE : Any> : HTRecipeLookupHandler {
     val recipeCache: HTSingleRecipeCache<INPUT, RECIPE>
 
     fun findFirstRecipe(input: INPUT): RECIPE? = recipeCache.findFirstRecipe(input, createLookupContext())
@@ -26,7 +24,7 @@ interface HTSingleRecipeLookupHandler<INPUT : Any, RECIPE : Predicate<INPUT>> : 
      * @author Hiiragi Tsubasa
      * @since 26.1.13
      */
-    interface Typed<TYPE : Any, INPUT : TypedInstance<TYPE>, RECIPE : Predicate<INPUT>> : HTSingleRecipeLookupHandler<INPUT, RECIPE> {
+    interface Typed<TYPE : Any, INPUT : TypedInstance<TYPE>, RECIPE : Any> : HTSingleRecipeLookupHandler<INPUT, RECIPE> {
         override val recipeCache: HTSingleRecipeCache.Typed<TYPE, INPUT, RECIPE>
 
         /**
@@ -39,18 +37,11 @@ interface HTSingleRecipeLookupHandler<INPUT : Any, RECIPE : Predicate<INPUT>> : 
      * @author Hiiragi Tsubasa
      * @since 26.1.13
      */
-    interface ForFluid<RECIPE : Predicate<FluidInstance>> : Typed<Fluid, FluidInstance, RECIPE>
+    interface ForFluid<RECIPE : Any> : Typed<Fluid, FluidInstance, RECIPE>
 
     /**
      * @author Hiiragi Tsubasa
      * @since 26.1.13
      */
-    interface ForItem<RECIPE : Predicate<ItemInstance>> : Typed<Item, ItemInstance, RECIPE>
-
-    /**
-     * @author Hiiragi Tsubasa
-     * @since 26.1.13
-     */
-    interface ForItemOrFluid<RECIPE : Predicate<Either<ItemInstance, FluidInstance>>> :
-        HTSingleRecipeLookupHandler<Either<ItemInstance, FluidInstance>, RECIPE>
+    interface ForItem<RECIPE : Any> : Typed<Item, ItemInstance, RECIPE>
 }
