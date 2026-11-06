@@ -7,6 +7,7 @@ import hiiragi283.lib.recipe.base.HTLocationToFluidRecipe
 import hiiragi283.lib.recipe.handler.output.HTOutputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
+import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.entity.processor.base.HTLocationToBlockEntity
@@ -17,6 +18,7 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
@@ -48,11 +50,19 @@ class HTResourcePumpBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTLocationToBlockEntity    //
 
-    override fun createOutputHandler(): HTOutputSlot<FluidStack> = HTOutputSlotHelper.forFluid(outputTank)
+    private val outputHandler: HTOutputSlot<FluidStack> = HTOutputSlotHelper.forFluid(outputTank)
 
     override fun getLookup(): HTRecipeLookup<HTLocationToFluidRecipe> = RagiumRecipeLookups.RESOURCE_PUMPING
 
-    override fun onComplete() {
+    override fun canComplete(recipe: HTLocationToFluidRecipe, output: FluidStack): Boolean =
+        useTransaction { outputHandler.take(output, it) == HTOutputSlot.TakeResult.FULL }
+
+    override fun onComplete(recipe: HTLocationToFluidRecipe, level: ServerLevel, pos: BlockPos, output: FluidStack) {
+        useTransaction {
+            outputHandler.take(output, it)
+            it.commit()
+        }
+
         playSound(SoundEvents.BUCKET_FILL)
     }
 
