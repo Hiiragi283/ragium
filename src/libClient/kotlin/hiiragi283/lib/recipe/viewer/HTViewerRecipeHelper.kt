@@ -55,8 +55,8 @@ data object HTViewerRecipeHelper {
     }
 
     @JvmStatic
-    fun fluidSeparating(holder: HTRecipeHolder<HTFluidSeparatingRecipe>): HTFluidSeparatingViewerRecipe {
-        val (id: RecipeKey, recipe: HTFluidSeparatingRecipe) = holder
+    fun fluidSeparating(holder: HTRecipeHolder<HTFluidSeparatingRecipe.Basic>): HTFluidSeparatingViewerRecipe {
+        val (id: RecipeKey, recipe: HTFluidSeparatingRecipe.Basic) = holder
         return HTFluidSeparatingViewerRecipe(
             id.identifier(),
             recipe.ingredient.display(),

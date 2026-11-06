@@ -20,47 +20,26 @@ import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.Optional
 
-open class HTFluidSeparatingRecipe(override val ingredient: HTFluidIngredient, val result: Result, override val progressData: HTProgressData) :
-    HTFluidToRecipe<HTFluidSeparatingRecipe.Output>,
-    HTProgressRecipe.Holder {
-    companion object {
-        @JvmStatic
-        fun <RECIPE : HTFluidSeparatingRecipe> codec(factory: HTFluidSeparatingRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> =
-            HTCodecs.recordMap { instance ->
-                instance.group(
-                    HTFluidIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(HTFluidSeparatingRecipe::ingredient),
-                    Result.CODEC.fieldOf(HTConstants.RESULT).forGetter(HTFluidSeparatingRecipe::result),
-                    HTProgressRecipe.Holder.progressCodec(),
-                ).apply(instance, factory::create)
-            }
-
-        @JvmStatic
-        fun <RECIPE : HTFluidSeparatingRecipe> streamCodec(
-            factory: HTFluidSeparatingRecipeBuilder.Factory<RECIPE>,
-        ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
-            HTFluidIngredient.STREAM_CODEC,
-            HTFluidSeparatingRecipe::ingredient,
-            Result.STREAM_CODEC,
-            HTFluidSeparatingRecipe::result,
-            HTProgressData.STREAM_CODEC,
-            HTFluidSeparatingRecipe::progressData,
-            factory::create,
-        )
-    }
-
-    override fun apply(input: FluidInstance): Output = result.create()
-
-    override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
-
-    override fun getProgressData(input: FluidInstance): HTProgressData = progressData
-
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.11
+ */
+interface HTFluidSeparatingRecipe : HTFluidToRecipe<HTFluidSeparatingRecipe.Output> {
     //    Output    //
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.11
+     */
     @JvmRecord
     data class Output(val left: FluidStack, val right: FluidStack, val item: ItemStack)
 
     //    Result    //
 
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.11
+     */
     @JvmRecord
     data class Result(val fluids: Nel<HTFluidResult>, val item: Optional<HTItemResult>) {
         companion object {
@@ -85,5 +64,44 @@ open class HTFluidSeparatingRecipe(override val ingredient: HTFluidIngredient, v
         }
 
         fun create(): Output = Output(fluids.head.create(), fluids.getOrNull(1).createOrEmpty(), item.createOrEmpty())
+    }
+
+    //    Basic    //
+
+    /**
+     * @author Hiiragi Tsubasa
+     * @since 26.1.13
+     */
+    open class Basic(override val ingredient: HTFluidIngredient, val result: Result, override val progressData: HTProgressData) :
+        HTFluidSeparatingRecipe,
+        HTProgressRecipe.Holder {
+        companion object {
+            @JvmStatic
+            fun <RECIPE : Basic> codec(factory: HTFluidSeparatingRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
+                instance.group(
+                    HTFluidIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
+                    Result.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
+                    HTProgressRecipe.Holder.progressCodec(),
+                ).apply(instance, factory::create)
+            }
+
+            @JvmStatic
+            fun <RECIPE : Basic> streamCodec(factory: HTFluidSeparatingRecipeBuilder.Factory<RECIPE>): StreamCodec<RegistryFriendlyByteBuf, RECIPE> =
+                StreamCodec.composite(
+                    HTFluidIngredient.STREAM_CODEC,
+                    Basic::ingredient,
+                    Result.STREAM_CODEC,
+                    Basic::result,
+                    HTProgressData.STREAM_CODEC,
+                    Basic::progressData,
+                    factory::create,
+                )
+        }
+
+        override fun getProgressData(input: FluidInstance): HTProgressData = progressData
+
+        override fun apply(input: FluidInstance): Output = result.create()
+
+        override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
     }
 }
