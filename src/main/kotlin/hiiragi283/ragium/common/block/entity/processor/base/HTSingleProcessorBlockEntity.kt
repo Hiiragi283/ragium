@@ -14,7 +14,7 @@ abstract class HTSingleProcessorBlockEntity<INPUT : Any, OUTPUT : Any, RECIPE : 
     type: BlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
-) : HTProcessorBlockEntityN.Energized(type, pos, state),
+) : HTProcessorBlockEntity.Energized(type, pos, state),
     HTSingleRecipeLookupHandler<INPUT, RECIPE> {
     override fun writeValue(output: ValueOutput) {
         super.writeValue(output)

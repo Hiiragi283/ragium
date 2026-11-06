@@ -35,11 +35,14 @@ data object HTRecipeFactories {
 
     //    Double Input    //
 
-    interface DoubleInput<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, OUTPUT : Any> :
+    interface DoubleInputLike<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, OUTPUT : Any> :
         HTRecipeFactory<INPUT, OUTPUT>,
         HTProgressRecipe.Double<INPUT, INPUT_A, INPUT_B>,
         BiPredicate<INPUT_A, INPUT_B>,
-        BiFunction<INPUT_A, INPUT_B, OUTPUT> {
+        BiFunction<INPUT_A, INPUT_B, OUTPUT>
+
+    interface DoubleInput<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, OUTPUT : Any> :
+        DoubleInputLike<INPUT, INPUT_A, INPUT_B, OUTPUT> {
         override fun test(first: INPUT_A, second: INPUT_B): Boolean
 
         override fun apply(first: INPUT_A, second: INPUT_B): OUTPUT
@@ -53,11 +56,7 @@ data object HTRecipeFactories {
     /**
      * @since 26.1.13
      */
-    interface CatalysedSingleInput<INPUT : RecipeInput, INPUT_A : Any, OUTPUT : Any> :
-        HTRecipeFactory<INPUT, OUTPUT>,
-        HTProgressRecipe.Double<INPUT, INPUT_A, ItemInstance>,
-        BiPredicate<INPUT_A, ItemInstance>,
-        BiFunction<INPUT_A, ItemInstance, OUTPUT> {
+    interface CatalysedSingleInput<INPUT : RecipeInput, INPUT_A : Any, OUTPUT : Any> : DoubleInputLike<INPUT, INPUT_A, ItemInstance, OUTPUT> {
         override fun test(input: INPUT_A, catalyst: ItemInstance): Boolean
 
         override fun apply(input: INPUT_A, catalyst: ItemInstance): OUTPUT

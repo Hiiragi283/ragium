@@ -10,14 +10,11 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 
-/**
- * @see hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
- */
-abstract class HTDoubleProcessorBlockEntity<INPUT_A : Any, INPUT_B : Any, OUTPUT : Any, RECIPE : HTRecipeFactories.DoubleInput<*, INPUT_A, INPUT_B, OUTPUT>>(
+abstract class HTDoubleProcessorBlockEntity<INPUT_A : Any, INPUT_B : Any, OUTPUT : Any, RECIPE : HTRecipeFactories.DoubleInputLike<*, INPUT_A, INPUT_B, OUTPUT>>(
     type: BlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
-) : HTProcessorBlockEntityN.Energized(type, pos, state),
+) : HTProcessorBlockEntity.Energized(type, pos, state),
     HTDoubleRecipeLookupHandler<INPUT_A, INPUT_B, RECIPE> {
     override fun writeValue(output: ValueOutput) {
         super.writeValue(output)

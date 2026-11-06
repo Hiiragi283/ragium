@@ -3,7 +3,6 @@ package hiiragi283.lib.recipe.base
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.builder.HTLocationToFluidRecipeBuilder
-import hiiragi283.lib.recipe.HTRecipeFactory
 import hiiragi283.lib.recipe.ingredient.HTBiomeCondition
 import hiiragi283.lib.recipe.input.HTLocationRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
@@ -13,8 +12,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.server.level.ServerLevel
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.function.BiFunction
-import java.util.function.BiPredicate
 
 /**
  * @author Hiiragi Tsubasa
@@ -26,11 +23,7 @@ typealias HTLocationToFluidRecipe = HTLocationToRecipe<FluidStack>
  * @author Hiiragi Tsubasa
  * @since 26.1.11
  */
-interface HTLocationToRecipe<OUTPUT : Any> :
-    HTRecipeFactory<HTLocationRecipeInput, OUTPUT>,
-    HTProgressRecipe.Double<HTLocationRecipeInput, ServerLevel, BlockPos>,
-    BiPredicate<ServerLevel, BlockPos>,
-    BiFunction<ServerLevel, BlockPos, OUTPUT> {
+interface HTLocationToRecipe<OUTPUT : Any> : HTRecipeFactories.DoubleInputLike<HTLocationRecipeInput, ServerLevel, BlockPos, OUTPUT> {
 
     /**
      * @author Hiiragi Tsubasa

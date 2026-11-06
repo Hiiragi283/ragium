@@ -28,7 +28,7 @@ import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
-abstract class HTProcessorBlockEntityN(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBaseMachineBlockEntity(type, pos, state),
     HTRecipeLookupHandler {
     protected var progress: Int = 0
@@ -103,7 +103,7 @@ abstract class HTProcessorBlockEntityN(type: BlockEntityType<*>, pos: BlockPos, 
 
     //    Energized    //
 
-    abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntityN(type, pos, state) {
+    abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
         protected lateinit var storage: HTBasicEnergyStorage
             private set
 
