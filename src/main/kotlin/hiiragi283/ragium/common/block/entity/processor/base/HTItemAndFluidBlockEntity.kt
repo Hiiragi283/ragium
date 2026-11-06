@@ -4,8 +4,8 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemAndFluidRecipe
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
-import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.output.HTOutputHandler
+import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -84,8 +84,8 @@ abstract class HTItemAndFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos
 
     //    HTDoubleProcessorBlockEntity    //
 
-    private val outputFluidHandler: HTOutputSlot<FluidStack> = HTOutputSlotHelper.forFluid(outputTank)
-    private val outputItemHandler: HTOutputSlot<ItemStack> = HTOutputSlotHelper.forItem(outputSlot)
+    private val outputFluidHandler: HTOutputHandler<FluidStack> = HTOutputHandlerHelper.forFluid(outputTank)
+    private val outputItemHandler: HTOutputHandler<ItemStack> = HTOutputHandlerHelper.forItem(outputSlot)
 
     override fun canComplete(recipe: HTItemAndFluidRecipe, first: ItemInstance, second: FluidInstance, output: HTItemAndFluidStack): Boolean =
         useTransaction { transaction: Transaction ->

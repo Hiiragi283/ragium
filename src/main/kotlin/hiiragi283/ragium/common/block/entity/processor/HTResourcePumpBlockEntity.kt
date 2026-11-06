@@ -4,8 +4,8 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTLocationToFluidRecipe
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
-import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.output.HTOutputHandler
+import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
@@ -50,12 +50,12 @@ class HTResourcePumpBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTLocationToBlockEntity    //
 
-    private val outputHandler: HTOutputSlot<FluidStack> = HTOutputSlotHelper.forFluid(outputTank)
+    private val outputHandler: HTOutputHandler<FluidStack> = HTOutputHandlerHelper.forFluid(outputTank)
 
     override fun getLookup(): HTRecipeLookup<HTLocationToFluidRecipe> = RagiumRecipeLookups.RESOURCE_PUMPING
 
     override fun canComplete(recipe: HTLocationToFluidRecipe, output: FluidStack): Boolean =
-        useTransaction { outputHandler.take(output, it) == HTOutputSlot.TakeResult.FULL }
+        useTransaction { outputHandler.take(output, it) == HTOutputHandler.TakeResult.FULL }
 
     override fun onComplete(recipe: HTLocationToFluidRecipe, level: ServerLevel, pos: BlockPos, output: FluidStack) {
         useTransaction {

@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.block.entity.processor.base
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
 import hiiragi283.lib.recipe.handler.input.HTInputSlot
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
-import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.output.HTOutputHandler
+import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -35,7 +35,7 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
 
     private val firstInputHandler: HTInputSlot<ItemInstance> = createFirstInputHandler()
     private val secondInputHandler: HTInputSlot<ItemInstance> = createSecondInputHandler()
-    private val outputHandler: HTOutputSlot<ItemStack> = HTOutputSlotHelper.forItem(outputSlot)
+    private val outputHandler: HTOutputHandler<ItemStack> = HTOutputHandlerHelper.forItem(outputSlot)
 
     protected abstract fun createFirstInputHandler(): HTInputSlot<ItemInstance>
 
@@ -51,7 +51,7 @@ abstract class HTDoubleItemToItemBlockEntity(type: BlockEntityType<*>, pos: Bloc
             when {
                 firstInputHandler.use(target, transaction).failed -> false
                 secondInputHandler.use(disc, transaction).failed -> false
-                else -> outputHandler.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+                else -> outputHandler.take(output, transaction) == HTOutputHandler.TakeResult.FULL
             }
         }
 

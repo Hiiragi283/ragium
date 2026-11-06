@@ -4,8 +4,8 @@ import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
 import hiiragi283.lib.recipe.handler.input.HTInputHandler
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
-import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.output.HTOutputHandler
+import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -40,7 +40,7 @@ abstract class HTSizedShapelessBlockEntity(type: BlockEntityType<*>, pos: BlockP
     protected abstract fun getLookup(): HTRecipeLookup<HTSizedShapelessRecipe>
 
     private val inputHandler: HTInputHandler<ItemInstance> = HTInputHandlerHelper.forItems(inputSlots)
-    private val outputHandler: HTOutputSlot<ItemStack> = HTOutputSlotHelper.forItem(outputSlot)
+    private val outputHandler: HTOutputHandler<ItemStack> = HTOutputHandlerHelper.forItem(outputSlot)
 
     override fun getInput(): List<ItemInstance> = inputSlots.map(HTBasicItemSlot::getStackCopy)
 

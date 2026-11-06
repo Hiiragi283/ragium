@@ -5,8 +5,8 @@ import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
-import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.output.HTOutputHandler
+import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
@@ -97,7 +97,7 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         override fun getProgressData(input: ItemInstance): HTProgressData = HTProgressData.time(recipe.cookingTime())
     }
 
-    override fun createOutputHandler(): HTOutputSlot<ItemStack> = HTOutputSlotHelper.forItem(outputSlot)
+    override fun createOutputHandler(): HTOutputHandler<ItemStack> = HTOutputHandlerHelper.forItem(outputSlot)
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.smelter
 }

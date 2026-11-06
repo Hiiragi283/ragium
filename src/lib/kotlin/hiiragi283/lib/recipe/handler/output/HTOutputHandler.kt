@@ -8,7 +8,7 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-interface HTOutputSlot<STACK : Any> {
+interface HTOutputHandler<STACK : Any> {
     /**
      * 出力を受け取ります。
      * @param stack 受け取る出力
@@ -31,7 +31,7 @@ interface HTOutputSlot<STACK : Any> {
     //    TakeResult    //
 
     /**
-     * [HTOutputSlot.take]の結果を表すクラスです。
+     * [HTOutputHandler.take]の結果を表すクラスです。
      * @author Hiiragi Tsubasa
      * @since 26.1.7
      */

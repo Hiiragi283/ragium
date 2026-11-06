@@ -4,8 +4,8 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
-import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.output.HTOutputHandler
+import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
@@ -86,9 +86,9 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
 
     //    HTItemToBlockEntity    //
 
-    private val outputItemHandler: HTOutputSlot<ItemStack> = HTOutputSlotHelper.forItem(outputSlot)
-    private val leftOutputHandler: HTOutputSlot<FluidStack> = HTOutputSlotHelper.forFluid(leftOutputTank)
-    private val rightOutputHandler: HTOutputSlot<FluidStack> = HTOutputSlotHelper.forFluid(rightOutputTank)
+    private val outputItemHandler: HTOutputHandler<ItemStack> = HTOutputHandlerHelper.forItem(outputSlot)
+    private val leftOutputHandler: HTOutputHandler<FluidStack> = HTOutputHandlerHelper.forFluid(leftOutputTank)
+    private val rightOutputHandler: HTOutputHandler<FluidStack> = HTOutputHandlerHelper.forFluid(rightOutputTank)
 
     override fun canComplete(recipe: HTFluidSeparatingRecipe, input: FluidInstance, output: HTFluidSeparatingRecipe.Output): Boolean =
         useTransaction { transaction: Transaction ->
@@ -98,8 +98,8 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
                 else -> {
                     val (left: FluidStack, right: FluidStack, item: ItemStack) = output
                     when {
-                        leftOutputHandler.take(right, transaction) != HTOutputSlot.TakeResult.FULL -> false
-                        rightOutputHandler.take(left, transaction) != HTOutputSlot.TakeResult.FULL -> false
+                        leftOutputHandler.take(right, transaction) != HTOutputHandler.TakeResult.FULL -> false
+                        rightOutputHandler.take(left, transaction) != HTOutputHandler.TakeResult.FULL -> false
                         else -> outputItemHandler.take(item, transaction).fullOrNoneTaken
                     }
                 }

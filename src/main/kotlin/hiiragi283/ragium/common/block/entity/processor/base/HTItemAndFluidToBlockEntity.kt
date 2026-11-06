@@ -5,7 +5,7 @@ import hiiragi283.lib.recipe.handler.cache.HTRecipeCacheHelper
 import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
 import hiiragi283.lib.recipe.handler.input.HTInputSlot
 import hiiragi283.lib.recipe.handler.lookup.HTDoubleRecipeLookupHandler
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
+import hiiragi283.lib.recipe.handler.output.HTOutputHandler
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
@@ -64,9 +64,9 @@ abstract class HTItemAndFluidToBlockEntity<OUTPUT : Any, RECIPE : HTItemAndFluid
 
     abstract class SingleOutput<OUTPUT : Any, RECIPE : HTItemAndFluidToRecipe<OUTPUT>>(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
         HTItemAndFluidToBlockEntity<OUTPUT, RECIPE>(type, pos, state) {
-        protected val outputHandler: HTOutputSlot<OUTPUT> = createOutputHandler()
+        protected val outputHandler: HTOutputHandler<OUTPUT> = createOutputHandler()
 
-        protected abstract fun createOutputHandler(): HTOutputSlot<OUTPUT>
+        protected abstract fun createOutputHandler(): HTOutputHandler<OUTPUT>
 
         override fun canComplete(recipe: RECIPE, first: ItemInstance, second: FluidInstance, output: OUTPUT): Boolean =
             useTransaction { transaction: Transaction ->
@@ -74,7 +74,7 @@ abstract class HTItemAndFluidToBlockEntity<OUTPUT : Any, RECIPE : HTItemAndFluid
                 when {
                     inputItemHandler.use(itemInput, transaction).failed -> false
                     inputFluidHandler.use(fluidInput, transaction).failed -> false
-                    else -> outputHandler.take(output, transaction) == HTOutputSlot.TakeResult.FULL
+                    else -> outputHandler.take(output, transaction) == HTOutputHandler.TakeResult.FULL
                 }
             }
 

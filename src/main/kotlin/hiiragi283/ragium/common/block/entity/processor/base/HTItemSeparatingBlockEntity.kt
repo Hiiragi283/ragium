@@ -4,8 +4,8 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
-import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.output.HTOutputHandler
+import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
@@ -75,8 +75,8 @@ abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockP
 
     //    HTItemToBlockEntity    //
 
-    private val outputItemHandler: HTOutputSlot<ItemStack> = HTOutputSlotHelper.forItems(outputSlots)
-    private val outputFluidHandler: HTOutputSlot<FluidStack> = HTOutputSlotHelper.forFluid(outputTank)
+    private val outputItemHandler: HTOutputHandler<ItemStack> = HTOutputHandlerHelper.forItems(outputSlots)
+    private val outputFluidHandler: HTOutputHandler<FluidStack> = HTOutputHandlerHelper.forFluid(outputTank)
 
     override fun canComplete(recipe: HTItemSeparatingRecipe, input: ItemInstance, output: HTItemSeparatingRecipe.Output): Boolean =
         useTransaction { transaction: Transaction ->

@@ -4,8 +4,8 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
-import hiiragi283.lib.recipe.handler.output.HTOutputSlot
-import hiiragi283.lib.recipe.handler.output.HTOutputSlotHelper
+import hiiragi283.lib.recipe.handler.output.HTOutputHandler
+import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
 import hiiragi283.ragium.common.gui.widget.HTItemWidget
@@ -66,5 +66,5 @@ abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, pos: Bl
 
     //    HTItemAndFluidToBlockEntity    //
 
-    override fun createOutputHandler(): HTOutputSlot<ItemStack> = HTOutputSlotHelper.forItem(outputSlot)
+    override fun createOutputHandler(): HTOutputHandler<ItemStack> = HTOutputHandlerHelper.forItem(outputSlot)
 }
