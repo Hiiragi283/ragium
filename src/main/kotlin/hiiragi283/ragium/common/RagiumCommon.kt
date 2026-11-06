@@ -83,6 +83,7 @@ internal data object RagiumCommon {
 
         RagiumRecipeLookups.ALLOYING.fromRecipeType(RagiumRecipeTypes.ALLOYING)
         RagiumRecipeLookups.DRYING.fromRecipeType(RagiumRecipeTypes.DRYING)
+        RagiumRecipeLookups.FREEZING.fromRecipeType(RagiumRecipeTypes.FREEZING)
         RagiumRecipeLookups.MELTING.fromRecipeType(RagiumRecipeTypes.MELTING)
         RagiumRecipeLookups.PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING)
         RagiumRecipeLookups.REFINING.fromRecipeType(RagiumRecipeTypes.REFINING)

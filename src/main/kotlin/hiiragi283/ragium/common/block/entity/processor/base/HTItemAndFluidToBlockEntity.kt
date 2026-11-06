@@ -32,19 +32,19 @@ abstract class HTItemAndFluidToBlockEntity<OUTPUT : Any, RECIPE : HTItemAndFluid
         private set
 
     protected fun createInputTank(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
-        inputTank = builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(getTankCapacity(), listener, filter = ::hasRecipeForSecond))
+        inputTank = builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(getTankCapacity(), listener))
     }
 
     protected lateinit var inputSlot: HTBasicItemSlot
         private set
 
     protected fun createInputSlot(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {
-        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener, filter = ::hasRecipeForFirst))
+        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
     }
 
     //    HTDoubleProcessorBlockEntity    //
 
-    override val recipeCache: HTRecipeCacheHelper.ItemAndFluidN<RECIPE> = HTRecipeCacheHelper.ItemAndFluidN(getLookup())
+    override val recipeCache: HTRecipeCacheHelper.ItemAndFluid<RECIPE> = HTRecipeCacheHelper.ItemAndFluid(getLookup())
 
     protected abstract fun getLookup(): HTRecipeLookup<RECIPE>
 

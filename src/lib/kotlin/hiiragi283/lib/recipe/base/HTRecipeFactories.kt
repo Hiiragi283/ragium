@@ -1,6 +1,7 @@
 package hiiragi283.lib.recipe.base
 
 import hiiragi283.lib.recipe.HTRecipeFactory
+import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.crafting.RecipeInput
 import net.neoforged.neoforge.common.util.TriPredicate
 import org.apache.commons.lang3.function.TriFunction
@@ -52,14 +53,14 @@ data object HTRecipeFactories {
     /**
      * @since 26.1.13
      */
-    interface CatalysedSingleInput<INPUT : RecipeInput, INPUT_A : Any, CATALYST : Any, OUTPUT : Any> :
+    interface CatalysedSingleInput<INPUT : RecipeInput, INPUT_A : Any, OUTPUT : Any> :
         HTRecipeFactory<INPUT, OUTPUT>,
-        HTProgressRecipe.Double<INPUT, INPUT_A, CATALYST>,
-        BiPredicate<INPUT_A, CATALYST>,
-        BiFunction<INPUT_A, CATALYST, OUTPUT> {
-        override fun test(input: INPUT_A, catalyst: CATALYST): Boolean
+        HTProgressRecipe.Double<INPUT, INPUT_A, ItemInstance>,
+        BiPredicate<INPUT_A, ItemInstance>,
+        BiFunction<INPUT_A, ItemInstance, OUTPUT> {
+        override fun test(input: INPUT_A, catalyst: ItemInstance): Boolean
 
-        override fun apply(input: INPUT_A, catalyst: CATALYST): OUTPUT
+        override fun apply(input: INPUT_A, catalyst: ItemInstance): OUTPUT
 
         /**
          * 消費される入力を取得します。

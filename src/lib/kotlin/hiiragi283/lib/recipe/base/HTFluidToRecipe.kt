@@ -38,7 +38,7 @@ typealias HTFluidToItemRecipe = HTFluidToRecipe<ItemStack>
 typealias HTFluidToItemAndFluidRecipe = HTFluidToRecipe<HTItemAndFluidStack>
 
 /**
- * 1種類の液体から1種類の完成品を作成するレシピを表すインターフェースです。
+ * 1種類の液体から完成品を作成するレシピを表すインターフェースです。
  * @author Hiiragi Tsubasa
  * @since 26.1.5
  */

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.lib.recipe.base.HTCatalysedFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
@@ -62,7 +63,7 @@ data object RagiumRecipeLookups {
     val DRYING: HTCompoundRecipeLookup<HTItemOrFluidRecipe> = create(RagiumConstants.DRYING)
 
     @JvmField
-    val FREEZING: HTRecipeLookup<RTFreezingRecipe> = create(RagiumRecipeTypes.FREEZING)
+    val FREEZING: HTCompoundRecipeLookup<HTCatalysedFluidToItemRecipe> = create(RagiumConstants.FREEZING)
 
     @JvmField
     val MELTING: HTCompoundRecipeLookup<HTItemToFluidRecipe> = create(RagiumConstants.MELTING)

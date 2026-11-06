@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.lib.recipe.base.HTItemFluidToRecipe
+import hiiragi283.lib.recipe.base.HTCatalysedFluidToItemRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
@@ -11,11 +11,10 @@ import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
 class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) : HTCatalysedFluidToItemBlockEntity(RagiumBlockEntityTypes.FREEZER.get(), pos, state) {
-    override fun getLookup(): HTRecipeLookup<HTItemFluidToRecipe<ItemStack>> = RagiumRecipeLookups.FREEZING
+    override fun getLookup(): HTRecipeLookup<HTCatalysedFluidToItemRecipe> = RagiumRecipeLookups.FREEZING
 
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(HTSoundInstance(SoundEvents.BUCKET_FILL_POWDER_SNOW))
 

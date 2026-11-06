@@ -51,7 +51,7 @@ typealias HTItemToItemAndFluidRecipe = HTItemToRecipe<HTItemAndFluidStack>
 typealias HTItemToMultiItemRecipe = HTItemToRecipe<List<ItemStack>>
 
 /**
- * 1種類のアイテムから1種類の完成品を作成するレシピを表すインターフェースです。
+ * 1種類のアイテムから完成品を作成するレシピを表すインターフェースです。
  * @author Hiiragi Tsubasa
  * @since 26.1.5
  */
