@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
+import hiiragi283.lib.recipe.base.HTCatalysedItemToItemRecipe
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.sounds.HTSoundInstance
@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
     HTCatalysedItemToItemBlockEntity(RagiumBlockEntityTypes.ENGRAVER.get(), pos, state) {
-    override fun getLookup(): HTRecipeLookup<HTDoubleItemToItemRecipe> = RagiumRecipeLookups.ENGRAVING
+    override fun getLookup(): HTRecipeLookup<HTCatalysedItemToItemRecipe> = RagiumRecipeLookups.ENGRAVING
 
     override fun createRecipeHandler(): HTRecipeHandler = createRecipeHandler(HTSoundInstance(SoundEvents.ALLAY_HURT))
 

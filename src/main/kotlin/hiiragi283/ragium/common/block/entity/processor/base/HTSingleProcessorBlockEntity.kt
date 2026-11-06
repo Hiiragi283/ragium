@@ -10,9 +10,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 
-/**
- * @see hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
- */
 abstract class HTSingleProcessorBlockEntity<INPUT : Any, OUTPUT : Any, RECIPE : HTRecipeFactories.SingleInput<*, INPUT, OUTPUT>>(
     type: BlockEntityType<*>,
     pos: BlockPos,

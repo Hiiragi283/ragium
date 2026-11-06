@@ -19,7 +19,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPressMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTResourcePumpBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTScannerBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTEnchantmentAbsorberBlockEntity
@@ -37,6 +36,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPyrolyzerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity

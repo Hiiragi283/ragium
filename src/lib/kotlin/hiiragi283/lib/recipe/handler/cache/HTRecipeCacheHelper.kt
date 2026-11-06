@@ -1,6 +1,7 @@
 package hiiragi283.lib.recipe.handler.cache
 
 import hiiragi283.lib.recipe.base.HTCatalysedFluidToRecipe
+import hiiragi283.lib.recipe.base.HTCatalysedItemToRecipe
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
@@ -90,5 +91,15 @@ data object HTRecipeCacheHelper {
         override fun isEmpty(first: FluidInstance, second: ItemInstance): Boolean = HTIngredientHelper.isEmpty(first)
 
         override fun matches(recipe: RECIPE, first: FluidInstance, second: ItemInstance): Boolean = recipe.test(first, second)
+    }
+
+    /**
+     * @since 26.1.13
+     */
+    class CatalysedItem<RECIPE : HTCatalysedItemToRecipe<*>>(lookup: HTRecipeLookup<RECIPE>) :
+        HTDoubleRecipeCache<ItemInstance, ItemInstance, RECIPE>(lookup) {
+        override fun isEmpty(first: ItemInstance, second: ItemInstance): Boolean = HTIngredientHelper.isEmpty(first)
+
+        override fun matches(recipe: RECIPE, first: ItemInstance, second: ItemInstance): Boolean = recipe.test(first, second)
     }
 }

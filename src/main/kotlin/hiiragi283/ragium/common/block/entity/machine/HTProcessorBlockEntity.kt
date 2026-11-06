@@ -5,7 +5,6 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.handler.HTDoubleRecipeHandler
 import hiiragi283.lib.recipe.handler.HTRecipeHandler
-import hiiragi283.lib.recipe.handler.HTSingleRecipeHandler
 import hiiragi283.lib.recipe.handler.HTTripleRecipeHandler
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTBasicEnergyStorage
@@ -124,15 +123,6 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
                     transaction.commit()
                 }
                 extracted
-            }
-        }
-
-        protected inner class SingleProgressor<INPUT : Any, RECIPE : HTProgressRecipe.Single<*, INPUT>> :
-            EnergyProgressor(),
-            HTSingleRecipeHandler.Progressor<INPUT, RECIPE> {
-            override fun getMaxProgress(recipe: RECIPE, input: INPUT): Int {
-                val requiredEnergy: Int = recipe.getProgressData(input).time * this.baseEnergyPerTick
-                return HTMachineUpgradeHelper.modifyEnergy(components(), requiredEnergy)
             }
         }
 
