@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.serialization.codec.HTCodecs
 import net.minecraft.core.Holder
+import net.minecraft.core.TypedInstance
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -19,7 +20,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource
  */
 @ConsistentCopyVisibility
 @JvmRecord
-data class HTMemoryDiscData private constructor(val item: Holder<Item>, val components: DataComponentPatch) {
+data class HTMemoryDiscData private constructor(val item: Holder<Item>, val components: DataComponentPatch) : TypedInstance<Item> {
     companion object {
         @JvmField
         val CODEC: Codec<HTMemoryDiscData> = HTCodecs.record { instance ->
@@ -64,4 +65,6 @@ data class HTMemoryDiscData private constructor(val item: Holder<Item>, val comp
 
     @JvmOverloads
     fun toStack(count: Int = 1): ItemStack = ItemStack(item, count, components)
+
+    override fun typeHolder(): Holder<Item> = item
 }

@@ -35,6 +35,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPressMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTPrinterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTResourcePumpBlockEntity
@@ -180,6 +181,10 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.ENGRAVER, ::HTEngraverBlockEntity)
 
     @JvmField
+    val PRINTER: HTDeferredBlockEntityType<HTPrinterBlockEntity> =
+        registerTick(RagiumConstants.PRINTER, ::HTPrinterBlockEntity)
+
+    @JvmField
     val SCANNER: HTDeferredBlockEntityType<HTScannerBlockEntity> =
         registerTick(RagiumConstants.SCANNER, ::HTScannerBlockEntity)
 
@@ -278,6 +283,7 @@ data object RagiumBlockEntityTypes {
 
         registerBlockEntity(ELECTROLYZER.get())
         registerBlockEntity(ENGRAVER.get())
+        registerBlockEntity(PRINTER.get())
         registerBlockEntity(SCANNER.get())
 
         registerBlockEntity(ARCANE_TRANSFORMER.get())

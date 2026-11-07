@@ -68,6 +68,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.ELECTROLYZER, "電解機")
         add(RagiumBlocks.ENGRAVER, "レーザー加工機")
+        add(RagiumBlocks.PRINTER, "レーザー印刷機")
         add(RagiumBlocks.SCANNER, "レーザースキャナ")
 
         add(RagiumBlocks.ARCANE_TRANSFORMER, "神秘的変異機")
@@ -172,6 +173,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         add(RagiumItems.ELITE_CIRCUIT, "精鋭回路")
         add(RagiumItems.DIAMOND_WAFER, "ダイヤモンドウェハ")
+        add(RagiumItems.BLANK_MUSIC_DISC, "空の音楽ディスク")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")
@@ -270,6 +272,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumTranslation.RECIPE_CATEGORY_ELECTROLYZING, "電気分解")
         add(RagiumTranslation.RECIPE_CATEGORY_ENGRAVING, "レーザー加工")
+        add(RagiumTranslation.RECIPE_CATEGORY_PRINTING, "レーザー印刷")
 
         add(RagiumTranslation.RECIPE_CATEGORY_ENCHANTING, "エンチャント")
         add(RagiumTranslation.RECIPE_CATEGORY_TRANSFORMING, "変異")

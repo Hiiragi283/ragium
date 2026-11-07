@@ -70,6 +70,7 @@
     "planter",
     "potion_tank",
     "press_machine",
+    "printer",
     "purple_dye",
     "pyrolyzer",
     "quartz_glass",
@@ -123,6 +124,7 @@
     "planter",
     "potion_tank",
     "press_machine",
+    "printer",
     "pyrolyzer",
     "refinery",
     "resource_pump",
@@ -270,6 +272,7 @@
     "black_steel_block",
     "black_steel_ingot",
     "black_steel_nugget",
+    "blank_music_disc",
     "blue_dye_bucket",
     "brewery",
     "brown_dye_bucket",
@@ -417,6 +420,7 @@
     "press_die/packing",
     "press_die/unpacking",
     "press_machine",
+    "printer",
     "purple_dye_bucket",
     "pyrolyzer",
     "quartz_glass",
@@ -529,6 +533,7 @@
     "mixing",
     "planting",
     "pressing",
+    "printing",
     "pyrolyzing",
     "reacting/fluid",
     "reacting/item",
@@ -556,6 +561,7 @@
     "mixing",
     "planting",
     "pressing",
+    "printing",
     "pyrolyzing",
     "reacting/fluid",
     "reacting/item",
@@ -564,6 +570,7 @@
     "transforming"
   ],
   "minecraft:slot_display": [
+    "memory_disc",
     "sized"
   ],
   "minecraft:worldgen/configured_feature": [

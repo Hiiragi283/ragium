@@ -17,7 +17,9 @@ import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.display.HTDisplayableContent
+import hiiragi283.lib.recipe.display.HTMemoryDiscSlotDisplay
 import hiiragi283.lib.recipe.display.displayOrEmpty
+import hiiragi283.lib.recipe.viewer.HTCatalysedSingleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTSingleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTViewerRecipeHelper
@@ -29,12 +31,14 @@ import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTFluidReactingRecipe
 import hiiragi283.ragium.api.recipe.RTItemReactingRecipe
+import hiiragi283.ragium.api.recipe.RTPrintingRecipe
 import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.integration.jei.advanced.HTFluidBucketRecipePlugin
 import hiiragi283.ragium.integration.jei.advanced.HTPotionFluidRecipePlugin
 import hiiragi283.ragium.integration.jei.category.RTFluidReactingRecipeCategory
@@ -59,6 +63,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.fluids.FluidStack
 
 @JeiPlugin
@@ -225,6 +230,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumTranslation.RECIPE_CATEGORY_ENGRAVING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.ENGRAVER),
             ),
+            HTCatalysedSingleToSingleViewerRecipeCategory(
+                RagiumJeiRecipeTypes.PRINTING,
+                RagiumTranslation.RECIPE_CATEGORY_PRINTING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.PRINTER),
+            ),
             // Arcane
             HTDoubleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.ENCHANTING,
@@ -291,9 +301,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Resource
         registration.addRecipes(RagiumJeiRecipeTypes.BREWING, RagiumRecipeLookups.BREWING, HTViewerRecipeHelper::itemAndFluidToFluid)
         registration.addRecipes(RagiumJeiRecipeTypes.PLANTING, RagiumRecipeLookups.PLANTING, HTViewerRecipeHelper::singleToSingle)
-        // Electronics
-        registration.addRecipes(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumRecipeLookups.ELECTROLYZING, HTViewerRecipeHelper::fluidSeparating)
-        registration.addRecipes(RagiumJeiRecipeTypes.ENGRAVING, RagiumRecipeLookups.ENGRAVING, HTViewerRecipeHelper::catalysedSingleToSingle)
         registration.addRecipes(
             RagiumJeiRecipeTypes.RESOURCE_PUMPING,
             RagiumRecipeLookups.RESOURCE_PUMPING,
@@ -302,6 +309,18 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 key.identifier(),
                 recipe.condition.display(),
                 recipe.result.display(),
+                recipe.progressData,
+            )
+        }
+        // Electronics
+        registration.addRecipes(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumRecipeLookups.ELECTROLYZING, HTViewerRecipeHelper::fluidSeparating)
+        registration.addRecipes(RagiumJeiRecipeTypes.ENGRAVING, RagiumRecipeLookups.ENGRAVING, HTViewerRecipeHelper::catalysedSingleToSingle)
+        registration.addRecipes(RagiumJeiRecipeTypes.PRINTING, RagiumRecipeLookups.PRINTING) { (key, recipe: RTPrintingRecipe) ->
+            HTCatalysedSingleToSingleViewerRecipe(
+                key.identifier(),
+                recipe.ingredient.display(),
+                HTMemoryDiscSlotDisplay(SlotDisplay.ItemSlotDisplay(RagiumItems.MEMORY_DISC), recipe.catalyst.display()),
+                recipe.catalyst.display(),
                 recipe.progressData,
             )
         }
@@ -449,6 +468,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Electronics
         registration.addCraftingStation(RagiumJeiRecipeTypes.ENGRAVING, RagiumBlocks.ENGRAVER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.ELECTROLYZING, RagiumBlocks.ELECTROLYZER)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.PRINTING, RagiumBlocks.PRINTER)
         // Arcane
         registration.addCraftingStation(RagiumJeiRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.TRANSFORMING, RagiumBlocks.ARCANE_TRANSFORMER)

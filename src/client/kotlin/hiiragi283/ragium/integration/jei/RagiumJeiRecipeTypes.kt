@@ -93,6 +93,9 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val ENGRAVING: IRecipeType<HTCatalysedSingleToSingleViewerRecipe> = create(RagiumConstants.ENGRAVING)
 
+    @JvmField
+    val PRINTING: IRecipeType<HTCatalysedSingleToSingleViewerRecipe> = create(RagiumConstants.PRINTING)
+
     // Arcane
     @JvmField
     val ENCHANTING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.ENCHANTING)

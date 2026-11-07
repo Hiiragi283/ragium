@@ -130,6 +130,10 @@ data object RagiumRecipeSerializers {
     val ENGRAVING: RecipeSerializer<RTEngravingRecipe> =
         register(RagiumConstants.ENGRAVING, RTEngravingRecipe.SERIALIZER)
 
+    @JvmField
+    val PRINTING: RecipeSerializer<RTPrintingRecipe> =
+        register(RagiumConstants.PRINTING, RTPrintingRecipe.SERIALIZER)
+
     // Arcane
     @JvmField
     val ENCHANTING: RecipeSerializer<RTEnchantingRecipe> =

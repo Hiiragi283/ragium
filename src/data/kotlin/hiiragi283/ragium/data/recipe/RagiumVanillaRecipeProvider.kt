@@ -67,24 +67,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 count = 4
             }
         }.save(exporter)
-        // Splash Bottle
-        VanillaRecipeBuilders.shapeless {
-            ingredient { +holderSet(Tags.Items.GUNPOWDERS) }
-            repeat(4) { ingredient { items { +Items.GLASS_BOTTLE } } }
-            result {
-                +RagiumItems.SPLASH_BOTTLE
-                count = 4
-            }
-        }.save(exporter)
-        // Lingering Bottle
-        VanillaRecipeBuilders.shapeless {
-            ingredient { items { +Items.DRAGON_BREATH } }
-            repeat(4) { ingredient { items { +Items.GLASS_BOTTLE } } }
-            result {
-                +RagiumItems.LINGERING_BOTTLE
-                count = 4
-            }
-        }.save(exporter)
         // Cement
         VanillaRecipeBuilders.shapeless {
             ingredient { +holderSet(Tags.Items.SANDS) }
@@ -104,6 +86,41 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }
             recipeId suffix "_with_lime"
         }.save(exporter)
+
+        // Splash Bottle
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(Tags.Items.GUNPOWDERS) }
+            repeat(4) { ingredient { items { +Items.GLASS_BOTTLE } } }
+            result {
+                +RagiumItems.SPLASH_BOTTLE
+                count = 4
+            }
+        }.save(exporter)
+        // Lingering Bottle
+        VanillaRecipeBuilders.shapeless {
+            ingredient { items { +Items.DRAGON_BREATH } }
+            repeat(4) { ingredient { items { +Items.GLASS_BOTTLE } } }
+            result {
+                +RagiumItems.LINGERING_BOTTLE
+                count = 4
+            }
+        }.save(exporter)
+        // Blank Music Disc
+        VanillaRecipeBuilders.shaped {
+            +" A "
+            +"A A"
+            +" A "
+            define('A') { +holderSet(HTCommonTags.Items.PLASTICS) }
+            result { +RagiumItems.BLANK_MUSIC_DISC }
+        }.save(exporter)
+        // Memory Disc
+        VanillaRecipeBuilders.shaped {
+            hollow4()
+            define('A') { +holderSet(HTCommonTags.Items.PLASTICS) }
+            define('B') { items { +RagiumItems.SILICON_WAFER } }
+            result { +RagiumItems.MEMORY_DISC }
+        }.save(exporter)
+
         // Wither Doll
         VanillaRecipeBuilders.shaped {
             +"AAA"

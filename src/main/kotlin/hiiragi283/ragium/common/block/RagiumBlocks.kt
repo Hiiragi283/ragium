@@ -324,6 +324,9 @@ data object RagiumBlocks {
     val ENGRAVER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ENGRAVER)
 
     @JvmField
+    val PRINTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.PRINTER)
+
+    @JvmField
     val SCANNER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.SCANNER)
 
     // Arcane
@@ -362,6 +365,7 @@ data object RagiumBlocks {
 
             put(HTMachineType.ELECTRONICS, ELECTROLYZER)
             put(HTMachineType.ELECTRONICS, ENGRAVER)
+            put(HTMachineType.ELECTRONICS, PRINTER)
             put(HTMachineType.ELECTRONICS, SCANNER)
 
             put(HTMachineType.ARCANE, ARCANE_TRANSFORMER)

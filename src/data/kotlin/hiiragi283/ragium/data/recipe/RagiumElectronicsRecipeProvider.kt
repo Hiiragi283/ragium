@@ -16,12 +16,15 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.world.item.Items
+import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
 class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
         electrolyzing()
+        printing()
 
         circuitBoard()
         circuit()
@@ -55,6 +58,28 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             }
             itemResult { +RagiumItems.ALKALI_HYDROXIDE }
             recipeId replace id("salt_water")
+        }.save(exporter)
+    }
+
+    private fun printing() {
+        // Book + Written Book
+        RagiumRecipeBuilders.printing {
+            ingredient { items { +Items.WRITABLE_BOOK } }
+            catalyst { items { +Items.WRITTEN_BOOK } }
+            recipeId replace id("written_book")
+        }.save(exporter)
+        // Map + Filled Map
+        RagiumRecipeBuilders.printing {
+            ingredient { items { +Items.MAP } }
+            catalyst { items { +Items.FILLED_MAP } }
+            recipeId replace id("filled_map")
+        }.save(exporter)
+
+        // Blank Music Disc + Music Disc
+        RagiumRecipeBuilders.printing {
+            ingredient { items { +RagiumItems.BLANK_MUSIC_DISC } }
+            catalyst { +holderSet(Tags.Items.MUSIC_DISCS) }
+            recipeId replace id("music_disc")
         }.save(exporter)
     }
 

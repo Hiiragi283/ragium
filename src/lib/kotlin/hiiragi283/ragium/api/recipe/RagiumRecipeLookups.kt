@@ -107,6 +107,9 @@ data object RagiumRecipeLookups {
     @JvmField
     val ENGRAVING: HTCompoundRecipeLookup<HTCatalysedItemToItemRecipe> = create(RagiumConstants.ENGRAVING)
 
+    @JvmField
+    val PRINTING: HTRecipeLookup<RTPrintingRecipe> = create(RagiumRecipeTypes.PRINTING)
+
     // Arcane
     @JvmField
     val ENCHANTING: HTCompoundRecipeLookup<RTEnchantingRecipe> = create(RagiumConstants.ENCHANTING)

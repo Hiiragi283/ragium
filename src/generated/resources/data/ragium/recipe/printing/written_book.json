@@ -1,0 +1,9 @@
+{
+  "type": "ragium:printing",
+  "catalyst": "minecraft:written_book",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:writable_book"
+  },
+  "time": 200
+}

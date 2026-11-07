@@ -273,6 +273,14 @@ data object RagiumRecipeBuilders {
         return HTSingleRecipeBuilder.Catalysed(RagiumConstants.ENGRAVING, ::RTEngravingRecipe).apply(builderAction)
     }
 
+    @JvmStatic
+    inline fun printing(builderAction: RTPrintingRecipeBuilder.() -> Unit): RTPrintingRecipeBuilder {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return RTPrintingRecipeBuilder().apply(builderAction)
+    }
+
     // Arcane
     @JvmStatic
     inline fun enchanting(builderAction: HTItemToItemRecipeBuilder<RTEnchantingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<RTEnchantingRecipe> {

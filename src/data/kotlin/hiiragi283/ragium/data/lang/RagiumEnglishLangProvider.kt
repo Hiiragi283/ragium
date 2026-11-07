@@ -72,6 +72,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.ELECTROLYZER, "Electrolyzer")
         add(RagiumBlocks.ENGRAVER, "Laser Engraver")
+        add(RagiumBlocks.PRINTER, "Laser Printer")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
         add(RagiumBlocks.ARCANE_TRANSFORMER, "Arcane Transformer")
@@ -176,6 +177,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         add(RagiumItems.ELITE_CIRCUIT, "Elite Circuit")
         add(RagiumItems.DIAMOND_WAFER, "Diamond Wafer")
+        add(RagiumItems.BLANK_MUSIC_DISC, "Blank Music Disc")
         add(RagiumItems.ELDER_HEART, "Elder Heart")
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
@@ -273,6 +275,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumTranslation.RECIPE_CATEGORY_ELECTROLYZING, "Electrolyzing")
         add(RagiumTranslation.RECIPE_CATEGORY_ENGRAVING, "Laser Engraving")
+        add(RagiumTranslation.RECIPE_CATEGORY_PRINTING, "Laser Printing")
 
         add(RagiumTranslation.RECIPE_CATEGORY_ENCHANTING, "Enchanting")
         add(RagiumTranslation.RECIPE_CATEGORY_TRANSFORMING, "Transforming")

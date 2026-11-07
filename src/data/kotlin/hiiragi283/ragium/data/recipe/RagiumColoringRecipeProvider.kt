@@ -6,6 +6,7 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.registry.HTFluidContent
+import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.and
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
@@ -79,6 +80,14 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 result { +VanillaColoredCollections.CONCRETE[color] }
                 time /= 4
                 recipeId replace id("$name/concrete_from_cement")
+            }.save(exporter)
+
+            // Banner + Banner
+            RagiumRecipeBuilders.printing {
+                val banner: HTSimpleDeferredBlockAndItem = VanillaColoredCollections.BANNER[color]
+                ingredient { items { +banner } }
+                catalyst { items { +banner } }
+                recipeId replace id("$name/banner")
             }.save(exporter)
 
             // Coloring

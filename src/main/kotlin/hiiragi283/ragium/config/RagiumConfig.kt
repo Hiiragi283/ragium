@@ -200,6 +200,9 @@ data object RagiumConfig {
             val engraver: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.ENGRAVER, 64)
 
             @JvmField
+            val printer: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.PRINTER, 32)
+
+            @JvmField
             val scanner: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.SCANNER, 32)
 
             // Arcane
