@@ -489,6 +489,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             ingredient { +holderSet(RagiumFluids.HYDROXIDE_SOLUTION) }
             ingredient { +holderSet(RagiumFluids.CARBON_DIOXIDE) }
             itemResult { +RagiumItems.ALKALI_CARBONATE }
+            fluidResult { water() }
+            recipeId replace RagiumItems.ALKALI_CARBONATE.id
         }.save(exporter)
         // SiO2 + Na2CO3 -> Glass
         RagiumRecipeBuilders.alloying {

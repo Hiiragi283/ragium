@@ -16,13 +16,14 @@ import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.RecipeKey
 import hiiragi283.lib.recipe.display.HTDisplayableContent
+import hiiragi283.lib.recipe.display.displayOrEmpty
 import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTSingleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTViewerRecipeHelper
 import hiiragi283.lib.registry.asHolderSequence
+import hiiragi283.lib.util.getLeftList
 import hiiragi283.lib.util.getOrNull
 import hiiragi283.lib.util.toOptional
-import hiiragi283.lib.util.toPair
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
@@ -39,10 +40,13 @@ import hiiragi283.ragium.integration.jei.advanced.HTFluidBucketRecipePlugin
 import hiiragi283.ragium.integration.jei.advanced.HTPotionFluidRecipePlugin
 import hiiragi283.ragium.integration.jei.category.RTAlloyingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTAssemblingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTFluidReactingRecipeCategory
+import hiiragi283.ragium.integration.jei.category.RTItemReactingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTMixingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTPlantingRecipeCategory
+import hiiragi283.ragium.recipe.viewer.RTFluidReactingViewerRecipe
+import hiiragi283.ragium.recipe.viewer.RTItemReactingViewerRecipe
 import hiiragi283.ragium.recipe.viewer.RTMixingViewerRecipe
-import hiiragi283.ragium.recipe.viewer.RTReactingViewerRecipe
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
@@ -60,7 +64,6 @@ import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.fluids.FluidStack
 
 @JeiPlugin
@@ -183,6 +186,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 HTBackgroundType.INPUT,
             ),
             RTMixingRecipeCategory(guiHelper),
+            RTFluidReactingRecipeCategory(guiHelper),
+            RTItemReactingRecipeCategory(guiHelper),
             // Resource
             HTDoubleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.BREWING,
@@ -250,19 +255,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.FLUID_REACTING,
             RagiumRecipeLookups.FLUID_REACTING,
         ) { (key: RecipeKey, recipe: RTFluidReactingRecipe) ->
-            val (fluids: List<SlotDisplay>, items: List<SlotDisplay>) = recipe.result
-                .content
-                .mapLeft { it.map(HTDisplayableContent::display) }
-                .mapRight { listOf(it.display()) }
-                .toPair(::listOf, ::listOf)
-
-            RTReactingViewerRecipe(
+            RTFluidReactingViewerRecipe(
                 key.identifier(),
-                listOf(),
                 recipe.ingredients.map(HTDisplayableContent::display),
                 recipe.catalyst.display(),
-                items,
-                fluids,
+                recipe.result.content.getRight().displayOrEmpty(),
+                recipe.result.content.getLeftList().map(HTDisplayableContent::display),
                 recipe.progressData,
             )
         }
@@ -270,23 +268,13 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.ITEM_REACTING,
             RagiumRecipeLookups.ITEM_REACTING,
         ) { (key: RecipeKey, recipe: RTItemReactingRecipe) ->
-            val (fluidInputs: List<SlotDisplay>, itemInputs: List<SlotDisplay>) = recipe.ingredients
-                .mapLeft { listOf(it.display()) }
-                .mapRight { listOf(it.display()) }
-                .toPair(::listOf, ::listOf)
-            val (fluidOutputs: List<SlotDisplay>, itemOutputs: List<SlotDisplay>) = recipe.result
-                .content
-                .mapLeft { listOf(it.display()) }
-                .mapRight { listOf(it.display()) }
-                .toPair(::listOf, ::listOf)
-
-            RTReactingViewerRecipe(
+            RTItemReactingViewerRecipe(
                 key.identifier(),
-                itemInputs,
-                fluidInputs,
+                recipe.ingredients.getLeft().displayOrEmpty(),
+                recipe.ingredients.getRight().displayOrEmpty(),
                 recipe.catalyst.display(),
-                itemOutputs,
-                fluidOutputs,
+                recipe.result.content.getLeft().displayOrEmpty(),
+                recipe.result.content.getRight().displayOrEmpty(),
                 recipe.progressData,
             )
         }
