@@ -16,7 +16,6 @@ import hiiragi283.lib.serialization.network.optionalOf
 import hiiragi283.lib.util.DFUEither
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.IorNel
-import hiiragi283.lib.util.fold
 import hiiragi283.lib.util.getLeftList
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
@@ -213,17 +212,3 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
         override fun getId(): Identifier? = content.getRight()?.key?.identifier()
     }
 }
-
-//    Extensions    //
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.5
- */
-fun HTFluidResult?.createOrEmpty(): FluidStack = this?.create() ?: FluidStack.EMPTY
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.5
- */
-fun Optional<HTFluidResult>.createOrEmpty(): FluidStack = this.fold(FluidStack::EMPTY, HTFluidResult::create)

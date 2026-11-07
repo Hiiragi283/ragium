@@ -13,11 +13,9 @@ import hiiragi283.lib.util.HTDelegates
 import hiiragi283.lib.util.Ior
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.world.item.crafting.Recipe
-import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.jvm.optionals.getOrNull
 
 class HTFluidSeparatingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
     HTProgressRecipeBuilder.SingleResult<RECIPE>(prefix),
@@ -39,18 +37,18 @@ class HTFluidSeparatingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pri
     }
 
     // Results
-    @PublishedApi internal var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
+    @PublishedApi internal var itemResult: HTItemResult? by HTDelegates.onceOrNull()
 
     @PublishedApi internal var fluidResults: MutableList<HTFluidResult> = ObjectArrayList()
 
     override val result: HTFluidSeparatingRecipe.Result by lazy {
-        Ior.fromNullable(fluidResults.toNelOrNull(), itemResult.getOrNull())
+        Ior.fromNullable(fluidResults.toNelOrNull(), itemResult)
             ?.let(HTFluidSeparatingRecipe::Result)
             ?: error("Either item or fluid result required")
     }
 
     override operator fun HTItemResult.unaryPlus() {
-        itemResult = Optional.of(this)
+        itemResult = this
     }
 
     override operator fun HTFluidResult.unaryPlus() {

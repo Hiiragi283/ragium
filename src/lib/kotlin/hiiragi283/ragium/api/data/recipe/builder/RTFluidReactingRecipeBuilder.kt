@@ -18,11 +18,9 @@ import hiiragi283.lib.util.Ior
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTFluidReactingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.jvm.optionals.getOrNull
 
 class RTFluidReactingRecipeBuilder :
     HTProgressRecipeBuilder.SingleResult<RTFluidReactingRecipe>(RagiumConstants.REACTING),
@@ -52,18 +50,18 @@ class RTFluidReactingRecipeBuilder :
     }
 
     // Results
-    @PublishedApi internal var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
+    @PublishedApi internal var itemResult: HTItemResult? by HTDelegates.onceOrNull()
 
     @PublishedApi internal var fluidResults: MutableList<HTFluidResult> = ObjectArrayList()
 
     override val result: HTFluidSeparatingRecipe.Result by lazy {
-        Ior.fromNullable(fluidResults.toNelOrNull(), itemResult.getOrNull())
+        Ior.fromNullable(fluidResults.toNelOrNull(), itemResult)
             ?.let(HTFluidSeparatingRecipe::Result)
             ?: error("Either item or fluid result required")
     }
 
     override operator fun HTItemResult.unaryPlus() {
-        itemResult = Optional.of(this)
+        itemResult = this
     }
 
     override operator fun HTFluidResult.unaryPlus() {

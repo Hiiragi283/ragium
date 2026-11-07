@@ -4,7 +4,6 @@ import hiiragi283.lib.data.recipe.result.HTItemOrFluidResultBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
-import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.world.item.crafting.Recipe
@@ -38,5 +37,5 @@ class HTItemOrFluidRecipeBuilder<out RECIPE : Recipe<*>>(
     // Results
     override val builder: HTItemOrFluidResultBuilder = HTItemOrFluidResultBuilder()
 
-    override val result: HTRecipeResult<*> by lazy(builder::build)
+    override val result: HTItemOrFluidResult by lazy(builder::build)
 }

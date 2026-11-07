@@ -13,9 +13,7 @@ import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
-import hiiragi283.lib.serialization.network.optionalOf
 import hiiragi283.lib.util.DFUEither
-import hiiragi283.lib.util.fold
 import hiiragi283.ragium.api.RagiumConfigAccess
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
@@ -37,8 +35,7 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
-import java.util.Optional
-import kotlin.jvm.optionals.getOrElse
+import java.util.OptionalInt
 
 /**
  * アイテムの完成品を表すインターフェースです。
@@ -224,26 +221,26 @@ data class HTItemResult(val entry: Entry, val count: Int) :
      * @since 26.1.6
      */
     @JvmRecord
-    data class EnchantedBookEntry(val enchantments: Map<Holder<Enchantment>, Optional<Int>>) : Entry {
+    data class EnchantedBookEntry(private val enchantments: Map<Holder<Enchantment>, OptionalInt>) : Entry {
         companion object {
             @JvmField
-            val CODEC: MapCodec<EnchantedBookEntry> = HTCodecs.mapOf(Enchantment.CODEC, HTCodecs.optional(HTCodecs.POSITIVE_INT))
+            val CODEC: MapCodec<EnchantedBookEntry> = HTCodecs.mapOf(Enchantment.CODEC, HTCodecs.optionalInt(HTCodecs.POSITIVE_INT))
                 .fieldOf("enchantments")
                 .xmap(::EnchantedBookEntry, EnchantedBookEntry::enchantments)
 
             @JvmField
             val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchantedBookEntry> = HTStreamCodecs.mapOf(
                 Enchantment.STREAM_CODEC,
-                ByteBufCodecs.VAR_INT.optionalOf(),
+                HTStreamCodecs.optionalInt(ByteBufCodecs.VAR_INT),
             ).map(::EnchantedBookEntry, EnchantedBookEntry::enchantments)
 
             @JvmField
             val TYPE: HTItemResultType<EnchantedBookEntry> = HTItemResultType(CODEC, STREAM_CODEC)
         }
 
-        constructor(enchantment: Holder<Enchantment>) : this(mapOf(enchantment to Optional.empty()))
+        constructor(enchantment: Holder<Enchantment>) : this(mapOf(enchantment to OptionalInt.empty()))
 
-        constructor(enchantment: Holder<Enchantment>, level: Int) : this(mapOf(enchantment to Optional.of(level)))
+        constructor(enchantment: Holder<Enchantment>, level: Int) : this(mapOf(enchantment to OptionalInt.of(level)))
 
         override fun type(): HTItemResultType<*> = TYPE
 
@@ -254,8 +251,8 @@ data class HTItemResult(val entry: Entry, val count: Int) :
         }
 
         private fun buildEnchantments(): ItemEnchantments = buildItemEnchantments {
-            for ((holder: Holder<Enchantment>, level: Optional<Int>) in enchantments) {
-                set(holder, level.getOrElse { holder.value().maxLevel })
+            for ((holder: Holder<Enchantment>, level: OptionalInt) in enchantments) {
+                level.ifPresentOrElse({ set(holder, it) }, { set(holder, holder.value().maxLevel) })
             }
         }
 
@@ -306,11 +303,3 @@ data class HTItemResult(val entry: Entry, val count: Int) :
         override fun display(): SlotDisplay = base.display().takeUnless { it is SlotDisplay.Empty } ?: fallback.display()
     }
 }
-
-//    Extensions    //
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.5
- */
-fun Optional<HTItemResult>.createOrEmpty(): ItemStack = this.fold(ItemStack::EMPTY, HTItemResult::create)

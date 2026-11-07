@@ -6,7 +6,6 @@ import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.lib.util.Ior
-import java.util.Optional
 
 /**
  * [HTItemOrFluidResult]を作成するビルダークラスです。
@@ -14,9 +13,9 @@ import java.util.Optional
  * @since 26.1.13
  */
 class HTItemOrFluidResultBuilder {
-    var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
+    var itemResult: HTItemResult? by HTDelegates.onceOrNull()
 
-    var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
+    var fluidResult: HTFluidResult? by HTDelegates.onceOrNull()
 
     fun build(): HTItemOrFluidResult = Ior.fromNullable(itemResult, fluidResult)
         ?.let(::HTItemOrFluidResult)
@@ -31,11 +30,11 @@ class HTItemOrFluidResultBuilder {
         val builder: HTItemOrFluidResultBuilder
 
         override operator fun HTItemResult.unaryPlus() {
-            builder.itemResult = Optional.of(this)
+            builder.itemResult = this
         }
 
         override operator fun HTFluidResult.unaryPlus() {
-            builder.fluidResult = Optional.of(this)
+            builder.fluidResult = this
         }
     }
 }

@@ -19,6 +19,7 @@ import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ByIdMap
+import java.util.OptionalInt
 import java.util.UUID
 
 /**
@@ -44,6 +45,27 @@ data object HTStreamCodecs {
     @JvmStatic
     fun <B : ByteBuf, K : Any, V : Any> mapOf(keyCodec: StreamCodec<in B, K>, valueCodec: StreamCodec<in B, V>): StreamCodec<B, Map<K, V>> =
         ByteBufCodecs.map(::LinkedHashMap, keyCodec, valueCodec)
+
+    /**
+     * [OptionalInt]の[StreamCodec]を返します。
+     * @since 26.1.13
+     */
+    @JvmStatic
+    fun <B : ByteBuf> optionalInt(codec: StreamCodec<B, Int>): StreamCodec<B, OptionalInt> = object : StreamCodec<B, OptionalInt> {
+        override fun encode(original: B, value: OptionalInt) {
+            value.ifPresentOrElse(
+                {
+                    original.writeBoolean(true)
+                    codec.encode(original, it)
+                },
+                {
+                    original.writeBoolean(false)
+                },
+            )
+        }
+
+        override fun decode(input: B): OptionalInt = if (input.readBoolean()) OptionalInt.of(codec.decode(input)) else OptionalInt.empty()
+    }
 
     /**
      * [Pair]の[StreamCodec]を作成します。
