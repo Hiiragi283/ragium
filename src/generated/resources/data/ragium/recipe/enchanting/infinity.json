@@ -1,0 +1,15 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 4,
+    "items": "minecraft:skeleton_skull"
+  },
+  "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
+    "enchantments": {
+      "minecraft:infinity": {}
+    }
+  },
+  "time": 200
+}

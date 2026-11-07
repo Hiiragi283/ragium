@@ -1,0 +1,15 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 64,
+    "items": "#c:feathers"
+  },
+  "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
+    "enchantments": {
+      "minecraft:feather_falling": {}
+    }
+  },
+  "time": 200
+}

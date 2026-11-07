@@ -1,0 +1,15 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:slime_balls"
+  },
+  "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
+    "enchantments": {
+      "minecraft:binding_curse": {}
+    }
+  },
+  "time": 200
+}

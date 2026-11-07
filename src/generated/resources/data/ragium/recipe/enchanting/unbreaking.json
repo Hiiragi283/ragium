@@ -1,0 +1,15 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 16,
+    "items": "#c:gems/diamond"
+  },
+  "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
+    "enchantments": {
+      "minecraft:unbreaking": {}
+    }
+  },
+  "time": 200
+}

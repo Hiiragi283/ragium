@@ -1,0 +1,15 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 64,
+    "items": "#minecraft:soul_fire_base_blocks"
+  },
+  "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
+    "enchantments": {
+      "minecraft:soul_speed": {}
+    }
+  },
+  "time": 200
+}

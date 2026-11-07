@@ -1,0 +1,15 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 16,
+    "items": "minecraft:fire_charge"
+  },
+  "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
+    "enchantments": {
+      "minecraft:fire_aspect": {}
+    }
+  },
+  "time": 200
+}

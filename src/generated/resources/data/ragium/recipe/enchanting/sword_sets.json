@@ -1,0 +1,16 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 16,
+    "items": "#ragium:quartz_blocks"
+  },
+  "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
+    "enchantments": {
+      "minecraft:sharpness": 5,
+      "minecraft:unbreaking": 3
+    }
+  },
+  "time": 200
+}
