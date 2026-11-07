@@ -88,9 +88,7 @@ class HTChemicalLaboBlockEntity(pos: BlockPos, state: BlockState) :
         widgetHolder.track(outputTank)
     }
 
-    override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false // TODO
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.chemicalLabo
 }

@@ -1,0 +1,28 @@
+{
+  "type": "ragium:reacting",
+  "ingredients": {
+    "fluids": [
+      {
+        "amount": 2000,
+        "fluids": "#c:hydrogen_sulfide"
+      },
+      {
+        "amount": 3000,
+        "fluids": "#c:oxygen"
+      }
+    ]
+  },
+  "results": {
+    "fluids": [
+      {
+        "amount": 2000,
+        "id": "ragium:sulfur_dioxide"
+      },
+      {
+        "amount": 2000,
+        "id": "minecraft:water"
+      }
+    ]
+  },
+  "time": 200
+}

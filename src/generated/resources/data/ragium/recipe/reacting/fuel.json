@@ -1,0 +1,28 @@
+{
+  "type": "ragium:reacting",
+  "ingredients": {
+    "fluids": [
+      {
+        "amount": 1000,
+        "fluids": "#c:sulfuric_fuel"
+      },
+      {
+        "amount": 250,
+        "fluids": "#c:hydrogen"
+      }
+    ]
+  },
+  "results": {
+    "fluids": [
+      {
+        "amount": 1000,
+        "id": "ragium:fuel"
+      },
+      {
+        "amount": 250,
+        "id": "ragium:hydrogen_sulfide"
+      }
+    ]
+  },
+  "time": 200
+}

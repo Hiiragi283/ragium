@@ -157,12 +157,21 @@ data object RagiumFluids {
     }
 
     @JvmField
-    val NATURAL_GAS: HTFluidContent.Virtual = REGISTER.registerVirtual("natural_gas") { properties = gaseous() }
+    val SULFURIC_NAPHTHA: HTFluidContent.Flowing = REGISTER.registerFlowing("sulfuric_naphtha") {
+        properties = liquid()
+        typeFactory = { HTExplosiveFluidType(3f, it) }
+    }
 
     @JvmField
     val NAPHTHA: HTFluidContent.Flowing = REGISTER.registerFlowing("naphtha") {
         properties = liquid()
         typeFactory = { HTExplosiveFluidType(3f, it) }
+    }
+
+    @JvmField
+    val SULFURIC_FUEL: HTFluidContent.Flowing = REGISTER.registerFlowing("sulfuric_fuel") {
+        properties = liquid()
+        typeFactory = { HTExplosiveFluidType(4f, it) }
     }
 
     @JvmField
@@ -221,6 +230,9 @@ data object RagiumFluids {
     val PHOSPHORIC_ACID: HTFluidContent.Virtual = REGISTER.registerVirtual("phosphoric_acid") { properties = liquid() }
 
     // S
+    @JvmField
+    val HYDROGEN_SULFIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen_sulfide") { properties = gaseous() }
+
     @JvmField
     val SULFUR_DIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("sulfur_dioxide") { properties = gaseous() }
 

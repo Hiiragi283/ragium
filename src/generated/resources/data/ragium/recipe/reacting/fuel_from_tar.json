@@ -2,7 +2,7 @@
   "type": "ragium:reacting",
   "ingredients": {
     "fluid": {
-      "amount": 1000,
+      "amount": 500,
       "fluids": "#c:hydrogen"
     },
     "item": {
@@ -11,10 +11,16 @@
     }
   },
   "results": {
-    "fluid": {
-      "amount": 500,
-      "id": "ragium:fuel"
-    }
+    "fluids": [
+      {
+        "amount": 200,
+        "id": "ragium:fuel"
+      },
+      {
+        "amount": 50,
+        "id": "ragium:naphtha"
+      }
+    ]
   },
   "time": 200
 }

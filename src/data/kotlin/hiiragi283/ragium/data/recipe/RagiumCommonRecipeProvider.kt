@@ -145,72 +145,111 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
             recipeId replace id("crude_oil_from_soul_soil")
         }.save(exporter)
-        // Crude Oil -> Natural Gas + Naphtha + Residue Oil
+        // Crude Oil -> Sulfuric Naphtha + Sulfuric Fuel + Residue Oil
         RagiumRecipeBuilders.refining {
             ingredient { +holderSet(RagiumFluids.CRUDE_OIL) }
             fluidResult {
-                +RagiumFluids.NATURAL_GAS
-                amount = 250
+                +RagiumFluids.SULFURIC_NAPHTHA
+                amount = 300
             }
             fluidResult {
-                +RagiumFluids.NAPHTHA
-                amount = 750
+                +RagiumFluids.SULFURIC_FUEL
+                amount = 450
             }
             itemResult { +RagiumItems.TAR }
             recipeId replace RagiumFluids.CRUDE_OIL.id()
         }.save(exporter)
 
-        // Naphtha -> Fuel + Sulfur
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.NAPHTHA) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SULFUR) }
-            fluidResult {
-                +RagiumFluids.FUEL
-                amount = 500
+        // Sulfuric Naphtha + H2 -> Naphtha + H2S
+        RagiumRecipeBuilders.reacting {
+            fluidIngredient { +holderSet(RagiumFluids.SULFURIC_NAPHTHA) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.HYDROGEN)
+                amount /= 4
             }
-            recipeId suffix "_from_naphtha"
+            fluidResult { +RagiumFluids.NAPHTHA }
+            fluidResult {
+                +RagiumFluids.HYDROGEN_SULFIDE
+                amount /= 4
+            }
         }.save(exporter)
-        // Naphtha + Redstone -> Anti-rust Oil
-        RagiumRecipeBuilders.mixing {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            fluidIngredient { +holderSet(RagiumFluids.NAPHTHA) }
-            fluidResult { +RagiumFluids.ANTI_RUST_OIL }
+        // Sulfuric Fuel + H2 -> Fuel + H2S
+        RagiumRecipeBuilders.reacting {
+            fluidIngredient { +holderSet(RagiumFluids.SULFURIC_FUEL) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.HYDROGEN)
+                amount /= 4
+            }
+            fluidResult { +RagiumFluids.FUEL }
+            fluidResult {
+                +RagiumFluids.HYDROGEN_SULFIDE
+                amount /= 4
+            }
+        }.save(exporter)
+        // 2x H2S + 3x O2 -> 2x SO2 + 2x H2O
+        RagiumRecipeBuilders.reacting {
+            fluidIngredient {
+                +holderSet(RagiumFluids.HYDROGEN_SULFIDE)
+                amount *= 2
+            }
+            fluidIngredient {
+                +holderSet(RagiumFluids.OXYGEN)
+                amount *= 3
+            }
+            fluidResult {
+                +RagiumFluids.SULFUR_DIOXIDE
+                amount *= 2
+            }
+            fluidResult {
+                water()
+                amount *= 2
+            }
+            recipeId suffix "_from_hydrogen_sulfide"
         }.save(exporter)
 
-        // Tar -> Pitch Coke
+        // Naphtha -> Fuel
+        RagiumRecipeBuilders.refining {
+            ingredient { +holderSet(RagiumFluids.NAPHTHA) }
+            fluidResult {
+                +RagiumFluids.FUEL
+                amount = 750
+            }
+            recipeId replace id("fuel_from_naphtha")
+        }.save(exporter)
+
+        // Tar -> Pitch Coke + Naphtha
         RagiumRecipeBuilders.pyrolyzing {
-            ingredient { items { +RagiumItems.TAR } }
+            ingredient {
+                items { +RagiumItems.TAR }
+                count = 4
+            }
             itemResult { +RagiumItems.PITCH_COKE }
-            recipeId suffix "_from_tar"
+            fluidResult {
+                +RagiumFluids.NAPHTHA
+                amount = 250
+            }
         }.save(exporter)
         // Tar + H2 -> Fuel
         RagiumRecipeBuilders.reacting {
             itemIngredient { items { +RagiumItems.TAR } }
-            fluidIngredient { +holderSet(RagiumFluids.HYDROGEN) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.HYDROGEN)
+                amount /= 2
+            }
             fluidResult {
                 +RagiumFluids.FUEL
-                amount = 500
+                amount = 200
+            }
+            fluidResult {
+                +RagiumFluids.NAPHTHA
+                amount = 50
             }
             recipeId suffix "_from_tar"
         }.save(exporter)
     }
 
     private fun plastic() {
-        // Natural Gas + O2 -> Molten Plastic
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient {
-                +holderSet(RagiumFluids.NATURAL_GAS)
-                amount /= 2
-            }
-            fluidIngredient {
-                +holderSet(RagiumFluids.OXYGEN)
-                amount /= 4
-            }
-            fluidResult {
-                +RagiumFluids.MOLTEN_PLASTIC
-                amount = 180
-            }
-        }.save(exporter)
+        // TODO: Molten Plastic
         // Molten Plastic <-> Plastic
         RagiumRecipeBuilders.melting {
             ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
@@ -259,15 +298,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun resin() {
-        // Natural Gas + H2O -> Alcohol
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.NATURAL_GAS) }
-            fluidIngredient {
-                +waterSet()
-                amount /= 2
-            }
-            fluidResult { +RagiumFluids.ALCOHOL }
-        }.save(exporter)
+        // Synthetic Gas -> Methanol
+
         // Alcohol + (Ag) -> Aldehyde
         RagiumRecipeBuilders.reacting {
             fluidIngredient { +holderSet(RagiumTags.Fluids.ALCOHOLS) }

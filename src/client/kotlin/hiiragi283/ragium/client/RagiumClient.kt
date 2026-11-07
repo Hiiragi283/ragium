@@ -175,13 +175,17 @@ data object RagiumClient : HTClientMod() {
             molten()
             colorTint(Color(0x333333))
         }
-        register.register(RagiumFluids.NATURAL_GAS) {
-            transparent()
-            colorTint(Color(0xcccccc))
+        register.register(RagiumFluids.SULFURIC_NAPHTHA) {
+            dull()
+            colorTint(Color(0xff6600))
         }
         register.register(RagiumFluids.NAPHTHA) {
             transparent()
             colorTint(Color(0xff6600))
+        }
+        register.register(RagiumFluids.SULFURIC_FUEL) {
+            dull()
+            colorTint(Color(0xff9900))
         }
         register.register(RagiumFluids.FUEL) {
             transparent()
@@ -247,6 +251,10 @@ data object RagiumClient : HTClientMod() {
             colorTint(Color(0xffcc99))
         }
         // S
+        register.register(RagiumFluids.HYDROGEN_SULFIDE) {
+            transparent()
+            colorTint(Color(0xcc6633))
+        }
         register.register(RagiumFluids.SULFUR_DIOXIDE) {
             transparent()
             colorTint(Color(0x996600))

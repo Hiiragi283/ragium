@@ -80,8 +80,8 @@ data class RTReactingRecipe(
             .mapLeft { it.singleOrNull() ?: return null }
             .mapRight { it.singleOrNull() ?: return null }
         val result: HTItemOrFluidResult = result.contents
-            .mapLeft { it.singleOrNull() ?: return null }
-            .mapRight { it.singleOrNull() ?: return null }
+            .mapLeft { it.head }
+            .mapRight { it.head }
             .let(::HTItemOrFluidResult)
         return Simple(ingredient, catalyst, result, progressData)
     }
