@@ -217,14 +217,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +Items.CANDLE }
             category = RecipeCategory.DECORATIONS
         }.save(exporter)
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(Tags.Items.STRINGS) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.MOLTEN_BEESWAX)
-                amount /= 4
-            }
-            result { +Items.CANDLE }
-        }.save(exporter)
         // Torch
         VanillaRecipeBuilders.shaped {
             +"A"

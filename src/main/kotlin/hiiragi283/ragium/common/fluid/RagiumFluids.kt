@@ -100,9 +100,6 @@ data object RagiumFluids {
     }
 
     @JvmField
-    val MOLTEN_BEESWAX: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_beeswax") { properties = molten() }
-
-    @JvmField
     val RESIN: HTFluidContent.Flowing = REGISTER.registerFlowing("resin") {
         properties = create(SoundEvents.RESIN_PLACE, SoundEvents.RESIN_BREAK)
         fluidProperties = STICK_PROPERTY
@@ -183,9 +180,6 @@ data object RagiumFluids {
         properties = liquid()
         typeFactory = { HTExplosiveFluidType(4f, it) }
     }
-
-    @JvmField
-    val ANTI_RUST_OIL: HTFluidContent.Virtual = REGISTER.registerVirtual("anti_rust_oil") { properties = liquid() }
 
     @JvmField
     val MOLTEN_PLASTIC: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_plastic") { properties = molten() }

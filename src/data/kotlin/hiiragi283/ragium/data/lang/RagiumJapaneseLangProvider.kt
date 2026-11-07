@@ -94,7 +94,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
         addFluid(RagiumFluids.HONEY, "ハチミツ")
-        addFluid(RagiumFluids.MOLTEN_BEESWAX, "溶けた蜜蠟")
         addFluid(RagiumFluids.RESIN, "樹脂")
         addFluid(RagiumFluids.MOLTEN_GLASS, "溶融ガラス")
 
@@ -114,7 +113,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
         addFluid(RagiumFluids.SULFURIC_FUEL, "硫化燃料油")
         addFluid(RagiumFluids.FUEL, "燃料油")
-        addFluid(RagiumFluids.ANTI_RUST_OIL, "防錆油")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "溶融プラスチック")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "合成樹脂")
         // N

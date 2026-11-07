@@ -98,7 +98,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
         addFluid(RagiumFluids.HONEY, "Honey")
-        addFluid(RagiumFluids.MOLTEN_BEESWAX, "Molten Beeswax")
         addFluid(RagiumFluids.RESIN, "Resin")
         addFluid(RagiumFluids.MOLTEN_GLASS, "Molten Glass")
 
@@ -118,7 +117,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
         addFluid(RagiumFluids.SULFURIC_FUEL, "Sulfuric Fuel")
         addFluid(RagiumFluids.FUEL, "Fuel")
-        addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "Molten Plastic")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "Synthetic Resin")
         // N

@@ -32,6 +32,7 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.item.crafting.Ingredient
@@ -101,6 +102,36 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.ENCHANTING.fromRecipeType(RagiumRecipeTypes.ENCHANTING)
         RagiumRecipeLookups.TRANSFORMING.fromRecipeType(RagiumRecipeTypes.TRANSFORMING)
         // runtime recipes
+        RagiumRecipeLookups.ASSEMBLING.addSubLookup { (_, registries: RegistryAccess) ->
+            val waxes: HolderSet.Named<Item> = registries.getOrNull(RagiumTags.Items.WAXES) ?: return@addSubLookup sequenceOf()
+            BuiltInRegistries.BLOCK
+                .getDataMap(NeoForgeDataMaps.WAXABLES)
+                .asSequence()
+                .mapNotNull { (key: ResourceKey<Block>, value: Waxable) ->
+                    val base: Item = BuiltInRegistries.BLOCK.getValue(key)?.asItem() ?: return@mapNotNull null
+                    RagiumRecipeBuilders.assembling {
+                        ingredient { items { +base } }
+                        ingredient { +waxes }
+                        result { +value.waxed().asItem() }
+                        time /= 4
+                        recipeId prefix "waxing/"
+                    }.buildSynthetic()
+                }
+        }
+        RagiumRecipeLookups.CUTTING.addSubLookup {
+            BuiltInRegistries.BLOCK
+                .getDataMap(NeoForgeDataMaps.WAXABLES)
+                .asSequence()
+                .mapNotNull { (key: ResourceKey<Block>, value: Waxable) ->
+                    val base: Item = BuiltInRegistries.BLOCK.getValue(key)?.asItem() ?: return@mapNotNull null
+                    RagiumRecipeBuilders.cutting {
+                        ingredient { items { +value.waxed().asItem() } }
+                        result { +base }
+                        time /= 4
+                        recipeId prefix "unwaxing/"
+                    }.buildSynthetic()
+                }
+        }
         RagiumRecipeLookups.CENTRIFUGING.addRecipes(
             buildMap {
                 HTBottleType.entries.forEach { bottleType: HTBottleType ->
@@ -125,9 +156,10 @@ internal data object RagiumCommon {
             BuiltInRegistries.BLOCK
                 .getDataMap(NeoForgeDataMaps.OXIDIZABLES)
                 .asSequence()
-                .map { (key: ResourceKey<Block>, value: Oxidizable) ->
+                .mapNotNull { (key: ResourceKey<Block>, value: Oxidizable) ->
+                    val base: Item = BuiltInRegistries.BLOCK.getValue(key)?.asItem() ?: return@mapNotNull null
                     RagiumRecipeBuilders.bathing {
-                        itemIngredient { items { +BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem() } }
+                        itemIngredient { items { +base } }
                         fluidIngredient {
                             +oxygen
                             amount = 250
@@ -142,32 +174,16 @@ internal data object RagiumCommon {
             BuiltInRegistries.BLOCK
                 .getDataMap(NeoForgeDataMaps.OXIDIZABLES)
                 .asSequence()
-                .map { (key: ResourceKey<Block>, value: Oxidizable) ->
+                .mapNotNull { (key: ResourceKey<Block>, value: Oxidizable) ->
+                    val base: Item = BuiltInRegistries.BLOCK.getValue(key)?.asItem() ?: return@mapNotNull null
                     RagiumRecipeBuilders.bathing {
                         itemIngredient { items { +value.nextOxidationStage().asItem() } }
                         fluidIngredient {
                             +hydrogen
                             amount = 250
                         }
-                        result { +BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem() }
+                        result { +base }
                         recipeId prefix "reduction/"
-                    }.buildSynthetic()
-                }
-        }
-        RagiumRecipeLookups.BATHING.addSubLookup { (_, registries: RegistryAccess) ->
-            val waxes: HolderSet<Fluid> = registries.getOrNull(RagiumTags.Fluids.WAXES) ?: return@addSubLookup sequenceOf()
-            BuiltInRegistries.BLOCK
-                .getDataMap(NeoForgeDataMaps.WAXABLES)
-                .asSequence()
-                .map { (key: ResourceKey<Block>, value: Waxable) ->
-                    RagiumRecipeBuilders.bathing {
-                        itemIngredient { items { +BuiltInRegistries.BLOCK.getValueOrThrow(key).asItem() } }
-                        fluidIngredient {
-                            +waxes
-                            amount = 125
-                        }
-                        result { +value.waxed().asItem() }
-                        recipeId prefix "rustproof/"
                     }.buildSynthetic()
                 }
         }

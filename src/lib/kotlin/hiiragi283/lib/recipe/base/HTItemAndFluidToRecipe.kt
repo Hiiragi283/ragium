@@ -6,6 +6,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
@@ -36,7 +37,13 @@ typealias HTItemAndFluidToItemRecipe = HTItemAndFluidToRecipe<ItemStack>
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-interface HTItemAndFluidToRecipe<OUTPUT : Any> : HTItemFluidToRecipe<OUTPUT> {
+interface HTItemAndFluidToRecipe<OUTPUT : Any> : HTRecipeFactories.DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance, OUTPUT> {
+    override fun matches(input: HTItemAndFluidRecipeInput): Boolean = test(input.item, input.fluid)
+
+    override fun produce(input: HTItemAndFluidRecipeInput): OUTPUT = apply(input.item, input.fluid)
+
+    override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData = getProgressData(input.item, input.fluid)
+
     /**
      * @author Hiiragi Tsubasa
      * @since 26.1.0
