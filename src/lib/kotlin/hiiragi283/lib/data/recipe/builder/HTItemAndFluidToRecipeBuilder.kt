@@ -11,7 +11,6 @@ import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.util.HTDelegates
-import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -26,10 +25,8 @@ import kotlin.contracts.contract
 open class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
     prefix: String,
     private val factory: Factory<RESULT, RECIPE>,
-) : HTProgressRecipeBuilder<RECIPE>(prefix),
+) : HTProgressRecipeBuilder.SingleResult<RECIPE>(prefix),
     HTItemOrFluidIngredientAcceptor {
-    final override fun getRecipeId(): Identifier? = result.getId()
-
     final override fun createRecipe(): RECIPE = factory.create(itemIngredient, fluidIngredient, result, progressData)
 
     // Ingredients
@@ -46,7 +43,7 @@ open class HTItemAndFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE 
     }
 
     // Result
-    var result: RESULT by HTDelegates.onceInitialize()
+    override var result: RESULT by HTDelegates.onceInitialize()
 
     operator fun RESULT.unaryPlus() {
         result = this

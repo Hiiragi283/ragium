@@ -15,22 +15,19 @@ import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
 import hiiragi283.lib.util.Ior
-import hiiragi283.lib.util.toOptional
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTFluidReactingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import net.minecraft.resources.Identifier
 import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.jvm.optionals.getOrNull
 
 class RTFluidReactingRecipeBuilder :
-    HTProgressRecipeBuilder<RTFluidReactingRecipe>(RagiumConstants.REACTING),
+    HTProgressRecipeBuilder.SingleResult<RTFluidReactingRecipe>(RagiumConstants.REACTING),
     HTItemCatalystAcceptor,
     HTItemOrFluidResultAcceptor {
-    override fun getRecipeId(): Identifier? = result.getId()
-
     override fun createRecipe(): RTFluidReactingRecipe = RTFluidReactingRecipe(ingredients.toNel(), catalyst, result, progressData)
 
     // Ingredients
@@ -59,8 +56,10 @@ class RTFluidReactingRecipeBuilder :
 
     @PublishedApi internal var fluidResults: MutableList<HTFluidResult> = ObjectArrayList()
 
-    val result: HTFluidSeparatingRecipe.Result by lazy {
-        Ior.fromNullable(fluidResults.toNelOrNull().toOptional(), itemResult).orElseThrow().let(HTFluidSeparatingRecipe::Result)
+    override val result: HTFluidSeparatingRecipe.Result by lazy {
+        Ior.fromNullable(fluidResults.toNelOrNull(), itemResult.getOrNull())
+            ?.let(HTFluidSeparatingRecipe::Result)
+            ?: error("Either item or fluid result required")
     }
 
     override operator fun HTItemResult.unaryPlus() {

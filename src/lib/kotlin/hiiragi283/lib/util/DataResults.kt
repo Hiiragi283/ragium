@@ -51,7 +51,7 @@ fun <R : Any> Either<String, R>.toDataResult(): DataResult<R> = this.fold({ Data
  * @author Hiiragi Tsubasa
  * @since 26.1.12
  */
-fun <R : Any> DataResult<R>.toIor(): Ior<String, R> = Ior.fromNullable(this.error().map { it.message() }, this.result()).orElseThrow()
+fun <R : Any> DataResult<R>.toIor(): Ior<String, R> = Ior.fromNullable(this.error().map { it.message() }, this.result())!!
 
 /**
  * @author Hiiragi Tsubasa

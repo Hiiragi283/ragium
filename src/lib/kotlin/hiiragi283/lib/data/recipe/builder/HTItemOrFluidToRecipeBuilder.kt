@@ -6,7 +6,6 @@ import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.HTDelegates
-import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 
 /**
@@ -18,10 +17,8 @@ import net.minecraft.world.item.crafting.Recipe
 abstract class HTItemOrFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
     prefix: String,
     private val factory: Factory<RESULT, RECIPE>,
-) : HTProgressRecipeBuilder<RECIPE>(prefix),
+) : HTProgressRecipeBuilder.SingleResult<RECIPE>(prefix),
     HTItemOrFluidIngredientAcceptor {
-    final override fun getRecipeId(): Identifier? = result.getId()
-
     final override fun createRecipe(): RECIPE = factory.create(ingredient, result, progressData)
 
     // Ingredients
@@ -36,7 +33,7 @@ abstract class HTItemOrFluidToRecipeBuilder<RESULT : HTRecipeResult<*>, out RECI
     }
 
     // Result
-    var result: RESULT by HTDelegates.onceInitialize()
+    override var result: RESULT by HTDelegates.onceInitialize()
 
     operator fun RESULT.unaryPlus() {
         result = this

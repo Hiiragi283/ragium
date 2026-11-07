@@ -4,9 +4,9 @@ import hiiragi283.lib.data.recipe.result.HTItemOrFluidResultBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
+import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.HTDelegates
-import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 
 /**
@@ -18,11 +18,9 @@ import net.minecraft.world.item.crafting.Recipe
 class HTItemOrFluidRecipeBuilder<out RECIPE : Recipe<*>>(
     prefix: String,
     private val factory: HTItemOrFluidToRecipeBuilder.Factory<HTItemOrFluidResult, RECIPE>,
-) : HTProgressRecipeBuilder<RECIPE>(prefix),
+) : HTProgressRecipeBuilder.SingleResult<RECIPE>(prefix),
     HTItemOrFluidIngredientAcceptor,
     HTItemOrFluidResultBuilder.Holder {
-    override fun getRecipeId(): Identifier? = result.getId()
-
     override fun createRecipe(): RECIPE = factory.create(ingredient, result, progressData)
 
     // Ingredients
@@ -39,4 +37,6 @@ class HTItemOrFluidRecipeBuilder<out RECIPE : Recipe<*>>(
 
     // Results
     override val builder: HTItemOrFluidResultBuilder = HTItemOrFluidResultBuilder()
+
+    override val result: HTRecipeResult<*> by lazy(builder::build)
 }

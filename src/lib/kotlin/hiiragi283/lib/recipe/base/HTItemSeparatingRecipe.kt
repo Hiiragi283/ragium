@@ -2,10 +2,12 @@ package hiiragi283.lib.recipe.base
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
+import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
 import hiiragi283.lib.serialization.network.HTStreamCodecs
@@ -14,6 +16,7 @@ import hiiragi283.lib.util.IorNel
 import hiiragi283.lib.util.toPair
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
@@ -43,7 +46,7 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
      * @since 26.1.12
      */
     @JvmRecord
-    data class Result(val content: IorNel<HTItemResult, HTFluidResult>) {
+    data class Result(val content: IorNel<HTItemResult, HTFluidResult>) : HTRecipeResult<Output> {
         companion object {
             @JvmField
             val CODEC: MapCodec<Result> = HTCodecs.ior(
@@ -58,7 +61,13 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
             ).map(::Result, Result::content)
         }
 
-        fun create(): Output = content
+        override fun getId(): Identifier? = content.fold(
+            { it.head.getId() },
+            HTFluidResult::getId,
+            { items: Nel<HTItemResult>, fluid: HTFluidResult -> items.head.getId() ?: fluid.getId() },
+        )
+
+        override fun create(): Output = content
             .mapLeft { it.map(HTItemResult::create) }
             .mapRight { it.create() }
             .toPair(::listOf, FluidStack::EMPTY)

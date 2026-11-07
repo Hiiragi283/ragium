@@ -61,4 +61,9 @@ data object HTDelegates {
             setter.accept(value)
         }
     }
+
+    /**
+     * @since 26.1.13
+     */
+    fun <T : Any> optionInitialize(): ReadWriteProperty<Any?, Option<T>> = onceInitialize { Option.none() }
 }

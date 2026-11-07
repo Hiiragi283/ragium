@@ -18,11 +18,9 @@ class HTItemOrFluidResultBuilder {
 
     var fluidResult: Optional<HTFluidResult> by HTDelegates.optionalInitialize()
 
-    val result: HTItemOrFluidResult by lazy {
-        Ior.fromNullable(itemResult, fluidResult)
-            .map(::HTItemOrFluidResult)
-            .orElseThrow { error("Either item or fluid result required") }
-    }
+    fun build(): HTItemOrFluidResult = Ior.fromNullable(itemResult, fluidResult)
+        ?.let(::HTItemOrFluidResult)
+        ?: error("Either item or fluid result required")
 
     /**
      * レシピビルダーに実装されるインターフェースです。
@@ -31,8 +29,6 @@ class HTItemOrFluidResultBuilder {
      */
     interface Holder : HTItemOrFluidResultAcceptor {
         val builder: HTItemOrFluidResultBuilder
-
-        val result: HTItemOrFluidResult get() = builder.result
 
         override operator fun HTItemResult.unaryPlus() {
             builder.itemResult = Optional.of(this)

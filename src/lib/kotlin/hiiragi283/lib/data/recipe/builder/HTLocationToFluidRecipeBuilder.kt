@@ -8,7 +8,6 @@ import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTBiomeCondition
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.util.HTDelegates
-import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -20,9 +19,7 @@ import kotlin.contracts.contract
  * @since 26.1.11
  */
 class HTLocationToFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
-    HTProgressRecipeBuilder<RECIPE>(prefix) {
-    override fun getRecipeId(): Identifier? = result.getId()
-
+    HTProgressRecipeBuilder.SingleResult<RECIPE>(prefix) {
     override fun createRecipe(): RECIPE = factory.create(condition, result, progressData)
 
     // Biome Condition
@@ -40,7 +37,7 @@ class HTLocationToFluidRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pri
     }
 
     // Result
-    @PublishedApi internal var result: HTFluidResult by HTDelegates.onceInitialize()
+    override var result: HTFluidResult by HTDelegates.onceInitialize()
 
     operator fun HTFluidResult.unaryPlus() {
         result = this

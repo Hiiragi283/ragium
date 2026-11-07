@@ -11,7 +11,6 @@ import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.util.HTDelegates
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -24,9 +23,7 @@ import kotlin.contracts.contract
  * @since 26.1.11
  */
 class HTSizedShapelessRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
-    HTProgressRecipeBuilder<RECIPE>(prefix) {
-    override fun getRecipeId(): Identifier? = result.getId()
-
+    HTProgressRecipeBuilder.SingleResult<RECIPE>(prefix) {
     override fun createRecipe(): RECIPE = factory.create(ingredients.toNel(), result, progressData)
 
     // Ingredients
@@ -44,7 +41,7 @@ class HTSizedShapelessRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, priv
     }
 
     // Result
-    @PublishedApi internal var result: HTItemResult by HTDelegates.onceInitialize()
+    override var result: HTItemResult by HTDelegates.onceInitialize()
 
     operator fun HTItemResult.unaryPlus() {
         result = this

@@ -8,6 +8,7 @@ import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * 二つの値のうち，その両方または片方だけを保持するクラスです。
@@ -41,10 +42,7 @@ sealed class Ior<out A, out B> {
          * @since 26.1.5
          */
         @JvmStatic
-        fun <A : Any, B : Any> fromNullable(left: Optional<A>, right: Optional<B>): Optional<Ior<A, B>> = left.fold(
-            { right.map { Right(it) } },
-            { leftValue: A -> Optional.of(right.fold({ Left(leftValue) }, { Both(leftValue, it) })) },
-        )
+        fun <A : Any, B : Any> fromNullable(left: Optional<A>, right: Optional<B>): Ior<A, B>? = fromNullable(left.getOrNull(), right.getOrNull())
 
         /**
          * 指定された[pair]を[Ior]に変換します。

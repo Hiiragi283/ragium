@@ -11,7 +11,6 @@ import hiiragi283.lib.recipe.ingredient.HTIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.util.HTDelegates
-import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.Recipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -27,10 +26,8 @@ import kotlin.contracts.contract
 class HTSingleToItemAndFluidRecipeBuilder<ING : HTIngredient<*, *>, out RECIPE : Recipe<*>>(
     prefix: String,
     private val factory: HTBasicSingleRecipe.Factory<ING, HTItemOrFluidResult, RECIPE>,
-) : HTProgressRecipeBuilder<RECIPE>(prefix),
+) : HTProgressRecipeBuilder.SingleResult<RECIPE>(prefix),
     HTItemOrFluidResultBuilder.Holder {
-    override fun getRecipeId(): Identifier? = result.getId()
-
     override fun createRecipe(): RECIPE = factory.create(ingredient, result, progressData)
 
     // Ingredient
@@ -42,6 +39,8 @@ class HTSingleToItemAndFluidRecipeBuilder<ING : HTIngredient<*, *>, out RECIPE :
 
     // Results
     override val builder: HTItemOrFluidResultBuilder = HTItemOrFluidResultBuilder()
+
+    override val result: HTItemOrFluidResult by lazy(builder::build)
 }
 
 //    Extensions    //
