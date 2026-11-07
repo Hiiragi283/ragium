@@ -29,6 +29,7 @@ import hiiragi283.ragium.api.recipe.RTDryingRecipe
 import hiiragi283.ragium.api.recipe.RTElectrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTEngravingRecipe
+import hiiragi283.ragium.api.recipe.RTExtractingRecipe
 import hiiragi283.ragium.api.recipe.RTFillingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
@@ -94,6 +95,14 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTItemSeparatingRecipeBuilder(RagiumConstants.CENTRIFUGING, ::RTCentrifugingRecipe).apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun extracting(builderAction: HTItemToItemRecipeBuilder<RTExtractingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<RTExtractingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTSingleRecipeBuilder.Basic(RagiumConstants.EXTRACTING, ::RTExtractingRecipe).apply(builderAction)
     }
 
     @JvmStatic

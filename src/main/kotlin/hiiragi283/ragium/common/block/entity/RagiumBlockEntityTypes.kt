@@ -29,6 +29,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTCuttingMachineBlockEnti
 import hiiragi283.ragium.common.block.entity.processor.HTElectrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTEngraverBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
@@ -105,6 +106,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> =
         registerTick(RagiumConstants.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
+
+    @JvmField
+    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> =
+        registerTick(RagiumConstants.EXTRACTOR, ::HTExtractorBlockEntity)
 
     @JvmField
     val PRESS_MACHINE: HTDeferredBlockEntityType<HTPressMachineBlockEntity> =
@@ -252,6 +257,7 @@ data object RagiumBlockEntityTypes {
         registerBlockEntity(CRUSHER.get())
         registerBlockEntity(COMPRESSOR.get())
         registerBlockEntity(CUTTING_MACHINE.get())
+        registerBlockEntity(EXTRACTOR.get())
         registerBlockEntity(PRESS_MACHINE.get())
 
         registerBlockEntity(ALLOY_SMELTER.get())

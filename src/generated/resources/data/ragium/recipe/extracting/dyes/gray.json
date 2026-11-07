@@ -1,14 +1,12 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "ingredient": {
     "count": 1,
     "items": "minecraft:closed_eyeblossom"
   },
   "result": {
-    "item": {
-      "count": 2,
-      "id": "minecraft:gray_dye"
-    }
+    "count": 2,
+    "id": "minecraft:gray_dye"
   },
   "time": 200
 }

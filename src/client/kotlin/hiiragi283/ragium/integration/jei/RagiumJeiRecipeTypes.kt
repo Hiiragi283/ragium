@@ -36,6 +36,9 @@ data object RagiumJeiRecipeTypes {
     val CUTTING: IRecipeType<HTSingleToMultiViewerRecipe> = create(RagiumConstants.CUTTING)
 
     @JvmField
+    val EXTRACTING: IRecipeType<HTSingleToSingleViewerRecipe> = create(RagiumConstants.EXTRACTING)
+
+    @JvmField
     val FILLING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.FILLING)
 
     @JvmField

@@ -392,6 +392,15 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun nitrogen() {
+        // Gunpowder -> KNO3
+        RagiumRecipeBuilders.extracting {
+            ingredient {
+                +holderSet(Tags.Items.GUNPOWDERS)
+                count = 3
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.NITER) }
+            recipeId suffix "_from_gunpowder"
+        }.save(exporter)
         // Gunpowder -> C + S + KNO3
         RagiumRecipeBuilders.centrifuging {
             ingredient {
@@ -410,11 +419,11 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 count = 2
             }
             fluidIngredient { +holderSet(RagiumFluids.SULFURIC_ACID) }
-            itemResult {
-                +RagiumItems.ALKALI_SULFATE
-                count = 2
+            itemResult { +RagiumItems.ALKALI_SULFATE }
+            fluidResult {
+                +RagiumFluids.NITRIC_ACID
+                amount *= 2
             }
-            fluidResult { +RagiumFluids.NITRIC_ACID }
             recipeId suffix "_from_niter"
         }.save(exporter)
     }

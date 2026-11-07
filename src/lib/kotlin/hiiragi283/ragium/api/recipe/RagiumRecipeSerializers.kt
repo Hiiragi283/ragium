@@ -55,6 +55,10 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.CUTTING, RTCuttingRecipe.SERIALIZER)
 
     @JvmField
+    val EXTRACTING: RecipeSerializer<RTExtractingRecipe> =
+        register(RagiumConstants.EXTRACTING, RTExtractingRecipe.SERIALIZER)
+
+    @JvmField
     val FILLING: RecipeSerializer<RTFillingRecipe> =
         register(RagiumConstants.FILLING, RTFillingRecipe.SERIALIZER)
 

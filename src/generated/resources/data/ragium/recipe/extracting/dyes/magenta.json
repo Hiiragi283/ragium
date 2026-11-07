@@ -1,14 +1,12 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "ingredient": {
     "count": 1,
     "items": "minecraft:allium"
   },
   "result": {
-    "item": {
-      "count": 2,
-      "id": "minecraft:magenta_dye"
-    }
+    "count": 2,
+    "id": "minecraft:magenta_dye"
   },
   "time": 200
 }

@@ -52,6 +52,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
+        add(RagiumBlocks.EXTRACTOR, "Extractor")
         add(RagiumBlocks.PRESS_MACHINE, "Press Machine")
 
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
@@ -223,6 +224,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.COMPRESSING, "Compressing")
         addRecipeType(RagiumRecipeTypes.CRUSHING, "Crushing")
         addRecipeType(RagiumRecipeTypes.CUTTING, "Cutting")
+        addRecipeType(RagiumRecipeTypes.EXTRACTING, "Extracting")
         addRecipeType(RagiumRecipeTypes.FILLING, "Filling")
         addRecipeType(RagiumRecipeTypes.PRESSING, "Pressing")
 

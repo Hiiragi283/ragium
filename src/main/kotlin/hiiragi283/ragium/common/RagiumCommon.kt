@@ -78,6 +78,7 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING)
         RagiumRecipeLookups.CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING)
         RagiumRecipeLookups.CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING)
+        RagiumRecipeLookups.EXTRACTING.fromRecipeType(RagiumRecipeTypes.EXTRACTING)
         RagiumRecipeLookups.FILLING.fromRecipeType(RagiumRecipeTypes.FILLING)
         RagiumRecipeLookups.PRESSING.fromRecipeType(RagiumRecipeTypes.PRESSING)
 

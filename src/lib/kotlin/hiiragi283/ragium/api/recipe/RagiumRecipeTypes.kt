@@ -51,6 +51,9 @@ data object RagiumRecipeTypes {
     val CUTTING: RecipeType<RTCuttingRecipe> = create(RagiumConstants.CUTTING)
 
     @JvmField
+    val EXTRACTING: RecipeType<RTExtractingRecipe> = create(RagiumConstants.EXTRACTING)
+
+    @JvmField
     val FILLING: RecipeType<RTFillingRecipe> = create(RagiumConstants.FILLING)
 
     @JvmField

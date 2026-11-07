@@ -50,6 +50,9 @@ data object RagiumRecipeLookups {
     val CUTTING: HTCompoundRecipeLookup<HTItemToMultiItemRecipe> = create(RagiumConstants.CUTTING)
 
     @JvmField
+    val EXTRACTING: HTCompoundRecipeLookup<HTItemToItemRecipe> = create(RagiumConstants.EXTRACTING)
+
+    @JvmField
     val FILLING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.FILLING)
 
     @JvmField

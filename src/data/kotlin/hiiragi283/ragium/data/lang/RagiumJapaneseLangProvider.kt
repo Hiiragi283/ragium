@@ -48,6 +48,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.CRUSHER, "破砕機")
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CUTTING_MACHINE, "裁断機")
+        add(RagiumBlocks.EXTRACTOR, "抽出機")
         add(RagiumBlocks.PRESS_MACHINE, "プレス機")
 
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
@@ -219,6 +220,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addRecipeType(RagiumRecipeTypes.COMPRESSING, "圧縮")
         addRecipeType(RagiumRecipeTypes.CRUSHING, "粉砕")
         addRecipeType(RagiumRecipeTypes.CUTTING, "切断")
+        addRecipeType(RagiumRecipeTypes.EXTRACTING, "抽出")
         addRecipeType(RagiumRecipeTypes.FILLING, "封入")
         addRecipeType(RagiumRecipeTypes.PRESSING, "プレス加工")
 

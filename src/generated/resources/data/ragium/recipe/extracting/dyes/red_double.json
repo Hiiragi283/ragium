@@ -1,14 +1,12 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "ingredient": {
     "count": 1,
     "items": "minecraft:rose_bush"
   },
   "result": {
-    "item": {
-      "count": 4,
-      "id": "minecraft:red_dye"
-    }
+    "count": 4,
+    "id": "minecraft:red_dye"
   },
   "time": 200
 }

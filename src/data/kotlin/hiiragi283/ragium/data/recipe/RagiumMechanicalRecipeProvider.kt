@@ -425,9 +425,9 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         )
         for (color: DyeColor in DyeColor.entries) {
             val builder: HTItemIngredientBuilder.() -> Unit = single[color] ?: continue
-            RagiumRecipeBuilders.centrifuging {
+            RagiumRecipeBuilders.extracting {
                 ingredient(builder)
-                itemResult {
+                result {
                     +VanillaColoredCollections.DYE[color]
                     count = 2
                 }
@@ -435,33 +435,33 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }.save(exporter)
         }
         // Double
-        RagiumRecipeBuilders.centrifuging {
+        RagiumRecipeBuilders.extracting {
             ingredient { items { +Items.ROSE_BUSH } }
-            itemResult {
+            result {
                 +Items.RED_DYE
                 count = 4
             }
             recipeId replace id("dyes", "red_double")
         }.save(exporter)
-        RagiumRecipeBuilders.centrifuging {
+        RagiumRecipeBuilders.extracting {
             ingredient { items { +Items.SUNFLOWER } }
-            itemResult {
+            result {
                 +Items.YELLOW_DYE
                 count = 4
             }
             recipeId replace id("dyes", "yellow_double")
         }.save(exporter)
-        RagiumRecipeBuilders.centrifuging {
+        RagiumRecipeBuilders.extracting {
             ingredient { items { +Items.PITCHER_PLANT } }
-            itemResult {
+            result {
                 +Items.CYAN_DYE
                 count = 4
             }
             recipeId replace id("dyes", "cyan_double")
         }.save(exporter)
-        RagiumRecipeBuilders.centrifuging {
+        RagiumRecipeBuilders.extracting {
             ingredient { items { +Items.LILAC } }
-            itemResult {
+            result {
                 +Items.PINK_DYE
                 count = 4
             }

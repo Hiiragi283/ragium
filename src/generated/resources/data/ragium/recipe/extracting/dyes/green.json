@@ -1,14 +1,12 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "ingredient": {
     "count": 1,
     "items": "minecraft:cactus"
   },
   "result": {
-    "item": {
-      "count": 2,
-      "id": "minecraft:green_dye"
-    }
+    "count": 2,
+    "id": "minecraft:green_dye"
   },
   "time": 200
 }

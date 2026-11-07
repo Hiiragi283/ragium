@@ -1,14 +1,12 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "ingredient": {
     "count": 1,
     "items": "minecraft:blue_orchid"
   },
   "result": {
-    "item": {
-      "count": 2,
-      "id": "minecraft:light_blue_dye"
-    }
+    "count": 2,
+    "id": "minecraft:light_blue_dye"
   },
   "time": 200
 }

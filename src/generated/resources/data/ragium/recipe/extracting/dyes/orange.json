@@ -1,5 +1,5 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "ingredient": {
     "count": 1,
     "items": [
@@ -9,10 +9,8 @@
     ]
   },
   "result": {
-    "item": {
-      "count": 2,
-      "id": "minecraft:orange_dye"
-    }
+    "count": 2,
+    "id": "minecraft:orange_dye"
   },
   "time": 200
 }
