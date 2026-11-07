@@ -110,6 +110,7 @@ data object HTConstants {
     const val CONSTANTS = "constants"
     const val DESCRIPTION = "description"
     const val ERROR = "error"
+    const val RECIPE_CATEGORY = "recipe_category"
     const val TOOLTIP = "tooltip"
 
     const val ITEM_GROUP = "itemGroup"

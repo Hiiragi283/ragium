@@ -3,6 +3,7 @@ package hiiragi283.lib.integration.jei.category
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.addOptional
 import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
+import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.util.getLeftList
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
@@ -10,13 +11,12 @@ import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.types.IRecipeType
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.display.SlotDisplay
 
-class HTItemSeparatingRecipeCategory(recipeType: IRecipeType<HTItemSeparatingViewerRecipe>, recipeType1: RecipeType<*>, icon: IDrawable) :
+class HTItemSeparatingRecipeCategory(recipeType: IRecipeType<HTItemSeparatingViewerRecipe>, title: HTHasText, icon: IDrawable) :
     HTViewerRecipeCategory<HTItemSeparatingViewerRecipe>(
         recipeType,
-        recipeType1,
+        title,
         icon,
         18 * 7,
         18 * 2,

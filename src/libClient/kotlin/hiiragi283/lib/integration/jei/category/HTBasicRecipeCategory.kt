@@ -6,10 +6,8 @@ import hiiragi283.lib.integration.jei.HTJeiDrawables
 import hiiragi283.lib.integration.jei.ingredient.HTFluidSlotRenderer
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
-import hiiragi283.lib.registry.getKeyOrThrow
-import hiiragi283.lib.resource.toLanguageKey
+import hiiragi283.lib.text.HTHasText
 import hiiragi283.lib.text.Text
-import hiiragi283.lib.text.translatableText
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.drawable.IDrawable
@@ -21,9 +19,7 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.category.IRecipeCategory
 import mezz.jei.api.recipe.types.IRecipeType
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.Identifier
-import net.minecraft.world.item.crafting.RecipeType
 
 /**
  * Hiiragi Seriesで使用される[IRecipeCategory]の拡張クラスです。
@@ -41,13 +37,13 @@ abstract class HTBasicRecipeCategory<RECIPE : Any>(
 ) : IRecipeCategory<RECIPE> {
     constructor(
         recipeType: IRecipeType<RECIPE>,
-        recipeType1: RecipeType<*>,
+        title: HTHasText,
         icon: IDrawable,
         width: Int,
         height: Int,
     ) : this(
         recipeType,
-        translatableText(BuiltInRegistries.RECIPE_TYPE.wrapAsHolder(recipeType1).getKeyOrThrow().toLanguageKey()),
+        title.getText(),
         icon,
         width,
         height,

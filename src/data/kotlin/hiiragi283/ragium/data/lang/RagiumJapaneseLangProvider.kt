@@ -4,7 +4,6 @@ import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -214,38 +213,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addCustomPotion("golden_apple", "金リンゴ")
         addCustomPotion("enchanted_golden_apple", "エンチャントされた金リンゴ")
 
-        // Recipe Type
-        addRecipeType(RagiumRecipeTypes.ASSEMBLING, "組立")
-        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "遠心分離")
-        addRecipeType(RagiumRecipeTypes.COMPRESSING, "圧縮")
-        addRecipeType(RagiumRecipeTypes.CRUSHING, "粉砕")
-        addRecipeType(RagiumRecipeTypes.CUTTING, "切断")
-        addRecipeType(RagiumRecipeTypes.EXTRACTING, "抽出")
-        addRecipeType(RagiumRecipeTypes.FILLING, "封入")
-        addRecipeType(RagiumRecipeTypes.PRESSING, "プレス加工")
-
-        addRecipeType(RagiumRecipeTypes.ALLOYING, "合金")
-        addRecipeType(RagiumRecipeTypes.DRYING, "乾燥")
-        addRecipeType(RagiumRecipeTypes.FREEZING, "冷凍")
-        addRecipeType(RagiumRecipeTypes.MELTING, "溶融")
-        addRecipeType(RagiumRecipeTypes.PYROLYZING, "熱分解")
-        addRecipeType(RagiumRecipeTypes.REFINING, "蒸留")
-
-        addRecipeType(RagiumRecipeTypes.BATHING, "化学洗浄")
-        addRecipeType(RagiumRecipeTypes.MIXING, "混合")
-        addRecipeType(RagiumRecipeTypes.FLUID_REACTING, "化学反応 - 液体")
-        addRecipeType(RagiumRecipeTypes.ITEM_REACTING, "化学反応 - アイテム")
-
-        addRecipeType(RagiumRecipeTypes.BREWING, "醸造")
-        addRecipeType(RagiumRecipeTypes.PLANTING, "栽培")
-        addRecipeType(RagiumRecipeTypes.RESOURCE_PUMPING, "資源汲み上げ")
-
-        addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
-        addRecipeType(RagiumRecipeTypes.ENGRAVING, "レーザー加工")
-
-        addRecipeType(RagiumRecipeTypes.ENCHANTING, "エンチャント")
-        addRecipeType(RagiumRecipeTypes.TRANSFORMING, "変異")
-
         // Text - Lib
         add(HTCommonTranslation.ERROR, "エラー")
         add(HTCommonTranslation.INFINITE, "無限")
@@ -278,6 +245,37 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_ASSEMBLING, "組立")
+        add(RagiumTranslation.RECIPE_CATEGORY_CENTRIFUGING, "遠心分離")
+        add(RagiumTranslation.RECIPE_CATEGORY_COMPRESSING, "圧縮")
+        add(RagiumTranslation.RECIPE_CATEGORY_CRUSHING, "粉砕")
+        add(RagiumTranslation.RECIPE_CATEGORY_CUTTING, "切断")
+        add(RagiumTranslation.RECIPE_CATEGORY_EXTRACTING, "抽出")
+        add(RagiumTranslation.RECIPE_CATEGORY_FILLING, "封入")
+        add(RagiumTranslation.RECIPE_CATEGORY_PRESSING, "プレス加工")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_ALLOYING, "合金")
+        add(RagiumTranslation.RECIPE_CATEGORY_DRYING, "乾燥")
+        add(RagiumTranslation.RECIPE_CATEGORY_FREEZING, "冷凍")
+        add(RagiumTranslation.RECIPE_CATEGORY_MELTING, "溶融")
+        add(RagiumTranslation.RECIPE_CATEGORY_PYROLYZING, "熱分解")
+        add(RagiumTranslation.RECIPE_CATEGORY_REFINING, "蒸留")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_BATHING, "化学洗浄")
+        add(RagiumTranslation.RECIPE_CATEGORY_MIXING, "混合")
+        add(RagiumTranslation.RECIPE_CATEGORY_FLUID_REACTING, "化学反応 - 液体")
+        add(RagiumTranslation.RECIPE_CATEGORY_ITEM_REACTING, "化学反応 - アイテム")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_BREWING, "醸造")
+        add(RagiumTranslation.RECIPE_CATEGORY_PLANTING, "栽培")
+        add(RagiumTranslation.RECIPE_CATEGORY_RESOURCE_PUMPING, "資源汲み上げ")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_ELECTROLYZING, "電気分解")
+        add(RagiumTranslation.RECIPE_CATEGORY_ENGRAVING, "レーザー加工")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_ENCHANTING, "エンチャント")
+        add(RagiumTranslation.RECIPE_CATEGORY_TRANSFORMING, "変異")
 
         add(RagiumTranslation.TOOLTIPS_SULFUR, "石炭鉱石からドロップします")
         add(RagiumTranslation.TOOLTIPS_CINNABAR, "レッドストーン鉱石からドロップします")

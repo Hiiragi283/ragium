@@ -12,11 +12,11 @@
   },
   "results": {
     "fluid": {
-      "amount": 1000,
+      "amount": 2000,
       "id": "ragium:nitric_acid"
     },
     "item": {
-      "count": 2,
+      "count": 1,
       "id": "ragium:alkali_sulfate"
     }
   },

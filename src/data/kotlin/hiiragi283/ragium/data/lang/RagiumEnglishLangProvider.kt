@@ -4,7 +4,6 @@ import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -217,39 +216,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addCustomPotion("darkness", "Darkness")
         addCustomPotion("golden_apple", "Golden Apple")
         addCustomPotion("enchanted_golden_apple", "Enchanted Golden Apple")
-
-        // Recipe Type
-        addRecipeType(RagiumRecipeTypes.ASSEMBLING, "Assembling")
-        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "Centrifuging")
-        addRecipeType(RagiumRecipeTypes.COMPRESSING, "Compressing")
-        addRecipeType(RagiumRecipeTypes.CRUSHING, "Crushing")
-        addRecipeType(RagiumRecipeTypes.CUTTING, "Cutting")
-        addRecipeType(RagiumRecipeTypes.EXTRACTING, "Extracting")
-        addRecipeType(RagiumRecipeTypes.FILLING, "Filling")
-        addRecipeType(RagiumRecipeTypes.PRESSING, "Pressing")
-
-        addRecipeType(RagiumRecipeTypes.ALLOYING, "Alloying")
-        addRecipeType(RagiumRecipeTypes.DRYING, "Drying")
-        addRecipeType(RagiumRecipeTypes.FREEZING, "Freezing")
-        addRecipeType(RagiumRecipeTypes.MELTING, "Melting")
-        addRecipeType(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
-        addRecipeType(RagiumRecipeTypes.REFINING, "Refining")
-
-        addRecipeType(RagiumRecipeTypes.BATHING, "Chemical Bathing")
-        addRecipeType(RagiumRecipeTypes.MIXING, "Mixing")
-        addRecipeType(RagiumRecipeTypes.FLUID_REACTING, "Chemical Reacting - Fluid")
-        addRecipeType(RagiumRecipeTypes.ITEM_REACTING, "Chemical Reacting - Item")
-
-        addRecipeType(RagiumRecipeTypes.BREWING, "Brewing")
-        addRecipeType(RagiumRecipeTypes.PLANTING, "Planting")
-        addRecipeType(RagiumRecipeTypes.RESOURCE_PUMPING, "Resource Pumping")
-
-        addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
-        addRecipeType(RagiumRecipeTypes.ENGRAVING, "Laser Engraving")
-
-        addRecipeType(RagiumRecipeTypes.ENCHANTING, "Enchanting")
-        addRecipeType(RagiumRecipeTypes.TRANSFORMING, "Transforming")
-
         // Text - Lib
         add(HTCommonTranslation.ERROR, "Error")
         add(HTCommonTranslation.INFINITE, "Infinite")
@@ -282,6 +248,37 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_ASSEMBLING, "Assembling")
+        add(RagiumTranslation.RECIPE_CATEGORY_CENTRIFUGING, "Centrifuging")
+        add(RagiumTranslation.RECIPE_CATEGORY_COMPRESSING, "Compressing")
+        add(RagiumTranslation.RECIPE_CATEGORY_CRUSHING, "Crushing")
+        add(RagiumTranslation.RECIPE_CATEGORY_CUTTING, "Cutting")
+        add(RagiumTranslation.RECIPE_CATEGORY_EXTRACTING, "Extracting")
+        add(RagiumTranslation.RECIPE_CATEGORY_FILLING, "Filling")
+        add(RagiumTranslation.RECIPE_CATEGORY_PRESSING, "Pressing")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_ALLOYING, "Alloying")
+        add(RagiumTranslation.RECIPE_CATEGORY_DRYING, "Drying")
+        add(RagiumTranslation.RECIPE_CATEGORY_FREEZING, "Freezing")
+        add(RagiumTranslation.RECIPE_CATEGORY_MELTING, "Melting")
+        add(RagiumTranslation.RECIPE_CATEGORY_PYROLYZING, "Pyrolyzing")
+        add(RagiumTranslation.RECIPE_CATEGORY_REFINING, "Refining")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_BATHING, "Chemical Bathing")
+        add(RagiumTranslation.RECIPE_CATEGORY_MIXING, "Mixing")
+        add(RagiumTranslation.RECIPE_CATEGORY_FLUID_REACTING, "Chemical Reacting - Fluid")
+        add(RagiumTranslation.RECIPE_CATEGORY_ITEM_REACTING, "Chemical Reacting - Item")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_BREWING, "Brewing")
+        add(RagiumTranslation.RECIPE_CATEGORY_PLANTING, "Planting")
+        add(RagiumTranslation.RECIPE_CATEGORY_RESOURCE_PUMPING, "Resource Pumping")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_ELECTROLYZING, "Electrolyzing")
+        add(RagiumTranslation.RECIPE_CATEGORY_ENGRAVING, "Laser Engraving")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_ENCHANTING, "Enchanting")
+        add(RagiumTranslation.RECIPE_CATEGORY_TRANSFORMING, "Transforming")
 
         add(RagiumTranslation.TOOLTIPS_SULFUR, "Dropped from Coal Ores")
         add(RagiumTranslation.TOOLTIPS_CINNABAR, "Dropped from Redstone Ores")

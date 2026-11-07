@@ -60,5 +60,5 @@ enum class HTCommonTranslation(type: String, vararg path: String) : HTTranslatio
     DATAPACK_WIP("datapack", "work_in_progress"),
     ;
 
-    override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".")).toLanguageKey(type)
+    override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".", transform = { it.replace('/', '.') })).toLanguageKey(type)
 }

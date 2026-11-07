@@ -3,7 +3,7 @@ package hiiragi283.ragium.integration.jei.category
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.category.HTViewerRecipeCategory
 import hiiragi283.lib.recipe.viewer.HTMultiToSingleViewerRecipe
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -15,7 +15,7 @@ import mezz.jei.api.recipe.IFocusGroup
 class RTAssemblingRecipeCategory(guiHelper: IGuiHelper) :
     HTViewerRecipeCategory<HTMultiToSingleViewerRecipe>(
         RagiumJeiRecipeTypes.ASSEMBLING,
-        RagiumRecipeTypes.ASSEMBLING,
+        RagiumTranslation.RECIPE_CATEGORY_ASSEMBLING,
         guiHelper.createDrawableItemLike(RagiumBlocks.ASSEMBLER),
         18 * 5,
         18 * 2,

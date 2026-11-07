@@ -3,7 +3,7 @@ package hiiragi283.ragium.integration.jei.category
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.addOptional
 import hiiragi283.lib.integration.jei.category.HTViewerRecipeCategory
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.recipe.viewer.RTItemReactingViewerRecipe
@@ -15,7 +15,7 @@ import mezz.jei.api.recipe.IFocusGroup
 class RTItemReactingRecipeCategory(guiHelper: IGuiHelper) :
     HTViewerRecipeCategory<RTItemReactingViewerRecipe>(
         RagiumJeiRecipeTypes.ITEM_REACTING,
-        RagiumRecipeTypes.ITEM_REACTING,
+        RagiumTranslation.RECIPE_CATEGORY_ITEM_REACTING,
         guiHelper.createDrawableItemLike(RagiumBlocks.CHEMICAL_REACTOR),
         18 * 8,
         18 * 2,
