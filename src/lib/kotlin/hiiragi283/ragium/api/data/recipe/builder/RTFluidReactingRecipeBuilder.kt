@@ -8,6 +8,7 @@ import hiiragi283.lib.data.recipe.builder.HTItemCatalystAcceptor
 import hiiragi283.lib.data.recipe.builder.HTItemOrFluidResultAcceptor
 import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
+import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import hiiragi283.lib.recipe.result.HTFluidResult
@@ -58,8 +59,8 @@ class RTFluidReactingRecipeBuilder :
 
     @PublishedApi internal var fluidResults: MutableList<HTFluidResult> = ObjectArrayList()
 
-    val result: RTFluidReactingRecipe.Result by lazy {
-        Ior.fromNullable(fluidResults.toNelOrNull().toOptional(), itemResult).orElseThrow().let(RTFluidReactingRecipe::Result)
+    val result: HTFluidSeparatingRecipe.Result by lazy {
+        Ior.fromNullable(fluidResults.toNelOrNull().toOptional(), itemResult).orElseThrow().let(HTFluidSeparatingRecipe::Result)
     }
 
     override operator fun HTItemResult.unaryPlus() {

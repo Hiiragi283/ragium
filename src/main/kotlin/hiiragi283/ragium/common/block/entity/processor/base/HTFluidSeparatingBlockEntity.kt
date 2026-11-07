@@ -87,32 +87,24 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
     //    HTItemToBlockEntity    //
 
     private val outputItemHandler: HTOutputHandler<ItemStack> = HTOutputHandlerHelper.forItem(outputSlot)
-    private val leftOutputHandler: HTOutputHandler<FluidStack> = HTOutputHandlerHelper.forFluid(leftOutputTank)
-    private val rightOutputHandler: HTOutputHandler<FluidStack> = HTOutputHandlerHelper.forFluid(rightOutputTank)
+    private val outputFluidHandler: HTOutputHandler<FluidStack> = HTOutputHandlerHelper.forFluids(listOf(leftOutputTank, rightOutputTank))
 
     override fun canComplete(recipe: HTFluidSeparatingRecipe, input: FluidInstance, output: HTFluidSeparatingRecipe.Output): Boolean =
         useTransaction { transaction: Transaction ->
+            val (fluids: List<FluidStack>, item: ItemStack) = output
             when {
                 inputHandler.use(recipe.getMatchingStack(input), transaction).failed -> false
-
-                else -> {
-                    val (left: FluidStack, right: FluidStack, item: ItemStack) = output
-                    when {
-                        leftOutputHandler.take(right, transaction) != HTOutputHandler.TakeResult.FULL -> false
-                        rightOutputHandler.take(left, transaction) != HTOutputHandler.TakeResult.FULL -> false
-                        else -> outputItemHandler.take(item, transaction).fullOrNoneTaken
-                    }
-                }
+                outputFluidHandler.takeAll(fluids, transaction) != HTOutputHandler.TakeResult.FULL -> false
+                else -> outputItemHandler.take(item, transaction).fullOrNoneTaken
             }
         }
 
     override fun onComplete(recipe: HTFluidSeparatingRecipe, input: FluidInstance, output: HTFluidSeparatingRecipe.Output) {
         useTransaction { transaction: Transaction ->
             inputHandler.use(recipe.getMatchingStack(input), transaction)
-            val (left: FluidStack, right: FluidStack, item: ItemStack) = output
+            val (fluids: List<FluidStack>, item: ItemStack) = output
             outputItemHandler.take(item, transaction)
-            leftOutputHandler.take(right, transaction)
-            rightOutputHandler.take(left, transaction)
+            outputFluidHandler.takeAll(fluids, transaction)
             transaction.commit()
         }
         onComplete()

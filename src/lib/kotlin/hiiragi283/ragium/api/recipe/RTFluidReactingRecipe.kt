@@ -12,18 +12,11 @@ import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import hiiragi283.lib.recipe.input.HTFluidRecipeInput
-import hiiragi283.lib.recipe.result.HTFluidResult
-import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
-import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.nelOf
-import hiiragi283.lib.util.IorNel
-import hiiragi283.lib.util.toPair
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -35,7 +28,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 data class RTFluidReactingRecipe(
     val ingredients: Nel<HTFluidIngredient>,
     val catalyst: HTItemCatalyst,
-    val result: Result,
+    val result: HTFluidSeparatingRecipe.Result,
     override val progressData: HTProgressData,
 ) : HTRecipeFactories.CatalysedSingleInput<RTFluidReactingRecipe.Input, List<FluidInstance>, HTFluidSeparatingRecipe.Output>,
     HTProgressRecipe.Holder,
@@ -48,7 +41,7 @@ data class RTFluidReactingRecipe(
                     .compactNelFieldOf(HTConstants.INGREDIENT, HTConstants.INGREDIENTS, 2)
                     .forGetter(RTFluidReactingRecipe::ingredients),
                 HTItemCatalyst.CODEC.forGetter(RTFluidReactingRecipe::catalyst),
-                Result.CODEC.fieldOf(HTConstants.RESULTS).forGetter(RTFluidReactingRecipe::result),
+                HTFluidSeparatingRecipe.Result.CODEC.fieldOf(HTConstants.RESULTS).forGetter(RTFluidReactingRecipe::result),
                 HTProgressRecipe.Holder.progressCodec(),
             ).apply(instance, ::RTFluidReactingRecipe)
         }
@@ -59,7 +52,7 @@ data class RTFluidReactingRecipe(
             RTFluidReactingRecipe::ingredients,
             HTItemCatalyst.STREAM_CODEC,
             RTFluidReactingRecipe::catalyst,
-            Result.STREAM_CODEC,
+            HTFluidSeparatingRecipe.Result.STREAM_CODEC,
             RTFluidReactingRecipe::result,
             HTProgressData.STREAM_CODEC,
             RTFluidReactingRecipe::progressData,
@@ -102,36 +95,5 @@ data class RTFluidReactingRecipe(
         override fun getItem(index: Int): ItemStack = error("No item for index: $index")
 
         override fun size(): Int = 0
-    }
-
-    //    Result    //
-
-    @JvmRecord
-    data class Result(val content: IorNel<HTFluidResult, HTItemResult>) : HTRecipeResult<HTFluidSeparatingRecipe.Output> {
-        companion object {
-            @JvmField
-            val CODEC: MapCodec<Result> = HTCodecs.ior(
-                HTFluidResult.CODEC.compactNelFieldOf(HTConstants.FLUID, HTConstants.FLUIDS, 2),
-                HTItemResult.CODEC.fieldOf(HTConstants.ITEM),
-            ).xmap(::Result, Result::content)
-
-            @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Result> =
-                HTStreamCodecs.ior(HTFluidResult.STREAM_CODEC.nelOf(), HTItemResult.STREAM_CODEC).map(::Result, Result::content)
-        }
-
-        override fun getId(): Identifier? = content.fold(
-            { it.head.getId() },
-            HTItemResult::getId,
-            { fluids: Nel<HTFluidResult>, item: HTItemResult -> fluids.head.getId() ?: item.getId() },
-        )
-
-        override fun create(): HTFluidSeparatingRecipe.Output = content
-            .mapLeft { it.map(HTFluidResult::create) }
-            .mapRight(HTItemResult::create)
-            .toPair(::listOf, ItemStack::EMPTY)
-            .let { (fluids: List<FluidStack>, item: ItemStack) ->
-                HTFluidSeparatingRecipe.Output(fluids.first(), fluids.getOrNull(1) ?: FluidStack.EMPTY, item)
-            }
     }
 }

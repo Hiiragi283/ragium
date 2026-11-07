@@ -1,6 +1,5 @@
 package hiiragi283.lib.recipe.base
 
-import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
@@ -8,17 +7,19 @@ import hiiragi283.lib.data.recipe.builder.HTFluidSeparatingRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.recipe.result.createOrEmpty
+import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
+import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.nelOf
-import hiiragi283.lib.serialization.network.optionalOf
+import hiiragi283.lib.util.IorNel
+import hiiragi283.lib.util.toPair
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.Optional
 
 /**
  * @author Hiiragi Tsubasa
@@ -32,7 +33,11 @@ interface HTFluidSeparatingRecipe : HTFluidToRecipe<HTFluidSeparatingRecipe.Outp
      * @since 26.1.11
      */
     @JvmRecord
-    data class Output(val left: FluidStack, val right: FluidStack, val item: ItemStack)
+    data class Output(val fluids: List<FluidStack>, val item: ItemStack) {
+        constructor(fluid: FluidStack, item: ItemStack) : this(listOf(fluid), item)
+
+        constructor(pair: Pair<List<FluidStack>, ItemStack>) : this(pair.first, pair.second)
+    }
 
     //    Result    //
 
@@ -41,29 +46,32 @@ interface HTFluidSeparatingRecipe : HTFluidToRecipe<HTFluidSeparatingRecipe.Outp
      * @since 26.1.11
      */
     @JvmRecord
-    data class Result(val fluids: Nel<HTFluidResult>, val item: Optional<HTItemResult>) {
+    data class Result(val content: IorNel<HTFluidResult, HTItemResult>) : HTRecipeResult<Output> {
         companion object {
             @JvmField
-            val CODEC: Codec<Result> = HTCodecs.record { instance ->
-                instance.group(
-                    HTFluidResult.CODEC
-                        .compactNelFieldOf(HTConstants.FLUID, HTConstants.FLUIDS, 2)
-                        .forGetter(Result::fluids),
-                    HTItemResult.CODEC.optionalFieldOf(HTConstants.ITEM).forGetter(Result::item),
-                ).apply(instance, ::Result)
-            }
+            val CODEC: MapCodec<Result> = HTCodecs.ior(
+                HTFluidResult.CODEC.compactNelFieldOf(HTConstants.FLUID, HTConstants.FLUIDS, 2),
+                HTItemResult.CODEC.fieldOf(HTConstants.ITEM),
+            ).xmap(::Result, Result::content)
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Result> = StreamCodec.composite(
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Result> = HTStreamCodecs.ior(
                 HTFluidResult.STREAM_CODEC.nelOf(),
-                Result::fluids,
-                HTItemResult.STREAM_CODEC.optionalOf(),
-                Result::item,
-                ::Result,
-            )
+                HTItemResult.STREAM_CODEC,
+            ).map(::Result, Result::content)
         }
 
-        fun create(): Output = Output(fluids.head.create(), fluids.getOrNull(1).createOrEmpty(), item.createOrEmpty())
+        override fun getId(): Identifier? = content.fold(
+            { it.head.getId() },
+            HTItemResult::getId,
+            { fluids: Nel<HTFluidResult>, item: HTItemResult -> fluids.head.getId() ?: item.getId() },
+        )
+
+        override fun create(): Output = content
+            .mapLeft { it.map(HTFluidResult::create) }
+            .mapRight { it.create() }
+            .toPair(::listOf, ItemStack::EMPTY)
+            .let(::Output)
     }
 
     //    Basic    //

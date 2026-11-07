@@ -10,9 +10,9 @@ import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.display.HTDisplayableContent
-import hiiragi283.lib.recipe.display.display
 import hiiragi283.lib.recipe.display.displayOrEmpty
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
+import hiiragi283.lib.util.getLeftList
 
 /**
  * @author Hiiragi Tsubasa
@@ -58,8 +58,8 @@ data object HTViewerRecipeHelper {
         return HTFluidSeparatingViewerRecipe(
             id.identifier(),
             recipe.ingredient.display(),
-            recipe.result.item.display(),
-            recipe.result.fluids.map(HTDisplayableContent::display),
+            recipe.result.content.getRight().displayOrEmpty(),
+            recipe.result.content.getLeftList().map(HTDisplayableContent::display),
             recipe.progressData,
         )
     }

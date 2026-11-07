@@ -37,6 +37,30 @@ data object HTOutputHandlerHelper {
         }
     }
 
+    /**
+     * 複数の[HTFluidTank]を[アイテム][FluidStack]向けの[HTOutputHandler]に変換します。
+     * @since 26.1.13
+     */
+    @JvmStatic
+    fun forFluids(tanks: List<HTFluidTank>): HTOutputHandler<FluidStack> = MultiFluids(tanks)
+
+    @JvmRecord
+    private data class MultiFluids(private val tanks: List<HTFluidTank>) : HTOutputHandler<FluidStack> {
+        override fun take(stack: FluidStack, transaction: TransactionContext): HTOutputHandler.TakeResult {
+            if (stack.isEmpty) return HTOutputHandler.TakeResult.NONE
+            val (resource: FluidResource, amount: Int) = stack.toResourcePair()
+            var inserted = 0
+            for (tank: HTFluidTank in tanks) {
+                inserted += tank.insert(resource, amount - inserted, transaction, HTTransferAccess.INTERNAL)
+                if (inserted == amount) break
+            }
+            return when (inserted) {
+                amount -> HTOutputHandler.TakeResult.FULL
+                else -> HTOutputHandler.TakeResult.PARTIALLY
+            }
+        }
+    }
+
     //    Item    //
 
     /**

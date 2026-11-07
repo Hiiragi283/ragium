@@ -21,9 +21,3 @@ interface HTDisplayableContent {
  * @since 26.1.12
  */
 fun HTDisplayableContent?.displayOrEmpty(): Optional<SlotDisplay> = this?.display().toOptional()
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.12
- */
-fun Optional<out HTDisplayableContent>.display(): Optional<SlotDisplay> = this.map(HTDisplayableContent::display)
