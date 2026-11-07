@@ -1,17 +1,15 @@
 {
-  "type": "ragium:reacting",
-  "ingredients": {
-    "fluids": [
-      {
-        "amount": 1000,
-        "fluids": "#c:sulfuric_naphtha"
-      },
-      {
-        "amount": 250,
-        "fluids": "#c:hydrogen"
-      }
-    ]
-  },
+  "type": "ragium:reacting/fluid",
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:sulfuric_naphtha"
+    },
+    {
+      "amount": 250,
+      "fluids": "#c:hydrogen"
+    }
+  ],
   "results": {
     "fluids": [
       {

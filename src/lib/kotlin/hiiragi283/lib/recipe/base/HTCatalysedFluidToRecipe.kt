@@ -3,7 +3,7 @@ package hiiragi283.lib.recipe.base
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTFluidWithCatalystRecipeInput
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
@@ -40,12 +40,12 @@ typealias HTCatalysedFluidToItemAndFluidRecipe = HTCatalysedFluidToRecipe<HTItem
  * @author Hiiragi Tsubasa
  * @since 26.1.13
  */
-interface HTCatalysedFluidToRecipe<OUTPUT : Any> : HTRecipeFactories.CatalysedSingleInput<HTItemAndFluidRecipeInput, FluidInstance, OUTPUT> {
-    override fun matches(input: HTItemAndFluidRecipeInput): Boolean = test(input.fluid, input.item)
+interface HTCatalysedFluidToRecipe<OUTPUT : Any> : HTRecipeFactories.CatalysedSingleInput<HTFluidWithCatalystRecipeInput, FluidInstance, OUTPUT> {
+    override fun matches(input: HTFluidWithCatalystRecipeInput): Boolean = test(input.fluid, input.catalyst)
 
-    override fun produce(input: HTItemAndFluidRecipeInput): OUTPUT = apply(input.fluid, input.item)
+    override fun produce(input: HTFluidWithCatalystRecipeInput): OUTPUT = apply(input.fluid, input.catalyst)
 
-    override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData = getProgressData(input.fluid, input.item)
+    override fun getProgressData(input: HTFluidWithCatalystRecipeInput): HTProgressData = getProgressData(input.fluid, input.catalyst)
 
     /**
      * @author Hiiragi Tsubasa

@@ -45,7 +45,7 @@ class HTFluidSeparatingRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, pri
         +HTFluidIngredientBuilder.build(builderAction)
     }
 
-    // Result
+    // Results
     @PublishedApi internal var itemResult: Optional<HTItemResult> by HTDelegates.optionalInitialize()
 
     @PublishedApi internal var fluidResults: MutableList<HTFluidResult> = ObjectArrayList()

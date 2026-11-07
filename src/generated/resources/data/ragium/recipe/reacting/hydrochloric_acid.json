@@ -1,17 +1,15 @@
 {
-  "type": "ragium:reacting",
-  "ingredients": {
-    "fluids": [
-      {
-        "amount": 1000,
-        "fluids": "#c:hydrogen_chloride"
-      },
-      {
-        "amount": 1000,
-        "fluids": "#c:water"
-      }
-    ]
-  },
+  "type": "ragium:reacting/fluid",
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:hydrogen_chloride"
+    },
+    {
+      "amount": 1000,
+      "fluids": "#c:water"
+    }
+  ],
   "results": {
     "fluid": {
       "amount": 1000,

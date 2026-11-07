@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api
 
+import hiiragi283.lib.HTConstants
+
 /**
  * Ragiumで使用される定数をまとめたクラスです。
  * @author Hiiragi Tsubasa
@@ -89,6 +91,8 @@ data object RagiumConstants {
     const val BATHING = "bathing"
     const val MIXING = "mixing"
     const val REACTING = "reacting"
+    const val FLUID_REACTING = "$REACTING/${HTConstants.FLUID}"
+    const val ITEM_REACTING = "$REACTING/${HTConstants.ITEM}"
 
     // Resource
     const val BREWING = "brewing"

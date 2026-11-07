@@ -161,9 +161,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // Sulfuric Naphtha + H2 -> Naphtha + H2S
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.SULFURIC_NAPHTHA) }
-            fluidIngredient {
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.SULFURIC_NAPHTHA) }
+            ingredient {
                 +holderSet(RagiumFluids.HYDROGEN)
                 amount /= 4
             }
@@ -174,9 +174,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
         // Sulfuric Fuel + H2 -> Fuel + H2S
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.SULFURIC_FUEL) }
-            fluidIngredient {
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.SULFURIC_FUEL) }
+            ingredient {
                 +holderSet(RagiumFluids.HYDROGEN)
                 amount /= 4
             }
@@ -187,12 +187,12 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
         // 2x H2S + 3x O2 -> 2x SO2 + 2x H2O
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient {
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient {
                 +holderSet(RagiumFluids.HYDROGEN_SULFIDE)
                 amount *= 2
             }
-            fluidIngredient {
+            ingredient {
                 +holderSet(RagiumFluids.OXYGEN)
                 amount *= 3
             }
@@ -230,7 +230,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             }
         }.save(exporter)
         // Tar + H2 -> Fuel
-        RagiumRecipeBuilders.reacting {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient { items { +RagiumItems.TAR } }
             fluidIngredient {
                 +holderSet(RagiumFluids.HYDROGEN)
@@ -239,10 +239,6 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult {
                 +RagiumFluids.FUEL
                 amount = 200
-            }
-            fluidResult {
-                +RagiumFluids.NAPHTHA
-                amount = 50
             }
             recipeId suffix "_from_tar"
         }.save(exporter)
@@ -301,15 +297,15 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         // Synthetic Gas -> Methanol
 
         // Alcohol + (Ag) -> Aldehyde
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumTags.Fluids.ALCOHOLS) }
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumTags.Fluids.ALCOHOLS) }
             catalyst { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.SILVER) }
             fluidResult { +RagiumFluids.ALDEHYDE }
         }.save(exporter)
         // Aromatic Compound + Aldehyde -> Synthetic Resin
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
-            fluidIngredient { +holderSet(RagiumTags.Fluids.ALDEHYDES) }
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
+            ingredient { +holderSet(RagiumTags.Fluids.ALDEHYDES) }
             fluidResult {
                 +RagiumFluids.SYNTHETIC_RESIN
                 amount *= 2
@@ -334,8 +330,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         calcium()
 
         // 2x H2O -> 2x H2 + O2
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +waterSet() }
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +waterSet() }
             catalyst { +holderSet(RagiumTags.Items.CATALYSTS_ELECTROLYZE) }
             fluidResult { +RagiumFluids.HYDROGEN }
             fluidResult {
@@ -409,9 +405,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun explosive() {
         // Aromatic Compound + HNO3 -> Liquid Explosive
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
-            fluidIngredient { +holderSet(RagiumFluids.NITRIC_ACID) }
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
+            ingredient { +holderSet(RagiumFluids.NITRIC_ACID) }
             fluidResult { +RagiumFluids.LIQUID_EXPLOSIVE }
         }.save(exporter)
 
@@ -443,9 +439,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             recipeId suffix "_from_fluorite"
         }.save(exporter)
         // HF + H2O -> HF(aq)
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.HYDROGEN_FLUORIDE) }
-            fluidIngredient { +waterSet() }
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.HYDROGEN_FLUORIDE) }
+            ingredient { +waterSet() }
             fluidResult { +RagiumFluids.HYDROFLUORIC_ACID }
         }.save(exporter)
     }
@@ -463,15 +459,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             exp = 0.15f
         }
         // 2x NaOH (aq) + CO2 -> Na2CO3 + H2O
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.HYDROXIDE_SOLUTION) }
-            fluidIngredient { +holderSet(RagiumFluids.CARBON_DIOXIDE) }
-            fluidResult {
-                water()
-                amount *= 2
-            }
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.HYDROXIDE_SOLUTION) }
+            ingredient { +holderSet(RagiumFluids.CARBON_DIOXIDE) }
             itemResult { +RagiumItems.ALKALI_CARBONATE }
-            recipeId replace id("soda_ash_dust")
         }.save(exporter)
         // SiO2 + Na2CO3 -> Glass
         RagiumRecipeBuilders.alloying {
@@ -664,12 +655,12 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             recipeId suffix "_from_apatite"
         }.save(exporter)
         // H3PO4 + Ca(OH2) aq -> Bone
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient {
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient {
                 +holderSet(RagiumFluids.PHOSPHORIC_ACID)
                 amount = 600
             }
-            fluidIngredient { +holderSet(RagiumFluids.HYDROXIDE_SOLUTION) }
+            ingredient { +holderSet(RagiumFluids.HYDROXIDE_SOLUTION) }
             itemResult {
                 +Items.BONE
                 count = 12
@@ -685,9 +676,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.SULFUR_DIOXIDE }
         }.save(exporter)
         // SO2 + 1/2 O2 -> SO3
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
-            fluidIngredient {
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.SULFUR_DIOXIDE) }
+            ingredient {
                 +holderSet(RagiumFluids.OXYGEN)
                 amount /= 2
             }
@@ -699,9 +690,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.SULFUR_TRIOXIDE }
         }.save(exporter)
         // SO3 + H2O -> H2SO4
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.SULFUR_TRIOXIDE) }
-            fluidIngredient { +waterSet() }
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.SULFUR_TRIOXIDE) }
+            ingredient { +waterSet() }
             fluidResult { +RagiumFluids.SULFURIC_ACID }
         }.save(exporter)
     }
@@ -723,9 +714,8 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
-        RagiumRecipeBuilders.reacting {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SALT) }
-            fluidIngredient { +waterSet() }
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.SALT_WATER) }
             catalyst { +holderSet(RagiumTags.Items.CATALYSTS_ELECTROLYZE) }
             fluidResult {
                 +RagiumFluids.HYDROGEN
@@ -740,18 +730,18 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // H2 + Cl2 -> 2x HCl
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.HYDROGEN) }
-            fluidIngredient { +holderSet(RagiumFluids.CHLORINE) }
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.HYDROGEN) }
+            ingredient { +holderSet(RagiumFluids.CHLORINE) }
             fluidResult {
                 +RagiumFluids.HYDROGEN_CHLORIDE
                 amount *= 2
             }
         }.save(exporter)
         // HCl + H2O -> HCl(aq)
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.HYDROGEN_CHLORIDE) }
-            fluidIngredient { +waterSet() }
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.HYDROGEN_CHLORIDE) }
+            ingredient { +waterSet() }
             fluidResult { +RagiumFluids.HYDROCHLORIC_ACID }
         }.save(exporter)
     }
@@ -771,11 +761,12 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidResult { +RagiumFluids.LIMEWATER }
         }.save(exporter)
         // Ca(OH)2 + CO2 -> CaCO3 + H2O
-        RagiumRecipeBuilders.reacting {
-            fluidIngredient { +holderSet(RagiumFluids.LIMEWATER) }
-            fluidIngredient { +holderSet(RagiumFluids.CARBON_DIOXIDE) }
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.LIMEWATER) }
+            ingredient { +holderSet(RagiumFluids.CARBON_DIOXIDE) }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.LIME) }
             fluidResult { water() }
+            recipeId replace id("lime_dust")
         }.save(exporter)
 
         // (Na,K)2SO4 + Ca(OH)2 -> CaSO4 + 2x KOH
@@ -840,10 +831,9 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // Plant Oil + R-OH + NaOH -> Fuel + Glycerol
-        RagiumRecipeBuilders.reacting {
-            itemIngredient { items { +RagiumItems.ALKALI_HYDROXIDE } }
-            fluidIngredient { +holderSet(RagiumFluids.PLANT_OIL) }
-            fluidIngredient {
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.PLANT_OIL) }
+            ingredient {
                 +holderSet(RagiumTags.Fluids.ALCOHOLS)
                 amount *= 6
             }

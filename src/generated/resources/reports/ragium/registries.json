@@ -528,7 +528,8 @@
     "planting",
     "pressing",
     "pyrolyzing",
-    "reacting",
+    "reacting/fluid",
+    "reacting/item",
     "refining",
     "resource/pumping",
     "transforming"
@@ -552,7 +553,8 @@
     "planting",
     "pressing",
     "pyrolyzing",
-    "reacting",
+    "reacting/fluid",
+    "reacting/item",
     "refining",
     "resource/pumping",
     "transforming"

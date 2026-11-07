@@ -6,7 +6,7 @@ import hiiragi283.lib.recipe.base.HTCatalysedFluidToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTFluidWithCatalystRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType
 
 class RTFreezingRecipe(ingredient: HTFluidIngredient, catalyst: HTItemCatalyst, result: HTItemResult, progressData: HTProgressData) :
     HTCatalysedFluidToRecipe.BasicItem(ingredient, catalyst, result, progressData),
-    HTSerializableRecipe<HTItemAndFluidRecipeInput> {
+    HTSerializableRecipe<HTFluidWithCatalystRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTFreezingRecipe> = codec(HTFluidIngredient.CODEC, HTItemResult.CODEC, ::RTFreezingRecipe)

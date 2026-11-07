@@ -1,0 +1,20 @@
+{
+  "type": "ragium:reacting/fluid",
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:alkali_hydroxide_solution"
+    },
+    {
+      "amount": 1000,
+      "fluids": "#c:carbon_dioxide"
+    }
+  ],
+  "results": {
+    "item": {
+      "count": 1,
+      "id": "ragium:alkali_carbonate"
+    }
+  },
+  "time": 200
+}

@@ -97,8 +97,12 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.MIXING, RTMixingRecipe.SERIALIZER)
 
     @JvmField
-    val REACTING: RecipeSerializer<RTReactingRecipe> =
-        register(RagiumConstants.REACTING, RTReactingRecipe.SERIALIZER)
+    val FLUID_REACTING: RecipeSerializer<RTFluidReactingRecipe> =
+        register(RagiumConstants.FLUID_REACTING, RTFluidReactingRecipe.SERIALIZER)
+
+    @JvmField
+    val ITEM_REACTING: RecipeSerializer<RTItemReactingRecipe> =
+        register(RagiumConstants.ITEM_REACTING, RTItemReactingRecipe.SERIALIZER)
 
     // Resource
     @JvmField

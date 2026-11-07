@@ -1,5 +1,5 @@
 {
-  "type": "ragium:reacting",
+  "type": "ragium:reacting/item",
   "ingredients": {
     "fluid": {
       "amount": 125,

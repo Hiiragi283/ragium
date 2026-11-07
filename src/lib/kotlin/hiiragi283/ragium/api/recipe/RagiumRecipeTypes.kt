@@ -83,7 +83,10 @@ data object RagiumRecipeTypes {
     val MIXING: RecipeType<RTMixingRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
-    val REACTING: RecipeType<RTReactingRecipe> = create(RagiumConstants.REACTING)
+    val FLUID_REACTING: RecipeType<RTFluidReactingRecipe> = create(RagiumConstants.FLUID_REACTING)
+
+    @JvmField
+    val ITEM_REACTING: RecipeType<RTItemReactingRecipe> = create(RagiumConstants.ITEM_REACTING)
 
     // Resource
     @JvmField

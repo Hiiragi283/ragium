@@ -167,7 +167,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             result { +RagiumItems.CRUDE_SILICON }
         }.save(exporter)
         // Crude Si + HCl -> Si Dust
-        RagiumRecipeBuilders.reacting {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient { +holderSet(HTCommonTags.Items.SILICON) }
             fluidIngredient {
                 +holderSet(RagiumFluids.HYDROCHLORIC_ACID)

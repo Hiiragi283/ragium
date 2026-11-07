@@ -69,11 +69,14 @@ data object HTRecipeFactories {
 
     //    Triple Input    //
 
-    interface TripleInput<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, INPUT_C : Any, OUTPUT : Any> :
+    interface TripleInputLike<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, INPUT_C : Any, OUTPUT : Any> :
         HTRecipeFactory<INPUT, OUTPUT>,
-        TriPredicate<INPUT_A, INPUT_B, INPUT_C>,
         HTProgressRecipe.Triple<INPUT, INPUT_A, INPUT_B, INPUT_C>,
-        TriFunction<INPUT_A, INPUT_B, INPUT_C, OUTPUT> {
+        TriPredicate<INPUT_A, INPUT_B, INPUT_C>,
+        TriFunction<INPUT_A, INPUT_B, INPUT_C, OUTPUT>
+
+    interface TripleInput<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, INPUT_C : Any, OUTPUT : Any> :
+        TripleInputLike<INPUT, INPUT_A, INPUT_B, INPUT_C, OUTPUT> {
         override fun test(first: INPUT_A, second: INPUT_B, third: INPUT_C): Boolean
 
         override fun apply(first: INPUT_A, second: INPUT_B, third: INPUT_C): OUTPUT
@@ -82,5 +85,20 @@ data object HTRecipeFactories {
          * 消費される入力を取得します。
          */
         fun getMatchingStack(first: INPUT_A, second: INPUT_B, third: INPUT_C): Triple<INPUT_A, INPUT_B, INPUT_C>
+    }
+
+    /**
+     * @since 26.1.13
+     */
+    interface CatalysedDoubleInput<INPUT : RecipeInput, INPUT_A : Any, INPUT_B : Any, OUTPUT : Any> :
+        TripleInputLike<INPUT, INPUT_A, INPUT_B, ItemInstance, OUTPUT> {
+        override fun test(first: INPUT_A, second: INPUT_B, catalyst: ItemInstance): Boolean
+
+        override fun apply(first: INPUT_A, second: INPUT_B, catalyst: ItemInstance): OUTPUT
+
+        /**
+         * 消費される入力を取得します。
+         */
+        fun getMatchingStack(first: INPUT_A, second: INPUT_B): Pair<INPUT_A, INPUT_B>
     }
 }

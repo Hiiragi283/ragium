@@ -1,5 +1,5 @@
 {
-  "type": "ragium:reacting",
+  "type": "ragium:reacting/item",
   "ingredients": {
     "fluid": {
       "amount": 500,
@@ -11,16 +11,10 @@
     }
   },
   "results": {
-    "fluids": [
-      {
-        "amount": 200,
-        "id": "ragium:fuel"
-      },
-      {
-        "amount": 50,
-        "id": "ragium:naphtha"
-      }
-    ]
+    "fluid": {
+      "amount": 200,
+      "id": "ragium:fuel"
+    }
   },
   "time": 200
 }

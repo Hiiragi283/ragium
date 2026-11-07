@@ -189,11 +189,19 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun reacting(builderAction: RTReactingRecipeBuilder.() -> Unit): RTReactingRecipeBuilder {
+    inline fun fluidReacting(builderAction: RTFluidReactingRecipeBuilder.() -> Unit): RTFluidReactingRecipeBuilder {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTReactingRecipeBuilder().apply(builderAction)
+        return RTFluidReactingRecipeBuilder().apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun itemReacting(builderAction: RTItemReactingRecipeBuilder.() -> Unit): RTItemReactingRecipeBuilder {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return RTItemReactingRecipeBuilder().apply(builderAction)
     }
 
     // Resource
