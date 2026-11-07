@@ -2,6 +2,7 @@ package hiiragi283.lib.recipe.base
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.data.recipe.builder.HTItemCombineRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.input.getItemOrEmpty
@@ -47,7 +48,7 @@ interface HTItemCombineRecipe : HTRecipeFactories.DoubleInput<RecipeInput, ItemI
         HTProgressRecipe.Holder {
         companion object {
             @JvmStatic
-            fun <RECIPE : Basic> codec(factory: Factory<RECIPE>): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
+            fun <RECIPE : Basic> codec(factory: HTItemCombineRecipeBuilder.Factory<RECIPE>): MapCodec<RECIPE> = HTCodecs.recordMap { instance ->
                 instance.group(
                     HTItemIngredient.CODEC
                         .listOf(2, 2)
@@ -59,30 +60,20 @@ interface HTItemCombineRecipe : HTRecipeFactories.DoubleInput<RecipeInput, ItemI
             }
 
             @JvmStatic
-            fun <RECIPE : Basic> streamCodec(factory: Factory<RECIPE>): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = StreamCodec.composite(
-                HTItemIngredient.STREAM_CODEC.listOf(),
-                { listOf(it.firstIngredient, it.secondIngredient) },
-                HTItemResult.STREAM_CODEC,
-                Basic::result,
-                HTProgressData.STREAM_CODEC,
-                Basic::progressData,
-                factory::create,
-            )
+            fun <RECIPE : Basic> streamCodec(factory: HTItemCombineRecipeBuilder.Factory<RECIPE>): StreamCodec<RegistryFriendlyByteBuf, RECIPE> =
+                StreamCodec.composite(
+                    HTItemIngredient.STREAM_CODEC.listOf(),
+                    { listOf(it.firstIngredient, it.secondIngredient) },
+                    HTItemResult.STREAM_CODEC,
+                    Basic::result,
+                    HTProgressData.STREAM_CODEC,
+                    Basic::progressData,
+                    factory::create,
+                )
         }
 
         final override fun getProgressData(first: ItemInstance, second: ItemInstance): HTProgressData = progressData
 
         final override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
-    }
-
-    /**
-     * @author Hiiragi Tsubasa
-     * @since 26.1.13
-     */
-    fun interface Factory<out RECIPE : Any> {
-        fun create(ingredients: List<HTItemIngredient>, result: HTItemResult, progressData: HTProgressData): RECIPE =
-            create(ingredients[0], ingredients[1], result, progressData)
-
-        fun create(firstIngredient: HTItemIngredient, secondIngredient: HTItemIngredient, result: HTItemResult, progressData: HTProgressData): RECIPE
     }
 }

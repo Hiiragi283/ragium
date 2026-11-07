@@ -7,16 +7,12 @@ import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTRecipeFactories
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.input.HTFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.serialization.codec.HTCodecs
-import hiiragi283.lib.serialization.network.HTStreamCodecs
-import hiiragi283.lib.util.Ior
-import hiiragi283.lib.util.toPair
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemInstance
@@ -28,7 +24,8 @@ import net.neoforged.neoforge.fluids.FluidStack
 
 @JvmRecord
 data class RTItemReactingRecipe(
-    val ingredients: Ior<HTItemIngredient, HTFluidIngredient>,
+    val itemIngredient: HTItemIngredient,
+    val fluidIngredient: HTFluidIngredient,
     val catalyst: HTItemCatalyst,
     val result: HTItemOrFluidResult,
     override val progressData: HTProgressData,
@@ -39,10 +36,10 @@ data class RTItemReactingRecipe(
         @JvmField
         val CODEC: MapCodec<RTItemReactingRecipe> = HTCodecs.recordMap { instance ->
             instance.group(
-                HTCodecs.ior(
+                HTCodecs.mapPair(
                     HTItemIngredient.CODEC.fieldOf(HTConstants.ITEM),
                     HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID),
-                ).fieldOf(HTConstants.INGREDIENTS).forGetter(RTItemReactingRecipe::ingredients),
+                ).fieldOf(HTConstants.INGREDIENTS).forGetter { it.itemIngredient to it.fluidIngredient },
                 HTItemCatalyst.CODEC.forGetter(RTItemReactingRecipe::catalyst),
                 HTItemOrFluidResult.CODEC.fieldOf(HTConstants.RESULTS).forGetter(RTItemReactingRecipe::result),
                 HTProgressRecipe.Holder.progressCodec(),
@@ -51,8 +48,10 @@ data class RTItemReactingRecipe(
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, RTItemReactingRecipe> = StreamCodec.composite(
-            HTStreamCodecs.ior(HTItemIngredient.STREAM_CODEC, HTFluidIngredient.STREAM_CODEC),
-            RTItemReactingRecipe::ingredients,
+            HTItemIngredient.STREAM_CODEC,
+            RTItemReactingRecipe::itemIngredient,
+            HTFluidIngredient.STREAM_CODEC,
+            RTItemReactingRecipe::fluidIngredient,
             HTItemCatalyst.STREAM_CODEC,
             RTItemReactingRecipe::catalyst,
             HTItemOrFluidResult.STREAM_CODEC,
@@ -66,20 +65,22 @@ data class RTItemReactingRecipe(
         val SERIALIZER: RecipeSerializer<RTItemReactingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(first: ItemInstance, second: FluidInstance, catalyst: ItemInstance): Boolean = ingredients.fold(
-        { it.test(first) && HTIngredientHelper.isEmpty(second) },
-        { HTIngredientHelper.isEmpty(first) && it.test(second) },
-        { item: HTItemIngredient, fluid: HTFluidIngredient -> item.test(first) && fluid.test(second) },
-    ) && this.catalyst.test(catalyst)
+    constructor(
+        ingredient: Pair<HTItemIngredient, HTFluidIngredient>,
+        catalyst: HTItemCatalyst,
+        result: HTItemOrFluidResult,
+        progressData: HTProgressData,
+    ) : this(ingredient.first, ingredient.second, catalyst, result, progressData)
+
+    override fun test(first: ItemInstance, second: FluidInstance, catalyst: ItemInstance): Boolean =
+        itemIngredient.test(first) && fluidIngredient.test(second) && this.catalyst.test(catalyst)
 
     override fun matches(input: Input): Boolean = test(input.item, input.fluid, input.catalyst)
 
     override fun apply(first: ItemInstance, second: FluidInstance, catalyst: ItemInstance): HTItemAndFluidStack = result.create()
 
-    override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> = ingredients
-        .mapLeft { it.getMatchingStack(first) }
-        .mapRight { it.getMatchingStack(second) }
-        .toPair(ItemStack::EMPTY, FluidStack::EMPTY)
+    override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> =
+        itemIngredient.getMatchingStack(first) to fluidIngredient.getMatchingStack(second)
 
     override fun produce(input: Input): HTItemAndFluidStack = apply(input.item, input.fluid, input.catalyst)
 

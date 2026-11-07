@@ -17,8 +17,8 @@ import kotlin.jvm.optionals.getOrNull
 @JvmRecord
 data class RTItemReactingViewerRecipe(
     override val id: Identifier?,
-    val itemIngredient: Optional<SlotDisplay>,
-    val fluidIngredient: Optional<SlotDisplay>,
+    val itemIngredient: SlotDisplay,
+    val fluidIngredient: SlotDisplay,
     val catalyst: SlotDisplay,
     val itemResult: Optional<SlotDisplay>,
     val fluidResult: Optional<SlotDisplay>,
@@ -29,8 +29,8 @@ data class RTItemReactingViewerRecipe(
         val CODEC: Codec<RTItemReactingViewerRecipe> = HTCodecs.record { instance ->
             instance.group(
                 HTViewerRecipe.idCodec(),
-                SlotDisplay.CODEC.optionalFieldOf("item_ingredients").forGetter(RTItemReactingViewerRecipe::itemIngredient),
-                SlotDisplay.CODEC.optionalFieldOf("fluid_ingredients").forGetter(RTItemReactingViewerRecipe::fluidIngredient),
+                SlotDisplay.CODEC.fieldOf("item_ingredients").forGetter(RTItemReactingViewerRecipe::itemIngredient),
+                SlotDisplay.CODEC.fieldOf("fluid_ingredients").forGetter(RTItemReactingViewerRecipe::fluidIngredient),
                 SlotDisplay.CODEC.fieldOf(HTConstants.CATALYST).forGetter(RTItemReactingViewerRecipe::catalyst),
                 SlotDisplay.CODEC.optionalFieldOf("item_results").forGetter(RTItemReactingViewerRecipe::itemResult),
                 SlotDisplay.CODEC.optionalFieldOf("fluid_results").forGetter(RTItemReactingViewerRecipe::fluidResult),
@@ -41,17 +41,13 @@ data class RTItemReactingViewerRecipe(
 
     private constructor(
         id: Optional<Identifier>,
-        itemIngredient: Optional<SlotDisplay>,
-        fluidIngredient: Optional<SlotDisplay>,
+        itemIngredient: SlotDisplay,
+        fluidIngredient: SlotDisplay,
         catalyst: SlotDisplay,
         itemResult: Optional<SlotDisplay>,
         fluidResult: Optional<SlotDisplay>,
         progressData: HTProgressData,
     ) : this(id.getOrNull(), itemIngredient, fluidIngredient, catalyst, itemResult, fluidResult, progressData)
 
-    override fun isHandled(): Boolean = when {
-        itemIngredient.isEmpty() && fluidIngredient.isEmpty() -> false
-        itemResult.isEmpty() && fluidResult.isEmpty() -> false
-        else -> true
-    }
+    override fun isHandled(): Boolean = itemResult.isPresent || fluidResult.isPresent
 }

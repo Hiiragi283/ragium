@@ -6,6 +6,7 @@ import hiiragi283.lib.recipe.base.HTBasicSingleRecipe
 import hiiragi283.lib.recipe.base.HTCatalysedSingleRecipe
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
+import hiiragi283.lib.recipe.base.HTItemCombineRecipe
 import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
@@ -85,6 +86,18 @@ data object HTViewerRecipeHelper {
             id.identifier(),
             recipe.ingredient.display(),
             recipe.catalyst.display(),
+            recipe.result.display(),
+            recipe.progressData,
+        )
+    }
+
+    @JvmStatic
+    fun combineItem(holder: HTRecipeHolder<HTItemCombineRecipe.Basic>): HTDoubleToSingleViewerRecipe {
+        val (id: RecipeKey, recipe: HTItemCombineRecipe.Basic) = holder
+        return HTDoubleToSingleViewerRecipe(
+            id.identifier(),
+            recipe.firstIngredient.display(),
+            recipe.secondIngredient.display(),
             recipe.result.display(),
             recipe.progressData,
         )

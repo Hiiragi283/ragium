@@ -16,7 +16,7 @@ class RTAssemblingRecipe(ingredients: Nel<HTItemIngredient>, result: HTItemResul
     companion object {
         @JvmField
         val SERIALIZER: RecipeSerializer<RTAssemblingRecipe> =
-            RecipeSerializer(codec(::RTAssemblingRecipe), streamCodec(::RTAssemblingRecipe))
+            RecipeSerializer(codec(::RTAssemblingRecipe, 3), streamCodec(::RTAssemblingRecipe))
     }
 
     override fun getSerializer(): RecipeSerializer<RTAssemblingRecipe> = RagiumRecipeSerializers.ASSEMBLING

@@ -1,5 +1,5 @@
 {
-  "type": "ragium:reacting/item",
+  "type": "ragium:mixing",
   "ingredients": {
     "fluid": {
       "amount": 1000,
@@ -10,11 +10,9 @@
       "items": "#c:dusts/ash"
     }
   },
-  "results": {
-    "fluid": {
-      "amount": 1000,
-      "id": "ragium:alkali_hydroxide_solution"
-    }
+  "result": {
+    "amount": 1000,
+    "id": "ragium:alkali_hydroxide_solution"
   },
   "time": 200
 }

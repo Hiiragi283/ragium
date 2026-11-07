@@ -37,11 +37,11 @@ interface HTSizedShapelessRecipe : HTRecipeFactories.SingleInput<RecipeInput, Li
         HTProgressRecipe.Holder {
         companion object {
             @JvmStatic
-            fun <RECIPE : Basic> codec(factory: (Nel<HTItemIngredient>, HTItemResult, HTProgressData) -> RECIPE): MapCodec<RECIPE> =
+            fun <RECIPE : Basic> codec(factory: (Nel<HTItemIngredient>, HTItemResult, HTProgressData) -> RECIPE, size: Int): MapCodec<RECIPE> =
                 HTCodecs.recordMap { instance ->
                     instance.group(
                         HTItemIngredient.CODEC
-                            .compactNelFieldOf(HTConstants.INGREDIENT, HTConstants.INGREDIENTS)
+                            .compactNelFieldOf(HTConstants.INGREDIENT, HTConstants.INGREDIENTS, size)
                             .forGetter(Basic::ingredients),
                         HTItemResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
                         HTProgressRecipe.Holder.progressCodec(),

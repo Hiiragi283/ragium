@@ -358,10 +358,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun saltAndSolution(fluid: HTFluidContent, item: HTSimpleDeferredItem) {
         // Salt + Water -> Salt (aq)
-        RagiumRecipeBuilders.itemReacting {
+        RagiumRecipeBuilders.mixing {
             itemIngredient { items { +item } }
             fluidIngredient { +waterSet() }
-            fluidResult { +fluid }
+            result { +fluid }
             recipeId replace fluid.id().withSuffix("_from_salt")
         }.save(exporter)
         // Salt (aq) -> Salt + Water
@@ -375,10 +375,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun saltAndSolution(fluid: HTFluidContent, material: RagiumMaterial) {
         // Salt + Water -> Salt (aq)
-        RagiumRecipeBuilders.itemReacting {
+        RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, material) }
             fluidIngredient { +waterSet() }
-            fluidResult { +fluid }
+            result { +fluid }
             recipeId replace fluid.id().withSuffix("_from_salt")
         }.save(exporter)
         // Salt (aq) -> Salt + Water
@@ -505,13 +505,13 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // KOH (aq)
-        RagiumRecipeBuilders.itemReacting {
+        RagiumRecipeBuilders.mixing {
             itemIngredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.ASH)
                 count = 4
             }
             fluidIngredient { +waterSet() }
-            fluidResult { +RagiumFluids.HYDROXIDE_SOLUTION }
+            result { +RagiumFluids.HYDROXIDE_SOLUTION }
             recipeId suffix "_from_ash"
         }.save(exporter)
 

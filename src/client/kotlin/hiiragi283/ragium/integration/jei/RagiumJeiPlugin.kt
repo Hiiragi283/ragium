@@ -11,6 +11,7 @@ import hiiragi283.lib.integration.jei.category.HTItemSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToItemAndFluidViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToMultiViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToSingleViewerRecipeCategory
+import hiiragi283.lib.integration.jei.category.HTSizedShapelessRecipeCategory
 import hiiragi283.lib.integration.jei.ingredient.HTIngredientTypes
 import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTPotionHelper
@@ -36,8 +37,6 @@ import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.integration.jei.advanced.HTFluidBucketRecipePlugin
 import hiiragi283.ragium.integration.jei.advanced.HTPotionFluidRecipePlugin
-import hiiragi283.ragium.integration.jei.category.RTAlloyingRecipeCategory
-import hiiragi283.ragium.integration.jei.category.RTAssemblingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTFluidReactingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTItemReactingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTPlantingRecipeCategory
@@ -115,7 +114,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         registration.addRecipeCategories(
             // Mechanical
-            RTAssemblingRecipeCategory(guiHelper),
+            HTSizedShapelessRecipeCategory(
+                RagiumJeiRecipeTypes.ASSEMBLING,
+                RagiumTranslation.RECIPE_CATEGORY_ASSEMBLING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.ASSEMBLER),
+            ),
             HTItemSeparatingRecipeCategory(
                 RagiumJeiRecipeTypes.CENTRIFUGING,
                 RagiumTranslation.RECIPE_CATEGORY_CENTRIFUGING,
@@ -153,7 +156,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 guiHelper.createDrawableItemLike(RagiumBlocks.PRESS_MACHINE),
             ),
             // Heat
-            RTAlloyingRecipeCategory(guiHelper),
+            HTSizedShapelessRecipeCategory(
+                RagiumJeiRecipeTypes.ALLOYING,
+                RagiumTranslation.RECIPE_CATEGORY_ALLOYING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.ALLOY_SMELTER),
+            ),
             HTSingleToItemAndFluidViewerRecipeCategory(
                 RagiumJeiRecipeTypes.DRYING,
                 RagiumTranslation.RECIPE_CATEGORY_DRYING,
@@ -273,8 +280,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         ) { (key: RecipeKey, recipe: RTItemReactingRecipe) ->
             RTItemReactingViewerRecipe(
                 key.identifier(),
-                recipe.ingredients.getLeft().displayOrEmpty(),
-                recipe.ingredients.getRight().displayOrEmpty(),
+                recipe.itemIngredient.display(),
+                recipe.fluidIngredient.display(),
                 recipe.catalyst.display(),
                 recipe.result.content.getLeft().displayOrEmpty(),
                 recipe.result.content.getRight().displayOrEmpty(),

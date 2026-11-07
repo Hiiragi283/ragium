@@ -1,15 +1,10 @@
 package hiiragi283.ragium.common.block.entity.processor
 
-import hiiragi283.lib.gui.HTBackgroundType
-import hiiragi283.lib.gui.HTSlotHelper
-import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
-import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.entity.processor.base.HTSizedShapelessBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTItemWidget
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
@@ -22,35 +17,6 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun onComplete() {
         playSound(SoundEvents.FIRE_EXTINGUISH)
-    }
-
-    override fun getInputSize(): Int = 3
-
-    override fun setupMenu(widgetHolder: HTWidgetHolder) {
-        super.setupMenu(widgetHolder)
-        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(1.5), HTSlotHelper.getSlotPosY(1.5))
-        // progress
-        addProgressBar(widgetHolder)
-        // inputs
-        inputSlots.forEachIndexed { index: Int, slot: HTBasicItemSlot ->
-            widgetHolder += HTItemWidget.Container(
-                slot,
-                index,
-                HTSlotHelper.getSlotPosX(0.5 + index),
-                HTSlotHelper.getSlotPosY(0.5),
-                HTBackgroundType.INPUT,
-            )
-            widgetHolder.track(slot)
-        }
-        // output
-        widgetHolder += HTItemWidget.Container(
-            outputSlot,
-            3,
-            HTSlotHelper.getSlotPosX(6),
-            HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT,
-        )
-        widgetHolder.track(outputSlot)
     }
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.alloySmelter

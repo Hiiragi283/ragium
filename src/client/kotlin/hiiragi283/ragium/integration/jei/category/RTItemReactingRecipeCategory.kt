@@ -16,7 +16,7 @@ class RTItemReactingRecipeCategory(guiHelper: IGuiHelper) :
     HTViewerRecipeCategory<RTItemReactingViewerRecipe>(
         RagiumJeiRecipeTypes.ITEM_REACTING,
         RagiumTranslation.RECIPE_CATEGORY_ITEM_REACTING,
-        guiHelper.createDrawableItemLike(RagiumBlocks.CHEMICAL_REACTOR),
+        guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING),
         18 * 8,
         18 * 2,
         RTItemReactingViewerRecipe.CODEC,
@@ -25,11 +25,11 @@ class RTItemReactingRecipeCategory(guiHelper: IGuiHelper) :
         // inputs
         builder
             .addInputSlot(getPosition(0), getPosition(1))
-            .addOptional(recipe.fluidIngredient)
+            .add(recipe.fluidIngredient)
             .setSlotBackground(HTBackgroundType.INPUT)
         builder
             .addInputSlot(getPosition(2), getPosition(1))
-            .addOptional(recipe.itemIngredient)
+            .add(recipe.itemIngredient)
             .setSlotBackground(HTBackgroundType.INPUT)
         // catalyst
         builder

@@ -60,7 +60,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.CHEMICAL_BATH, "化学浴槽")
         add(RagiumBlocks.CHEMICAL_LABO, "化学実験室")
-        add(RagiumBlocks.CHEMICAL_REACTOR, "化学反応槽")
         add(RagiumBlocks.MIXER, "混合機")
 
         add(RagiumBlocks.BREWERY, "醸造機")

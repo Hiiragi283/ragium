@@ -19,7 +19,6 @@ import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.transfer.fluid.HTFluidTankUtil
 import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
@@ -253,13 +252,6 @@ data object RagiumBlocks {
         properties: BlockBehaviour.Properties = machine(),
     ): HTBasicDeferredBlockAndItem<HTMachineBlock> = registerWithBE(type, ::HTMachineBlock, properties)
 
-    @JvmStatic
-    private fun registerFakeMachine(name: String, properties: BlockBehaviour.Properties = machine()): HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        REGISTER.registerSimple(
-            name,
-            { HTMachineBlock(RagiumBlockEntityTypes.CRUSHER, properties.setId(it)) }, // TODO
-        )
-
     // Mechanical
     @JvmField
     val ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ASSEMBLER)
@@ -312,9 +304,6 @@ data object RagiumBlocks {
     val CHEMICAL_LABO: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CHEMICAL_LABO)
 
     @JvmField
-    val CHEMICAL_REACTOR: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerFakeMachine(RagiumConstants.CHEMICAL_REACTOR)
-
-    @JvmField
     val MIXER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.MIXER)
 
     // Resource
@@ -365,7 +354,6 @@ data object RagiumBlocks {
 
             put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
             put(HTMachineType.CHEMICAL, CHEMICAL_LABO)
-            put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
             put(HTMachineType.CHEMICAL, MIXER)
 
             put(HTMachineType.RESOURCE, BREWERY)

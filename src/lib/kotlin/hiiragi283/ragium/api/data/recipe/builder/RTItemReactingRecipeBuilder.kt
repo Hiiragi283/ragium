@@ -9,7 +9,6 @@ import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.util.HTDelegates
-import hiiragi283.lib.util.Ior
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTItemReactingRecipe
 
@@ -18,14 +17,12 @@ class RTItemReactingRecipeBuilder :
     HTItemOrFluidIngredientAcceptor,
     HTItemCatalystAcceptor,
     HTItemOrFluidResultBuilder.Holder {
-    override fun createRecipe(): RTItemReactingRecipe = RTItemReactingRecipe(ingredient, catalyst, result, progressData)
+    override fun createRecipe(): RTItemReactingRecipe = RTItemReactingRecipe(itemIngredient, fluidIngredient, catalyst, result, progressData)
 
     // Ingredients
-    private var itemIngredient: HTItemIngredient? by HTDelegates.onceOrNull()
-    private var fluidIngredient: HTFluidIngredient? by HTDelegates.onceOrNull()
-    val ingredient: Ior<HTItemIngredient, HTFluidIngredient> by lazy {
-        Ior.fromNullable(itemIngredient, fluidIngredient) ?: error("Either item or fluid ingredient required")
-    }
+    @PublishedApi internal var itemIngredient: HTItemIngredient by HTDelegates.onceInitialize()
+
+    @PublishedApi internal var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
 
     override operator fun HTItemIngredient.unaryPlus() {
         itemIngredient = this

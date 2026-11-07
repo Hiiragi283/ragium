@@ -16,7 +16,7 @@ class RTFluidReactingRecipeCategory(guiHelper: IGuiHelper) :
     HTViewerRecipeCategory<RTFluidReactingViewerRecipe>(
         RagiumJeiRecipeTypes.FLUID_REACTING,
         RagiumTranslation.RECIPE_CATEGORY_FLUID_REACTING,
-        guiHelper.createDrawableItemLike(RagiumBlocks.CHEMICAL_REACTOR),
+        guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING),
         18 * 8,
         18 * 2,
         RTFluidReactingViewerRecipe.CODEC,

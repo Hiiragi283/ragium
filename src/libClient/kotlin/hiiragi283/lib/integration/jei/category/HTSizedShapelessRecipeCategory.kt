@@ -1,22 +1,20 @@
-package hiiragi283.ragium.integration.jei.category
+package hiiragi283.lib.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
-import hiiragi283.lib.integration.jei.category.HTViewerRecipeCategory
 import hiiragi283.lib.recipe.viewer.HTMultiToSingleViewerRecipe
-import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.common.block.RagiumBlocks
-import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
+import hiiragi283.lib.text.HTHasText
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
+import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
-import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
+import mezz.jei.api.recipe.types.IRecipeType
 
-class RTAlloyingRecipeCategory(guiHelper: IGuiHelper) :
+class HTSizedShapelessRecipeCategory(recipeType: IRecipeType<HTMultiToSingleViewerRecipe>, title: HTHasText, icon: IDrawable) :
     HTViewerRecipeCategory<HTMultiToSingleViewerRecipe>(
-        RagiumJeiRecipeTypes.ALLOYING,
-        RagiumTranslation.RECIPE_CATEGORY_ALLOYING,
-        guiHelper.createDrawableItemLike(RagiumBlocks.ALLOY_SMELTER),
+        recipeType,
+        title,
+        icon,
         18 * 6,
         18 * 1,
         HTMultiToSingleViewerRecipe.CODEC,

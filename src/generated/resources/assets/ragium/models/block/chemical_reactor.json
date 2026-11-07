@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "front": "ragium:block/chemical_reactor_front",
-    "side": "ragium:block/machine/chemical_side",
-    "top": "ragium:block/machine_casing"
-  }
-}

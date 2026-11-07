@@ -16,7 +16,7 @@ class RTAlloyingRecipe(ingredients: Nel<HTItemIngredient>, result: HTItemResult,
     companion object {
         @JvmField
         val SERIALIZER: RecipeSerializer<RTAlloyingRecipe> =
-            RecipeSerializer(codec(::RTAlloyingRecipe), streamCodec(::RTAlloyingRecipe))
+            RecipeSerializer(codec(::RTAlloyingRecipe, 3), streamCodec(::RTAlloyingRecipe))
     }
 
     override fun getSerializer(): RecipeSerializer<RTAlloyingRecipe> = RagiumRecipeSerializers.ALLOYING
