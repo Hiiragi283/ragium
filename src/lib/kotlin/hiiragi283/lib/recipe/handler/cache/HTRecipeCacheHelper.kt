@@ -4,6 +4,7 @@ import hiiragi283.lib.recipe.base.HTCatalysedFluidToRecipe
 import hiiragi283.lib.recipe.base.HTCatalysedItemToRecipe
 import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
+import hiiragi283.lib.recipe.base.HTItemCombineRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
@@ -53,16 +54,16 @@ data object HTRecipeCacheHelper {
     //    Double    //
 
     /**
-     * 2種類のアイテムに対する[HTDoubleRecipeCache]の実装クラスです。
+     * @since 26.1.13
      */
-    class DoubleItem<RECIPE : BiPredicate<ItemInstance, ItemInstance>>(lookup: HTRecipeLookup<RECIPE>, val isStrict: Boolean) :
-        HTDoubleRecipeCache<ItemInstance, ItemInstance, RECIPE>(lookup) {
-        override fun isEmpty(first: ItemInstance, second: ItemInstance): Boolean = when (isStrict) {
-            true -> HTIngredientHelper.isEmpty(first) || HTIngredientHelper.isEmpty(second)
-            false -> HTIngredientHelper.isEmpty(first) && HTIngredientHelper.isEmpty(second)
-        }
-
-        override fun matches(recipe: RECIPE, first: ItemInstance, second: ItemInstance): Boolean = recipe.test(first, second)
+    class ItemCombine(lookup: HTRecipeLookup<HTItemCombineRecipe>) :
+        HTDoubleRecipeCache.Typed<Item, ItemInstance, Item, ItemInstance, HTItemCombineRecipe>(
+            lookup,
+            HTItemCombineRecipe::firstIngredient,
+            HTItemCombineRecipe::secondIngredient,
+        ) {
+        override fun isEmpty(first: ItemInstance, second: ItemInstance): Boolean =
+            HTIngredientHelper.isEmpty(first) || HTIngredientHelper.isEmpty(second)
     }
 
     /**

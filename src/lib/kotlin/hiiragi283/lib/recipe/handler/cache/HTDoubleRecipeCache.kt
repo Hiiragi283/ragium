@@ -1,8 +1,10 @@
 package hiiragi283.lib.recipe.handler.cache
 
 import hiiragi283.lib.recipe.HTRecipeHolder
+import hiiragi283.lib.recipe.ingredient.HTIngredient
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.util.right
+import net.minecraft.core.TypedInstance
 
 /**
  * 2つの入力に対する[HTBaseRecipeCache]の拡張クラスです。
@@ -53,4 +55,28 @@ abstract class HTDoubleRecipeCache<INPUT_A : Any, INPUT_B : Any, RECIPE : Any>(l
      * @since 26.1.13
      */
     protected abstract fun matches(recipe: RECIPE, first: INPUT_A, second: INPUT_B): Boolean
+
+    /**
+     * 入力が[TypedInstance]を継承している場合に利用できる[HTDoubleRecipeCache]の拡張インターフェースです。
+     * @author Hiiragi Tsubasa
+     * @since 26.1.13
+     */
+    abstract class Typed<TYPE_A : Any, IN_A : TypedInstance<TYPE_A>, TYPE_B : Any, IN_B : TypedInstance<TYPE_B>, RECIPE : Any>(
+        lookup: HTRecipeLookup<RECIPE>,
+        private val firstGetter: (RECIPE) -> HTIngredient<TYPE_A, IN_A>,
+        private val secondGetter: (RECIPE) -> HTIngredient<TYPE_B, IN_B>,
+    ) : HTDoubleRecipeCache<IN_A, IN_B, RECIPE>(lookup) {
+        fun getFirstIngredient(recipe: RECIPE): HTIngredient<TYPE_A, IN_A> = firstGetter(recipe)
+
+        fun getSecondIngredient(recipe: RECIPE): HTIngredient<TYPE_B, IN_B> = secondGetter(recipe)
+
+        override fun matches(recipe: RECIPE, first: IN_A, second: IN_B): Boolean =
+            getFirstIngredient(recipe).test(first) && getSecondIngredient(recipe).test(second)
+
+        fun findAllHolderForFirst(first: TypedInstance<TYPE_A>, context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> =
+            lookup.getAllRecipes(context).filter { (_, recipe: RECIPE) -> getFirstIngredient(recipe).testOnlyType(first) }
+
+        fun findAllHolderForSecond(second: TypedInstance<TYPE_B>, context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<RECIPE>> =
+            lookup.getAllRecipes(context).filter { (_, recipe: RECIPE) -> getSecondIngredient(recipe).testOnlyType(second) }
+    }
 }

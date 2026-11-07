@@ -299,8 +299,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         ) { (key: RecipeKey, recipe: RTEnchantingRecipe) ->
             HTDoubleToSingleViewerRecipe(
                 key.identifier(),
-                RTEnchantingRecipe.BOOK_INGREDIENT.display(),
                 recipe.ingredient.display(),
+                RTEnchantingRecipe.BOOK_INGREDIENT.display(),
                 recipe.result.display(),
                 recipe.progressData,
             )
