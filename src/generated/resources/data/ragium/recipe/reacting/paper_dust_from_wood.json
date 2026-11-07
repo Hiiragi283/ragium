@@ -1,5 +1,5 @@
 {
-  "type": "ragium:mixing",
+  "type": "ragium:reacting/item",
   "ingredients": {
     "fluid": {
       "amount": 250,
@@ -16,7 +16,7 @@
       "items": "#c:dusts/wood"
     }
   },
-  "result": {
+  "results": {
     "fluid": {
       "amount": 250,
       "id": "ragium:black_liquor"

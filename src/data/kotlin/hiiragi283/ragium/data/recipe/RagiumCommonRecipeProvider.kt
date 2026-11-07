@@ -370,26 +370,28 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun saltAndSolution(fluid: HTFluidContent, item: HTSimpleDeferredItem) {
         // Salt + Water -> Salt (aq)
-        RagiumRecipeBuilders.mixing {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient { items { +item } }
             fluidIngredient { +waterSet() }
             fluidResult { +fluid }
+            recipeId replace fluid.id().withSuffix("_from_salt")
         }.save(exporter)
         // Salt (aq) -> Salt + Water
         RagiumRecipeBuilders.drying {
             fluidIngredient { +holderSet(fluid) }
             fluidResult { water() }
             itemResult { +item }
-            recipeId replace item.id.withSuffix("_from_solution")
+            recipeId replace item.id().withSuffix("_from_solution")
         }.save(exporter)
     }
 
     private fun saltAndSolution(fluid: HTFluidContent, material: RagiumMaterial) {
         // Salt + Water -> Salt (aq)
-        RagiumRecipeBuilders.mixing {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, material) }
             fluidIngredient { +waterSet() }
             fluidResult { +fluid }
+            recipeId replace fluid.id().withSuffix("_from_salt")
         }.save(exporter)
         // Salt (aq) -> Salt + Water
         val item: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, material)
@@ -397,7 +399,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             fluidIngredient { +holderSet(fluid) }
             fluidResult { water() }
             itemResult { +item }
-            recipeId replace item.id.withSuffix("_from_solution")
+            recipeId replace item.id().withSuffix("_from_solution")
         }.save(exporter)
     }
 
@@ -414,7 +416,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             recipeId suffix "_from_gunpowder"
         }.save(exporter)
         // H2SO4 + 2x KNO3 -> 2x HNO3 + K2SO4
-        RagiumRecipeBuilders.mixing {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.NITER)
                 count = 2
@@ -454,7 +456,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun fluorine() {
         // CaF2 + H2SO4 -> 2x HF + CaSO4
-        RagiumRecipeBuilders.mixing {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.FLUORITE) }
             fluidIngredient { +holderSet(RagiumFluids.SULFURIC_ACID) }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.GYPSUM) }
@@ -506,7 +508,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // KOH (aq)
-        RagiumRecipeBuilders.mixing {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.ASH)
                 count = 4
@@ -517,7 +519,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // Wood Pulp + Alkali aq -> Paper Pulp + Black Liquor
-        RagiumRecipeBuilders.mixing {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD) }
             fluidIngredient {
                 +holderSet(setOf(RagiumFluids.HYDROXIDE_SOLUTION, RagiumFluids.SULFATE_SOLUTION))
@@ -669,7 +671,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun phosphor() {
         // Ca3(PO4)2 + 3x H2SO4 -> H3PO4 + 3x CaSO4
-        RagiumRecipeBuilders.mixing {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.APATITE) }
             fluidIngredient {
                 +holderSet(RagiumFluids.SULFURIC_ACID)
@@ -730,7 +732,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         saltAndSolution(RagiumFluids.SALT_WATER, RagiumMaterial.Chemical.SALT)
 
         // 2x NaCl + H2SO4 -> 2x HCl + Na2SO4
-        RagiumRecipeBuilders.mixing {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SALT) }
             fluidIngredient {
                 +holderSet(RagiumFluids.SULFURIC_ACID)
@@ -783,7 +785,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             recipeId suffix "_from_lime"
         }.save(exporter)
         // CaO + H2O -> Ca(OH)2
-        RagiumRecipeBuilders.mixing {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.QUICK_LIME) }
             fluidIngredient { +waterSet() }
             fluidResult { +RagiumFluids.LIMEWATER }
@@ -798,7 +800,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
 
         // (Na,K)2SO4 + Ca(OH)2 -> CaSO4 + 2x KOH
-        RagiumRecipeBuilders.mixing {
+        RagiumRecipeBuilders.itemReacting {
             itemIngredient { items { +RagiumItems.ALKALI_SULFATE } }
             fluidIngredient { +holderSet(RagiumFluids.LIMEWATER) }
             itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.GYPSUM) }

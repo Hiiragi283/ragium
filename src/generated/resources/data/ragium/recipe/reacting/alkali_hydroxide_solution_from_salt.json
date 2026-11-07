@@ -1,5 +1,5 @@
 {
-  "type": "ragium:mixing",
+  "type": "ragium:reacting/item",
   "ingredients": {
     "fluid": {
       "amount": 1000,
@@ -7,13 +7,13 @@
     },
     "item": {
       "count": 1,
-      "items": "#c:dusts/salt"
+      "items": "ragium:alkali_hydroxide"
     }
   },
-  "result": {
+  "results": {
     "fluid": {
       "amount": 1000,
-      "id": "ragium:salt_water"
+      "id": "ragium:alkali_hydroxide_solution"
     }
   },
   "time": 200
