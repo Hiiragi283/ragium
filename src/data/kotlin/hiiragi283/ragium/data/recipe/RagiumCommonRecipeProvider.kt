@@ -123,7 +123,7 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
 
     private fun oilRefining() {
         plastic()
-        resin()
+        carbonyl()
 
         // Soul Sand -> Sand + Crude Oil
         RagiumRecipeBuilders.centrifuging {
@@ -293,9 +293,21 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         }.save(exporter)
     }
 
-    private fun resin() {
-        // Synthetic Gas -> Methanol
+    private fun carbonyl() {
+        // Cokes + Water -> Synthetic Gas
+        RagiumRecipeBuilders.itemReacting {
+            itemIngredient { +holderSet(RagiumTags.Items.COKES) }
+            fluidIngredient { +waterSet() }
+            fluidResult { +RagiumFluids.SYNTHETIC_GAS }
+        }.save(exporter)
 
+        // Synthetic Gas -> Methanol
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.SYNTHETIC_GAS) }
+            catalyst { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.COPPER) }
+            fluidResult { +RagiumFluids.ALCOHOL }
+            recipeId replace id("methanol")
+        }.save(exporter)
         // Alcohol + (Ag) -> Aldehyde
         RagiumRecipeBuilders.fluidReacting {
             ingredient { +holderSet(RagiumTags.Fluids.ALCOHOLS) }
@@ -310,6 +322,20 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
                 +RagiumFluids.SYNTHETIC_RESIN
                 amount *= 2
             }
+        }.save(exporter)
+
+        // Synthetic Gas -> Fuel + Water + Wax
+        RagiumRecipeBuilders.refining {
+            ingredient {
+                +holderSet(RagiumFluids.SYNTHETIC_GAS)
+                amount *= 2
+            }
+            fluidResult {
+                +RagiumFluids.FUEL
+                amount /= 2
+            }
+            fluidResult { water() }
+            recipeId replace id("fischer_tropsch_process")
         }.save(exporter)
     }
 

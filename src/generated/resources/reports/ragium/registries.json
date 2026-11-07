@@ -233,6 +233,7 @@
     "sulfuric_acid",
     "sulfuric_fuel",
     "sulfuric_naphtha",
+    "synthetic_gas",
     "synthetic_resin",
     "white_dye",
     "yellow_dye"
@@ -473,6 +474,7 @@
     "sulfuric_naphtha_bucket",
     "synthetic_feather",
     "synthetic_fiber",
+    "synthetic_gas_bucket",
     "synthetic_leather",
     "synthetic_resin_bucket",
     "tank",
@@ -629,6 +631,7 @@
     "sulfuric_acid",
     "sulfuric_fuel",
     "sulfuric_naphtha",
+    "synthetic_gas",
     "synthetic_resin",
     "white_dye",
     "yellow_dye"

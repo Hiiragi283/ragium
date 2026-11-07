@@ -35,6 +35,7 @@ data object RagiumFluids {
         REGISTER.addAlias("bleach", "chlorine")
         REGISTER.addAlias("ammonia", "nitric_acid")
         REGISTER.addAlias("sodium_hydroxide_solution", "alkali_hydroxide_solution")
+        REGISTER.addAlias("natural_gas", "synthetic_gas")
 
         REGISTER.register(eventBus)
     }
@@ -124,6 +125,9 @@ data object RagiumFluids {
 
     @JvmField
     val CREOSOTE: HTFluidContent.Virtual = REGISTER.registerVirtual("creosote") { properties = liquid() }
+
+    @JvmField
+    val SYNTHETIC_GAS: HTFluidContent.Virtual = REGISTER.registerVirtual("synthetic_gas") { properties = gaseous() }
 
     @JvmField
     val BLACK_LIQUOR: HTFluidContent.Virtual = REGISTER.registerVirtual("black_liquor") { properties = liquid() }

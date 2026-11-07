@@ -1,0 +1,15 @@
+{
+  "type": "ragium:reacting/fluid",
+  "catalyst": "#c:dusts/copper",
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:synthetic_gas"
+  },
+  "results": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:alcohol"
+    }
+  },
+  "time": 200
+}

@@ -56,6 +56,7 @@
     "#c:buckets/sulfuric_acid",
     "#c:buckets/sulfuric_fuel",
     "#c:buckets/sulfuric_naphtha",
+    "#c:buckets/synthetic_gas",
     "#c:buckets/synthetic_resin"
   ]
 }
