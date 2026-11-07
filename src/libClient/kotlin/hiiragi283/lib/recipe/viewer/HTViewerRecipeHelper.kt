@@ -78,10 +78,10 @@ data object HTViewerRecipeHelper {
     }
 
     @JvmStatic
-    fun itemOrFluid(holder: HTRecipeHolder<HTItemOrFluidToRecipe.BasicItemAndFluid>): HTItemOrFluidViewerRecipe {
+    fun itemOrFluid(holder: HTRecipeHolder<HTItemOrFluidToRecipe.BasicItemAndFluid>): HTItemFluidViewerRecipe {
         val (id: RecipeKey, recipe: HTItemOrFluidToRecipe.BasicItemAndFluid) = holder
         val (item: HTDisplayableContent?, fluid: HTDisplayableContent?) = recipe.result.content.toPair()
-        return HTItemOrFluidViewerRecipe(
+        return HTItemFluidViewerRecipe(
             id.identifier(),
             recipe.ingredient.mapLeft(HTDisplayableContent::display).leftOrNull().toOptional(),
             recipe.ingredient.map(HTDisplayableContent::display).getOrNull().toOptional(),
@@ -126,6 +126,20 @@ data object HTViewerRecipeHelper {
             recipe.itemIngredient.display(),
             recipe.fluidIngredient.display(),
             recipe.result.display(),
+            recipe.progressData,
+        )
+    }
+
+    @JvmStatic
+    fun itemAndFluid(holder: HTRecipeHolder<HTItemAndFluidToRecipe.BasicItemAndFluid>): HTItemFluidViewerRecipe {
+        val (id: RecipeKey, recipe: HTItemAndFluidToRecipe.BasicItemAndFluid) = holder
+        val (item: HTDisplayableContent?, fluid: HTDisplayableContent?) = recipe.result.content.toPair()
+        return HTItemFluidViewerRecipe(
+            id.identifier(),
+            recipe.itemIngredient.displayOrEmpty(),
+            recipe.fluidIngredient.displayOrEmpty(),
+            item.displayOrEmpty(),
+            fluid.displayOrEmpty(),
             recipe.progressData,
         )
     }

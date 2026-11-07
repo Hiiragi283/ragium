@@ -85,27 +85,24 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 count = 4
             }
         }.save(exporter)
-        // Mortar
+        // Cement
         VanillaRecipeBuilders.shapeless {
-            ingredient { +holderSet(Tags.Items.BUCKETS_WATER) }
-            repeat(2) { ingredient { +holderSet(Tags.Items.SANDS) } }
-            repeat(2) { ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.QUICK_LIME) } }
+            ingredient { +holderSet(Tags.Items.SANDS) }
+            ingredient { +holderSet(Tags.Items.GRAVELS) }
             result {
-                +RagiumItems.MORTAR
-                count = 4
+                +RagiumItems.CEMENT
+                count = 2
             }
         }.save(exporter)
-        VanillaRecipeBuilders.shaped {
-            mosaic4()
-            define('A') { +holderSet(Tags.Items.BRICKS_NORMAL) }
-            define('B') { items { +RagiumItems.MORTAR } }
-            result { +Items.BRICKS }
-        }.save(exporter)
-        VanillaRecipeBuilders.shaped {
-            mosaic4()
-            define('A') { +holderSet(Tags.Items.BRICKS_NETHER) }
-            define('B') { items { +RagiumItems.MORTAR } }
-            result { +Items.NETHER_BRICKS }
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(Tags.Items.SANDS) }
+            ingredient { +holderSet(Tags.Items.GRAVELS) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.QUICK_LIME) }
+            result {
+                +RagiumItems.CEMENT
+                count = 4
+            }
+            recipeId suffix "_with_lime"
         }.save(exporter)
         // Wither Doll
         VanillaRecipeBuilders.shaped {

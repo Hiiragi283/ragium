@@ -9,6 +9,7 @@ import hiiragi283.lib.registry.and
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.data.PackOutput
@@ -57,17 +58,15 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }.save(exporter)
             // Sand + Gravel + Liquid Dye -> XX Concrete
             RagiumRecipeBuilders.mixing {
-                itemIngredient { +holderSet(Tags.Items.SANDS) }
-                itemIngredient { +holderSet(Tags.Items.GRAVELS) }
+                itemIngredient { items { +RagiumItems.CEMENT } }
                 fluidIngredient {
                     +holderSet(dyeContent)
-                    amount /= 4
+                    amount /= 8
                 }
                 itemResult {
                     +VanillaColoredCollections.CONCRETE[color]
-                    count = 2
                 }
-                time /= 2
+                time /= 4
                 recipeId replace id("$name/concrete")
             }.save(exporter)
 

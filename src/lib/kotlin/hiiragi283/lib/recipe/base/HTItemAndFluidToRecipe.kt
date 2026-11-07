@@ -67,7 +67,7 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> : HTItemFluidToRecipe<OUTPUT> {
                     HTCodecs.mapPair(
                         HTItemIngredient.CODEC.fieldOf(HTConstants.ITEM),
                         HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID),
-                    ).fieldOf(HTConstants.INGREDIENT).forGetter { it.itemIngredient to it.fluidIngredient },
+                    ).fieldOf(HTConstants.INGREDIENTS).forGetter { it.itemIngredient to it.fluidIngredient },
                     resultCodec.fieldOf(HTConstants.RESULT).forGetter(Basic<OUTPUT, RESULT>::result),
                     HTProgressRecipe.Holder.progressCodec(),
                 ).apply(instance, factory::create)

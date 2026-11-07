@@ -13,7 +13,7 @@ import kotlin.jvm.optionals.getOrNull
  * @since 26.1.13
  */
 @JvmRecord
-data class HTItemOrFluidViewerRecipe(
+data class HTItemFluidViewerRecipe(
     override val id: Identifier?,
     val itemIngredient: Optional<SlotDisplay>,
     val fluidIngredient: Optional<SlotDisplay>,
@@ -23,15 +23,15 @@ data class HTItemOrFluidViewerRecipe(
 ) : HTViewerRecipe.Progressed {
     companion object {
         @JvmField
-        val CODEC: Codec<HTItemOrFluidViewerRecipe> = HTCodecs.record { instance ->
+        val CODEC: Codec<HTItemFluidViewerRecipe> = HTCodecs.record { instance ->
             instance.group(
                 HTViewerRecipe.idCodec(),
-                SlotDisplay.CODEC.optionalFieldOf("item_ingredient").forGetter(HTItemOrFluidViewerRecipe::itemIngredient),
-                SlotDisplay.CODEC.optionalFieldOf("fluid_ingredient").forGetter(HTItemOrFluidViewerRecipe::fluidIngredient),
-                SlotDisplay.CODEC.optionalFieldOf("item_result").forGetter(HTItemOrFluidViewerRecipe::itemResult),
-                SlotDisplay.CODEC.optionalFieldOf("fluid_result").forGetter(HTItemOrFluidViewerRecipe::fluidResult),
+                SlotDisplay.CODEC.optionalFieldOf("item_ingredient").forGetter(HTItemFluidViewerRecipe::itemIngredient),
+                SlotDisplay.CODEC.optionalFieldOf("fluid_ingredient").forGetter(HTItemFluidViewerRecipe::fluidIngredient),
+                SlotDisplay.CODEC.optionalFieldOf("item_result").forGetter(HTItemFluidViewerRecipe::itemResult),
+                SlotDisplay.CODEC.optionalFieldOf("fluid_result").forGetter(HTItemFluidViewerRecipe::fluidResult),
                 HTViewerRecipe.Progressed.progressCodec(),
-            ).apply(instance, ::HTItemOrFluidViewerRecipe)
+            ).apply(instance, ::HTItemFluidViewerRecipe)
         }
     }
 

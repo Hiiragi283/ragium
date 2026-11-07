@@ -58,7 +58,7 @@ data object RagiumItems {
         }
         REGISTER.addAlias("sodium_hydroxide", "alkali_hydroxide")
         REGISTER.addAlias("soda_ash_dust", "alkali_carbonate")
-        REGISTER.addAlias("cement", "mortar")
+        REGISTER.addAlias("mortar", "cement")
         REGISTER.addAlias("circuit_board", "circuit_board/blank")
         REGISTER.addAlias("electric_circuit", "circuit_board/advanced")
 
@@ -153,7 +153,7 @@ data object RagiumItems {
     val PARTICLE_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("particle_board")
 
     @JvmField
-    val MORTAR: HTSimpleDeferredItem = REGISTER.registerItem("mortar", ::HTMortarItem)
+    val CEMENT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cement")
 
     // Heat
     @JvmField

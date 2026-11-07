@@ -1,6 +1,6 @@
 {
   "type": "ragium:filling",
-  "ingredient": {
+  "ingredients": {
     "fluid": {
       "amount": 10,
       "fluids": "#c:water"

@@ -154,7 +154,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         // Item
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
-        add(RagiumItems.MORTAR, "Mortar")
+        add(RagiumItems.CEMENT, "Cement")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.STICKY_BALL, "Sticky Ball")
         add(RagiumItems.ALKALI_HYDROXIDE, "Alkali Hydroxide")

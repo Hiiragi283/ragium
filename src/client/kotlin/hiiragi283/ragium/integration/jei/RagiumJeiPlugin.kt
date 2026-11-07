@@ -23,13 +23,11 @@ import hiiragi283.lib.recipe.viewer.HTViewerRecipeHelper
 import hiiragi283.lib.registry.asHolderSequence
 import hiiragi283.lib.util.getLeftList
 import hiiragi283.lib.util.getOrNull
-import hiiragi283.lib.util.toOptional
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.RTFluidReactingRecipe
 import hiiragi283.ragium.api.recipe.RTItemReactingRecipe
-import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -42,11 +40,9 @@ import hiiragi283.ragium.integration.jei.category.RTAlloyingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTAssemblingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTFluidReactingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTItemReactingRecipeCategory
-import hiiragi283.ragium.integration.jei.category.RTMixingRecipeCategory
 import hiiragi283.ragium.integration.jei.category.RTPlantingRecipeCategory
 import hiiragi283.ragium.recipe.viewer.RTFluidReactingViewerRecipe
 import hiiragi283.ragium.recipe.viewer.RTItemReactingViewerRecipe
-import hiiragi283.ragium.recipe.viewer.RTMixingViewerRecipe
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
@@ -185,7 +181,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 guiHelper.createDrawableItemLike(RagiumBlocks.CHEMICAL_BATH),
                 HTBackgroundType.INPUT,
             ),
-            RTMixingRecipeCategory(guiHelper),
+            HTItemOrFluidViewerRecipeCategory(
+                RagiumJeiRecipeTypes.MIXING,
+                RagiumRecipeTypes.MIXING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.MIXER ),
+            ),
             RTFluidReactingRecipeCategory(guiHelper),
             RTItemReactingRecipeCategory(guiHelper),
             // Resource
@@ -246,16 +246,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.REFINING, RagiumRecipeLookups.REFINING, HTViewerRecipeHelper::fluidSeparating)
         // Chemical
         registration.addRecipes(RagiumJeiRecipeTypes.BATHING, RagiumRecipeLookups.BATHING, HTViewerRecipeHelper::itemAndFluidToItem)
-        registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING) { (key: RecipeKey, recipe: RTMixingRecipe) ->
-            RTMixingViewerRecipe(
-                key.identifier(),
-                recipe.itemIngredients.map(HTDisplayableContent::display),
-                recipe.fluidIngredient.display(),
-                recipe.result.itemDisplay().toOptional(),
-                recipe.result.fluidDisplay().toOptional(),
-                recipe.progressData,
-            )
-        }
+        registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING , HTViewerRecipeHelper::itemAndFluid)
         registration.addRecipes(
             RagiumJeiRecipeTypes.FLUID_REACTING,
             RagiumRecipeLookups.FLUID_REACTING,

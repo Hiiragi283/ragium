@@ -292,6 +292,16 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
             recipeId suffix "_from_block"
         }.save(exporter)
+
+        // Oxygen
+        RagiumRecipeBuilders.melting {
+            ingredient { items { +Items.WIND_CHARGE } }
+            result {
+                +RagiumFluids.OXYGEN
+                amount /= 4
+            }
+            recipeId suffix "_from_wind_charge"
+        }.save(exporter)
     }
 
     override fun getName(): String = "Heat Recipes"

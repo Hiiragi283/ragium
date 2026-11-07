@@ -1,6 +1,6 @@
 {
   "type": "ragium:transforming",
-  "ingredient": {
+  "ingredients": {
     "fluid": {
       "amount": 250,
       "fluids": "#c:enchanted_experience"

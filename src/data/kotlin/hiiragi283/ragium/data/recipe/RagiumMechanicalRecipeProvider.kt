@@ -626,7 +626,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             result { +Items.GRAVEL }
             time /= 2
             recipeId suffix "_from_cobblestones"
-        }
+        }.save(exporter)
         // Gravel -> Sand + Flint
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.GRAVELS) }

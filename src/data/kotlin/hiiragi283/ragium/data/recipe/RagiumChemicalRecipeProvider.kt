@@ -38,21 +38,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             result { +Items.STICKY_PISTON }
         }.save(exporter)
 
-        // Sand + CaO + Water -> Mortar
-        RagiumRecipeBuilders.mixing {
-            itemIngredient { +holderSet(Tags.Items.SANDS) }
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.QUICK_LIME) }
-            fluidIngredient {
-                +waterSet()
-                amount /= 2
-            }
-            itemResult {
-                +RagiumItems.MORTAR
-                count = 2
-            }
-            time /= 2
-        }.save(exporter)
-
         // Poison + Spider Eye -> Fermented Spider Eye
         RagiumRecipeBuilders.bathing {
             itemIngredient { items { +Items.SPIDER_EYE } }

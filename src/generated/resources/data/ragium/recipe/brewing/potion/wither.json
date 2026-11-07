@@ -1,6 +1,6 @@
 {
   "type": "ragium:brewing",
-  "ingredient": {
+  "ingredients": {
     "fluid": {
       "amount": 1000,
       "fluids": {

@@ -1,6 +1,6 @@
 {
   "type": "ragium:bathing",
-  "ingredient": {
+  "ingredients": {
     "fluid": {
       "amount": 1000,
       "fluids": "#c:liquid_explosive"

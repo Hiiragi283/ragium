@@ -4,7 +4,7 @@ import hiiragi283.lib.integration.jei.IRecipeType
 import hiiragi283.lib.recipe.viewer.HTCatalysedSingleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTFluidSeparatingViewerRecipe
-import hiiragi283.lib.recipe.viewer.HTItemOrFluidViewerRecipe
+import hiiragi283.lib.recipe.viewer.HTItemFluidViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTMultiToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTSingleToMultiViewerRecipe
@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.recipe.viewer.RTFluidReactingViewerRecipe
 import hiiragi283.ragium.recipe.viewer.RTItemReactingViewerRecipe
-import hiiragi283.ragium.recipe.viewer.RTMixingViewerRecipe
 import mezz.jei.api.recipe.types.IRecipeType
 
 data object RagiumJeiRecipeTypes {
@@ -47,7 +46,7 @@ data object RagiumJeiRecipeTypes {
     val ALLOYING: IRecipeType<HTMultiToSingleViewerRecipe> = create(RagiumConstants.ALLOYING)
 
     @JvmField
-    val DRYING: IRecipeType<HTItemOrFluidViewerRecipe> = create(RagiumConstants.DRYING)
+    val DRYING: IRecipeType<HTItemFluidViewerRecipe> = create(RagiumConstants.DRYING)
 
     @JvmField
     val FREEZING: IRecipeType<HTCatalysedSingleToSingleViewerRecipe> = create(RagiumConstants.FREEZING)
@@ -66,7 +65,7 @@ data object RagiumJeiRecipeTypes {
     val BATHING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.BATHING)
 
     @JvmField
-    val MIXING: IRecipeType<RTMixingViewerRecipe> = create(RagiumConstants.MIXING)
+    val MIXING: IRecipeType<HTItemFluidViewerRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
     val FLUID_REACTING: IRecipeType<RTFluidReactingViewerRecipe> = create(RagiumConstants.FLUID_REACTING)

@@ -2,25 +2,19 @@
   "type": "ragium:mixing",
   "ingredients": {
     "fluid": {
-      "amount": 250,
+      "amount": 125,
       "fluids": "#c:dyes/lime"
     },
-    "items": [
-      {
-        "count": 1,
-        "items": "#c:sands"
-      },
-      {
-        "count": 1,
-        "items": "#c:gravels"
-      }
-    ]
+    "item": {
+      "count": 1,
+      "items": "ragium:cement"
+    }
   },
   "result": {
     "item": {
-      "count": 2,
+      "count": 1,
       "id": "minecraft:lime_concrete"
     }
   },
-  "time": 100
+  "time": 50
 }

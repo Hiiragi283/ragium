@@ -3,6 +3,7 @@
 package hiiragi283.ragium.api.data.recipe.builder
 
 import hiiragi283.lib.data.recipe.builder.HTFluidSeparatingRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemOrFluidRecipeBuilder
@@ -32,6 +33,7 @@ import hiiragi283.ragium.api.recipe.RTEngravingRecipe
 import hiiragi283.ragium.api.recipe.RTFillingRecipe
 import hiiragi283.ragium.api.recipe.RTFreezingRecipe
 import hiiragi283.ragium.api.recipe.RTMeltingRecipe
+import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RTPressingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
@@ -182,11 +184,11 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun mixing(builderAction: RTMixingRecipeBuilder.() -> Unit): RTMixingRecipeBuilder {
+    inline fun mixing(builderAction: HTItemAndFluidRecipeBuilder<RTMixingRecipe>.() -> Unit): HTItemAndFluidRecipeBuilder<RTMixingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return RTMixingRecipeBuilder().apply(builderAction)
+        return HTItemAndFluidRecipeBuilder(RagiumConstants.MIXING, ::RTMixingRecipe).apply(builderAction)
     }
 
     @JvmStatic

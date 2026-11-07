@@ -1,10 +1,7 @@
 package hiiragi283.ragium.api.data.map
 
-import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -44,23 +41,10 @@ data object RagiumDataMaps {
         .synced(HTCoolantData.CODEC, false)
         .build()
 
-    /**
-     * モルタルによるブロックの修復
-     */
-    @JvmField
-    val MORTAR_REPAIR: DataMapType<Block, Block> = run {
-        val blockCodec: Codec<Block> = BuiltInRegistries.BLOCK.byNameCodec()
-        DataMapType.builder(RagiumAPI.id("mortar_repair"), Registries.BLOCK, blockCodec)
-            .synced(blockCodec, false)
-            .build()
-    }
-
     @SubscribeEvent
     fun registerDataMapType(event: RegisterDataMapTypesEvent) {
         event.register(MAGMATIC_FUEL)
         event.register(COMBUSTION_FUEL)
         event.register(COOLANT)
-
-        event.register(MORTAR_REPAIR)
     }
 }

@@ -17,7 +17,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
@@ -33,7 +32,6 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
         // chemical(provider)
         fluidFuel()
-        mortarRepair()
     }
 
     private fun furnaceFuel() {
@@ -167,16 +165,6 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
         builder(RagiumDataMaps.COOLANT)
             .add(Tags.Fluids.WATER, HTCoolantData(5), false)
-    }
-
-    private fun mortarRepair() {
-        builder(RagiumDataMaps.MORTAR_REPAIR)
-            .add(Blocks.CRACKED_DEEPSLATE_BRICKS, Blocks.DEEPSLATE_BRICKS)
-            .add(Blocks.CRACKED_DEEPSLATE_TILES, Blocks.DEEPSLATE_TILES)
-            .add(Blocks.CRACKED_NETHER_BRICKS, Blocks.NETHER_BRICKS)
-            .add(Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS, Blocks.POLISHED_BLACKSTONE_BRICKS)
-            .add(Blocks.CRACKED_STONE_BRICKS, Blocks.STONE_BRICKS)
-            .add(Blocks.INFESTED_CRACKED_STONE_BRICKS, Blocks.INFESTED_STONE_BRICKS)
     }
 
     // Block

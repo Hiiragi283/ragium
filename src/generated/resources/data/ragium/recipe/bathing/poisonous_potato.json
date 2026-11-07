@@ -1,6 +1,6 @@
 {
   "type": "ragium:bathing",
-  "ingredient": {
+  "ingredients": {
     "fluid": {
       "amount": 250,
       "fluids": {

@@ -1,6 +1,6 @@
 {
   "type": "ragium:bathing",
-  "ingredient": {
+  "ingredients": {
     "fluid": {
       "amount": 125,
       "fluids": "#c:dyes/red"
