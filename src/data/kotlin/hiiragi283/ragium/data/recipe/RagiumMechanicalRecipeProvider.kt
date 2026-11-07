@@ -298,6 +298,40 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     private fun centrifuging() {
         dyes()
 
+        // Wet Sponge -> Sponge + Water
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.WET_SPONGE } }
+            itemResult { +Items.SPONGE }
+            fluidResult { water() }
+        }.save(exporter)
+        // Mud -> Dirt + Water
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.MUD } }
+            itemResult { +Items.DIRT }
+            fluidResult {
+                water()
+                amount /= 4
+            }
+            time /= 4
+            recipeId suffix "_from_mud"
+        }.save(exporter)
+
+        // Kelp -> Dried Kelp + Water
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.KELP } }
+            itemResult { +Items.DRIED_KELP }
+            fluidResult {
+                water()
+                amount /= 8
+            }
+            time /= 4
+        }.save(exporter)
+        // Rotten Flesh -> Leather
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.ROTTEN_FLESH } }
+            itemResult { +Items.LEATHER }
+        }.save(exporter)
+
         // Honey Bottle -> Glass Bottle + Honey
         RagiumRecipeBuilders.centrifuging {
             ingredient { +holderSet(Tags.Items.DRINKS_HONEY) }
@@ -318,13 +352,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             recipeId replace id("experience_from_bottle")
         }.save(exporter)
-        // Wet Sponge -> Sponge + Water
-        RagiumRecipeBuilders.centrifuging {
-            ingredient { items { +Items.WET_SPONGE } }
-            itemResult { +Items.SPONGE }
-            fluidResult { water() }
-        }.save(exporter)
-
         // Honeycomb -> Beeswax + Honey
         RagiumRecipeBuilders.centrifuging {
             ingredient { items { +Items.HONEYCOMB } }

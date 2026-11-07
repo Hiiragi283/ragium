@@ -6,7 +6,6 @@ import hiiragi283.lib.recipe.base.HTBasicSingleRecipe
 import hiiragi283.lib.recipe.base.HTCatalysedSingleRecipe
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
-import hiiragi283.lib.recipe.base.HTItemOrFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
@@ -14,7 +13,6 @@ import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.recipe.display.display
 import hiiragi283.lib.recipe.display.displayOrEmpty
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
-import hiiragi283.lib.util.toOptional
 
 /**
  * @author Hiiragi Tsubasa
@@ -73,20 +71,6 @@ data object HTViewerRecipeHelper {
             id.identifier(),
             recipe.ingredient.display(),
             recipe.result.content.mapLeft { it.map(HTDisplayableContent::display) }.mapRight(HTDisplayableContent::display),
-            recipe.progressData,
-        )
-    }
-
-    @JvmStatic
-    fun itemOrFluid(holder: HTRecipeHolder<HTItemOrFluidToRecipe.BasicItemAndFluid>): HTItemFluidViewerRecipe {
-        val (id: RecipeKey, recipe: HTItemOrFluidToRecipe.BasicItemAndFluid) = holder
-        val (item: HTDisplayableContent?, fluid: HTDisplayableContent?) = recipe.result.content.toPair()
-        return HTItemFluidViewerRecipe(
-            id.identifier(),
-            recipe.ingredient.mapLeft(HTDisplayableContent::display).leftOrNull().toOptional(),
-            recipe.ingredient.map(HTDisplayableContent::display).getOrNull().toOptional(),
-            item.displayOrEmpty(),
-            fluid.displayOrEmpty(),
             recipe.progressData,
         )
     }

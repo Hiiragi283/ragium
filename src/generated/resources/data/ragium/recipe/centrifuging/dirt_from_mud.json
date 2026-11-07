@@ -1,18 +1,18 @@
 {
-  "type": "ragium:drying",
+  "type": "ragium:centrifuging",
   "ingredient": {
     "count": 1,
-    "items": "minecraft:wet_sponge"
+    "items": "minecraft:mud"
   },
   "result": {
     "fluid": {
-      "amount": 1000,
+      "amount": 250,
       "id": "minecraft:water"
     },
     "item": {
       "count": 1,
-      "id": "minecraft:sponge"
+      "id": "minecraft:dirt"
     }
   },
-  "time": 200
+  "time": 50
 }

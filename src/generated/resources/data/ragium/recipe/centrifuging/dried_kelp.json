@@ -1,17 +1,17 @@
 {
-  "type": "ragium:drying",
+  "type": "ragium:centrifuging",
   "ingredient": {
     "count": 1,
-    "items": "minecraft:mud"
+    "items": "minecraft:kelp"
   },
   "result": {
     "fluid": {
-      "amount": 250,
+      "amount": 125,
       "id": "minecraft:water"
     },
     "item": {
       "count": 1,
-      "id": "minecraft:dirt"
+      "id": "minecraft:dried_kelp"
     }
   },
   "time": 50

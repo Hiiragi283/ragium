@@ -3,9 +3,9 @@
 package hiiragi283.ragium.api.data.recipe.builder
 
 import hiiragi283.lib.data.recipe.builder.HTFluidSeparatingRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTFluidToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToItemRecipeBuilder
-import hiiragi283.lib.data.recipe.builder.HTItemOrFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemRecipeBuilder
@@ -126,11 +126,13 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun drying(builderAction: HTItemOrFluidRecipeBuilder<RTDryingRecipe>.() -> Unit): HTItemOrFluidRecipeBuilder<RTDryingRecipe> {
+    inline fun drying(
+        builderAction: HTFluidToItemAndFluidRecipeBuilder<RTDryingRecipe>.() -> Unit,
+    ): HTFluidToItemAndFluidRecipeBuilder<RTDryingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemOrFluidRecipeBuilder(RagiumConstants.DRYING, ::RTDryingRecipe).apply(builderAction)
+        return HTFluidToItemAndFluidRecipeBuilder(RagiumConstants.DRYING, ::RTDryingRecipe).apply(builderAction)
     }
 
     @JvmStatic

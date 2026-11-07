@@ -1,5 +1,5 @@
 {
-  "type": "ragium:drying",
+  "type": "ragium:centrifuging",
   "ingredient": {
     "count": 1,
     "items": "minecraft:rotten_flesh"
