@@ -944,19 +944,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             result { +Items.MUD }
         }.save(exporter)
-
-        // XX Concrete Powder + Water -> XX Concrete
-        for (color: DyeColor in DyeColor.entries) {
-            RagiumRecipeBuilders.filling {
-                itemIngredient { items { +VanillaColoredCollections.CONCRETE_POWDER[color] } }
-                fluidIngredient {
-                    +waterSet()
-                    amount = 10
-                }
-                result { +VanillaColoredCollections.CONCRETE[color] }
-                recipeId suffix "_from_powder"
-            }.save(exporter)
-        }
     }
 
     override fun getName(): String = "Mechanical Recipes"

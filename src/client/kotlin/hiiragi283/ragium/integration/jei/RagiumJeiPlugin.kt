@@ -181,10 +181,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 guiHelper.createDrawableItemLike(RagiumBlocks.CHEMICAL_BATH),
                 HTBackgroundType.INPUT,
             ),
-            HTItemOrFluidViewerRecipeCategory(
+            HTDoubleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.MIXING,
                 RagiumRecipeTypes.MIXING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.MIXER),
+                HTBackgroundType.INPUT,
             ),
             RTFluidReactingRecipeCategory(guiHelper),
             RTItemReactingRecipeCategory(guiHelper),
@@ -246,7 +247,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.REFINING, RagiumRecipeLookups.REFINING, HTViewerRecipeHelper::fluidSeparating)
         // Chemical
         registration.addRecipes(RagiumJeiRecipeTypes.BATHING, RagiumRecipeLookups.BATHING, HTViewerRecipeHelper::itemAndFluidToItem)
-        registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING, HTViewerRecipeHelper::itemAndFluid)
+        registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING, HTViewerRecipeHelper::itemAndFluidToFluid)
         registration.addRecipes(
             RagiumJeiRecipeTypes.FLUID_REACTING,
             RagiumRecipeLookups.FLUID_REACTING,

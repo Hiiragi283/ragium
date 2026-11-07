@@ -130,20 +130,6 @@ data object HTViewerRecipeHelper {
         )
     }
 
-    @JvmStatic
-    fun itemAndFluid(holder: HTRecipeHolder<HTItemAndFluidToRecipe.BasicItemAndFluid>): HTItemFluidViewerRecipe {
-        val (id: RecipeKey, recipe: HTItemAndFluidToRecipe.BasicItemAndFluid) = holder
-        val (item: HTDisplayableContent?, fluid: HTDisplayableContent?) = recipe.result.content.toPair()
-        return HTItemFluidViewerRecipe(
-            id.identifier(),
-            recipe.itemIngredient.displayOrEmpty(),
-            recipe.fluidIngredient.displayOrEmpty(),
-            item.displayOrEmpty(),
-            fluid.displayOrEmpty(),
-            recipe.progressData,
-        )
-    }
-
     // Multi
     @JvmStatic
     fun sizedShapeless(holder: HTRecipeHolder<HTSizedShapelessRecipe.Basic>): HTMultiToSingleViewerRecipe {

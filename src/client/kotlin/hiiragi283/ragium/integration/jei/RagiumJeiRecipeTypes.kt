@@ -65,7 +65,7 @@ data object RagiumJeiRecipeTypes {
     val BATHING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.BATHING)
 
     @JvmField
-    val MIXING: IRecipeType<HTItemFluidViewerRecipe> = create(RagiumConstants.MIXING)
+    val MIXING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
     val FLUID_REACTING: IRecipeType<RTFluidReactingViewerRecipe> = create(RagiumConstants.FLUID_REACTING)

@@ -58,13 +58,13 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }.save(exporter)
 
         // Gravel + Water -> Flint
-        RagiumRecipeBuilders.mixing {
+        RagiumRecipeBuilders.bathing {
             itemIngredient { +holderSet(Tags.Items.GRAVELS) }
             fluidIngredient {
                 +waterSet()
                 amount /= 4
             }
-            itemResult { +Items.FLINT }
+            result { +Items.FLINT }
             time /= 4
         }.save(exporter)
     }

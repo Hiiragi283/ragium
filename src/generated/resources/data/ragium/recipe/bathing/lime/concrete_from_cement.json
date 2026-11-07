@@ -1,0 +1,18 @@
+{
+  "type": "ragium:bathing",
+  "ingredients": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:dyes/lime"
+    },
+    "item": {
+      "count": 1,
+      "items": "ragium:cement"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:lime_concrete"
+  },
+  "time": 50
+}

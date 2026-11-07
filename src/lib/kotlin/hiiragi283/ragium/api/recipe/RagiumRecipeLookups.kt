@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.recipe
 import hiiragi283.lib.recipe.base.HTCatalysedFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTCatalysedItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
-import hiiragi283.lib.recipe.base.HTItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemOrFluidRecipe
@@ -80,7 +79,7 @@ data object RagiumRecipeLookups {
     val BATHING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.BATHING)
 
     @JvmField
-    val MIXING: HTCompoundRecipeLookup<HTItemAndFluidRecipe> = create(RagiumConstants.MIXING)
+    val MIXING: HTCompoundRecipeLookup<HTItemAndFluidToFluidRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
     val FLUID_REACTING: HTRecipeLookup<RTFluidReactingRecipe> = create(RagiumRecipeTypes.FLUID_REACTING)

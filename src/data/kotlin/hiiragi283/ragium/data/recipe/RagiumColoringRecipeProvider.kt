@@ -35,7 +35,7 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
                     +waterSet()
                     amount /= 4
                 }
-                fluidResult {
+                result {
                     +dyeContent
                     amount /= 4
                 }
@@ -56,18 +56,28 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 time /= 4
                 recipeId replace id("dye/$name")
             }.save(exporter)
+
+            // Water + XX Concrete Powder -> XX Concrete
+            RagiumRecipeBuilders.bathing {
+                itemIngredient { items { +VanillaColoredCollections.CONCRETE_POWDER[color] } }
+                fluidIngredient {
+                    +waterSet()
+                    amount /= 8
+                }
+                result { +VanillaColoredCollections.CONCRETE[color] }
+                time /= 4
+                recipeId replace id("$name/concrete_from_powder")
+            }.save(exporter)
             // Sand + Gravel + Liquid Dye -> XX Concrete
-            RagiumRecipeBuilders.mixing {
+            RagiumRecipeBuilders.bathing {
                 itemIngredient { items { +RagiumItems.CEMENT } }
                 fluidIngredient {
                     +holderSet(dyeContent)
                     amount /= 8
                 }
-                itemResult {
-                    +VanillaColoredCollections.CONCRETE[color]
-                }
+                result { +VanillaColoredCollections.CONCRETE[color] }
                 time /= 4
-                recipeId replace id("$name/concrete")
+                recipeId replace id("$name/concrete_from_cement")
             }.save(exporter)
 
             // Coloring
