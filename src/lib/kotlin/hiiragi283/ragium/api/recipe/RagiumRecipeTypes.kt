@@ -100,6 +100,9 @@ data object RagiumRecipeTypes {
 
     // Electronics
     @JvmField
+    val ELECTROLYZING: RecipeType<RTElectrolyzingRecipe> = create(RagiumConstants.ELECTROLYZING)
+
+    @JvmField
     val ENGRAVING: RecipeType<RTEngravingRecipe> = create(RagiumConstants.ENGRAVING)
 
     // Arcane

@@ -94,6 +94,7 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.BREWING.fromRecipeType(RagiumRecipeTypes.BREWING)
         RagiumRecipeLookups.PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING)
 
+        RagiumRecipeLookups.ELECTROLYZING.fromRecipeType(RagiumRecipeTypes.ELECTROLYZING)
         RagiumRecipeLookups.ENGRAVING.fromRecipeType(RagiumRecipeTypes.ENGRAVING)
 
         RagiumRecipeLookups.ENCHANTING.fromRecipeType(RagiumRecipeTypes.ENCHANTING)

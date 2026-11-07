@@ -99,6 +99,9 @@ data object RagiumRecipeLookups {
 
     // Electronics
     @JvmField
+    val ELECTROLYZING: HTCompoundRecipeLookup<HTFluidSeparatingRecipe> = create(RagiumConstants.ELECTROLYZING)
+
+    @JvmField
     val ENGRAVING: HTCompoundRecipeLookup<HTCatalysedItemToItemRecipe> = create(RagiumConstants.ENGRAVING)
 
     // Arcane

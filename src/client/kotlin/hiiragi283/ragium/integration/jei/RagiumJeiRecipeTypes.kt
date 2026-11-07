@@ -86,6 +86,9 @@ data object RagiumJeiRecipeTypes {
 
     // Electronics
     @JvmField
+    val ELECTROLYZING: IRecipeType<HTFluidSeparatingViewerRecipe> = create(RagiumConstants.ELECTROLYZING)
+
+    @JvmField
     val ENGRAVING: IRecipeType<HTCatalysedSingleToSingleViewerRecipe> = create(RagiumConstants.ENGRAVING)
 
     // Arcane

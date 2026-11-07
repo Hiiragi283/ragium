@@ -21,6 +21,8 @@ import java.util.concurrent.CompletableFuture
 class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
+        electrolyzing()
+
         circuitBoard()
         circuit()
         silicon()
@@ -28,6 +30,33 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
     }
 
     override fun getName(): String = "Electronics Recipes"
+
+    private fun electrolyzing() {
+        // 2x H2O -> 2x H2 + O2
+        RagiumRecipeBuilders.electrolyzing {
+            ingredient { +waterSet() }
+            fluidResult { +RagiumFluids.HYDROGEN }
+            fluidResult {
+                +RagiumFluids.OXYGEN
+                amount /= 2
+            }
+            recipeId replace id("water")
+        }.save(exporter)
+        // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
+        RagiumRecipeBuilders.electrolyzing {
+            ingredient { +holderSet(RagiumFluids.SALT_WATER) }
+            fluidResult {
+                +RagiumFluids.HYDROGEN
+                amount /= 2
+            }
+            fluidResult {
+                +RagiumFluids.CHLORINE
+                amount /= 2
+            }
+            itemResult { +RagiumItems.ALKALI_HYDROXIDE }
+            recipeId replace id("salt_water")
+        }.save(exporter)
+    }
 
     private fun circuitBoard() {
         // Plastic -> Blank Circuit Board

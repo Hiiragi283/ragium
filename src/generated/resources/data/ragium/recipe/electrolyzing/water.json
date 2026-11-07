@@ -1,11 +1,10 @@
 {
-  "type": "ragium:reacting/fluid",
-  "catalyst": "#ragium:catalysts/electrolyze",
+  "type": "ragium:electrolyzing",
   "ingredient": {
     "amount": 1000,
     "fluids": "#c:water"
   },
-  "results": {
+  "result": {
     "fluids": [
       {
         "amount": 1000,
