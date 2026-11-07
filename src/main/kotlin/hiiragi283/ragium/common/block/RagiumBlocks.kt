@@ -74,6 +74,8 @@ data object RagiumBlocks {
         REGISTER.addAlias(RagiumAPI.id("deepslate_niter_ore"), vanillaId("deepslate"))
         REGISTER.addAlias(RagiumAPI.id("nether_niter_ore"), vanillaId("netherrack"))
 
+        REGISTER.addAlias("blender", "mixer")
+
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
 
@@ -324,9 +326,6 @@ data object RagiumBlocks {
 
     // Electronics
     @JvmField
-    val BLENDER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerFakeMachine(RagiumConstants.BLENDER)
-
-    @JvmField
     val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ELECTROLYZER)
 
     @JvmField
@@ -369,7 +368,6 @@ data object RagiumBlocks {
             put(HTMachineType.RESOURCE, PLANTER)
             put(HTMachineType.RESOURCE, RESOURCE_PUMP)
 
-            put(HTMachineType.ELECTRONICS, BLENDER)
             put(HTMachineType.ELECTRONICS, ELECTROLYZER)
             put(HTMachineType.ELECTRONICS, ENGRAVER)
             put(HTMachineType.ELECTRONICS, SCANNER)

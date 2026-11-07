@@ -56,7 +56,6 @@ data object RagiumConstants {
     // Electronics
     const val NUCLEAR_DYNAMO = "nuclear_$DYNAMO"
 
-    const val BLENDER = "blender"
     const val ELECTROLYZER = "electrolyzer"
     const val ENGRAVER = "engraver"
     const val SCANNER = "scanner"

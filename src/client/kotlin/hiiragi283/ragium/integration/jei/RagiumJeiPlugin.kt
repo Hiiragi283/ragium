@@ -184,7 +184,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemOrFluidViewerRecipeCategory(
                 RagiumJeiRecipeTypes.MIXING,
                 RagiumRecipeTypes.MIXING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.MIXER ),
+                guiHelper.createDrawableItemLike(RagiumBlocks.MIXER),
             ),
             RTFluidReactingRecipeCategory(guiHelper),
             RTItemReactingRecipeCategory(guiHelper),
@@ -246,7 +246,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.REFINING, RagiumRecipeLookups.REFINING, HTViewerRecipeHelper::fluidSeparating)
         // Chemical
         registration.addRecipes(RagiumJeiRecipeTypes.BATHING, RagiumRecipeLookups.BATHING, HTViewerRecipeHelper::itemAndFluidToItem)
-        registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING , HTViewerRecipeHelper::itemAndFluid)
+        registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING, HTViewerRecipeHelper::itemAndFluid)
         registration.addRecipes(
             RagiumJeiRecipeTypes.FLUID_REACTING,
             RagiumRecipeLookups.FLUID_REACTING,
@@ -427,7 +427,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Chemical
         registration.addCraftingStation(RagiumJeiRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
         registration.addCraftingStation(RagiumJeiRecipeTypes.MIXING, RagiumBlocks.MIXER)
-        registration.addCraftingStation(RagiumJeiRecipeTypes.MIXING, RagiumBlocks.BLENDER)
         // Resource
         registration.addCraftingStation(RagiumJeiRecipeTypes.BREWING, RagiumBlocks.BREWERY)
         registration.addCraftingStation(RagiumJeiRecipeTypes.PLANTING, RagiumBlocks.PLANTER)

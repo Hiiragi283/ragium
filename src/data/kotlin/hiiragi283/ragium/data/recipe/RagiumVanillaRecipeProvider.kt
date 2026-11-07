@@ -496,7 +496,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             recipeId suffix "_elite"
         }.save(exporter)
 
-        electronics(RagiumBlocks.BLENDER) { items { +RagiumBlocks.MIXER } }
         electronics(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
         // Arcane
         arcane(RagiumBlocks.ARCANE_TRANSFORMER) { +holderSet(Tags.Items.NETHER_STARS) }

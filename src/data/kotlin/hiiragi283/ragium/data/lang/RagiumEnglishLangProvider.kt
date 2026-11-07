@@ -71,7 +71,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.PLANTER, "Planter")
         add(RagiumBlocks.RESOURCE_PUMP, "Resource Pump")
 
-        add(RagiumBlocks.BLENDER, "Blender")
         add(RagiumBlocks.ELECTROLYZER, "Electrolyzer")
         add(RagiumBlocks.ENGRAVER, "Laser Engraver")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
