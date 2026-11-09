@@ -15,7 +15,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItem
     override fun getLookup(): HTRecipeLookup<HTItemToMultiItemRecipe> = RagiumRecipeLookups.CRUSHING
 
     override fun onComplete() {
-        playSound(SoundEvents.GRINDSTONE_USE)
+        playSound(SoundEvents.GRAVEL_BREAK)
     }
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.crusher

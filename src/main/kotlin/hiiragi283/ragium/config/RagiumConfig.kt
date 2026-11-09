@@ -127,10 +127,10 @@ data object RagiumConfig {
             val assembler: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.ASSEMBLER)
 
             @JvmField
-            val centrifuge: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CENTRIFUGE)
+            val centrifuge: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CENTRIFUGE, 32)
 
             @JvmField
-            val crusher: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CRUSHER)
+            val crusher: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CRUSHER, 32)
 
             @JvmField
             val compressor: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.COMPRESSOR)
@@ -142,7 +142,10 @@ data object RagiumConfig {
             val extractor: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.EXTRACTOR)
 
             @JvmField
-            val pressMachine: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.PRESS_MACHINE)
+            val pressMachine: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.PRESS_MACHINE, 32)
+
+            @JvmField
+            val pulverizer: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.PULVERIZER)
 
             // Heat
             @JvmField

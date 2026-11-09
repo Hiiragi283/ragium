@@ -49,6 +49,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.CUTTING_MACHINE, "裁断機")
         add(RagiumBlocks.EXTRACTOR, "抽出機")
         add(RagiumBlocks.PRESS_MACHINE, "プレス機")
+        add(RagiumBlocks.PULVERIZER, "粉砕機")
 
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
         add(RagiumBlocks.DRYER, "乾燥機")
@@ -249,11 +250,12 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.RECIPE_CATEGORY_ASSEMBLING, "組立")
         add(RagiumTranslation.RECIPE_CATEGORY_CENTRIFUGING, "遠心分離")
         add(RagiumTranslation.RECIPE_CATEGORY_COMPRESSING, "圧縮")
-        add(RagiumTranslation.RECIPE_CATEGORY_CRUSHING, "粉砕")
+        add(RagiumTranslation.RECIPE_CATEGORY_CRUSHING, "破砕")
         add(RagiumTranslation.RECIPE_CATEGORY_CUTTING, "切断")
         add(RagiumTranslation.RECIPE_CATEGORY_EXTRACTING, "抽出")
         add(RagiumTranslation.RECIPE_CATEGORY_FILLING, "封入")
         add(RagiumTranslation.RECIPE_CATEGORY_PRESSING, "プレス加工")
+        add(RagiumTranslation.RECIPE_CATEGORY_PULVERIZING, "粉砕")
 
         add(RagiumTranslation.RECIPE_CATEGORY_ALLOYING, "合金")
         add(RagiumTranslation.RECIPE_CATEGORY_DRYING, "乾燥")

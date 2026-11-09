@@ -419,11 +419,12 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         mechanical(RagiumBlocks.ASSEMBLER) { items { +Items.CRAFTER } }
         mechanical(RagiumBlocks.CENTRIFUGE) { +holderSet(ItemTags.BARS) }
-        mechanical(RagiumBlocks.CRUSHER) { items { +Items.GRINDSTONE } }
+        mechanical(RagiumBlocks.CRUSHER) { items { +Items.FLINT } }
         mechanical(RagiumBlocks.COMPRESSOR) { +holderSet(ItemTags.ANVIL) }
         mechanical(RagiumBlocks.CUTTING_MACHINE) { items { +Items.STONECUTTER } }
         mechanical(RagiumBlocks.EXTRACTOR) { items { +Items.HOPPER } }
         mechanical(RagiumBlocks.PRESS_MACHINE) { items { +Items.PISTON } }
+        mechanical(RagiumBlocks.PULVERIZER) { items { +Items.GRINDSTONE } }
         // Heat
         VanillaRecipeBuilders.shaped {
             hollow4()

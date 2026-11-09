@@ -1,0 +1,12 @@
+{
+  "type": "ragium:pulverizing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:bones"
+  },
+  "result": {
+    "count": 6,
+    "id": "minecraft:bone_meal"
+  },
+  "time": 200
+}

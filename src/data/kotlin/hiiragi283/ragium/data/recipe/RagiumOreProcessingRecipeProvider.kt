@@ -6,6 +6,8 @@ import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
+import hiiragi283.lib.data.recipe.builder.ingredient
+import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.vanillaId
@@ -105,7 +107,7 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
             RagiumMaterial.Other.REDSTONE -> HTSimpleDeferredItem(vanillaId("redstone"))
             else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, material]
         } ?: return
-        RagiumRecipeBuilders.crushing {
+        RagiumRecipeBuilders.pulverizing {
             ingredient { +holderSet(CommonTagPrefixes.CRUSHED_ORES, material) }
             result {
                 +dust

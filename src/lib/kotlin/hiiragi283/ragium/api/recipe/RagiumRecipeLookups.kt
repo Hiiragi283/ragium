@@ -58,6 +58,9 @@ data object RagiumRecipeLookups {
     @JvmField
     val PRESSING: HTCompoundRecipeLookup<HTCatalysedItemToItemRecipe> = create(RagiumConstants.PRESSING)
 
+    @JvmField
+    val PULVERIZING: HTCompoundRecipeLookup<HTItemToItemRecipe> = create(RagiumConstants.PULVERIZING)
+
     // Heat
     @JvmField
     val ALLOYING: HTCompoundRecipeLookup<HTSizedShapelessRecipe> = create(RagiumConstants.ALLOYING)

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:pulverizing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:ingots/iron"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:iron_dust"
+  },
+  "time": 200
+}

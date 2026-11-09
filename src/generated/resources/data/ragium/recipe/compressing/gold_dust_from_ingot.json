@@ -1,0 +1,12 @@
+{
+  "type": "ragium:pulverizing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:ingots/gold"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:gold_dust"
+  },
+  "time": 200
+}

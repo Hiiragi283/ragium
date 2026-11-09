@@ -53,6 +53,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.EXTRACTOR, "Extractor")
         add(RagiumBlocks.PRESS_MACHINE, "Press Machine")
+        add(RagiumBlocks.PULVERIZER, "Pulverizer")
 
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         add(RagiumBlocks.DRYER, "Dryer")
@@ -257,6 +258,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.RECIPE_CATEGORY_EXTRACTING, "Extracting")
         add(RagiumTranslation.RECIPE_CATEGORY_FILLING, "Filling")
         add(RagiumTranslation.RECIPE_CATEGORY_PRESSING, "Pressing")
+        add(RagiumTranslation.RECIPE_CATEGORY_PULVERIZING, "Pulverizing")
 
         add(RagiumTranslation.RECIPE_CATEGORY_ALLOYING, "Alloying")
         add(RagiumTranslation.RECIPE_CATEGORY_DRYING, "Drying")

@@ -37,6 +37,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPressMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPrinterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTResourcePumpBlockEntity
@@ -116,6 +117,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val PRESS_MACHINE: HTDeferredBlockEntityType<HTPressMachineBlockEntity> =
         registerTick(RagiumConstants.PRESS_MACHINE, ::HTPressMachineBlockEntity)
+
+    @JvmField
+    val PULVERIZER: HTDeferredBlockEntityType<HTPulverizerBlockEntity> =
+        registerTick(RagiumConstants.PULVERIZER, ::HTPulverizerBlockEntity)
 
     // Heat
     @JvmField
@@ -269,6 +274,7 @@ data object RagiumBlockEntityTypes {
         registerBlockEntity(CUTTING_MACHINE.get())
         registerBlockEntity(EXTRACTOR.get())
         registerBlockEntity(PRESS_MACHINE.get())
+        registerBlockEntity(PULVERIZER.get())
 
         registerBlockEntity(ALLOY_SMELTER.get())
         registerBlockEntity(DRYER.get())

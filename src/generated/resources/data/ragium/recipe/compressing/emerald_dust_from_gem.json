@@ -1,0 +1,12 @@
+{
+  "type": "ragium:pulverizing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:gems/emerald"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:emerald_dust"
+  },
+  "time": 200
+}
