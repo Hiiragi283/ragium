@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "ragium:item/circuit_board/elite"
+    "model": "ragium:item/circuit/industrial"
   }
 }

@@ -3,7 +3,7 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "ragium:circuit_board/elite"
+      "items": "ragium:circuit_board/industrial"
     },
     {
       "count": 1,
@@ -16,7 +16,7 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:circuit/elite"
+    "id": "ragium:circuit/industrial"
   },
   "time": 200
 }

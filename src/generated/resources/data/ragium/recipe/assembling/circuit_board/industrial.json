@@ -3,16 +3,16 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "ragium:machine_parts/resource"
+      "items": "ragium:circuit_board/blank"
     },
     {
-      "count": 1,
-      "items": "ragium:circuit/elite"
+      "count": 3,
+      "items": "#c:nuggets/silver"
     }
   ],
   "result": {
     "count": 1,
-    "id": "ragium:machine_parts/electronics"
+    "id": "ragium:circuit_board/industrial"
   },
   "time": 200
 }

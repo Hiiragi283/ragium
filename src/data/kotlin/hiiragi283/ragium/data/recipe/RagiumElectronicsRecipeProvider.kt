@@ -122,7 +122,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
                 +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.COPPER)
                 count = 3
             }
-            result { +RagiumItems.BASIC_CIRCUIT_BOARD }
+            result { +RagiumItems.CIRCUIT_BOARDS.basic }
         }.save(exporter)
         // Blank + Gold -> Advanced
         RagiumRecipeBuilders.assembling {
@@ -131,16 +131,16 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
                 +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.GOLD)
                 count = 3
             }
-            result { +RagiumItems.ADVANCED_CIRCUIT_BOARD }
+            result { +RagiumItems.CIRCUIT_BOARDS.advanced }
         }.save(exporter)
-        // Blank + Silver -> Elite
+        // Blank + Silver -> Industrial
         RagiumRecipeBuilders.assembling {
             ingredient { items { +RagiumItems.BLANK_CIRCUIT_BOARD } }
             ingredient {
                 +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Metal.SILVER)
                 count = 3
             }
-            result { +RagiumItems.ELITE_CIRCUIT_BOARD }
+            result { +RagiumItems.CIRCUIT_BOARDS.industrial }
         }.save(exporter)
     }
 
@@ -153,11 +153,11 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.COPPER) }
             define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             define('C') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            result { +RagiumItems.BASIC_CIRCUIT }
+            result { +RagiumItems.CIRCUITS.basic }
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
             ingredient {
-                items { +RagiumItems.BASIC_CIRCUIT_BOARD }
+                items { +RagiumItems.CIRCUIT_BOARDS.basic }
                 count = 4
             }
             ingredient { items { +RagiumItems.SILICON_WAFER } }
@@ -166,7 +166,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
                 count = 4
             }
             result {
-                +RagiumItems.BASIC_CIRCUIT
+                +RagiumItems.CIRCUITS.basic
                 count = 4
             }
         }.save(exporter)
@@ -176,13 +176,13 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.LAPIS) }
             define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE) }
-            define('D') { items { +RagiumItems.BASIC_CIRCUIT } }
-            result { +RagiumItems.ADVANCED_CIRCUIT }
+            define('D') { items { +RagiumItems.CIRCUITS.basic } }
+            result { +RagiumItems.CIRCUITS.advanced }
         }.save(exporter)
         // Advanced
         RagiumRecipeBuilders.assembling {
             ingredient {
-                items { +RagiumItems.ADVANCED_CIRCUIT_BOARD }
+                items { +RagiumItems.CIRCUIT_BOARDS.advanced }
                 count = 2
             }
             ingredient { items { +RagiumItems.SILICON_WAFER } }
@@ -191,16 +191,16 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
                 count = 2
             }
             result {
-                +RagiumItems.ADVANCED_CIRCUIT
+                +RagiumItems.CIRCUITS.advanced
                 count = 2
             }
         }.save(exporter)
-        // Elite
+        // Industrial
         RagiumRecipeBuilders.assembling {
-            ingredient { items { +RagiumItems.ELITE_CIRCUIT_BOARD } }
+            ingredient { items { +RagiumItems.CIRCUIT_BOARDS.industrial } }
             ingredient { items { +RagiumItems.SILICON_WAFER } }
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.DIAMOND) }
-            result { +RagiumItems.ELITE_CIRCUIT }
+            result { +RagiumItems.CIRCUITS.industrial }
         }.save(exporter)
     }
 

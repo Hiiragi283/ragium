@@ -9,7 +9,6 @@ import net.minecraft.world.item.DyeColor
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-@JvmRecord
 data class HTColoredCollection<out T>(
     val white: T,
     val orange: T,
@@ -27,7 +26,7 @@ data class HTColoredCollection<out T>(
     val green: T,
     val red: T,
     val black: T,
-) : Collection<T> {
+) : AbstractCollection<T>() {
     companion object {
         @JvmField
         val VALUES: HTColoredCollection<DyeColor> = HTColoredCollection(
@@ -129,32 +128,24 @@ data class HTColoredCollection<out T>(
 
     override val size: Int get() = 16
 
-    override fun isEmpty(): Boolean = false
-
-    override fun contains(element: @UnsafeVariance T): Boolean = this.any { it == element }
-
-    fun asSequence(): Sequence<T> = sequenceOf(
-        white,
-        orange,
-        magenta,
-        lightBlue,
-        yellow,
-        lime,
-        pink,
-        gray,
-        lightGray,
-        cyan,
-        purple,
-        blue,
-        brown,
-        green,
-        red,
-        black,
-    )
-
-    override fun iterator(): Iterator<T> = asSequence().iterator()
-
-    override fun containsAll(elements: Collection<@UnsafeVariance T>): Boolean = elements.all { contains(it) }
+    override fun iterator(): Iterator<T> = iterator {
+        yield(white)
+        yield(orange)
+        yield(magenta)
+        yield(lightBlue)
+        yield(yellow)
+        yield(lime)
+        yield(pink)
+        yield(gray)
+        yield(lightGray)
+        yield(cyan)
+        yield(purple)
+        yield(blue)
+        yield(brown)
+        yield(green)
+        yield(red)
+        yield(black)
+    }
 }
 
 /**

@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineUpgrade
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.registry.HTTieredContents
 import hiiragi283.ragium.api.text.HTItemTooltip
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -61,6 +62,8 @@ data object RagiumItems {
         REGISTER.addAlias("mortar", "cement")
         REGISTER.addAlias("circuit_board", "circuit_board/blank")
         REGISTER.addAlias("electric_circuit", "circuit_board/advanced")
+        REGISTER.addAlias("circuit_board/elite", "circuit_board/industrial")
+        REGISTER.addAlias("circuit/elite", "circuit/industrial")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -219,22 +222,12 @@ data object RagiumItems {
     val BLANK_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board/blank")
 
     @JvmField
-    val BASIC_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board/basic")
+    val CIRCUIT_BOARDS: HTTieredContents<HTSimpleDeferredItem> =
+        HTTieredContents.NAMES.map { name: String -> REGISTER.registerSimpleItem("circuit_board/$name") }
 
     @JvmField
-    val ADVANCED_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board/advanced")
-
-    @JvmField
-    val ELITE_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board/elite")
-
-    @JvmField
-    val BASIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit/basic")
-
-    @JvmField
-    val ADVANCED_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit/advanced")
-
-    @JvmField
-    val ELITE_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit/elite")
+    val CIRCUITS: HTTieredContents<HTSimpleDeferredItem> =
+        HTTieredContents.NAMES.map { name: String -> REGISTER.registerSimpleItem("circuit/$name") }
 
     @JvmField
     val DIAMOND_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_wafer")

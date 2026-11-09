@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.registry.HTTieredContents
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
@@ -58,6 +59,15 @@ interface RagiumLangProvider {
             }
         provider.add(RagiumItems.COAL_COKE, RagiumMaterial.Fuel.COAL_COKE)
         provider.add(RagiumItems.PITCH_COKE, RagiumMaterial.Fuel.PITCH_COKE)
+
+        val boardName = HTLangName("Circuit Board", "回路基板")
+        RagiumItems.CIRCUIT_BOARDS.zip(HTTieredContents.TRANSLATE_PATTERNS) { board: HTHasTranslationKey, pattern: HTLangPatternProvider ->
+            provider.add(board, pattern, boardName)
+        }
+        val circuitName = HTLangName("Circuit", "回路")
+        RagiumItems.CIRCUITS.zip(HTTieredContents.TRANSLATE_PATTERNS) { circuit: HTHasTranslationKey, pattern: HTLangPatternProvider ->
+            provider.add(circuit, pattern, circuitName)
+        }
 
         val lensPattern = HTLangPatternProvider("%s Lens", "%sのレンズ")
         provider.add(RagiumItems.QUARTZ_LENS, lensPattern, RagiumMaterial.Gem.QUARTZ)

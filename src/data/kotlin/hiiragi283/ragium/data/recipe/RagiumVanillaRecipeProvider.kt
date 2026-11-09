@@ -495,7 +495,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         RagiumRecipeBuilders.assembling {
             ingredient { items { +RagiumItems.getParts(HTMachineType.RESOURCE) } }
             ingredient {
-                items { +RagiumItems.ADVANCED_CIRCUIT }
+                items { +RagiumItems.CIRCUITS.advanced }
                 count = 2
             }
             recipeId suffix "_advanced"
@@ -503,9 +503,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
             ingredient { items { +RagiumItems.getParts(HTMachineType.RESOURCE) } }
-            ingredient { items { +RagiumItems.ELITE_CIRCUIT } }
+            ingredient { items { +RagiumItems.CIRCUITS.industrial } }
             result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
-            recipeId suffix "_elite"
+            recipeId suffix "_industrial"
         }.save(exporter)
 
         electronics(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
