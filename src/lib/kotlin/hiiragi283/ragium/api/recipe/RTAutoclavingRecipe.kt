@@ -1,0 +1,25 @@
+package hiiragi283.ragium.api.recipe
+
+import hiiragi283.lib.recipe.HTSerializableRecipe
+import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
+import hiiragi283.lib.recipe.base.HTProgressData
+import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.result.HTItemResult
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
+
+class RTAutoclavingRecipe(itemIngredient: HTItemIngredient, fluidIngredient: HTFluidIngredient, result: HTItemResult, progressData: HTProgressData) :
+    HTItemAndFluidToRecipe.BasicItem(itemIngredient, fluidIngredient, result, progressData),
+    HTSerializableRecipe<HTItemAndFluidRecipeInput> {
+    companion object {
+        @JvmField
+        val SERIALIZER: RecipeSerializer<RTAutoclavingRecipe> =
+            RecipeSerializer(codec(::RTAutoclavingRecipe), streamCodec(::RTAutoclavingRecipe))
+    }
+
+    override fun getSerializer(): RecipeSerializer<RTAutoclavingRecipe> = RagiumRecipeSerializers.AUTOCLAVING
+
+    override fun getType(): RecipeType<RTAutoclavingRecipe> = RagiumRecipeTypes.AUTOCLAVING
+}

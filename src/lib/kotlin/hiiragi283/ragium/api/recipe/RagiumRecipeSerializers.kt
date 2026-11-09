@@ -93,6 +93,10 @@ data object RagiumRecipeSerializers {
 
     // Chemical
     @JvmField
+    val AUTOCLAVING: RecipeSerializer<RTAutoclavingRecipe> =
+        register(RagiumConstants.AUTOCLAVING, RTAutoclavingRecipe.SERIALIZER)
+
+    @JvmField
     val BATHING: RecipeSerializer<RTBathingRecipe> =
         register(RagiumConstants.BATHING, RTBathingRecipe.SERIALIZER)
 

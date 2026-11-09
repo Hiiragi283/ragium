@@ -58,6 +58,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.REFINERY, "精製機")
         add(RagiumBlocks.SMELTER, "製錬炉")
 
+        add(RagiumBlocks.AUTOCLAVE, "オートクレーブ")
         add(RagiumBlocks.CHEMICAL_BATH, "化学浴槽")
         add(RagiumBlocks.CHEMICAL_LABO, "化学実験室")
         add(RagiumBlocks.MIXER, "混合機")
@@ -261,6 +262,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.RECIPE_CATEGORY_PYROLYZING, "熱分解")
         add(RagiumTranslation.RECIPE_CATEGORY_REFINING, "蒸留")
 
+        add(RagiumTranslation.RECIPE_CATEGORY_AUTOCLAVING, "オートクレーブ")
         add(RagiumTranslation.RECIPE_CATEGORY_BATHING, "化学洗浄")
         add(RagiumTranslation.RECIPE_CATEGORY_MIXING, "混合")
         add(RagiumTranslation.RECIPE_CATEGORY_FLUID_REACTING, "化学反応 - 液体")

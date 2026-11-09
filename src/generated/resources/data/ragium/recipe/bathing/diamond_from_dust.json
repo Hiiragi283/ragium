@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/diamond"
+      }
+    }
+  ],
+  "type": "ragium:autoclaving",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:dusts/diamond"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:diamond"
+  },
+  "time": 200
+}

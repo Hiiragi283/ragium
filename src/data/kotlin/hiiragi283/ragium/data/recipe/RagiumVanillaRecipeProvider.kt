@@ -474,6 +474,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
         }.save(exporter)
 
+        chemical(RagiumBlocks.AUTOCLAVE) { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Metal.IRON) }
         chemical(RagiumBlocks.CHEMICAL_BATH) { items { +Items.CAULDRON } }
         chemical(RagiumBlocks.CHEMICAL_LABO) { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.DIAMOND) }
         chemical(RagiumBlocks.MIXER) { +holderSet(Tags.Items.BUCKETS_EMPTY) }

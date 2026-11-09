@@ -38,6 +38,7 @@ data object RagiumConstants {
     // Chemical
     const val COMBUSTION_DYNAMO = "combustion_$DYNAMO"
 
+    const val AUTOCLAVE = "autoclave"
     const val CHEMICAL_BATH = "chemical_bath"
     const val CHEMICAL_LABO = "chemical_labo"
     const val CHEMICAL_REACTOR = "chemical_reactor"
@@ -91,6 +92,7 @@ data object RagiumConstants {
     const val REFINING = "refining"
 
     // Chemical
+    const val AUTOCLAVING = "autoclaving"
     const val BATHING = "bathing"
     const val MIXING = "mixing"
     const val REACTING = "reacting"

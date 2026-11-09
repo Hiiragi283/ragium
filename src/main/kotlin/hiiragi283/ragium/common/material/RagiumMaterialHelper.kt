@@ -23,14 +23,14 @@ data object RagiumMaterialHelper {
     }
 
     @JvmStatic
-    fun getGem(gem: RagiumMaterial.Gem): HTSimpleDeferredItem = when (gem) {
-        RagiumMaterial.Gem.LAPIS -> HTSimpleDeferredItem(vanillaId("lapis_lazuri"))
+    fun getGem(gem: RagiumMaterial.Gem): HTSimpleDeferredItem? = when (gem) {
+        RagiumMaterial.Gem.LAPIS -> HTSimpleDeferredItem(vanillaId("lapis_lazuli"))
         RagiumMaterial.Gem.QUARTZ -> HTSimpleDeferredItem(vanillaId("quartz"))
         RagiumMaterial.Gem.AMETHYST -> HTSimpleDeferredItem(vanillaId("amethyst_shard"))
         RagiumMaterial.Gem.DIAMOND -> HTSimpleDeferredItem(vanillaId("diamond"))
         RagiumMaterial.Gem.EMERALD -> HTSimpleDeferredItem(vanillaId("emerald"))
         RagiumMaterial.Gem.ECHO -> HTSimpleDeferredItem(vanillaId("echo_shard"))
-        else -> RagiumItems.getOrThrow(HTItemPart.GEM, gem)
+        else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.GEM, gem]
     }
 
     @JvmStatic

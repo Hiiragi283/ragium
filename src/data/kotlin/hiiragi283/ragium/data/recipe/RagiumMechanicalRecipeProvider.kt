@@ -576,6 +576,13 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
         RagiumRecipeBuilders.compressing {
             ingredient {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN)
+                count = 4
+            }
+            result { +Items.OBSIDIAN }
+        }.save(exporter)
+        RagiumRecipeBuilders.compressing {
+            ingredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.CARBON)
                 count = 64
             }
@@ -777,11 +784,17 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }.save(exporter)
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.OBSIDIANS_NORMAL) }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN)
+                count = 4
+            }
         }.save(exporter)
         /*RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.OBSIDIANS_CRYING) }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.OBSIDIAN)
+                count = 4
+            }
             result { +RagiumItems.ELDRITCH_TEAR }
             recipeId suffix "_from_crying"
         }.save(exporter)*/

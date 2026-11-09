@@ -79,6 +79,9 @@ data object RagiumRecipeLookups {
 
     // Chemical
     @JvmField
+    val AUTOCLAVING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.AUTOCLAVING)
+
+    @JvmField
     val BATHING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.BATHING)
 
     @JvmField

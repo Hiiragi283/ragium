@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/fluorite"
+      }
+    }
+  ],
+  "type": "ragium:autoclaving",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:dusts/fluorite"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:fluorite"
+  },
+  "time": 200
+}

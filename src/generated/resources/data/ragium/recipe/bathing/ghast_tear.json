@@ -1,0 +1,18 @@
+{
+  "type": "ragium:autoclaving",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:molten_glass"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:gems/niter"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:ghast_tear"
+  },
+  "time": 200
+}

@@ -62,6 +62,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.REFINERY, "Refinery")
         add(RagiumBlocks.SMELTER, "Smelter")
 
+        add(RagiumBlocks.AUTOCLAVE, "Autoclave")
         add(RagiumBlocks.CHEMICAL_BATH, "Chemical Bath")
         add(RagiumBlocks.CHEMICAL_LABO, "Chemical Labo")
         add(RagiumBlocks.MIXER, "Mixer")
@@ -264,6 +265,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.RECIPE_CATEGORY_PYROLYZING, "Pyrolyzing")
         add(RagiumTranslation.RECIPE_CATEGORY_REFINING, "Refining")
 
+        add(RagiumTranslation.RECIPE_CATEGORY_AUTOCLAVING, "Autoclaving")
         add(RagiumTranslation.RECIPE_CATEGORY_BATHING, "Chemical Bathing")
         add(RagiumTranslation.RECIPE_CATEGORY_MIXING, "Mixing")
         add(RagiumTranslation.RECIPE_CATEGORY_FLUID_REACTING, "Chemical Reacting - Fluid")

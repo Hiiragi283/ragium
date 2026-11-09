@@ -65,6 +65,9 @@ data object RagiumJeiRecipeTypes {
 
     // Chemical
     @JvmField
+    val AUTOCLAVING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.AUTOCLAVING)
+
+    @JvmField
     val BATHING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.BATHING)
 
     @JvmField

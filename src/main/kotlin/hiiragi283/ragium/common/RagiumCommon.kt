@@ -90,6 +90,7 @@ internal data object RagiumCommon {
         RagiumRecipeLookups.PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING)
         RagiumRecipeLookups.REFINING.fromRecipeType(RagiumRecipeTypes.REFINING)
 
+        RagiumRecipeLookups.AUTOCLAVING.fromRecipeType(RagiumRecipeTypes.AUTOCLAVING)
         RagiumRecipeLookups.BATHING.fromRecipeType(RagiumRecipeTypes.BATHING)
         RagiumRecipeLookups.MIXING.fromRecipeType(RagiumRecipeTypes.MIXING)
 

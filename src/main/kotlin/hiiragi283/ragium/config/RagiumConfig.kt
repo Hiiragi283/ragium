@@ -168,6 +168,9 @@ data object RagiumConfig {
 
             // Chemical
             @JvmField
+            val autoclave: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.AUTOCLAVE, 64)
+
+            @JvmField
             val chemicalBath: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CHEMICAL_BATH)
 
             @JvmField

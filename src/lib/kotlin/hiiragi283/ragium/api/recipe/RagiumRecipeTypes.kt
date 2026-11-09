@@ -80,6 +80,9 @@ data object RagiumRecipeTypes {
 
     // Chemical
     @JvmField
+    val AUTOCLAVING: RecipeType<RTAutoclavingRecipe> = create(RagiumConstants.AUTOCLAVING)
+
+    @JvmField
     val BATHING: RecipeType<RTBathingRecipe> = create(RagiumConstants.BATHING)
 
     @JvmField

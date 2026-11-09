@@ -298,6 +298,9 @@ data object RagiumBlocks {
 
     // Chemical
     @JvmField
+    val AUTOCLAVE: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.AUTOCLAVE)
+
+    @JvmField
     val CHEMICAL_BATH: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CHEMICAL_BATH)
 
     @JvmField
@@ -355,6 +358,7 @@ data object RagiumBlocks {
             put(HTMachineType.HEAT, REFINERY)
             put(HTMachineType.HEAT, SMELTER)
 
+            put(HTMachineType.CHEMICAL, AUTOCLAVE)
             put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
             put(HTMachineType.CHEMICAL, CHEMICAL_LABO)
             put(HTMachineType.CHEMICAL, MIXER)

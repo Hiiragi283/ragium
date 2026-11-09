@@ -19,6 +19,7 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.recipe.RTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
+import hiiragi283.ragium.api.recipe.RTAutoclavingRecipe
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
 import hiiragi283.ragium.api.recipe.RTBrewingRecipe
 import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
@@ -183,6 +184,16 @@ data object RagiumRecipeBuilders {
     }
 
     // Chemical
+    @JvmStatic
+    inline fun autoclaving(
+        builderAction: HTItemAndFluidToItemRecipeBuilder<RTAutoclavingRecipe>.() -> Unit,
+    ): HTItemAndFluidToItemRecipeBuilder<RTAutoclavingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemAndFluidToItemRecipeBuilder(RagiumConstants.BATHING, ::RTAutoclavingRecipe).apply(builderAction)
+    }
+
     @JvmStatic
     inline fun bathing(
         builderAction: HTItemAndFluidToItemRecipeBuilder<RTBathingRecipe>.() -> Unit,

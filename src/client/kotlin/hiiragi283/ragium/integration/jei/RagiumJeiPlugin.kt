@@ -193,6 +193,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             ),
             // Chemical
             HTDoubleToSingleViewerRecipeCategory(
+                RagiumJeiRecipeTypes.AUTOCLAVING,
+                RagiumTranslation.RECIPE_CATEGORY_AUTOCLAVING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.AUTOCLAVE),
+                HTBackgroundType.INPUT,
+            ),
+            HTDoubleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.BATHING,
                 RagiumTranslation.RECIPE_CATEGORY_BATHING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.CHEMICAL_BATH),
@@ -269,6 +275,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING, HTViewerRecipeHelper::itemSeparating)
         registration.addRecipes(RagiumJeiRecipeTypes.REFINING, RagiumRecipeLookups.REFINING, HTViewerRecipeHelper::fluidSeparating)
         // Chemical
+        registration.addRecipes(RagiumJeiRecipeTypes.AUTOCLAVING, RagiumRecipeLookups.AUTOCLAVING, HTViewerRecipeHelper::itemAndFluidToItem)
         registration.addRecipes(RagiumJeiRecipeTypes.BATHING, RagiumRecipeLookups.BATHING, HTViewerRecipeHelper::itemAndFluidToItem)
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeLookups.MIXING, HTViewerRecipeHelper::itemAndFluidToFluid)
         registration.addRecipes(
@@ -459,6 +466,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RecipeTypes.BLASTING, RagiumBlocks.SMELTER)
         registration.addCraftingStation(RecipeTypes.SMOKING, RagiumBlocks.SMELTER)
         // Chemical
+        registration.addCraftingStation(RagiumJeiRecipeTypes.AUTOCLAVING, RagiumBlocks.AUTOCLAVE)
         registration.addCraftingStation(RagiumJeiRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_BATH)
         registration.addCraftingStation(RagiumJeiRecipeTypes.MIXING, RagiumBlocks.MIXER)
         // Resource
