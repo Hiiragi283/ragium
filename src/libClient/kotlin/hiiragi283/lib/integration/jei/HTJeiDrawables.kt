@@ -1,10 +1,10 @@
 package hiiragi283.lib.integration.jei
 
-import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.ragium.api.RagiumAPI
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.helpers.IGuiHelper
+import thedarkcolour.kotlinforforge.neoforge.kotlin.enumMapOf
 
 /**
  * JEIで使用するスプライトをまとめたクラスです。
@@ -22,13 +22,13 @@ data object HTJeiDrawables {
 
     @JvmStatic
     fun init(guiHelper: IGuiHelper) {
-        slots = HTBackgroundType.entries.associateWithTo(mutableEnumMapOf()) { type: HTBackgroundType ->
+        slots = HTBackgroundType.entries.associateWithTo(enumMapOf()) { type: HTBackgroundType ->
             guiHelper
                 .drawableBuilder(type.slotTexture, 0, 0, 18, 18)
                 .setTextureSize(18, 18)
                 .build()
         }
-        tanks = HTBackgroundType.entries.associateWithTo(mutableEnumMapOf()) { type: HTBackgroundType ->
+        tanks = HTBackgroundType.entries.associateWithTo(enumMapOf()) { type: HTBackgroundType ->
             guiHelper
                 .drawableBuilder(type.tankTexture, 0, 0, 18, 18 * 3)
                 .setTextureSize(18, 18)

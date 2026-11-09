@@ -87,7 +87,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.UPGRADE_STATION, "強化ステーション")
         add(RagiumBlocks.ENCHANTMENT_ABSORBER, "エンチャントパワー吸収器")
 
-        add(RagiumBlocks.MACHINE_CASING, "機械ケーシング")
+        add(RagiumBlocks.MACHINE_CASING, "機械外装")
         // Damage Type
         add("death.attack.chemicalBurn", $$"%1$sは化学火傷を負った")
         add("death.attack.chemicalBurn.player", $$"%1$sは%2$sと戦いながら化学火傷を負った")

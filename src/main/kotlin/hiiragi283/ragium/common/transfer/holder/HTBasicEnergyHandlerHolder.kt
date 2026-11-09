@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.transfer.holder
 
-import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.transfer.energy.HTEnergyStorage
 import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.core.Direction
+import thedarkcolour.kotlinforforge.neoforge.kotlin.enumMapOf
 
 class HTBasicEnergyHandlerHolder(
     configGetter: HTSlotInfoProvider?,
@@ -25,7 +25,7 @@ class HTBasicEnergyHandlerHolder(
     class Builder(val configGetter: HTSlotInfoProvider?) {
         private var hasBuilt = false
         private var handler: HTEnergyStorage? by HTDelegates.onceOrNull()
-        private val handlerMap: MutableMap<HTSlotInfo, HTEnergyStorage> = mutableEnumMapOf()
+        private val handlerMap: MutableMap<HTSlotInfo, HTEnergyStorage> = enumMapOf()
 
         fun <T : HTEnergyStorage> addHandler(info: HTSlotInfo, handler: T): T {
             check(!hasBuilt) { "Builder has already built" }

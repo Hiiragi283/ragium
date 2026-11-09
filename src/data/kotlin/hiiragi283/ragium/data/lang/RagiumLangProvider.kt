@@ -34,7 +34,7 @@ interface RagiumLangProvider {
         // provider.add(RagiumBlocks.CRYOLITE_BLOCK, HTStorageBlockPart.DEFAULT, RagiumMaterial.Gem.CRYOLITE)
         // provider.addDecoration(RagiumBlocks.CRYOLITE_DECORATION, RagiumMaterial.Gem.CRYOLITE)
 
-        val casingPattern = HTLangPatternProvider("Machine Casing (%s)", "機械筐体 (%s)")
+        val casingPattern = HTLangPatternProvider("Machine Casing (%s)", "機械外装 (%s)")
         for ((machineType: HTLangName, casing: HTHasTranslationKey) in RagiumBlocks.MACHINE_CASINGS) {
             provider.add(casing, casingPattern, machineType)
         }
