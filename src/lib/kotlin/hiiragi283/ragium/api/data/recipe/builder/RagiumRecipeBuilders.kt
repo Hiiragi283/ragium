@@ -200,7 +200,7 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemAndFluidToItemRecipeBuilder(RagiumConstants.BATHING, ::RTAutoclavingRecipe).apply(builderAction)
+        return HTItemAndFluidToItemRecipeBuilder(RagiumConstants.AUTOCLAVING, ::RTAutoclavingRecipe).apply(builderAction)
     }
 
     @JvmStatic

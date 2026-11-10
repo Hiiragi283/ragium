@@ -1,15 +1,15 @@
 {
-  "type": "ragium:alloying",
-  "ingredients": [
-    {
-      "count": 8,
-      "items": "#c:dusts/silicon"
+  "type": "ragium:autoclaving",
+  "ingredients": {
+    "fluid": {
+      "amount": 720,
+      "fluids": "#c:molten_silicon"
     },
-    {
+    "item": {
       "count": 1,
       "items": "#c:dusts/raginite"
     }
-  ],
+  },
   "result": {
     "count": 1,
     "id": "ragium:silicon_boule"

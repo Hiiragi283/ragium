@@ -6,6 +6,7 @@ import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.tag.CommonTagPrefixes
+import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
@@ -248,6 +249,23 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount /= 4
             }
             recipeId suffix "_from_wind_charge"
+        }.save(exporter)
+        // Silicon
+        RagiumRecipeBuilders.melting {
+            ingredient { +holderSet(HTCommonTags.Items.SILICON) }
+            result {
+                +RagiumFluids.MOLTEN_SILICON
+                amount = 30
+            }
+            recipeId suffix "_from_crude"
+        }.save(exporter)
+        RagiumRecipeBuilders.melting {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SILICON) }
+            result {
+                +RagiumFluids.MOLTEN_SILICON
+                amount = 90
+            }
+            recipeId suffix "_from_dust"
         }.save(exporter)
     }
 

@@ -233,13 +233,13 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
                 amount = 100
             }
         }.save(exporter)
-        // Si Dust + Redstone -> Silicon Boule
-        RagiumRecipeBuilders.alloying {
-            ingredient {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SILICON)
-                count = 8
+        // Molten Si + Redstone -> Silicon Boule
+        RagiumRecipeBuilders.autoclaving {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.RAGINITE) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.MOLTEN_SILICON)
+                amount = 90 * 8
             }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.RAGINITE) }
             result { +RagiumItems.SILICON_BOULE }
             time *= 16
         }.save(exporter)

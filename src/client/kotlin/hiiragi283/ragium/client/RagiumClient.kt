@@ -242,6 +242,11 @@ data object RagiumClient : HTClientMod() {
             transparent()
             colorTint(Color(0xffcccc))
         }
+        // Si
+        register.register(RagiumFluids.MOLTEN_SILICON) {
+            molten()
+            colorTint(Color(0x336699))
+        }
         // P
         register.register(RagiumFluids.PHOSPHORIC_ACID) {
             dull()

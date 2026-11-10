@@ -223,6 +223,10 @@ data object RagiumFluids {
     @JvmField
     val ALUMINA_SOLUTION: HTFluidContent.Virtual = REGISTER.registerVirtual("alumina_solution") { properties = liquid() }
 
+    // Si
+    @JvmField
+    val MOLTEN_SILICON: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_silicon") { properties = molten() }
+
     // P
     @JvmField
     val PHOSPHORIC_ACID: HTFluidContent.Virtual = REGISTER.registerVirtual("phosphoric_acid") { properties = liquid() }
