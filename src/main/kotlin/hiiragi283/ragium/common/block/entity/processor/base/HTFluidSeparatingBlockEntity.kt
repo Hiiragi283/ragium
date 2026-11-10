@@ -54,7 +54,6 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
             HTSlotHelper.getSlotPosX(1),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
-            false,
         )
         widgetHolder.track(inputTank)
         // outputs
@@ -71,7 +70,6 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
             HTSlotHelper.getSlotPosX(5.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
-            false,
         )
         widgetHolder.track(leftOutputTank)
         widgetHolder += HTFluidWidget.Tank(
@@ -79,7 +77,6 @@ abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: Block
             HTSlotHelper.getSlotPosX(7),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.EXTRA_OUTPUT,
-            false,
         )
         widgetHolder.track(rightOutputTank)
     }

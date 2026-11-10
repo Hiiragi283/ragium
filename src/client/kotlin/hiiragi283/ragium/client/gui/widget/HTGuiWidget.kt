@@ -64,6 +64,6 @@ class HTGuiWidget<WIDGET : HTWidget>(private val gui: HTGuiAccess, val widget: W
     private inner class Access : HTWidget.Access {
         override var isActive: Boolean by this@HTGuiWidget::active
         override var isVisible: Boolean by this@HTGuiWidget::visible
-        override val cursorAccess: ItemAccess? by this@HTGuiWidget.gui::cursorAccess
+        override val cursorAccess: ItemAccess by this@HTGuiWidget.gui::cursorAccess
     }
 }

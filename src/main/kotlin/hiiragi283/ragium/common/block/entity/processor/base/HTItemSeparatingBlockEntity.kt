@@ -68,7 +68,6 @@ abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockP
             HTSlotHelper.getSlotPosX(7.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
-            false,
         )
         widgetHolder.track(outputTank)
     }

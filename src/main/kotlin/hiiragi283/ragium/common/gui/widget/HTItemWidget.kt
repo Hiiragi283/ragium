@@ -85,7 +85,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
 
         override fun mouseClicked(access: HTWidget.Access, mouseX: Double, mouseY: Double, button: Int) {
             if (isGhost) {
-                val cursorStack: ItemStack = access.cursorAccess?.let { HTItemCapabilities.getSlot(it, 0) }?.getItemStack() ?: return
+                val cursorStack: ItemStack = HTItemCapabilities.getSlot(access.cursorAccess, 0)?.getItemStack() ?: return
                 stackSetter?.invoke(cursorStack)
             }
         }

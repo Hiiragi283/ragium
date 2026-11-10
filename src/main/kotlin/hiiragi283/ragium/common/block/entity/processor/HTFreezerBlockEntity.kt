@@ -47,7 +47,6 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotHelper.getSlotPosX(1),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
-            false,
         )
         widgetHolder.track(inputTank)
         // catalyst

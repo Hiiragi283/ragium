@@ -43,25 +43,32 @@ data object HTResourceSlotUtil {
      * @see net.neoforged.neoforge.transfer.energy.EnergyHandlerUtil.move
      */
     @JvmStatic
-    fun <T : Resource> move(slotFrom: HTResourceSlot<T>?, slotTo: HTResourceSlot<T>?, amount: Int, parent: TransactionContext?): Int {
+    fun <T : Resource> move(
+        from: HTResourceSlot<T>?,
+        to: HTResourceSlot<T>?,
+        amount: Int,
+        parent: TransactionContext?,
+        fromAccess: HTTransferAccess = HTTransferAccess.INTERNAL,
+        toAccess: HTTransferAccess = HTTransferAccess.INTERNAL,
+    ): Int {
         TransferPreconditions.checkNonNegative(amount)
-        if (slotFrom == null || slotTo == null || amount == 0) return 0
+        if (from == null || to == null || amount == 0) return 0
         return runCatching {
             // 移動元のリソースが空の場合，何も移動しない
-            val fromResource: T = slotFrom.resource
+            val fromResource: T = from.resource
             if (fromResource.isEmpty) return@runCatching 0
             useTransaction(parent) { transaction: Transaction ->
                 // 最大でどれだけ搬出可能か取得する
                 val maxExtracted: Int
                 useTransaction(transaction) { transaction1: Transaction ->
-                    maxExtracted = slotFrom.extract(fromResource, amount, transaction1, HTTransferAccess.INTERNAL)
+                    maxExtracted = from.extract(fromResource, amount, transaction1, fromAccess)
                 }
                 // 搬出できる量がない場合は，実際に移動しない
                 if (maxExtracted == 0) return@runCatching 0
                 // 搬入できる量を取得する
-                val inserted: Int = slotTo.insert(fromResource, maxExtracted, transaction, HTTransferAccess.INTERNAL)
+                val inserted: Int = to.insert(fromResource, maxExtracted, transaction, toAccess)
                 // 搬入できる量と搬出できる量が異なる場合は移動しない
-                if (inserted != slotFrom.extract(fromResource, inserted, transaction, HTTransferAccess.INTERNAL)) {
+                if (inserted != from.extract(fromResource, inserted, transaction, fromAccess)) {
                     return@runCatching 0
                 }
                 transaction.commit()
@@ -70,8 +77,8 @@ data object HTResourceSlotUtil {
         }.getOrElse {
             val report: CrashReport = CrashReport.forThrowable(it, "Moving resources between slots")
             report.addCategory("Move details")
-                .setDetail("Input", slotFrom::toString)
-                .setDetail("Output", slotTo::toString)
+                .setDetail("Input", from::toString)
+                .setDetail("Output", to::toString)
                 .setDetail("Amount", amount)
                 .setDetail("Transaction", parent.toString())
             throw ReportedException(report)

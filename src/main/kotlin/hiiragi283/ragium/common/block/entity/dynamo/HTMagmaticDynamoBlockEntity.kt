@@ -50,7 +50,6 @@ class HTMagmaticDynamoBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
-            false,
         )
         widgetHolder.track(fuelTank)
         // output

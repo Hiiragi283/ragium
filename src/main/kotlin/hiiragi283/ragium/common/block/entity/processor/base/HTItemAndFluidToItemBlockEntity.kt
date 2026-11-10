@@ -50,7 +50,6 @@ abstract class HTItemAndFluidToItemBlockEntity(type: BlockEntityType<*>, pos: Bl
             HTSlotHelper.getSlotPosX(1),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
-            false,
         )
         widgetHolder.track(inputTank)
         // output

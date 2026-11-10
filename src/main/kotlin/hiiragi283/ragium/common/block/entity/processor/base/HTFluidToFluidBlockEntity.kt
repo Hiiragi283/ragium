@@ -35,7 +35,6 @@ abstract class HTFluidToFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
-            false,
         )
         widgetHolder.track(inputTank)
         // output
@@ -44,7 +43,6 @@ abstract class HTFluidToFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
-            false,
         )
         widgetHolder.track(outputTank)
     }

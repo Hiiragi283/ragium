@@ -14,7 +14,7 @@ interface HTGuiAccess {
      * カーソル上のアイテムに対する[ItemAccess]を取得します。
      * @since 26.1.13
      */
-    val cursorAccess: ItemAccess?
+    val cursorAccess: ItemAccess
 
     /**
      * このGUIの始点のx座標を取得します。

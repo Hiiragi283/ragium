@@ -12,7 +12,7 @@ import hiiragi283.lib.transfer.item.HTItemStackSlot
 fun interface HTBlockEntityWithMenu {
     fun setupMenu(widgetHolder: HTWidgetHolder)
 
-    fun HTWidgetHolder.track(tank: HTFluidStackTank, syncType: HTSyncType = HTSyncType.S2C) {
+    fun HTWidgetHolder.track(tank: HTFluidStackTank, syncType: HTSyncType = HTSyncType.BOTH) {
         this.track(HTFluidSyncSlot(tank), syncType)
     }
 

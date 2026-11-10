@@ -68,6 +68,6 @@ interface HTWidget {
     interface Access {
         var isActive: Boolean
         var isVisible: Boolean
-        val cursorAccess: ItemAccess?
+        val cursorAccess: ItemAccess
     }
 }

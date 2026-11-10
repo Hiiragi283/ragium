@@ -7,58 +7,66 @@ import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.lib.recipe.widget.HTGhostWidget
 import hiiragi283.lib.recipe.widget.HTIngredientWidget
+import hiiragi283.lib.transfer.HTResourceSlotUtil
+import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
+import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.lib.transfer.fluid.getFluidStack
+import hiiragi283.lib.util.Either
 import net.neoforged.neoforge.fluids.FluidStack
 
-private typealias FluidStackSetter = (FluidStack) -> Unit
+private typealias ContentSetter = Either<(FluidStack) -> Unit, HTFluidTank>
 
 sealed class HTFluidWidget(
     view: HTFluidView,
-    private val stackSetter: FluidStackSetter?,
+    private val contentSetter: ContentSetter,
     x: Int,
     y: Int,
     val backgroundType: HTBackgroundType,
     width: Int,
     height: Int,
-    val isGhost: Boolean,
 ) : HTAbstractWidget(x - 1, y - 1, width, height),
     HTGhostWidget,
     HTIngredientWidget,
     HTFluidView by view {
+    val isGhost: Boolean get() = contentSetter.isLeft()
+
     final override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.FLUID.get()
 
     final override fun mouseClicked(access: HTWidget.Access, mouseX: Double, mouseY: Double, button: Int) {
-        if (isGhost) {
-            val cursorStack: FluidStack = access.cursorAccess?.let { HTFluidCapabilities.getSlot(it, 0) }?.getFluidStack() ?: return
-            stackSetter?.invoke(cursorStack)
-        }
+        val cursorTank: HTFluidTank = HTFluidCapabilities.getSlot(access.cursorAccess, 0) ?: return
+        contentSetter.fold(
+            { cursorTank.getFluidStack().let(it) },
+            { tank: HTFluidTank ->
+                val cursorFrom: Int = HTResourceSlotUtil.move(cursorTank, tank, Int.MAX_VALUE, null, HTTransferAccess.MANUAL, HTTransferAccess.MANUAL)
+                if (cursorFrom == 0) {
+                    HTResourceSlotUtil.move(tank, cursorTank, Int.MAX_VALUE, null, HTTransferAccess.MANUAL, HTTransferAccess.MANUAL)
+                }
+            },
+        )
     }
 
     final override fun getIngredient(): FluidStack = this.getFluidStack()
 
-    final override fun getGhostConsumer(): HTGhostWidget.GhostIngredientConsumer? = when {
-        isGhost -> HTGhostWidget.FluidConsumer { stack ->
+    final override fun getGhostConsumer(): HTGhostWidget.GhostIngredientConsumer? = contentSetter.leftOrNull()?.let {
+        HTGhostWidget.FluidConsumer { stack ->
             if (stack is FluidStack) {
-                stackSetter?.invoke(stack)
+                it(stack)
             }
         }
-
-        else -> null
     }
 
     //    Slot    //
 
-    class Slot(view: HTFluidView, stackSetter: FluidStackSetter?, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) :
-        HTFluidWidget(view, stackSetter, x, y, backgroundType, 18, 18, isGhost) {
+    class Slot(view: HTFluidView, contentSetter: ContentSetter, x: Int, y: Int, backgroundType: HTBackgroundType) :
+        HTFluidWidget(view, contentSetter, x, y, backgroundType, 18, 18) {
         constructor(
             tank: HTBasicFluidTank,
             x: Int,
             y: Int,
             backgroundType: HTBackgroundType,
-            isGhost: Boolean,
-        ) : this(tank, tank::setStack, x, y, backgroundType, isGhost)
+        ) : this(tank, Either.Right(tank), x, y, backgroundType)
 
         override fun toString(): String =
             "HTFluidWidget.Slot(bounds=$bounds, stack=${this.getFluidStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"
@@ -66,24 +74,22 @@ sealed class HTFluidWidget(
 
     //    Tank    //
 
-    class Tank(view: HTFluidView, stackSetter: FluidStackSetter?, x: Int, y: Int, backgroundType: HTBackgroundType, isGhost: Boolean) :
+    class Tank(view: HTFluidView, contentSetter: ContentSetter, x: Int, y: Int, backgroundType: HTBackgroundType) :
         HTFluidWidget(
             view,
-            stackSetter,
+            contentSetter,
             x,
             y,
             backgroundType,
             18,
             18 * 3,
-            isGhost,
         ) {
         constructor(
             tank: HTBasicFluidTank,
             x: Int,
             y: Int,
             backgroundType: HTBackgroundType,
-            isGhost: Boolean,
-        ) : this(tank, tank::setStack, x, y, backgroundType, isGhost)
+        ) : this(tank, Either.Right(tank), x, y, backgroundType)
 
         override fun toString(): String =
             "HTFluidWidget.Tank(bounds=$bounds, stack=${this.getFluidStack()}, backgroundType=$backgroundType, isGhost=$isGhost)"

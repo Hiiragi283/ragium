@@ -9,7 +9,6 @@ import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.gui.menu.HTContainerMenu
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.core.RegistryAccess
 import net.minecraft.world.entity.player.Inventory
@@ -44,7 +43,7 @@ abstract class HTContainerScreen<MENU : HTContainerMenu<*>>(menu: MENU, inventor
 
     //    HTGuiAccess    //
 
-    override val cursorAccess: ItemAccess? get() = Minecraft.getInstance().player?.let { ItemAccess.forPlayerCursor(it, menu) }
+    override val cursorAccess: ItemAccess by menu::cursorAccess
 
     //    Extensions    //
 

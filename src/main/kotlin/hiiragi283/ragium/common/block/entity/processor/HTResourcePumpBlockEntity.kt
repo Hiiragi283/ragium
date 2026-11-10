@@ -43,7 +43,6 @@ class HTResourcePumpBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
-            false,
         )
         widgetHolder.track(outputTank)
     }

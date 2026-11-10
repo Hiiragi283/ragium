@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.gui.menu
 import com.google.common.collect.Iterables
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.sync.HTChangeType
+import hiiragi283.lib.gui.sync.HTItemSyncSlot
 import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.sync.HTSyncableMenu
 import hiiragi283.lib.gui.sync.HTSyncablePayload
@@ -26,6 +27,7 @@ import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.network.PacketDistributor
+import net.neoforged.neoforge.transfer.access.ItemAccess
 import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.transaction.Transaction
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
@@ -95,6 +97,9 @@ abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val i
             )
         }
     }
+
+    val player: Player get() = inventory.player
+    val cursorAccess: ItemAccess get() = ItemAccess.forPlayerCursor(player, this)
 
     //    AbstractContainerMenu    //
 
@@ -177,6 +182,10 @@ abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val i
 
     fun addTrackedSlot(slot: HTSyncableSlot, type: HTSyncType) {
         trackedSlots += slot to type
+    }
+
+    init {
+        addTrackedSlot(HTItemSyncSlot(::getCarried, ::setCarried), HTSyncType.C2S)
     }
 
     override fun getTrackedSlot(index: Int): HTSyncableSlot? = trackedSlots.getOrNull(index)?.first

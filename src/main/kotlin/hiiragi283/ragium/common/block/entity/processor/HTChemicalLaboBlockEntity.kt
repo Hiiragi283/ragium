@@ -58,7 +58,6 @@ class HTChemicalLaboBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotHelper.getSlotPosX(1),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
-            false,
         )
         widgetHolder.track(inputTank)
         // catalyst
@@ -83,7 +82,6 @@ class HTChemicalLaboBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotHelper.getSlotPosX(7),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
-            false,
         )
         widgetHolder.track(outputTank)
     }
