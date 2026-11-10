@@ -2,8 +2,6 @@
 
 package hiiragi283.lib.data.recipe.builder
 
-import hiiragi283.lib.collection.Nel
-import hiiragi283.lib.collection.toNel
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
 import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.base.HTProgressData
@@ -24,7 +22,7 @@ import kotlin.contracts.contract
  */
 class HTSizedShapelessRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, private val factory: Factory<RECIPE>) :
     HTProgressRecipeBuilder.SingleResult<RECIPE>(prefix) {
-    override fun createRecipe(): RECIPE = factory.create(ingredients.toNel(), result, progressData)
+    override fun createRecipe(): RECIPE = factory.create(ingredients, result, progressData)
 
     // Ingredients
     private val ingredients: MutableList<HTItemIngredient> = ObjectArrayList()
@@ -62,6 +60,6 @@ class HTSizedShapelessRecipeBuilder<out RECIPE : Recipe<*>>(prefix: String, priv
      * @since 26.1.11
      */
     fun interface Factory<out RECIPE : Any> {
-        fun create(ingredients: Nel<HTItemIngredient>, result: HTItemResult, progressData: HTProgressData): RECIPE
+        fun create(ingredients: List<HTItemIngredient>, result: HTItemResult, progressData: HTProgressData): RECIPE
     }
 }

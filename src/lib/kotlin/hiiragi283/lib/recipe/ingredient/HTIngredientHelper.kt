@@ -82,6 +82,7 @@ data object HTIngredientHelper {
     @JvmName("matchFluids")
     @JvmStatic
     fun match(ingredients: Iterable<HTFluidIngredient>, inputs: Iterable<FluidInstance>): Boolean {
+        if (ingredients.none()) return true
         val combined: List<FluidStack> = inputs
             .fold(mutableMapOf()) { map: MutableMap<FluidResource, Int>, instance: FluidInstance ->
                 val resource: FluidResource = unwrap(instance).let(FluidResource::of)
@@ -90,6 +91,7 @@ data object HTIngredientHelper {
                 }
                 map
             }.map { (resource: FluidResource, count: Int) -> resource.toStack(count) }
+        if (combined.isEmpty()) return false
         ingredient@for (ingredient: HTFluidIngredient in ingredients) {
             for (stack: FluidStack in combined) {
                 if (ingredient.test(stack)) {
@@ -108,6 +110,7 @@ data object HTIngredientHelper {
     @JvmName("getMatchingFluids")
     @JvmStatic
     fun getMatchingStacks(ingredients: Iterable<HTFluidIngredient>, inputs: Iterable<FluidInstance>): List<FluidInstance> {
+        if (ingredients.none()) return listOf()
         val combined: List<FluidStack> = inputs
             .fold(mutableMapOf()) { map: MutableMap<FluidResource, Int>, instance: FluidInstance ->
                 val resource: FluidResource = unwrap(instance).let(FluidResource::of)
@@ -116,6 +119,7 @@ data object HTIngredientHelper {
                 }
                 map
             }.map { (resource: FluidResource, count: Int) -> resource.toStack(count) }
+        if (combined.isEmpty()) return listOf()
         val results: MutableList<FluidInstance> = mutableListOf()
         ingredient@for (ingredient: HTFluidIngredient in ingredients) {
             for (stack: FluidStack in combined) {
@@ -190,6 +194,7 @@ data object HTIngredientHelper {
     @JvmName("matchItems")
     @JvmStatic
     fun match(ingredients: Iterable<HTItemIngredient>, inputs: Iterable<ItemInstance>): Boolean {
+        if (ingredients.none()) return true
         val combined: List<ItemStack> = inputs
             .fold(mutableMapOf()) { map: MutableMap<ItemResource, Int>, instance: ItemInstance ->
                 val resource: ItemResource = unwrap(instance).let(ItemResource::of)
@@ -198,6 +203,7 @@ data object HTIngredientHelper {
                 }
                 map
             }.map { (resource: ItemResource, count: Int) -> resource.toStack(count) }
+        if (combined.isEmpty()) return false
         ingredient@for (ingredient: HTItemIngredient in ingredients) {
             for (stack: ItemStack in combined) {
                 if (ingredient.test(stack)) {
@@ -216,6 +222,7 @@ data object HTIngredientHelper {
     @JvmName("getMatchingItems")
     @JvmStatic
     fun getMatchingStacks(ingredients: Iterable<HTItemIngredient>, inputs: Iterable<ItemInstance>): List<ItemInstance> {
+        if (ingredients.none()) return listOf()
         val combined: List<ItemStack> = inputs
             .fold(mutableMapOf()) { map: MutableMap<ItemResource, Int>, instance: ItemInstance ->
                 val resource: ItemResource = unwrap(instance).let(ItemResource::of)
@@ -224,6 +231,7 @@ data object HTIngredientHelper {
                 }
                 map
             }.map { (resource: ItemResource, count: Int) -> resource.toStack(count) }
+        if (combined.isEmpty()) return listOf()
         val results: MutableList<ItemInstance> = mutableListOf()
         ingredient@for (ingredient: HTItemIngredient in ingredients) {
             for (stack: ItemStack in combined) {
