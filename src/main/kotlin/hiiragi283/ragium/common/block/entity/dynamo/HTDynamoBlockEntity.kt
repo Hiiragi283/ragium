@@ -6,6 +6,7 @@ import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTBasicEnergyStorage
+import hiiragi283.lib.transfer.energy.HTEnergyStorageUtil
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
@@ -28,7 +29,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
-import net.neoforged.neoforge.transfer.energy.EnergyHandlerUtil
 import net.neoforged.neoforge.transfer.transaction.Transaction
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
@@ -64,9 +64,9 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
 
     protected fun exportEnergy(level: ServerLevel, pos: BlockPos) {
         for (direction: Direction in Direction.entries) {
-            EnergyHandlerUtil.move(
-                getEnergyHandler(null),
-                HTEnergyCapabilities.getCapability(level, pos.relative(direction), direction.opposite),
+            HTEnergyStorageUtil.move(
+                storage,
+                HTEnergyCapabilities.getStorage(level, pos.relative(direction), direction.opposite),
                 Int.MAX_VALUE,
                 null,
             )
