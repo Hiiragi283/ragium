@@ -4,14 +4,20 @@ import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.data.buildDataPatch
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.Text
+import hiiragi283.lib.transfer.HTTransferAccess
+import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.api.data.RagiumDataComponents
+import net.minecraft.CrashReport
+import net.minecraft.ReportedException
 import net.minecraft.core.component.DataComponentGetter
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.redstone.Redstone
+import net.neoforged.neoforge.transfer.TransferPreconditions
 import net.neoforged.neoforge.transfer.access.ItemAccess
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 import kotlin.math.roundToInt
 
 /**
@@ -22,6 +28,42 @@ import kotlin.math.roundToInt
 data object HTEnergyStorageUtil {
     @JvmStatic
     fun calculateRedstoneLevel(view: HTEnergyView): Int = Mth.lerpDiscrete(view.filledLevel, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+
+    /**
+     * 2つのストレージ間でエネルギーを移動します。
+     * @param amount 移動するエネルギー量の上限
+     * @param parent 親トランザクション。`null`の場合は新しいルートトランザクションを開きます。
+     * @return 実際に移動したエネルギー量
+     * @see net.neoforged.neoforge.transfer.energy.EnergyHandlerUtil.move
+     */
+    @JvmStatic
+    fun move(from: HTEnergyStorage?, to: HTEnergyStorage?, amount: Int, parent: TransactionContext?): Int {
+        TransferPreconditions.checkNonNegative(amount)
+        if (from == null || to == null || amount == 0) return 0
+
+        try {
+            return useTransaction(parent) { transaction ->
+                val maxExtracted: Int = useTransaction(transaction) { simulation ->
+                    from.extract(amount, simulation, HTTransferAccess.INTERNAL)
+                }
+                if (maxExtracted == 0) return@useTransaction 0
+
+                val inserted: Int = to.insert(maxExtracted, transaction, HTTransferAccess.INTERNAL)
+                if (inserted != from.extract(inserted, transaction, HTTransferAccess.INTERNAL)) return@useTransaction 0
+
+                transaction.commit()
+                inserted
+            }
+        } catch (exception: Exception) {
+            val report: CrashReport = CrashReport.forThrowable(exception, "Moving energy between storages")
+            report.addCategory("Move details")
+                .setDetail("Input", from::toString)
+                .setDetail("Output", to::toString)
+                .setDetail("Amount", amount)
+                .setDetail("Transaction", parent.toString())
+            throw ReportedException(report)
+        }
+    }
 
     @JvmStatic
     fun getEnergy(container: DataComponentGetter): Int = container.getOrDefault(RagiumDataComponents.ENERGY, 0)
