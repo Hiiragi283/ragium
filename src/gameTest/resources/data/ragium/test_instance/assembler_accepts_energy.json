@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:function",
+  "function": "ragium:assembler_accepts_energy",
+  "environment": "minecraft:default",
+  "structure": "minecraft:empty",
+  "max_ticks": 20
+}

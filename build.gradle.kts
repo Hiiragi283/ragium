@@ -105,6 +105,11 @@ val dataModule: SourceSet =
             compileClasspath += clientModule.output + clientModule.compileClasspath
             runtimeClasspath += clientModule.output + clientModule.runtimeClasspath
         }.get()
+val gameTestModule: SourceSet =
+    sourceSets
+        .register("gameTest") {
+            compileClasspath += mainModule.output + mainModule.compileClasspath
+        }.get()
 
 repositories {
     mavenLocal()
@@ -182,6 +187,16 @@ neoForge {
             programArgument("--nogui")
         }
 
+        register("gameTestServer") {
+            type = "gameTestServer"
+            gameDirectory =
+                layout.buildDirectory
+                    .dir("game-test")
+                    .get()
+                    .asFile
+            programArguments.addAll("--tests", "$modId:*")
+        }
+
         register("data") {
             clientData()
             sourceSet = dataModule
@@ -227,6 +242,7 @@ neoForge {
             sourceSet(sourceSets.main.get())
             sourceSet(clientModule)
             sourceSet(dataModule)
+            sourceSet(gameTestModule)
         }
     }
 
