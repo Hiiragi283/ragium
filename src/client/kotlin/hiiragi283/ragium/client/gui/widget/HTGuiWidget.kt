@@ -10,7 +10,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.client.input.CharacterEvent
 import net.minecraft.client.input.KeyEvent
 import net.minecraft.client.input.MouseButtonEvent
-import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.transfer.access.ItemAccess
 
 /**
  * 参照 : [Mekanism - GuiElement](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/client/gui/element/GuiElement.java)
@@ -64,6 +64,6 @@ class HTGuiWidget<WIDGET : HTWidget>(private val gui: HTGuiAccess, val widget: W
     private inner class Access : HTWidget.Access {
         override var isActive: Boolean by this@HTGuiWidget::active
         override var isVisible: Boolean by this@HTGuiWidget::visible
-        override val carried: ItemStack by this@HTGuiWidget.gui::carried
+        override val cursorAccess: ItemAccess? by this@HTGuiWidget.gui::cursorAccess
     }
 }

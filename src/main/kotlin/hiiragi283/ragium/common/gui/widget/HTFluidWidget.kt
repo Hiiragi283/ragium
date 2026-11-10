@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.gui.widget
 
+import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.widget.HTAbstractWidget
 import hiiragi283.lib.gui.widget.HTWidget
@@ -10,7 +11,6 @@ import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.lib.transfer.fluid.getFluidStack
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
 private typealias FluidStackSetter = (FluidStack) -> Unit
 
@@ -31,7 +31,8 @@ sealed class HTFluidWidget(
 
     final override fun mouseClicked(access: HTWidget.Access, mouseX: Double, mouseY: Double, button: Int) {
         if (isGhost) {
-            stackSetter?.invoke(FluidUtil.getFirstStackContained(access.carried))
+            val cursorStack: FluidStack = access.cursorAccess?.let { HTFluidCapabilities.getSlot(it, 0) }?.getFluidStack() ?: return
+            stackSetter?.invoke(cursorStack)
         }
     }
 

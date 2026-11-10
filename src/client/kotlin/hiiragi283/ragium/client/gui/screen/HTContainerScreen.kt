@@ -9,12 +9,13 @@ import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.gui.menu.HTContainerMenu
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.core.RegistryAccess
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.client.network.ClientPacketDistributor
+import net.neoforged.neoforge.transfer.access.ItemAccess
 
 abstract class HTContainerScreen<MENU : HTContainerMenu<*>>(menu: MENU, inventory: Inventory, title: Text, width: Int, height: Int) :
     AbstractContainerScreen<MENU>(menu, inventory, title, width, height),
@@ -43,7 +44,7 @@ abstract class HTContainerScreen<MENU : HTContainerMenu<*>>(menu: MENU, inventor
 
     //    HTGuiAccess    //
 
-    override val carried: ItemStack get() = menu.carried
+    override val cursorAccess: ItemAccess? get() = Minecraft.getInstance().player?.let { ItemAccess.forPlayerCursor(it, menu) }
 
     //    Extensions    //
 

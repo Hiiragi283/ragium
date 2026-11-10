@@ -1,6 +1,6 @@
 package hiiragi283.lib.gui
 
-import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.transfer.access.ItemAccess
 
 /**
  * GUIを表すインターフェースです。
@@ -11,9 +11,10 @@ import net.minecraft.world.item.ItemStack
  */
 interface HTGuiAccess {
     /**
-     * カーソル上の[アイテム][ItemStack]を取得します。
+     * カーソル上のアイテムに対する[ItemAccess]を取得します。
+     * @since 26.1.13
      */
-    val carried: ItemStack get() = ItemStack.EMPTY
+    val cursorAccess: ItemAccess?
 
     /**
      * このGUIの始点のx座標を取得します。

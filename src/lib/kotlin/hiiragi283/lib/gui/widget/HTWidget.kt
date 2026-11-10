@@ -1,7 +1,7 @@
 package hiiragi283.lib.gui.widget
 
 import hiiragi283.lib.gui.HTBounds
-import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.transfer.access.ItemAccess
 
 /**
  * GUI上の要素を表すインターフェースです。
@@ -68,6 +68,6 @@ interface HTWidget {
     interface Access {
         var isActive: Boolean
         var isVisible: Boolean
-        val carried: ItemStack
+        val cursorAccess: ItemAccess?
     }
 }
