@@ -750,6 +750,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 ingredient { +holderSet(CommonTagPrefixes.GEM, gem) }
                 result { +dust }
                 recipeId suffix "_from_gem"
+                condition { itemTagPresent(CommonTagPrefixes.GEM, gem) }
             }.save(exporter)
         }
 
@@ -759,6 +760,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 ingredient { +holderSet(CommonTagPrefixes.INGOT, metalLike) }
                 result { +dust }
                 recipeId suffix "_from_ingot"
+                condition { itemTagPresent(CommonTagPrefixes.INGOT, metalLike) }
             }.save(exporter)
         }
 

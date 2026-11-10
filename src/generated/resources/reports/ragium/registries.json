@@ -35,6 +35,7 @@
     "enchanted_experience",
     "enchanter",
     "enchantment_absorber",
+    "energy_pipe",
     "engraver",
     "experience",
     "experience_tank",
@@ -116,6 +117,7 @@
     "electrolyzer",
     "enchanter",
     "enchantment_absorber",
+    "energy_pipe",
     "engraver",
     "experience_tank",
     "extractor",
@@ -343,6 +345,7 @@
     "enchanted_experience_bucket",
     "enchanter",
     "enchantment_absorber",
+    "energy_pipe",
     "engraver",
     "experience_bucket",
     "experience_tank",
@@ -585,11 +588,17 @@
     "memory_disc",
     "sized"
   ],
+  "minecraft:test_function": [
+    "assembler_accepts_energy"
+  ],
   "minecraft:worldgen/configured_feature": [
     "lake/crude_oil"
   ],
   "minecraft:worldgen/placed_feature": [
     "lake/crude_oil"
+  ],
+  "neoforge:attachment_types": [
+    "energy_network"
   ],
   "neoforge:biome_modifier": [
     "lake/crude_oil"
@@ -666,8 +675,7 @@
   "ragium:item_result_type": [
     "enchanted_book",
     "simple",
-    "tag",
-    "with_fallback"
+    "tag"
   ],
   "ragium:syncable_payload_type": [
     "fluid",

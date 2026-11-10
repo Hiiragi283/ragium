@@ -132,7 +132,7 @@ data object RagiumRecipeBuilders {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSingleRecipeBuilder.Basic(RagiumConstants.COMPRESSING, ::RTPulverizingRecipe).apply(builderAction)
+        return HTSingleRecipeBuilder.Basic(RagiumConstants.PULVERIZING, ::RTPulverizingRecipe).apply(builderAction)
     }
 
     // Heat

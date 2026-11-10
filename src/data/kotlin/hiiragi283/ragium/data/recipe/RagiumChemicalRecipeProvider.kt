@@ -89,7 +89,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
 
         // Molten Glass + Niter -> Ghast Tear
         RagiumRecipeBuilders.autoclaving {
-            itemIngredient { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Chemical.NITER) }
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.NITER) }
             fluidIngredient { +holderSet(RagiumFluids.MOLTEN_GLASS) }
             result { +Items.GHAST_TEAR }
         }.save(exporter)
