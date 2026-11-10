@@ -37,19 +37,26 @@ data object HTEnergyStorageUtil {
      * @see net.neoforged.neoforge.transfer.energy.EnergyHandlerUtil.move
      */
     @JvmStatic
-    fun move(from: HTEnergyStorage?, to: HTEnergyStorage?, amount: Int, parent: TransactionContext?): Int {
+    fun move(
+        from: HTEnergyStorage?,
+        to: HTEnergyStorage?,
+        amount: Int,
+        parent: TransactionContext?,
+        fromAccess: HTTransferAccess = HTTransferAccess.INTERNAL,
+        toAccess: HTTransferAccess = HTTransferAccess.INTERNAL,
+    ): Int {
         TransferPreconditions.checkNonNegative(amount)
         if (from == null || to == null || amount == 0) return 0
 
         try {
             return useTransaction(parent) { transaction ->
                 val maxExtracted: Int = useTransaction(transaction) { simulation ->
-                    from.extract(amount, simulation, HTTransferAccess.INTERNAL)
+                    from.extract(amount, simulation, fromAccess)
                 }
                 if (maxExtracted == 0) return@useTransaction 0
 
-                val inserted: Int = to.insert(maxExtracted, transaction, HTTransferAccess.INTERNAL)
-                if (inserted != from.extract(inserted, transaction, HTTransferAccess.INTERNAL)) return@useTransaction 0
+                val inserted: Int = to.insert(maxExtracted, transaction, toAccess)
+                if (inserted != from.extract(inserted, transaction, fromAccess)) return@useTransaction 0
 
                 transaction.commit()
                 inserted

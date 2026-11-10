@@ -135,7 +135,6 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id(HTConstants.TAG), HTItemResult.TagEntry.TYPE)
             helper.register(RagiumAPI.id("enchanted_book"), HTItemResult.EnchantedBookEntry.TYPE)
-            helper.register(RagiumAPI.id("with_fallback"), HTItemResult.WithFallbackEntry.TYPE)
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
             helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)

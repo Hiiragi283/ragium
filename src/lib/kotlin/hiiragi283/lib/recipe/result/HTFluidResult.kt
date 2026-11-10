@@ -55,8 +55,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
         }
 
         @JvmField
-        val CODEC: Codec<HTFluidResult> =
-            Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) { it.toResult() }
+        val CODEC: Codec<HTFluidResult> = Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) { it.toResult() }
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTFluidResult> = StreamCodec.composite(
@@ -106,8 +105,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
 
             @JvmField
             val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> =
-                ByteBufCodecs.registry(RagiumRegistries.Keys.FLUID_RESULT_TYPE)
-                    .dispatch(Entry::type, HTFluidResultType<*>::streamCodec)
+                ByteBufCodecs.registry(RagiumRegistries.Keys.FLUID_RESULT_TYPE).dispatch(Entry::type, HTFluidResultType<*>::streamCodec)
         }
 
         fun type(): HTFluidResultType<*>

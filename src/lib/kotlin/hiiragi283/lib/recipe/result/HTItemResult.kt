@@ -56,9 +56,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
         }
 
         @JvmField
-        val CODEC: Codec<HTItemResult> = Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) {
-            it.toResult()
-        }
+        val CODEC: Codec<HTItemResult> = Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) { it.toResult() }
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemResult> = StreamCodec.composite(
@@ -110,9 +108,8 @@ data class HTItemResult(val entry: Entry, val count: Int) :
             )
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> = ByteBufCodecs.registry(
-                RagiumRegistries.Keys.ITEM_RESULT_TYPE,
-            ).dispatch(Entry::type, HTItemResultType<*>::streamCodec)
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> =
+                ByteBufCodecs.registry(RagiumRegistries.Keys.ITEM_RESULT_TYPE).dispatch(Entry::type, HTItemResultType<*>::streamCodec)
         }
 
         fun type(): HTItemResultType<*>
@@ -265,41 +262,5 @@ data class HTItemResult(val entry: Entry, val count: Int) :
                 buildDataPatch { set(DataComponents.STORED_ENCHANTMENTS, buildEnchantments()) },
             ),
         )
-    }
-
-    /**
-     * @since 26.1.7
-     */
-    @JvmRecord
-    data class WithFallbackEntry(val base: Entry, val fallback: Entry) : Entry {
-        companion object {
-            @JvmField
-            val CODEC: MapCodec<WithFallbackEntry> = HTCodecs.recordMap { instance ->
-                instance.group(
-                    Entry.MAP_CODEC.fieldOf("base").forGetter(WithFallbackEntry::base),
-                    Entry.MAP_CODEC.fieldOf("fallback").forGetter(WithFallbackEntry::fallback),
-                ).apply(instance, ::WithFallbackEntry)
-            }
-
-            @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, WithFallbackEntry> = StreamCodec.composite(
-                Entry.STREAM_CODEC,
-                WithFallbackEntry::base,
-                Entry.STREAM_CODEC,
-                WithFallbackEntry::fallback,
-                ::WithFallbackEntry,
-            )
-
-            @JvmField
-            val TYPE: HTItemResultType<WithFallbackEntry> = HTItemResultType(CODEC, STREAM_CODEC)
-        }
-
-        override fun type(): HTItemResultType<*> = TYPE
-
-        override fun create(count: Int): ItemStack = base.create(count).takeUnless(ItemStack::isEmpty) ?: fallback.create(count)
-
-        override fun getId(): Identifier? = base.getId() ?: fallback.getId()
-
-        override fun display(): SlotDisplay = base.display().takeUnless { it is SlotDisplay.Empty } ?: fallback.display()
     }
 }

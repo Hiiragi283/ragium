@@ -8,7 +8,7 @@ import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.common.util.ValueIOSerializable
 
-data object HTEnergyCapabilityCodec : HTCapabilityCodec(HTBlockEntity::hasEnergyStorage) {
+data object HTEnergyCapabilityCodec : HTCapabilityCodec {
     override fun saveTo(output: ValueOutput, blockEntity: HTBlockEntity) {
         val storage: HTEnergyStorage = getHandler(blockEntity) ?: return
         if (storage is ValueIOSerializable) {
@@ -28,4 +28,6 @@ data object HTEnergyCapabilityCodec : HTCapabilityCodec(HTBlockEntity::hasEnergy
     }
 
     private fun getHandler(blockEntity: HTBlockEntity): HTEnergyStorage? = blockEntity.getEnergyStorage(null)
+
+    override fun canHandle(blockEntity: HTBlockEntity): Boolean = blockEntity.hasEnergyStorage()
 }

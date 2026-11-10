@@ -22,8 +22,8 @@ class HTSlottedCapabilityCodec<CONTAINER : Any>(
     private val containerTag: String,
     private val containerKey: String,
     private val blockEntityGetter: (HTBlockEntity, Direction?) -> List<CONTAINER>,
-    canHandle: (HTBlockEntity) -> Boolean,
-) : HTCapabilityCodec(canHandle) {
+    private val canHandle: (HTBlockEntity) -> Boolean,
+) : HTCapabilityCodec {
     companion object {
         @JvmField
         val ITEM: HTSlottedCapabilityCodec<HTItemSlot> =
@@ -96,4 +96,6 @@ class HTSlottedCapabilityCodec<CONTAINER : Any>(
     }
 
     private fun getContainers(blockEntity: HTBlockEntity): List<CONTAINER> = blockEntityGetter(blockEntity, null)
+
+    override fun canHandle(blockEntity: HTBlockEntity): Boolean = canHandle.invoke(blockEntity)
 }
