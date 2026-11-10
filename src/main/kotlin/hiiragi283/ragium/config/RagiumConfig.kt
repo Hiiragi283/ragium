@@ -54,6 +54,8 @@ data object RagiumConfig {
 
         val expConversionRatio: ModConfigSpec.IntValue = builder.definePositiveInt("expConversionRatio", 20)
 
+        val energyPipeRate: ModConfigSpec.IntValue = builder.definePositiveInt("energyPipeRate", 256)
+
         @JvmField
         val machineTankCapacity: ModConfigSpec.IntValue = builder.definePositiveInt("machineTankCapacity", 8000)
 

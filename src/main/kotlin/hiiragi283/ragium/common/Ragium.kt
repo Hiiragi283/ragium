@@ -21,6 +21,7 @@ import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.common.attachment.RagiumAttachments
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.effect.RagiumMobEffects
@@ -58,6 +59,7 @@ data object Ragium : HTCommonMod() {
         RagiumMobEffects.register(eventBus)
         RagiumPotions.register(eventBus)
 
+        RagiumAttachments.register(eventBus)
         RagiumWidgetTypes.REGISTER.register(eventBus)
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)

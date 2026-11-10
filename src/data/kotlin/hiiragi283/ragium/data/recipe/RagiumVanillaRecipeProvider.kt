@@ -697,6 +697,17 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             ingredient { +holderSet(Tags.Items.ENDER_PEARLS) }
             result { +RagiumBlocks.VOID_TANK }
         }.save(exporter)
+
+        // Energy Pipe
+        VanillaRecipeBuilders.shaped {
+            +"CRC"
+            define('C') { items { +Items.COPPER_INGOT } }
+            define('R') { items { +Items.REDSTONE } }
+            result {
+                +RagiumBlocks.ENERGY_PIPE
+                count = 8
+            }
+        }.save(exporter)
     }
 
     //    Upgrade    //

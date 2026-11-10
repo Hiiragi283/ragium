@@ -228,6 +228,10 @@ data object RagiumBlockEntityTypes {
 
     // Battery
     @JvmField
+    val ENERGY_PIPE: HTDeferredBlockEntityType<HTEnergyPipeBlockEntity> =
+        REGISTER.registerType("energy_pipe", ::HTEnergyPipeBlockEntity)
+
+    @JvmField
     val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
         registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
 
@@ -255,6 +259,8 @@ data object RagiumBlockEntityTypes {
 
     @JvmStatic
     private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
+        event.registerBlockEntity(HTEnergyCapabilities.block, ENERGY_PIPE.get(), HTEnergyPipeBlockEntity::getEnergyInput)
+
         fun <BE : HTBlockEntity> registerBlockEntity(type: BlockEntityType<BE>) {
             event.registerBlockEntity(HTEnergyCapabilities.block, type, HTBlockEntity::getEnergyHandler)
             event.registerBlockEntity(HTFluidCapabilities.block, type, HTBlockEntity::getFluidHandler)

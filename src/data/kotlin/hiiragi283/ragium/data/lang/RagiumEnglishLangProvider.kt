@@ -86,6 +86,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.VOID_TANK, "Void Tank")
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
 
+        add(RagiumBlocks.ENERGY_PIPE, "Energy Pipe")
         add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")
 
         add(RagiumBlocks.UPGRADE_STATION, "Upgrade Station")

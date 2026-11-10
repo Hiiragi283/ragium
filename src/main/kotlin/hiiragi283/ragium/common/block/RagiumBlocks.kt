@@ -434,6 +434,13 @@ data object RagiumBlocks {
 
     // Battery
     @JvmField
+    val ENERGY_PIPE: HTBasicDeferredBlockAndItem<HTEnergyPipeBlock> = registerWithBE(
+        RagiumBlockEntityTypes.ENERGY_PIPE,
+        ::HTEnergyPipeBlock,
+        properties(2f).requiresCorrectToolForDrops().sound(SoundType.COPPER).noOcclusion(),
+    )
+
+    @JvmField
     val CREATIVE_BATTERY: HTBasicDeferredBlockAndItem<HTBasicEntityBlock> =
         registerWithBE(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBasicEntityBlock)
 

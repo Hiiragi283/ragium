@@ -82,6 +82,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.VOID_TANK, "廃棄タンク")
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブ用タンク")
 
+        add(RagiumBlocks.ENERGY_PIPE, "エネルギーパイプ")
         add(RagiumBlocks.CREATIVE_BATTERY, "クリエイティブ用バッテリー")
 
         add(RagiumBlocks.UPGRADE_STATION, "強化ステーション")
