@@ -30,6 +30,7 @@ import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
+import hiiragi283.ragium.common.network.HTInteractWithCursorPayload
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.config.RagiumConfig
@@ -152,10 +153,8 @@ data object Ragium : HTCommonMod() {
 
     override fun registerPayload(registrar: PayloadRegistrar) {
         registrar.playToClient(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC)
-        registrar.playBidirectional(
-            HTUpdateMenuPacket.TYPE,
-            HTUpdateMenuPacket.STREAM_CODEC,
-            HTPayloadHandlers::handleC2S,
-        )
+        registrar.playToClient(HTUpdateMenuPacket.TYPE, HTUpdateMenuPacket.STREAM_CODEC)
+
+        registrar.playToServer(HTInteractWithCursorPayload.TYPE, HTInteractWithCursorPayload.STREAM_CODEC, HTPayloadHandlers::handleC2S)
     }
 }

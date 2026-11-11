@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.gui.menu
 
-import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.sync.HTSyncableSlot
 import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetHolder
@@ -39,9 +38,13 @@ class HTWidgetContainerMenu(menuType: MenuType<*>, containerId: Int, inventory: 
             return widget
         }
 
-        override fun track(slot: HTSyncableSlot, type: HTSyncType) {
-            this@HTWidgetContainerMenu.addTrackedSlot(slot, type)
-            RagiumAPI.LOGGER.debug("Added syncable slot: {} for {}", slot, type)
+        override fun getWidgetId(widget: HTWidget): Int = widgets.indexOf(widget)
+
+        override fun getWidget(index: Int): HTWidget? = widgets.getOrNull(index)
+
+        override fun track(slot: HTSyncableSlot) {
+            this@HTWidgetContainerMenu.addTrackedSlot(slot)
+            RagiumAPI.LOGGER.debug("Added syncable slot: {}", slot)
         }
 
         override var rows: Int = 3

@@ -3,8 +3,6 @@ package hiiragi283.ragium.common.gui.menu
 import com.google.common.collect.Iterables
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.sync.HTChangeType
-import hiiragi283.lib.gui.sync.HTItemSyncSlot
-import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.sync.HTSyncableMenu
 import hiiragi283.lib.gui.sync.HTSyncablePayload
 import hiiragi283.lib.gui.sync.HTSyncableSlot
@@ -177,18 +175,13 @@ abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val i
 
     //    Slot Sync    //
 
-    val trackedSlots: List<Pair<HTSyncableSlot, HTSyncType>>
-        field: MutableList<Pair<HTSyncableSlot, HTSyncType>> = ObjectArrayList()
+    val trackedSlots: List<HTSyncableSlot> field: MutableList<HTSyncableSlot> = ObjectArrayList()
 
-    fun addTrackedSlot(slot: HTSyncableSlot, type: HTSyncType) {
-        trackedSlots += slot to type
+    fun addTrackedSlot(slot: HTSyncableSlot) {
+        trackedSlots += slot
     }
 
-    init {
-        addTrackedSlot(HTItemSyncSlot(::getCarried, ::setCarried), HTSyncType.C2S)
-    }
-
-    override fun getTrackedSlot(index: Int): HTSyncableSlot? = trackedSlots.getOrNull(index)?.first
+    override fun getTrackedSlot(index: Int): HTSyncableSlot? = trackedSlots.getOrNull(index)
 
     /**
      * 参照 : [Mekanism - MekanismContainer.broadcastChanges]
@@ -200,8 +193,7 @@ abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val i
         if (player is ServerPlayer) {
             HTUpdateMenuPacket.create(containerId) {
                 for (i: Int in trackedSlots.indices) {
-                    val (slot: HTSyncableSlot, syncType: HTSyncType) = trackedSlots[i]
-                    if (!syncType.allowS2C) continue
+                    val slot: HTSyncableSlot = trackedSlots[i]
                     val changeType: HTChangeType = slot.getChange() ?: continue
                     val payload: HTSyncablePayload = slot.createPayload(access, changeType) ?: continue
                     this[i] = payload
@@ -221,7 +213,7 @@ abstract class HTContainerMenu<C>(menuType: MenuType<*>, containerId: Int, val i
         if (player is ServerPlayer) {
             HTUpdateMenuPacket.create(containerId) {
                 for (i: Int in trackedSlots.indices) {
-                    val (slot: HTSyncableSlot, _) = trackedSlots[i]
+                    val slot: HTSyncableSlot = trackedSlots[i]
                     slot.getChange()
                     val payload: HTSyncablePayload = slot.createPayload(access, HTChangeType.FULL) ?: continue
                     this[i] = payload

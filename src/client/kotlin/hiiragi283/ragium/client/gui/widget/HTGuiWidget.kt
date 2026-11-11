@@ -1,8 +1,10 @@
 package hiiragi283.ragium.client.gui.widget
 
-import hiiragi283.lib.gui.HTGuiAccess
 import hiiragi283.lib.gui.widget.HTWidget
+import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.text.Text
+import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
+import hiiragi283.ragium.common.gui.menu.HTWidgetContainerMenu
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Renderable
@@ -10,21 +12,21 @@ import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.client.input.CharacterEvent
 import net.minecraft.client.input.KeyEvent
 import net.minecraft.client.input.MouseButtonEvent
-import net.neoforged.neoforge.transfer.access.ItemAccess
 
 /**
  * 参照 : [Mekanism - GuiElement](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/client/gui/element/GuiElement.java)
  */
-class HTGuiWidget<WIDGET : HTWidget>(private val gui: HTGuiAccess, val widget: WIDGET) :
+class HTGuiWidget<WIDGET : HTWidget>(private val screen: HTWidgetContainerScreen, val widget: WIDGET) :
     AbstractWidget(
-        widget.bounds.x + gui.getLeftPos(),
-        widget.bounds.y + gui.getTopPos(),
+        widget.bounds.x + screen.getLeftPos(),
+        widget.bounds.y + screen.getTopPos(),
         widget.bounds.width,
         widget.bounds.height,
         Text.empty(),
     ) {
     private val access = Access()
-    private val renderer: Renderable? by lazy { HTWidgetRendererManager.create(gui, widget) }
+    private val menuAccess = MenuAccess()
+    private val renderer: Renderable? by lazy { HTWidgetRendererManager.create(screen, widget) }
 
     init {
         widget.onInit(access)
@@ -37,7 +39,7 @@ class HTGuiWidget<WIDGET : HTWidget>(private val gui: HTGuiAccess, val widget: W
     }
 
     override fun onClick(event: MouseButtonEvent, doubleClick: Boolean) {
-        widget.mouseClicked(access, event.x(), event.y(), event.button())
+        widget.mouseClicked(menuAccess, event.x(), event.y(), event.button())
     }
 
     override fun onRelease(event: MouseButtonEvent) {
@@ -59,11 +61,13 @@ class HTGuiWidget<WIDGET : HTWidget>(private val gui: HTGuiAccess, val widget: W
 
     override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {}
 
-    //    HTWidget.Access    //
-
     private inner class Access : HTWidget.Access {
         override var isActive: Boolean by this@HTGuiWidget::active
         override var isVisible: Boolean by this@HTGuiWidget::visible
-        override val cursorAccess: ItemAccess by this@HTGuiWidget.gui::cursorAccess
+    }
+
+    private inner class MenuAccess : HTWidget.MenuAccess {
+        override val clientMenu: HTWidgetContainerMenu by this@HTGuiWidget.screen::menu
+        override val widgetHolder: HTWidgetHolder by clientMenu::widgetHolder
     }
 }

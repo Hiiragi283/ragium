@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.gui.widget
 import hiiragi283.lib.capability.HTItemCapabilities
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTBounds
+import hiiragi283.lib.gui.widget.HTCursorInteractiveWidget
 import hiiragi283.lib.gui.widget.HTWidget
 import hiiragi283.lib.gui.widget.HTWidgetType
 import hiiragi283.lib.recipe.widget.HTGhostWidget
@@ -12,6 +13,7 @@ import hiiragi283.lib.transfer.item.getItemStack
 import hiiragi283.ragium.common.gui.slot.HTItemContainerSlot
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.transfer.access.ItemAccess
 
 private typealias ItemStackSetter = (ItemStack) -> Unit
 
@@ -62,6 +64,7 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
         backgroundType: HTBackgroundType,
         val isGhost: Boolean,
     ) : HTItemWidget(backgroundType),
+        HTCursorInteractiveWidget,
         HTGhostWidget {
         constructor(
             stackGetter: () -> ItemStack,
@@ -83,9 +86,9 @@ sealed class HTItemWidget(val backgroundType: HTBackgroundType) :
 
         override fun getStack(): ItemStack = stackGetter()
 
-        override fun mouseClicked(access: HTWidget.Access, mouseX: Double, mouseY: Double, button: Int) {
+        override fun interactWithCursor(access: ItemAccess) {
             if (isGhost) {
-                val cursorStack: ItemStack = HTItemCapabilities.getSlot(access.cursorAccess, 0)?.getItemStack() ?: return
+                val cursorStack: ItemStack = HTItemCapabilities.getSlot(access, 0)?.getItemStack() ?: return
                 stackSetter?.invoke(cursorStack)
             }
         }
