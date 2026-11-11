@@ -282,7 +282,7 @@ class HTFluidContentRegister(modId: String) : RegistryAliasAcceptor {
                 blockRegister.registerBlock(
                     name,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.WATER),
-                ) { prop: BlockBehaviour.Properties -> blockFactory!!(sourceHolder.get(), prop) }
+                ) { prop: BlockBehaviour.Properties -> it(sourceHolder.get(), prop) }
             }
             // Fluid
             val flowingHolder: HTDeferredHolder<Fluid, BaseFlowingFluid.Flowing> =

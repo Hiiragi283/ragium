@@ -306,8 +306,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 recipe.itemIngredient.display(),
                 recipe.fluidIngredient.display(),
                 recipe.catalyst.display(),
-                recipe.result.content.getLeft().displayOrEmpty(),
-                recipe.result.content.getRight().displayOrEmpty(),
+                recipe.result.itemDisplay(),
+                recipe.result.fluidDisplay(),
                 recipe.progressData,
             )
         }

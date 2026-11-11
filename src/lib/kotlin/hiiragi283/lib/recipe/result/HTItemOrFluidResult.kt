@@ -3,6 +3,7 @@ package hiiragi283.lib.recipe.result
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.recipe.display.displayOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.Ior
@@ -13,6 +14,7 @@ import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.fluids.FluidStack
+import java.util.Optional
 
 /**
  * アイテムまたは液体の完成品を保持するクラスです。
@@ -48,7 +50,7 @@ data class HTItemOrFluidResult(val content: Ior<HTItemResult, HTFluidResult>) : 
         .toPair(ItemStack::EMPTY, FluidStack::EMPTY)
         .let(::HTItemAndFluidStack)
 
-    fun itemDisplay(): SlotDisplay? = content.getLeft()?.display()
+    fun itemDisplay(): Optional<SlotDisplay> = content.getLeft().displayOrEmpty()
 
-    fun fluidDisplay(): SlotDisplay? = content.getRight()?.display()
+    fun fluidDisplay(): Optional<SlotDisplay> = content.getRight().displayOrEmpty()
 }

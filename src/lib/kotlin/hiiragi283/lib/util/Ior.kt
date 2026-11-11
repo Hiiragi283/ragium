@@ -99,25 +99,6 @@ sealed class Ior<out A, out B> {
     /**
      * 保持している値を変換します。
      * @param C 変換後のクラス
-     * @param left このインスタンスが[Left]の場合の変換ブロック
-     * @param right このインスタンスが[Right]の場合の変換ブロック
-     * @return 変換された値
-     */
-    inline fun <C> map(left: (A) -> C, right: (B) -> C): C {
-        contract {
-            callsInPlace(left, InvocationKind.AT_MOST_ONCE)
-            callsInPlace(right, InvocationKind.AT_MOST_ONCE)
-        }
-        return when (this) {
-            is Both -> right(rightValue)
-            is Left -> left(value)
-            is Right -> right(value)
-        }
-    }
-
-    /**
-     * 保持している値を変換します。
-     * @param C 変換後のクラス
      * @param right このインスタンスが[Right]または[Both]の場合の変換ブロック
      * @return 変換された[Ior]のインスタンス
      */
