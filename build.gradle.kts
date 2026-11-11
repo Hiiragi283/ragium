@@ -365,12 +365,14 @@ kotlin {
 
 dokka {
     dokkaSourceSets {
+        val librarySourceRoots = listOf(libModule, libClientModule).map { it.kotlin.srcDirs }
+
         configureEach {
-            sourceRoots.from(
-                listOf(libModule, libClientModule)
-                    .map { it.kotlin }
-                    .map { it.srcDirs.filter { "lib" in it.path } },
-            )
+            if (name == mainModule.name) {
+                sourceRoots.setFrom(librarySourceRoots)
+            } else {
+                sourceRoots.from(librarySourceRoots)
+            }
         }
     }
 }
