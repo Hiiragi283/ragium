@@ -66,7 +66,6 @@ class HTCombustionDynamoBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotHelper.getSlotPosX(0.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.EXTRA_INPUT,
-            false,
         )
         widgetHolder.track(coolantTank)
         widgetHolder += HTFluidWidget.Tank(
@@ -74,7 +73,6 @@ class HTCombustionDynamoBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
-            false,
         )
         widgetHolder.track(fuelTank)
         // output

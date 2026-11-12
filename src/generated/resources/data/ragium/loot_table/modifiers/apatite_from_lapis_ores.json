@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "chances": [
+                0.1,
+                0.14285715,
+                0.25,
+                1.0
+              ],
+              "condition": "minecraft:table_bonus",
+              "enchantment": "minecraft:fortune"
+            }
+          ],
+          "name": "ragium:apatite"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ragium:modifiers/apatite_from_lapis_ores"
+}

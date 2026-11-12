@@ -1,8 +1,8 @@
 {
-  "type": "ragium:reacting",
+  "type": "ragium:reacting/item",
   "ingredients": {
     "fluid": {
-      "amount": 1000,
+      "amount": 500,
       "fluids": "#c:hydrogen"
     },
     "item": {
@@ -12,7 +12,7 @@
   },
   "results": {
     "fluid": {
-      "amount": 500,
+      "amount": 200,
       "id": "ragium:fuel"
     }
   },

@@ -6,6 +6,7 @@ import hiiragi283.lib.world.getTypedBlockEntity
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.entity.storage.base.HTBaseTankBlockEntity
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -25,16 +26,19 @@ open class HTFluidStorageBlock(type: HTDeferredBlockEntityType<*>, properties: P
         hand: InteractionHand,
         hitResult: BlockHitResult,
     ): InteractionResult {
-        val result: InteractionResult = super.useItemOn(itemStack, state, level, pos, player, hand, hitResult)
-        if (itemStack.isEmpty) return result
-        if (!player.isShiftKeyDown) {
-            val tank: HTFluidTank =
-                level.getTypedBlockEntity<HTBaseTankBlockEntity>(pos)?.tank ?: return InteractionResult.FAIL
-            if (interactTank(itemStack, state, level, pos, player, hand, hitResult, tank)) {
-                return InteractionResult.SUCCESS
+        if (itemStack.isEmpty) return InteractionResult.TRY_WITH_EMPTY_HAND
+        if (level is ServerLevel) {
+            if (!player.isShiftKeyDown) {
+                val tank: HTFluidTank =
+                    level.getTypedBlockEntity<HTBaseTankBlockEntity>(pos)?.tank ?: return InteractionResult.FAIL
+                if (interactTank(itemStack, state, level, pos, player, hand, hitResult, tank)) {
+                    return InteractionResult.SUCCESS_SERVER
+                }
             }
+            return InteractionResult.PASS
+        } else {
+            return InteractionResult.CONSUME
         }
-        return result
     }
 
     protected open fun interactTank(

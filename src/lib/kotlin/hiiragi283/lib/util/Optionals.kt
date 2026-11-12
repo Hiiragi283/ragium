@@ -13,13 +13,6 @@ import kotlin.jvm.optionals.toList
 fun <T : Any> T?.toOptional(): Optional<T> = Optional.ofNullable(this)
 
 /**
- * [Optional.of]に変換します。
- * @author Hiiragi Tsubasa
- * @since 26.1.3
- */
-fun <T : Any> T.some(): Optional<T> = Optional.of(this)
-
-/**
  * [Pair]の[Optional]を[Map]に変換します。
  * @author Hiiragi Tsubasa
  * @since 26.1.3

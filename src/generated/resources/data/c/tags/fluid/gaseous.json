@@ -5,9 +5,10 @@
     "#c:hydrogen",
     "#c:hydrogen_chloride",
     "#c:hydrogen_fluoride",
-    "#c:natural_gas",
+    "#c:hydrogen_sulfide",
     "#c:oxygen",
     "#c:sulfur_dioxide",
-    "#c:sulfur_trioxide"
+    "#c:sulfur_trioxide",
+    "#c:synthetic_gas"
   ]
 }

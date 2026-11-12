@@ -4,8 +4,8 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTGuiAccess
 import hiiragi283.lib.gui.widget.HTSpriteWidgetRenderer
 import hiiragi283.lib.text.Text
+import hiiragi283.lib.transfer.energy.HTEnergyStorageUtil
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Item
@@ -29,6 +29,6 @@ class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) :
     override fun getSpriteId(): Identifier = SPRITE
 
     override fun collectTooltips(consumer: (Text) -> Unit, context: Item.TooltipContext, flag: TooltipFlag) {
-        HTStorageHelper.addEnergyTooltip(widget, consumer, flag.isCreative)
+        HTEnergyStorageUtil.addEnergyTooltip(widget, consumer, flag.isCreative)
     }
 }

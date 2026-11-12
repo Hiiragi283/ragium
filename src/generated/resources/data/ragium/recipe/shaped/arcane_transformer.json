@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:nuggets/shadow_steel",
+    "B": "ragium:machine_parts/arcane",
+    "C": "#c:gears/netherite",
+    "D": "#c:nether_stars"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ADA"
+  ],
+  "result": {
+    "id": "ragium:arcane_transformer"
+  }
+}

@@ -17,4 +17,6 @@ interface RagiumConfigAccess {
     }
 
     val modIdComparator: Comparator<Identifier>
+
+    val expRatio: Int
 }

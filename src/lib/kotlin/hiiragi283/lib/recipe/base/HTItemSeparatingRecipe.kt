@@ -7,14 +7,16 @@ import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.recipe.result.createOrEmpty
+import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.codec.compactNelFieldOf
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.serialization.network.nelOf
 import hiiragi283.lib.util.IorNel
+import hiiragi283.lib.util.toPair
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
@@ -33,6 +35,8 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
     @JvmRecord
     data class Output(val items: List<ItemStack>, val fluid: FluidStack) {
         constructor(item: ItemStack, fluid: FluidStack) : this(listOf(item), fluid)
+
+        constructor(pair: Pair<List<ItemStack>, FluidStack>) : this(pair.first, pair.second)
     }
 
     //    Result    //
@@ -42,7 +46,7 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
      * @since 26.1.12
      */
     @JvmRecord
-    data class Result(val content: IorNel<HTItemResult, HTFluidResult>) {
+    data class Result(val content: IorNel<HTItemResult, HTFluidResult>) : HTRecipeResult<Output> {
         companion object {
             @JvmField
             val CODEC: MapCodec<Result> = HTCodecs.ior(
@@ -57,10 +61,17 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
             ).map(::Result, Result::content)
         }
 
-        fun create(): Output {
-            val (items: Nel<HTItemResult>?, fluid: HTFluidResult?) = content.toPair()
-            return Output(items?.map(HTItemResult::create) ?: listOf(), fluid.createOrEmpty())
-        }
+        override fun getId(): Identifier? = content.fold(
+            { it.head.getId() },
+            HTFluidResult::getId,
+            { items: Nel<HTItemResult>, fluid: HTFluidResult -> items.head.getId() ?: fluid.getId() },
+        )
+
+        override fun create(): Output = content
+            .mapLeft { it.map(HTItemResult::create) }
+            .mapRight { it.create() }
+            .toPair(::listOf, FluidStack::EMPTY)
+            .let(::Output)
     }
 
     //    Basic    //
@@ -69,7 +80,7 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
      * @author Hiiragi Tsubasa
      * @since 26.1.12
      */
-    open class Basic(val ingredient: HTItemIngredient, val result: Result, override val progressData: HTProgressData) :
+    open class Basic(override val ingredient: HTItemIngredient, val result: Result, override val progressData: HTProgressData) :
         HTItemSeparatingRecipe,
         HTProgressRecipe.Holder {
         companion object {
@@ -78,7 +89,7 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
                 instance.group(
                     HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(Basic::ingredient),
                     Result.CODEC.fieldOf(HTConstants.RESULT).forGetter(Basic::result),
-                    HTProgressData.CODEC.forGetter(Basic::progressData),
+                    HTProgressRecipe.Holder.progressCodec(),
                 ).apply(instance, factory::create)
             }
 
@@ -94,8 +105,6 @@ interface HTItemSeparatingRecipe : HTItemToRecipe<HTItemSeparatingRecipe.Output>
                     factory::create,
                 )
         }
-
-        override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
         override fun apply(input: ItemInstance): Output = result.create()
 

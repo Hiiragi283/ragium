@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:wind_charge"
+  },
+  "result": {
+    "amount": 250,
+    "id": "ragium:oxygen"
+  },
+  "time": 200
+}

@@ -3,13 +3,18 @@ package hiiragi283.lib.recipe.result
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.recipe.display.displayOrEmpty
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
 import hiiragi283.lib.util.Ior
+import hiiragi283.lib.util.toPair
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.display.SlotDisplay
+import net.neoforged.neoforge.fluids.FluidStack
+import java.util.Optional
 
 /**
  * アイテムまたは液体の完成品を保持するクラスです。
@@ -39,12 +44,13 @@ data class HTItemOrFluidResult(val content: Ior<HTItemResult, HTFluidResult>) : 
         HTFluidResult::getId,
     ) { item: HTItemResult, fluid: HTFluidResult -> item.getId() ?: fluid.getId() }
 
-    override fun create(): HTItemAndFluidStack {
-        val (item: HTItemResult?, fluid: HTFluidResult?) = content.toPair()
-        return HTItemAndFluidStack(item.createOrEmpty(), fluid.createOrEmpty())
-    }
+    override fun create(): HTItemAndFluidStack = content
+        .mapLeft(HTItemResult::create)
+        .mapRight(HTFluidResult::create)
+        .toPair(ItemStack::EMPTY, FluidStack::EMPTY)
+        .let(::HTItemAndFluidStack)
 
-    fun itemDisplay(): SlotDisplay? = content.getLeft()?.display()
+    fun itemDisplay(): Optional<SlotDisplay> = content.getLeft().displayOrEmpty()
 
-    fun fluidDisplay(): SlotDisplay? = content.getRight()?.display()
+    fun fluidDisplay(): Optional<SlotDisplay> = content.getRight().displayOrEmpty()
 }

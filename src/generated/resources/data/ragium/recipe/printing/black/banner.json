@@ -1,0 +1,9 @@
+{
+  "type": "ragium:printing",
+  "catalyst": "minecraft:black_banner",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:black_banner"
+  },
+  "time": 200
+}

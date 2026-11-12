@@ -80,19 +80,17 @@ class HTCompoundRecipeLookup<out RECIPE : Any> private constructor(private val i
  * @param RECIPE [HTCompoundRecipeLookup]のレシピのクラス
  * @param VANILLA_RECIPE バニラの[Recipe]を継承したクラス
  * @param recipeType バニラの[RecipeType]
- * @param transform [VANILLA_RECIPE]を[RECIPE]に変換するブロック
  * @author Hiiragi Tsubasa
- * @since 26.1.0
+ * @since 26.1.13
  */
-fun <INPUT : RecipeInput, RECIPE : Any, VANILLA_RECIPE : Recipe<INPUT>> HTCompoundRecipeLookup<RECIPE>.fromRecipeType(
+inline fun <INPUT : RecipeInput, reified RECIPE : Any, VANILLA_RECIPE : Recipe<INPUT>> HTCompoundRecipeLookup<RECIPE>.fromRecipeType(
     recipeType: RecipeType<VANILLA_RECIPE>,
-    transform: (VANILLA_RECIPE) -> RECIPE?,
 ) {
     this.addSubLookup { context: HTRecipeLookup.Context ->
         context
             .byType(recipeType)
             .mapNotNull { (key: RecipeKey, recipe: VANILLA_RECIPE) ->
-                val recipe1: RECIPE = transform(recipe) ?: return@mapNotNull null
+                val recipe1: RECIPE = recipe as? RECIPE ?: return@mapNotNull null
                 HTRecipeHolder(key, recipe1)
             }
     }

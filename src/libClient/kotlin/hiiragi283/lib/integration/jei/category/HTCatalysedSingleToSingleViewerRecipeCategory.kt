@@ -2,20 +2,20 @@ package hiiragi283.lib.integration.jei.category
 
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.recipe.viewer.HTCatalysedSingleToSingleViewerRecipe
+import hiiragi283.lib.text.HTHasText
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.types.IRecipeType
-import net.minecraft.world.item.crafting.RecipeType
 
 class HTCatalysedSingleToSingleViewerRecipeCategory(
     recipeType: IRecipeType<HTCatalysedSingleToSingleViewerRecipe>,
-    recipeType1: RecipeType<*>,
+    title: HTHasText,
     icon: IDrawable,
 ) : HTViewerRecipeCategory<HTCatalysedSingleToSingleViewerRecipe>(
     recipeType,
-    recipeType1,
+    title,
     icon,
     18 * 6,
     18 * 1,

@@ -6,12 +6,14 @@ import com.mojang.datafixers.kinds.App
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.DynamicOps
+import com.mojang.serialization.Keyable
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.MapLike
 import com.mojang.serialization.RecordBuilder
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.lib.registry.RegistryKey
 import hiiragi283.lib.text.Text
+import hiiragi283.lib.util.DFUPair
 import hiiragi283.lib.util.Either
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.dataResult
@@ -28,8 +30,10 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
 import java.util.Optional
+import java.util.OptionalInt
 import java.util.UUID
 import java.util.stream.Stream
+import kotlin.Int
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -51,10 +55,44 @@ data object HTCodecs {
     fun <K : Any, V : Any> mapOf(keyCodec: Codec<K>, valueCodec: Codec<V>): Codec<Map<K, V>> = Codec.unboundedMap(keyCodec, valueCodec)
 
     /**
+     * @since 26.1.13
+     */
+    @JvmStatic
+    fun <K : Any, V : Any> mapMapOf(keyCodec: Codec<K>, valueCodec: Codec<V>, keys: Keyable): MapCodec<Map<K, V>> =
+        Codec.simpleMap(keyCodec, valueCodec, keys)
+
+    /**
      * [Optional]でラップされた[Codec]を作成します。
      */
     @JvmStatic
     fun <A : Any> optional(codec: Codec<A>): Codec<Optional<A>> = ExtraCodecs.optionalEmptyMap(codec)
+
+    /**
+     * [OptionalInt]の[Codec]を作成します。
+     * @since 26.1.13
+     */
+    @JvmStatic
+    fun optionalInt(codec: Codec<Int>): Codec<OptionalInt> = OptionalIntCodec(codec)
+
+    @JvmRecord
+    private data class OptionalIntCodec(val codec: Codec<Int>) : Codec<OptionalInt> {
+        companion object {
+            @JvmStatic
+            private fun <T : Any> isEmptyMap(ops: DynamicOps<T>, input: T): Boolean {
+                val map: Optional<MapLike<T>> = ops.getMap(input).result()
+                return map.isPresent && map.get().entries().findAny().isEmpty
+            }
+        }
+
+        override fun <T : Any> encode(input: OptionalInt, ops: DynamicOps<T>, prefix: T): DataResult<T> =
+            if (input.isEmpty) DataResult.success(ops.emptyMap()) else codec.encode(input.asInt, ops, prefix)
+
+        override fun <T : Any> decode(ops: DynamicOps<T>, input: T): DataResult<DFUPair<OptionalInt, T>> = if (isEmptyMap(ops, input)) {
+            DataResult.success(DFUPair.of(OptionalInt.empty(), input))
+        } else {
+            codec.decode(ops, input).map { pair: DFUPair<Int, T> -> pair.mapFirst(OptionalInt::of) }
+        }
+    }
 
     @JvmStatic
     fun <A : Any, B : Any> pair(first: Codec<A>, second: Codec<B>): MapCodec<Pair<A, B>> = recordMap { instance ->

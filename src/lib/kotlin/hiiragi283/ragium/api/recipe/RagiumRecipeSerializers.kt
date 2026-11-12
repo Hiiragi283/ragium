@@ -55,6 +55,10 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.CUTTING, RTCuttingRecipe.SERIALIZER)
 
     @JvmField
+    val EXTRACTING: RecipeSerializer<RTExtractingRecipe> =
+        register(RagiumConstants.EXTRACTING, RTExtractingRecipe.SERIALIZER)
+
+    @JvmField
     val FILLING: RecipeSerializer<RTFillingRecipe> =
         register(RagiumConstants.FILLING, RTFillingRecipe.SERIALIZER)
 
@@ -62,10 +66,18 @@ data object RagiumRecipeSerializers {
     val PRESSING: RecipeSerializer<RTPressingRecipe> =
         register(RagiumConstants.PRESSING, RTPressingRecipe.SERIALIZER)
 
+    @JvmField
+    val PULVERIZING: RecipeSerializer<RTPulverizingRecipe> =
+        register(RagiumConstants.PULVERIZING, RTPulverizingRecipe.SERIALIZER)
+
     // Heat
     @JvmField
     val ALLOYING: RecipeSerializer<RTAlloyingRecipe> =
         register(RagiumConstants.ALLOYING, RTAlloyingRecipe.SERIALIZER)
+
+    @JvmField
+    val DRYING: RecipeSerializer<RTDryingRecipe> =
+        register(RagiumConstants.DRYING, RTDryingRecipe.SERIALIZER)
 
     @JvmField
     val FREEZING: RecipeSerializer<RTFreezingRecipe> =
@@ -85,24 +97,24 @@ data object RagiumRecipeSerializers {
 
     // Chemical
     @JvmField
-    val BATHING: RecipeSerializer<RTBathingRecipe> =
-        register(RagiumConstants.BATHING, RTBathingRecipe.SERIALIZER)
+    val AUTOCLAVING: RecipeSerializer<RTAutoclavingRecipe> =
+        register(RagiumConstants.AUTOCLAVING, RTAutoclavingRecipe.SERIALIZER)
 
     @JvmField
-    val EXCHANGING: RecipeSerializer<RTExchangingRecipe> =
-        register(RagiumConstants.EXCHANGING, RTExchangingRecipe.SERIALIZER)
+    val BATHING: RecipeSerializer<RTBathingRecipe> =
+        register(RagiumConstants.BATHING, RTBathingRecipe.SERIALIZER)
 
     @JvmField
     val MIXING: RecipeSerializer<RTMixingRecipe> =
         register(RagiumConstants.MIXING, RTMixingRecipe.SERIALIZER)
 
     @JvmField
-    val REACTING: RecipeSerializer<RTReactingRecipe> =
-        register(RagiumConstants.REACTING, RTReactingRecipe.SERIALIZER)
+    val FLUID_REACTING: RecipeSerializer<RTFluidReactingRecipe> =
+        register(RagiumConstants.FLUID_REACTING, RTFluidReactingRecipe.SERIALIZER)
 
     @JvmField
-    val WASHING: RecipeSerializer<RTWashingRecipe> =
-        register(RagiumConstants.WASHING, RTWashingRecipe.SERIALIZER)
+    val ITEM_REACTING: RecipeSerializer<RTItemReactingRecipe> =
+        register(RagiumConstants.ITEM_REACTING, RTItemReactingRecipe.SERIALIZER)
 
     // Resource
     @JvmField
@@ -126,8 +138,16 @@ data object RagiumRecipeSerializers {
     val ENGRAVING: RecipeSerializer<RTEngravingRecipe> =
         register(RagiumConstants.ENGRAVING, RTEngravingRecipe.SERIALIZER)
 
+    @JvmField
+    val PRINTING: RecipeSerializer<RTPrintingRecipe> =
+        register(RagiumConstants.PRINTING, RTPrintingRecipe.SERIALIZER)
+
     // Arcane
     @JvmField
     val ENCHANTING: RecipeSerializer<RTEnchantingRecipe> =
         register(RagiumConstants.ENCHANTING, RTEnchantingRecipe.SERIALIZER)
+
+    @JvmField
+    val TRANSFORMING: RecipeSerializer<RTTransformingRecipe> =
+        register(RagiumConstants.TRANSFORMING, RTTransformingRecipe.SERIALIZER)
 }

@@ -1,0 +1,26 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:or",
+          "values": [
+            "#c:cobblestones"
+          ]
+        },
+        {
+          "type": "neoforge:not",
+          "value": "#c:cobblestones/infested"
+        }
+      ]
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:gravel"
+  },
+  "time": 100
+}

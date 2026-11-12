@@ -19,6 +19,7 @@ import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.screen.tooltip.HTMemoryDiscClientTooltipComponent
+import hiiragi283.ragium.client.gui.widget.HTEnchantmentWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTItemWidgetRenderer
@@ -81,6 +82,7 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
+        event.register(RagiumWidgetTypes.ENCHANTMENT.get(), ::HTEnchantmentWidgetRenderer)
         event.register(RagiumWidgetTypes.ENERGY.get(), ::HTEnergySlotWidgetRenderer)
         event.register(RagiumWidgetTypes.FLUID.get(), ::HTFluidWidgetRenderer)
         event.register(RagiumWidgetTypes.ITEM.get(), ::HTItemWidgetRenderer)
@@ -101,48 +103,35 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerFluidModels(register: HTFluidModelRegister) {
-        for (color: DyeColor in DyeColor.entries) {
-            register.register(RagiumFluids.DYES[color]) {
-                dull()
-                color.textureDiffuseColor.let(::colorTint)
-            }
-        }
-
-        register.register(RagiumFluids.HONEY) {
-            still = Material(vanillaId(HTConstants.BLOCK, "honey_block_top"), true)
-        }
-        register.register(RagiumFluids.MOLTEN_BEESWAX) {
-            still = Material(vanillaId(HTConstants.BLOCK, "honeycomb_block"))
-        }
-        register.register(RagiumFluids.RESIN) {
-            still = Material(vanillaId(HTConstants.BLOCK, "resin_block"))
-        }
         register.register(RagiumFluids.POTION) {
             dull()
             tintSource = FluidStackTintSource { stack: FluidStack ->
                 ARGB.opaque(HTPotionHelper.getContentsOrEmpty(stack).color)
             }
         }
-        register.register(RagiumFluids.OMINOUS_FLUX) {
-            molten()
-            colorTint(Color(0x003366))
+        register.register(RagiumFluids.EXPERIENCE) {
+            transparent()
+            colorTint(Color(0x99ff00))
         }
-
+        register.register(RagiumFluids.ENCHANTED_EXPERIENCE) {
+            transparent()
+            colorTint(Color(0xcc00ff))
+        }
+        for (color: DyeColor in DyeColor.entries) {
+            register.register(RagiumFluids.DYES[color]) {
+                dull()
+                color.textureDiffuseColor.let(::colorTint)
+            }
+        }
+        register.register(RagiumFluids.HONEY) {
+            still = Material(vanillaId(HTConstants.BLOCK, "honey_block_top"), true)
+        }
+        register.register(RagiumFluids.RESIN) {
+            still = Material(vanillaId(HTConstants.BLOCK, "resin_block"))
+        }
         register.register(RagiumFluids.MOLTEN_GLASS) {
             molten()
             colorTint(Color(0xffffff))
-        }
-        register.register(RagiumFluids.MOLTEN_REDSTONE) {
-            molten()
-            colorTint(Color(0xcc0000))
-        }
-        register.register(RagiumFluids.MOLTEN_GLOWSTONE) {
-            molten()
-            colorTint(Color(0xffcc66))
-        }
-        register.register(RagiumFluids.MOLTEN_ENDER) {
-            molten()
-            colorTint(Color(0x006666))
         }
 
         // H
@@ -158,6 +147,10 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.CREOSOTE) {
             dull()
             colorTint(Color(0x663333))
+        }
+        register.register(RagiumFluids.SYNTHETIC_GAS) {
+            transparent()
+            colorTint(Color(0xcccccc))
         }
         register.register(RagiumFluids.BLACK_LIQUOR) {
             dull()
@@ -183,21 +176,21 @@ data object RagiumClient : HTClientMod() {
             molten()
             colorTint(Color(0x333333))
         }
-        register.register(RagiumFluids.NATURAL_GAS) {
-            transparent()
-            colorTint(Color(0xcccccc))
+        register.register(RagiumFluids.SULFURIC_NAPHTHA) {
+            dull()
+            colorTint(Color(0xff6600))
         }
         register.register(RagiumFluids.NAPHTHA) {
             transparent()
             colorTint(Color(0xff6600))
         }
+        register.register(RagiumFluids.SULFURIC_FUEL) {
+            dull()
+            colorTint(Color(0xff9900))
+        }
         register.register(RagiumFluids.FUEL) {
             transparent()
             colorTint(Color(0xff9900))
-        }
-        register.register(RagiumFluids.ANTI_RUST_OIL) {
-            dull()
-            colorTint(Color(0xff9933))
         }
         register.register(RagiumFluids.MOLTEN_PLASTIC) {
             molten()
@@ -249,12 +242,21 @@ data object RagiumClient : HTClientMod() {
             transparent()
             colorTint(Color(0xffcccc))
         }
+        // Si
+        register.register(RagiumFluids.MOLTEN_SILICON) {
+            molten()
+            colorTint(Color(0x336699))
+        }
         // P
         register.register(RagiumFluids.PHOSPHORIC_ACID) {
             dull()
             colorTint(Color(0xffcc99))
         }
         // S
+        register.register(RagiumFluids.HYDROGEN_SULFIDE) {
+            transparent()
+            colorTint(Color(0xcc6633))
+        }
         register.register(RagiumFluids.SULFUR_DIOXIDE) {
             transparent()
             colorTint(Color(0x996600))

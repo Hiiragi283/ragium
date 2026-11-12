@@ -4,7 +4,6 @@ package hiiragi283.lib.data.recipe.builder
 
 import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
-import hiiragi283.lib.data.recipe.ingredient.IngredientBuilder
 import hiiragi283.lib.data.recipe.result.HTFluidResultBuilder
 import hiiragi283.lib.data.recipe.result.HTItemResultBuilder
 import hiiragi283.lib.recipe.base.HTBasicSingleRecipe
@@ -17,8 +16,6 @@ import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.util.HTDelegates
-import net.minecraft.resources.Identifier
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -33,9 +30,7 @@ import kotlin.contracts.contract
  * @since 26.1.8
  */
 abstract class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, out RECIPE : Recipe<*>>(prefix: String) :
-    HTProgressRecipeBuilder<RECIPE>(prefix) {
-    final override fun getRecipeId(): Identifier? = result.getId()
-
+    HTProgressRecipeBuilder.SingleResult<RECIPE>(prefix) {
     // Ingredient
     var ingredient: ING by HTDelegates.onceInitialize()
 
@@ -44,7 +39,7 @@ abstract class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeRes
     }
 
     // Result
-    var result: RES by HTDelegates.onceInitialize()
+    override var result: RES by HTDelegates.onceInitialize()
 
     operator fun RES.unaryPlus() {
         result = this
@@ -66,25 +61,15 @@ abstract class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeRes
     class Catalysed<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, out RECIPE : Recipe<*>>(
         prefix: String,
         private val factory: HTCatalysedSingleRecipe.Factory<ING, RES, RECIPE>,
-    ) : HTSingleRecipeBuilder<ING, RES, RECIPE>(prefix) {
+    ) : HTSingleRecipeBuilder<ING, RES, RECIPE>(prefix),
+        HTItemCatalystAcceptor {
         override fun createRecipe(): RECIPE = factory.create(ingredient, catalyst, result, progressData)
 
         // Catalyst
         @PublishedApi internal var catalyst: HTItemCatalyst by HTDelegates.onceInitialize(HTItemCatalyst::EMPTY)
 
-        operator fun HTItemCatalyst.unaryPlus() {
+        override operator fun HTItemCatalyst.unaryPlus() {
             catalyst = this
-        }
-
-        operator fun Ingredient.unaryPlus() {
-            +HTItemCatalyst(this)
-        }
-
-        inline fun catalyst(builderAction: IngredientBuilder.() -> Unit) {
-            contract {
-                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-            }
-            +IngredientBuilder.build(builderAction)
         }
     }
 }

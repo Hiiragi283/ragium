@@ -1,17 +1,18 @@
 package hiiragi283.lib.recipe.ingredient
 
 import hiiragi283.lib.data.HTDataComponentHelper
-import hiiragi283.lib.fluid.toTemplateOrNull
-import hiiragi283.lib.item.toTemplateOrNull
 import hiiragi283.lib.registry.isAir
 import hiiragi283.lib.registry.isEmpty
 import net.minecraft.core.TypedInstance
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
+import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.item.ItemResource
 
@@ -27,37 +28,43 @@ data object HTIngredientHelper {
     /**
      * [FluidInstance]を[FluidStack]に変換します。
      */
+    @JvmName("unwrapFluid")
     @JvmStatic
-    fun unwrap(instance: FluidInstance): FluidStack = when (instance) {
-        is FluidStack -> instance.copy()
-        is FluidStackTemplate -> instance.create()
-        else -> FluidStack(instance.typeHolder(), instance.amount(), HTDataComponentHelper.createPatch(instance))
-    }
-
-    /**
-     * [FluidInstance]を[FluidStackTemplate]に変換します。
-     * @since 26.1.12
-     */
-    @JvmStatic
-    fun unwrapAsTemplate(instance: FluidInstance): FluidStackTemplate? = if (isEmpty(instance)) {
-        null
-    } else {
-        when (instance) {
-            is FluidStack -> instance.toTemplateOrNull()
-            is FluidStackTemplate -> instance
-            else -> FluidStackTemplate(instance.typeHolder(), instance.amount(), HTDataComponentHelper.createPatch(instance))
+    fun unwrap(instance: TypedInstance<Fluid>): FluidStack = when (instance) {
+        is FluidInstance -> when (instance) {
+            is FluidStack -> instance.copy()
+            is FluidStackTemplate -> instance.create()
+            else -> FluidStack(instance.typeHolder(), instance.amount(), HTDataComponentHelper.createPatch(instance))
         }
+
+        is FluidResource -> instance.toStack(FluidType.BUCKET_VOLUME)
+
+        else -> FluidStack(instance.typeHolder(), FluidType.BUCKET_VOLUME)
     }
 
     /**
-     * [FluidInstance]が空かどうか判定します。
+     * 液体の[TypedInstance]が空かどうか判定します。
      */
+    @JvmName("isEmptyFluid")
     @JvmStatic
-    fun isEmpty(instance: FluidInstance): Boolean = when (instance) {
-        is FluidStack -> instance.isEmpty
-        is FluidStackTemplate -> false
-        else -> instance.typeHolder().isEmpty || instance.amount() <= 0
+    fun isEmpty(instance: TypedInstance<Fluid>): Boolean = when (instance) {
+        is FluidInstance -> when (instance) {
+            is FluidStack -> instance.isEmpty
+            is FluidStackTemplate -> false
+            else -> instance.typeHolder().isEmpty || instance.amount() <= 0
+        }
+
+        is FluidResource -> instance.isEmpty
+
+        else -> instance.typeHolder().isEmpty
     }
+
+    /**
+     * @since 26.1.13
+     */
+    @JvmName("isEmptyFluids")
+    @JvmStatic
+    fun isEmpty(instances: Iterable<FluidInstance>): Boolean = instances.none() || instances.all(::isEmpty)
 
     /**
      * @since 26.1.7
@@ -75,6 +82,7 @@ data object HTIngredientHelper {
     @JvmName("matchFluids")
     @JvmStatic
     fun match(ingredients: Iterable<HTFluidIngredient>, inputs: Iterable<FluidInstance>): Boolean {
+        if (ingredients.none()) return true
         val combined: List<FluidStack> = inputs
             .fold(mutableMapOf()) { map: MutableMap<FluidResource, Int>, instance: FluidInstance ->
                 val resource: FluidResource = unwrap(instance).let(FluidResource::of)
@@ -83,6 +91,7 @@ data object HTIngredientHelper {
                 }
                 map
             }.map { (resource: FluidResource, count: Int) -> resource.toStack(count) }
+        if (combined.isEmpty()) return false
         ingredient@for (ingredient: HTFluidIngredient in ingredients) {
             for (stack: FluidStack in combined) {
                 if (ingredient.test(stack)) {
@@ -101,6 +110,7 @@ data object HTIngredientHelper {
     @JvmName("getMatchingFluids")
     @JvmStatic
     fun getMatchingStacks(ingredients: Iterable<HTFluidIngredient>, inputs: Iterable<FluidInstance>): List<FluidInstance> {
+        if (ingredients.none()) return listOf()
         val combined: List<FluidStack> = inputs
             .fold(mutableMapOf()) { map: MutableMap<FluidResource, Int>, instance: FluidInstance ->
                 val resource: FluidResource = unwrap(instance).let(FluidResource::of)
@@ -109,6 +119,7 @@ data object HTIngredientHelper {
                 }
                 map
             }.map { (resource: FluidResource, count: Int) -> resource.toStack(count) }
+        if (combined.isEmpty()) return listOf()
         val results: MutableList<FluidInstance> = mutableListOf()
         ingredient@for (ingredient: HTFluidIngredient in ingredients) {
             for (stack: FluidStack in combined) {
@@ -129,37 +140,43 @@ data object HTIngredientHelper {
     /**
      * [ItemInstance]を[ItemStack]に変換します。
      */
+    @JvmName("unwrapItem")
     @JvmStatic
-    fun unwrap(instance: ItemInstance): ItemStack = when (instance) {
-        is ItemStack -> instance.copy()
-        is ItemStackTemplate -> instance.create()
-        else -> ItemStack(instance.typeHolder(), instance.count(), HTDataComponentHelper.createPatch(instance))
-    }
-
-    /**
-     * [ItemInstance]を[ItemStackTemplate]に変換します。
-     * @since 26.1.12
-     */
-    @JvmStatic
-    fun unwrapAsTemplate(instance: ItemInstance): ItemStackTemplate? = if (isEmpty(instance)) {
-        null
-    } else {
-        when (instance) {
-            is ItemStack -> instance.toTemplateOrNull()
-            is ItemStackTemplate -> instance
-            else -> ItemStackTemplate(instance.typeHolder(), instance.count(), HTDataComponentHelper.createPatch(instance))
+    fun unwrap(instance: TypedInstance<Item>): ItemStack = when (instance) {
+        is ItemInstance -> when (instance) {
+            is ItemStack -> instance.copy()
+            is ItemStackTemplate -> instance.create()
+            else -> ItemStack(instance.typeHolder(), instance.count(), HTDataComponentHelper.createPatch(instance))
         }
+
+        is ItemResource -> instance.toStack()
+
+        else -> ItemStack(instance.typeHolder())
     }
 
     /**
-     * [ItemInstance]が空かどうか判定します。
+     * アイテムの[TypedInstance]が空かどうか判定します。
      */
+    @JvmName("isEmptyItem")
     @JvmStatic
-    fun isEmpty(instance: ItemInstance): Boolean = when (instance) {
-        is ItemStack -> instance.isEmpty
-        is ItemStackTemplate -> false
-        else -> instance.typeHolder().isAir || instance.count() <= 0
+    fun isEmpty(instance: TypedInstance<Item>): Boolean = when (instance) {
+        is ItemInstance -> when (instance) {
+            is ItemStack -> instance.isEmpty
+            is ItemStackTemplate -> false
+            else -> instance.typeHolder().isAir || instance.count() <= 0
+        }
+
+        is ItemResource -> instance.isEmpty
+
+        else -> instance.typeHolder().isAir
     }
+
+    /**
+     * @since 26.1.13
+     */
+    @JvmName("isEmptyItems")
+    @JvmStatic
+    fun isEmpty(instances: Iterable<TypedInstance<Item>>): Boolean = instances.none() || instances.all(::isEmpty)
 
     /**
      * @since 26.1.7
@@ -177,6 +194,7 @@ data object HTIngredientHelper {
     @JvmName("matchItems")
     @JvmStatic
     fun match(ingredients: Iterable<HTItemIngredient>, inputs: Iterable<ItemInstance>): Boolean {
+        if (ingredients.none()) return true
         val combined: List<ItemStack> = inputs
             .fold(mutableMapOf()) { map: MutableMap<ItemResource, Int>, instance: ItemInstance ->
                 val resource: ItemResource = unwrap(instance).let(ItemResource::of)
@@ -185,6 +203,7 @@ data object HTIngredientHelper {
                 }
                 map
             }.map { (resource: ItemResource, count: Int) -> resource.toStack(count) }
+        if (combined.isEmpty()) return false
         ingredient@for (ingredient: HTItemIngredient in ingredients) {
             for (stack: ItemStack in combined) {
                 if (ingredient.test(stack)) {
@@ -203,6 +222,7 @@ data object HTIngredientHelper {
     @JvmName("getMatchingItems")
     @JvmStatic
     fun getMatchingStacks(ingredients: Iterable<HTItemIngredient>, inputs: Iterable<ItemInstance>): List<ItemInstance> {
+        if (ingredients.none()) return listOf()
         val combined: List<ItemStack> = inputs
             .fold(mutableMapOf()) { map: MutableMap<ItemResource, Int>, instance: ItemInstance ->
                 val resource: ItemResource = unwrap(instance).let(ItemResource::of)
@@ -211,6 +231,7 @@ data object HTIngredientHelper {
                 }
                 map
             }.map { (resource: ItemResource, count: Int) -> resource.toStack(count) }
+        if (combined.isEmpty()) return listOf()
         val results: MutableList<ItemInstance> = mutableListOf()
         ingredient@for (ingredient: HTItemIngredient in ingredients) {
             for (stack: ItemStack in combined) {

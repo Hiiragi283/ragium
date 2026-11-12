@@ -1,0 +1,20 @@
+{
+  "type": "ragium:reacting/item",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:dusts/quick_lime"
+    }
+  },
+  "results": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:limewater"
+    }
+  },
+  "time": 200
+}

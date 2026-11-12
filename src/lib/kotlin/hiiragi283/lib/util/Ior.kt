@@ -8,6 +8,7 @@ import java.util.Optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * 二つの値のうち，その両方または片方だけを保持するクラスです。
@@ -41,10 +42,7 @@ sealed class Ior<out A, out B> {
          * @since 26.1.5
          */
         @JvmStatic
-        fun <A : Any, B : Any> fromNullable(left: Optional<A>, right: Optional<B>): Optional<Ior<A, B>> = left.fold(
-            { right.map { Right(it) } },
-            { leftValue: A -> Optional.of(right.fold({ Left(leftValue) }, { Both(leftValue, it) })) },
-        )
+        fun <A : Any, B : Any> fromNullable(left: Optional<A>, right: Optional<B>): Ior<A, B>? = fromNullable(left.getOrNull(), right.getOrNull())
 
         /**
          * 指定された[pair]を[Ior]に変換します。
@@ -93,25 +91,6 @@ sealed class Ior<out A, out B> {
         }
         return when (this) {
             is Both -> both(leftValue, rightValue)
-            is Left -> left(value)
-            is Right -> right(value)
-        }
-    }
-
-    /**
-     * 保持している値を変換します。
-     * @param C 変換後のクラス
-     * @param left このインスタンスが[Left]の場合の変換ブロック
-     * @param right このインスタンスが[Right]の場合の変換ブロック
-     * @return 変換された値
-     */
-    inline fun <C> map(left: (A) -> C, right: (B) -> C): C {
-        contract {
-            callsInPlace(left, InvocationKind.AT_MOST_ONCE)
-            callsInPlace(right, InvocationKind.AT_MOST_ONCE)
-        }
-        return when (this) {
-            is Both -> right(rightValue)
             is Left -> left(value)
             is Right -> right(value)
         }
@@ -233,6 +212,16 @@ inline fun <A, B> Ior<A, B>.getOrElse(default: (A) -> B): B {
         is Ior.Right<B> -> this.value
     }
 }
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.13
+ */
+inline fun <A, B> Ior<A, B>.toPair(emptyLeft: () -> A, emptyRight: () -> B): Pair<A, B> = fold(
+    { it to emptyRight() },
+    { emptyLeft() to it },
+    { left: A, right: B -> left to right },
+)
 
 /**
  * @author Hiiragi Tsubasa

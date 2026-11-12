@@ -1,0 +1,24 @@
+{
+  "type": "ragium:reacting/item",
+  "ingredients": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:hydrochloric_acid"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:silicon"
+    }
+  },
+  "results": {
+    "fluid": {
+      "amount": 100,
+      "id": "ragium:hydrochloric_acid"
+    },
+    "item": {
+      "count": 1,
+      "id": "ragium:silicon_dust"
+    }
+  },
+  "time": 200
+}

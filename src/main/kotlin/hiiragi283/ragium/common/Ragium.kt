@@ -9,6 +9,7 @@ import hiiragi283.lib.gui.sync.HTLongSyncPayload
 import hiiragi283.lib.item.HTCreativeModeTabHelper
 import hiiragi283.lib.mod.HTCommonMod
 import hiiragi283.lib.network.HTPayloadHandlers
+import hiiragi283.lib.recipe.display.HTMemoryDiscSlotDisplay
 import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.recipe.ingredient.HTPotionFluidIngredient
@@ -20,6 +21,7 @@ import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.common.attachment.RagiumAttachments
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.effect.RagiumMobEffects
@@ -28,6 +30,7 @@ import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.common.gui.widget.RagiumWidgetTypes
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.alchemy.RagiumPotions
+import hiiragi283.ragium.common.network.HTInteractWithCursorPayload
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.config.RagiumConfig
@@ -57,6 +60,7 @@ data object Ragium : HTCommonMod() {
         RagiumMobEffects.register(eventBus)
         RagiumPotions.register(eventBus)
 
+        RagiumAttachments.register(eventBus)
         RagiumWidgetTypes.REGISTER.register(eventBus)
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
@@ -112,6 +116,7 @@ data object Ragium : HTCommonMod() {
             RagiumRecipeTypes.allTypes.forEach(helper::register)
         }
         event.register(Registries.SLOT_DISPLAY) { helper ->
+            helper.register(RagiumAPI.id("memory_disc"), HTMemoryDiscSlotDisplay.TYPE)
             helper.register(RagiumAPI.id("sized"), HTSizedSlotDisplay.TYPE)
         }
         event.register(Registries.LOOT_CONDITION_TYPE) { helper ->
@@ -132,8 +137,7 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumRegistries.Keys.ITEM_RESULT_TYPE) { helper ->
             helper.register(RagiumAPI.id("simple"), HTItemResult.SimpleEntry.TYPE)
             helper.register(RagiumAPI.id(HTConstants.TAG), HTItemResult.TagEntry.TYPE)
-            helper.register(RagiumAPI.id("enchanted_book"), HTItemResult.EnchantedBookEntryN.TYPE)
-            helper.register(RagiumAPI.id("with_fallback"), HTItemResult.WithFallbackEntry.TYPE)
+            helper.register(RagiumAPI.id("enchanted_book"), HTItemResult.EnchantedBookEntry.TYPE)
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
             helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)
@@ -149,10 +153,8 @@ data object Ragium : HTCommonMod() {
 
     override fun registerPayload(registrar: PayloadRegistrar) {
         registrar.playToClient(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC)
-        registrar.playBidirectional(
-            HTUpdateMenuPacket.TYPE,
-            HTUpdateMenuPacket.STREAM_CODEC,
-            HTPayloadHandlers::handleC2S,
-        )
+        registrar.playToClient(HTUpdateMenuPacket.TYPE, HTUpdateMenuPacket.STREAM_CODEC)
+
+        registrar.playToServer(HTInteractWithCursorPayload.TYPE, HTInteractWithCursorPayload.STREAM_CODEC, HTPayloadHandlers::handleC2S)
     }
 }

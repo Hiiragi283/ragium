@@ -50,6 +50,7 @@ enum class HTCommonTranslation(type: String, vararg path: String) : HTTranslatio
     SECONDS(HTConstants.GUI, "seconds"),
 
     BIOME(HTConstants.GUI, "biome"),
+    ENCHANTMENT_POWER(HTConstants.GUI, HTConstants.ENCHANTMENT_POWER),
 
     // Item Description
     TOOLTIP_INTRINSIC_ENCHANTMENT(HTConstants.TOOLTIP, "intrinsic_enchantment"),
@@ -59,5 +60,5 @@ enum class HTCommonTranslation(type: String, vararg path: String) : HTTranslatio
     DATAPACK_WIP("datapack", "work_in_progress"),
     ;
 
-    override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".")).toLanguageKey(type)
+    override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".", transform = { it.replace('/', '.') })).toLanguageKey(type)
 }

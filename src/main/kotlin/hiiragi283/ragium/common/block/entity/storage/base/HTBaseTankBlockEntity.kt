@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.storage.base
 
+import hiiragi283.lib.transfer.HTResourceSlotUtil
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
-import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import net.minecraft.core.BlockPos
@@ -29,7 +29,7 @@ abstract class HTBaseTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, st
         level?.updateNeighbourForOutputSignal(blockPos, blockState.block)
     }
 
-    override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStorageHelper.calculateRedstoneLevel(tank)
+    override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTResourceSlotUtil.calculateRedstoneLevel(tank)
 
     //    Sync    //
 

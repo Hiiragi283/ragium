@@ -1,0 +1,18 @@
+{
+  "type": "ragium:bathing",
+  "ingredients": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:dyes/blue"
+    },
+    "item": {
+      "count": 1,
+      "items": "ragium:cement"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:blue_concrete"
+  },
+  "time": 50
+}

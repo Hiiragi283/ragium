@@ -1,0 +1,16 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 16,
+    "items": "#c:storage_blocks/iron"
+  },
+  "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
+    "enchantments": {
+      "minecraft:protection": 4,
+      "minecraft:unbreaking": 3
+    }
+  },
+  "time": 200
+}

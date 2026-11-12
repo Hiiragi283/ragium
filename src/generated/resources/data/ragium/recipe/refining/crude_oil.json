@@ -7,12 +7,12 @@
   "result": {
     "fluids": [
       {
-        "amount": 250,
-        "id": "ragium:natural_gas"
+        "amount": 300,
+        "id": "ragium:sulfuric_naphtha"
       },
       {
-        "amount": 750,
-        "id": "ragium:naphtha"
+        "amount": 450,
+        "id": "ragium:sulfuric_fuel"
       }
     ],
     "item": {

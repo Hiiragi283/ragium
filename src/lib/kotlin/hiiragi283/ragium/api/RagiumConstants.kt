@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api
 
+import hiiragi283.lib.HTConstants
+
 /**
  * Ragiumで使用される定数をまとめたクラスです。
  * @author Hiiragi Tsubasa
@@ -19,7 +21,9 @@ data object RagiumConstants {
     const val COMPRESSOR = "compressor"
     const val CRUSHER = "crusher"
     const val CUTTING_MACHINE = "cutting_machine"
+    const val EXTRACTOR = "extractor"
     const val PRESS_MACHINE = "press_machine"
+    const val PULVERIZER = "pulverizer"
 
     // Heat
     const val MAGMATIC_DYNAMO = "magmatic_$DYNAMO"
@@ -35,10 +39,11 @@ data object RagiumConstants {
     // Chemical
     const val COMBUSTION_DYNAMO = "combustion_$DYNAMO"
 
+    const val AUTOCLAVE = "autoclave"
     const val CHEMICAL_BATH = "chemical_bath"
+    const val CHEMICAL_LABO = "chemical_labo"
     const val CHEMICAL_REACTOR = "chemical_reactor"
     const val MIXER = "mixer"
-    const val WASHER = "washer"
 
     // Resource
     const val SOLAR_GENERATOR = "solar_generator"
@@ -54,14 +59,15 @@ data object RagiumConstants {
     // Electronics
     const val NUCLEAR_DYNAMO = "nuclear_$DYNAMO"
 
-    const val BLENDER = "blender"
     const val ELECTROLYZER = "electrolyzer"
     const val ENGRAVER = "engraver"
+    const val PRINTER = "printer"
     const val SCANNER = "scanner"
 
     // Arcane
     const val ARCANE_DYNAMO = "arcane_$DYNAMO"
 
+    const val ARCANE_TRANSFORMER = "arcane_transformer"
     const val ENCHANTER = "enchanter"
     const val FLUID_DUPLICATOR = "fluid_duplicator"
     const val MASS_FABRICATOR = "mass_fabricator"
@@ -74,8 +80,10 @@ data object RagiumConstants {
     const val COMPRESSING = "compressing"
     const val CRUSHING = "crushing"
     const val CUTTING = "cutting"
+    const val EXTRACTING = "extracting"
     const val FILLING = "filling"
     const val PRESSING = "pressing"
+    const val PULVERIZING = "pulverizing"
 
     // Heat
     const val ALLOYING = "alloying"
@@ -86,11 +94,12 @@ data object RagiumConstants {
     const val REFINING = "refining"
 
     // Chemical
+    const val AUTOCLAVING = "autoclaving"
     const val BATHING = "bathing"
-    const val EXCHANGING = "exchanging"
     const val MIXING = "mixing"
     const val REACTING = "reacting"
-    const val WASHING = "washing"
+    const val FLUID_REACTING = "$REACTING/${HTConstants.FLUID}"
+    const val ITEM_REACTING = "$REACTING/${HTConstants.ITEM}"
 
     // Resource
     const val BREWING = "brewing"
@@ -106,4 +115,5 @@ data object RagiumConstants {
 
     // Arcane
     const val ENCHANTING = "enchanting"
+    const val TRANSFORMING = "transforming"
 }

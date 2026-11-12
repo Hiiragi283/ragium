@@ -53,6 +53,24 @@ data object HTDelegates {
      */
     fun <T : Any> optionalInitialize(): ReadWriteProperty<Any?, Optional<T>> = onceInitialize { Optional.empty() }
 
+    /**
+     * @since 26.1.13
+     */
+    fun <T : Any> onceOrNull(): ReadWriteProperty<Any?, T?> = OnceOrNull()
+
+    private class OnceOrNull<T : Any> : ReadWriteProperty<Any?, T?> {
+        private var isInitialized: Boolean = false
+        private var value: T? = null
+
+        override fun getValue(thisRef: Any?, property: KProperty<*>): T? = value
+
+        override fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
+            check(!isInitialized) { "Property ${property.name} has already been initialized" }
+            isInitialized = true
+            this.value = value
+        }
+    }
+
     @JvmRecord
     data class LazyDelegate<T : Any>(private val getter: Supplier<out T>, private val setter: Consumer<in T>) : ReadWriteProperty<Any?, T> {
         override fun getValue(thisRef: Any?, property: KProperty<*>): T = getter.get()

@@ -3,7 +3,7 @@ minecraft = "26.1.2"
 
 neo-moddev = "2.0.148"
 neo-version = "26.1.2.125"
-kff-version = "6.4.0"
+kff-version = "6.5.0"
 
 kotlin = "2.4.21"
 dokka = "2.2.0"
@@ -11,7 +11,7 @@ spotless = "8.10.4"
 
 axion-release = "1.21.4"
 maven-publish = "0.37.0"
-mod-publish = "2.1.1"
+mod-publish = "2.2.1"
 
 ae2 = "26.1.13-beta"
 curios = "15.0.0+26.1.2"

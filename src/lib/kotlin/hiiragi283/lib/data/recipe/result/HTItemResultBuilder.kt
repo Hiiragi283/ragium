@@ -8,7 +8,6 @@ import hiiragi283.lib.registry.HTDeferredBlockAndItem
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.util.HTBuilderMarker
 import hiiragi283.lib.util.HTDelegates
-import hiiragi283.lib.util.toOptional
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.resources.Identifier
@@ -18,6 +17,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
+import java.util.OptionalInt
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -93,14 +93,14 @@ class HTItemResultBuilder @PublishedApi internal constructor() {
      */
     @JvmName("unaryPlusEnchantment")
     operator fun Holder<Enchantment>.unaryPlus() {
-        +HTItemResult.EnchantedBookEntryN(this)
+        +HTItemResult.EnchantedBookEntry(this)
     }
 
     /**
      * @since 26.1.6
      */
     operator fun ItemEnchantments.unaryPlus() {
-        +HTItemResult.EnchantedBookEntryN(this.entrySet().associate { (holder: Holder<Enchantment>, level: Int) -> holder to level.toOptional() })
+        +HTItemResult.EnchantedBookEntry(this.entrySet().associate { (holder: Holder<Enchantment>, level: Int) -> holder to OptionalInt.of(level) })
     }
 
     /**

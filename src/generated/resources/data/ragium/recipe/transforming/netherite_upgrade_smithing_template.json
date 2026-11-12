@@ -1,0 +1,18 @@
+{
+  "type": "ragium:transforming",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:storage_blocks/diamond"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:netherite_upgrade_smithing_template"
+  },
+  "time": 200
+}

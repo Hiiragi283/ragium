@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:silicon"
+  },
+  "result": {
+    "amount": 30,
+    "id": "ragium:molten_silicon"
+  },
+  "time": 200
+}

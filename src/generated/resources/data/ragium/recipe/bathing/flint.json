@@ -1,0 +1,18 @@
+{
+  "type": "ragium:bathing",
+  "ingredients": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:gravels"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:flint"
+  },
+  "time": 50
+}

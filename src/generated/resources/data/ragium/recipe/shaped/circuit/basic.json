@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:ingots/copper",
+    "B": "#c:dusts/redstone",
+    "C": "#c:ingots/sooty_iron"
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:circuit/basic"
+  }
+}

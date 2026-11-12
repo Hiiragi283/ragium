@@ -14,30 +14,38 @@ import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.dynamo.HTCombustionDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTFuelDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.dynamo.HTMagmaticDynamoBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCentrifugeBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTChemicalBathBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTElectrolyzerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTEnchanterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTEngraverBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTPressMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTResourcePumpBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTScannerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.misc.HTEnchantmentAbsorberBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTUpgradeStationBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTArcaneTransformerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAssemblerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAutoclaveBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCentrifugeBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTChemicalBathBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTChemicalLaboBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCompressorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCrusherBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTElectrolyzerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTEnchanterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTEngraverBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTExtractorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTFreezerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTPressMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTPrinterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTPulverizerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTPyrolyzerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTResourcePumpBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTScannerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTExperienceTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTPotionTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import net.minecraft.world.level.block.Block
@@ -103,13 +111,25 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
 
     @JvmField
+    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> =
+        registerTick(RagiumConstants.EXTRACTOR, ::HTExtractorBlockEntity)
+
+    @JvmField
     val PRESS_MACHINE: HTDeferredBlockEntityType<HTPressMachineBlockEntity> =
         registerTick(RagiumConstants.PRESS_MACHINE, ::HTPressMachineBlockEntity)
+
+    @JvmField
+    val PULVERIZER: HTDeferredBlockEntityType<HTPulverizerBlockEntity> =
+        registerTick(RagiumConstants.PULVERIZER, ::HTPulverizerBlockEntity)
 
     // Heat
     @JvmField
     val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> =
         registerTick(RagiumConstants.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
+
+    @JvmField
+    val DRYER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
+        registerTick(RagiumConstants.DRYER, ::HTFreezerBlockEntity) // TODO
 
     @JvmField
     val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
@@ -133,8 +153,16 @@ data object RagiumBlockEntityTypes {
 
     // Chemical
     @JvmField
+    val AUTOCLAVE: HTDeferredBlockEntityType<HTAutoclaveBlockEntity> =
+        registerTick(RagiumConstants.AUTOCLAVE, ::HTAutoclaveBlockEntity)
+
+    @JvmField
     val CHEMICAL_BATH: HTDeferredBlockEntityType<HTChemicalBathBlockEntity> =
         registerTick(RagiumConstants.CHEMICAL_BATH, ::HTChemicalBathBlockEntity)
+
+    @JvmField
+    val CHEMICAL_LABO: HTDeferredBlockEntityType<HTChemicalLaboBlockEntity> =
+        registerTick(RagiumConstants.CHEMICAL_LABO, ::HTChemicalLaboBlockEntity)
 
     @JvmField
     val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> =
@@ -163,10 +191,18 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.ENGRAVER, ::HTEngraverBlockEntity)
 
     @JvmField
+    val PRINTER: HTDeferredBlockEntityType<HTPrinterBlockEntity> =
+        registerTick(RagiumConstants.PRINTER, ::HTPrinterBlockEntity)
+
+    @JvmField
     val SCANNER: HTDeferredBlockEntityType<HTScannerBlockEntity> =
         registerTick(RagiumConstants.SCANNER, ::HTScannerBlockEntity)
 
     // Arcane
+    @JvmField
+    val ARCANE_TRANSFORMER: HTDeferredBlockEntityType<HTArcaneTransformerBlockEntity> =
+        registerTick(RagiumConstants.ARCANE_TRANSFORMER, ::HTArcaneTransformerBlockEntity)
+
     @JvmField
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
         registerTick(RagiumConstants.ENCHANTER, ::HTEnchanterBlockEntity)
@@ -183,10 +219,18 @@ data object RagiumBlockEntityTypes {
         registerTick("potion_tank", ::HTPotionTankBlockEntity)
 
     @JvmField
+    val EXPERIENCE_TANK: HTDeferredBlockEntityType<HTExperienceTankBlockEntity> =
+        registerTick("experience_tank", ::HTExperienceTankBlockEntity)
+
+    @JvmField
     val CREATIVE_TANK: HTDeferredBlockEntityType<HTCreativeTankBlockEntity> =
         registerTick("creative_tank", ::HTCreativeTankBlockEntity)
 
     // Battery
+    @JvmField
+    val ENERGY_PIPE: HTDeferredBlockEntityType<HTEnergyPipeBlockEntity> =
+        REGISTER.registerType("energy_pipe", ::HTEnergyPipeBlockEntity)
+
     @JvmField
     val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
         registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
@@ -196,6 +240,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val UPGRADE_STATION: HTDeferredBlockEntityType<HTUpgradeStationBlockEntity> =
         registerTick("upgrade_station", ::HTUpgradeStationBlockEntity)
+
+    @JvmField
+    val ENCHANTMENT_ABSORBER: HTDeferredBlockEntityType<HTEnchantmentAbsorberBlockEntity> =
+        registerTick("enchantment_absorber", ::HTEnchantmentAbsorberBlockEntity)
 
     //    Events    //
 
@@ -211,6 +259,8 @@ data object RagiumBlockEntityTypes {
 
     @JvmStatic
     private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
+        event.registerBlockEntity(HTEnergyCapabilities.block, ENERGY_PIPE.get(), HTEnergyPipeBlockEntity::getEnergyInput)
+
         fun <BE : HTBlockEntity> registerBlockEntity(type: BlockEntityType<BE>) {
             event.registerBlockEntity(HTEnergyCapabilities.block, type, HTBlockEntity::getEnergyHandler)
             event.registerBlockEntity(HTFluidCapabilities.block, type, HTBlockEntity::getFluidHandler)
@@ -228,16 +278,21 @@ data object RagiumBlockEntityTypes {
         registerBlockEntity(CRUSHER.get())
         registerBlockEntity(COMPRESSOR.get())
         registerBlockEntity(CUTTING_MACHINE.get())
+        registerBlockEntity(EXTRACTOR.get())
         registerBlockEntity(PRESS_MACHINE.get())
+        registerBlockEntity(PULVERIZER.get())
 
         registerBlockEntity(ALLOY_SMELTER.get())
+        registerBlockEntity(DRYER.get())
         registerBlockEntity(FREEZER.get())
         registerBlockEntity(MELTER.get())
         registerBlockEntity(PYROLYZER.get())
         registerBlockEntity(REFINERY.get())
         registerBlockEntity(SMELTER.get())
 
+        registerBlockEntity(AUTOCLAVE.get())
         registerBlockEntity(CHEMICAL_BATH.get())
+        registerBlockEntity(CHEMICAL_LABO.get())
         registerBlockEntity(MIXER.get())
 
         registerBlockEntity(BREWERY.get())
@@ -246,12 +301,15 @@ data object RagiumBlockEntityTypes {
 
         registerBlockEntity(ELECTROLYZER.get())
         registerBlockEntity(ENGRAVER.get())
+        registerBlockEntity(PRINTER.get())
         registerBlockEntity(SCANNER.get())
 
+        registerBlockEntity(ARCANE_TRANSFORMER.get())
         registerBlockEntity(ENCHANTER.get())
         // Storage
         registerBlockEntity(TANK.get())
         registerBlockEntity(POTION_TANK.get())
+        registerBlockEntity(EXPERIENCE_TANK.get())
         registerBlockEntity(CREATIVE_TANK.get())
 
         event.registerBlockEntity(
@@ -260,5 +318,6 @@ data object RagiumBlockEntityTypes {
         ) { _, _ -> InfiniteEnergyHandler.INSTANCE }
         // Misc
         registerBlockEntity(UPGRADE_STATION.get())
+        registerBlockEntity(ENCHANTMENT_ABSORBER.get())
     }
 }

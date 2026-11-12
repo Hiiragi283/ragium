@@ -31,7 +31,7 @@ data class HTItemSeparatingViewerRecipe(
                 HTCodecs.ior(
                     SlotDisplay.CODEC.compactNelFieldOf(HTConstants.ITEM, HTConstants.ITEMS),
                     SlotDisplay.CODEC.fieldOf(HTConstants.FLUID),
-                ).fieldOf(HTConstants.RESULT).forGetter(HTItemSeparatingViewerRecipe::results),
+                ).fieldOf(HTConstants.RESULTS).forGetter(HTItemSeparatingViewerRecipe::results),
                 HTViewerRecipe.Progressed.progressCodec(),
             ).apply(instance, ::HTItemSeparatingViewerRecipe)
         }

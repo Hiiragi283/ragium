@@ -22,6 +22,12 @@ data object CommonTagPrefixes {
     @JvmField
     val DUST = HTTagPrefix("dusts", "dusts/%s")
 
+    /**
+     * @since 26.1.13
+     */
+    @JvmField
+    val CRUSHED_ORES = HTTagPrefix("crushed_ores", "crushed_ores/%s")
+
     @JvmField
     val GEAR = HTTagPrefix("gears", "gears/%s")
 
@@ -36,6 +42,12 @@ data object CommonTagPrefixes {
 
     @JvmField
     val RAW_MATERIALS = HTTagPrefix("raw_materials", "raw_materials/%s")
+
+    /**
+     * @since 26.1.13
+     */
+    @JvmField
+    val SMALL_DUST = HTTagPrefix("small_dusts", "small_dusts/%s")
 
     @JvmField
     val TINY = HTTagPrefix("tiny", "tiny/%s")

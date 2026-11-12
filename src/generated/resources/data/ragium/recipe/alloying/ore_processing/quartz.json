@@ -3,7 +3,13 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "#c:ores/quartz"
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:ores/quartz",
+          "c:raw_materials/quartz"
+        ]
+      }
     },
     {
       "count": 1,

@@ -2,7 +2,7 @@
   "type": "neoforge:add_table",
   "conditions": [
     {
-      "blocks": "#minecraft:redstone_ores",
+      "blocks": "#c:ores/redstone",
       "condition": "ragium:block_set"
     }
   ],

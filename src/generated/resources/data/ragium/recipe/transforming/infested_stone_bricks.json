@@ -1,0 +1,18 @@
+{
+  "type": "ragium:transforming",
+  "ingredients": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "minecraft:stone_bricks"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:infested_stone_bricks"
+  },
+  "time": 200
+}

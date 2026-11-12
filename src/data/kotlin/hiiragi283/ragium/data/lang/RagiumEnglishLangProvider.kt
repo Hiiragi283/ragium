@@ -4,7 +4,6 @@ import hiiragi283.lib.data.lang.HTLangProvider
 import hiiragi283.lib.data.lang.HTLangTypes
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.advancment.RagiumAdvancementKeys
 import hiiragi283.ragium.common.block.RagiumBlocks
@@ -52,70 +51,76 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
+        add(RagiumBlocks.EXTRACTOR, "Extractor")
         add(RagiumBlocks.PRESS_MACHINE, "Press Machine")
+        add(RagiumBlocks.PULVERIZER, "Pulverizer")
 
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
+        add(RagiumBlocks.DRYER, "Dryer")
         add(RagiumBlocks.FREEZER, "Freezer")
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
         add(RagiumBlocks.REFINERY, "Refinery")
         add(RagiumBlocks.SMELTER, "Smelter")
 
+        add(RagiumBlocks.AUTOCLAVE, "Autoclave")
         add(RagiumBlocks.CHEMICAL_BATH, "Chemical Bath")
-        add(RagiumBlocks.CHEMICAL_REACTOR, "Chemical Reactor")
+        add(RagiumBlocks.CHEMICAL_LABO, "Chemical Labo")
         add(RagiumBlocks.MIXER, "Mixer")
 
         add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.PLANTER, "Planter")
         add(RagiumBlocks.RESOURCE_PUMP, "Resource Pump")
 
-        add(RagiumBlocks.BLENDER, "Blender")
         add(RagiumBlocks.ELECTROLYZER, "Electrolyzer")
         add(RagiumBlocks.ENGRAVER, "Laser Engraver")
+        add(RagiumBlocks.PRINTER, "Laser Printer")
         add(RagiumBlocks.SCANNER, "Laser Scanner")
 
+        add(RagiumBlocks.ARCANE_TRANSFORMER, "Arcane Transformer")
         add(RagiumBlocks.ENCHANTER, "Enchanter")
 
         add(RagiumBlocks.TANK, "Variable Tank")
         add(RagiumBlocks.POTION_TANK, "Potion Tank")
+        add(RagiumBlocks.EXPERIENCE_TANK, "Experience Tank")
         add(RagiumBlocks.VOID_TANK, "Void Tank")
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
 
+        add(RagiumBlocks.ENERGY_PIPE, "Energy Pipe")
         add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")
 
         add(RagiumBlocks.UPGRADE_STATION, "Upgrade Station")
+        add(RagiumBlocks.ENCHANTMENT_ABSORBER, "Enchantment Absorber")
 
         add(RagiumBlocks.MACHINE_CASING, "Machine Casing")
         // Damage Type
         add("death.attack.chemicalBurn", $$"%1$s was injured chemical burn")
         add("death.attack.chemicalBurn.player", $$"%1$s was injured chemical burn while fighting %2$s")
         // Fluid
-        addFluid(RagiumFluids.HONEY, "Honey")
-        addFluid(RagiumFluids.MOLTEN_BEESWAX, "Molten Beeswax")
-        addFluid(RagiumFluids.RESIN, "Resin")
+        addFluid(RagiumFluids.EXPERIENCE, "Experience")
+        addFluid(RagiumFluids.ENCHANTED_EXPERIENCE, "Enchanted Experience")
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
-        addFluid(RagiumFluids.OMINOUS_FLUX, "Ominous Flux")
+        addFluid(RagiumFluids.HONEY, "Honey")
+        addFluid(RagiumFluids.RESIN, "Resin")
         addFluid(RagiumFluids.MOLTEN_GLASS, "Molten Glass")
-        addFluid(RagiumFluids.MOLTEN_REDSTONE, "Destabilized Redstone")
-        addFluid(RagiumFluids.MOLTEN_GLOWSTONE, "Energized Glowstone")
-        addFluid(RagiumFluids.MOLTEN_ENDER, "Resonant Ender")
 
         // H
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
         // C
         addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
+        addFluid(RagiumFluids.SYNTHETIC_GAS, "Synthetic Gas")
         addFluid(RagiumFluids.BLACK_LIQUOR, "Black Liquor")
         addFluid(RagiumFluids.PLANT_OIL, "Plant Oil")
         addFluid(RagiumFluids.ALCOHOL, "Alcohol")
         addFluid(RagiumFluids.ALDEHYDE, "Aldehyde")
         addFluid(RagiumFluids.AROMATIC_COMPOUND, "Aromatic Compound")
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
-        addFluid(RagiumFluids.NATURAL_GAS, "Natural Gas")
+        addFluid(RagiumFluids.SULFURIC_NAPHTHA, "Sulfuric Naphtha")
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
+        addFluid(RagiumFluids.SULFURIC_FUEL, "Sulfuric Fuel")
         addFluid(RagiumFluids.FUEL, "Fuel")
-        addFluid(RagiumFluids.ANTI_RUST_OIL, "Anti-rust Oil")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "Molten Plastic")
         addFluid(RagiumFluids.SYNTHETIC_RESIN, "Synthetic Resin")
         // N
@@ -132,9 +137,12 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFATE_SOLUTION, "Alkali Sulfate Solution")
         // Al
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "Alumina Solution")
+        // Si
+        addFluid(RagiumFluids.MOLTEN_SILICON, "Molten Silicon")
         // P
         addFluid(RagiumFluids.PHOSPHORIC_ACID, "Phosphoric Acid")
         // S
+        addFluid(RagiumFluids.HYDROGEN_SULFIDE, "Hydrogen Sulfide")
         addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
@@ -149,7 +157,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
         add(RagiumItems.CEMENT, "Cement")
-        add(RagiumItems.MORTAR, "Mortar")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.STICKY_BALL, "Sticky Ball")
         add(RagiumItems.ALKALI_HYDROXIDE, "Alkali Hydroxide")
@@ -165,12 +172,11 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.SPLASH_BOTTLE, "Splash Bottle")
         add(RagiumItems.LINGERING_BOTTLE, "Lingering Bottle")
         add(RagiumItems.CRUDE_SILICON, "Crude Silicon")
+        add(RagiumItems.SILICON_BOULE, "Silicon Boule")
         add(RagiumItems.SILICON_WAFER, "Silicon Wafer")
-        add(RagiumItems.SILICON_CHIP, "Silicon Chip")
-        add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
-        add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
+        add(RagiumItems.BLANK_CIRCUIT_BOARD, "Empty Circuit Board")
         add(RagiumItems.DIAMOND_WAFER, "Diamond Wafer")
-        add(RagiumItems.DIAMOND_CHIP, "Diamond Chip")
+        add(RagiumItems.BLANK_MUSIC_DISC, "Blank Music Disc")
         add(RagiumItems.ELDER_HEART, "Elder Heart")
         add(RagiumItems.WITHER_DOLL, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
@@ -208,37 +214,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addCustomPotion("darkness", "Darkness")
         addCustomPotion("golden_apple", "Golden Apple")
         addCustomPotion("enchanted_golden_apple", "Enchanted Golden Apple")
-
-        // Recipe Type
-        addRecipeType(RagiumRecipeTypes.ASSEMBLING, "Assembling")
-        addRecipeType(RagiumRecipeTypes.CENTRIFUGING, "Centrifuging")
-        addRecipeType(RagiumRecipeTypes.COMPRESSING, "Compressing")
-        addRecipeType(RagiumRecipeTypes.CRUSHING, "Crushing")
-        addRecipeType(RagiumRecipeTypes.CUTTING, "Cutting")
-        addRecipeType(RagiumRecipeTypes.FILLING, "Filling")
-        addRecipeType(RagiumRecipeTypes.PRESSING, "Pressing")
-
-        addRecipeType(RagiumRecipeTypes.ALLOYING, "Alloying")
-        addRecipeType(RagiumRecipeTypes.FREEZING, "Freezing")
-        addRecipeType(RagiumRecipeTypes.MELTING, "Melting")
-        addRecipeType(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
-        addRecipeType(RagiumRecipeTypes.REFINING, "Refining")
-
-        addRecipeType(RagiumRecipeTypes.BATHING, "Chemical Bathing")
-        addRecipeType(RagiumRecipeTypes.EXCHANGING, "Exchanging")
-        addRecipeType(RagiumRecipeTypes.MIXING, "Mixing")
-        addRecipeType(RagiumRecipeTypes.REACTING, "Chemical Reacting")
-        addRecipeType(RagiumRecipeTypes.WASHING, "Washing")
-
-        addRecipeType(RagiumRecipeTypes.BREWING, "Brewing")
-        addRecipeType(RagiumRecipeTypes.PLANTING, "Planting")
-        addRecipeType(RagiumRecipeTypes.RESOURCE_PUMPING, "Resource Pumping")
-
-        addRecipeType(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
-        addRecipeType(RagiumRecipeTypes.ENGRAVING, "Laser Engraving")
-
-        addRecipeType(RagiumRecipeTypes.ENCHANTING, "Enchanting")
-
         // Text - Lib
         add(HTCommonTranslation.ERROR, "Error")
         add(HTCommonTranslation.INFINITE, "Infinite")
@@ -259,6 +234,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(HTCommonTranslation.SECONDS, $$"%1$s sec (%2$s ticks)")
 
         add(HTCommonTranslation.BIOME, $$"Biome: %1$s")
+        add(HTCommonTranslation.ENCHANTMENT_POWER, $$"Enchantment Power: %1$s")
 
         add(HTCommonTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(HTCommonTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")
@@ -271,10 +247,45 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
 
+        add(RagiumTranslation.RECIPE_CATEGORY_ASSEMBLING, "Assembling")
+        add(RagiumTranslation.RECIPE_CATEGORY_CENTRIFUGING, "Centrifuging")
+        add(RagiumTranslation.RECIPE_CATEGORY_COMPRESSING, "Compressing")
+        add(RagiumTranslation.RECIPE_CATEGORY_CRUSHING, "Crushing")
+        add(RagiumTranslation.RECIPE_CATEGORY_CUTTING, "Cutting")
+        add(RagiumTranslation.RECIPE_CATEGORY_EXTRACTING, "Extracting")
+        add(RagiumTranslation.RECIPE_CATEGORY_FILLING, "Filling")
+        add(RagiumTranslation.RECIPE_CATEGORY_PRESSING, "Pressing")
+        add(RagiumTranslation.RECIPE_CATEGORY_PULVERIZING, "Pulverizing")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_ALLOYING, "Alloying")
+        add(RagiumTranslation.RECIPE_CATEGORY_DRYING, "Drying")
+        add(RagiumTranslation.RECIPE_CATEGORY_FREEZING, "Freezing")
+        add(RagiumTranslation.RECIPE_CATEGORY_MELTING, "Melting")
+        add(RagiumTranslation.RECIPE_CATEGORY_PYROLYZING, "Pyrolyzing")
+        add(RagiumTranslation.RECIPE_CATEGORY_REFINING, "Refining")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_AUTOCLAVING, "Autoclaving")
+        add(RagiumTranslation.RECIPE_CATEGORY_BATHING, "Chemical Bathing")
+        add(RagiumTranslation.RECIPE_CATEGORY_MIXING, "Mixing")
+        add(RagiumTranslation.RECIPE_CATEGORY_FLUID_REACTING, "Chemical Reacting - Fluid")
+        add(RagiumTranslation.RECIPE_CATEGORY_ITEM_REACTING, "Chemical Reacting - Item")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_BREWING, "Brewing")
+        add(RagiumTranslation.RECIPE_CATEGORY_PLANTING, "Planting")
+        add(RagiumTranslation.RECIPE_CATEGORY_RESOURCE_PUMPING, "Resource Pumping")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_ELECTROLYZING, "Electrolyzing")
+        add(RagiumTranslation.RECIPE_CATEGORY_ENGRAVING, "Laser Engraving")
+        add(RagiumTranslation.RECIPE_CATEGORY_PRINTING, "Laser Printing")
+
+        add(RagiumTranslation.RECIPE_CATEGORY_ENCHANTING, "Enchanting")
+        add(RagiumTranslation.RECIPE_CATEGORY_TRANSFORMING, "Transforming")
+
         add(RagiumTranslation.TOOLTIPS_SULFUR, "Dropped from Coal Ores")
         add(RagiumTranslation.TOOLTIPS_CINNABAR, "Dropped from Redstone Ores")
-        add(RagiumTranslation.TOOLTIPS_FLUORITE, "Dropped from Lapis Lazuri Ores")
+        add(RagiumTranslation.TOOLTIPS_APATITE, "Dropped from Lapis Lazuri Ores")
         add(RagiumTranslation.TOOLTIPS_CARBON, "Dropped from Diamond Ores")
+        add(RagiumTranslation.TOOLTIPS_FLUORITE, "Dropped from Quartz Ores")
 
         add(RagiumTranslation.TOOLTIPS_MEMORY_DISC_DATA, $$"Scanned Item: %1$s")
         add(RagiumTranslation.TOOLTIPS_UPGRADE_SPEED, $$"Speed: %1$s")

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 4,
+    "items": "#c:storage_blocks/diamond"
+  },
+  "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
+    "enchantments": {
+      "minecraft:efficiency": 5,
+      "minecraft:unbreaking": 3
+    }
+  },
+  "time": 200
+}

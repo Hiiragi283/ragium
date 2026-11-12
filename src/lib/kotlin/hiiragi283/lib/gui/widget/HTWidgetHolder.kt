@@ -1,6 +1,5 @@
 package hiiragi283.lib.gui.widget
 
-import hiiragi283.lib.gui.sync.HTSyncType
 import hiiragi283.lib.gui.sync.HTSyncableSlot
 
 /**
@@ -26,16 +25,24 @@ interface HTWidgetHolder : Iterable<HTWidget> {
     }
 
     /**
+     * @since 26.1.13
+     */
+    fun getWidgetId(widget: HTWidget): Int
+
+    /**
+     * @since 26.1.13
+     */
+    fun getWidget(index: Int): HTWidget?
+
+    /**
      * 指定した[slot]を追加します。
      *
      * 参照 : [Mekanism - MekanismContainer.track](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/inventory/container/MekanismContainer.java)
-     * @param type 同期の方向
      */
-    fun track(slot: HTSyncableSlot, type: HTSyncType)
+    fun track(slot: HTSyncableSlot)
 
-    operator fun plusAssign(pair: Pair<HTSyncableSlot, HTSyncType>) {
-        val (slot: HTSyncableSlot, type: HTSyncType) = pair
-        this.track(slot, type)
+    operator fun plusAssign(slot: HTSyncableSlot) {
+        this.track(slot)
     }
 
     var rows: Int

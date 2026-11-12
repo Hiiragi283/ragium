@@ -1,0 +1,18 @@
+{
+  "type": "ragium:autoclaving",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:dyes/purple"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:dusts/silica"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:amethyst_shard"
+  },
+  "time": 200
+}

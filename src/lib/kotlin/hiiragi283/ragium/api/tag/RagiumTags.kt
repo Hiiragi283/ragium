@@ -55,12 +55,6 @@ data object RagiumTags {
         @JvmField
         val ALDEHYDES: TagKey<Fluid> = create("aldehydes")
 
-        /**
-         * @since 26.1.12
-         */
-        @JvmField
-        val WAXES: TagKey<Fluid> = create("waxes")
-
         @JvmStatic
         private fun create(vararg path: String): TagKey<Fluid> = FluidTags.create(RagiumAPI.id(*path))
     }
@@ -114,6 +108,12 @@ data object RagiumTags {
          */
         @JvmField
         val SUPPORT_UPGRADES: TagKey<Item> = create("support_upgrades")
+
+        /**
+         * @since 26.1.13
+         */
+        @JvmField
+        val WAXES: TagKey<Item> = create("waxes")
 
         @JvmStatic
         private fun create(vararg path: String): TagKey<Item> = ItemTags.create(RagiumAPI.id(*path))

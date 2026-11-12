@@ -1,0 +1,18 @@
+{
+  "type": "ragium:transforming",
+  "ingredients": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:infested_cobblestone"
+  },
+  "time": 200
+}

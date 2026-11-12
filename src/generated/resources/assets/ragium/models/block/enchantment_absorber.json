@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "ragium:block/enchantment_absorber_bottom",
+    "side": "ragium:block/enchantment_absorber_side",
+    "top": "ragium:block/enchantment_absorber_top"
+  }
+}

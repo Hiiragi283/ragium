@@ -1,0 +1,15 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:ender_pearls"
+  },
+  "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
+    "enchantments": {
+      "minecraft:vanishing_curse": {}
+    }
+  },
+  "time": 200
+}

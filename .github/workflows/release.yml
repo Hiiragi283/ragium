@@ -37,3 +37,8 @@ jobs:
           generate_release_notes: true
           files: |
             build/libs/*.jar
+      - name: Publish to CurseForge and Modrinth
+        run: ./gradlew publishMods
+        env:
+          CURSEFORGE: ${{ secrets.CURSEFORGE }}
+          MODRINTH: ${{ secrets.MODRINTH }}

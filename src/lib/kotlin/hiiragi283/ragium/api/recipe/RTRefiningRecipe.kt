@@ -8,8 +8,8 @@ import hiiragi283.lib.recipe.input.HTSingleFluidRecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class RTRefiningRecipe(ingredient: HTFluidIngredient, result: Result, progressData: HTProgressData) :
-    HTFluidSeparatingRecipe(ingredient, result, progressData),
+class RTRefiningRecipe(ingredient: HTFluidIngredient, result: HTFluidSeparatingRecipe.Result, progressData: HTProgressData) :
+    HTFluidSeparatingRecipe.Basic(ingredient, result, progressData),
     HTSerializableRecipe<HTSingleFluidRecipeInput> {
     companion object {
         @JvmField

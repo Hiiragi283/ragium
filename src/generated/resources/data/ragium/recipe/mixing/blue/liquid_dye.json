@@ -11,10 +11,8 @@
     }
   },
   "result": {
-    "fluid": {
-      "amount": 250,
-      "id": "ragium:blue_dye"
-    }
+    "amount": 250,
+    "id": "ragium:blue_dye"
   },
   "time": 100
 }

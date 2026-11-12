@@ -217,3 +217,12 @@ inline fun <A, B, C> Either<A, B>.flatMapLeft(left: (A) -> Either<C, B>): Either
         is Either.Right -> this
     }
 }
+
+/**
+ * @author Hiiragi Tsubasa
+ * @since 26.1.13
+ */
+inline fun <A, B> Either<A, B>.toPair(emptyLeft: () -> A, emptyRight: () -> B): Pair<A, B> = fold(
+    { it to emptyRight() },
+    { emptyLeft() to it },
+)

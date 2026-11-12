@@ -3,7 +3,13 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "#c:ores/coal"
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:ores/coal",
+          "c:raw_materials/coal"
+        ]
+      }
     },
     {
       "count": 1,

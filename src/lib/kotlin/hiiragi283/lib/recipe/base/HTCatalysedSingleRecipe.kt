@@ -32,7 +32,7 @@ open class HTCatalysedSingleRecipe<out ING : Any, out RES : Any>(
                 ingredient.fieldOf(HTConstants.INGREDIENT).forGetter { it.ingredient },
                 HTItemCatalyst.CODEC.forGetter { it.catalyst },
                 result.fieldOf(HTConstants.RESULT).forGetter { it.result },
-                HTProgressData.CODEC.forGetter { it.progressData },
+                HTProgressRecipe.Holder.progressCodec(),
             ).apply(instance, factory::create)
         }
 

@@ -2,30 +2,20 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.lib.recipe.HTSerializableRecipe
-import hiiragi283.lib.recipe.base.HTCatalysedSingleRecipe
-import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
+import hiiragi283.lib.recipe.base.HTCatalysedFluidToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
-import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.lib.recipe.input.HTFluidWithCatalystRecipeInput
 import hiiragi283.lib.recipe.result.HTItemResult
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.world.item.ItemInstance
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.neoforge.fluids.FluidInstance
 
 class RTFreezingRecipe(ingredient: HTFluidIngredient, catalyst: HTItemCatalyst, result: HTItemResult, progressData: HTProgressData) :
-    HTCatalysedSingleRecipe<HTFluidIngredient, HTItemResult>(
-        ingredient,
-        catalyst,
-        result,
-        progressData,
-    ),
-    HTItemAndFluidToItemRecipe,
-    HTSerializableRecipe<HTItemAndFluidRecipeInput> {
+    HTCatalysedFluidToRecipe.BasicItem(ingredient, catalyst, result, progressData),
+    HTSerializableRecipe<HTFluidWithCatalystRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<RTFreezingRecipe> = codec(HTFluidIngredient.CODEC, HTItemResult.CODEC, ::RTFreezingRecipe)
@@ -37,15 +27,6 @@ class RTFreezingRecipe(ingredient: HTFluidIngredient, catalyst: HTItemCatalyst, 
         @JvmField
         val SERIALIZER: RecipeSerializer<RTFreezingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
-
-    override fun test(first: ItemInstance, second: FluidInstance): Boolean = catalyst.test(first) && ingredient.test(second)
-
-    override fun apply(first: ItemInstance, second: FluidInstance): ItemStack = result.create()
-
-    override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> =
-        ItemStack.EMPTY to ingredient.getMatchingStack(second)
-
-    override fun getProgressData(first: ItemInstance, second: FluidInstance): HTProgressData = progressData
 
     override fun getSerializer(): RecipeSerializer<RTFreezingRecipe> = RagiumRecipeSerializers.FREEZING
 

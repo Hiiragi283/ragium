@@ -95,5 +95,8 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
             .add(RagiumBlocks.TANK)
             .add(RagiumBlocks.POTION_TANK)
             .addTag(HTMachineType.MACHINE_PREFIX.rawCommonTag.item)
+        builder(RagiumTags.Items.WAXES)
+            .add(vanillaId("honeycomb"))
+            .add(RagiumItems.BEESWAX)
     }
 }

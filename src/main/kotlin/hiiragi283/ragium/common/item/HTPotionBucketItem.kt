@@ -5,7 +5,7 @@ import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.text.Text
 import hiiragi283.lib.text.translatableText
-import hiiragi283.ragium.common.transfer.item.HTCustomBucketItemHandler
+import hiiragi283.ragium.common.transfer.fluid.HTCustomBucketFluidHandler
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.transfer.access.ItemAccess
@@ -20,7 +20,7 @@ class HTPotionBucketItem(properties: Properties) : HTPotionBasedItem(properties)
         return translatableText(super.descriptionId, potionName)
     }
 
-    class BucketHandler(itemAccess: ItemAccess) : HTCustomBucketItemHandler(itemAccess) {
+    class BucketHandler(itemAccess: ItemAccess) : HTCustomBucketFluidHandler(itemAccess) {
         override fun getResourceFrom(accessResource: ItemResource, index: Int): FluidResource =
             HTPotionHelper.createFluid(accessResource).mapOrElse(FluidResource::of) { FluidResource.EMPTY }
     }

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:sands",
+    "#c:gravels",
+    "#c:dusts/quick_lime"
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:cement"
+  }
+}

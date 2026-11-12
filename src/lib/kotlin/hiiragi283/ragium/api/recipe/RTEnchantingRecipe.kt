@@ -1,16 +1,14 @@
 package hiiragi283.ragium.api.recipe
 
-import com.mojang.serialization.MapCodec
-import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.HTSerializableRecipe
-import hiiragi283.lib.recipe.base.HTDoubleItemToItemRecipe
+import hiiragi283.lib.recipe.base.HTBasicSingleRecipe
+import hiiragi283.lib.recipe.base.HTItemCombineRecipe
+import hiiragi283.lib.recipe.base.HTItemToRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
-import hiiragi283.lib.recipe.base.HTProgressRecipe
+import hiiragi283.lib.recipe.ingredient.HTIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
-import hiiragi283.lib.serialization.codec.HTCodecs
-import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.StreamCodec
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -19,47 +17,27 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-@JvmRecord
-data class RTEnchantingRecipe(val ingredient: HTItemIngredient, val result: HTItemResult, override val progressData: HTProgressData) :
-    HTDoubleItemToItemRecipe,
-    HTProgressRecipe.Holder,
+class RTEnchantingRecipe(ingredient: HTItemIngredient, result: HTItemResult, progressData: HTProgressData) :
+    HTBasicSingleRecipe<HTItemIngredient, HTItemResult>(ingredient, result, progressData),
+    HTItemCombineRecipe,
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField
         val BOOK_INGREDIENT = HTItemIngredient(Ingredient.of(Items.BOOK), 1)
 
         @JvmField
-        val CODEC: MapCodec<RTEnchantingRecipe> = HTCodecs.recordMap { instance ->
-            instance.group(
-                HTItemIngredient.CODEC.fieldOf(HTConstants.INGREDIENT).forGetter(RTEnchantingRecipe::ingredient),
-                HTItemResult.CODEC.fieldOf(HTConstants.RESULT).forGetter(RTEnchantingRecipe::result),
-                HTProgressData.CODEC.forGetter(RTEnchantingRecipe::progressData),
-            ).apply(instance, ::RTEnchantingRecipe)
-        }
-
-        @JvmField
-        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, RTEnchantingRecipe> = StreamCodec.composite(
-            HTItemIngredient.STREAM_CODEC,
-            RTEnchantingRecipe::ingredient,
-            HTItemResult.STREAM_CODEC,
-            RTEnchantingRecipe::result,
-            HTProgressData.STREAM_CODEC,
-            RTEnchantingRecipe::progressData,
-            ::RTEnchantingRecipe,
+        val SERIALIZER: RecipeSerializer<RTEnchantingRecipe> = RecipeSerializer(
+            HTItemToRecipe.BasicItem.codec(::RTEnchantingRecipe),
+            HTItemToRecipe.BasicItem.streamCodec(::RTEnchantingRecipe),
         )
-
-        @JvmField
-        val SERIALIZER: RecipeSerializer<RTEnchantingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(first: ItemInstance, second: ItemInstance): Boolean = BOOK_INGREDIENT.test(first) && ingredient.test(second)
-
-    override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
-
-    override fun getMatchingStack(first: ItemInstance, second: ItemInstance): Pair<ItemInstance, ItemInstance> =
-        BOOK_INGREDIENT.getMatchingStack(first) to ingredient.getMatchingStack(second)
+    override val firstIngredient: HTIngredient<Item, ItemInstance> get() = ingredient
+    override val secondIngredient: HTIngredient<Item, ItemInstance> get() = BOOK_INGREDIENT
 
     override fun getProgressData(first: ItemInstance, second: ItemInstance): HTProgressData = progressData
+
+    override fun apply(first: ItemInstance, second: ItemInstance): ItemStack = result.create()
 
     override fun getSerializer(): RecipeSerializer<RTEnchantingRecipe> = RagiumRecipeSerializers.ENCHANTING
 

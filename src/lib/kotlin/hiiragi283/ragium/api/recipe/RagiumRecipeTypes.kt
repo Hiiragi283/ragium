@@ -51,14 +51,23 @@ data object RagiumRecipeTypes {
     val CUTTING: RecipeType<RTCuttingRecipe> = create(RagiumConstants.CUTTING)
 
     @JvmField
+    val EXTRACTING: RecipeType<RTExtractingRecipe> = create(RagiumConstants.EXTRACTING)
+
+    @JvmField
     val FILLING: RecipeType<RTFillingRecipe> = create(RagiumConstants.FILLING)
 
     @JvmField
     val PRESSING: RecipeType<RTPressingRecipe> = create(RagiumConstants.PRESSING)
 
+    @JvmField
+    val PULVERIZING: RecipeType<RTPulverizingRecipe> = create(RagiumConstants.PULVERIZING)
+
     // Heat
     @JvmField
     val ALLOYING: RecipeType<RTAlloyingRecipe> = create(RagiumConstants.ALLOYING)
+
+    @JvmField
+    val DRYING: RecipeType<RTDryingRecipe> = create(RagiumConstants.DRYING)
 
     @JvmField
     val FREEZING: RecipeType<RTFreezingRecipe> = create(RagiumConstants.FREEZING)
@@ -74,19 +83,19 @@ data object RagiumRecipeTypes {
 
     // Chemical
     @JvmField
-    val BATHING: RecipeType<RTBathingRecipe> = create(RagiumConstants.BATHING)
+    val AUTOCLAVING: RecipeType<RTAutoclavingRecipe> = create(RagiumConstants.AUTOCLAVING)
 
     @JvmField
-    val EXCHANGING: RecipeType<RTExchangingRecipe> = create(RagiumConstants.EXCHANGING)
+    val BATHING: RecipeType<RTBathingRecipe> = create(RagiumConstants.BATHING)
 
     @JvmField
     val MIXING: RecipeType<RTMixingRecipe> = create(RagiumConstants.MIXING)
 
     @JvmField
-    val REACTING: RecipeType<RTReactingRecipe> = create(RagiumConstants.REACTING)
+    val FLUID_REACTING: RecipeType<RTFluidReactingRecipe> = create(RagiumConstants.FLUID_REACTING)
 
     @JvmField
-    val WASHING: RecipeType<RTWashingRecipe> = create(RagiumConstants.WASHING)
+    val ITEM_REACTING: RecipeType<RTItemReactingRecipe> = create(RagiumConstants.ITEM_REACTING)
 
     // Resource
     @JvmField
@@ -105,7 +114,13 @@ data object RagiumRecipeTypes {
     @JvmField
     val ENGRAVING: RecipeType<RTEngravingRecipe> = create(RagiumConstants.ENGRAVING)
 
+    @JvmField
+    val PRINTING: RecipeType<RTPrintingRecipe> = create(RagiumConstants.PRINTING)
+
     // Arcane
     @JvmField
     val ENCHANTING: RecipeType<RTEnchantingRecipe> = create(RagiumConstants.ENCHANTING)
+
+    @JvmField
+    val TRANSFORMING: RecipeType<RTTransformingRecipe> = create(RagiumConstants.TRANSFORMING)
 }

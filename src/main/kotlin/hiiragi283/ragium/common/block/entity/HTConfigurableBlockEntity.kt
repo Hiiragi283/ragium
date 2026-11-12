@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
 import com.mojang.serialization.Codec
-import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfoProvider
@@ -11,6 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
+import thedarkcolour.kotlinforforge.neoforge.kotlin.enumMapOf
 
 /**
  * 搬入出の面を制御可能な[HTBlockEntity]の拡張クラスです。
@@ -25,7 +25,7 @@ abstract class HTConfigurableBlockEntity(type: BlockEntityType<*>, pos: BlockPos
         private val CONFIG_CODEC: Codec<Map<Direction, HTSlotInfo>> = HTCodecs.mapOf(Direction.CODEC, HTSlotInfo.CODEC)
     }
 
-    private val slotInfoCache: MutableMap<Direction, HTSlotInfo> = mutableEnumMapOf()
+    private val slotInfoCache: MutableMap<Direction, HTSlotInfo> = enumMapOf()
 
     override fun writeValue(output: ValueOutput) {
         super.writeValue(output)

@@ -1,0 +1,18 @@
+{
+  "type": "ragium:transforming",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "minecraft:player_head"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:dragon_head"
+  },
+  "time": 200
+}

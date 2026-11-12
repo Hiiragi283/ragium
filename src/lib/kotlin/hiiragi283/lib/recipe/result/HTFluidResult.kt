@@ -16,7 +16,6 @@ import hiiragi283.lib.serialization.network.optionalOf
 import hiiragi283.lib.util.DFUEither
 import hiiragi283.lib.util.Ior
 import hiiragi283.lib.util.IorNel
-import hiiragi283.lib.util.fold
 import hiiragi283.lib.util.getLeftList
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
@@ -56,8 +55,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
         }
 
         @JvmField
-        val CODEC: Codec<HTFluidResult> =
-            Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) { it.toResult() }
+        val CODEC: Codec<HTFluidResult> = Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) { it.toResult() }
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTFluidResult> = StreamCodec.composite(
@@ -107,8 +105,7 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
 
             @JvmField
             val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> =
-                ByteBufCodecs.registry(RagiumRegistries.Keys.FLUID_RESULT_TYPE)
-                    .dispatch(Entry::type, HTFluidResultType<*>::streamCodec)
+                ByteBufCodecs.registry(RagiumRegistries.Keys.FLUID_RESULT_TYPE).dispatch(Entry::type, HTFluidResultType<*>::streamCodec)
         }
 
         fun type(): HTFluidResultType<*>
@@ -213,17 +210,3 @@ data class HTFluidResult(val entry: Entry, val amount: Int) :
         override fun getId(): Identifier? = content.getRight()?.key?.identifier()
     }
 }
-
-//    Extensions    //
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.5
- */
-fun HTFluidResult?.createOrEmpty(): FluidStack = this?.create() ?: FluidStack.EMPTY
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.5
- */
-fun Optional<HTFluidResult>.createOrEmpty(): FluidStack = this.fold(FluidStack::EMPTY, HTFluidResult::create)

@@ -6,9 +6,8 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
+import hiiragi283.lib.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.lib.recipe.result.HTFluidResult
-import hiiragi283.lib.recipe.result.HTItemAndFluidStack
-import hiiragi283.lib.recipe.result.HTItemOrFluidResult
 import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.lib.recipe.result.HTRecipeResult
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -34,30 +33,26 @@ typealias HTItemAndFluidToFluidRecipe = HTItemAndFluidToRecipe<FluidStack>
 typealias HTItemAndFluidToItemRecipe = HTItemAndFluidToRecipe<ItemStack>
 
 /**
- * 1種類のアイテムと液体から1種類のアイテムと液体を作成するレシピを表すエイリアスです。
- * @author Hiiragi Tsubasa
- * @since 26.1.9
- */
-typealias HTItemOrFluidRecipe = HTItemAndFluidToRecipe<HTItemAndFluidStack>
-
-/**
  * 1種類のアイテムと液体から1種類の完成品を作成するレシピを表すインターフェースです。
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-interface HTItemAndFluidToRecipe<OUTPUT : Any> :
-    HTRecipePredicates.ItemAndFluid,
-    HTRecipeFactories.ItemAndFluid<OUTPUT> {
+interface HTItemAndFluidToRecipe<OUTPUT : Any> : HTRecipeFactories.DoubleInput<HTItemAndFluidRecipeInput, ItemInstance, FluidInstance, OUTPUT> {
+    override fun matches(input: HTItemAndFluidRecipeInput): Boolean = test(input.item, input.fluid)
+
+    override fun produce(input: HTItemAndFluidRecipeInput): OUTPUT = apply(input.item, input.fluid)
+
+    override fun getProgressData(input: HTItemAndFluidRecipeInput): HTProgressData = getProgressData(input.item, input.fluid)
 
     /**
      * @author Hiiragi Tsubasa
      * @since 26.1.0
      */
-    abstract class Basic<OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>>(
+    open class Basic<OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>>(
         val itemIngredient: HTItemIngredient,
         val fluidIngredient: HTFluidIngredient,
         val result: RESULT,
-        override val progressData: HTProgressData,
+        final override val progressData: HTProgressData,
     ) : HTItemAndFluidToRecipe<OUTPUT>,
         HTProgressRecipe.Holder {
         companion object {
@@ -70,9 +65,9 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
                     HTCodecs.mapPair(
                         HTItemIngredient.CODEC.fieldOf(HTConstants.ITEM),
                         HTFluidIngredient.CODEC.fieldOf(HTConstants.FLUID),
-                    ).fieldOf(HTConstants.INGREDIENT).forGetter { it.itemIngredient to it.fluidIngredient },
+                    ).fieldOf(HTConstants.INGREDIENTS).forGetter { it.itemIngredient to it.fluidIngredient },
                     resultCodec.fieldOf(HTConstants.RESULT).forGetter(Basic<OUTPUT, RESULT>::result),
-                    HTProgressData.CODEC.forGetter(Basic<OUTPUT, RESULT>::progressData),
+                    HTProgressRecipe.Holder.progressCodec(),
                 ).apply(instance, factory::create)
             }
 
@@ -93,14 +88,14 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
             )
         }
 
-        override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.test(first) && fluidIngredient.test(second)
+        final override fun test(first: ItemInstance, second: FluidInstance): Boolean = itemIngredient.test(first) && fluidIngredient.test(second)
 
-        override fun apply(first: ItemInstance, second: FluidInstance): OUTPUT = result.create()
+        final override fun apply(first: ItemInstance, second: FluidInstance): OUTPUT = result.create()
 
-        override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> =
+        final override fun getMatchingStack(first: ItemInstance, second: FluidInstance): Pair<ItemInstance, FluidInstance> =
             itemIngredient.getMatchingStack(first) to fluidIngredient.getMatchingStack(second)
 
-        override fun getProgressData(first: ItemInstance, second: FluidInstance): HTProgressData = progressData
+        final override fun getProgressData(first: ItemInstance, second: FluidInstance): HTProgressData = progressData
     }
 
     /**
@@ -136,28 +131,6 @@ interface HTItemAndFluidToRecipe<OUTPUT : Any> :
             fun <RECIPE : BasicFluid> streamCodec(
                 factory: HTItemAndFluidToRecipeBuilder.Factory<HTFluidResult, RECIPE>,
             ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = streamCodec(HTFluidResult.STREAM_CODEC, factory)
-        }
-    }
-
-    /**
-     * @author Hiiragi Tsubasa
-     * @since 26.1.9
-     */
-    open class BasicItemAndFluid(
-        itemIngredient: HTItemIngredient,
-        fluidIngredient: HTFluidIngredient,
-        result: HTItemOrFluidResult,
-        progressData: HTProgressData,
-    ) : Basic<HTItemAndFluidStack, HTItemOrFluidResult>(itemIngredient, fluidIngredient, result, progressData) {
-        companion object {
-            @JvmStatic
-            fun <RECIPE : BasicItemAndFluid> codec(factory: HTItemAndFluidToRecipeBuilder.Factory<HTItemOrFluidResult, RECIPE>): MapCodec<RECIPE> =
-                codec(HTItemOrFluidResult.CODEC, factory)
-
-            @JvmStatic
-            fun <RECIPE : BasicItemAndFluid> streamCodec(
-                factory: HTItemAndFluidToRecipeBuilder.Factory<HTItemOrFluidResult, RECIPE>,
-            ): StreamCodec<RegistryFriendlyByteBuf, RECIPE> = streamCodec(HTItemOrFluidResult.STREAM_CODEC, factory)
         }
     }
 }

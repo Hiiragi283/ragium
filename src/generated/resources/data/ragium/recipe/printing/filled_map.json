@@ -1,0 +1,9 @@
+{
+  "type": "ragium:printing",
+  "catalyst": "minecraft:filled_map",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:map"
+  },
+  "time": 200
+}

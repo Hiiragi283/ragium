@@ -1,0 +1,18 @@
+{
+  "type": "ragium:transforming",
+  "ingredients": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "minecraft:snowball"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:wind_charge"
+  },
+  "time": 200
+}

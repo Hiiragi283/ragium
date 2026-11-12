@@ -1,8 +1,8 @@
 package hiiragi283.lib.transfer.resolver
 
-import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.transfer.holder.HTCapabilityHolder
 import net.minecraft.core.Direction
+import thedarkcolour.kotlinforforge.neoforge.kotlin.enumMapOf
 
 /**
  * [HTCapabilityResolver]の実装クラスです。
@@ -15,7 +15,7 @@ abstract class HTCapabilityManager<HOLDER : HTCapabilityHolder, HANDLER : Any>(
     protected val holder: HOLDER,
     private val proxyCreator: ProxyCreator<HOLDER, HANDLER>,
 ) : HTCapabilityResolver {
-    private val handlers: MutableMap<Direction, HANDLER> = mutableEnumMapOf()
+    private val handlers: MutableMap<Direction, HANDLER> = enumMapOf()
     private var readOnlyHandler: HANDLER? = null
 
     override fun <T : Any> resolve(side: Direction?): T? = when {

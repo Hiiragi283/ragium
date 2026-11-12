@@ -1,7 +1,8 @@
 {
   "values": [
+    "ragium:autoclave",
     "ragium:chemical_bath",
-    "ragium:chemical_reactor",
+    "ragium:chemical_labo",
     "ragium:mixer"
   ]
 }

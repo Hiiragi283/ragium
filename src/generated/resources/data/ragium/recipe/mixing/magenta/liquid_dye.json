@@ -11,10 +11,8 @@
     }
   },
   "result": {
-    "fluid": {
-      "amount": 250,
-      "id": "ragium:magenta_dye"
-    }
+    "amount": 250,
+    "id": "ragium:magenta_dye"
   },
   "time": 100
 }

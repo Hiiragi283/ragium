@@ -1,0 +1,18 @@
+{
+  "type": "ragium:centrifuging",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:experience_bottle"
+  },
+  "result": {
+    "fluid": {
+      "amount": 250,
+      "id": "ragium:experience"
+    },
+    "item": {
+      "count": 1,
+      "id": "minecraft:glass_bottle"
+    }
+  },
+  "time": 200
+}

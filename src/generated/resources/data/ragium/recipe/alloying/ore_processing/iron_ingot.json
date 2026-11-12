@@ -3,7 +3,13 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "#c:ores/iron"
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:ores/iron",
+          "c:raw_materials/iron"
+        ]
+      }
     },
     {
       "count": 1,

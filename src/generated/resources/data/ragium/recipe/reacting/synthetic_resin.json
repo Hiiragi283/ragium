@@ -1,17 +1,15 @@
 {
-  "type": "ragium:reacting",
-  "ingredients": {
-    "fluids": [
-      {
-        "amount": 1000,
-        "fluids": "#c:aromatic_compound"
-      },
-      {
-        "amount": 1000,
-        "fluids": "#ragium:aldehydes"
-      }
-    ]
-  },
+  "type": "ragium:reacting/fluid",
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:aromatic_compound"
+    },
+    {
+      "amount": 1000,
+      "fluids": "#ragium:aldehydes"
+    }
+  ],
   "results": {
     "fluid": {
       "amount": 2000,

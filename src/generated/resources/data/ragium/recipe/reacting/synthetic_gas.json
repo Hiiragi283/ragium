@@ -1,0 +1,20 @@
+{
+  "type": "ragium:reacting/item",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": "#ragium:cokes"
+    }
+  },
+  "results": {
+    "fluid": {
+      "amount": 1000,
+      "id": "ragium:synthetic_gas"
+    }
+  },
+  "time": 200
+}

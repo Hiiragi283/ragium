@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.transfer.holder
 
-import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.transfer.holder.HTCapabilityHolder
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Direction
+import thedarkcolour.kotlinforforge.neoforge.kotlin.enumMapOf
 
 /**
  * 参考 : [Mekanism - ConfigHolder](https://github.com/mekanism/Mekanism/blob/26.3/src/main/java/mekanism/common/capabilities/holder/ConfigHolder.java)
@@ -26,7 +26,7 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
     ) {
         private var hasBuilt = false
         private val slots: MutableList<SLOT> = ObjectArrayList()
-        private val slotMap: MutableMap<HTSlotInfo, MutableList<SLOT>> = mutableEnumMapOf()
+        private val slotMap: MutableMap<HTSlotInfo, MutableList<SLOT>> = enumMapOf()
 
         private fun putSlot(info: HTSlotInfo, slot: SLOT) {
             slotMap.getOrPut(info, ::ObjectArrayList) += slot

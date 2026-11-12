@@ -1,0 +1,20 @@
+{
+  "type": "ragium:refining",
+  "ingredient": {
+    "amount": 2000,
+    "fluids": "#c:synthetic_gas"
+  },
+  "result": {
+    "fluids": [
+      {
+        "amount": 500,
+        "id": "ragium:fuel"
+      },
+      {
+        "amount": 1000,
+        "id": "minecraft:water"
+      }
+    ]
+  },
+  "time": 200
+}

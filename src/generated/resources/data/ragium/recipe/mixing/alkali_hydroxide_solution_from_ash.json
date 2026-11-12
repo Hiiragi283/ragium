@@ -11,10 +11,8 @@
     }
   },
   "result": {
-    "fluid": {
-      "amount": 1000,
-      "id": "ragium:alkali_hydroxide_solution"
-    }
+    "amount": 1000,
+    "id": "ragium:alkali_hydroxide_solution"
   },
   "time": 200
 }

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:extracting",
+  "ingredient": {
+    "count": 3,
+    "items": "#c:gunpowders"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:niter_dust"
+  },
+  "time": 200
+}

@@ -16,6 +16,8 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.client.data.models.BlockModelGenerators
 import net.minecraft.client.data.models.ItemModelGenerators
+import net.minecraft.client.data.models.blockstates.ConditionBuilder
+import net.minecraft.client.data.models.blockstates.MultiPartGenerator
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator
 import net.minecraft.client.data.models.blockstates.PropertyDispatch
 import net.minecraft.client.data.models.model.ModelTemplates
@@ -23,10 +25,12 @@ import net.minecraft.client.data.models.model.TextureMapping
 import net.minecraft.client.data.models.model.TextureSlot
 import net.minecraft.client.data.models.model.TexturedModel
 import net.minecraft.client.resources.model.sprite.Material
+import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.PipeBlock
 
 class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAPI.MOD_ID) {
     override fun registerModels(blockModels: BlockModelGenerators, itemModels: ItemModelGenerators) {
@@ -34,13 +38,8 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         val dripFluids: List<HTFluidContent> = buildList {
             addAll(RagiumFluids.DYES)
             add(RagiumFluids.HONEY)
-            add(RagiumFluids.MOLTEN_BEESWAX)
             add(RagiumFluids.RESIN)
-            add(RagiumFluids.OMINOUS_FLUX)
             add(RagiumFluids.MOLTEN_GLASS)
-            add(RagiumFluids.MOLTEN_REDSTONE)
-            add(RagiumFluids.MOLTEN_GLOWSTONE)
-            add(RagiumFluids.MOLTEN_ENDER)
 
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.MOLTEN_PLASTIC)
@@ -75,6 +74,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         }.forEach { generators.createTrivialCube(it.getOrThrow()) }
 
         RagiumBlocks.ALL_DECORATIONS.forEach { generators.createDecoration(it) }
+        createEnergyPipe(generators)
 
         // Dynamo
         RagiumBlocks.DYNAMOS.values.flatten().forEach {
@@ -124,6 +124,27 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         }
         // Misc
         generators.createTrivialBlock(RagiumBlocks.UPGRADE_STATION.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
+        generators.createTrivialBlock(RagiumBlocks.ENCHANTMENT_ABSORBER.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
+    }
+
+    private fun createEnergyPipe(generators: BlockModelGenerators) {
+        val block: Block = RagiumBlocks.ENERGY_PIPE.getOrThrow()
+        val core: Identifier = RagiumAPI.id("block/energy_pipe")
+        val arm = BlockModelGenerators.plainVariant(RagiumAPI.id("block/energy_pipe_arm"))
+        val multipart: MultiPartGenerator = MultiPartGenerator.multiPart(block).with(BlockModelGenerators.plainVariant(core))
+        for ((side, property) in PipeBlock.PROPERTY_BY_DIRECTION) {
+            val variant = when (side) {
+                Direction.NORTH -> arm
+                Direction.SOUTH -> arm.with(BlockModelGenerators.Y_ROT_180)
+                Direction.WEST -> arm.with(BlockModelGenerators.Y_ROT_270)
+                Direction.EAST -> arm.with(BlockModelGenerators.Y_ROT_90)
+                Direction.UP -> arm.with(BlockModelGenerators.X_ROT_270)
+                Direction.DOWN -> arm.with(BlockModelGenerators.X_ROT_90)
+            }
+            multipart.with(ConditionBuilder().term(property, true), variant)
+        }
+        generators.blockStateOutput.accept(multipart)
+        generators.registerSimpleItemModel(block, core)
     }
 
     private fun createMachineBlock(generators: BlockModelGenerators, block: HTSimpleValueWithKey<Block>, inactive: Identifier, active: Identifier) {

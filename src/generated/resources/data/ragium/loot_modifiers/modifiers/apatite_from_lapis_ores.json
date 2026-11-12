@@ -1,0 +1,11 @@
+{
+  "type": "neoforge:add_table",
+  "conditions": [
+    {
+      "blocks": "#c:ores/lapis",
+      "condition": "ragium:block_set"
+    }
+  ],
+  "priority": 0,
+  "table": "ragium:modifiers/apatite_from_lapis_ores"
+}

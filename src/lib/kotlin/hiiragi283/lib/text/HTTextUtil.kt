@@ -7,6 +7,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.ClickEvent
+import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.network.chat.HoverEvent
 import net.minecraft.network.chat.Style
 import net.minecraft.network.chat.TextColor
@@ -40,6 +41,9 @@ object HTTextUtil {
     private val TEXT_NULL: Text = "null".toText()
 
     @JvmField
+    val COMMA_SEPARATOR: Text = ", ".toText()
+
+    @JvmField
     val INT_FORMAT: NumberFormat = NumberFormat.getIntegerInstance()
 
     @JvmField
@@ -70,8 +74,16 @@ object HTTextUtil {
      * @return いい感じになった[テキスト][MutableText]
      */
     @JvmStatic
-    fun smartTranslate(key: String, vararg args: Any?): MutableText {
-        if (args.isEmpty()) {
+    fun smartTranslate(key: String, vararg args: Any?): MutableText = smartTranslate(key, args.toList())
+
+    /**
+     * 指定した[翻訳キー][key]と[引数][args]をいい感じにして[テキスト][MutableText]に変換します。
+     * @return いい感じになった[テキスト][MutableText]
+     * @since 26.1.13
+     */
+    @JvmStatic
+    fun smartTranslate(key: String, args: Iterable<Any?>): MutableText {
+        if (args.none()) {
             return translatableText(key)
         } else {
             val formattedArgs: MutableList<Any> = ObjectArrayList()
@@ -190,5 +202,57 @@ object HTTextUtil {
         ChatFormatting.ITALIC -> style.isItalic
         ChatFormatting.RESET -> style.isEmpty
         else -> style.color != null
+    }
+
+    /**
+     * @see ComponentUtils.formatList
+     * @since 26.1.13
+     */
+    @JvmStatic
+    fun joinToText(texts: Iterable<Text>, separator: Text = COMMA_SEPARATOR): Text {
+        val it: Iterator<Text> = texts.iterator()
+        if (!it.hasNext()) {
+            return Text.empty()
+        }
+        val element: Text = it.next()
+        if (!it.hasNext()) {
+            return element
+        }
+        val dst: MutableText = Text.empty()
+        var first = true
+        while (it.hasNext()) {
+            if (!first) {
+                dst.append(separator)
+            }
+            dst.append(it.next())
+            first = false
+        }
+        return dst
+    }
+
+    /**
+     * @see ComponentUtils.formatList
+     * @since 26.1.13
+     */
+    @JvmStatic
+    fun <T> joinToText(texts: Iterable<T>, separator: Text = COMMA_SEPARATOR, transformer: (T) -> Text): Text {
+        val it: Iterator<T> = texts.iterator()
+        if (!it.hasNext()) {
+            return Text.empty()
+        }
+        val element: T = it.next()
+        if (!it.hasNext()) {
+            return transformer(element)
+        }
+        val dst: MutableText = Text.empty()
+        var first = true
+        while (it.hasNext()) {
+            if (!first) {
+                dst.append(separator)
+            }
+            dst.append(transformer(it.next()))
+            first = false
+        }
+        return dst
     }
 }

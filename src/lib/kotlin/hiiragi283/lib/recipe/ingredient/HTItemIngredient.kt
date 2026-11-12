@@ -5,6 +5,7 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.recipe.display.HTSizedSlotDisplay
 import hiiragi283.lib.serialization.codec.HTCodecs
+import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -14,8 +15,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
-import java.util.Optional
-import kotlin.jvm.optionals.getOrNull
 
 /**
  * [Item]向けの[HTIngredient]の実装クラスです。
@@ -53,26 +52,15 @@ data class HTItemIngredient(val unsized: Ingredient, val count: Int) :
 
     override fun test(instance: ItemInstance): Boolean = testOnlyType(instance) && instance.count() >= count
 
-    override fun testOnlyType(instance: ItemInstance): Boolean = HTIngredientHelper.unwrap(instance).let(unsized::test)
+    override fun testOnlyType(instance: TypedInstance<Item>): Boolean = when {
+        unsized.isSimple -> unsized.acceptsItem(instance.typeHolder())
+        else -> HTIngredientHelper.unwrap(instance).let(unsized::test)
+    }
 
-    override fun getMatchingStack(instance: ItemInstance): ItemInstance = when (testOnlyType(instance)) {
+    override fun getMatchingStack(instance: ItemInstance): ItemInstance = when (test(instance)) {
         true -> HTIngredientHelper.copyWithCount(instance, count)
         false -> ItemStack.EMPTY
     }
 
     override fun display(): SlotDisplay = HTSizedSlotDisplay(unsized.display(), count)
 }
-
-//    Extensions    //
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.2
- */
-fun Optional<HTItemIngredient>.test(instance: ItemInstance): Boolean = this.getOrNull().testOrEmpty(instance)
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.9
- */
-fun HTItemIngredient?.testOrEmpty(instance: ItemInstance): Boolean = this?.test(instance) ?: HTIngredientHelper.isEmpty(instance)

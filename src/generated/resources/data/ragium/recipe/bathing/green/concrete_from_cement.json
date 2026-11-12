@@ -1,0 +1,18 @@
+{
+  "type": "ragium:bathing",
+  "ingredients": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:dyes/green"
+    },
+    "item": {
+      "count": 1,
+      "items": "ragium:cement"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:green_concrete"
+  },
+  "time": 50
+}

@@ -1,0 +1,9 @@
+{
+  "type": "ragium:printing",
+  "catalyst": "minecraft:cyan_banner",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:cyan_banner"
+  },
+  "time": 200
+}

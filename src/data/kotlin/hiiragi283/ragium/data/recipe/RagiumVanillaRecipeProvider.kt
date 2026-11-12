@@ -67,6 +67,26 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 count = 4
             }
         }.save(exporter)
+        // Cement
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(Tags.Items.SANDS) }
+            ingredient { +holderSet(Tags.Items.GRAVELS) }
+            result {
+                +RagiumItems.CEMENT
+                count = 2
+            }
+        }.save(exporter)
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(Tags.Items.SANDS) }
+            ingredient { +holderSet(Tags.Items.GRAVELS) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.QUICK_LIME) }
+            result {
+                +RagiumItems.CEMENT
+                count = 4
+            }
+            recipeId suffix "_with_lime"
+        }.save(exporter)
+
         // Splash Bottle
         VanillaRecipeBuilders.shapeless {
             ingredient { +holderSet(Tags.Items.GUNPOWDERS) }
@@ -85,36 +105,22 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 count = 4
             }
         }.save(exporter)
-        // Cement
-        VanillaRecipeBuilders.shapeless {
-            ingredient { +holderSet(Tags.Items.SANDS) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.QUICK_LIME) }
-            result {
-                +RagiumItems.CEMENT
-                count = 2
-            }
-        }.save(exporter)
-        // Mortar
-        VanillaRecipeBuilders.shapeless {
-            ingredient { +holderSet(Tags.Items.BUCKETS_WATER) }
-            repeat(4) { ingredient { items { +RagiumItems.CEMENT } } }
-            result {
-                +RagiumItems.MORTAR
-                count = 4
-            }
-        }.save(exporter)
+        // Blank Music Disc
         VanillaRecipeBuilders.shaped {
-            mosaic4()
-            define('A') { +holderSet(Tags.Items.BRICKS_NORMAL) }
-            define('B') { items { +RagiumItems.MORTAR } }
-            result { +Items.BRICKS }
+            +" A "
+            +"A A"
+            +" A "
+            define('A') { +holderSet(HTCommonTags.Items.PLASTICS) }
+            result { +RagiumItems.BLANK_MUSIC_DISC }
         }.save(exporter)
+        // Memory Disc
         VanillaRecipeBuilders.shaped {
-            mosaic4()
-            define('A') { +holderSet(Tags.Items.BRICKS_NETHER) }
-            define('B') { items { +RagiumItems.MORTAR } }
-            result { +Items.NETHER_BRICKS }
+            hollow4()
+            define('A') { +holderSet(HTCommonTags.Items.PLASTICS) }
+            define('B') { items { +RagiumItems.SILICON_WAFER } }
+            result { +RagiumItems.MEMORY_DISC }
         }.save(exporter)
+
         // Wither Doll
         VanillaRecipeBuilders.shaped {
             +"AAA"
@@ -227,14 +233,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('B') { items { +RagiumItems.BEESWAX } }
             result { +Items.CANDLE }
             category = RecipeCategory.DECORATIONS
-        }.save(exporter)
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(Tags.Items.STRINGS) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.MOLTEN_BEESWAX)
-                amount /= 4
-            }
-            result { +Items.CANDLE }
         }.save(exporter)
         // Torch
         VanillaRecipeBuilders.shaped {
@@ -421,10 +419,12 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         mechanical(RagiumBlocks.ASSEMBLER) { items { +Items.CRAFTER } }
         mechanical(RagiumBlocks.CENTRIFUGE) { +holderSet(ItemTags.BARS) }
-        mechanical(RagiumBlocks.CRUSHER) { items { +Items.GRINDSTONE } }
+        mechanical(RagiumBlocks.CRUSHER) { items { +Items.FLINT } }
         mechanical(RagiumBlocks.COMPRESSOR) { +holderSet(ItemTags.ANVIL) }
         mechanical(RagiumBlocks.CUTTING_MACHINE) { items { +Items.STONECUTTER } }
+        mechanical(RagiumBlocks.EXTRACTOR) { items { +Items.HOPPER } }
         mechanical(RagiumBlocks.PRESS_MACHINE) { items { +Items.PISTON } }
+        mechanical(RagiumBlocks.PULVERIZER) { items { +Items.GRINDSTONE } }
         // Heat
         VanillaRecipeBuilders.shaped {
             hollow4()
@@ -463,6 +463,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
 
         heat(RagiumBlocks.ALLOY_SMELTER) { items { +Items.BLAST_FURNACE } }
+        heat(RagiumBlocks.DRYER) { items { +Items.SOUL_SAND } }
         heat(RagiumBlocks.MELTER) { +holderSet(Tags.Items.BUCKETS_LAVA) }
 
         heat(RagiumBlocks.SMELTER) { items { +Items.FURNACE } }
@@ -474,7 +475,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
         }.save(exporter)
 
+        chemical(RagiumBlocks.AUTOCLAVE) { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Metal.IRON) }
         chemical(RagiumBlocks.CHEMICAL_BATH) { items { +Items.CAULDRON } }
+        chemical(RagiumBlocks.CHEMICAL_LABO) { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.DIAMOND) }
         chemical(RagiumBlocks.MIXER) { +holderSet(Tags.Items.BUCKETS_EMPTY) }
         // Resource
         RagiumRecipeBuilders.bathing {
@@ -492,15 +495,22 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         RagiumRecipeBuilders.assembling {
             ingredient { items { +RagiumItems.getParts(HTMachineType.RESOURCE) } }
             ingredient {
-                items { +RagiumItems.ELECTRIC_CIRCUIT }
+                items { +RagiumItems.CIRCUITS.advanced }
                 count = 2
             }
+            recipeId suffix "_advanced"
             result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
         }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.getParts(HTMachineType.RESOURCE) } }
+            ingredient { items { +RagiumItems.CIRCUITS.industrial } }
+            result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
+            recipeId suffix "_industrial"
+        }.save(exporter)
 
-        electronics(RagiumBlocks.BLENDER) { items { +RagiumBlocks.MIXER } }
         electronics(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
         // Arcane
+        arcane(RagiumBlocks.ARCANE_TRANSFORMER) { +holderSet(Tags.Items.NETHER_STARS) }
         arcane(RagiumBlocks.ENCHANTER) { items { +Items.ENCHANTING_TABLE } }
         // Other
         VanillaRecipeBuilders.shaped {
@@ -755,6 +765,10 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         ingotToNugget(RagiumMaterial.Alloy.SOOTY_IRON)
         ingotToNugget(RagiumMaterial.Alloy.BLACK_STEEL)
         ingotToNugget(RagiumMaterial.Alloy.SHADOW_STEEL)
+        // 4x Small Dust -> Dust
+        smallToDust(RagiumMaterial.Metal.GOLD)
+        smallToDust(RagiumMaterial.Metal.NICKEL)
+        smallToDust(RagiumMaterial.Metal.SILVER)
         // Gear
         RagiumItems.getOrThrow(HTItemPart.GEAR, RagiumMaterial.Other.WOOD).let { gear: HTSimpleDeferredItem ->
             val inputs: HolderSet<Item> = holderSet(ItemTags.PLANKS)
@@ -927,6 +941,19 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +ingot }
             group = ingot.id.path
             recipeId suffix "_from_nugget"
+        }.save(exporter)
+    }
+
+    private fun smallToDust(material: RagiumMaterial) {
+        val smallDust: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, material)
+        val dust: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, material)
+        VanillaRecipeBuilders.shaped {
+            +"AA"
+            +"AB"
+            define('A') { +holderSet(CommonTagPrefixes.SMALL_DUST, material) }
+            define('B') { items { +smallDust } }
+            result { +dust }
+            recipeId suffix "_from_small"
         }.save(exporter)
     }
 

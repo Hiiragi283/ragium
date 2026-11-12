@@ -13,9 +13,7 @@ import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.registry.getKeyOrThrow
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.serialization.network.HTStreamCodecs
-import hiiragi283.lib.serialization.network.optionalOf
 import hiiragi283.lib.util.DFUEither
-import hiiragi283.lib.util.fold
 import hiiragi283.ragium.api.RagiumConfigAccess
 import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.Holder
@@ -37,8 +35,7 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
-import java.util.Optional
-import kotlin.jvm.optionals.getOrElse
+import java.util.OptionalInt
 
 /**
  * アイテムの完成品を表すインターフェースです。
@@ -59,9 +56,7 @@ data class HTItemResult(val entry: Entry, val count: Int) :
         }
 
         @JvmField
-        val CODEC: Codec<HTItemResult> = Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) {
-            it.toResult()
-        }
+        val CODEC: Codec<HTItemResult> = Codec.withAlternative(MAP_CODEC.codec(), Entry.MAP_CODEC.codec()) { it.toResult() }
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemResult> = StreamCodec.composite(
@@ -113,9 +108,8 @@ data class HTItemResult(val entry: Entry, val count: Int) :
             )
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> = ByteBufCodecs.registry(
-                RagiumRegistries.Keys.ITEM_RESULT_TYPE,
-            ).dispatch(Entry::type, HTItemResultType<*>::streamCodec)
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, Entry> =
+                ByteBufCodecs.registry(RagiumRegistries.Keys.ITEM_RESULT_TYPE).dispatch(Entry::type, HTItemResultType<*>::streamCodec)
         }
 
         fun type(): HTItemResultType<*>
@@ -224,26 +218,26 @@ data class HTItemResult(val entry: Entry, val count: Int) :
      * @since 26.1.6
      */
     @JvmRecord
-    data class EnchantedBookEntryN(val enchantments: Map<Holder<Enchantment>, Optional<Int>>) : Entry {
+    data class EnchantedBookEntry(private val enchantments: Map<Holder<Enchantment>, OptionalInt>) : Entry {
         companion object {
             @JvmField
-            val CODEC: MapCodec<EnchantedBookEntryN> = HTCodecs.mapOf(Enchantment.CODEC, HTCodecs.optional(HTCodecs.POSITIVE_INT))
+            val CODEC: MapCodec<EnchantedBookEntry> = HTCodecs.mapOf(Enchantment.CODEC, HTCodecs.optionalInt(HTCodecs.POSITIVE_INT))
                 .fieldOf("enchantments")
-                .xmap(::EnchantedBookEntryN, EnchantedBookEntryN::enchantments)
+                .xmap(::EnchantedBookEntry, EnchantedBookEntry::enchantments)
 
             @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchantedBookEntryN> = HTStreamCodecs.mapOf(
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchantedBookEntry> = HTStreamCodecs.mapOf(
                 Enchantment.STREAM_CODEC,
-                ByteBufCodecs.VAR_INT.optionalOf(),
-            ).map(::EnchantedBookEntryN, EnchantedBookEntryN::enchantments)
+                HTStreamCodecs.optionalInt(ByteBufCodecs.VAR_INT),
+            ).map(::EnchantedBookEntry, EnchantedBookEntry::enchantments)
 
             @JvmField
-            val TYPE: HTItemResultType<EnchantedBookEntryN> = HTItemResultType(CODEC, STREAM_CODEC)
+            val TYPE: HTItemResultType<EnchantedBookEntry> = HTItemResultType(CODEC, STREAM_CODEC)
         }
 
-        constructor(enchantment: Holder<Enchantment>) : this(mapOf(enchantment to Optional.empty()))
+        constructor(enchantment: Holder<Enchantment>) : this(mapOf(enchantment to OptionalInt.empty()))
 
-        constructor(enchantment: Holder<Enchantment>, level: Int) : this(mapOf(enchantment to Optional.of(level)))
+        constructor(enchantment: Holder<Enchantment>, level: Int) : this(mapOf(enchantment to OptionalInt.of(level)))
 
         override fun type(): HTItemResultType<*> = TYPE
 
@@ -254,8 +248,8 @@ data class HTItemResult(val entry: Entry, val count: Int) :
         }
 
         private fun buildEnchantments(): ItemEnchantments = buildItemEnchantments {
-            for ((holder: Holder<Enchantment>, level: Optional<Int>) in enchantments) {
-                set(holder, level.getOrElse { holder.value().maxLevel })
+            for ((holder: Holder<Enchantment>, level: OptionalInt) in enchantments) {
+                level.ifPresentOrElse({ set(holder, it) }, { set(holder, holder.value().maxLevel) })
             }
         }
 
@@ -269,54 +263,4 @@ data class HTItemResult(val entry: Entry, val count: Int) :
             ),
         )
     }
-
-    /**
-     * @since 26.1.7
-     */
-    @JvmRecord
-    data class WithFallbackEntry(val base: Entry, val fallback: Entry) : Entry {
-        companion object {
-            @JvmField
-            val CODEC: MapCodec<WithFallbackEntry> = HTCodecs.recordMap { instance ->
-                instance.group(
-                    Entry.MAP_CODEC.fieldOf("base").forGetter(WithFallbackEntry::base),
-                    Entry.MAP_CODEC.fieldOf("fallback").forGetter(WithFallbackEntry::fallback),
-                ).apply(instance, ::WithFallbackEntry)
-            }
-
-            @JvmField
-            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, WithFallbackEntry> = StreamCodec.composite(
-                Entry.STREAM_CODEC,
-                WithFallbackEntry::base,
-                Entry.STREAM_CODEC,
-                WithFallbackEntry::fallback,
-                ::WithFallbackEntry,
-            )
-
-            @JvmField
-            val TYPE: HTItemResultType<WithFallbackEntry> = HTItemResultType(CODEC, STREAM_CODEC)
-        }
-
-        override fun type(): HTItemResultType<*> = TYPE
-
-        override fun create(count: Int): ItemStack = base.create(count).takeUnless(ItemStack::isEmpty) ?: fallback.create(count)
-
-        override fun getId(): Identifier? = base.getId() ?: fallback.getId()
-
-        override fun display(): SlotDisplay = base.display().takeUnless { it is SlotDisplay.Empty } ?: fallback.display()
-    }
 }
-
-//    Extensions    //
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.5
- */
-fun HTItemResult?.createOrEmpty(): ItemStack = this?.create() ?: ItemStack.EMPTY
-
-/**
- * @author Hiiragi Tsubasa
- * @since 26.1.5
- */
-fun Optional<HTItemResult>.createOrEmpty(): ItemStack = this.fold(ItemStack::EMPTY, HTItemResult::create)

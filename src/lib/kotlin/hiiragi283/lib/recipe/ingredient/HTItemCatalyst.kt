@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.util.fold
+import net.minecraft.core.TypedInstance
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.Item
@@ -41,8 +42,15 @@ data class HTItemCatalyst(val content: Optional<Ingredient>) :
 
     override fun test(instance: ItemInstance): Boolean = testOnlyType(instance)
 
-    override fun testOnlyType(instance: ItemInstance): Boolean =
-        content.fold({ HTIngredientHelper.isEmpty(instance) }, { it.test(HTIngredientHelper.unwrap(instance)) })
+    override fun testOnlyType(instance: TypedInstance<Item>): Boolean = content.fold(
+        { HTIngredientHelper.isEmpty(instance) },
+        { ingredient: Ingredient ->
+            when {
+                ingredient.isEmpty -> ingredient.acceptsItem(instance.typeHolder())
+                else -> HTIngredientHelper.unwrap(instance).let(ingredient::test)
+            }
+        },
+    )
 
     override fun getMatchingStack(instance: ItemInstance): ItemInstance = ItemStack.EMPTY
 

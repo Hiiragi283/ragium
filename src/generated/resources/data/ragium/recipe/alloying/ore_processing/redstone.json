@@ -3,7 +3,13 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "#c:ores/redstone"
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:ores/redstone",
+          "c:raw_materials/redstone"
+        ]
+      }
     },
     {
       "count": 1,
@@ -11,7 +17,7 @@
     }
   ],
   "result": {
-    "count": 9,
+    "count": 12,
     "id": "minecraft:redstone"
   },
   "time": 200

@@ -38,6 +38,7 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
         }
         // Misc
         add(RagiumBlocks.UPGRADE_STATION, ::copyComponent)
+        add(RagiumBlocks.ENCHANTMENT_ABSORBER, ::copyComponent)
     }
 
     private inline fun buildTable(builderAction: HTLootTableBuilder.() -> Unit): LootTable.Builder = HTLootTableBuilder.build(builderAction)

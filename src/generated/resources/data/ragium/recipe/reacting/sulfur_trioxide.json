@@ -1,17 +1,15 @@
 {
-  "type": "ragium:reacting",
-  "ingredients": {
-    "fluids": [
-      {
-        "amount": 1000,
-        "fluids": "#c:sulfur_dioxide"
-      },
-      {
-        "amount": 500,
-        "fluids": "#c:oxygen"
-      }
-    ]
-  },
+  "type": "ragium:reacting/fluid",
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:sulfur_dioxide"
+    },
+    {
+      "amount": 500,
+      "fluids": "#c:oxygen"
+    }
+  ],
   "results": {
     "fluid": {
       "amount": 1000,

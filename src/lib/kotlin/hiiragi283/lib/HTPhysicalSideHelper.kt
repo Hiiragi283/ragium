@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.flag.FeatureElement
 import net.minecraft.world.flag.FeatureFlagSet
 import net.minecraft.world.flag.FeatureFlags
@@ -28,7 +29,7 @@ import kotlin.jvm.optionals.getOrNull
 @EventBusSubscriber
 data object HTPhysicalSideHelper {
     /**
-     * 現在の物理サイドに応じて処理を行います。
+     * 現在の物理サイドに対して処理を行います。
      * @param T 戻り値のクラス
      * @param client 物理クライアント側の処理
      * @param server 物理サーバー側の処理
@@ -43,7 +44,7 @@ data object HTPhysicalSideHelper {
     //    Registry    //
 
     /**
-     * 現在の[レジストリへのアクセス][RegistryAccess]を取得します。
+     * 現在の物理サイドに対して[レジストリへのアクセス][RegistryAccess]を取得します。
      * @return クライアント側でワールドを読み込んでいない，またはサーバーのインスタンスが作成されていない場合は`null`
      */
     @JvmStatic
@@ -61,7 +62,7 @@ data object HTPhysicalSideHelper {
     //    Feature Flag    //
 
     /**
-     * 現在の[FeatureFlagSet]を取得します。
+     * 現在の物理サイドに対して[FeatureFlagSet]を取得します。
      * @return クライアント側でワールドを読み込んでいない，またはサーバーのインスタンスが作成されていない場合は[FeatureFlags.DEFAULT_FLAGS]
      **/
     @JvmStatic
@@ -77,7 +78,7 @@ data object HTPhysicalSideHelper {
         private set
 
     /**
-     * 現在の[HTRecipeLookup.Context]を作成します。
+     * 現在の物理サイドに対して[HTRecipeLookup.Context]を作成します。
      * @since 26.1.1
      */
     @JvmStatic
@@ -88,6 +89,17 @@ data object HTPhysicalSideHelper {
         },
     ) ?: HTRecipeLookup.Context.EMPTY
 
+    /**
+     * 指定された[level]に対して[HTRecipeLookup.Context]を作成します。
+     * @since 26.1.13
+     */
+    @JvmStatic
+    fun createLookupContext(level: Level?): HTRecipeLookup.Context = when (level) {
+        null -> HTRecipeLookup.Context.EMPTY
+        is ServerLevel -> HTRecipeLookup.Context(level.recipeAccess().recipeMap(), level.registryAccess())
+        else -> HTRecipeLookup.Context(cachedRecipes, level.registryAccess())
+    }
+
     @SubscribeEvent
     fun onRecipeSync(event: RecipesReceivedEvent) {
         cachedRecipes = event.recipeMap
@@ -96,7 +108,7 @@ data object HTPhysicalSideHelper {
     //    PotionBrewing    //
 
     /**
-     * 現在の[PotionBrewing]を取得します。
+     * 現在の物理サイドに対して[PotionBrewing]を取得します。
      * @since 26.1.1
      */
     @JvmStatic

@@ -5,7 +5,7 @@
     "A": "#c:nuggets/sooty_iron",
     "B": "ragium:machine_parts/mechanical",
     "C": "#c:gears/copper",
-    "D": "minecraft:grindstone"
+    "D": "minecraft:flint"
   },
   "pattern": [
     "ABA",

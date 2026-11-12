@@ -102,11 +102,15 @@ data object HTConstants {
     const val RESULT = "result"
     const val RESULTS = "results"
 
+    const val ENCHANTMENT = "enchantment"
+    const val ENCHANTMENT_POWER = "enchantment_power"
+
     //    Text    //
 
     const val CONSTANTS = "constants"
     const val DESCRIPTION = "description"
     const val ERROR = "error"
+    const val RECIPE_CATEGORY = "recipe_category"
     const val TOOLTIP = "tooltip"
 
     const val ITEM_GROUP = "itemGroup"

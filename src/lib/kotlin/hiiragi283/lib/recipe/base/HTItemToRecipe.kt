@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.collection.Nel
 import hiiragi283.lib.data.recipe.builder.HTItemToMultiItemRecipeBuilder
+import hiiragi283.lib.recipe.ingredient.HTIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTFluidResult
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
@@ -15,8 +16,10 @@ import hiiragi283.lib.serialization.codec.compactNelFieldOf
 import hiiragi283.lib.serialization.network.nelOf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
 
 /**
@@ -48,13 +51,20 @@ typealias HTItemToItemAndFluidRecipe = HTItemToRecipe<HTItemAndFluidStack>
 typealias HTItemToMultiItemRecipe = HTItemToRecipe<List<ItemStack>>
 
 /**
- * 1種類のアイテムから1種類の完成品を作成するレシピを表すインターフェースです。
+ * 1種類のアイテムから完成品を作成するレシピを表すインターフェースです。
  * @author Hiiragi Tsubasa
  * @since 26.1.5
  */
-interface HTItemToRecipe<OUTPUT : Any> :
-    HTRecipePredicates.SingleItem,
-    HTRecipeFactories.SingleItemTo<OUTPUT> {
+interface HTItemToRecipe<OUTPUT : Any> : HTRecipeFactories.SingleInput<SingleRecipeInput, ItemInstance, OUTPUT> {
+    val ingredient: HTIngredient<Item, ItemInstance>
+
+    override fun test(input: ItemInstance): Boolean = ingredient.test(input)
+
+    override fun matches(input: SingleRecipeInput): Boolean = test(input.item())
+
+    override fun produce(input: SingleRecipeInput): OUTPUT = apply(input.item())
+
+    override fun getProgressData(input: SingleRecipeInput): HTProgressData = getProgressData(input.item())
 
     /**
      * @author Hiiragi Tsubasa
@@ -63,8 +73,6 @@ interface HTItemToRecipe<OUTPUT : Any> :
     open class Basic<OUTPUT : Any, RESULT : HTRecipeResult<OUTPUT>>(ingredient: HTItemIngredient, result: RESULT, progressData: HTProgressData) :
         HTBasicSingleRecipe<HTItemIngredient, RESULT>(ingredient, result, progressData),
         HTItemToRecipe<OUTPUT> {
-        override fun test(input: ItemInstance): Boolean = ingredient.test(input)
-
         override fun apply(input: ItemInstance): OUTPUT = result.create()
 
         override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
@@ -135,7 +143,7 @@ interface HTItemToRecipe<OUTPUT : Any> :
      * @author Hiiragi Tsubasa
      * @since 26.1.11
      */
-    open class BasicMultiItem(val ingredient: HTItemIngredient, val results: Nel<HTItemResult>, override val progressData: HTProgressData) :
+    open class BasicMultiItem(override val ingredient: HTItemIngredient, val results: Nel<HTItemResult>, override val progressData: HTProgressData) :
         HTItemToMultiItemRecipe,
         HTProgressRecipe.Holder {
         companion object {
@@ -147,7 +155,7 @@ interface HTItemToRecipe<OUTPUT : Any> :
                         HTItemResult.CODEC
                             .compactNelFieldOf(HTConstants.RESULT, HTConstants.RESULTS, 4)
                             .forGetter(BasicMultiItem::results),
-                        HTProgressData.CODEC.forGetter(BasicMultiItem::progressData),
+                        HTProgressRecipe.Holder.progressCodec(),
                     ).apply(instance, factory::create)
                 }
 
@@ -164,8 +172,6 @@ interface HTItemToRecipe<OUTPUT : Any> :
                 factory::create,
             )
         }
-
-        override fun test(input: ItemInstance): Boolean = ingredient.test(input)
 
         override fun getProgressData(input: ItemInstance): HTProgressData = progressData
 

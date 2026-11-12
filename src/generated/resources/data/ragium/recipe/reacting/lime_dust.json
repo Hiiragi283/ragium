@@ -1,17 +1,15 @@
 {
-  "type": "ragium:reacting",
-  "ingredients": {
-    "fluids": [
-      {
-        "amount": 1000,
-        "fluids": "#c:limewater"
-      },
-      {
-        "amount": 1000,
-        "fluids": "#c:carbon_dioxide"
-      }
-    ]
-  },
+  "type": "ragium:reacting/fluid",
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:limewater"
+    },
+    {
+      "amount": 1000,
+      "fluids": "#c:carbon_dioxide"
+    }
+  ],
   "results": {
     "fluid": {
       "amount": 1000,

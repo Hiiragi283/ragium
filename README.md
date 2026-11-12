@@ -41,6 +41,14 @@ This mod is licensed under [MPL-2.0](./LICENSE)
 - [Issue Tracker](https://github.com/Hiiragi283/ragium/issues)
 - [Pull Requests](https://github.com/Hiiragi283/ragium/pulls)
 
+### GameTests
+
+Run Ragium's GameTests with `./gradlew runGameTestServer` (`.\gradlew.bat runGameTestServer` in PowerShell).
+The test server uses `build/game-test` as its working directory.
+
+Test code lives in `src/gameTest/kotlin`, with test definitions in `src/gameTest/resources/data/ragium/test_instance`.
+To run the example in a development world, use `/test run ragium:assembler_accepts_energy`.
+
 ## Maven Repository
 
 [![Maven Central Version](https://img.shields.io/maven-central/v/io.github.hiiragi283/ragium?style=for-the-badge)](https://search.maven.org/artifact/io.github.hiiragi283/ragium)

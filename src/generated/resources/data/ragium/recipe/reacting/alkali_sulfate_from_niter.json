@@ -1,0 +1,24 @@
+{
+  "type": "ragium:reacting/item",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:sulfuric_acid"
+    },
+    "item": {
+      "count": 2,
+      "items": "#c:dusts/niter"
+    }
+  },
+  "results": {
+    "fluid": {
+      "amount": 2000,
+      "id": "ragium:nitric_acid"
+    },
+    "item": {
+      "count": 1,
+      "id": "ragium:alkali_sulfate"
+    }
+  },
+  "time": 200
+}

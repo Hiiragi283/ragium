@@ -1,0 +1,18 @@
+{
+  "type": "ragium:transforming",
+  "ingredients": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "minecraft:shroomlight"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:glowstone"
+  },
+  "time": 200
+}

@@ -6,6 +6,7 @@ import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.tag.CommonTagPrefixes
+import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
@@ -14,13 +15,10 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponents
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.component.OminousBottleAmplifier
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 import java.util.concurrent.CompletableFuture
 
 class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
@@ -149,15 +147,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             catalyst { items { +RagiumItems.BLOCK_MOLD } }
             result { +Items.HONEY_BLOCK }
         }.save(exporter)
-        // Beeswax
-        RagiumRecipeBuilders.freezing {
-            ingredient {
-                +holderSet(RagiumFluids.MOLTEN_BEESWAX)
-                amount /= 4
-            }
-            catalyst { items { +RagiumItems.BALL_MOLD } }
-            result { +RagiumItems.BEESWAX }
-        }.save(exporter)
 
         // Sticky Ball
         RagiumRecipeBuilders.freezing {
@@ -234,14 +223,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             result { +RagiumFluids.HONEY }
             recipeId suffix "_from_block"
         }.save(exporter)
-        // Beeswax
-        RagiumRecipeBuilders.melting {
-            ingredient { items { +RagiumItems.BEESWAX } }
-            result {
-                +RagiumFluids.MOLTEN_BEESWAX
-                amount /= 4
-            }
-        }.save(exporter)
         // Resin
         RagiumRecipeBuilders.melting {
             ingredient { +holderSet(Tags.Items.CLUMPS_RESIN) }
@@ -260,47 +241,31 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             recipeId suffix "_from_block"
         }.save(exporter)
 
-        // Ominous Bottle -> Ominous Flux
-        (OminousBottleAmplifier.MIN_AMPLIFIER..OminousBottleAmplifier.MAX_AMPLIFIER).forEach { amplifier: Int ->
-            RagiumRecipeBuilders.melting {
-                ingredient {
-                    +DataComponentIngredient.of(
-                        false,
-                        DataComponents.OMINOUS_BOTTLE_AMPLIFIER,
-                        OminousBottleAmplifier(amplifier),
-                        Items.OMINOUS_BOTTLE,
-                    )
-                }
-                result {
-                    +RagiumFluids.OMINOUS_FLUX
-                    amount = 250 * (amplifier + 1)
-                }
-                recipeId prefix "${amplifier}x_"
-            }.save(exporter)
-        }
-        // Molten Redstone
+        // Oxygen
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
+            ingredient { items { +Items.WIND_CHARGE } }
             result {
-                +RagiumFluids.MOLTEN_REDSTONE
-                amount = 90
+                +RagiumFluids.OXYGEN
+                amount /= 4
             }
+            recipeId suffix "_from_wind_charge"
         }.save(exporter)
-        // Molten Glowstone
+        // Silicon
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE) }
+            ingredient { +holderSet(HTCommonTags.Items.SILICON) }
             result {
-                +RagiumFluids.MOLTEN_GLOWSTONE
-                amount = 90
+                +RagiumFluids.MOLTEN_SILICON
+                amount = 30
             }
+            recipeId suffix "_from_crude"
         }.save(exporter)
-        // Molten Ender
         RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.ENDER_PEARLS) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SILICON) }
             result {
-                +RagiumFluids.MOLTEN_ENDER
+                +RagiumFluids.MOLTEN_SILICON
                 amount = 90
             }
+            recipeId suffix "_from_dust"
         }.save(exporter)
     }
 

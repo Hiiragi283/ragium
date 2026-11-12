@@ -2,7 +2,7 @@
   "type": "neoforge:add_table",
   "conditions": [
     {
-      "blocks": "#minecraft:coal_ores",
+      "blocks": "#c:ores/coal",
       "condition": "ragium:block_set"
     }
   ],

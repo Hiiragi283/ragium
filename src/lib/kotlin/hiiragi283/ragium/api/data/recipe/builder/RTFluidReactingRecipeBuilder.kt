@@ -1,0 +1,70 @@
+@file:OptIn(ExperimentalContracts::class)
+
+package hiiragi283.ragium.api.data.recipe.builder
+
+import hiiragi283.lib.collection.toNel
+import hiiragi283.lib.collection.toNelOrNull
+import hiiragi283.lib.data.recipe.builder.HTItemCatalystAcceptor
+import hiiragi283.lib.data.recipe.builder.HTItemOrFluidResultAcceptor
+import hiiragi283.lib.data.recipe.builder.HTProgressRecipeBuilder
+import hiiragi283.lib.data.recipe.ingredient.HTFluidIngredientBuilder
+import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
+import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
+import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
+import hiiragi283.lib.recipe.result.HTFluidResult
+import hiiragi283.lib.recipe.result.HTItemResult
+import hiiragi283.lib.util.HTDelegates
+import hiiragi283.lib.util.Ior
+import hiiragi283.ragium.api.RagiumConstants
+import hiiragi283.ragium.api.recipe.RTFluidReactingRecipe
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+
+class RTFluidReactingRecipeBuilder :
+    HTProgressRecipeBuilder.SingleResult<RTFluidReactingRecipe>(RagiumConstants.REACTING),
+    HTItemCatalystAcceptor,
+    HTItemOrFluidResultAcceptor {
+    override fun createRecipe(): RTFluidReactingRecipe = RTFluidReactingRecipe(ingredients.toNel(), catalyst, result, progressData)
+
+    // Ingredients
+    private val ingredients: MutableList<HTFluidIngredient> = ObjectArrayList()
+
+    operator fun HTFluidIngredient.unaryPlus() {
+        ingredients += this
+    }
+
+    inline fun ingredient(builderAction: HTFluidIngredientBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        +HTFluidIngredientBuilder.build(builderAction)
+    }
+
+    // Catalyst
+    @PublishedApi internal var catalyst: HTItemCatalyst by HTDelegates.onceInitialize(HTItemCatalyst::EMPTY)
+
+    override operator fun HTItemCatalyst.unaryPlus() {
+        catalyst = this
+    }
+
+    // Results
+    @PublishedApi internal var itemResult: HTItemResult? by HTDelegates.onceOrNull()
+
+    @PublishedApi internal var fluidResults: MutableList<HTFluidResult> = ObjectArrayList()
+
+    override val result: HTFluidSeparatingRecipe.Result by lazy {
+        Ior.fromNullable(fluidResults.toNelOrNull(), itemResult)
+            ?.let(HTFluidSeparatingRecipe::Result)
+            ?: error("Either item or fluid result required")
+    }
+
+    override operator fun HTItemResult.unaryPlus() {
+        itemResult = this
+    }
+
+    override operator fun HTFluidResult.unaryPlus() {
+        fluidResults += this
+    }
+}

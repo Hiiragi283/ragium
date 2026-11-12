@@ -1,0 +1,18 @@
+{
+  "type": "ragium:autoclaving",
+  "ingredients": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:water"
+    },
+    "item": {
+      "count": 1,
+      "items": "minecraft:large_amethyst_bud"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:amethyst_cluster"
+  },
+  "time": 200
+}

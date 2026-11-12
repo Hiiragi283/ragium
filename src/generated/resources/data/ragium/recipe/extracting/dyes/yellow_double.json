@@ -1,0 +1,12 @@
+{
+  "type": "ragium:extracting",
+  "ingredient": {
+    "count": 1,
+    "items": "minecraft:sunflower"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:yellow_dye"
+  },
+  "time": 200
+}

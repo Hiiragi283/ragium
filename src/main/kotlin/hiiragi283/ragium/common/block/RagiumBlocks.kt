@@ -16,15 +16,15 @@ import hiiragi283.lib.registry.HTDeferredBlockRegister
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.registry.ItemWithContextFactory
 import hiiragi283.lib.resource.vanillaId
+import hiiragi283.lib.transfer.fluid.HTFluidTankUtil
 import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.block.misc.HTEnchantmentAbsorberBlock
 import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock
 import hiiragi283.ragium.common.block.storage.HTPotionTankBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
@@ -72,6 +72,8 @@ data object RagiumBlocks {
         REGISTER.addAlias(RagiumAPI.id("niter_ore"), vanillaId("stone"))
         REGISTER.addAlias(RagiumAPI.id("deepslate_niter_ore"), vanillaId("deepslate"))
         REGISTER.addAlias(RagiumAPI.id("nether_niter_ore"), vanillaId("netherrack"))
+
+        REGISTER.addAlias("blender", "mixer")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -250,13 +252,6 @@ data object RagiumBlocks {
         properties: BlockBehaviour.Properties = machine(),
     ): HTBasicDeferredBlockAndItem<HTMachineBlock> = registerWithBE(type, ::HTMachineBlock, properties)
 
-    @JvmStatic
-    private fun registerFakeMachine(name: String, properties: BlockBehaviour.Properties = machine()): HTBasicDeferredBlockAndItem<HTMachineBlock> =
-        REGISTER.registerSimple(
-            name,
-            { HTMachineBlock(RagiumBlockEntityTypes.CRUSHER, properties.setId(it)) }, // TODO
-        )
-
     // Mechanical
     @JvmField
     val ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ASSEMBLER)
@@ -274,11 +269,20 @@ data object RagiumBlocks {
     val CUTTING_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE)
 
     @JvmField
+    val EXTRACTOR: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.EXTRACTOR)
+
+    @JvmField
     val PRESS_MACHINE: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.PRESS_MACHINE)
+
+    @JvmField
+    val PULVERIZER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.PULVERIZER)
 
     // Heat
     @JvmField
     val ALLOY_SMELTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER)
+
+    @JvmField
+    val DRYER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.DRYER)
 
     @JvmField
     val FREEZER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.FREEZER)
@@ -297,10 +301,13 @@ data object RagiumBlocks {
 
     // Chemical
     @JvmField
+    val AUTOCLAVE: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.AUTOCLAVE)
+
+    @JvmField
     val CHEMICAL_BATH: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CHEMICAL_BATH)
 
     @JvmField
-    val CHEMICAL_REACTOR: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerFakeMachine(RagiumConstants.CHEMICAL_REACTOR)
+    val CHEMICAL_LABO: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.CHEMICAL_LABO)
 
     @JvmField
     val MIXER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.MIXER)
@@ -317,18 +324,21 @@ data object RagiumBlocks {
 
     // Electronics
     @JvmField
-    val BLENDER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerFakeMachine(RagiumConstants.BLENDER)
-
-    @JvmField
     val ELECTROLYZER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ELECTROLYZER)
 
     @JvmField
     val ENGRAVER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ENGRAVER)
 
     @JvmField
+    val PRINTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.PRINTER)
+
+    @JvmField
     val SCANNER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.SCANNER)
 
     // Arcane
+    @JvmField
+    val ARCANE_TRANSFORMER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ARCANE_TRANSFORMER)
+
     @JvmField
     val ENCHANTER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerMachine(RagiumBlockEntityTypes.ENCHANTER)
 
@@ -341,27 +351,32 @@ data object RagiumBlocks {
             put(HTMachineType.MECHANICAL, CRUSHER)
             put(HTMachineType.MECHANICAL, COMPRESSOR)
             put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
+            put(HTMachineType.MECHANICAL, EXTRACTOR)
             put(HTMachineType.MECHANICAL, PRESS_MACHINE)
+            put(HTMachineType.MECHANICAL, PULVERIZER)
 
             put(HTMachineType.HEAT, ALLOY_SMELTER)
+            put(HTMachineType.HEAT, DRYER)
             put(HTMachineType.HEAT, MELTER)
             put(HTMachineType.HEAT, PYROLYZER)
             put(HTMachineType.HEAT, REFINERY)
             put(HTMachineType.HEAT, SMELTER)
 
+            put(HTMachineType.CHEMICAL, AUTOCLAVE)
             put(HTMachineType.CHEMICAL, CHEMICAL_BATH)
-            put(HTMachineType.CHEMICAL, CHEMICAL_REACTOR)
+            put(HTMachineType.CHEMICAL, CHEMICAL_LABO)
             put(HTMachineType.CHEMICAL, MIXER)
 
             put(HTMachineType.RESOURCE, BREWERY)
             put(HTMachineType.RESOURCE, PLANTER)
             put(HTMachineType.RESOURCE, RESOURCE_PUMP)
 
-            put(HTMachineType.ELECTRONICS, BLENDER)
             put(HTMachineType.ELECTRONICS, ELECTROLYZER)
             put(HTMachineType.ELECTRONICS, ENGRAVER)
+            put(HTMachineType.ELECTRONICS, PRINTER)
             put(HTMachineType.ELECTRONICS, SCANNER)
 
+            put(HTMachineType.ARCANE, ARCANE_TRANSFORMER)
             put(HTMachineType.ARCANE, ENCHANTER)
 
             put(HTMachineType.Custom("cryo", HTLangName("Cryo", "低温")), FREEZER)
@@ -393,6 +408,13 @@ data object RagiumBlocks {
     )
 
     @JvmField
+    val EXPERIENCE_TANK: HTBasicDeferredBlockAndItem<HTTankBlock> = registerWithBE(
+        RagiumBlockEntityTypes.EXPERIENCE_TANK,
+        ::HTTankBlock,
+        tankProperty,
+    )
+
+    @JvmField
     val VOID_TANK: HTBasicDeferredBlockAndItem<HTVoidTankBlock> = REGISTER.registerSimple(
         "void_tank",
         tankProperty,
@@ -408,9 +430,16 @@ data object RagiumBlocks {
     )
 
     @JvmField
-    val TANKS: List<HTSimpleDeferredBlockAndItem> = listOf(TANK, POTION_TANK, VOID_TANK, CREATIVE_TANK)
+    val TANKS: List<HTSimpleDeferredBlockAndItem> = listOf(TANK, POTION_TANK, EXPERIENCE_TANK, VOID_TANK, CREATIVE_TANK)
 
     // Battery
+    @JvmField
+    val ENERGY_PIPE: HTBasicDeferredBlockAndItem<HTEnergyPipeBlock> = registerWithBE(
+        RagiumBlockEntityTypes.ENERGY_PIPE,
+        ::HTEnergyPipeBlock,
+        properties(2f).requiresCorrectToolForDrops().sound(SoundType.COPPER).noOcclusion(),
+    )
+
     @JvmField
     val CREATIVE_BATTERY: HTBasicDeferredBlockAndItem<HTBasicEntityBlock> =
         registerWithBE(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBasicEntityBlock)
@@ -420,6 +449,10 @@ data object RagiumBlocks {
     @JvmField
     val UPGRADE_STATION: HTBasicDeferredBlockAndItem<HTUpgradeStationBlock> =
         registerWithBE(RagiumBlockEntityTypes.UPGRADE_STATION, ::HTUpgradeStationBlock)
+
+    @JvmField
+    val ENCHANTMENT_ABSORBER: HTBasicDeferredBlockAndItem<HTEnchantmentAbsorberBlock> =
+        registerWithBE(RagiumBlockEntityTypes.ENCHANTMENT_ABSORBER, ::HTEnchantmentAbsorberBlock)
 
     //    Decoration    //
 
@@ -476,7 +509,7 @@ data object RagiumBlocks {
         event.registerItem(
             HTFluidCapabilities.item,
             { stack: ItemStack, _ ->
-                HTStorageHelper.getFluid(stack)
+                HTFluidTankUtil.getFluid(stack)
                     .let(FluidResource::of)
                     .takeUnless(FluidResource::isEmpty)
                     ?.let(::InfiniteResourceHandler)

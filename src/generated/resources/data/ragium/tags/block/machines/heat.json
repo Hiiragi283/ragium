@@ -1,6 +1,7 @@
 {
   "values": [
     "ragium:alloy_smelter",
+    "ragium:dryer",
     "ragium:melter",
     "ragium:pyrolyzer",
     "ragium:refinery",

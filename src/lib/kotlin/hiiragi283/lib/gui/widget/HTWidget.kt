@@ -1,7 +1,7 @@
 package hiiragi283.lib.gui.widget
 
 import hiiragi283.lib.gui.HTBounds
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.inventory.AbstractContainerMenu
 
 /**
  * GUI上の要素を表すインターフェースです。
@@ -29,7 +29,7 @@ interface HTWidget {
     /**
      * このウィジェットをクリックした時に呼び出されます。
      */
-    fun mouseClicked(access: Access, mouseX: Double, mouseY: Double, button: Int) {}
+    fun mouseClicked(access: MenuAccess, mouseX: Double, mouseY: Double, button: Int) {}
 
     /**
      * このウィジェットの上でクリックを解放した時に呼び出されます。
@@ -68,6 +68,10 @@ interface HTWidget {
     interface Access {
         var isActive: Boolean
         var isVisible: Boolean
-        val carried: ItemStack
+    }
+
+    interface MenuAccess {
+        val clientMenu: AbstractContainerMenu
+        val widgetHolder: HTWidgetHolder
     }
 }

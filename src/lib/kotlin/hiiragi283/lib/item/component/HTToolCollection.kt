@@ -19,13 +19,15 @@ data class HTToolCollection<out T>(val sword: T, val shovel: T, val pickaxe: T, 
         HTToolType.HOE -> hoe
     }
 
-    fun asSequence(): Sequence<T> = HTToolType.entries.asSequence().map(::get)
-
     override val size: Int = 5
 
-    override fun isEmpty(): Boolean = false
-
-    override fun iterator(): Iterator<T> = asSequence().iterator()
+    override fun iterator(): Iterator<T> = iterator {
+        yield(sword)
+        yield(shovel)
+        yield(pickaxe)
+        yield(axe)
+        yield(hoe)
+    }
 
     inline fun <R> map(transform: (T) -> R): HTToolCollection<R> = HTToolCollection(
         transform(sword),

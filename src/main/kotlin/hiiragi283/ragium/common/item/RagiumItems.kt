@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineUpgrade
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.registry.HTTieredContents
 import hiiragi283.ragium.api.text.HTItemTooltip
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -58,6 +59,11 @@ data object RagiumItems {
         }
         REGISTER.addAlias("sodium_hydroxide", "alkali_hydroxide")
         REGISTER.addAlias("soda_ash_dust", "alkali_carbonate")
+        REGISTER.addAlias("mortar", "cement")
+        REGISTER.addAlias("circuit_board", "circuit_board/blank")
+        REGISTER.addAlias("electric_circuit", "circuit_board/advanced")
+        REGISTER.addAlias("circuit_board/elite", "circuit_board/industrial")
+        REGISTER.addAlias("circuit/elite", "circuit/industrial")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -88,12 +94,12 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Gem.APATITE, HTItemPart.DUST, HTItemPart.GEM)
                 // putAll(RagiumMaterial.Gem.CRYOLITE, HTItemPart.DUST, HTItemPart.GEM)
                 // Metal
-                putAll(RagiumMaterial.Metal.COPPER, HTItemPart.DUST, HTItemPart.GEAR)
-                putAll(RagiumMaterial.Metal.IRON, HTItemPart.DUST, HTItemPart.GEAR)
-                putAll(RagiumMaterial.Metal.GOLD, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Metal.COPPER, HTItemPart.CRUSHED_ORES, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Metal.IRON, HTItemPart.CRUSHED_ORES, HTItemPart.DUST, HTItemPart.GEAR)
+                putAll(RagiumMaterial.Metal.GOLD, HTItemPart.CRUSHED_ORES, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.SMALL_DUST)
                 putAll(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT, HTItemPart.NUGGET)
-                putAll(RagiumMaterial.Metal.NICKEL, HTItemPart.DUST)
-                putAll(RagiumMaterial.Metal.SILVER, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Metal.NICKEL, HTItemPart.DUST, HTItemPart.SMALL_DUST)
+                putAll(RagiumMaterial.Metal.SILVER, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET, HTItemPart.SMALL_DUST)
                 // Alloy
                 putAll(RagiumMaterial.Alloy.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.CONSTANTAN, HTItemPart.DUST, HTItemPart.INGOT)
@@ -106,6 +112,15 @@ data object RagiumItems {
                     putAll(dustLike, HTItemPart.DUST)
                 }
                 putAll(RagiumMaterial.Other.WOOD, HTItemPart.GEAR)
+                // Raws
+                setOf(
+                    RagiumMaterial.Fuel.COAL,
+                    RagiumMaterial.Gem.LAPIS,
+                    RagiumMaterial.Gem.QUARTZ,
+                    RagiumMaterial.Gem.DIAMOND,
+                    RagiumMaterial.Gem.EMERALD,
+                    RagiumMaterial.Other.REDSTONE,
+                ).forEach { putAll(it, HTItemPart.CRUSHED_ORES, HTItemPart.RAW) }
             },
             ::sortedSetOf,
         ).flatMapTable { (material: RagiumMaterial, parts: Collection<HTItemPart>) ->
@@ -142,9 +157,6 @@ data object RagiumItems {
 
     @JvmField
     val CEMENT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cement")
-
-    @JvmField
-    val MORTAR: HTSimpleDeferredItem = REGISTER.registerItem("mortar", ::HTMortarItem)
 
     // Heat
     @JvmField
@@ -201,22 +213,27 @@ data object RagiumItems {
     val CRUDE_SILICON: HTSimpleDeferredItem = REGISTER.registerSimpleItem("crude_silicon")
 
     @JvmField
+    val SILICON_BOULE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_boule") { it.stacksTo(1) }
+
+    @JvmField
     val SILICON_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_wafer")
 
     @JvmField
-    val SILICON_CHIP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_chip")
+    val BLANK_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board/blank")
 
     @JvmField
-    val CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board")
+    val CIRCUIT_BOARDS: HTTieredContents<HTSimpleDeferredItem> =
+        HTTieredContents.NAMES.map { name: String -> REGISTER.registerSimpleItem("circuit_board/$name") }
 
     @JvmField
-    val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit")
+    val CIRCUITS: HTTieredContents<HTSimpleDeferredItem> =
+        HTTieredContents.NAMES.map { name: String -> REGISTER.registerSimpleItem("circuit/$name") }
 
     @JvmField
     val DIAMOND_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_wafer")
 
     @JvmField
-    val DIAMOND_CHIP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_chip")
+    val BLANK_MUSIC_DISC: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_music_disc")
 
     // Arcane
     @JvmField
@@ -280,24 +297,16 @@ data object RagiumItems {
 
     // Electronics
     @JvmField
-    val QUARTZ_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("quartz_lens") {
-        it.stacksTo(1)
-    }
+    val QUARTZ_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("quartz_lens") { it.stacksTo(1) }
 
     @JvmField
-    val DIAMOND_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_lens") {
-        it.stacksTo(1).rarity(Rarity.UNCOMMON)
-    }
+    val DIAMOND_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_lens") { it.stacksTo(1).rarity(Rarity.UNCOMMON) }
 
     @JvmField
-    val SHADOW_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("shadow_lens") {
-        it.stacksTo(1).rarity(Rarity.RARE)
-    }
+    val SHADOW_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("shadow_lens") { it.stacksTo(1).rarity(Rarity.RARE) }
 
     @JvmField
-    val NETHER_STAR_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("nether_star_lens") {
-        it.stacksTo(1).rarity(Rarity.EPIC)
-    }
+    val NETHER_STAR_LENS: HTSimpleDeferredItem = REGISTER.registerSimpleItem("nether_star_lens") { it.stacksTo(1).rarity(Rarity.EPIC) }
 
     @JvmField
     val MEMORY_DISC: HTSimpleDeferredItem = REGISTER.registerItem("memory_disc", ::HTMemoryDiscItem)
@@ -352,9 +361,7 @@ data object RagiumItems {
     @JvmStatic
     private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
         fun <T : Any> set(item: ItemLike, type: DataComponentType<T>, value: T) {
-            event.modify(item) { builder: DataComponentMap.Builder, _, _ ->
-                builder.set(type, value)
-            }
+            event.modify(item) { builder: DataComponentMap.Builder, _, _ -> builder.set(type, value) }
         }
 
         // Tooltip
@@ -364,7 +371,8 @@ data object RagiumItems {
 
         setTooltip(getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SULFUR), RagiumTranslation.TOOLTIPS_SULFUR)
         setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.CINNABAR), RagiumTranslation.TOOLTIPS_CINNABAR)
-        setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE), RagiumTranslation.TOOLTIPS_FLUORITE)
+        setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.APATITE), RagiumTranslation.TOOLTIPS_APATITE)
         setTooltip(getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.CARBON), RagiumTranslation.TOOLTIPS_CARBON)
+        setTooltip(getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE), RagiumTranslation.TOOLTIPS_FLUORITE)
     }
 }

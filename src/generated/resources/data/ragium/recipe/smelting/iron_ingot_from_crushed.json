@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": "#c:crushed_ores/iron",
+  "result": {
+    "id": "minecraft:iron_ingot"
+  }
+}

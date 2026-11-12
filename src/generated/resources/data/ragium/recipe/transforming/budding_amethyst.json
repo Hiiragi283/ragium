@@ -1,0 +1,18 @@
+{
+  "type": "ragium:transforming",
+  "ingredients": {
+    "fluid": {
+      "amount": 500,
+      "fluids": "#c:enchanted_experience"
+    },
+    "item": {
+      "count": 1,
+      "items": "minecraft:amethyst_block"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:budding_amethyst"
+  },
+  "time": 200
+}

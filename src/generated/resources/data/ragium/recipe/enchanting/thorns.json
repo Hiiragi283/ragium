@@ -1,0 +1,21 @@
+{
+  "type": "ragium:enchanting",
+  "ingredient": {
+    "count": 64,
+    "items": {
+      "neoforge:ingredient_type": "neoforge:compound",
+      "children": [
+        "#c:crops/cactus",
+        "minecraft:pointed_dripstone"
+      ]
+    }
+  },
+  "result": {
+    "type": "ragium:enchanted_book",
+    "count": 1,
+    "enchantments": {
+      "minecraft:thorns": {}
+    }
+  },
+  "time": 200
+}

@@ -1,0 +1,9 @@
+{
+  "type": "ragium:printing",
+  "catalyst": "#c:music_discs",
+  "ingredient": {
+    "count": 1,
+    "items": "ragium:blank_music_disc"
+  },
+  "time": 200
+}

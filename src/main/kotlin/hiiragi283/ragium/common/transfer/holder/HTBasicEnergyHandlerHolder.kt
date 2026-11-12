@@ -1,12 +1,10 @@
 package hiiragi283.ragium.common.transfer.holder
 
-import hiiragi283.lib.collection.mutableEnumMapOf
 import hiiragi283.lib.transfer.energy.HTEnergyStorage
 import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
 import hiiragi283.lib.util.HTDelegates
 import net.minecraft.core.Direction
-import java.util.Optional
-import kotlin.jvm.optionals.getOrNull
+import thedarkcolour.kotlinforforge.neoforge.kotlin.enumMapOf
 
 class HTBasicEnergyHandlerHolder(
     configGetter: HTSlotInfoProvider?,
@@ -26,12 +24,12 @@ class HTBasicEnergyHandlerHolder(
 
     class Builder(val configGetter: HTSlotInfoProvider?) {
         private var hasBuilt = false
-        private var handler: Optional<HTEnergyStorage> by HTDelegates.optionalInitialize()
-        private val handlerMap: MutableMap<HTSlotInfo, HTEnergyStorage> = mutableEnumMapOf()
+        private var handler: HTEnergyStorage? by HTDelegates.onceOrNull()
+        private val handlerMap: MutableMap<HTSlotInfo, HTEnergyStorage> = enumMapOf()
 
         fun <T : HTEnergyStorage> addHandler(info: HTSlotInfo, handler: T): T {
             check(!hasBuilt) { "Builder has already built" }
-            this.handler = Optional.of(handler)
+            this.handler = handler
             when (info) {
                 HTSlotInfo.NONE -> return handler
 
@@ -51,7 +49,7 @@ class HTBasicEnergyHandlerHolder(
 
         fun build(): HTBasicEnergyHandlerHolder? {
             hasBuilt = true
-            return handler.map { HTBasicEnergyHandlerHolder(configGetter, it, handlerMap) }.getOrNull()
+            return handler?.let { HTBasicEnergyHandlerHolder(configGetter, it, handlerMap) }
         }
     }
 }

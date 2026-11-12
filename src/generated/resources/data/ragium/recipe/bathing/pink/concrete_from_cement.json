@@ -1,0 +1,18 @@
+{
+  "type": "ragium:bathing",
+  "ingredients": {
+    "fluid": {
+      "amount": 125,
+      "fluids": "#c:dyes/pink"
+    },
+    "item": {
+      "count": 1,
+      "items": "ragium:cement"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:pink_concrete"
+  },
+  "time": 50
+}

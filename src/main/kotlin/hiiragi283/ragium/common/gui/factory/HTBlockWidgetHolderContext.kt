@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
-@JvmRecord
 data class HTBlockWidgetHolderContext(val factory: Factory, val player: Player, val pos: BlockPos) :
     HTWidgetHolderContext,
     MenuProvider {
@@ -53,9 +52,9 @@ data class HTBlockWidgetHolderContext(val factory: Factory, val player: Player, 
         }
     }
 
-    val level: Level get() = player.level()
-    val state: BlockState get() = level.getBlockState(pos)
-    val blockEntity: BlockEntity? get() = level.getBlockEntity(pos)
+    val level: Level = player.level()
+    val state: BlockState = level.getBlockState(pos)
+    val blockEntity: BlockEntity? = level.getBlockEntity(pos)
 
     override fun setup(player: Player, widgetHolder: HTWidgetHolder) {
         factory.setup(this, widgetHolder)
@@ -80,9 +79,18 @@ data class HTBlockWidgetHolderContext(val factory: Factory, val player: Player, 
         fun createContext(player: Player, pos: BlockPos): HTBlockWidgetHolderContext = HTBlockWidgetHolderContext(this, player, pos)
 
         fun stillValid(context: HTBlockWidgetHolderContext): Boolean {
-            if (!context.level.isInWorldBounds(context.pos)) return false
+            val level: Level = context.level
+            val pos: BlockPos = context.pos
+            if (!level.isInWorldBounds(pos)) return false
+            // 異なるブロックに置き換わった場合はfalse
+            if (!level.getBlockState(pos).`is`(context.state.block)) return false
+            // プレイヤーがアクセスできない距離にいたらfalse
+            val player: Player = context.player
+            if (!player.isWithinBlockInteractionRange(pos, 4.0)) return false
+            // Block Entityが削除された，または異なるインスタンスを参照した場合はfalse
             val blockEntity: BlockEntity = context.blockEntity ?: return true
-            return !blockEntity.isRemoved
+            if (blockEntity.isRemoved) return false
+            return level.getBlockEntity(pos) === blockEntity
         }
 
         fun getDisplayName(context: HTBlockWidgetHolderContext): Text = (context.blockEntity as? Nameable)?.displayName ?: context.state.block.name

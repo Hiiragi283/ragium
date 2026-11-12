@@ -1,4 +1,7 @@
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import com.vanniktech.maven.publish.tasks.JavadocJar
+import me.modmuss50.mpp.ReleaseType
+import me.modmuss50.mpp.platforms.modrinth.ModrinthApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.slf4j.event.Level
 
@@ -14,6 +17,7 @@ plugins {
 
     alias(libs.plugins.axion.release)
     alias(libs.plugins.maven.publish)
+    alias(libs.plugins.mod.publish)
 }
 
 val modId = "ragium"
@@ -105,6 +109,11 @@ val dataModule: SourceSet =
             compileClasspath += clientModule.output + clientModule.compileClasspath
             runtimeClasspath += clientModule.output + clientModule.runtimeClasspath
         }.get()
+val gameTestModule: SourceSet =
+    sourceSets
+        .register("gameTest") {
+            compileClasspath += mainModule.output + mainModule.compileClasspath
+        }.get()
 
 repositories {
     mavenLocal()
@@ -182,6 +191,16 @@ neoForge {
             programArgument("--nogui")
         }
 
+        register("gameTestServer") {
+            type = "gameTestServer"
+            gameDirectory =
+                layout.buildDirectory
+                    .dir("game-test")
+                    .get()
+                    .asFile
+            programArguments.addAll("--tests", "$modId:*")
+        }
+
         register("data") {
             clientData()
             sourceSet = dataModule
@@ -227,6 +246,7 @@ neoForge {
             sourceSet(sourceSets.main.get())
             sourceSet(clientModule)
             sourceSet(dataModule)
+            sourceSet(gameTestModule)
         }
     }
 
@@ -349,12 +369,14 @@ kotlin {
 
 dokka {
     dokkaSourceSets {
+        val librarySourceRoots = listOf(libModule, libClientModule).map { it.kotlin.srcDirs }
+
         configureEach {
-            sourceRoots.from(
-                listOf(libModule, libClientModule)
-                    .map { it.kotlin }
-                    .map { it.srcDirs.filter { "lib" in it.path } },
-            )
+            if (name == mainModule.name) {
+                sourceRoots.setFrom(librarySourceRoots)
+            } else {
+                sourceRoots.from(librarySourceRoots)
+            }
         }
     }
 }
@@ -378,6 +400,50 @@ spotless {
         // endWithNewline()
         // formatAnnotations()
         // removeUnusedImports()
+    }
+}
+
+publishMods {
+    val mcVersion: Provider<String> = libs.versions.minecraft
+
+    file = tasks.jar.flatMap { it.archiveFile }
+    changelog = providers.gradleProperty("CHANGELOG").orElse("")
+    type = ReleaseType.BETA
+    modLoaders.add("neoforge")
+
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE")
+        projectId = "1299885"
+        minecraftVersions.add(mcVersion)
+        changelogType = "markdown"
+        projectSlug = "ragium"
+
+        javaVersions.add(JavaVersion.VERSION_25)
+        client = true
+        server = true
+
+        requires("kotlin-for-forge")
+        optional("jei")
+        optional("jade")
+    }
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH")
+        projectId = "jBgE71lF"
+        minecraftVersions.add(mcVersion)
+
+        additionalFile(tasks.named<Jar>("sourcesJar").flatMap { it.archiveFile }) {
+            type = ModrinthApi.AdditionalFileType.SOURCES_JAR
+        }
+        // Maven Publish registers the Dokka JAR task after project evaluation.
+        val javadocJar: RegularFileProperty = objects.fileProperty()
+        project.afterEvaluate { javadocJar.set(tasks.named<JavadocJar>("dokkaJavadocJar").flatMap { it.archiveFile }) }
+        additionalFile(javadocJar) {
+            type = ModrinthApi.AdditionalFileType.JAVADOC_JAR
+        }
+
+        requires("kotlin-for-forge")
+        optional("jei")
+        optional("jade")
     }
 }
 
