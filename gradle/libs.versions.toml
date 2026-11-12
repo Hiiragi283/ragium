@@ -11,7 +11,7 @@ spotless = "8.10.4"
 
 axion-release = "1.21.4"
 maven-publish = "0.37.0"
-mod-publish = "2.1.1"
+mod-publish = "2.2.1"
 
 ae2 = "26.1.13-beta"
 curios = "15.0.0+26.1.2"
