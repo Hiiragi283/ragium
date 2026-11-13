@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "ragium:heating_coil",
-    "B": "ragium:machine_parts/mechanical"
+    "A": "#c:ingots/black_steel"
   },
   "pattern": [
     "AAA",
-    "BBB",
+    "A A",
     "AAA"
   ],
   "result": {
-    "id": "ragium:machine_parts/heat"
+    "count": 2,
+    "id": "ragium:machine_casing/basic"
   }
 }

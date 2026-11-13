@@ -13,7 +13,6 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
-import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
@@ -23,7 +22,6 @@ import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
-import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
@@ -46,7 +44,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         vanilla()
         decoration()
         machine()
-        dynamo()
         storage()
         upgrade()
         material()
@@ -398,128 +395,27 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }
     }
 
-    //    Processor    //
+    //    Machine    //
 
     private fun machine() {
-        // Mechanical
+        // Basic
         VanillaRecipeBuilders.shaped {
-            layered2()
+            hollow()
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            result { +RagiumItems.getParts(HTMachineType.MECHANICAL) }
+            result { +RagiumBlocks.MACHINE_CASINGS.basic }
+            recipeId suffix "_from_sooty_iron"
         }.save(exporter)
-        RagiumRecipeBuilders.assembling {
-            ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON)
-                count = 2
-            }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            result { +RagiumItems.getParts(HTMachineType.MECHANICAL) }
-        }.save(exporter)
-
-        mechanical(RagiumBlocks.ASSEMBLER) { items { +Items.CRAFTER } }
-        mechanical(RagiumBlocks.CENTRIFUGE) { +holderSet(ItemTags.BARS) }
-        mechanical(RagiumBlocks.CRUSHER) { items { +Items.FLINT } }
-        mechanical(RagiumBlocks.COMPRESSOR) { +holderSet(ItemTags.ANVIL) }
-        mechanical(RagiumBlocks.CUTTING_MACHINE) { items { +Items.STONECUTTER } }
-        mechanical(RagiumBlocks.EXTRACTOR) { items { +Items.HOPPER } }
-        mechanical(RagiumBlocks.PRESS_MACHINE) { items { +Items.PISTON } }
-        mechanical(RagiumBlocks.PULVERIZER) { items { +Items.GRINDSTONE } }
-        // Heat
         VanillaRecipeBuilders.shaped {
-            hollow4()
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.CONSTANTAN) }
-            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            result {
-                +RagiumItems.HEATING_COIL
-                count = 3
-            }
-        }.save(exporter)
-        RagiumRecipeBuilders.assembling {
-            ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.CONSTANTAN)
-                count = 4
-            }
-            ingredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            result {
-                +RagiumItems.HEATING_COIL
-                count = 6
-            }
-        }.save(exporter)
-
-        VanillaRecipeBuilders.shaped {
-            layered2()
-            define('A') { items { +RagiumItems.HEATING_COIL } }
-            define('B') { items { +RagiumItems.getParts(HTMachineType.MECHANICAL) } }
-            result { +RagiumItems.getParts(HTMachineType.HEAT) }
-        }.save(exporter)
-        RagiumRecipeBuilders.assembling {
-            ingredient { items { +RagiumItems.getParts(HTMachineType.MECHANICAL) } }
-            ingredient {
-                items { +RagiumItems.HEATING_COIL }
-                count = 2
-            }
-            result { +RagiumItems.getParts(HTMachineType.HEAT) }
-        }.save(exporter)
-
-        heat(RagiumBlocks.ALLOY_SMELTER) { items { +Items.BLAST_FURNACE } }
-        heat(RagiumBlocks.DRYER) { items { +Items.SOUL_SAND } }
-        heat(RagiumBlocks.MELTER) { +holderSet(Tags.Items.BUCKETS_LAVA) }
-
-        heat(RagiumBlocks.SMELTER) { items { +Items.FURNACE } }
-        // Chemical
-        RagiumRecipeBuilders.alloying {
-            ingredient { items { +RagiumItems.getParts(HTMachineType.HEAT) } }
-            ingredient { +dustOrIngot(RagiumMaterial.Metal.GOLD) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE) }
-            result { +RagiumItems.getParts(HTMachineType.CHEMICAL) }
-        }.save(exporter)
-
-        chemical(RagiumBlocks.AUTOCLAVE) { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Metal.IRON) }
-        chemical(RagiumBlocks.CHEMICAL_BATH) { items { +Items.CAULDRON } }
-        chemical(RagiumBlocks.CHEMICAL_LABO) { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.DIAMOND) }
-        chemical(RagiumBlocks.MIXER) { +holderSet(Tags.Items.BUCKETS_EMPTY) }
-        // Resource
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { items { +RagiumItems.getParts(HTMachineType.CHEMICAL) } }
-            fluidIngredient {
-                +holderSet(RagiumFluids.MOLTEN_PLASTIC)
-                amount = 90 * 2
-            }
-            result { +RagiumItems.getParts(HTMachineType.RESOURCE) }
-        }.save(exporter)
-
-        resource(RagiumBlocks.BREWERY) { items { +Items.BREWING_STAND } }
-        resource(RagiumBlocks.PLANTER) { items { +Items.FLOWER_POT } }
-        // Electronics
-        RagiumRecipeBuilders.assembling {
-            ingredient { items { +RagiumItems.getParts(HTMachineType.RESOURCE) } }
-            ingredient {
-                items { +RagiumItems.CIRCUITS.advanced }
-                count = 2
-            }
-            recipeId suffix "_advanced"
-            result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
-        }.save(exporter)
-        RagiumRecipeBuilders.assembling {
-            ingredient { items { +RagiumItems.getParts(HTMachineType.RESOURCE) } }
-            ingredient { items { +RagiumItems.CIRCUITS.industrial } }
-            result { +RagiumItems.getParts(HTMachineType.ELECTRONICS) }
-            recipeId suffix "_industrial"
-        }.save(exporter)
-
-        electronics(RagiumBlocks.ELECTROLYZER) { +holderSet(ItemTags.LIGHTNING_RODS) }
-        // Arcane
-        arcane(RagiumBlocks.ARCANE_TRANSFORMER) { +holderSet(Tags.Items.NETHER_STARS) }
-        arcane(RagiumBlocks.ENCHANTER) { items { +Items.ENCHANTING_TABLE } }
-        // Other
-        VanillaRecipeBuilders.shaped {
-            cross8()
+            hollow()
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
-            define('B') { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Metal.COPPER) }
-            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.IRON) }
-            result { +RagiumBlocks.FREEZER }
+            result {
+                +RagiumBlocks.MACHINE_CASINGS.basic
+                count = 2
+            }
+            recipeId suffix "_from_black_steel"
         }.save(exporter)
+        // Advanced
+        // Elite
 
         // Decoration
         VanillaRecipeBuilders.shaped {
@@ -540,88 +436,9 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 result { +block }
             }.save(exporter)
         }
-    }
 
-    private inline fun machine(
-        machineType: HTMachineType,
-        material: HTMaterialLike,
-        gear: HTMaterialLike,
-        result: HTSimpleDeferredBlockAndItem,
-        builderAction: IngredientBuilder.() -> Unit,
-    ) {
-        VanillaRecipeBuilders.shaped {
-            +"ABA"
-            +"BCB"
-            +"ADA"
-            define('A') { +holderSet(CommonTagPrefixes.NUGGET, material) }
-            define('B') { items { +RagiumItems.getParts(machineType) } }
-            define('C') { +holderSet(CommonTagPrefixes.GEAR, gear) }
-            define('D', builderAction)
-            result { +result }
-        }.save(exporter)
+        dynamo()
     }
-
-    private inline fun mechanical(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
-        machine(
-            HTMachineType.MECHANICAL,
-            RagiumMaterial.Alloy.SOOTY_IRON,
-            RagiumMaterial.Metal.COPPER,
-            result,
-            builderAction,
-        )
-    }
-
-    private inline fun heat(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
-        machine(
-            HTMachineType.HEAT,
-            RagiumMaterial.Alloy.SOOTY_IRON,
-            RagiumMaterial.Metal.IRON,
-            result,
-            builderAction,
-        )
-    }
-
-    private inline fun chemical(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
-        machine(
-            HTMachineType.CHEMICAL,
-            RagiumMaterial.Alloy.BLACK_STEEL,
-            RagiumMaterial.Metal.GOLD,
-            result,
-            builderAction,
-        )
-    }
-
-    private inline fun resource(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
-        machine(
-            HTMachineType.RESOURCE,
-            RagiumMaterial.Alloy.BLACK_STEEL,
-            RagiumMaterial.Gem.EMERALD,
-            result,
-            builderAction,
-        )
-    }
-
-    private inline fun electronics(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
-        machine(
-            HTMachineType.ELECTRONICS,
-            RagiumMaterial.Alloy.BLACK_STEEL,
-            RagiumMaterial.Gem.DIAMOND,
-            result,
-            builderAction,
-        )
-    }
-
-    private inline fun arcane(result: HTSimpleDeferredBlockAndItem, builderAction: IngredientBuilder.() -> Unit) {
-        machine(
-            HTMachineType.ARCANE,
-            RagiumMaterial.Alloy.SHADOW_STEEL,
-            RagiumMaterial.Alloy.NETHERITE,
-            result,
-            builderAction,
-        )
-    }
-
-    //    Dynamo    //
 
     private fun dynamo() {
         // Fuel

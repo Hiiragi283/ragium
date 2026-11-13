@@ -2,15 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": "#c:ingots/sooty_iron",
-    "B": "#c:dusts/redstone"
+    "A": "#c:ingots/sooty_iron"
   },
   "pattern": [
     "AAA",
-    "BBB",
+    "A A",
     "AAA"
   ],
   "result": {
-    "id": "ragium:machine_parts/mechanical"
+    "id": "ragium:machine_casing/basic"
   }
 }
