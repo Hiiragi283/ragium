@@ -4,7 +4,6 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.integration.jei.addOptional
 import hiiragi283.lib.integration.jei.category.HTViewerRecipeCategory
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.recipe.viewer.RTFluidReactingViewerRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -16,7 +15,7 @@ class RTFluidReactingRecipeCategory(guiHelper: IGuiHelper) :
     HTViewerRecipeCategory<RTFluidReactingViewerRecipe>(
         RagiumJeiRecipeTypes.FLUID_REACTING,
         RagiumTranslation.RECIPE_CATEGORY_FLUID_REACTING,
-        guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING),
+        guiHelper.createBlankDrawable(16, 16),
         18 * 8,
         18 * 2,
         RTFluidReactingViewerRecipe.CODEC,

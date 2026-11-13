@@ -398,7 +398,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }
     }
 
-    //    Machine    //
+    //    Processor    //
 
     private fun machine() {
         // Mechanical
@@ -529,14 +529,14 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('A') { +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Alloy.SOOTY_IRON) }
             define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
             result {
-                +RagiumBlocks.MACHINE_CASING
+                +RagiumBlocks.DECORATION_CASINGS.basic
                 count = 4
             }
         }.save(exporter)
 
-        for (block: HTSimpleDeferredBlockAndItem in RagiumBlocks.MACHINE_CASINGS.values) {
+        sequenceOf(RagiumBlocks.DECORATION_CASINGS, RagiumBlocks.DECORATION_HULLS.values).flatten().forEach { block: HTSimpleDeferredBlockAndItem ->
             VanillaRecipeBuilders.stonecutting {
-                ingredient { items { +RagiumBlocks.MACHINE_CASING } }
+                ingredient { +holderSet(RagiumTags.BlockItems.DECORATIONS_MACHINE.item) }
                 result { +block }
             }.save(exporter)
         }

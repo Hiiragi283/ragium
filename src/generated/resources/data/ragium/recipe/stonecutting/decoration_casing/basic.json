@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "#ragium:decorations/machine",
+  "result": {
+    "id": "ragium:decoration_casing/basic"
+  }
+}

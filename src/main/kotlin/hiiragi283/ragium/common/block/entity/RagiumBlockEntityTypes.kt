@@ -87,7 +87,7 @@ data object RagiumBlockEntityTypes {
     val COMBUSTION_DYNAMO: HTDeferredBlockEntityType<HTCombustionDynamoBlockEntity> =
         registerTick(RagiumConstants.COMBUSTION_DYNAMO, ::HTCombustionDynamoBlockEntity)
 
-    //    Machine    //
+    //    Processor    //
 
     // Mechanical
     @JvmField
@@ -272,7 +272,7 @@ data object RagiumBlockEntityTypes {
         registerBlockEntity(MAGMATIC_DYNAMO.get())
         registerBlockEntity(COMBUSTION_DYNAMO.get())
 
-        // Machine
+        // Processor
         registerBlockEntity(ASSEMBLER.get())
         registerBlockEntity(CENTRIFUGE.get())
         registerBlockEntity(CRUSHER.get())

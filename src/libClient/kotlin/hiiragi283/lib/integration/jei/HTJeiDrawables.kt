@@ -41,11 +41,11 @@ data object HTJeiDrawables {
      * スロットの背景スプライトを取得します。
      */
     @JvmStatic
-    fun getSlot(type: HTBackgroundType): IDrawable = slots[type]!!
+    fun getSlot(type: HTBackgroundType): IDrawable = slots.getValue(type)
 
     /**
      * タンクの背景スプライトを取得します。
      */
     @JvmStatic
-    fun getTank(type: HTBackgroundType): IDrawable = tanks[type]!!
+    fun getTank(type: HTBackgroundType): IDrawable = tanks.getValue(type)
 }

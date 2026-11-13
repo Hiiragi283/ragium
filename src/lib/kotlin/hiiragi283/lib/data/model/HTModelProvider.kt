@@ -5,8 +5,6 @@ import hiiragi283.lib.registry.HTDecorationContent
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.resource.HTSimpleValueWithKey
 import hiiragi283.lib.resource.HTValueWithKey
-import hiiragi283.lib.resource.blockId
-import hiiragi283.lib.resource.itemId
 import hiiragi283.lib.resource.toId
 import hiiragi283.lib.resource.vanillaId
 import net.minecraft.client.data.models.BlockModelGenerators
@@ -78,7 +76,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @since 26.1.8
      */
     fun BlockModelGenerators.createDecoration(content: HTDecorationContent) {
-        val fullBlockId: Identifier = content.base.id().blockId
+        val fullBlockId: Identifier = content.base.blockId()
         val texture = Material(fullBlockId)
 
         this.createSlab(content.slab, fullBlockId, texture, texture, texture)
@@ -178,7 +176,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      */
     fun ItemModelGenerators.generateFlatItem(
         item: HTSimpleValueWithKey<Item>,
-        layer: Identifier = item.id().itemId,
+        layer: Identifier = item.itemId(),
         template: ModelTemplate = ModelTemplates.FLAT_ITEM,
     ) {
         this.itemModelOutput.accept(
@@ -219,7 +217,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      */
     fun ItemModelGenerators.createFlatItemModel(
         item: HTSimpleValueWithKey<*>,
-        layer: Identifier = item.id().itemId,
+        layer: Identifier = item.itemId(),
         template: ModelTemplate = ModelTemplates.FLAT_ITEM,
     ): Identifier = template.createItem(item, TextureMapping.layer0(Material(layer)), this.modelOutput)
 

@@ -23,6 +23,7 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.registry.HTTieredContents
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.block.misc.HTEnchantmentAbsorberBlock
 import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock
@@ -74,6 +75,11 @@ data object RagiumBlocks {
         REGISTER.addAlias(RagiumAPI.id("nether_niter_ore"), vanillaId("netherrack"))
 
         REGISTER.addAlias("blender", "mixer")
+        HTMachineType.entries.forEach { machineType: HTMachineType ->
+            val name: String = machineType.materialName
+            REGISTER.addAlias("${name}_machine_casing", "decoration_hull/$name")
+        }
+        REGISTER.addAlias("machine_casing", "decoration_casing/basic")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -217,6 +223,12 @@ data object RagiumBlocks {
         // CRYOLITE_DECORATION
     )
 
+    //    Processor    //
+
+    @JvmField
+    val MACHINE_CASINGS: HTTieredContents<HTSimpleDeferredBlockAndItem> =
+        HTTieredContents.NAMES.map { name: String -> REGISTER.registerSimple("machine_casing/$name", machine()) }
+
     //    Dynamo    //
 
     @JvmStatic
@@ -244,7 +256,7 @@ data object RagiumBlocks {
         },
     )
 
-    //    Machine    //
+    //    Processor    //
 
     @JvmStatic
     private fun registerMachine(
@@ -457,15 +469,13 @@ data object RagiumBlocks {
     //    Decoration    //
 
     @JvmField
-    val MACHINE_CASING: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple("machine_casing", machine())
+    val DECORATION_CASINGS: HTTieredContents<HTSimpleDeferredBlockAndItem> =
+        HTTieredContents.NAMES.map { name: String -> REGISTER.registerSimple("decoration_casing/$name", machine()) }
 
     @JvmField
-    val MACHINE_CASINGS: Map<HTMachineType, HTSimpleDeferredBlockAndItem> = HTMachineType.entries.associateWith { machineType: HTMachineType ->
-        REGISTER.registerSimple("${machineType.materialName}_machine_casing", machine())
+    val DECORATION_HULLS: Map<HTMachineType, HTSimpleDeferredBlockAndItem> = HTMachineType.entries.associateWith { machineType: HTMachineType ->
+        REGISTER.registerSimple("decoration_hull/${machineType.materialName}", machine())
     }
-
-    @JvmStatic
-    fun getCasing(machineType: HTMachineType): HTSimpleDeferredBlockAndItem = MACHINE_CASINGS[machineType]!!
 
     //    Events    //
 

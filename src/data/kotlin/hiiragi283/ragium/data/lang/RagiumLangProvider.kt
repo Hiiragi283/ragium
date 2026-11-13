@@ -34,9 +34,11 @@ interface RagiumLangProvider {
         // provider.add(RagiumBlocks.CRYOLITE_BLOCK, HTStorageBlockPart.DEFAULT, RagiumMaterial.Gem.CRYOLITE)
         // provider.addDecoration(RagiumBlocks.CRYOLITE_DECORATION, RagiumMaterial.Gem.CRYOLITE)
 
-        val casingPattern = HTLangPatternProvider("Machine Casing (%s)", "機械外装 (%s)")
-        for ((machineType: HTLangName, casing: HTHasTranslationKey) in RagiumBlocks.MACHINE_CASINGS) {
-            provider.add(casing, casingPattern, machineType)
+        translateTiered(provider, RagiumBlocks.MACHINE_CASINGS, HTLangName("Machine Casing", "機械筐体"))
+        translateTiered(provider, RagiumBlocks.DECORATION_CASINGS, HTLangName("Decoration Casing", "装飾用筐体"))
+        val casingPattern = HTLangPatternProvider("Decoration Hull (%s)", "装飾用外装 (%s)")
+        for ((machineType: HTLangName, hull: HTHasTranslationKey) in RagiumBlocks.DECORATION_HULLS) {
+            provider.add(hull, casingPattern, machineType)
         }
         // Fluid
         val dyePattern = HTLangPatternProvider("%s Dye", "%sの染料")
@@ -60,14 +62,8 @@ interface RagiumLangProvider {
         provider.add(RagiumItems.COAL_COKE, RagiumMaterial.Fuel.COAL_COKE)
         provider.add(RagiumItems.PITCH_COKE, RagiumMaterial.Fuel.PITCH_COKE)
 
-        val boardName = HTLangName("Circuit Board", "回路基板")
-        RagiumItems.CIRCUIT_BOARDS.zip(HTTieredContents.TRANSLATE_PATTERNS) { board: HTHasTranslationKey, pattern: HTLangPatternProvider ->
-            provider.add(board, pattern, boardName)
-        }
-        val circuitName = HTLangName("Circuit", "回路")
-        RagiumItems.CIRCUITS.zip(HTTieredContents.TRANSLATE_PATTERNS) { circuit: HTHasTranslationKey, pattern: HTLangPatternProvider ->
-            provider.add(circuit, pattern, circuitName)
-        }
+        translateTiered(provider, RagiumItems.CIRCUIT_BOARDS, HTLangName("Circuit Board", "回路基板"))
+        translateTiered(provider, RagiumItems.CIRCUITS, HTLangName("Circuit", "回路"))
 
         val lensPattern = HTLangPatternProvider("%s Lens", "%sのレンズ")
         provider.add(RagiumItems.QUARTZ_LENS, lensPattern, RagiumMaterial.Gem.QUARTZ)
@@ -98,5 +94,11 @@ interface RagiumLangProvider {
         provider.add(HTCommonTranslation.PERCENTAGE, $$"%1$s %%")
 
         provider.add(HTCommonTranslation.TICK, $$"%1$s ticks")
+    }
+
+    private fun translateTiered(provider: HTLangProvider, content: HTTieredContents<HTHasTranslationKey>, name: HTLangName) {
+        content.zip(HTTieredContents.TRANSLATE_PATTERNS) { board: HTHasTranslationKey, pattern: HTLangPatternProvider ->
+            provider.add(board, pattern, name)
+        }
     }
 }

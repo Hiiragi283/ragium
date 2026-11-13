@@ -1,8 +1,6 @@
 package hiiragi283.lib.data.model
 
 import hiiragi283.lib.resource.HTSimpleValueWithKey
-import hiiragi283.lib.resource.blockId
-import hiiragi283.lib.resource.itemId
 import net.minecraft.client.data.models.model.ModelInstance
 import net.minecraft.client.data.models.model.ModelTemplate
 import net.minecraft.client.data.models.model.TextureMapping
@@ -16,7 +14,7 @@ import kotlin.jvm.optionals.getOrElse
  * @since 26.1.0
  */
 fun ModelTemplate.createBlock(block: HTSimpleValueWithKey<*>, textures: TextureMapping, output: BiConsumer<Identifier, ModelInstance>): Identifier =
-    this.create(block.id().blockId.withSuffix(this.suffix.getOrElse { "" }), textures, output)
+    this.create(block.blockId().withSuffix(this.suffix.getOrElse { "" }), textures, output)
 
 /**
  * `models/item`配下のモデルJSONを生成します。
@@ -24,4 +22,4 @@ fun ModelTemplate.createBlock(block: HTSimpleValueWithKey<*>, textures: TextureM
  * @since 26.1.0
  */
 fun ModelTemplate.createItem(item: HTSimpleValueWithKey<*>, textures: TextureMapping, output: BiConsumer<Identifier, ModelInstance>): Identifier =
-    this.create(item.id().itemId.withSuffix(this.suffix.getOrElse { "" }), textures, output)
+    this.create(item.itemId().withSuffix(this.suffix.getOrElse { "" }), textures, output)

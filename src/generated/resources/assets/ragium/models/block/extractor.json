@@ -3,6 +3,6 @@
   "textures": {
     "front": "ragium:block/extractor_front",
     "side": "ragium:block/machine/mechanical_side",
-    "top": "ragium:block/machine_casing"
+    "top": "ragium:block/machine_casing/basic"
   }
 }

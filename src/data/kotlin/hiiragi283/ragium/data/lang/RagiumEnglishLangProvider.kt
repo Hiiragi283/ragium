@@ -91,8 +91,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(RagiumBlocks.UPGRADE_STATION, "Upgrade Station")
         add(RagiumBlocks.ENCHANTMENT_ABSORBER, "Enchantment Absorber")
-
-        add(RagiumBlocks.MACHINE_CASING, "Machine Casing")
         // Damage Type
         add("death.attack.chemicalBurn", $$"%1$s was injured chemical burn")
         add("death.attack.chemicalBurn.player", $$"%1$s was injured chemical burn while fighting %2$s")

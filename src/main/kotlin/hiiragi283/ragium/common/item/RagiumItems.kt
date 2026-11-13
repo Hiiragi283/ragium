@@ -248,13 +248,12 @@ data object RagiumItems {
     //    Parts    //
 
     @JvmField
-    val MACHINE_PARTS: Map<HTMachineType, HTSimpleDeferredItem> = HTMachineType.entries
-        .associateWith { machineType: HTMachineType ->
-            REGISTER.registerSimpleItem("machine_parts/${machineType.materialName}")
-        }
+    val MACHINE_PARTS: Map<HTMachineType, HTSimpleDeferredItem> = HTMachineType.entries.associateWith { machineType: HTMachineType ->
+        REGISTER.registerSimpleItem("machine_parts/${machineType.materialName}")
+    }
 
     @JvmStatic
-    fun getParts(machineType: HTMachineType): HTSimpleDeferredItem = MACHINE_PARTS[machineType]!!
+    fun getParts(machineType: HTMachineType): HTSimpleDeferredItem = MACHINE_PARTS.getValue(machineType)
 
     // Mechanical
     @JvmField

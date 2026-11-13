@@ -32,8 +32,10 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
 
             yieldAll(RagiumBlocks.DYNAMOS.values.flatten())
             yieldAll(RagiumBlocks.MACHINES.values.flatten())
-            yield(RagiumBlocks.MACHINE_CASING)
-            yieldAll(RagiumBlocks.MACHINE_CASINGS.values)
+
+            yieldAll(RagiumBlocks.MACHINE_CASINGS)
+            yieldAll(RagiumBlocks.DECORATION_CASINGS)
+            yieldAll(RagiumBlocks.DECORATION_HULLS.values)
 
             yieldAll(RagiumBlocks.TANKS)
             yield(RagiumBlocks.ENERGY_PIPE)

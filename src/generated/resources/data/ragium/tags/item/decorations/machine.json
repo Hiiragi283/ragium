@@ -1,0 +1,13 @@
+{
+  "values": [
+    "ragium:decoration_casing/advanced",
+    "ragium:decoration_casing/basic",
+    "ragium:decoration_casing/industrial",
+    "ragium:decoration_hull/arcane",
+    "ragium:decoration_hull/chemical",
+    "ragium:decoration_hull/electronics",
+    "ragium:decoration_hull/heat",
+    "ragium:decoration_hull/mechanical",
+    "ragium:decoration_hull/resource"
+  ]
+}

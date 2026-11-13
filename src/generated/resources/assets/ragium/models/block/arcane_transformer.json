@@ -3,6 +3,6 @@
   "textures": {
     "front": "ragium:block/arcane_transformer_front",
     "side": "ragium:block/machine/arcane_side",
-    "top": "ragium:block/machine_casing"
+    "top": "ragium:block/machine_casing/basic"
   }
 }

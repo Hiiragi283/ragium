@@ -19,6 +19,12 @@ data object RagiumTags {
      * @since 26.1.5
      */
     data object BlockItems {
+        /**
+         * @since 26.1.14
+         */
+        @JvmField
+        val DECORATIONS_MACHINE: BlockItemTag = create("decorations/machine")
+
         @JvmField
         val QUARTZ_BLOCKS: BlockItemTag = create("quartz_blocks")
 

@@ -33,6 +33,16 @@ interface HTValueWithKey<R : Any, out T : R> {
      */
     fun id(): Identifier = key().identifier()
 
+    /**
+     * @since 26.1.14
+     */
+    fun blockId(): Identifier = id().blockId
+
+    /**
+     * @since 26.1.14
+     */
+    fun itemId(): Identifier = id().itemId
+
     fun asResult(): DataResult<@UnsafeVariance T>
 
     /**

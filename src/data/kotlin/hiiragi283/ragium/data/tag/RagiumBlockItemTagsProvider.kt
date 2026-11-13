@@ -43,7 +43,7 @@ class RagiumBlockItemTagsProvider(factory: (BlockItemTag) -> HTBlockItemTagBuild
                 builder(HTMachineType.DYNAMO_PREFIX, machineType).add(dynamo)
             }
         }
-        // Machine
+        // Processor
         for ((machineType: HTMachineType, machines: List<HTSimpleDeferredBlockAndItem>) in RagiumBlocks.MACHINES.entries) {
             for (machine: HTSimpleDeferredBlockAndItem in machines) {
                 builder(HTMachineType.MACHINE_PREFIX, machineType).add(machine)
@@ -53,5 +53,10 @@ class RagiumBlockItemTagsProvider(factory: (BlockItemTag) -> HTBlockItemTagBuild
         builder(RagiumTags.BlockItems.STORAGES_CREATIVE)
             .add(RagiumBlocks.CREATIVE_BATTERY)
             .add(RagiumBlocks.CREATIVE_TANK)
+        // Machine Decoration
+        builder(RagiumTags.BlockItems.DECORATIONS_MACHINE).apply {
+            RagiumBlocks.DECORATION_CASINGS.forEach(this::add)
+            RagiumBlocks.DECORATION_HULLS.values.forEach(this::add)
+        }
     }
 }

@@ -152,7 +152,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTDoubleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.FILLING,
                 RagiumTranslation.RECIPE_CATEGORY_FILLING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.MACHINE_CASING),
+                guiHelper.createBlankDrawable(16, 16),
                 HTBackgroundType.INPUT,
             ),
             HTCatalysedSingleToSingleViewerRecipeCategory(

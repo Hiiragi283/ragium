@@ -4,8 +4,8 @@ import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.data.model.HTModelTemplates
 import hiiragi283.lib.registry.HTFluidContent
+import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.resource.HTSimpleValueWithKey
-import hiiragi283.lib.resource.blockId
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
@@ -68,12 +68,10 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             yield(RagiumBlocks.FLUORITE_BLOCK)
             // yield(RagiumBlocks.CRYOLITE_BLOCK)
 
+            yieldAll(RagiumBlocks.MACHINE_CASINGS)
             yield(RagiumBlocks.CREATIVE_BATTERY) // TODO
-
-            yield(RagiumBlocks.MACHINE_CASING)
         }.forEach { generators.createTrivialCube(it.getOrThrow()) }
 
-        RagiumBlocks.ALL_DECORATIONS.forEach { generators.createDecoration(it) }
         createEnergyPipe(generators)
 
         // Dynamo
@@ -86,7 +84,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
                 ).with(BlockModelGenerators.ROTATIONS_COLUMN_WITH_FACING),
             )
         }
-        // Machine
+        // Processor
         val inactiveModels: MutableMap<HTMachineType, Identifier> = hashMapOf()
         RagiumBlocks.MACHINES
             .entries
@@ -114,8 +112,14 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             RagiumBlocks.QUARTZ_GLASS.getOrThrow(),
             RagiumBlocks.QUARTZ_GLASS_PANE.getOrThrow(),
         )
+        RagiumBlocks.ALL_DECORATIONS.forEach { generators.createDecoration(it) }
 
-        for ((machineType: HTMachineType, block: HTSimpleValueWithKey<Block>) in RagiumBlocks.MACHINE_CASINGS) {
+        RagiumBlocks.DECORATION_CASINGS.zip(
+            RagiumBlocks.MACHINE_CASINGS,
+        ) { decoration: HTSimpleDeferredBlockAndItem, casing: HTSimpleDeferredBlockAndItem ->
+            generators.createSimple(decoration, ModelTemplates.CUBE_ALL, TextureMapping.cube(Material(casing.blockId())))
+        }
+        for ((machineType: HTMachineType, block: HTSimpleValueWithKey<Block>) in RagiumBlocks.DECORATION_HULLS) {
             generators.createSimple(block, ModelTemplates.CUBE_TOP, textureMapping(machineType))
         }
         // Storage
@@ -129,8 +133,8 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
     private fun createEnergyPipe(generators: BlockModelGenerators) {
         val block: Block = RagiumBlocks.ENERGY_PIPE.getOrThrow()
-        val core: Identifier = RagiumAPI.id("block/energy_pipe")
-        val arm = BlockModelGenerators.plainVariant(RagiumAPI.id("block/energy_pipe_arm"))
+        val core: Identifier = RagiumAPI.id(HTConstants.BLOCK, "energy_pipe")
+        val arm = BlockModelGenerators.plainVariant(RagiumAPI.id(HTConstants.BLOCK, "energy_pipe_arm"))
         val multipart: MultiPartGenerator = MultiPartGenerator.multiPart(block).with(BlockModelGenerators.plainVariant(core))
         for ((side, property) in PipeBlock.PROPERTY_BY_DIRECTION) {
             val variant = when (side) {
@@ -159,7 +163,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun machineModel(generators: BlockModelGenerators, machineType: HTMachineType, block: HTSimpleValueWithKey<Block>): Identifier {
-        val blockId: Identifier = block.id().blockId
+        val blockId: Identifier = block.blockId()
         return ModelTemplates.CUBE_ORIENTABLE.create(
             blockId,
             textureMapping(machineType).put(TextureSlot.FRONT, Material(blockId.withSuffix("_front"))),
@@ -168,7 +172,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
     }
 
     private fun textureMapping(machineType: HTMachineType): TextureMapping = TextureMapping()
-        .put(TextureSlot.TOP, Material(RagiumBlocks.MACHINE_CASING.id().blockId))
+        .put(TextureSlot.TOP, Material(RagiumBlocks.MACHINE_CASINGS.basic.blockId()))
         .put(
             TextureSlot.SIDE,
             Material(RagiumAPI.id(HTConstants.BLOCK, RagiumConstants.MACHINE, "${machineType.materialName}_side")),
