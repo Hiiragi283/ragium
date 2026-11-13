@@ -36,6 +36,8 @@ data object RagiumFluids {
         REGISTER.addAlias("ammonia", "nitric_acid")
         REGISTER.addAlias("sodium_hydroxide_solution", "alkali_hydroxide_solution")
         REGISTER.addAlias("natural_gas", "synthetic_gas")
+        REGISTER.addAlias("resin", "glue")
+        REGISTER.addAlias("synthetic_resin", "glue")
 
         REGISTER.register(eventBus)
     }
@@ -96,12 +98,6 @@ data object RagiumFluids {
     @JvmField
     val HONEY: HTFluidContent.Flowing = REGISTER.registerFlowing("honey") {
         properties = create(SoundEvents.HONEY_BLOCK_PLACE, SoundEvents.HONEY_BLOCK_BREAK)
-        fluidProperties = STICK_PROPERTY
-    }
-
-    @JvmField
-    val RESIN: HTFluidContent.Flowing = REGISTER.registerFlowing("resin") {
-        properties = create(SoundEvents.RESIN_PLACE, SoundEvents.RESIN_BREAK)
         fluidProperties = STICK_PROPERTY
     }
 
@@ -185,7 +181,7 @@ data object RagiumFluids {
     val MOLTEN_PLASTIC: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_plastic") { properties = molten() }
 
     @JvmField
-    val SYNTHETIC_RESIN: HTFluidContent.Virtual = REGISTER.registerVirtual("synthetic_resin") { properties = liquid() }
+    val GLUE: HTFluidContent.Flowing = REGISTER.registerFlowing("glue") { properties = liquid() }
 
     // N
     @JvmField

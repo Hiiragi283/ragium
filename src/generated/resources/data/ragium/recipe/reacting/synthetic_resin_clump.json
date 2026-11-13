@@ -2,18 +2,18 @@
   "type": "ragium:reacting/fluid",
   "ingredients": [
     {
-      "amount": 1000,
+      "amount": 250,
       "fluids": "#c:aromatic_compound"
     },
     {
-      "amount": 1000,
+      "amount": 250,
       "fluids": "#ragium:aldehydes"
     }
   ],
   "results": {
-    "fluid": {
-      "amount": 2000,
-      "id": "ragium:synthetic_resin"
+    "item": {
+      "count": 1,
+      "id": "ragium:synthetic_resin_clump"
     }
   },
   "time": 200

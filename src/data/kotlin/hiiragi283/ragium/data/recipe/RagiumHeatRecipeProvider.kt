@@ -147,16 +147,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             catalyst { items { +RagiumItems.BLOCK_MOLD } }
             result { +Items.HONEY_BLOCK }
         }.save(exporter)
-
-        // Sticky Ball
-        RagiumRecipeBuilders.freezing {
-            ingredient {
-                +holderSet(RagiumTags.Fluids.RESINS)
-                amount /= 4
-            }
-            catalyst { items { +RagiumItems.BALL_MOLD } }
-            result { +RagiumItems.STICKY_BALL }
-        }.save(exporter)
     }
 
     private fun melting() {
@@ -221,23 +211,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         RagiumRecipeBuilders.melting {
             ingredient { items { +Items.HONEY_BLOCK } }
             result { +RagiumFluids.HONEY }
-            recipeId suffix "_from_block"
-        }.save(exporter)
-        // Resin
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.CLUMPS_RESIN) }
-            result {
-                +RagiumFluids.RESIN
-                amount = 90
-            }
-            recipeId suffix "_from_clump"
-        }.save(exporter)
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(Tags.Items.STORAGE_BLOCKS_RESIN) }
-            result {
-                +RagiumFluids.RESIN
-                amount = 90 * 9
-            }
             recipeId suffix "_from_block"
         }.save(exporter)
 

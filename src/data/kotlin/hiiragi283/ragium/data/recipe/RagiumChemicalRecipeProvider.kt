@@ -8,7 +8,6 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
@@ -96,20 +95,20 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     }
 
     private fun bathing() {
-        // Wood Pulp + Resin -> Particle Board
+        // Wood Pulp + Glue -> Particle Board
         RagiumRecipeBuilders.bathing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD) }
             fluidIngredient {
-                +holderSet(RagiumTags.Fluids.RESINS)
+                +holderSet(RagiumFluids.GLUE)
                 amount /= 8
             }
             result { +RagiumItems.PARTICLE_BOARD }
         }.save(exporter)
-        // Piston + Resin -> Sticky Piston
+        // Piston + Glue -> Sticky Piston
         RagiumRecipeBuilders.bathing {
             itemIngredient { items { +Items.PISTON } }
             fluidIngredient {
-                +holderSet(RagiumTags.Fluids.RESINS)
+                +holderSet(RagiumFluids.GLUE)
                 amount /= 8
             }
             result { +Items.STICKY_PISTON }

@@ -126,9 +126,6 @@ data object RagiumClient : HTClientMod() {
         register.register(RagiumFluids.HONEY) {
             still = Material(vanillaId(HTConstants.BLOCK, "honey_block_top"), true)
         }
-        register.register(RagiumFluids.RESIN) {
-            still = Material(vanillaId(HTConstants.BLOCK, "resin_block"))
-        }
         register.register(RagiumFluids.MOLTEN_GLASS) {
             molten()
             colorTint(Color(0xffffff))
@@ -196,8 +193,8 @@ data object RagiumClient : HTClientMod() {
             molten()
             colorTint(Color(0xccccdd))
         }
-        register.register(RagiumFluids.SYNTHETIC_RESIN) {
-            molten()
+        register.register(RagiumFluids.GLUE) {
+            transparent()
             colorTint(Color(0xff6633))
         }
         // N

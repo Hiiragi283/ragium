@@ -16,9 +16,6 @@ class RagiumFluidTagsProvider(output: PackOutput, lookupProvider: CompletableFut
     override fun appendTags(registries: HolderLookup.Provider) {
         addContents(RagiumFluids.REGISTER.asSequence())
 
-        builder(RagiumTags.Fluids.RESINS)
-            .addContentTag(RagiumFluids.RESIN)
-            .addContentTag(RagiumFluids.SYNTHETIC_RESIN)
         builder(RagiumTags.Fluids.ALCOHOLS)
             .addContentTag(RagiumFluids.ALCOHOL)
             .addTag(HTConstants.COMMON.toId("methanol"), type = HTTagDependType.OPTIONAL)

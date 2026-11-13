@@ -100,7 +100,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "Invalid Potion")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s Bucket")
         addFluid(RagiumFluids.HONEY, "Honey")
-        addFluid(RagiumFluids.RESIN, "Resin")
         addFluid(RagiumFluids.MOLTEN_GLASS, "Molten Glass")
 
         // H
@@ -120,7 +119,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFURIC_FUEL, "Sulfuric Fuel")
         addFluid(RagiumFluids.FUEL, "Fuel")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "Molten Plastic")
-        addFluid(RagiumFluids.SYNTHETIC_RESIN, "Synthetic Resin")
+        addFluid(RagiumFluids.GLUE, "Glue")
         // N
         addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "Liquid Explosive")
@@ -164,6 +163,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
+        add(RagiumItems.SYNTHETIC_RESIN_CLUMP, "Synthetic Resin Clump")
         // add(RagiumItems.ALCLAD_PLATE, "Alclad Plate")
         add(RagiumItems.BEESWAX, "Beeswax")
         add(RagiumItems.BIO_CHAFF, "Bio Chaff")

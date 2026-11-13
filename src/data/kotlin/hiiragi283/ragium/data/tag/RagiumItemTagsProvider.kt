@@ -61,6 +61,7 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
         // Other
         builder(ItemTags.PLANKS).add(RagiumItems.PARTICLE_BOARD)
 
+        builder(Tags.Items.CLUMPS_RESIN).add(RagiumItems.SYNTHETIC_RESIN_CLUMP)
         builder(Tags.Items.FEATHERS).add(RagiumItems.SYNTHETIC_FEATHER)
         builder(Tags.Items.LEATHERS).add(RagiumItems.SYNTHETIC_LEATHER)
         builder(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)

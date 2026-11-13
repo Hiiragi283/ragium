@@ -44,12 +44,6 @@ data object RagiumTags {
      */
     data object Fluids {
         /**
-         * @since 26.1.7
-         */
-        @JvmField
-        val RESINS: TagKey<Fluid> = create("resins")
-
-        /**
          * @since 26.1.8
          */
         @JvmField

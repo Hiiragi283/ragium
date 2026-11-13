@@ -96,7 +96,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         // add(RagiumFluids.POTION.getFluidType().descriptionId, "無効なポーション")
         add(RagiumFluids.POTION.bucketHolder, $$"%1$s入りバケツ")
         addFluid(RagiumFluids.HONEY, "ハチミツ")
-        addFluid(RagiumFluids.RESIN, "樹脂")
         addFluid(RagiumFluids.MOLTEN_GLASS, "溶融ガラス")
 
         // H
@@ -116,7 +115,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFURIC_FUEL, "硫化燃料油")
         addFluid(RagiumFluids.FUEL, "燃料油")
         addFluid(RagiumFluids.MOLTEN_PLASTIC, "溶融プラスチック")
-        addFluid(RagiumFluids.SYNTHETIC_RESIN, "合成樹脂")
+        addFluid(RagiumFluids.GLUE, "接着剤")
         // N
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluids.LIQUID_EXPLOSIVE, "液体爆薬")
@@ -160,6 +159,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
+        add(RagiumItems.SYNTHETIC_RESIN_CLUMP, "合成樹脂")
         // add(RagiumItems.ALCLAD_PLATE, "アルクラッド板")
         add(RagiumItems.BEESWAX, "蜜蠟")
         add(RagiumItems.BIO_CHAFF, "バイオチャフ")

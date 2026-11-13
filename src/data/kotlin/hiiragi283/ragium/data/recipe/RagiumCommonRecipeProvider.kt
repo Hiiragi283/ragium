@@ -314,14 +314,37 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
             catalyst { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.SILVER) }
             fluidResult { +RagiumFluids.ALDEHYDE }
         }.save(exporter)
-        // Aromatic Compound + Aldehyde -> Synthetic Resin
+        // Aromatic Compound + Aldehyde -> Synthetic Resin Clump
         RagiumRecipeBuilders.fluidReacting {
-            ingredient { +holderSet(RagiumFluids.AROMATIC_COMPOUND) }
-            ingredient { +holderSet(RagiumTags.Fluids.ALDEHYDES) }
-            fluidResult {
-                +RagiumFluids.SYNTHETIC_RESIN
-                amount *= 2
+            ingredient {
+                +holderSet(RagiumFluids.AROMATIC_COMPOUND)
+                amount /= 4
             }
+            ingredient {
+                +holderSet(RagiumTags.Fluids.ALDEHYDES)
+                amount /= 4
+            }
+            itemResult { +RagiumItems.SYNTHETIC_RESIN_CLUMP }
+        }.save(exporter)
+        // Resin Clump + Alcohol -> Glue
+        RagiumRecipeBuilders.itemReacting {
+            itemIngredient { +holderSet(Tags.Items.CLUMPS_RESIN) }
+            fluidIngredient {
+                +holderSet(RagiumTags.Fluids.ALCOHOLS)
+                amount /= 4
+            }
+            fluidResult {
+                +RagiumFluids.GLUE
+                amount /= 4
+            }
+        }.save(exporter)
+        // Glue -> Sticky Ball
+        RagiumRecipeBuilders.drying {
+            ingredient {
+                +holderSet(RagiumFluids.GLUE)
+                amount /= 4
+            }
+            itemResult { +RagiumItems.STICKY_BALL }
         }.save(exporter)
 
         // Synthetic Gas -> Fuel + Water + Wax

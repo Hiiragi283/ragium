@@ -1,0 +1,20 @@
+{
+  "type": "ragium:reacting/item",
+  "ingredients": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#ragium:alcohols"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:clumps/resin"
+    }
+  },
+  "results": {
+    "fluid": {
+      "amount": 250,
+      "id": "ragium:glue"
+    }
+  },
+  "time": 200
+}

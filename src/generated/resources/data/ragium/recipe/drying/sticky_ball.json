@@ -1,0 +1,14 @@
+{
+  "type": "ragium:drying",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:glue"
+  },
+  "result": {
+    "item": {
+      "count": 1,
+      "id": "ragium:sticky_ball"
+    }
+  },
+  "time": 200
+}

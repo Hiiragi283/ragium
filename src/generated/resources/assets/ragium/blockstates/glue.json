@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "ragium:block/resin"
+      "model": "ragium:block/glue"
     }
   }
 }

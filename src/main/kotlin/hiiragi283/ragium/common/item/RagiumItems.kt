@@ -193,6 +193,9 @@ data object RagiumItems {
     @JvmField
     val SYNTHETIC_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("synthetic_fiber")
 
+    @JvmField
+    val SYNTHETIC_RESIN_CLUMP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("synthetic_resin_clump")
+
     // val ALCLAD_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alclad_plate")
 
     // Resource

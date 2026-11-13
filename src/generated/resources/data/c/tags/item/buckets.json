@@ -30,6 +30,7 @@
     "#c:buckets/enchanted_experience",
     "#c:buckets/experience",
     "#c:buckets/fuel",
+    "#c:buckets/glue",
     "#c:buckets/honey",
     "#c:buckets/hydrochloric_acid",
     "#c:buckets/hydrofluoric_acid",
@@ -48,14 +49,12 @@
     "#c:buckets/phosphoric_acid",
     "#c:buckets/plant_oil",
     "#c:buckets/potion",
-    "#c:buckets/resin",
     "#c:buckets/salt_water",
     "#c:buckets/sulfur_dioxide",
     "#c:buckets/sulfur_trioxide",
     "#c:buckets/sulfuric_acid",
     "#c:buckets/sulfuric_fuel",
     "#c:buckets/sulfuric_naphtha",
-    "#c:buckets/synthetic_gas",
-    "#c:buckets/synthetic_resin"
+    "#c:buckets/synthetic_gas"
   ]
 }
