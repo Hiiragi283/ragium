@@ -572,6 +572,8 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         nineToBlock(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Metal.SILVER, HTItemPart.INGOT)
+        nineToBlock(RagiumMaterial.Alloy.CONSTANTAN, HTItemPart.INGOT)
+        nineToBlock(RagiumMaterial.Alloy.INVAR, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Alloy.BLACK_STEEL, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Alloy.SHADOW_STEEL, HTItemPart.INGOT)
@@ -579,6 +581,8 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         ingotToNugget(RagiumMaterial.Metal.ALUMINUM)
         ingotToNugget(RagiumMaterial.Metal.SILVER)
         ingotToNugget(RagiumMaterial.Alloy.NETHERITE, ingot = HTSimpleDeferredItem(vanillaId("netherite_ingot")))
+        ingotToNugget(RagiumMaterial.Alloy.CONSTANTAN)
+        ingotToNugget(RagiumMaterial.Alloy.INVAR)
         ingotToNugget(RagiumMaterial.Alloy.SOOTY_IRON)
         ingotToNugget(RagiumMaterial.Alloy.BLACK_STEEL)
         ingotToNugget(RagiumMaterial.Alloy.SHADOW_STEEL)
@@ -617,6 +621,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 result { +it }
             }
         }
+        gear(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.INVAR)
         // Dust -> Ingot
         for (metalLike: RagiumMaterial.MetalLike in RagiumMaterial.MetalLike.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metalLike] ?: continue

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:dusts/iron",
+    "#c:dusts/iron",
+    "#c:dusts/nickel"
+  ],
+  "result": {
+    "count": 3,
+    "id": "ragium:invar_dust"
+  }
+}

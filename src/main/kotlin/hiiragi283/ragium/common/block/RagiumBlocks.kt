@@ -144,17 +144,17 @@ data object RagiumBlocks {
 
     @JvmField
     val STORAGE_BLOCKS: Map<RagiumMaterial, HTSimpleDeferredBlockAndItem> = setOf(
-        RagiumMaterial.Fuel.CHARCOAL to copyOf(Blocks.COAL_BLOCK).sound(SoundType.TUFF),
+        RagiumMaterial.Fuel.CHARCOAL to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.TERRACOTTA_GRAY).sound(SoundType.TUFF),
         RagiumMaterial.Fuel.COAL_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_GRAY),
-        RagiumMaterial.Fuel.PITCH_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.COLOR_BLUE),
+        RagiumMaterial.Fuel.PITCH_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE),
         RagiumMaterial.Metal.ALUMINUM to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.COLOR_PINK),
         RagiumMaterial.Metal.SILVER to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_LIGHT_GRAY),
+        RagiumMaterial.Alloy.CONSTANTAN to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_ORANGE),
+        RagiumMaterial.Alloy.INVAR to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_CYAN),
         RagiumMaterial.Alloy.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
         RagiumMaterial.Alloy.BLACK_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_BLACK),
-        RagiumMaterial.Alloy.SHADOW_STEEL to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE),
-    ).associateTo(
-        sortedMapOf(RagiumMaterial.COMPARATOR),
-    ) { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
+        RagiumMaterial.Alloy.SHADOW_STEEL to copyOf(Blocks.NETHERITE_BLOCK).mapColor(MapColor.TERRACOTTA_PURPLE),
+    ).associateTo(sortedMapOf(RagiumMaterial.COMPARATOR)) { (material: RagiumMaterial, properties: BlockBehaviour.Properties) ->
         material to REGISTER.registerSimple(HTStorageBlockPart.DEFAULT.createName(material), properties)
     }
 

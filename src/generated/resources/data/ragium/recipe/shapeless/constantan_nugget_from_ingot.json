@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "constantan_nugget",
+  "ingredients": [
+    "#c:ingots/constantan"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:constantan_nugget"
+  }
+}

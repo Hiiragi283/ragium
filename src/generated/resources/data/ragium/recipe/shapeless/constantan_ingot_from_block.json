@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "constantan_ingot",
+  "ingredients": [
+    "#c:storage_blocks/constantan"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:constantan_ingot"
+  }
+}

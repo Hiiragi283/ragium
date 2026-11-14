@@ -132,6 +132,11 @@ sealed interface RagiumMaterial :
          */
         CONSTANTAN("Constantan", "コンスタンタン"),
 
+        /**
+         * @since 26.1.14
+         */
+        INVAR("Invar", "インバー"),
+
         // Ragium
 
         /**

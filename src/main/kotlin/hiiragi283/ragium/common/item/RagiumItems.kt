@@ -102,7 +102,8 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Metal.SILVER, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET, HTItemPart.SMALL_DUST)
                 // Alloy
                 putAll(RagiumMaterial.Alloy.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
-                putAll(RagiumMaterial.Alloy.CONSTANTAN, HTItemPart.DUST, HTItemPart.INGOT)
+                putAll(RagiumMaterial.Alloy.CONSTANTAN, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET)
+                putAll(RagiumMaterial.Alloy.INVAR, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.INGOT, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.BLACK_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.SHADOW_STEEL, HTItemPart.INGOT, HTItemPart.NUGGET)

@@ -2,6 +2,8 @@
   "values": [
     "ragium:aluminum_nugget",
     "ragium:black_steel_nugget",
+    "ragium:constantan_nugget",
+    "ragium:invar_nugget",
     "ragium:netherite_nugget",
     "ragium:shadow_steel_nugget",
     "ragium:silver_nugget",

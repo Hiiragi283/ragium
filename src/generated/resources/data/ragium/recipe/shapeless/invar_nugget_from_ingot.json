@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "invar_nugget",
+  "ingredients": [
+    "#c:ingots/invar"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:invar_nugget"
+  }
+}

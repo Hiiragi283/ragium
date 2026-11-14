@@ -1,0 +1,30 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 2,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/iron",
+          "c:ingots/iron"
+        ]
+      }
+    },
+    {
+      "count": 1,
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/nickel",
+          "c:ingots/nickel"
+        ]
+      }
+    }
+  ],
+  "result": {
+    "count": 3,
+    "id": "ragium:invar_ingot"
+  },
+  "time": 200
+}

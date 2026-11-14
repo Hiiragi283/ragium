@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "group": "invar_ingot",
+  "ingredient": "ragium:invar_dust",
+  "result": {
+    "id": "ragium:invar_ingot"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "constantan_ingot",
+  "key": {
+    "A": "#c:nuggets/constantan",
+    "B": "ragium:constantan_nugget"
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:constantan_ingot"
+  }
+}

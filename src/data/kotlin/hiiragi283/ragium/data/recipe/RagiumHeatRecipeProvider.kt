@@ -78,6 +78,27 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 count = 2
             }
         }.save(exporter)
+        // Iron + Nickel -> Invar
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.IRON) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.IRON) }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.NICKEL) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Alloy.INVAR)
+                count = 3
+            }
+        }.save(exporter)
+        RagiumRecipeBuilders.alloying {
+            ingredient {
+                +dustOrIngot(RagiumMaterial.Metal.IRON)
+                count = 2
+            }
+            ingredient { +dustOrIngot(RagiumMaterial.Metal.NICKEL) }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.INVAR)
+                count = 3
+            }
+        }.save(exporter)
 
         // Iron + Coals -> Sooty Iron
         RagiumRecipeBuilders.alloying {

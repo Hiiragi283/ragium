@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "invar_ingot",
+  "ingredients": [
+    "#c:storage_blocks/invar"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:invar_ingot"
+  }
+}
