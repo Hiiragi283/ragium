@@ -32,7 +32,7 @@ data object RagiumConstants {
     const val BOILER = "boiler"
     const val SOLID_BOILER = "solid_$BOILER"
     const val SOLAR_BOILER = "solar_$BOILER"
-    const val STEAM_TURBINE = "steam_turbine"
+    const val STEAM_DYNAMO = "steam_$DYNAMO"
 
     const val ALLOY_SMELTER = "alloy_smelter"
     const val DRYER = "dryer"

@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.generator.HTWaterMillBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.dynamo.HTCombustionDynamoBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.dynamo.HTSteamDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTBoilerBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTEnchantmentAbsorberBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTUpgradeStationBlockEntity
@@ -88,6 +89,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val SOLAR_BOILER: HTDeferredBlockEntityType<HTBoilerBlockEntity.Solar> =
         registerTick(RagiumConstants.SOLAR_BOILER, HTBoilerBlockEntity::Solar)
+
+    @JvmField
+    val STEAM_DYNAMO: HTDeferredBlockEntityType<HTSteamDynamoBlockEntity> =
+        registerTick(RagiumConstants.STEAM_DYNAMO, ::HTSteamDynamoBlockEntity)
 
     // Chemical
     @JvmField
@@ -283,6 +288,7 @@ data object RagiumBlockEntityTypes {
 
         registerBlockEntity(SOLID_BOILER.get())
         registerBlockEntity(SOLAR_BOILER.get())
+        registerBlockEntity(STEAM_DYNAMO.get())
 
         registerBlockEntity(COMBUSTION_DYNAMO.get())
 

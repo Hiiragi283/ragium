@@ -96,6 +96,7 @@
     "solar_boiler",
     "solid_boiler",
     "sooty_iron_block",
+    "steam_dynamo",
     "sulfuric_acid",
     "sulfuric_fuel",
     "sulfuric_naphtha",
@@ -144,6 +145,7 @@
     "smelter",
     "solar_boiler",
     "solid_boiler",
+    "steam_dynamo",
     "tank",
     "upgrade_station",
     "water_mill"
@@ -506,6 +508,7 @@
     "sooty_iron_sword",
     "splash_bottle",
     "steam_bucket",
+    "steam_dynamo",
     "sticky_ball",
     "sulfur_dioxide_bucket",
     "sulfur_dust",

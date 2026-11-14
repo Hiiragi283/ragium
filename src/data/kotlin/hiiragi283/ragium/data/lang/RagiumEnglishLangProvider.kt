@@ -45,6 +45,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.WATER_MILL, "Water Mill")
         add(RagiumBlocks.SOLID_BOILER, "Solid Fuel Boiler")
         add(RagiumBlocks.SOLAR_BOILER, "Solar Boiler")
+        add(RagiumBlocks.STEAM_DYNAMO, "Steam Dynamo")
         add(RagiumBlocks.COMBUSTION_DYNAMO, "Combustion Dynamo")
 
         add(RagiumBlocks.ASSEMBLER, "Assembler")

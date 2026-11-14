@@ -19,6 +19,7 @@ import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.transfer.fluid.HTFluidTankUtil
 import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
@@ -81,6 +82,7 @@ data object RagiumBlocks {
             REGISTER.addAlias("${name}_machine_casing", "decoration_hull/$name")
         }
         REGISTER.addAlias("machine_casing", "decoration_casing/basic")
+        REGISTER.addAlias("magmatic_dynamo", RagiumConstants.STEAM_DYNAMO)
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -255,6 +257,9 @@ data object RagiumBlocks {
     @JvmField
     val SOLAR_BOILER: HTBasicDeferredBlockAndItem<HTBoilerBlock> = registerWithBE(RagiumBlockEntityTypes.SOLAR_BOILER, ::HTBoilerBlock, machine())
 
+    @JvmField
+    val STEAM_DYNAMO: HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerDynamo(RagiumBlockEntityTypes.STEAM_DYNAMO)
+
     // Chemical
     @JvmField
     val COMBUSTION_DYNAMO: HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerDynamo(RagiumBlockEntityTypes.COMBUSTION_DYNAMO)
@@ -267,6 +272,7 @@ data object RagiumBlocks {
 
             put(HTMachineType.HEAT, SOLID_BOILER)
             put(HTMachineType.HEAT, SOLAR_BOILER)
+            put(HTMachineType.HEAT, STEAM_DYNAMO)
 
             put(HTMachineType.CHEMICAL, COMBUSTION_DYNAMO)
         },

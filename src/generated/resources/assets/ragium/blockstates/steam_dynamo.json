@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "ragium:block/steam_dynamo",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "ragium:block/steam_dynamo",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ragium:block/steam_dynamo",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "ragium:block/steam_dynamo",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "ragium:block/steam_dynamo"
+    },
+    "facing=west": {
+      "model": "ragium:block/steam_dynamo",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

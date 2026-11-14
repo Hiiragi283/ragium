@@ -41,6 +41,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.WATER_MILL, "水力発電機")
         add(RagiumBlocks.SOLID_BOILER, "固体燃料ボイラー")
         add(RagiumBlocks.SOLAR_BOILER, "太陽熱ボイラー")
+        add(RagiumBlocks.STEAM_DYNAMO, "蒸気ダイナモ")
         add(RagiumBlocks.COMBUSTION_DYNAMO, "燃焼ダイナモ")
 
         add(RagiumBlocks.ASSEMBLER, "組立機")
