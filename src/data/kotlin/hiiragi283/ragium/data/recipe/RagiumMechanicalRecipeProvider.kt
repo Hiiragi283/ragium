@@ -661,23 +661,20 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             time /= 2
             recipeId suffix "_from_cobblestones"
         }.save(exporter)
-        // Gravel -> Flint
+        // Gravel -> Sand + 2x Flint Shard
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.GRAVELS) }
-            result { +Items.FLINT }
-            time /= 2
-            recipeId suffix "_from_gravel"
-        }.save(exporter)
-        // Gravel -> Sand
-        RagiumRecipeBuilders.pulverizing {
-            ingredient { +holderSet(Tags.Items.GRAVELS) }
             result { +Items.SAND }
+            result {
+                +RagiumItems.FLINT_SHARD
+                count = 2
+            }
             time /= 2
             recipeId suffix "_from_gravel"
         }.save(exporter)
 
         // Book -> 3x Paper Pulp
-        RagiumRecipeBuilders.pulverizing {
+        RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.BOOK } }
             result {
                 +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Other.PAPER)
@@ -686,7 +683,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             recipeId suffix "_from_book"
         }.save(exporter)
         // Blaze Rod -> 4x Blaze Powder
-        RagiumRecipeBuilders.pulverizing {
+        RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.RODS_BLAZE) }
             result {
                 +Items.BLAZE_POWDER
@@ -694,7 +691,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
         }.save(exporter)
         // Breeze Rod -> 6x Wind Charge
-        RagiumRecipeBuilders.pulverizing {
+        RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.RODS_BREEZE) }
             result {
                 +Items.WIND_CHARGE
@@ -702,7 +699,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
         }.save(exporter)
         // Bone -> 6x Bone Meal
-        RagiumRecipeBuilders.pulverizing {
+        RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.BONES) }
             result {
                 +Items.BONE_MEAL
@@ -713,15 +710,15 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
     private fun crushMaterial() {
         // XX Dust
-        RagiumRecipeBuilders.pulverizing {
+        RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.COAL } }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.COAL) }
         }.save(exporter)
-        RagiumRecipeBuilders.pulverizing {
+        RagiumRecipeBuilders.crushing {
             ingredient { items { +Items.CHARCOAL } }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.CHARCOAL) }
         }.save(exporter)
-        RagiumRecipeBuilders.pulverizing {
+        RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(RagiumTags.Items.COKES) }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.CARBON) }
         }.save(exporter)
@@ -735,7 +732,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.LIME) }
         }.save(exporter)
-        RagiumRecipeBuilders.pulverizing {
+        RagiumRecipeBuilders.crushing {
             ingredient {
                 items { +Items.POINTED_DRIPSTONE }
                 count = 4
@@ -746,7 +743,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         for (gem: RagiumMaterial.Gem in RagiumMaterial.Gem.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, gem] ?: continue
-            RagiumRecipeBuilders.pulverizing {
+            RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(CommonTagPrefixes.GEM, gem) }
                 result { +dust }
                 recipeId suffix "_from_gem"
@@ -756,7 +753,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
 
         for (metalLike: RagiumMaterial.MetalLike in RagiumMaterial.MetalLike.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, metalLike] ?: continue
-            RagiumRecipeBuilders.pulverizing {
+            RagiumRecipeBuilders.crushing {
                 ingredient { +holderSet(CommonTagPrefixes.INGOT, metalLike) }
                 result { +dust }
                 recipeId suffix "_from_ingot"
@@ -765,7 +762,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         }
 
         val silicaDust: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SILICA)
-        RagiumRecipeBuilders.pulverizing {
+        RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.QUARTZ) }
             result { +silicaDust }
             recipeId suffix "_from_quartz"
@@ -778,7 +775,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             }
             recipeId suffix "_from_quartz_block"
         }.save(exporter)
-        RagiumRecipeBuilders.pulverizing {
+        RagiumRecipeBuilders.crushing {
             ingredient {
                 +holderSet(CommonTagPrefixes.GEM, RagiumMaterial.Gem.AMETHYST)
                 count = 4
@@ -811,7 +808,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         for (material: RagiumMaterial in RagiumMaterial.entries) {
             val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, material] ?: continue
             if (RagiumItems.MATERIAL_ITEMS.contains(HTItemPart.GEAR, material)) {
-                RagiumRecipeBuilders.pulverizing {
+                RagiumRecipeBuilders.crushing {
                     ingredient { +holderSet(CommonTagPrefixes.GEAR, material) }
                     result {
                         +dust
@@ -842,6 +839,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             Triple(Tags.Items.CHESTS_WOODEN, 1, 8),
             Triple(Tags.Items.FENCE_GATES_WOODEN, 1, 4),
             Triple(Tags.Items.FENCES_WOODEN, 1, 1),
+            Triple(Tags.Items.RODS_WOODEN, 2, 1),
             Triple(CommonTagPrefixes.GEAR.itemTagKey(RagiumMaterial.Other.WOOD), 4, 1),
         ).forEach { (input: TagKey<Item>, inputCount: Int, outputCount: Int) ->
             RagiumRecipeBuilders.crushing {
@@ -856,14 +854,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 recipeId suffix "_from_${input.location().debugPath}"
             }.save(exporter)
         }
-        RagiumRecipeBuilders.pulverizing {
-            ingredient {
-                +holderSet(Tags.Items.RODS_WOODEN)
-                count = 2
-            }
-            result { +woodPulp }
-            recipeId suffix "_from_rods_wooden"
-        }.save(exporter)
 
         RagiumRecipeBuilders.crushing {
             ingredient {

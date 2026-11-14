@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ragium:flint_shard",
+    "ragium:flint_shard",
+    "ragium:flint_shard",
+    "ragium:flint_shard"
+  ],
+  "result": {
+    "id": "minecraft:flint"
+  }
+}

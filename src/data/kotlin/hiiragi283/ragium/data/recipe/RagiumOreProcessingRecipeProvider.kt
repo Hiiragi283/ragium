@@ -110,7 +110,7 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
             RagiumMaterial.Other.REDSTONE -> HTSimpleDeferredItem(vanillaId("redstone"))
             else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, material]
         } ?: return
-        RagiumRecipeBuilders.pulverizing {
+        RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(CommonTagPrefixes.CRUSHED_ORES, material) }
             result {
                 +dust

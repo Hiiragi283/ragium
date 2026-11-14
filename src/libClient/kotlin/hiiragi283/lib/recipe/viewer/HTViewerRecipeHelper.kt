@@ -8,7 +8,7 @@ import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemCombineRecipe
 import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
-import hiiragi283.lib.recipe.base.HTItemToRecipe
+import hiiragi283.lib.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.recipe.display.displayOrEmpty
@@ -28,8 +28,8 @@ data object HTViewerRecipeHelper {
     }
 
     @JvmStatic
-    fun singleToMultiItem(holder: HTRecipeHolder<HTItemToRecipe.BasicMultiItem>): HTSingleToMultiViewerRecipe {
-        val (id: RecipeKey, recipe: HTItemToRecipe.BasicMultiItem) = holder
+    fun singleToMultiItem(holder: HTRecipeHolder<HTItemToMultiItemRecipe.Basic>): HTSingleToMultiViewerRecipe {
+        val (id: RecipeKey, recipe: HTItemToMultiItemRecipe.Basic) = holder
         return HTSingleToMultiViewerRecipe(
             id.identifier(),
             recipe.ingredient.display(),

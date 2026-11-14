@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/silver"
+      }
+    }
+  ],
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:ingots/silver"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:silver_dust"
+  },
+  "time": 200
+}

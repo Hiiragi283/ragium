@@ -150,6 +150,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.BAMBOO_CHARCOAL, "竹炭")
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
         add(RagiumItems.CEMENT, "セメント")
+        add(RagiumItems.FLINT_SHARD, "火打石の欠片")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.STICKY_BALL, "粘着質な塊")
         add(RagiumItems.ALKALI_HYDROXIDE, "アルカリ水酸化物")
@@ -250,7 +251,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.RECIPE_CATEGORY_EXTRACTING, "抽出")
         add(RagiumTranslation.RECIPE_CATEGORY_FILLING, "封入")
         add(RagiumTranslation.RECIPE_CATEGORY_PRESSING, "プレス加工")
-        add(RagiumTranslation.RECIPE_CATEGORY_PULVERIZING, "粉砕")
 
         add(RagiumTranslation.RECIPE_CATEGORY_ALLOYING, "合金")
         add(RagiumTranslation.RECIPE_CATEGORY_DRYING, "乾燥")

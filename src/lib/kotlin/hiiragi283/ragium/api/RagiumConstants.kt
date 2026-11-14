@@ -83,7 +83,6 @@ data object RagiumConstants {
     const val EXTRACTING = "extracting"
     const val FILLING = "filling"
     const val PRESSING = "pressing"
-    const val PULVERIZING = "pulverizing"
 
     // Heat
     const val ALLOYING = "alloying"

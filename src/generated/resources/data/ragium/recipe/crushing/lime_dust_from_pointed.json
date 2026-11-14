@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 4,
+    "items": "minecraft:pointed_dripstone"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:lime_dust"
+  },
+  "time": 200
+}

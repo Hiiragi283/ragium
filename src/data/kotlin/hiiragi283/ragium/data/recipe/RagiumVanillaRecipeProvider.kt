@@ -84,6 +84,11 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }
             recipeId suffix "_with_lime"
         }.save(exporter)
+        // 4x Flint Shard -> Flint
+        VanillaRecipeBuilders.shapeless {
+            repeat(4) { ingredient { items { +RagiumItems.FLINT_SHARD } } }
+            result { +Items.FLINT }
+        }.save(exporter)
 
         // Splash Bottle
         VanillaRecipeBuilders.shapeless {

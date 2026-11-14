@@ -37,7 +37,6 @@ import hiiragi283.ragium.api.recipe.RTMeltingRecipe
 import hiiragi283.ragium.api.recipe.RTMixingRecipe
 import hiiragi283.ragium.api.recipe.RTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RTPressingRecipe
-import hiiragi283.ragium.api.recipe.RTPulverizingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
@@ -125,14 +124,6 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTSingleRecipeBuilder.Catalysed(RagiumConstants.PRESSING, ::RTPressingRecipe).apply(builderAction)
-    }
-
-    @JvmStatic
-    inline fun pulverizing(builderAction: HTItemToItemRecipeBuilder<RTPulverizingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<RTPulverizingRecipe> {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTSingleRecipeBuilder.Basic(RagiumConstants.PULVERIZING, ::RTPulverizingRecipe).apply(builderAction)
     }
 
     // Heat
