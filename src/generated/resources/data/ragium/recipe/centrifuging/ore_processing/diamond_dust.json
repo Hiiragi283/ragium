@@ -1,0 +1,14 @@
+{
+  "type": "ragium:centrifuging",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:crushed_ores/diamond"
+  },
+  "result": {
+    "item": {
+      "count": 1,
+      "id": "ragium:diamond_dust"
+    }
+  },
+  "time": 200
+}

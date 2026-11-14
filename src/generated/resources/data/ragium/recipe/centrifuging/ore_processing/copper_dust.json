@@ -1,0 +1,20 @@
+{
+  "type": "ragium:centrifuging",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:crushed_ores/copper"
+  },
+  "result": {
+    "items": [
+      {
+        "count": 1,
+        "id": "ragium:copper_dust"
+      },
+      {
+        "count": 1,
+        "id": "ragium:small_nickel_dust"
+      }
+    ]
+  },
+  "time": 200
+}

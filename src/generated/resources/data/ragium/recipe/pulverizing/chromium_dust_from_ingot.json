@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/chromium"
+      }
+    }
+  ],
+  "type": "ragium:pulverizing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:ingots/chromium"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:chromium_dust"
+  },
+  "time": 200
+}

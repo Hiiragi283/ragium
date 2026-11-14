@@ -104,6 +104,11 @@ sealed interface RagiumMaterial :
         ALUMINUM("Aluminum", "アルミニウム"),
 
         /**
+         * @since 26.1.14
+         */
+        CHROMIUM("Chromium", "クロム"),
+
+        /**
          * @since 26.1.11
          */
         NICKEL("Nickel", "ニッケル"),

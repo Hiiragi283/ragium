@@ -122,7 +122,7 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
 
     override fun getName(): String = "Coloring Recipes"
 
-    enum class ColoredContents(val allTag: TagKey<Item>, val items: HTColoredCollection<ItemLike>) : StringRepresentable {
+    private enum class ColoredContents(val allTag: TagKey<Item>, val items: HTColoredCollection<ItemLike>) : StringRepresentable {
         BANNER(ItemTags.BANNERS, VanillaColoredCollections.BANNER),
         BED(ItemTags.BEDS, VanillaColoredCollections.BED),
         HARNESS(ItemTags.HARNESSES, VanillaColoredCollections.HARNESS),
@@ -139,10 +139,10 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
     /**
      * 白色のアイテムのみを判定します。
      */
-    fun ColoredContents.onlyWhites(): HolderSet<Item> = holderSet(this.allTag) and holderSet(Tags.Items.DYED_WHITE)
+    private fun ColoredContents.onlyWhites(): HolderSet<Item> = holderSet(this.allTag) and holderSet(Tags.Items.DYED_WHITE)
 
     /**
      * 白色以外のアイテムを判定します。
      */
-    fun ColoredContents.excludeWhites(): HolderSet<Item> = holderSet(this.allTag) and notHolderSet(Tags.Items.DYED_WHITE)
+    private fun ColoredContents.excludeWhites(): HolderSet<Item> = holderSet(this.allTag) and notHolderSet(Tags.Items.DYED_WHITE)
 }

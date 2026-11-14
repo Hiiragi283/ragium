@@ -1,0 +1,14 @@
+{
+  "type": "ragium:centrifuging",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:crushed_ores/redstone"
+  },
+  "result": {
+    "item": {
+      "count": 4,
+      "id": "minecraft:redstone"
+    }
+  },
+  "time": 200
+}

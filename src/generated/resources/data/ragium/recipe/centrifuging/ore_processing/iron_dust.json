@@ -1,0 +1,20 @@
+{
+  "type": "ragium:centrifuging",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:crushed_ores/iron"
+  },
+  "result": {
+    "items": [
+      {
+        "count": 1,
+        "id": "ragium:iron_dust"
+      },
+      {
+        "count": 1,
+        "id": "ragium:small_chromium_dust"
+      }
+    ]
+  },
+  "time": 200
+}

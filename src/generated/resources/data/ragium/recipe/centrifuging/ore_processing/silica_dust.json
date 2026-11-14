@@ -1,0 +1,14 @@
+{
+  "type": "ragium:centrifuging",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:crushed_ores/quartz"
+  },
+  "result": {
+    "item": {
+      "count": 3,
+      "id": "ragium:silica_dust"
+    }
+  },
+  "time": 200
+}

@@ -1,5 +1,7 @@
 {
   "values": [
+    "#c:small_dusts/chromium",
+    "#c:small_dusts/copper",
     "#c:small_dusts/gold",
     "#c:small_dusts/nickel",
     "#c:small_dusts/silver"

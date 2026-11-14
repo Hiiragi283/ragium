@@ -59,8 +59,8 @@ enum class HTOreBlockPart(private val idPattern: String, provider: HTLangPattern
 enum class HTStorageBlockPart(private val idPattern: String, provider: HTLangPatternProvider) :
     HTBlockPart,
     HTLangPatternProvider by provider {
-    DEFAULT("%s_block", "Block of %s", "%sブロック"),
     RAW("raw_%s_block", "Block of Raw %s", "%sの原石ブロック"),
+    DEFAULT("%s_block", "Block of %s", "%sブロック"),
     ;
 
     constructor(idPattern: String, enPattern: String, jaPattern: String) : this(
@@ -80,23 +80,32 @@ enum class HTStorageBlockPart(private val idPattern: String, provider: HTLangPat
 enum class HTItemPart(private val idPattern: String, override val tagPrefix: HTTagPrefix, provider: HTLangPatternProvider) :
     HTPart,
     HTLangPatternProvider by provider {
-    DUST("%s_dust", CommonTagPrefixes.DUST, "%s Dust", "%sの粉"),
-
-    /**
-     * @since 26.1.13
-     */
-    CRUSHED_ORES("crushed_%s_ore", CommonTagPrefixes.CRUSHED_ORES, "Crushed %s Ore", "粉砕された%s鉱石"),
-    GEAR("%s_gear", CommonTagPrefixes.GEAR, "%s Gear", "%sの歯車"),
-    GEM("%s", CommonTagPrefixes.GEM, HTLangPatternProvider.IDENTITY),
-    INGOT("%s_ingot", CommonTagPrefixes.INGOT, "%s Ingot", "%sインゴット"),
-    NUGGET("%s_nugget", CommonTagPrefixes.NUGGET, "%s Nugget", "%sナゲット"),
+    // Ore
     RAW("raw_%s", CommonTagPrefixes.RAW_MATERIALS, "Raw %s", "%sの原石"),
 
     /**
      * @since 26.1.13
      */
+    CRUSHED_ORES("crushed_%s_ore", CommonTagPrefixes.CRUSHED_ORES, "Crushed %s Ore", "粉砕された%s鉱石"),
+
+    // Dust
+    DUST("%s_dust", CommonTagPrefixes.DUST, "%s Dust", "%sの粉"),
+
+    /**
+     * @since 26.1.13
+     */
     SMALL_DUST("small_%s_dust", CommonTagPrefixes.SMALL_DUST, "Small %s Dust", "小さな%sの粉"),
+
+    // Base
+    GEM("%s", CommonTagPrefixes.GEM, HTLangPatternProvider.IDENTITY),
+    INGOT("%s_ingot", CommonTagPrefixes.INGOT, "%s Ingot", "%sインゴット"),
+
+    // Small Base
     TINY("tiny_%s", CommonTagPrefixes.TINY, "Tiny %s", "小さな%s"),
+    NUGGET("%s_nugget", CommonTagPrefixes.NUGGET, "%s Nugget", "%sナゲット"),
+
+    // Part
+    GEAR("%s_gear", CommonTagPrefixes.GEAR, "%s Gear", "%sの歯車"),
     ;
 
     constructor(idPattern: String, tagPrefix: HTTagPrefix, enPattern: String, jaPattern: String) : this(

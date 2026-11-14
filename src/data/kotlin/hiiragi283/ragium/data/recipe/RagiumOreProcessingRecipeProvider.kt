@@ -4,6 +4,7 @@ import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.forEach
 import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
@@ -17,6 +18,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.item.RagiumItems
@@ -36,6 +38,7 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
     override fun exportValues() {
         crushing()
         alloying()
+        centrifuging()
 
         // Crushed XX Ore -> XX Ingot
         setOf(
@@ -70,14 +73,14 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
 
         crushOre(RagiumMaterial.Metal.COPPER) { result { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.GOLD) } }
         crushOre(RagiumMaterial.Metal.IRON) { result { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.NICKEL) } }
-        crushOre(RagiumMaterial.Metal.GOLD) { result { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.SILVER) } }
+        crushOre(RagiumMaterial.Metal.GOLD) { result { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.COPPER) } }
 
         crushOre(RagiumMaterial.Other.REDSTONE) { result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.CINNABAR) } }
         // Crushed XX -> XX Dust
         pulverizeOre(RagiumMaterial.Fuel.COAL)
 
         pulverizeOre(RagiumMaterial.Gem.LAPIS, 3)
-        pulverizeOre(RagiumMaterial.Gem.QUARTZ, 4)
+        pulverizeOre(RagiumMaterial.Gem.QUARTZ, 3)
         pulverizeOre(RagiumMaterial.Gem.DIAMOND)
         pulverizeOre(RagiumMaterial.Gem.EMERALD)
 
@@ -147,4 +150,41 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
     }
 
     //    Centrifuging    //
+
+    private fun centrifuging() {
+        // Crushed XX Ore -> XX Dust + extra
+        centrifuging(RagiumMaterial.Fuel.COAL)
+
+        centrifuging(RagiumMaterial.Gem.LAPIS, 3)
+        centrifuging(RagiumMaterial.Gem.QUARTZ, 3)
+        centrifuging(RagiumMaterial.Gem.DIAMOND)
+        centrifuging(RagiumMaterial.Gem.EMERALD)
+
+        centrifuging(RagiumMaterial.Metal.COPPER) { itemResult { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.NICKEL) } }
+        centrifuging(RagiumMaterial.Metal.IRON) { itemResult { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.CHROMIUM) } }
+        centrifuging(RagiumMaterial.Metal.GOLD) { itemResult { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.SILVER) } }
+
+        centrifuging(RagiumMaterial.Other.REDSTONE, 4)
+    }
+
+    private inline fun centrifuging(
+        material: RagiumMaterial,
+        count: Int = 1,
+        builderAction: HTItemSeparatingRecipeBuilder<RTCentrifugingRecipe>.() -> Unit = {},
+    ) {
+        val dust: HTSimpleDeferredItem = when (material) {
+            RagiumMaterial.Gem.QUARTZ -> RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, RagiumMaterial.Chemical.SILICA]
+            RagiumMaterial.Other.REDSTONE -> HTSimpleDeferredItem(vanillaId("redstone"))
+            else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, material]
+        } ?: return
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { +holderSet(CommonTagPrefixes.CRUSHED_ORES, material) }
+            itemResult {
+                +dust
+                this.count = count
+            }
+            builderAction()
+            recipeId prefix PREFIX
+        }.save(exporter)
+    }
 }

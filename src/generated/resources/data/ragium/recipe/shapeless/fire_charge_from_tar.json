@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:gunpowders",
+    "minecraft:blaze_powder",
+    "ragium:tar"
+  ],
+  "result": {
+    "id": "minecraft:fire_charge"
+  }
+}

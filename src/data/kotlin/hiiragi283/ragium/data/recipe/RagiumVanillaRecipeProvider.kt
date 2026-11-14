@@ -13,6 +13,7 @@ import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
+import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
@@ -231,86 +232,56 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +Items.CANDLE }
             category = RecipeCategory.DECORATIONS
         }.save(exporter)
-        // Torch
-        VanillaRecipeBuilders.shaped {
-            +"A"
-            +"B"
-            define('A') { items { +RagiumItems.TAR } }
-            define('B') { +holderSet(Tags.Items.RODS_WOODEN) }
-            result {
-                +Items.TORCH
-                count = 3
-            }
-            recipeId suffix "_from_tar"
-        }.save(exporter)
-        VanillaRecipeBuilders.shaped {
-            +"A"
-            +"B"
-            define('A') { +holderSet(HTCommonTags.Items.PITCH_COKE) }
-            define('B') { +holderSet(Tags.Items.RODS_WOODEN) }
-            result {
-                +Items.TORCH
-                count = 6
-            }
-            recipeId suffix "_from_pitch_coke"
-        }.save(exporter)
-        VanillaRecipeBuilders.shaped {
-            +"A"
-            +"B"
-            define('A') { +holderSet(HTCommonTags.Items.COAL_COKE) }
-            define('B') { +holderSet(Tags.Items.RODS_WOODEN) }
-            result {
-                +Items.TORCH
-                count = 8
-            }
-            recipeId suffix "_from_coal_coke"
-        }.save(exporter)
-        // Fire Charge
-        VanillaRecipeBuilders.shapeless {
-            ingredient { +holderSet(Tags.Items.GUNPOWDERS) }
-            ingredient { items { +Items.BLAZE_POWDER } }
-            ingredient { +holderSet(HTCommonTags.Items.PITCH_COKE) }
-            result {
-                +Items.FIRE_CHARGE
-                count = 4
-            }
-            recipeId suffix "_from_pitch_coke"
-        }.save(exporter)
-        VanillaRecipeBuilders.shapeless {
-            ingredient { +holderSet(Tags.Items.GUNPOWDERS) }
-            ingredient { items { +Items.BLAZE_POWDER } }
-            ingredient { +holderSet(HTCommonTags.Items.COAL_COKE) }
-            result {
-                +Items.FIRE_CHARGE
-                count = 6
-            }
-            recipeId suffix "_from_coal_coke"
-        }.save(exporter)
-        // Hopper
-        VanillaRecipeBuilders.shaped {
-            +"A A"
-            +"ABA"
-            +" A "
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
-            result {
-                +Items.HOPPER
-                count = 2
-            }
-            recipeId suffix "_by_sooty_iron"
-        }.save(exporter)
-        VanillaRecipeBuilders.shaped {
-            +"A A"
-            +"ABA"
-            +" A "
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
-            define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
-            result {
-                +Items.HOPPER
-                count = 4
-            }
-            recipeId suffix "_by_black_steel"
-        }.save(exporter)
+        // Fossil Fuels
+        fun fossilFuels(outputs: Int, suffix: String, ingredient: IngredientBuilder.() -> Unit) {
+            // Torch
+            VanillaRecipeBuilders.shaped {
+                +"A"
+                +"B"
+                define('A', ingredient)
+                define('B') { +holderSet(Tags.Items.RODS_WOODEN) }
+                result {
+                    +Items.TORCH
+                    count = outputs
+                }
+                recipeId suffix "_from_$suffix"
+            }.save(exporter)
+            // Fire Charge
+            VanillaRecipeBuilders.shapeless {
+                ingredient { +holderSet(Tags.Items.GUNPOWDERS) }
+                ingredient { items { +Items.BLAZE_POWDER } }
+                ingredient(ingredient)
+                result {
+                    +Items.FIRE_CHARGE
+                    count = outputs - 2
+                }
+                recipeId suffix "_from_$suffix"
+            }.save(exporter)
+        }
+
+        fossilFuels(3, "tar") { items { +RagiumItems.TAR } }
+        fossilFuels(6, "pitch_coke") { +holderSet(HTCommonTags.Items.PITCH_COKE) }
+        fossilFuels(8, "coal_coke") { +holderSet(HTCommonTags.Items.COAL_COKE) }
+        // Iron Alt
+        fun ironAlt(material: HTMaterialLike, modifier: Float) {
+            // Hopper
+            VanillaRecipeBuilders.shaped {
+                +"A A"
+                +"ABA"
+                +" A "
+                define('A') { +holderSet(CommonTagPrefixes.INGOT, material) }
+                define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
+                result {
+                    +Items.HOPPER
+                    count = (count * modifier).toInt()
+                }
+                recipeId suffix "_by_${material.materialName}"
+            }.save(exporter)
+        }
+
+        ironAlt(RagiumMaterial.Alloy.SOOTY_IRON, 2f)
+        ironAlt(RagiumMaterial.Alloy.INVAR, 3f)
+        ironAlt(RagiumMaterial.Alloy.BLACK_STEEL, 4f)
     }
 
     //    Decoration    //
@@ -587,9 +558,18 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         ingotToNugget(RagiumMaterial.Alloy.BLACK_STEEL)
         ingotToNugget(RagiumMaterial.Alloy.SHADOW_STEEL)
         // 4x Small Dust -> Dust
-        smallToDust(RagiumMaterial.Metal.GOLD)
-        smallToDust(RagiumMaterial.Metal.NICKEL)
-        smallToDust(RagiumMaterial.Metal.SILVER)
+        RagiumMaterial.entries.forEach { material: RagiumMaterial ->
+            val smallDust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.SMALL_DUST, material] ?: return@forEach
+            val dust: HTSimpleDeferredItem = RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, material] ?: return@forEach
+            VanillaRecipeBuilders.shaped {
+                +"AA"
+                +"AB"
+                define('A') { +holderSet(CommonTagPrefixes.SMALL_DUST, material) }
+                define('B') { items { +smallDust } }
+                result { +dust }
+                recipeId suffix "_from_small"
+            }.save(exporter)
+        }
         // Gear
         RagiumItems.getOrThrow(HTItemPart.GEAR, RagiumMaterial.Other.WOOD).let { gear: HTSimpleDeferredItem ->
             val inputs: HolderSet<Item> = holderSet(ItemTags.PLANKS)
@@ -763,19 +743,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             result { +ingot }
             group = ingot.id.path
             recipeId suffix "_from_nugget"
-        }.save(exporter)
-    }
-
-    private fun smallToDust(material: RagiumMaterial) {
-        val smallDust: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, material)
-        val dust: HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, material)
-        VanillaRecipeBuilders.shaped {
-            +"AA"
-            +"AB"
-            define('A') { +holderSet(CommonTagPrefixes.SMALL_DUST, material) }
-            define('B') { items { +smallDust } }
-            result { +dust }
-            recipeId suffix "_from_small"
         }.save(exporter)
     }
 
