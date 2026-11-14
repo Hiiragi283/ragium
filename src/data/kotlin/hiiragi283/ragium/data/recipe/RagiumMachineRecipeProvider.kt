@@ -121,15 +121,22 @@ class RagiumMachineRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
         // Heat
         VanillaRecipeBuilders.shaped {
-            +" A "
-            +"BCB"
-            +"DED"
-            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.IRON) }
-            define('D') { items { +RagiumItems.getParts(HTMachineType.HEAT) } }
-            define('E') { +holderSet(Tags.Items.BUCKETS_LAVA) }
-            result { +RagiumBlocks.MAGMATIC_DYNAMO }
+            +"AAA"
+            +"ABA"
+            +"CCC"
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.COPPER) }
+            define('B') { +holderSet(Tags.Items.PLAYER_WORKSTATIONS_FURNACES) }
+            define('C') { items { +Items.BRICKS } }
+            result { +RagiumBlocks.SOLID_BOILER }
+        }.save(exporter)
+        VanillaRecipeBuilders.shaped {
+            +"AAA"
+            +"ABA"
+            +"CCC"
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.SILVER) }
+            define('B') { +holderSet(Tags.Items.PLAYER_WORKSTATIONS_FURNACES) }
+            define('C') { items { +Items.BRICKS } }
+            result { +RagiumBlocks.SOLAR_BOILER }
         }.save(exporter)
         // Chemical
         VanillaRecipeBuilders.shaped {

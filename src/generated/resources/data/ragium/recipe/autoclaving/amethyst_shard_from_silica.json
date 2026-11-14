@@ -3,7 +3,7 @@
   "ingredients": {
     "fluid": {
       "amount": 1000,
-      "fluids": "#c:dyes/purple"
+      "fluids": "#c:water"
     },
     "item": {
       "count": 1,

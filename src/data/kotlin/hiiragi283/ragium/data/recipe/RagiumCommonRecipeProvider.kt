@@ -294,10 +294,10 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     }
 
     private fun carbonyl() {
-        // Cokes + Water -> Synthetic Gas
+        // Cokes + Steam -> Synthetic Gas
         RagiumRecipeBuilders.itemReacting {
             itemIngredient { +holderSet(RagiumTags.Items.COKES) }
-            fluidIngredient { +waterSet() }
+            fluidIngredient { +holderSet(RagiumFluids.STEAM) }
             fluidResult { +RagiumFluids.SYNTHETIC_GAS }
         }.save(exporter)
 

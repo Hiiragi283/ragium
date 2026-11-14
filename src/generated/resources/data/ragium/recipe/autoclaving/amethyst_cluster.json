@@ -3,7 +3,7 @@
   "ingredients": {
     "fluid": {
       "amount": 250,
-      "fluids": "#c:water"
+      "fluids": "#c:steam"
     },
     "item": {
       "count": 1,

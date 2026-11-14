@@ -21,7 +21,11 @@ class HTWidgetContainerMenu(menuType: MenuType<*>, containerId: Int, inventory: 
     val widgetHolder: HTWidgetHolder = WidgetHolderImpl()
 
     init {
-        context.setup(inventory.player, widgetHolder)
+        val player: Player = inventory.player
+        context.setup(player, widgetHolder)
+        // ウィジェットが何も追加されなかった場合は即座に閉じる
+        if (widgets.isEmpty()) player.closeContainer()
+
         // Player Inventory
         addPlayerInv(inventory, (widgetHolder.rows - 4) * 18)
     }

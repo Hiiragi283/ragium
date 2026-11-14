@@ -6,10 +6,7 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.handler.lookup.HTRecipeLookupHandler
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTBasicEnergyStorage
-import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
-import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
-import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.lib.util.fixedFraction
 import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
@@ -17,8 +14,6 @@ import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.gui.widget.HTProgressWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicEnergyHandlerHolder
-import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
@@ -84,22 +79,6 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             }
         }
     }
-
-    final override fun createFluidHandler(listener: Runnable): HTResourceSlotHolder<HTFluidTank>? {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
-        createFluidTanks(builder, listener)
-        return builder.build()
-    }
-
-    protected open fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {}
-
-    final override fun createItemHandler(listener: Runnable): HTResourceSlotHolder<HTItemSlot>? {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
-        createItemSlots(builder, listener)
-        return builder.build()
-    }
-
-    protected open fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {}
 
     //    Energized    //
 

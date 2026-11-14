@@ -12,9 +12,11 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
@@ -26,12 +28,13 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     }
 
     private fun autoclaving() {
+        val steamSet: HolderSet<Fluid> = holderSet(RagiumFluids.STEAM)
         // XX Dust -> XX Gem
         for (gem: RagiumMaterial.Gem in RagiumMaterial.Gem.entries) {
             val item: HTSimpleDeferredItem = RagiumMaterialHelper.getGem(gem) ?: continue
             RagiumRecipeBuilders.autoclaving {
                 itemIngredient { +holderSet(CommonTagPrefixes.DUST, gem) }
-                fluidIngredient { +waterSet() }
+                fluidIngredient { +steamSet }
                 result { +item }
                 condition { itemTagPresent(CommonTagPrefixes.DUST, gem) }
                 recipeId suffix "_from_dust"
@@ -40,14 +43,14 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         // Silica + Water -> Quartz
         RagiumRecipeBuilders.autoclaving {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SILICA) }
-            fluidIngredient { +waterSet() }
+            fluidIngredient { +steamSet }
             result { +Items.QUARTZ }
             recipeId suffix "_from_silica"
         }.save(exporter)
         // Silica + Purple Dye -> Amethyst
         RagiumRecipeBuilders.autoclaving {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SILICA) }
-            fluidIngredient { +holderSet(RagiumFluids.DYES.purple) }
+            fluidIngredient { +waterSet() }
             result { +Items.AMETHYST_SHARD }
             recipeId suffix "_from_silica"
         }.save(exporter)
@@ -64,7 +67,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         RagiumRecipeBuilders.autoclaving {
             itemIngredient { items { +Items.SMALL_AMETHYST_BUD } }
             fluidIngredient {
-                +waterSet()
+                +steamSet
                 amount /= 4
             }
             result { +Items.MEDIUM_AMETHYST_BUD }
@@ -72,7 +75,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         RagiumRecipeBuilders.autoclaving {
             itemIngredient { items { +Items.MEDIUM_AMETHYST_BUD } }
             fluidIngredient {
-                +waterSet()
+                +steamSet
                 amount /= 4
             }
             result { +Items.LARGE_AMETHYST_BUD }
@@ -80,7 +83,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         RagiumRecipeBuilders.autoclaving {
             itemIngredient { items { +Items.LARGE_AMETHYST_BUD } }
             fluidIngredient {
-                +waterSet()
+                +steamSet
                 amount /= 4
             }
             result { +Items.AMETHYST_CLUSTER }

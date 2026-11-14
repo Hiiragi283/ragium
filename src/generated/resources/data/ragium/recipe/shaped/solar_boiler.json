@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:ingots/silver",
+    "B": "#c:player_workstations/furnaces",
+    "C": "minecraft:bricks"
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "CCC"
+  ],
+  "result": {
+    "id": "ragium:solar_boiler"
+  }
+}

@@ -39,7 +39,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.QUARTZ_GLASS_PANE, "クォーツガラス板")
 
         add(RagiumBlocks.WATER_MILL, "水力発電機")
-        add(RagiumBlocks.MAGMATIC_DYNAMO, "溶岩ダイナモ")
+        add(RagiumBlocks.SOLID_BOILER, "固体燃料ボイラー")
+        add(RagiumBlocks.SOLAR_BOILER, "太陽熱ボイラー")
         add(RagiumBlocks.COMBUSTION_DYNAMO, "燃焼ダイナモ")
 
         add(RagiumBlocks.ASSEMBLER, "組立機")
@@ -100,6 +101,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
 
         // H
         addFluid(RagiumFluids.HYDROGEN, "水素")
+        addFluid(RagiumFluids.STEAM, "蒸気")
         // C
         addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")

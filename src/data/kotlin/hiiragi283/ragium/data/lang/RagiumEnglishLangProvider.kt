@@ -43,7 +43,8 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.QUARTZ_GLASS_PANE, "Quartz Glass Pane")
 
         add(RagiumBlocks.WATER_MILL, "Water Mill")
-        add(RagiumBlocks.MAGMATIC_DYNAMO, "Magmatic Dynamo")
+        add(RagiumBlocks.SOLID_BOILER, "Solid Fuel Boiler")
+        add(RagiumBlocks.SOLAR_BOILER, "Solar Boiler")
         add(RagiumBlocks.COMBUSTION_DYNAMO, "Combustion Dynamo")
 
         add(RagiumBlocks.ASSEMBLER, "Assembler")
@@ -104,6 +105,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         // H
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
+        addFluid(RagiumFluids.STEAM, "Steam")
         // C
         addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
         addFluid(RagiumFluids.CREOSOTE, "Creosote")

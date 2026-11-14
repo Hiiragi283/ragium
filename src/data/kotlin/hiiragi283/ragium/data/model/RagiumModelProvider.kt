@@ -75,8 +75,8 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
         // Generator
         generators.createTrivialBlock(RagiumBlocks.WATER_MILL.getOrThrow(), TexturedModel.CUBE_TOP)
-
-        createDynamoBlock(generators, RagiumBlocks.MAGMATIC_DYNAMO)
+        generators.createTrivialBlock(RagiumBlocks.SOLID_BOILER.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
+        generators.createTrivialBlock(RagiumBlocks.SOLAR_BOILER.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
         createDynamoBlock(generators, RagiumBlocks.COMBUSTION_DYNAMO)
         // Processor
         val inactiveModels: MutableMap<HTMachineType, Identifier> = hashMapOf()

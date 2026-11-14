@@ -5,8 +5,6 @@ import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
-import hiiragi283.lib.transfer.fluid.HTFluidTank
-import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.common.block.entity.HTBlockEntityWithMenu
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
@@ -55,14 +53,12 @@ class HTEnchantmentAbsorberBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var inputTank: HTBasicFluidTank
     private lateinit var outputTank: HTBasicFluidTank
 
-    override fun createFluidHandler(listener: Runnable): HTResourceSlotHolder<HTFluidTank>? {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
             HTVariableFluidTank.input(getTankCapacity(), listener, filter = RagiumFluids.EXPERIENCE::isOfTag),
         )
         outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(getTankCapacity(), listener))
-        return builder.build()
     }
 
     private fun getTankCapacity(): ModConfigSpec.IntValue = RagiumConfig.SERVER.enchantmentAbsorberTankCapacity

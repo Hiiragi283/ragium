@@ -25,6 +25,7 @@ import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.registry.HTTieredContents
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.block.misc.HTBoilerBlock
 import hiiragi283.ragium.common.block.misc.HTEnchantmentAbsorberBlock
 import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock
 import hiiragi283.ragium.common.block.storage.HTPotionTankBlock
@@ -234,7 +235,7 @@ data object RagiumBlocks {
     @JvmStatic
     private fun registerGenerator(
         type: HTDeferredBlockEntityType<*>,
-        properties: BlockBehaviour.Properties = machine().noOcclusion(),
+        properties: BlockBehaviour.Properties = machine(),
     ): HTBasicDeferredBlockAndItem<HTGeneratorBlock> = registerWithBE(type, ::HTGeneratorBlock, properties)
 
     @JvmStatic
@@ -249,7 +250,10 @@ data object RagiumBlocks {
 
     // Heat
     @JvmField
-    val MAGMATIC_DYNAMO: HTBasicDeferredBlockAndItem<HTDynamoBlock> = registerDynamo(RagiumBlockEntityTypes.MAGMATIC_DYNAMO)
+    val SOLID_BOILER: HTBasicDeferredBlockAndItem<HTBoilerBlock> = registerWithBE(RagiumBlockEntityTypes.SOLID_BOILER, ::HTBoilerBlock, machine())
+
+    @JvmField
+    val SOLAR_BOILER: HTBasicDeferredBlockAndItem<HTBoilerBlock> = registerWithBE(RagiumBlockEntityTypes.SOLAR_BOILER, ::HTBoilerBlock, machine())
 
     // Chemical
     @JvmField
@@ -261,7 +265,8 @@ data object RagiumBlocks {
         {
             put(HTMachineType.MECHANICAL, WATER_MILL)
 
-            put(HTMachineType.HEAT, MAGMATIC_DYNAMO)
+            put(HTMachineType.HEAT, SOLID_BOILER)
+            put(HTMachineType.HEAT, SOLAR_BOILER)
 
             put(HTMachineType.CHEMICAL, COMBUSTION_DYNAMO)
         },

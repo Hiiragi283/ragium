@@ -136,6 +136,10 @@ data object RagiumClient : HTClientMod() {
             transparent()
             colorTint(Color(0x003399))
         }
+        register.register(RagiumFluids.STEAM) {
+            transparent()
+            colorTint(Color(0xccffff))
+        }
         // C
         register.register(RagiumFluids.CARBON_DIOXIDE) {
             transparent()

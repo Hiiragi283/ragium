@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:magmatic_dynamo"
+    "ragium:solar_boiler",
+    "ragium:solid_boiler"
   ]
 }

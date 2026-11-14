@@ -31,9 +31,8 @@ data object RagiumConstants {
     // Heat
     const val BOILER = "boiler"
     const val SOLID_BOILER = "solid_$BOILER"
-    const val LIQUID_BOILER = "liquid_$BOILER"
+    const val SOLAR_BOILER = "solar_$BOILER"
     const val STEAM_TURBINE = "steam_turbine"
-    const val MAGMATIC_DYNAMO = "magmatic_$DYNAMO"
 
     const val ALLOY_SMELTER = "alloy_smelter"
     const val DRYER = "dryer"
@@ -63,7 +62,7 @@ data object RagiumConstants {
     const val RESOURCE_PUMP = "resource_pump"
 
     // Electronics
-    const val NUCLEAR_DYNAMO = "nuclear_$DYNAMO"
+    const val NUCLEAR_REACTOR = "nuclear_reactor"
 
     const val ELECTROLYZER = "electrolyzer"
     const val ENGRAVER = "engraver"
@@ -71,7 +70,7 @@ data object RagiumConstants {
     const val SCANNER = "scanner"
 
     // Arcane
-    const val ARCANE_DYNAMO = "arcane_$DYNAMO"
+    const val DISENCHANTING_DYNAMO = "disenchanting_$DYNAMO"
 
     const val ARCANE_TRANSFORMER = "arcane_transformer"
     const val ENCHANTER = "enchanter"
