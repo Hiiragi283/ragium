@@ -12,9 +12,12 @@ data object RagiumConstants {
 
     const val DYNAMO = "dynamo"
     const val MACHINE = "machine"
+    const val GENERATOR = "generator"
+    const val PROCESSOR = "processor"
 
     // Mechanical
-    const val FUEL_DYNAMO = "fuel_$DYNAMO"
+    const val WATER_MILL = "water_mill"
+    const val WIND_MILL = "wind_mill"
 
     const val ASSEMBLER = "assembler"
     const val CENTRIFUGE = "centrifuge"
@@ -26,6 +29,10 @@ data object RagiumConstants {
     const val PULVERIZER = "pulverizer"
 
     // Heat
+    const val BOILER = "boiler"
+    const val SOLID_BOILER = "solid_$BOILER"
+    const val LIQUID_BOILER = "liquid_$BOILER"
+    const val STEAM_TURBINE = "steam_turbine"
     const val MAGMATIC_DYNAMO = "magmatic_$DYNAMO"
 
     const val ALLOY_SMELTER = "alloy_smelter"
@@ -46,9 +53,8 @@ data object RagiumConstants {
     const val MIXER = "mixer"
 
     // Resource
-    const val SOLAR_GENERATOR = "solar_generator"
+    const val SOLAR_PANEL = "solar_generator"
     const val THERMAL_GENERATOR = "thermal_generator"
-    const val WIND_GENERATOR = "wind_generator"
 
     const val BREWERY = "brewery"
     const val PLANTER = "planter"

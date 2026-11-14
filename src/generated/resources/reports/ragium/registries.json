@@ -53,7 +53,6 @@
     "fluorite_wall",
     "freezer",
     "fuel",
-    "fuel_dynamo",
     "glue",
     "gray_dye",
     "green_dye",
@@ -102,6 +101,7 @@
     "tank",
     "upgrade_station",
     "void_tank",
+    "water_mill",
     "white_dye",
     "yellow_dye"
   ],
@@ -129,7 +129,6 @@
     "experience_tank",
     "extractor",
     "freezer",
-    "fuel_dynamo",
     "magmatic_dynamo",
     "melter",
     "mixer",
@@ -144,7 +143,8 @@
     "scanner",
     "smelter",
     "tank",
-    "upgrade_station"
+    "upgrade_station",
+    "water_mill"
   ],
   "minecraft:creative_mode_tab": [
     "common"
@@ -374,7 +374,6 @@
     "fluorite_wall",
     "freezer",
     "fuel_bucket",
-    "fuel_dynamo",
     "glue_bucket",
     "gold_dust",
     "gold_gear",
@@ -523,6 +522,7 @@
     "ultimate_upgrade",
     "upgrade_station",
     "void_tank",
+    "water_mill",
     "white_dye_bucket",
     "wither_doll",
     "wither_star",

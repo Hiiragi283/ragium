@@ -73,19 +73,14 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
         createEnergyPipe(generators)
 
-        // Dynamo
-        RagiumBlocks.DYNAMOS.values.flatten().forEach {
-            val block: Block = it.getOrThrow()
-            generators.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(
-                    block,
-                    BlockModelGenerators.plainVariant(HTModelTemplates.Providers.DYNAMO_TEMPLATE.create(block, generators.modelOutput)),
-                ).with(BlockModelGenerators.ROTATIONS_COLUMN_WITH_FACING),
-            )
-        }
+        // Generator
+        generators.createTrivialBlock(RagiumBlocks.WATER_MILL.getOrThrow(), TexturedModel.CUBE_TOP)
+
+        createDynamoBlock(generators, RagiumBlocks.MAGMATIC_DYNAMO)
+        createDynamoBlock(generators, RagiumBlocks.COMBUSTION_DYNAMO)
         // Processor
         val inactiveModels: MutableMap<HTMachineType, Identifier> = hashMapOf()
-        RagiumBlocks.MACHINES
+        RagiumBlocks.PROCESSORS
             .entries
             .forEach { (machineType: HTMachineType, blockItems: List<HTSimpleValueWithKey<Block>>) ->
                 val inactive: Identifier = inactiveModels.computeIfAbsent(machineType) {
@@ -148,6 +143,16 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         }
         generators.blockStateOutput.accept(multipart)
         generators.registerSimpleItemModel(block, core)
+    }
+
+    private fun createDynamoBlock(generators: BlockModelGenerators, block: HTSimpleValueWithKey<Block>) {
+        val block: Block = block.getOrThrow()
+        generators.blockStateOutput.accept(
+            MultiVariantGenerator.dispatch(
+                block,
+                BlockModelGenerators.plainVariant(HTModelTemplates.Providers.DYNAMO_TEMPLATE.create(block, generators.modelOutput)),
+            ).with(BlockModelGenerators.ROTATIONS_COLUMN_WITH_FACING),
+        )
     }
 
     private fun createMachineBlock(generators: BlockModelGenerators, block: HTSimpleValueWithKey<Block>, inactive: Identifier, active: Identifier) {

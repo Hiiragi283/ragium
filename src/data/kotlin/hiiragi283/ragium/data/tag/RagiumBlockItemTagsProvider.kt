@@ -37,16 +37,16 @@ class RagiumBlockItemTagsProvider(factory: (BlockItemTag) -> HTBlockItemTagBuild
         builder(HTCommonTags.BlockItems.GLASS_PANES_QUARTZ).add(RagiumBlocks.QUARTZ_GLASS_PANE)
 
         RagiumBlocks.ALL_DECORATIONS.forEach { it.appendTags(::builder) }
-        // Dynamo
-        for ((machineType: HTMachineType, dynamos: List<HTSimpleDeferredBlockAndItem>) in RagiumBlocks.DYNAMOS.entries) {
-            for (dynamo: HTSimpleDeferredBlockAndItem in dynamos) {
-                builder(HTMachineType.DYNAMO_PREFIX, machineType).add(dynamo)
+        // Generator
+        for ((machineType: HTMachineType, generators: List<HTSimpleDeferredBlockAndItem>) in RagiumBlocks.GENERATORS.entries) {
+            for (generator: HTSimpleDeferredBlockAndItem in generators) {
+                builder(HTMachineType.GENERATOR_PREFIX, machineType).add(generator)
             }
         }
         // Processor
-        for ((machineType: HTMachineType, machines: List<HTSimpleDeferredBlockAndItem>) in RagiumBlocks.MACHINES.entries) {
-            for (machine: HTSimpleDeferredBlockAndItem in machines) {
-                builder(HTMachineType.MACHINE_PREFIX, machineType).add(machine)
+        for ((machineType: HTMachineType, processors: List<HTSimpleDeferredBlockAndItem>) in RagiumBlocks.PROCESSORS.entries) {
+            for (processor: HTSimpleDeferredBlockAndItem in processors) {
+                builder(HTMachineType.PROCESSOR_PREFIX, machineType).add(processor)
             }
         }
         // Storage

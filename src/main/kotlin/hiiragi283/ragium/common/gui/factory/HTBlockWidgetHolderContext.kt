@@ -5,6 +5,7 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.registry.HTDeferredHolder
 import hiiragi283.lib.text.Text
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.block.entity.HTBlockEntityWithMenu
 import hiiragi283.ragium.common.gui.menu.HTWidgetContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
@@ -94,5 +95,11 @@ data class HTBlockWidgetHolderContext(val factory: Factory, val player: Player, 
         }
 
         fun getDisplayName(context: HTBlockWidgetHolderContext): Text = (context.blockEntity as? Nameable)?.displayName ?: context.state.block.name
+    }
+
+    interface FactoryForBlockEntity : Factory {
+        override fun setup(context: HTBlockWidgetHolderContext, widgetHolder: HTWidgetHolder) {
+            (context.blockEntity as? HTBlockEntityWithMenu)?.setupMenu(widgetHolder)
+        }
     }
 }

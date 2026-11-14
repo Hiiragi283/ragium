@@ -42,7 +42,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.QUARTZ_GLASS, "Quartz Glass")
         add(RagiumBlocks.QUARTZ_GLASS_PANE, "Quartz Glass Pane")
 
-        add(RagiumBlocks.FUEL_DYNAMO, "Fuel Dynamo")
+        add(RagiumBlocks.WATER_MILL, "Water Mill")
         add(RagiumBlocks.MAGMATIC_DYNAMO, "Magmatic Dynamo")
         add(RagiumBlocks.COMBUSTION_DYNAMO, "Combustion Dynamo")
 

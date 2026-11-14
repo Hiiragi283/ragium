@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.dynamo
+package hiiragi283.ragium.common.block.entity.generator.dynamo
 
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
@@ -21,7 +21,7 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 class HTCombustionDynamoBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDynamoBlockEntity.Progressed(RagiumBlockEntityTypes.COMBUSTION_DYNAMO.get(), pos, state) {
+    HTDynamoBlockEntity(RagiumBlockEntityTypes.COMBUSTION_DYNAMO.get(), pos, state) {
     override fun getMaxProgress(level: ServerLevel, pos: BlockPos, state: BlockState, transaction: TransactionContext): Int {
         val resourceIn: FluidResource = fuelTank.resource
         if (resourceIn.isEmpty) return 0
@@ -40,7 +40,7 @@ class HTCombustionDynamoBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.dynamo.combustionDynamo
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.generator.combustionDynamo
 
     private lateinit var fuelTank: HTBasicFluidTank
     private lateinit var coolantTank: HTBasicFluidTank

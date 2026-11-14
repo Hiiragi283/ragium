@@ -18,7 +18,7 @@ abstract class HTBaseMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
 
     fun isActive(): Boolean = isActive(this.blockState)
 
-    fun isActive(state: BlockState): Boolean = state.getOptionalValue(RagiumBlockStateProperties.IS_ACTIVE).orElseGet { false }
+    fun isActive(state: BlockState): Boolean = state.getValueOrElse(RagiumBlockStateProperties.IS_ACTIVE, false)
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {}
 

@@ -11,9 +11,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
-import hiiragi283.ragium.common.block.entity.dynamo.HTCombustionDynamoBlockEntity
-import hiiragi283.ragium.common.block.entity.dynamo.HTFuelDynamoBlockEntity
-import hiiragi283.ragium.common.block.entity.dynamo.HTMagmaticDynamoBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTWaterMillBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.dynamo.HTCombustionDynamoBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.dynamo.HTMagmaticDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTEnchantmentAbsorberBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTUpgradeStationBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
@@ -73,19 +73,26 @@ data object RagiumBlockEntityTypes {
     private fun <BE : HTBlockEntity> registerTick(name: String, factory: BlockEntityType.BlockEntitySupplier<BE>): HTDeferredBlockEntityType<BE> =
         REGISTER.registerType(name, factory, HTBlockEntity::tickServer, HTBlockEntity::tickClient)
 
-    //    Dynamo    //
+    //    Generator    //
 
+    // Mechanical
     @JvmField
-    val FUEL_DYNAMO: HTDeferredBlockEntityType<HTFuelDynamoBlockEntity> =
-        registerTick(RagiumConstants.FUEL_DYNAMO, ::HTFuelDynamoBlockEntity)
+    val WATER_MILL: HTDeferredBlockEntityType<HTWaterMillBlockEntity> =
+        registerTick(RagiumConstants.WATER_MILL, ::HTWaterMillBlockEntity)
 
+    // Heat
     @JvmField
     val MAGMATIC_DYNAMO: HTDeferredBlockEntityType<HTMagmaticDynamoBlockEntity> =
         registerTick(RagiumConstants.MAGMATIC_DYNAMO, ::HTMagmaticDynamoBlockEntity)
 
+    // Chemical
     @JvmField
     val COMBUSTION_DYNAMO: HTDeferredBlockEntityType<HTCombustionDynamoBlockEntity> =
         registerTick(RagiumConstants.COMBUSTION_DYNAMO, ::HTCombustionDynamoBlockEntity)
+
+    // Resource
+    // Electronics
+    // Arcane
 
     //    Processor    //
 
@@ -267,9 +274,11 @@ data object RagiumBlockEntityTypes {
             event.registerBlockEntity(HTItemCapabilities.block, type, HTBlockEntity::getItemHandler)
         }
 
-        // Dynamo
-        registerBlockEntity(FUEL_DYNAMO.get())
+        // Generator
+        registerBlockEntity(WATER_MILL.get())
+
         registerBlockEntity(MAGMATIC_DYNAMO.get())
+
         registerBlockEntity(COMBUSTION_DYNAMO.get())
 
         // Processor

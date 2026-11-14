@@ -63,7 +63,7 @@ data object RagiumConfig {
         val enchantmentAbsorberTankCapacity: ModConfigSpec.IntValue = builder.definePositiveInt("enchantmentAbsorberTankCapacity", 8000)
 
         @JvmField
-        val dynamo: Dynamo
+        val generator: Generator
 
         @JvmField
         val machine: Machine
@@ -82,9 +82,9 @@ data object RagiumConfig {
         val tankCapacity: ModConfigSpec.IntValue
 
         init {
-            builder.push(RagiumConstants.DYNAMO)
-            builder.comment("Configurations for Dynamos")
-            dynamo = Dynamo(builder)
+            builder.push(RagiumConstants.GENERATOR)
+            builder.comment("Configurations for Generators")
+            generator = Generator(builder)
             builder.pop()
 
             builder.push(RagiumConstants.MACHINE)
@@ -100,13 +100,10 @@ data object RagiumConfig {
             builder.pop()
         }
 
-        class Dynamo(builder: ModConfigSpec.Builder) {
+        class Generator(builder: ModConfigSpec.Builder) {
             // Mechanical
             @JvmField
-            val fuelDynamo: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.FUEL_DYNAMO, 32)
-
-            @JvmField
-            val steamDynamoWaterPerTick: ModConfigSpec.IntValue
+            val waterMill: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.WATER_MILL, 8)
 
             // Heat
             @JvmField
@@ -115,12 +112,6 @@ data object RagiumConfig {
             // Chemical
             @JvmField
             val combustionDynamo: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.COMBUSTION_DYNAMO, 96)
-
-            init {
-                builder.push(RagiumConstants.FUEL_DYNAMO)
-                steamDynamoWaterPerTick = builder.definePositiveInt("waterPerTick", 2)
-                builder.pop()
-            }
         }
 
         class Machine(builder: ModConfigSpec.Builder) {

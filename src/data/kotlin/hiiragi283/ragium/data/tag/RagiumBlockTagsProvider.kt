@@ -30,8 +30,8 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yield(RagiumBlocks.QUARTZ_GLASS_PANE)
             yieldAll(RagiumBlocks.ALL_DECORATIONS.flatMap { it.all })
 
-            yieldAll(RagiumBlocks.DYNAMOS.values.flatten())
-            yieldAll(RagiumBlocks.MACHINES.values.flatten())
+            yieldAll(RagiumBlocks.GENERATORS.values.flatten())
+            yieldAll(RagiumBlocks.PROCESSORS.values.flatten())
 
             yieldAll(RagiumBlocks.MACHINE_CASINGS)
             yieldAll(RagiumBlocks.DECORATION_CASINGS)

@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
@@ -110,19 +111,15 @@ class RagiumMachineRecipeProvider(packOutput: PackOutput, future: CompletableFut
     }
 
     private fun generators() {
-        // Fuel
+        // Mechanical
         VanillaRecipeBuilders.shaped {
-            +" A "
-            +"BCB"
-            +"DED"
-            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.COPPER) }
-            define('D') { items { +MachineParts.MECHANICAL } }
-            define('E') { +holderSet(Tags.Items.PLAYER_WORKSTATIONS_FURNACES) }
-            result { +RagiumBlocks.FUEL_DYNAMO }
+            cross8()
+            define('A') { +holderSet(ItemTags.WOODEN_SLABS) }
+            define('B') { +holderSet(ItemTags.PLANKS) }
+            define('C') { items { +RagiumBlocks.MACHINE_CASINGS.basic } }
+            result { +RagiumBlocks.WATER_MILL }
         }.save(exporter)
-        // Magmatic
+        // Heat
         VanillaRecipeBuilders.shaped {
             +" A "
             +"BCB"
@@ -134,7 +131,7 @@ class RagiumMachineRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('E') { +holderSet(Tags.Items.BUCKETS_LAVA) }
             result { +RagiumBlocks.MAGMATIC_DYNAMO }
         }.save(exporter)
-        // Combustion
+        // Chemical
         VanillaRecipeBuilders.shaped {
             +" A "
             +"BCB"
@@ -146,10 +143,9 @@ class RagiumMachineRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('E') { items { +RagiumBlocks.TANK } }
             result { +RagiumBlocks.COMBUSTION_DYNAMO }
         }.save(exporter)
-        // Thermal Generator
-        // Photovoltaic
-        // Fission
-        // Disenchantment
+        // Resource
+        // Electronics
+        // Arcane
     }
 
     private fun processor() {

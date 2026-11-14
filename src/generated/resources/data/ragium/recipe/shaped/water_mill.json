@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#minecraft:wooden_slabs",
+    "B": "#minecraft:planks",
+    "C": "ragium:machine_casing/basic"
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "id": "ragium:water_mill"
+  }
+}

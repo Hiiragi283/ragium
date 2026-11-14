@@ -1,0 +1,11 @@
+{
+  "values": [
+    "#ragium:processor/arcane",
+    "#ragium:processor/chemical",
+    "#ragium:processor/cryo",
+    "#ragium:processor/electronics",
+    "#ragium:processor/heat",
+    "#ragium:processor/mechanical",
+    "#ragium:processor/resource"
+  ]
+}

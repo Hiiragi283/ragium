@@ -1,0 +1,7 @@
+{
+  "values": [
+    "#ragium:generators/chemical",
+    "#ragium:generators/heat",
+    "#ragium:generators/mechanical"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_top",
+  "textures": {
+    "side": "ragium:block/water_mill_side",
+    "top": "ragium:block/water_mill_top"
+  }
+}

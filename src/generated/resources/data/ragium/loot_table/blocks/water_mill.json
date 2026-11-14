@@ -22,11 +22,11 @@
               "source": "block_entity"
             }
           ],
-          "name": "ragium:fuel_dynamo"
+          "name": "ragium:water_mill"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/fuel_dynamo"
+  "random_sequence": "ragium:blocks/water_mill"
 }

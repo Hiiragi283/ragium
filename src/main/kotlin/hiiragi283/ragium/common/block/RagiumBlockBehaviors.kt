@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -10,6 +12,14 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
 data object RagiumBlockBehaviors {
+    @JvmStatic
+    fun openMenu(player: Player, pos: BlockPos): InteractionResult {
+        if (player is ServerPlayer) {
+            HTBlockWidgetHolderContext.openMenu(player, pos)
+        }
+        return InteractionResult.SUCCESS
+    }
+
     @JvmStatic
     fun interactWithTank(
         stack: ItemStack,

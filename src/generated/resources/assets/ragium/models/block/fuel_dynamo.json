@@ -1,7 +1,0 @@
-{
-  "parent": "ragium:block/dynamo_template",
-  "textures": {
-    "side": "ragium:block/fuel_dynamo_side",
-    "top": "ragium:block/fuel_dynamo_top"
-  }
-}

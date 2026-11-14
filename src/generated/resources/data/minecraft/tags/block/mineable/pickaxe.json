@@ -42,7 +42,6 @@
     "ragium:fluorite_stairs",
     "ragium:fluorite_wall",
     "ragium:freezer",
-    "ragium:fuel_dynamo",
     "ragium:invar_block",
     "ragium:machine_casing/advanced",
     "ragium:machine_casing/basic",
@@ -68,6 +67,7 @@
     "ragium:sooty_iron_block",
     "ragium:tank",
     "ragium:upgrade_station",
-    "ragium:void_tank"
+    "ragium:void_tank",
+    "ragium:water_mill"
   ]
 }

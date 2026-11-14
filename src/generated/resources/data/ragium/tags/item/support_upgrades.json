@@ -1,6 +1,7 @@
 {
   "values": [
-    "#ragium:machines",
+    "#ragium:generators",
+    "#ragium:processors",
     "ragium:potion_tank",
     "ragium:tank"
   ]

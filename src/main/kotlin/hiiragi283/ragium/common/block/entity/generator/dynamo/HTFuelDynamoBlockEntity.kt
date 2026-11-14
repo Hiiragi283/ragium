@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.dynamo
+package hiiragi283.ragium.common.block.entity.generator.dynamo
 
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
@@ -7,13 +7,11 @@ import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.gui.widget.HTItemWidget
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
-import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -24,8 +22,7 @@ import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
-class HTFuelDynamoBlockEntity(pos: BlockPos, state: BlockState) :
-    HTDynamoBlockEntity.Progressed(RagiumBlockEntityTypes.FUEL_DYNAMO.get(), pos, state) {
+class HTFuelDynamoBlockEntity(pos: BlockPos, state: BlockState) : HTDynamoBlockEntity(TODO(), pos, state) {
     companion object {
         @JvmStatic
         private val ASH_RESOURCE: ItemResource by lazy { RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.ASH).asResourceOrEmpty() }
@@ -69,7 +66,7 @@ class HTFuelDynamoBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.dynamo.fuelDynamo
+    override fun getConfig(): HTEnergyConfig = TODO()
 
     private lateinit var fuelSlot: HTBasicItemSlot
     private lateinit var ashSlot: HTBasicItemSlot

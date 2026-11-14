@@ -23,8 +23,8 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
         RagiumBlocks.STORAGE_BLOCKS.values.forEach(::dropSelf)
 
         RagiumBlocks.ALL_DECORATIONS.forEach { add(it.slab, ::createSlabItemTable) }
-        // Dynamo, Machine
-        sequenceOf(RagiumBlocks.DYNAMOS, RagiumBlocks.MACHINES)
+        // Generator, Machine
+        sequenceOf(RagiumBlocks.GENERATORS, RagiumBlocks.PROCESSORS)
             .flatMap { it.values }
             .flatten()
             .forEach { add(it, ::copyComponent) }
