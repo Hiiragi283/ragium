@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:small_dusts/niter",
+    "B": "ragium:small_niter_dust"
+  },
+  "pattern": [
+    "AA",
+    "AB"
+  ],
+  "result": {
+    "id": "ragium:niter_dust"
+  }
+}

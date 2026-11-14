@@ -1,0 +1,22 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "count": 1,
+    "items": "#c:sandstone/uncolored_blocks"
+  },
+  "results": [
+    {
+      "count": 4,
+      "id": "minecraft:sand"
+    },
+    {
+      "count": 2,
+      "id": "ragium:small_salt_dust"
+    },
+    {
+      "count": 1,
+      "id": "ragium:small_niter_dust"
+    }
+  ],
+  "time": 100
+}

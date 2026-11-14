@@ -113,6 +113,9 @@ data object RagiumItems {
                     if (dustLike is RagiumMaterial.Other && dustLike.hasExistingDust) continue
                     putAll(dustLike, HTItemPart.DUST)
                 }
+                put(RagiumMaterial.Chemical.SALT, HTItemPart.SMALL_DUST)
+                put(RagiumMaterial.Chemical.NITER, HTItemPart.SMALL_DUST)
+
                 putAll(RagiumMaterial.Other.WOOD, HTItemPart.GEAR)
                 // Raws
                 setOf(

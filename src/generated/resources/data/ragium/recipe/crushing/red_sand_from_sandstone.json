@@ -2,11 +2,11 @@
   "type": "ragium:crushing",
   "ingredient": {
     "count": 1,
-    "items": "#c:sandstone/uncolored_blocks"
+    "items": "#c:sandstone/red_blocks"
   },
   "result": {
     "count": 4,
-    "id": "minecraft:sand"
+    "id": "minecraft:red_sand"
   },
-  "time": 200
+  "time": 100
 }
