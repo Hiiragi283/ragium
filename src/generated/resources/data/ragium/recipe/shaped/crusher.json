@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:grindstone",
+    "B": "ragium:machine_parts/mechanical",
+    "C": "ragium:pulverizer",
+    "D": "ragium:machine_casing/advanced"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "id": "ragium:crusher"
+  }
+}

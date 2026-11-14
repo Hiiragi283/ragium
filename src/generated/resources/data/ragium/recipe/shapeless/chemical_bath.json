@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ragium:machine_casing/basic",
+    "minecraft:cauldron",
+    "ragium:machine_parts/chemical"
+  ],
+  "result": {
+    "id": "ragium:chemical_bath"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ragium:machine_casing/basic",
+    "#c:glass_blocks/quartz",
+    "ragium:machine_parts/chemical"
+  ],
+  "result": {
+    "id": "ragium:autoclave"
+  }
+}

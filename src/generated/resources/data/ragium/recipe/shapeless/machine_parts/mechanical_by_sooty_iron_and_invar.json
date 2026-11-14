@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:ingots/sooty_iron",
+    "#c:gears/invar",
+    "#c:circuits/basic"
+  ],
+  "result": {
+    "count": 6,
+    "id": "ragium:machine_parts/mechanical"
+  }
+}

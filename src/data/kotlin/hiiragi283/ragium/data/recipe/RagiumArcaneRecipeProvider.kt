@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.tag.CommonTagPrefixes
@@ -27,6 +28,16 @@ class RagiumArcaneRecipeProvider(packOutput: PackOutput, future: CompletableFutu
     override fun exportValues() {
         enchanting()
         transforming()
+
+        // Wither Doll
+        VanillaRecipeBuilders.shaped {
+            +"AAA"
+            +"BBB"
+            +" B "
+            define('A') { items { +Items.WITHER_SKELETON_SKULL } }
+            define('B') { +holderSet(ItemTags.SOUL_FIRE_BASE_BLOCKS) }
+            result { +RagiumItems.WITHER_DOLL }
+        }.save(exporter)
     }
 
     private fun enchanting() {

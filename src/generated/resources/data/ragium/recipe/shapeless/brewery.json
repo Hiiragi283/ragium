@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ragium:machine_casing/basic",
+    "minecraft:brewing_stand",
+    "ragium:machine_parts/resource"
+  ],
+  "result": {
+    "id": "ragium:brewery"
+  }
+}

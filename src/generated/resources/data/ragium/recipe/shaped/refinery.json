@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "ragium:extractor",
+    "B": "ragium:machine_parts/heat",
+    "C": "ragium:pyrolyzer",
+    "D": "ragium:machine_casing/industrial"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "id": "ragium:refinery"
+  }
+}

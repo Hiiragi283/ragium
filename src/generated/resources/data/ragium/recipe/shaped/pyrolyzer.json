@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:bricks/nether",
+    "B": "ragium:machine_parts/heat",
+    "C": "ragium:smelter",
+    "D": "ragium:machine_casing/advanced"
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "id": "ragium:pyrolyzer"
+  }
+}

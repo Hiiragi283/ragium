@@ -4,6 +4,7 @@ import hiiragi283.lib.color.HTColoredCollection
 import hiiragi283.lib.color.VanillaColoredCollections
 import hiiragi283.lib.data.HolderAcceptor
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.data.recipe.ingredient.HTItemIngredientBuilder
@@ -922,6 +923,20 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     }
 
     private fun pressing() {
+        // XX Press Die
+        VanillaRecipeBuilders.shaped {
+            +"AA"
+            +"AA"
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
+            result { +RagiumItems.BLANK_DIE }
+        }.save(exporter)
+        for (pressDie: HTSimpleDeferredItem in RagiumItems.PRESS_DIES) {
+            VanillaRecipeBuilders.stonecutting {
+                ingredient { +holderSet(RagiumTags.Items.PRESS_DIES) }
+                result { +pressDie }
+            }.save(exporter)
+        }
+
         val unpacking: Ingredient = Ingredient.of(RagiumItems.UNPACKING_DIE)
         // Melon -> Sliced Melon
         RagiumRecipeBuilders.pressing {

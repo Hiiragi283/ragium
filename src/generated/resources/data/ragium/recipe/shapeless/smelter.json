@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ragium:machine_casing/basic",
+    "#c:player_workstations/furnaces",
+    "ragium:machine_parts/heat"
+  ],
+  "result": {
+    "id": "ragium:smelter"
+  }
+}

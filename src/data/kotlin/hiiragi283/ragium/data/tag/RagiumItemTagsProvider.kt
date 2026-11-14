@@ -10,11 +10,13 @@ import hiiragi283.lib.resource.HTSimpleValueWithKey
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
+import hiiragi283.lib.tag.HTMaterialKey
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.registry.HTTieredContents
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
@@ -47,6 +49,10 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
                     builder(ItemTags.METAL_NUGGETS).add(item)
                 }
             }
+
+        RagiumItems.CIRCUITS.zip(HTTieredContents.MATERIAL) { circuit: HTSimpleValueWithKey<Item>, key: HTMaterialKey ->
+            builder(CommonTagPrefixes.CIRCUITS, key).add(circuit)
+        }
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             builders(Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)

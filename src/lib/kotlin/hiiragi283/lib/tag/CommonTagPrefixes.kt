@@ -19,14 +19,20 @@ data object CommonTagPrefixes {
 
     //    Item    //
 
+    /**
+     * @since 26.1.14
+     */
     @JvmField
-    val DUST = HTTagPrefix("dusts", "dusts/%s")
+    val CIRCUITS = HTTagPrefix("circuits", "circuits/%s")
 
     /**
      * @since 26.1.13
      */
     @JvmField
     val CRUSHED_ORES = HTTagPrefix("crushed_ores", "crushed_ores/%s")
+
+    @JvmField
+    val DUST = HTTagPrefix("dusts", "dusts/%s")
 
     @JvmField
     val GEAR = HTTagPrefix("gears", "gears/%s")

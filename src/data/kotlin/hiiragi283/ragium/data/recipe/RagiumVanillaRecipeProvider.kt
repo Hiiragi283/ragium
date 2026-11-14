@@ -17,7 +17,6 @@ import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -44,7 +43,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
     override fun exportValues() {
         vanilla()
         decoration()
-        machine()
         storage()
         upgrade()
         material()
@@ -89,77 +87,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             repeat(4) { ingredient { items { +RagiumItems.FLINT_SHARD } } }
             result { +Items.FLINT }
         }.save(exporter)
-
-        // Splash Bottle
-        VanillaRecipeBuilders.shapeless {
-            ingredient { +holderSet(Tags.Items.GUNPOWDERS) }
-            repeat(4) { ingredient { items { +Items.GLASS_BOTTLE } } }
-            result {
-                +RagiumItems.SPLASH_BOTTLE
-                count = 4
-            }
-        }.save(exporter)
-        // Lingering Bottle
-        VanillaRecipeBuilders.shapeless {
-            ingredient { items { +Items.DRAGON_BREATH } }
-            repeat(4) { ingredient { items { +Items.GLASS_BOTTLE } } }
-            result {
-                +RagiumItems.LINGERING_BOTTLE
-                count = 4
-            }
-        }.save(exporter)
-        // Blank Music Disc
-        VanillaRecipeBuilders.shaped {
-            +" A "
-            +"A A"
-            +" A "
-            define('A') { +holderSet(HTCommonTags.Items.PLASTICS) }
-            result { +RagiumItems.BLANK_MUSIC_DISC }
-        }.save(exporter)
-        // Memory Disc
-        VanillaRecipeBuilders.shaped {
-            hollow4()
-            define('A') { +holderSet(HTCommonTags.Items.PLASTICS) }
-            define('B') { items { +RagiumItems.SILICON_WAFER } }
-            result { +RagiumItems.MEMORY_DISC }
-        }.save(exporter)
-
-        // Wither Doll
-        VanillaRecipeBuilders.shaped {
-            +"AAA"
-            +"BBB"
-            +" B "
-            define('A') { items { +Items.WITHER_SKELETON_SKULL } }
-            define('B') { +holderSet(ItemTags.SOUL_FIRE_BASE_BLOCKS) }
-            result { +RagiumItems.WITHER_DOLL }
-        }.save(exporter)
-
-        // XX Press Die
-        VanillaRecipeBuilders.shaped {
-            +"AA"
-            +"AA"
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            result { +RagiumItems.BLANK_DIE }
-        }.save(exporter)
-        for (pressDie: HTSimpleDeferredItem in RagiumItems.PRESS_DIES) {
-            VanillaRecipeBuilders.stonecutting {
-                ingredient { +holderSet(RagiumTags.Items.PRESS_DIES) }
-                result { +pressDie }
-            }.save(exporter)
-        }
-        // XX Mold
-        VanillaRecipeBuilders.shaped {
-            +"AA"
-            +"AA"
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
-            result { +RagiumItems.BLANK_MOLD }
-        }.save(exporter)
-        for (mold: HTSimpleDeferredItem in RagiumItems.MOLDS) {
-            VanillaRecipeBuilders.stonecutting {
-                ingredient { +holderSet(RagiumTags.Items.MOLDS) }
-                result { +mold }
-            }.save(exporter)
-        }
 
         // XX Tools
         registerTools(RagiumItems.SOOTY_IRON_TOOLS, RagiumToolMaterials.SOOTY_IRON)
@@ -304,6 +231,26 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 count = 8
             }
         }.save(exporter)
+
+        // Machine
+        VanillaRecipeBuilders.shaped {
+            +"ABA"
+            +"B B"
+            +"ABA"
+            define('A') { +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Alloy.SOOTY_IRON) }
+            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
+            result {
+                +RagiumBlocks.DECORATION_CASINGS.basic
+                count = 4
+            }
+        }.save(exporter)
+
+        sequenceOf(RagiumBlocks.DECORATION_CASINGS, RagiumBlocks.DECORATION_HULLS.values).flatten().forEach { block: HTSimpleDeferredBlockAndItem ->
+            VanillaRecipeBuilders.stonecutting {
+                ingredient { +holderSet(RagiumTags.BlockItems.DECORATIONS_MACHINE.item) }
+                result { +block }
+            }.save(exporter)
+        }
     }
 
     private fun registerDecoration(content: HTDecorationContent) {
@@ -369,94 +316,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 group = wall.id().path
             }.save(exporter)
         }
-    }
-
-    //    Machine    //
-
-    private fun machine() {
-        // Basic
-        VanillaRecipeBuilders.shaped {
-            hollow()
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            result { +RagiumBlocks.MACHINE_CASINGS.basic }
-            recipeId suffix "_from_sooty_iron"
-        }.save(exporter)
-        VanillaRecipeBuilders.shaped {
-            hollow()
-            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
-            result {
-                +RagiumBlocks.MACHINE_CASINGS.basic
-                count = 2
-            }
-            recipeId suffix "_from_black_steel"
-        }.save(exporter)
-        // Advanced
-        // Elite
-
-        // Decoration
-        VanillaRecipeBuilders.shaped {
-            +"ABA"
-            +"B B"
-            +"ABA"
-            define('A') { +holderSet(CommonTagPrefixes.NUGGET, RagiumMaterial.Alloy.SOOTY_IRON) }
-            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            result {
-                +RagiumBlocks.DECORATION_CASINGS.basic
-                count = 4
-            }
-        }.save(exporter)
-
-        sequenceOf(RagiumBlocks.DECORATION_CASINGS, RagiumBlocks.DECORATION_HULLS.values).flatten().forEach { block: HTSimpleDeferredBlockAndItem ->
-            VanillaRecipeBuilders.stonecutting {
-                ingredient { +holderSet(RagiumTags.BlockItems.DECORATIONS_MACHINE.item) }
-                result { +block }
-            }.save(exporter)
-        }
-
-        dynamo()
-    }
-
-    private fun dynamo() {
-        // Fuel
-        VanillaRecipeBuilders.shaped {
-            +" A "
-            +"BCB"
-            +"DED"
-            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.COPPER) }
-            define('D') { items { +RagiumItems.getParts(HTMachineType.MECHANICAL) } }
-            define('E') { +holderSet(Tags.Items.PLAYER_WORKSTATIONS_FURNACES) }
-            result { +RagiumBlocks.FUEL_DYNAMO }
-        }.save(exporter)
-        // Magmatic
-        VanillaRecipeBuilders.shaped {
-            +" A "
-            +"BCB"
-            +"DED"
-            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.IRON) }
-            define('D') { items { +RagiumItems.getParts(HTMachineType.HEAT) } }
-            define('E') { +holderSet(Tags.Items.BUCKETS_LAVA) }
-            result { +RagiumBlocks.MAGMATIC_DYNAMO }
-        }.save(exporter)
-        // Combustion
-        VanillaRecipeBuilders.shaped {
-            +" A "
-            +"BCB"
-            +"DED"
-            define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            define('B') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
-            define('C') { +holderSet(CommonTagPrefixes.GEAR, RagiumMaterial.Metal.GOLD) }
-            define('D') { items { +RagiumItems.getParts(HTMachineType.CHEMICAL) } }
-            define('E') { items { +RagiumBlocks.TANK } }
-            result { +RagiumBlocks.COMBUSTION_DYNAMO }
-        }.save(exporter)
-        // Thermal Generator
-        // Photovoltaic
-        // Fission
-        // Disenchantment
     }
 
     //    Storage    //

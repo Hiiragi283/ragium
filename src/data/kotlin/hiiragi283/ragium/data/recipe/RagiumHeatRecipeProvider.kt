@@ -5,6 +5,7 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
+import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
@@ -141,6 +142,20 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
     }
 
     private fun freezing() {
+        // XX Mold
+        VanillaRecipeBuilders.shaped {
+            +"AA"
+            +"AA"
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD) }
+            result { +RagiumItems.BLANK_MOLD }
+        }.save(exporter)
+        for (mold: HTSimpleDeferredItem in RagiumItems.MOLDS) {
+            VanillaRecipeBuilders.stonecutting {
+                ingredient { +holderSet(RagiumTags.Items.MOLDS) }
+                result { +mold }
+            }.save(exporter)
+        }
+
         // Water -> Snowball
         RagiumRecipeBuilders.freezing {
             ingredient {

@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.registry.HTTieredContents
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
@@ -62,6 +63,14 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
     }
 
     private fun printing() {
+        // Memory Disc
+        VanillaRecipeBuilders.shaped {
+            hollow4()
+            define('A') { +holderSet(HTCommonTags.Items.PLASTICS) }
+            define('B') { items { +RagiumItems.SILICON_WAFER } }
+            result { +RagiumItems.MEMORY_DISC }
+        }.save(exporter)
+
         // Book + Written Book
         RagiumRecipeBuilders.printing {
             ingredient { items { +Items.WRITABLE_BOOK } }
@@ -75,6 +84,14 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             recipeId replace id("filled_map")
         }.save(exporter)
 
+        // Blank Music Disc
+        VanillaRecipeBuilders.shaped {
+            +" A "
+            +"A A"
+            +" A "
+            define('A') { +holderSet(HTCommonTags.Items.PLASTICS) }
+            result { +RagiumItems.BLANK_MUSIC_DISC }
+        }.save(exporter)
         // Blank Music Disc + Music Disc
         RagiumRecipeBuilders.printing {
             ingredient { items { +RagiumItems.BLANK_MUSIC_DISC } }
@@ -176,7 +193,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             define('A') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.LAPIS) }
             define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE) }
-            define('D') { items { +RagiumItems.CIRCUITS.basic } }
+            define('D') { +holderSet(CommonTagPrefixes.CIRCUITS, HTTieredContents.MATERIAL.basic) }
             result { +RagiumItems.CIRCUITS.advanced }
         }.save(exporter)
         // Advanced

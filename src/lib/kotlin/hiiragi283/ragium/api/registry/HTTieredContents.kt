@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.registry
 
 import hiiragi283.lib.data.lang.HTLangPatternProvider
+import hiiragi283.lib.tag.HTMaterialKey
 
 data class HTTieredContents<out T>(val basic: T, val advanced: T, val industrial: T) : AbstractCollection<T>() {
     companion object {
@@ -13,6 +14,12 @@ data class HTTieredContents<out T>(val basic: T, val advanced: T, val industrial
             HTLangPatternProvider("Advanced %s", "発展%s"),
             HTLangPatternProvider("Industrial %s", "工業用%s"),
         )
+
+        /**
+         * @since 26.1.14
+         */
+        @JvmField
+        val MATERIAL: HTTieredContents<HTMaterialKey> = NAMES.map(::HTMaterialKey)
     }
 
     inline fun <R> map(transform: (T) -> R): HTTieredContents<R> = HTTieredContents(

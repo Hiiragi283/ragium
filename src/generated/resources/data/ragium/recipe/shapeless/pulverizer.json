@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ragium:machine_casing/basic",
+    "minecraft:flint",
+    "ragium:machine_parts/mechanical"
+  ],
+  "result": {
+    "id": "ragium:pulverizer"
+  }
+}

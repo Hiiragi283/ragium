@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "ragium:machine_casing/basic",
+    "#c:buckets/lava",
+    "ragium:machine_parts/heat"
+  ],
+  "result": {
+    "id": "ragium:melter"
+  }
+}

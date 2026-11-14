@@ -5,7 +5,7 @@
     "A": "#c:dusts/lapis",
     "B": "#c:dusts/redstone",
     "C": "#c:dusts/glowstone",
-    "D": "ragium:circuit/basic"
+    "D": "#c:circuits/basic"
   },
   "pattern": [
     "ABA",

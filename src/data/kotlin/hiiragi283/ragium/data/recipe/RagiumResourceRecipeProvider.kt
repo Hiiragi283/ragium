@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.lib.data.recipe.HTRecipeProvider
+import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.item.component.PotionContents
@@ -10,6 +11,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey
@@ -35,6 +37,25 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
     }
 
     private fun brewing() {
+        // Splash Bottle
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +holderSet(Tags.Items.GUNPOWDERS) }
+            repeat(4) { ingredient { items { +Items.GLASS_BOTTLE } } }
+            result {
+                +RagiumItems.SPLASH_BOTTLE
+                count = 4
+            }
+        }.save(exporter)
+        // Lingering Bottle
+        VanillaRecipeBuilders.shapeless {
+            ingredient { items { +Items.DRAGON_BREATH } }
+            repeat(4) { ingredient { items { +Items.GLASS_BOTTLE } } }
+            result {
+                +RagiumItems.LINGERING_BOTTLE
+                count = 4
+            }
+        }.save(exporter)
+
         // Haste
         // Nausea
         RagiumRecipeBuilders.brewing {
