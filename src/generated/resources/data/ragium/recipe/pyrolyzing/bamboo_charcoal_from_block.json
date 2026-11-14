@@ -1,0 +1,18 @@
+{
+  "type": "ragium:pyrolyzing",
+  "ingredient": {
+    "count": 1,
+    "items": "#minecraft:bamboo_blocks"
+  },
+  "result": {
+    "fluid": {
+      "amount": 1125,
+      "id": "ragium:creosote"
+    },
+    "item": {
+      "count": 9,
+      "id": "ragium:bamboo_charcoal"
+    }
+  },
+  "time": 900
+}

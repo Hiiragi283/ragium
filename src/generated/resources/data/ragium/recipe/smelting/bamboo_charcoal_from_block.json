@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 1800,
+  "experience": 4.5,
+  "ingredient": "#minecraft:bamboo_blocks",
+  "result": {
+    "count": 9,
+    "id": "ragium:bamboo_charcoal"
+  }
+}

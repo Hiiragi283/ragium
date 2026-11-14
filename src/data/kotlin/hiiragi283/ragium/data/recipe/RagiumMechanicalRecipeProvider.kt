@@ -333,16 +333,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
             itemResult { +Items.LEATHER }
         }.save(exporter)
 
-        // Honey Bottle -> Glass Bottle + Honey
-        RagiumRecipeBuilders.centrifuging {
-            ingredient { +holderSet(Tags.Items.DRINKS_HONEY) }
-            itemResult { +Items.GLASS_BOTTLE }
-            fluidResult {
-                +RagiumFluids.HONEY
-                amount = 250
-            }
-            recipeId replace id("honey_from_bottle")
-        }.save(exporter)
         // Exp Bottle -> Glass Bottle + Exp
         RagiumRecipeBuilders.centrifuging {
             ingredient { items { +Items.EXPERIENCE_BOTTLE } }
@@ -352,16 +342,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 amount = 250
             }
             recipeId replace id("experience_from_bottle")
-        }.save(exporter)
-        // Honeycomb -> Beeswax + Honey
-        RagiumRecipeBuilders.centrifuging {
-            ingredient { items { +Items.HONEYCOMB } }
-            itemResult { +RagiumItems.BEESWAX }
-            fluidResult {
-                +RagiumFluids.HONEY
-                amount = 250
-            }
-            recipeId replace id("honey_from_comb")
         }.save(exporter)
     }
 
@@ -990,15 +970,6 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
     }
 
     private fun filling() {
-        // Glass Bottle + Honey -> Honey Bottle
-        RagiumRecipeBuilders.filling {
-            itemIngredient { items { +Items.GLASS_BOTTLE } }
-            fluidIngredient {
-                +holderSet(RagiumFluids.HONEY)
-                amount = 250
-            }
-            result { +Items.HONEY_BOTTLE }
-        }.save(exporter)
         // Glass Bottle + Exp -> Exp Bottle
         RagiumRecipeBuilders.filling {
             itemIngredient { items { +Items.GLASS_BOTTLE } }

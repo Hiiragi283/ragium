@@ -1,0 +1,24 @@
+{
+  "type": "ragium:reacting/fluid",
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluids": "#c:water"
+    },
+    {
+      "amount": 1000,
+      "fluids": "#c:lava"
+    }
+  ],
+  "results": {
+    "fluid": {
+      "amount": 4000,
+      "id": "ragium:steam"
+    },
+    "item": {
+      "count": 1,
+      "id": "minecraft:obsidian"
+    }
+  },
+  "time": 12
+}

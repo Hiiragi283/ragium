@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.tags.TagKey
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
@@ -32,8 +33,9 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
     override fun exportValues() {
         brewing()
         planting()
-
         resourcePumping()
+
+        honey()
     }
 
     private fun brewing() {
@@ -290,6 +292,61 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 amount /= 4
             }
             recipeId suffix "_at_soul_sand_valley"
+        }.save(exporter)
+    }
+
+    private fun honey() {
+        // Block -> Liquid
+        RagiumRecipeBuilders.melting {
+            ingredient { items { +Items.HONEY_BLOCK } }
+            result { +RagiumFluids.HONEY }
+            recipeId suffix "_from_block"
+        }.save(exporter)
+        // Liquid -> Block
+        RagiumRecipeBuilders.freezing {
+            ingredient { +holderSet(RagiumFluids.HONEY) }
+            catalyst { items { +RagiumItems.BLOCK_MOLD } }
+            result { +Items.HONEY_BLOCK }
+        }.save(exporter)
+
+        // Honey Bottle -> Glass Bottle + Liquid
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { +holderSet(Tags.Items.DRINKS_HONEY) }
+            itemResult { +Items.GLASS_BOTTLE }
+            fluidResult {
+                +RagiumFluids.HONEY
+                amount = 250
+            }
+            recipeId replace id("honey_from_bottle")
+        }.save(exporter)
+        // Glass Bottle + Liquid -> Honey Bottle
+        RagiumRecipeBuilders.filling {
+            itemIngredient { items { +Items.GLASS_BOTTLE } }
+            fluidIngredient {
+                +holderSet(RagiumFluids.HONEY)
+                amount = 250
+            }
+            result { +Items.HONEY_BOTTLE }
+        }.save(exporter)
+
+        // Honeycomb -> Beeswax + Liquid
+        RagiumRecipeBuilders.centrifuging {
+            ingredient { items { +Items.HONEYCOMB } }
+            itemResult { +RagiumItems.BEESWAX }
+            fluidResult {
+                +RagiumFluids.HONEY
+                amount = 250
+            }
+            recipeId replace id("honey_from_comb")
+        }.save(exporter)
+        // Candle
+        VanillaRecipeBuilders.shaped {
+            +"A"
+            +"B"
+            define('A') { +holderSet(Tags.Items.STRINGS) }
+            define('B') { items { +RagiumItems.BEESWAX } }
+            result { +Items.CANDLE }
+            category = RecipeCategory.DECORATIONS
         }.save(exporter)
     }
 

@@ -47,12 +47,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         upgrade()
         material()
 
-        // Bamboo Charcoal
-        VanillaRecipeBuilders.smelting {
-            ingredient { items { +Items.BAMBOO } }
-            result { +RagiumItems.BAMBOO_CHARCOAL }
-            exp = 0.5f
-        }.save(exporter)
         // Particle Board
         VanillaRecipeBuilders.shaped {
             hollow8()
@@ -154,15 +148,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('B') { items { +Items.ICE } }
             define('C') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.NITER) }
             result { +Items.BREEZE_ROD }
-        }.save(exporter)
-        // Candle
-        VanillaRecipeBuilders.shaped {
-            +"A"
-            +"B"
-            define('A') { +holderSet(Tags.Items.STRINGS) }
-            define('B') { items { +RagiumItems.BEESWAX } }
-            result { +Items.CANDLE }
-            category = RecipeCategory.DECORATIONS
         }.save(exporter)
         // Fossil Fuels
         fun fossilFuels(outputs: Int, suffix: String, ingredient: IngredientBuilder.() -> Unit) {

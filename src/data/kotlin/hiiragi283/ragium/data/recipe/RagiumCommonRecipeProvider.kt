@@ -4,11 +4,9 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
 import hiiragi283.lib.data.recipe.builder.result
-import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.tag.CommonTagPrefixes
-import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
@@ -19,348 +17,18 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.concurrent.CompletableFuture
 
 class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
     HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
     override fun exportValues() {
-        mechanical()
-        heat()
         chemical()
         resource()
     }
 
     override fun getName(): String = "Common Recipes"
-
-    //    Mechanical    //
-
-    private fun mechanical() {}
-
-    //    Heat    //
-
-    private fun heat() {
-        charcoal()
-        coal()
-        oilRefining()
-    }
-
-    private fun charcoal() {
-        // Log -> Charcoal + Creosote
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { +holderSet(ItemTags.LOGS_THAT_BURN) }
-            itemResult { +Items.CHARCOAL }
-            fluidResult {
-                +RagiumFluids.CREOSOTE
-                amount = 250
-            }
-            time /= 2
-            recipeId suffix "_from_logs"
-        }.save(exporter)
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.WOOD)
-                count = 4
-            }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Fuel.CHARCOAL) }
-            fluidResult {
-                +RagiumFluids.CREOSOTE
-                amount = 250
-            }
-            time /= 2
-        }.save(exporter)
-
-        // Creosote -> Aromatic Compound
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.CREOSOTE) }
-            fluidResult {
-                +RagiumFluids.AROMATIC_COMPOUND
-                amount = 500
-            }
-            recipeId replace RagiumFluids.CREOSOTE.id()
-        }.save(exporter)
-    }
-
-    private fun coal() {
-        // Coal -> Coal Coke + Tar + Creosote
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { items { +Items.COAL } }
-            itemResult { +RagiumItems.COAL_COKE }
-            itemResult { +RagiumItems.TAR }
-            fluidResult {
-                +RagiumFluids.CREOSOTE
-                amount = 500
-            }
-            time /= 2
-        }.save(exporter)
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Fuel.COAL) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.CARBON) }
-            itemResult { +RagiumItems.TAR }
-            fluidResult {
-                +RagiumFluids.CREOSOTE
-                amount = 500
-            }
-            time /= 2
-        }.save(exporter)
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient { +holderSet(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterial.Fuel.COAL) }
-            itemResult { +RagiumBlocks.getStorageOrThrow(RagiumMaterial.Fuel.COAL_COKE) }
-            itemResult {
-                +RagiumItems.TAR
-                count = 9
-            }
-            fluidResult {
-                +RagiumFluids.CREOSOTE
-                amount = 500 * 9
-            }
-            time = time / 2 * 9
-        }.save(exporter)
-    }
-
-    private fun oilRefining() {
-        plastic()
-        carbonyl()
-
-        // Soul Sand -> Sand + Crude Oil
-        RagiumRecipeBuilders.centrifuging {
-            ingredient { items { +Items.SOUL_SAND } }
-            itemResult { +Items.SAND }
-            fluidResult {
-                +RagiumFluids.CRUDE_OIL
-                amount = 250
-            }
-            recipeId replace id("crude_oil_from_soul_sand")
-        }.save(exporter)
-        // Soul Soil -> Clay + Crude Oil
-        RagiumRecipeBuilders.centrifuging {
-            ingredient { items { +Items.SOUL_SOIL } }
-            itemResult { +Items.CLAY }
-            fluidResult {
-                +RagiumFluids.CRUDE_OIL
-                amount = 250
-            }
-            recipeId replace id("crude_oil_from_soul_soil")
-        }.save(exporter)
-        // Crude Oil -> Sulfuric Naphtha + Sulfuric Fuel + Residue Oil
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.CRUDE_OIL) }
-            fluidResult {
-                +RagiumFluids.SULFURIC_NAPHTHA
-                amount = 300
-            }
-            fluidResult {
-                +RagiumFluids.SULFURIC_FUEL
-                amount = 450
-            }
-            itemResult { +RagiumItems.TAR }
-            recipeId replace RagiumFluids.CRUDE_OIL.id()
-        }.save(exporter)
-
-        // Sulfuric Naphtha + H2 -> Naphtha + H2S
-        RagiumRecipeBuilders.fluidReacting {
-            ingredient { +holderSet(RagiumFluids.SULFURIC_NAPHTHA) }
-            ingredient {
-                +holderSet(RagiumFluids.HYDROGEN)
-                amount /= 4
-            }
-            fluidResult { +RagiumFluids.NAPHTHA }
-            fluidResult {
-                +RagiumFluids.HYDROGEN_SULFIDE
-                amount /= 4
-            }
-        }.save(exporter)
-        // Sulfuric Fuel + H2 -> Fuel + H2S
-        RagiumRecipeBuilders.fluidReacting {
-            ingredient { +holderSet(RagiumFluids.SULFURIC_FUEL) }
-            ingredient {
-                +holderSet(RagiumFluids.HYDROGEN)
-                amount /= 4
-            }
-            fluidResult { +RagiumFluids.FUEL }
-            fluidResult {
-                +RagiumFluids.HYDROGEN_SULFIDE
-                amount /= 4
-            }
-        }.save(exporter)
-        // 2x H2S + 3x O2 -> 2x SO2 + 2x H2O
-        RagiumRecipeBuilders.fluidReacting {
-            ingredient {
-                +holderSet(RagiumFluids.HYDROGEN_SULFIDE)
-                amount *= 2
-            }
-            ingredient {
-                +holderSet(RagiumFluids.OXYGEN)
-                amount *= 3
-            }
-            fluidResult {
-                +RagiumFluids.SULFUR_DIOXIDE
-                amount *= 2
-            }
-            fluidResult {
-                water()
-                amount *= 2
-            }
-            recipeId suffix "_from_hydrogen_sulfide"
-        }.save(exporter)
-
-        // Naphtha -> Fuel
-        RagiumRecipeBuilders.refining {
-            ingredient { +holderSet(RagiumFluids.NAPHTHA) }
-            fluidResult {
-                +RagiumFluids.FUEL
-                amount = 750
-            }
-            recipeId replace id("fuel_from_naphtha")
-        }.save(exporter)
-
-        // Tar -> Pitch Coke + Naphtha
-        RagiumRecipeBuilders.pyrolyzing {
-            ingredient {
-                items { +RagiumItems.TAR }
-                count = 4
-            }
-            itemResult { +RagiumItems.PITCH_COKE }
-            fluidResult {
-                +RagiumFluids.NAPHTHA
-                amount = 250
-            }
-        }.save(exporter)
-        // Tar + H2 -> Fuel
-        RagiumRecipeBuilders.itemReacting {
-            itemIngredient { items { +RagiumItems.TAR } }
-            fluidIngredient {
-                +holderSet(RagiumFluids.HYDROGEN)
-                amount /= 2
-            }
-            fluidResult {
-                +RagiumFluids.FUEL
-                amount = 200
-            }
-            recipeId suffix "_from_tar"
-        }.save(exporter)
-    }
-
-    private fun plastic() {
-        // TODO: Molten Plastic
-        // Molten Plastic <-> Plastic
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(HTCommonTags.Items.PLASTICS) }
-            result {
-                +RagiumFluids.MOLTEN_PLASTIC
-                amount = 90
-            }
-        }.save(exporter)
-        RagiumRecipeBuilders.melting {
-            ingredient {
-                items {
-                    +RagiumItems.SYNTHETIC_FEATHER
-                    +RagiumItems.SYNTHETIC_LEATHER
-                    +RagiumItems.SYNTHETIC_FIBER
-                }
-            }
-            result {
-                +RagiumFluids.MOLTEN_PLASTIC
-                amount = 90
-            }
-            recipeId suffix "_from_synthetic_parts"
-        }.save(exporter)
-
-        val moltenPlastic = HTFluidIngredient(FluidIngredient.of(holderSet(RagiumFluids.MOLTEN_PLASTIC)), 90)
-        RagiumRecipeBuilders.freezing {
-            +moltenPlastic
-            catalyst { items { +RagiumItems.PLATE_MOLD } }
-            result { +RagiumItems.PLASTIC_PLATE }
-        }.save(exporter)
-        // Plastic -> Synthetic XX
-        RagiumRecipeBuilders.freezing {
-            +moltenPlastic
-            catalyst { +holderSet(Tags.Items.FEATHERS) }
-            result { +RagiumItems.SYNTHETIC_FEATHER }
-        }.save(exporter)
-        RagiumRecipeBuilders.freezing {
-            +moltenPlastic
-            catalyst { +holderSet(Tags.Items.LEATHERS) }
-            result { +RagiumItems.SYNTHETIC_LEATHER }
-        }.save(exporter)
-        RagiumRecipeBuilders.freezing {
-            +moltenPlastic
-            catalyst { +holderSet(Tags.Items.STRINGS) }
-            result { +RagiumItems.SYNTHETIC_FIBER }
-        }.save(exporter)
-    }
-
-    private fun carbonyl() {
-        // Cokes + Steam -> Synthetic Gas
-        RagiumRecipeBuilders.itemReacting {
-            itemIngredient { +holderSet(RagiumTags.Items.COKES) }
-            fluidIngredient { +holderSet(RagiumFluids.STEAM) }
-            fluidResult { +RagiumFluids.SYNTHETIC_GAS }
-        }.save(exporter)
-
-        // Synthetic Gas -> Methanol
-        RagiumRecipeBuilders.fluidReacting {
-            ingredient { +holderSet(RagiumFluids.SYNTHETIC_GAS) }
-            catalyst { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.COPPER) }
-            fluidResult { +RagiumFluids.ALCOHOL }
-            recipeId replace id("methanol")
-        }.save(exporter)
-        // Alcohol + (Ag) -> Aldehyde
-        RagiumRecipeBuilders.fluidReacting {
-            ingredient { +holderSet(RagiumTags.Fluids.ALCOHOLS) }
-            catalyst { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Metal.SILVER) }
-            fluidResult { +RagiumFluids.ALDEHYDE }
-        }.save(exporter)
-        // Aromatic Compound + Aldehyde -> Synthetic Resin Clump
-        RagiumRecipeBuilders.fluidReacting {
-            ingredient {
-                +holderSet(RagiumFluids.AROMATIC_COMPOUND)
-                amount /= 4
-            }
-            ingredient {
-                +holderSet(RagiumTags.Fluids.ALDEHYDES)
-                amount /= 4
-            }
-            itemResult { +RagiumItems.SYNTHETIC_RESIN_CLUMP }
-        }.save(exporter)
-        // Resin Clump + Alcohol -> Glue
-        RagiumRecipeBuilders.itemReacting {
-            itemIngredient { +holderSet(Tags.Items.CLUMPS_RESIN) }
-            fluidIngredient {
-                +holderSet(RagiumTags.Fluids.ALCOHOLS)
-                amount /= 4
-            }
-            fluidResult {
-                +RagiumFluids.GLUE
-                amount /= 4
-            }
-        }.save(exporter)
-        // Glue -> Sticky Ball
-        RagiumRecipeBuilders.drying {
-            ingredient {
-                +holderSet(RagiumFluids.GLUE)
-                amount /= 4
-            }
-            itemResult { +RagiumItems.STICKY_BALL }
-        }.save(exporter)
-
-        // Synthetic Gas -> Fuel + Water + Wax
-        RagiumRecipeBuilders.refining {
-            ingredient {
-                +holderSet(RagiumFluids.SYNTHETIC_GAS)
-                amount *= 2
-            }
-            fluidResult {
-                +RagiumFluids.FUEL
-                amount /= 2
-            }
-            fluidResult { water() }
-            recipeId replace id("fischer_tropsch_process")
-        }.save(exporter)
-    }
 
     //    Chemical    //
 
@@ -377,6 +45,16 @@ class RagiumCommonRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         chlorine()
 
         calcium()
+
+        // Oxygen
+        RagiumRecipeBuilders.melting {
+            ingredient { items { +Items.WIND_CHARGE } }
+            result {
+                +RagiumFluids.OXYGEN
+                amount /= 4
+            }
+            recipeId suffix "_from_wind_charge"
+        }.save(exporter)
     }
 
     private fun saltAndSolution(fluid: HTFluidContent, item: HTSimpleDeferredItem) {

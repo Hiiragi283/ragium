@@ -1,0 +1,27 @@
+{
+  "type": "ragium:reacting/item",
+  "ingredients": {
+    "fluid": {
+      "amount": 1000,
+      "fluids": "#c:lava"
+    },
+    "item": {
+      "count": 1,
+      "items": [
+        "minecraft:snow_block",
+        "minecraft:ice"
+      ]
+    }
+  },
+  "results": {
+    "fluid": {
+      "amount": 1000,
+      "id": "minecraft:water"
+    },
+    "item": {
+      "count": 1,
+      "id": "minecraft:obsidian"
+    }
+  },
+  "time": 25
+}
