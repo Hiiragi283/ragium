@@ -38,6 +38,8 @@ data object RagiumFluids {
         REGISTER.addAlias("natural_gas", "synthetic_gas")
         REGISTER.addAlias("resin", "glue")
         REGISTER.addAlias("synthetic_resin", "glue")
+        REGISTER.addAlias("chlorine", "hydrogen_chloride")
+        REGISTER.addAlias(RagiumAPI.id("salt_water"), vanillaId("water"))
 
         REGISTER.register(eventBus)
     }
@@ -210,9 +212,6 @@ data object RagiumFluids {
     // 3rd
     // Na
     @JvmField
-    val SALT_WATER: HTFluidContent.Flowing = REGISTER.registerFlowing("salt_water") { properties = liquid() }
-
-    @JvmField
     val HYDROXIDE_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("alkali_hydroxide_solution") { properties = liquid() }
 
     @JvmField
@@ -247,9 +246,6 @@ data object RagiumFluids {
     }
 
     // Cl
-    @JvmField
-    val CHLORINE: HTFluidContent.Virtual = REGISTER.registerVirtual("chlorine") { properties = gaseous() }
-
     @JvmField
     val HYDROGEN_CHLORIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen_chloride") {
         properties = gaseous()

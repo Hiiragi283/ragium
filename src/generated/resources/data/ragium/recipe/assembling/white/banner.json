@@ -1,11 +1,7 @@
 {
-  "type": "ragium:bathing",
-  "ingredients": {
-    "fluid": {
-      "amount": 125,
-      "fluids": "#c:chlorine"
-    },
-    "item": {
+  "type": "ragium:assembling",
+  "ingredients": [
+    {
       "count": 1,
       "items": {
         "type": "neoforge:and",
@@ -13,7 +9,7 @@
           {
             "type": "neoforge:or",
             "values": [
-              "#minecraft:harnesses"
+              "#minecraft:banners"
             ]
           },
           {
@@ -22,11 +18,15 @@
           }
         ]
       }
+    },
+    {
+      "count": 1,
+      "items": "ragium:soap"
     }
-  },
+  ],
   "result": {
     "count": 1,
-    "id": "minecraft:white_harness"
+    "id": "minecraft:white_banner"
   },
   "time": 200
 }

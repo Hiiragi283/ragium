@@ -46,7 +46,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             recipeId replace id("water")
         }.save(exporter)
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH(aq)
-        RagiumRecipeBuilders.electrolyzing {
+        /*RagiumRecipeBuilders.electrolyzing {
             ingredient { +holderSet(RagiumFluids.SALT_WATER) }
             fluidResult {
                 +RagiumFluids.HYDROGEN
@@ -58,7 +58,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             }
             itemResult { +RagiumItems.ALKALI_HYDROXIDE }
             recipeId replace id("salt_water")
-        }.save(exporter)
+        }*/
     }
 
     private fun printing() {

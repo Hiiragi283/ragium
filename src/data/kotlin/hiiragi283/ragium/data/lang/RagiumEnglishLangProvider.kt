@@ -133,7 +133,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "Hydrogen Fluoride")
         addFluid(RagiumFluids.HYDROFLUORIC_ACID, "Hydrofluoric Acid")
         // Na
-        addFluid(RagiumFluids.SALT_WATER, "Salt Water")
         addFluid(RagiumFluids.HYDROXIDE_SOLUTION, "Alkali Hydroxide Solution")
         addFluid(RagiumFluids.SULFATE_SOLUTION, "Alkali Sulfate Solution")
         // Al
@@ -148,7 +147,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
         // Cl
-        addFluid(RagiumFluids.CHLORINE, "Chlorine")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "Hydrogen Chloride")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "Hydrochloric Acid")
         // Ca
@@ -165,6 +163,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.ALKALI_HYDROXIDE, "Alkali Hydroxide")
         add(RagiumItems.ALKALI_CARBONATE, "Alkali Carbonate")
         add(RagiumItems.ALKALI_SULFATE, "Alkali Sulfate")
+        add(RagiumItems.SOAP, "Soap")
         add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
         add(RagiumItems.SYNTHETIC_FEATHER, "Synthetic Feather")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")

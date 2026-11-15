@@ -1,0 +1,18 @@
+{
+  "type": "ragium:bathing",
+  "ingredients": {
+    "fluid": {
+      "amount": 250,
+      "fluids": "#c:plant_oil"
+    },
+    "item": {
+      "count": 1,
+      "items": "#c:dusts/ash"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:soap"
+  },
+  "time": 200
+}

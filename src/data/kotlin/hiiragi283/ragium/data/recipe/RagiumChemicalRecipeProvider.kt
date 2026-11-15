@@ -201,7 +201,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }.save(exporter)
     }
 
-    private fun saltAndSolution(fluid: HTFluidContent, material: RagiumMaterial) {
+    /*private fun saltAndSolution(fluid: HTFluidContent, material: RagiumMaterial) {
         // Salt + Water -> Salt (aq)
         RagiumRecipeBuilders.mixing {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, material) }
@@ -217,7 +217,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             itemResult { +item }
             recipeId replace item.id().withSuffix("_from_solution")
         }.save(exporter)
-    }
+    }*/
 
     private fun nitrogen() {
         // Gunpowder -> KNO3
@@ -341,6 +341,23 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             fluidIngredient { +waterSet() }
             result { +RagiumFluids.HYDROXIDE_SOLUTION }
             recipeId suffix "_from_ash"
+        }.save(exporter)
+        // KOH + Plant Oil -> Soap
+        RagiumRecipeBuilders.bathing {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.ASH) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.PLANT_OIL)
+                amount /= 4
+            }
+            result { +RagiumItems.SOAP }
+        }.save(exporter)
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.HYDROXIDE_SOLUTION) }
+            ingredient { +holderSet(RagiumFluids.PLANT_OIL) }
+            itemResult {
+                +RagiumItems.SOAP
+                count = 4
+            }
         }.save(exporter)
 
         // Wood Pulp + Alkali aq -> Paper Pulp + Black Liquor
@@ -586,9 +603,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
     }
 
     private fun chlorine() {
-        // NaCl(aq)
-        saltAndSolution(RagiumFluids.SALT_WATER, RagiumMaterial.Chemical.SALT)
-
         // 2x NaCl + H2SO4 -> 2x HCl + Na2SO4
         RagiumRecipeBuilders.itemReacting {
             itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SALT) }
@@ -602,14 +616,14 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }.save(exporter)
 
         // H2 + Cl2 -> 2x HCl
-        RagiumRecipeBuilders.fluidReacting {
+        /*RagiumRecipeBuilders.fluidReacting {
             ingredient { +holderSet(RagiumFluids.HYDROGEN) }
             ingredient { +holderSet(RagiumFluids.CHLORINE) }
             fluidResult {
                 +RagiumFluids.HYDROGEN_CHLORIDE
                 amount *= 2
             }
-        }.save(exporter)
+        }*/
         // HCl + H2O -> HCl(aq)
         RagiumRecipeBuilders.fluidReacting {
             ingredient { +holderSet(RagiumFluids.HYDROGEN_CHLORIDE) }

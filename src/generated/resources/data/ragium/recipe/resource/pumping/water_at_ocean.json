@@ -3,7 +3,7 @@
   "condition": "#c:is_ocean",
   "result": {
     "amount": 4000,
-    "id": "ragium:salt_water"
+    "id": "minecraft:water"
   },
   "time": 200
 }

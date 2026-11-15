@@ -129,7 +129,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.HYDROGEN_FLUORIDE, "フッ化水素")
         addFluid(RagiumFluids.HYDROFLUORIC_ACID, "フッ化水素酸")
         // Na
-        addFluid(RagiumFluids.SALT_WATER, "塩水")
         addFluid(RagiumFluids.HYDROXIDE_SOLUTION, "アルカリ水酸化物溶液")
         addFluid(RagiumFluids.SULFATE_SOLUTION, "アルカリ硫酸塩溶液")
         // Al
@@ -144,7 +143,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
         // Cl
-        addFluid(RagiumFluids.CHLORINE, "塩素")
         addFluid(RagiumFluids.HYDROGEN_CHLORIDE, "塩化水素")
         addFluid(RagiumFluids.HYDROCHLORIC_ACID, "塩酸")
         // Ca
@@ -161,6 +159,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.ALKALI_HYDROXIDE, "アルカリ水酸化物")
         add(RagiumItems.ALKALI_CARBONATE, "アルカリ炭酸塩")
         add(RagiumItems.ALKALI_SULFATE, "アルカリ硫酸塩")
+        add(RagiumItems.SOAP, "石鹸")
         add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
         add(RagiumItems.SYNTHETIC_FEATHER, "合成羽")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成牛皮")

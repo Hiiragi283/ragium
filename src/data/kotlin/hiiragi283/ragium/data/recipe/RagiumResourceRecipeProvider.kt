@@ -260,7 +260,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
         RagiumRecipeBuilders.resourcePumping {
             biomes { +holderSet(Tags.Biomes.IS_OCEAN) }
             result {
-                +RagiumFluids.SALT_WATER
+                water()
                 amount *= 4
             }
             recipeId suffix "_at_ocean"

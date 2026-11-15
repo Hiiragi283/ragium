@@ -3,17 +3,17 @@
   "ingredients": [
     {
       "amount": 1000,
-      "fluids": "#c:hydrogen"
+      "fluids": "#c:alkali_hydroxide_solution"
     },
     {
       "amount": 1000,
-      "fluids": "#c:chlorine"
+      "fluids": "#c:plant_oil"
     }
   ],
   "results": {
-    "fluid": {
-      "amount": 2000,
-      "id": "ragium:hydrogen_chloride"
+    "item": {
+      "count": 4,
+      "id": "ragium:soap"
     }
   },
   "time": 200

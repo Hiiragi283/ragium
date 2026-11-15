@@ -194,6 +194,9 @@ data object RagiumItems {
     val ALKALI_SULFATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("alkali_sulfate")
 
     @JvmField
+    val SOAP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("soap")
+
+    @JvmField
     val PLASTIC_PLATE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plastic_plate")
 
     @JvmField

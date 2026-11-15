@@ -108,12 +108,9 @@ class RagiumColoringRecipeProvider(packOutput: PackOutput, future: CompletableFu
 
         // Bleaching
         for (contents: ColoredContents in ColoredContents.entries) {
-            RagiumRecipeBuilders.bathing {
-                itemIngredient { +contents.excludeWhites() }
-                fluidIngredient {
-                    +holderSet(RagiumFluids.CHLORINE)
-                    amount /= 8
-                }
+            RagiumRecipeBuilders.assembling {
+                ingredient { +contents.excludeWhites() }
+                ingredient { items { +RagiumItems.SOAP } }
                 result { +contents.white.asItem() }
                 recipeId replace id("white/${contents.serializedName}")
             }.save(exporter)
