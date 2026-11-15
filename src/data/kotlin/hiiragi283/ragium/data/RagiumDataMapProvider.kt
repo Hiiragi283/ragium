@@ -6,6 +6,7 @@ import hiiragi283.lib.tag.HTMaterialLike
 import hiiragi283.lib.tag.HTTagPrefix
 import hiiragi283.ragium.api.data.map.HTCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuel
+import hiiragi283.ragium.api.data.map.HTWindMillBonus
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -16,6 +17,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -31,6 +33,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         furnaceFuel()
 
         // chemical(provider)
+        windMillBonus()
         fluidFuel()
     }
 
@@ -150,6 +153,18 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             }
         }
     }*/
+
+    private fun windMillBonus() {
+        builder(RagiumDataMaps.WIND_MILL_BONUS)
+            .add(Tags.Biomes.IS_UNDERGROUND, HTWindMillBonus(0), false)
+            .add(Tags.Biomes.IS_BEACH, HTWindMillBonus(2), false)
+            .add(Tags.Biomes.IS_HILL, HTWindMillBonus(2), false)
+            .add(Tags.Biomes.IS_NETHER, HTWindMillBonus(3), false)
+            .add(Tags.Biomes.IS_PLATEAU, HTWindMillBonus(3), false)
+            .add(Tags.Biomes.IS_STONY_SHORES, HTWindMillBonus(3), false)
+            .add(Tags.Biomes.IS_MOUNTAIN, HTWindMillBonus(4), false)
+            .add(Tags.Biomes.IS_OCEAN, HTWindMillBonus(4), false)
+    }
 
     private fun fluidFuel() {
         builder(RagiumDataMaps.MAGMATIC_FUEL)

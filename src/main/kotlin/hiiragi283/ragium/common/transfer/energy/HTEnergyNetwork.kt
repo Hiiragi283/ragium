@@ -1,27 +1,34 @@
 package hiiragi283.ragium.common.transfer.energy
 
 import hiiragi283.lib.capability.HTEnergyCapabilities
-import hiiragi283.ragium.common.attachment.RagiumAttachments
 import hiiragi283.ragium.common.block.HTEnergyPipeBlock
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.attachment.AttachmentType
+import net.neoforged.neoforge.attachment.IAttachmentHolder
 import net.neoforged.neoforge.capabilities.BlockCapabilityCache
 import net.neoforged.neoforge.event.level.ChunkEvent
 import net.neoforged.neoforge.transfer.energy.EnergyHandler
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
-class HTEnergyNetwork internal constructor(private val level: ServerLevel) {
+class HTEnergyNetwork private constructor(private val level: ServerLevel) {
     companion object {
+        @JvmField
+        val TYPE: AttachmentType<HTEnergyNetwork> = AttachmentType.builder { holder: IAttachmentHolder ->
+            val level: ServerLevel = holder as? ServerLevel ?: error("Network data must be existing in server level")
+            HTEnergyNetwork(level)
+        }.build()
+
         @JvmStatic
-        operator fun get(level: ServerLevel): HTEnergyNetwork = level.getData(RagiumAttachments.ENERGY_NETWORK)
+        operator fun get(level: ServerLevel): HTEnergyNetwork = level.getData(TYPE)
 
         @JvmStatic
         fun onPipeChanged(level: ServerLevel, pos: BlockPos) {
-            if (!level.hasData(RagiumAttachments.ENERGY_NETWORK)) return
+            if (!level.hasData(TYPE)) return
             val network: HTEnergyNetwork = get(level)
             network.componentByPipe[pos]?.let(network::invalidate)
             for (side: Direction in Direction.entries) {
@@ -32,7 +39,7 @@ class HTEnergyNetwork internal constructor(private val level: ServerLevel) {
         @JvmStatic
         internal fun onChunkChanged(event: ChunkEvent<*>) {
             val level: ServerLevel = event.level as? ServerLevel ?: return
-            if (!level.hasData(RagiumAttachments.ENERGY_NETWORK)) return
+            if (!level.hasData(TYPE)) return
             val network: HTEnergyNetwork = get(level)
             network.componentsByChunk[event.chunk.pos]?.toList()?.forEach(network::invalidate)
         }

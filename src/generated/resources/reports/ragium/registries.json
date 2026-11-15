@@ -105,6 +105,7 @@
     "void_tank",
     "water_mill",
     "white_dye",
+    "wind_mill",
     "yellow_dye"
   ],
   "minecraft:block_entity_type": [
@@ -148,7 +149,8 @@
     "steam_dynamo",
     "tank",
     "upgrade_station",
-    "water_mill"
+    "water_mill",
+    "wind_mill"
   ],
   "minecraft:creative_mode_tab": [
     "common"
@@ -532,6 +534,7 @@
     "void_tank",
     "water_mill",
     "white_dye_bucket",
+    "wind_mill",
     "wither_doll",
     "wither_star",
     "wood_dust",

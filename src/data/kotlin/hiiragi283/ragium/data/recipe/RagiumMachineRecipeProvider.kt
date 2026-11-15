@@ -119,6 +119,12 @@ class RagiumMachineRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('C') { items { +RagiumBlocks.MACHINE_CASINGS.basic } }
             result { +RagiumBlocks.WATER_MILL }
         }.save(exporter)
+        VanillaRecipeBuilders.shaped {
+            hollow4()
+            define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON) }
+            define('B') { items { +RagiumBlocks.MACHINE_CASINGS.basic } }
+            result { +RagiumBlocks.WIND_MILL }
+        }.save(exporter)
         // Heat
         VanillaRecipeBuilders.shaped {
             +"AAA"

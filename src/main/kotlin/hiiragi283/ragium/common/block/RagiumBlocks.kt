@@ -250,6 +250,9 @@ data object RagiumBlocks {
     @JvmField
     val WATER_MILL: HTBasicDeferredBlockAndItem<HTGeneratorBlock> = registerGenerator(RagiumBlockEntityTypes.WATER_MILL)
 
+    @JvmField
+    val WIND_MILL: HTBasicDeferredBlockAndItem<HTGeneratorBlock> = registerGenerator(RagiumBlockEntityTypes.WIND_MILL)
+
     // Heat
     @JvmField
     val SOLID_BOILER: HTBasicDeferredBlockAndItem<HTBoilerBlock> = registerWithBE(RagiumBlockEntityTypes.SOLID_BOILER, ::HTBoilerBlock, machine())
@@ -269,6 +272,7 @@ data object RagiumBlocks {
         sortedMapOf(HTMachineType.COMPARATOR),
         {
             put(HTMachineType.MECHANICAL, WATER_MILL)
+            put(HTMachineType.MECHANICAL, WIND_MILL)
 
             put(HTMachineType.HEAT, SOLID_BOILER)
             put(HTMachineType.HEAT, SOLAR_BOILER)

@@ -1,0 +1,28 @@
+{
+  "values": {
+    "#c:is_beach": {
+      "multiplier": 2
+    },
+    "#c:is_hill": {
+      "multiplier": 2
+    },
+    "#c:is_mountain": {
+      "multiplier": 4
+    },
+    "#c:is_nether": {
+      "multiplier": 3
+    },
+    "#c:is_ocean": {
+      "multiplier": 4
+    },
+    "#c:is_plateau": {
+      "multiplier": 3
+    },
+    "#c:is_stony_shores": {
+      "multiplier": 3
+    },
+    "#c:is_underground": {
+      "multiplier": 0
+    }
+  }
+}

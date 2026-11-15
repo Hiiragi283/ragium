@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data.map
 
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.registries.Registries
+import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -19,6 +20,15 @@ data object RagiumDataMaps {
     private fun fluidFuel(name: String): DataMapType<Fluid, HTFluidFuel> =
         DataMapType.builder(RagiumAPI.id("fuel/$name"), Registries.FLUID, HTFluidFuel.CODEC)
             .synced(HTFluidFuel.CODEC, false)
+            .build()
+
+    /**
+     * @since 26.1.14
+     */
+    @JvmField
+    val WIND_MILL_BONUS: DataMapType<Biome, HTWindMillBonus> =
+        DataMapType.builder(RagiumAPI.id("wind_mill_bonus"), Registries.BIOME, HTWindMillBonus.CODEC)
+            .synced(HTWindMillBonus.CODEC, false)
             .build()
 
     /**
@@ -43,6 +53,8 @@ data object RagiumDataMaps {
 
     @SubscribeEvent
     fun registerDataMapType(event: RegisterDataMapTypesEvent) {
+        event.register(WIND_MILL_BONUS)
+
         event.register(MAGMATIC_FUEL)
         event.register(COMBUSTION_FUEL)
         event.register(COOLANT)

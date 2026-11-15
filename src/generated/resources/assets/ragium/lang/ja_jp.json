@@ -145,6 +145,7 @@
   "block.ragium.void_tank": "廃棄タンク",
   "block.ragium.water_mill": "水力発電機",
   "block.ragium.white_dye": "白色の染料",
+  "block.ragium.wind_mill": "風力発電機",
   "block.ragium.yellow_dye": "黄色の染料",
   "config.jade.plugin_ragium.machine_owner": "Machine Owner",
   "config.jade.plugin_ragium.machine_upgrade": "Machine Upgrades",

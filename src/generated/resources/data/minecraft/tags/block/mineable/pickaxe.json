@@ -70,6 +70,7 @@
     "ragium:tank",
     "ragium:upgrade_station",
     "ragium:void_tank",
-    "ragium:water_mill"
+    "ragium:water_mill",
+    "ragium:wind_mill"
   ]
 }

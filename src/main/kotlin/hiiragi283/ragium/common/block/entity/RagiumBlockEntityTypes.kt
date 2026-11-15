@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.generator.HTWaterMillBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTWindMillBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.dynamo.HTCombustionDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.dynamo.HTSteamDynamoBlockEntity
 import hiiragi283.ragium.common.block.entity.misc.HTBoilerBlockEntity
@@ -80,6 +81,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val WATER_MILL: HTDeferredBlockEntityType<HTWaterMillBlockEntity> =
         registerTick(RagiumConstants.WATER_MILL, ::HTWaterMillBlockEntity)
+
+    @JvmField
+    val WIND_MILL: HTDeferredBlockEntityType<HTWindMillBlockEntity> =
+        registerTick(RagiumConstants.WIND_MILL, ::HTWindMillBlockEntity)
 
     // Heat
     @JvmField
@@ -285,6 +290,7 @@ data object RagiumBlockEntityTypes {
 
         // Generator
         registerBlockEntity(WATER_MILL.get())
+        registerBlockEntity(WIND_MILL.get())
 
         registerBlockEntity(SOLID_BOILER.get())
         registerBlockEntity(SOLAR_BOILER.get())

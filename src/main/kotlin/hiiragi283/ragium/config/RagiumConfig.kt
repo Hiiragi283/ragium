@@ -105,6 +105,9 @@ data object RagiumConfig {
             @JvmField
             val waterMill: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.WATER_MILL, 8)
 
+            @JvmField
+            val windMill: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.WIND_MILL, 16)
+
             // Heat
             @JvmField
             val boilerWaterPerTick: ModConfigSpec.IntValue

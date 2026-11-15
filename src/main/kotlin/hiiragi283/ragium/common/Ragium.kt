@@ -21,7 +21,6 @@ import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.common.attachment.RagiumAttachments
 import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.effect.RagiumMobEffects
@@ -33,6 +32,7 @@ import hiiragi283.ragium.common.item.alchemy.RagiumPotions
 import hiiragi283.ragium.common.network.HTInteractWithCursorPayload
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
+import hiiragi283.ragium.common.transfer.energy.HTEnergyNetwork
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
@@ -60,7 +60,6 @@ data object Ragium : HTCommonMod() {
         RagiumMobEffects.register(eventBus)
         RagiumPotions.register(eventBus)
 
-        RagiumAttachments.register(eventBus)
         RagiumWidgetTypes.REGISTER.register(eventBus)
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
@@ -128,6 +127,9 @@ data object Ragium : HTCommonMod() {
         }
         event.register(NeoForgeRegistries.Keys.FLUID_INGREDIENT_TYPES) { helper ->
             helper.register(RagiumAPI.id(HTConstants.POTION), HTPotionFluidIngredient.TYPE)
+        }
+        event.register(NeoForgeRegistries.Keys.ATTACHMENT_TYPES) { helper ->
+            helper.register(RagiumAPI.id("energy_network"), HTEnergyNetwork.TYPE)
         }
 
         event.register(RagiumRegistries.Keys.FLUID_RESULT_TYPE) { helper ->

@@ -77,6 +77,7 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
 
         // Generator
         generators.createSimple(RagiumBlocks.WATER_MILL, TexturedModel.CUBE_TOP)
+        generators.createSimple(RagiumBlocks.WIND_MILL, TexturedModel.CUBE_TOP)
         RagiumBlocks.SOLID_BOILER.let { boiler ->
             generators.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(boiler.getOrThrow())
