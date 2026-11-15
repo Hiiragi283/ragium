@@ -21,7 +21,7 @@ data object RagiumJeiRecipeTypes {
 
     // Mechanical
     @JvmField
-    val ASSEMBLING: IRecipeType<HTMultiToSingleViewerRecipe> = create(RagiumConstants.ASSEMBLING)
+    val ASSEMBLING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
     val CENTRIFUGING: IRecipeType<HTItemSeparatingViewerRecipe> = create(RagiumConstants.CENTRIFUGING)

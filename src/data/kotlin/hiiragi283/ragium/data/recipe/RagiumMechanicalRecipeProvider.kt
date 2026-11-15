@@ -25,7 +25,6 @@ import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
-import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
@@ -34,7 +33,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.BlockTagIngredient
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient
 import java.util.concurrent.CompletableFuture
 
@@ -137,103 +135,30 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 count = 2
             }
         }.save(exporter)
-        // Repeater
+        // Redstone Circuits
         RagiumRecipeBuilders.assembling {
-            ingredient { +holderSet(Tags.Items.STONES) }
-            ingredient {
-                items { +Items.REDSTONE_TORCH }
-                count = 2
-            }
-            ingredient {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE)
-            }
+            ingredient { items { +Items.SMOOTH_STONE_SLAB } }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
             result {
-                +Items.REPEATER
+                +RagiumItems.REDSTONE_CIRCUIT_BOARD
                 count = 2
             }
         }.save(exporter)
-        // Comparator
         RagiumRecipeBuilders.assembling {
-            ingredient { +holderSet(Tags.Items.STONES) }
-            ingredient {
-                items { +Items.REDSTONE_TORCH }
-                count = 3
-            }
+            ingredient { items { +RagiumItems.REDSTONE_CIRCUIT_BOARD } }
+            ingredient { items { +Items.REDSTONE_TORCH } }
+            result { +Items.REPEATER }
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient { items { +Items.REPEATER } }
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SILICA) }
-            result {
-                +Items.COMPARATOR
-                count = 2
-            }
+            result { +Items.COMPARATOR }
         }.save(exporter)
         // Dispenser
         RagiumRecipeBuilders.assembling {
             ingredient { items { +Items.DROPPER } }
             ingredient { +holderSet(Tags.Items.TOOLS_BOW) }
             result { +Items.DISPENSER }
-        }.save(exporter)
-        RagiumRecipeBuilders.assembling {
-            ingredient { items { +Items.DROPPER } }
-            ingredient {
-                +holderSet(Tags.Items.RODS_WOODEN)
-                count = 3
-            }
-            ingredient {
-                +holderSet(Tags.Items.STRINGS)
-                count = 3
-            }
-            result { +Items.DISPENSER }
-            recipeId suffix "_stackable"
-        }.save(exporter)
-        // Rail
-        RagiumRecipeBuilders.assembling {
-            ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
-                count = 6
-            }
-            ingredient { +holderSet(Tags.Items.RODS_WOODEN) }
-            result {
-                +Items.RAIL
-                count = 24
-            }
-        }.save(exporter)
-        RagiumRecipeBuilders.assembling {
-            ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.GOLD)
-                count = 6
-            }
-            ingredient { +holderSet(Tags.Items.RODS_WOODEN) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            result {
-                +Items.POWERED_RAIL
-                count = 9
-            }
-        }.save(exporter)
-        RagiumRecipeBuilders.assembling {
-            ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
-                count = 6
-            }
-            ingredient { +BlockTagIngredient(BlockTags.STONE_PRESSURE_PLATES) }
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            result {
-                +Items.DETECTOR_RAIL
-                count = 9
-            }
-        }.save(exporter)
-        RagiumRecipeBuilders.assembling {
-            ingredient {
-                +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.IRON)
-                count = 6
-            }
-            ingredient { +holderSet(Tags.Items.RODS_WOODEN) }
-            ingredient {
-                items { +Items.REDSTONE_TORCH }
-                count = 2
-            }
-            result {
-                +Items.ACTIVATOR_RAIL
-                count = 9
-            }
         }.save(exporter)
         // TNT
         RagiumRecipeBuilders.assembling {

@@ -159,6 +159,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
         add(RagiumItems.CEMENT, "Cement")
         add(RagiumItems.FLINT_SHARD, "Flint Shard")
+        add(RagiumItems.REDSTONE_CIRCUIT_BOARD, "Redstone Circuit Board")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.STICKY_BALL, "Sticky Ball")
         add(RagiumItems.ALKALI_HYDROXIDE, "Alkali Hydroxide")

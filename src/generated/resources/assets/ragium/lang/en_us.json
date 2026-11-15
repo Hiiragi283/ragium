@@ -264,6 +264,7 @@
   "item.ragium.circuit_board.basic": "Basic Circuit Board",
   "item.ragium.circuit_board.blank": "Empty Circuit Board",
   "item.ragium.circuit_board.industrial": "Industrial Circuit Board",
+  "item.ragium.circuit_board.redstone": "Redstone Circuit Board",
   "item.ragium.coal_coke": "Coal Coke",
   "item.ragium.coal_dust": "Coal Dust",
   "item.ragium.constantan_dust": "Constantan Dust",

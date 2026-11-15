@@ -6,10 +6,6 @@
       "items": "ragium:circuit_board/basic"
     },
     {
-      "count": 1,
-      "items": "ragium:silicon_wafer"
-    },
-    {
       "count": 4,
       "items": "#c:dusts/redstone"
     }

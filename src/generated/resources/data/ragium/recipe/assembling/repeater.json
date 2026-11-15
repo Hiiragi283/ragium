@@ -3,19 +3,15 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "#c:stones"
-    },
-    {
-      "count": 2,
-      "items": "minecraft:redstone_torch"
+      "items": "ragium:circuit_board/redstone"
     },
     {
       "count": 1,
-      "items": "#c:dusts/redstone"
+      "items": "minecraft:redstone_torch"
     }
   ],
   "result": {
-    "count": 2,
+    "count": 1,
     "id": "minecraft:repeater"
   },
   "time": 200

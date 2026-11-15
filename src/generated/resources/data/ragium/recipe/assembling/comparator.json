@@ -3,11 +3,7 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "#c:stones"
-    },
-    {
-      "count": 3,
-      "items": "minecraft:redstone_torch"
+      "items": "minecraft:repeater"
     },
     {
       "count": 1,
@@ -15,7 +11,7 @@
     }
   ],
   "result": {
-    "count": 2,
+    "count": 1,
     "id": "minecraft:comparator"
   },
   "time": 200

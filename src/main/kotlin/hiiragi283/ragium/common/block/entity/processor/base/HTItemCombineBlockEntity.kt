@@ -13,6 +13,7 @@ import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
+import hiiragi283.ragium.common.gui.widget.HTArrowWidget
 import hiiragi283.ragium.common.gui.widget.HTItemWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
@@ -39,23 +40,24 @@ abstract class HTItemCombineBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(2))
         // progress
-        addProgressBar(widgetHolder)
+        widgetHolder += HTArrowWidget.Right(::progression, HTSlotHelper.getSlotPosX(2.25), HTSlotHelper.getSlotPosY(1))
+        widgetHolder += HTArrowWidget.Left(::progression, HTSlotHelper.getSlotPosX(5.25), HTSlotHelper.getSlotPosY(1))
         // inputs
         widgetHolder += HTItemWidget.Container(
             topInputSlot,
             0,
-            HTSlotHelper.getSlotPosX(2.5),
-            HTSlotHelper.getSlotPosY(0),
+            HTSlotHelper.getSlotPosX(1),
+            HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.INPUT,
         )
         widgetHolder.track(topInputSlot)
         widgetHolder += HTItemWidget.Container(
             bottomInputSlot,
             1,
-            HTSlotHelper.getSlotPosX(2.5),
-            HTSlotHelper.getSlotPosY(2),
+            HTSlotHelper.getSlotPosX(7),
+            HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.EXTRA_INPUT,
         )
         widgetHolder.track(bottomInputSlot)
@@ -63,7 +65,7 @@ abstract class HTItemCombineBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
         widgetHolder += HTItemWidget.Container(
             outputSlot,
             2,
-            HTSlotHelper.getSlotPosX(6),
+            HTSlotHelper.getSlotPosX(4),
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.OUTPUT,
         )

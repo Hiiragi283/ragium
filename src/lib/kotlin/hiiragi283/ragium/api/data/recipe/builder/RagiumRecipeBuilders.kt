@@ -6,6 +6,7 @@ import hiiragi283.lib.data.recipe.builder.HTFluidSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTFluidToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToItemRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemCombineRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemRecipeBuilder
@@ -53,13 +54,11 @@ import kotlin.contracts.contract
 data object RagiumRecipeBuilders {
     // Mechanical
     @JvmStatic
-    inline fun assembling(
-        builderAction: HTSizedShapelessRecipeBuilder<RTAssemblingRecipe>.() -> Unit,
-    ): HTSizedShapelessRecipeBuilder<RTAssemblingRecipe> {
+    inline fun assembling(builderAction: HTItemCombineRecipeBuilder<RTAssemblingRecipe>.() -> Unit): HTItemCombineRecipeBuilder<RTAssemblingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSizedShapelessRecipeBuilder(RagiumConstants.ASSEMBLING, ::RTAssemblingRecipe).apply(builderAction)
+        return HTItemCombineRecipeBuilder(RagiumConstants.ASSEMBLING, ::RTAssemblingRecipe).apply(builderAction)
     }
 
     @JvmStatic

@@ -119,10 +119,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         registration.addRecipeCategories(
             // Mechanical
-            HTSizedShapelessRecipeCategory(
+            HTDoubleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.ASSEMBLING,
                 RagiumTranslation.RECIPE_CATEGORY_ASSEMBLING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.ASSEMBLER),
+                HTBackgroundType.EXTRA_INPUT,
             ),
             HTItemSeparatingRecipeCategory(
                 RagiumJeiRecipeTypes.CENTRIFUGING,
@@ -259,7 +260,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
     override fun registerRecipes(registration: IRecipeRegistration) {
         // Mechanical
-        registration.addRecipes(RagiumJeiRecipeTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING, HTViewerRecipeHelper::sizedShapeless)
+        registration.addRecipes(RagiumJeiRecipeTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING, HTViewerRecipeHelper::itemCombine)
         registration.addRecipes(RagiumJeiRecipeTypes.CENTRIFUGING, RagiumRecipeLookups.CENTRIFUGING, HTViewerRecipeHelper::itemSeparating)
         registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING, HTViewerRecipeHelper::singleToSingle)
         registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeLookups.CRUSHING, HTViewerRecipeHelper::singleToMultiItem)

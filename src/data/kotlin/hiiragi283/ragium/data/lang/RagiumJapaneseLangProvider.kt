@@ -155,6 +155,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.PARTICLE_BOARD, "パーティクルボード")
         add(RagiumItems.CEMENT, "セメント")
         add(RagiumItems.FLINT_SHARD, "火打石の欠片")
+        add(RagiumItems.REDSTONE_CIRCUIT_BOARD, "レッドストーン回路基板")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.STICKY_BALL, "粘着質な塊")
         add(RagiumItems.ALKALI_HYDROXIDE, "アルカリ水酸化物")

@@ -315,6 +315,7 @@
     "circuit_board/basic",
     "circuit_board/blank",
     "circuit_board/industrial",
+    "circuit_board/redstone",
     "coal_coke",
     "coal_coke_block",
     "coal_dust",
@@ -716,11 +717,12 @@
     "long"
   ],
   "ragium:widget_type": [
+    "arrow/left",
+    "arrow/right",
     "enchantment",
     "energy",
     "fluid",
     "item",
-    "progress",
     "texture"
   ]
 }

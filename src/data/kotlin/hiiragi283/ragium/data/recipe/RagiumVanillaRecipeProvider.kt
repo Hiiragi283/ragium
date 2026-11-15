@@ -190,7 +190,20 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
                 define('B') { +holderSet(Tags.Items.CHESTS_WOODEN) }
                 result {
                     +Items.HOPPER
-                    count = (count * modifier).toInt()
+                    count = modifier.toInt()
+                }
+                recipeId suffix "_by_${material.materialName}"
+            }.save(exporter)
+            // Rail
+            VanillaRecipeBuilders.shaped {
+                +"A A"
+                +"ABA"
+                +"A A"
+                define('A') { +holderSet(CommonTagPrefixes.INGOT, material) }
+                define('B') { +holderSet(Tags.Items.RODS_WOODEN) }
+                result {
+                    +Items.RAIL
+                    count = (16 * modifier).toInt()
                 }
                 recipeId suffix "_by_${material.materialName}"
             }.save(exporter)

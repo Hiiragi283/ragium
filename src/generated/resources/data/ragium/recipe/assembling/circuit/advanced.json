@@ -6,10 +6,6 @@
       "items": "ragium:circuit_board/advanced"
     },
     {
-      "count": 1,
-      "items": "ragium:silicon_wafer"
-    },
-    {
       "count": 2,
       "items": "#c:dusts/glowstone"
     }

@@ -264,6 +264,7 @@
   "item.ragium.circuit_board.basic": "基本回路基板",
   "item.ragium.circuit_board.blank": "空の回路基板",
   "item.ragium.circuit_board.industrial": "工業用回路基板",
+  "item.ragium.circuit_board.redstone": "レッドストーン回路基板",
   "item.ragium.coal_coke": "石炭コークス",
   "item.ragium.coal_dust": "石炭の粉",
   "item.ragium.constantan_dust": "コンスタンタンの粉",

@@ -176,7 +176,6 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
                 items { +RagiumItems.CIRCUIT_BOARDS.basic }
                 count = 4
             }
-            ingredient { items { +RagiumItems.SILICON_WAFER } }
             ingredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE)
                 count = 4
@@ -201,7 +200,6 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
                 items { +RagiumItems.CIRCUIT_BOARDS.advanced }
                 count = 2
             }
-            ingredient { items { +RagiumItems.SILICON_WAFER } }
             ingredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE)
                 count = 2
@@ -214,7 +212,6 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         // Industrial
         RagiumRecipeBuilders.assembling {
             ingredient { items { +RagiumItems.CIRCUIT_BOARDS.industrial } }
-            ingredient { items { +RagiumItems.SILICON_WAFER } }
             ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.DIAMOND) }
             result { +RagiumItems.CIRCUITS.industrial }
         }.save(exporter)

@@ -92,7 +92,7 @@ data object HTViewerRecipeHelper {
     }
 
     @JvmStatic
-    fun combineItem(holder: HTRecipeHolder<HTItemCombineRecipe.Basic>): HTDoubleToSingleViewerRecipe {
+    fun itemCombine(holder: HTRecipeHolder<HTItemCombineRecipe.Basic>): HTDoubleToSingleViewerRecipe {
         val (id: RecipeKey, recipe: HTItemCombineRecipe.Basic) = holder
         return HTDoubleToSingleViewerRecipe(
             id.identifier(),

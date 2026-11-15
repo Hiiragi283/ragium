@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "#c:ingots/invar",
+    "B": "#c:rods/wooden"
+  },
+  "pattern": [
+    "A A",
+    "ABA",
+    "A A"
+  ],
+  "result": {
+    "count": 48,
+    "id": "minecraft:rail"
+  }
+}

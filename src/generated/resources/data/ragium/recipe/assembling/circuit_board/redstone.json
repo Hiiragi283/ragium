@@ -2,12 +2,8 @@
   "type": "ragium:assembling",
   "ingredients": [
     {
-      "count": 6,
-      "items": "#c:ingots/gold"
-    },
-    {
       "count": 1,
-      "items": "#c:rods/wooden"
+      "items": "minecraft:smooth_stone_slab"
     },
     {
       "count": 1,
@@ -15,8 +11,8 @@
     }
   ],
   "result": {
-    "count": 9,
-    "id": "minecraft:powered_rail"
+    "count": 2,
+    "id": "ragium:circuit_board/redstone"
   },
   "time": 200
 }

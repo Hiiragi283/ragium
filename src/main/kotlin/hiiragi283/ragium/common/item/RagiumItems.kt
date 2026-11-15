@@ -167,6 +167,9 @@ data object RagiumItems {
     @JvmField
     val FLINT_SHARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("flint_shard")
 
+    @JvmField
+    val REDSTONE_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board/redstone")
+
     // Heat
     @JvmField
     val COAL_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem(RagiumMaterial.Fuel.COAL_COKE.materialName)
