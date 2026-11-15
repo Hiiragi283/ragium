@@ -3,6 +3,8 @@ package hiiragi283.ragium.data.model
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.model.HTModelProvider
 import hiiragi283.lib.data.model.HTModelTemplates
+import hiiragi283.lib.data.model.buildTextureMapping
+import hiiragi283.lib.data.model.createBlock
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.resource.HTSimpleValueWithKey
@@ -74,9 +76,46 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         createEnergyPipe(generators)
 
         // Generator
-        generators.createTrivialBlock(RagiumBlocks.WATER_MILL.getOrThrow(), TexturedModel.CUBE_TOP)
-        generators.createTrivialBlock(RagiumBlocks.SOLID_BOILER.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
-        generators.createTrivialBlock(RagiumBlocks.SOLAR_BOILER.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
+        generators.createSimple(RagiumBlocks.WATER_MILL, TexturedModel.CUBE_TOP)
+        RagiumBlocks.SOLID_BOILER.let { boiler ->
+            generators.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(boiler.getOrThrow())
+                    .with(
+                        PropertyDispatch.initial(RagiumBlockStateProperties.IS_ACTIVE)
+                            .select(
+                                false,
+                                generators.plainVariant(
+                                    boiler,
+                                    ModelTemplates.CUBE_BOTTOM_TOP,
+                                    buildTextureMapping(TextureMapping.cubeBottomTop(boiler.getOrThrow())) {
+                                        put(TextureSlot.BOTTOM, Material(vanillaId(HTConstants.BLOCK, "bricks")))
+                                    },
+                                ),
+                            )
+                            .select(
+                                true,
+                                BlockModelGenerators.plainVariant(
+                                    ModelTemplates.CUBE_BOTTOM_TOP.createBlock(
+                                        boiler,
+                                        buildTextureMapping(TextureMapping.cubeBottomTop(boiler.getOrThrow())) {
+                                            put(TextureSlot.SIDE, Material(boiler.blockId().withSuffix("_side_active")))
+                                            put(TextureSlot.BOTTOM, Material(vanillaId(HTConstants.BLOCK, "bricks")))
+                                        },
+                                        generators.modelOutput,
+                                        "_active",
+                                    ),
+                                ),
+                            ),
+                    ),
+            )
+        }
+        generators.createSimple(
+            RagiumBlocks.SOLAR_BOILER,
+            ModelTemplates.CUBE_BOTTOM_TOP,
+            buildTextureMapping(TextureMapping.cubeBottomTop(RagiumBlocks.SOLAR_BOILER.getOrThrow())) {
+                put(TextureSlot.BOTTOM, Material(vanillaId(HTConstants.BLOCK, "bricks")))
+            },
+        )
         createDynamoBlock(generators, RagiumBlocks.STEAM_DYNAMO)
         createDynamoBlock(generators, RagiumBlocks.COMBUSTION_DYNAMO)
         // Processor
@@ -119,11 +158,11 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         }
         // Storage
         for (blockItem: HTSimpleValueWithKey<Block> in RagiumBlocks.TANKS) {
-            generators.createTrivialBlock(blockItem.getOrThrow(), HTModelTemplates.Providers.TANK_TEMPLATE)
+            generators.createSimple(blockItem, HTModelTemplates.Providers.TANK_TEMPLATE)
         }
         // Misc
-        generators.createTrivialBlock(RagiumBlocks.UPGRADE_STATION.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
-        generators.createTrivialBlock(RagiumBlocks.ENCHANTMENT_ABSORBER.getOrThrow(), TexturedModel.CUBE_TOP_BOTTOM)
+        generators.createSimple(RagiumBlocks.UPGRADE_STATION, TexturedModel.CUBE_TOP_BOTTOM)
+        generators.createSimple(RagiumBlocks.ENCHANTMENT_ABSORBER, TexturedModel.CUBE_TOP_BOTTOM)
     }
 
     private fun createEnergyPipe(generators: BlockModelGenerators) {
@@ -176,12 +215,10 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         )
     }
 
-    private fun textureMapping(machineType: HTMachineType): TextureMapping = TextureMapping()
-        .put(TextureSlot.TOP, Material(RagiumBlocks.MACHINE_CASINGS.basic.blockId()))
-        .put(
-            TextureSlot.SIDE,
-            Material(RagiumAPI.id(HTConstants.BLOCK, RagiumConstants.MACHINE, "${machineType.materialName}_side")),
-        )
+    private fun textureMapping(machineType: HTMachineType): TextureMapping = buildTextureMapping {
+        put(TextureSlot.TOP, Material(RagiumBlocks.MACHINE_CASINGS.basic.blockId()))
+        put(TextureSlot.SIDE, Material(RagiumAPI.id(HTConstants.BLOCK, RagiumConstants.MACHINE, "${machineType.materialName}_side")))
+    }
 
     private fun registerItemModels(generators: ItemModelGenerators) {
         val handheld: Set<HTSimpleValueWithKey<Item>> = buildSet {

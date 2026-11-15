@@ -16,6 +16,7 @@ import net.minecraft.client.data.models.model.ModelTemplate
 import net.minecraft.client.data.models.model.ModelTemplates
 import net.minecraft.client.data.models.model.TextureMapping
 import net.minecraft.client.data.models.model.TextureSlot
+import net.minecraft.client.data.models.model.TexturedModel
 import net.minecraft.client.resources.model.sprite.Material
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.Identifier
@@ -37,6 +38,8 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
 
     //    Block    //
 
+    // ModelTemplate
+
     /**
      * @since 26.1.8
      */
@@ -51,15 +54,35 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @since 26.1.8
      */
     fun BlockModelGenerators.createSimple(block: HTSimpleValueWithKey<Block>, template: ModelTemplate, mapping: TextureMapping) {
-        this.createSimple(block.getOrThrow(), this.plainVariant(block, template, mapping))
+        this.createSimple(block, this.plainVariant(block, template, mapping))
     }
+
+    // TexturedModel
+
+    /**
+     * @since 26.1.14
+     */
+    fun BlockModelGenerators.plainVariant(block: HTSimpleValueWithKey<Block>, provider: TexturedModel.Provider): MultiVariant =
+        BlockModelGenerators.plainVariant(provider.create(block, this.modelOutput))
+
+    /**
+     * ブロックJSONを生成します。
+     * @param block ブロックのインスタンス
+     * @param provider 使用するモデルのテンプレート
+     * @since 26.1.14
+     */
+    fun BlockModelGenerators.createSimple(block: HTSimpleValueWithKey<Block>, provider: TexturedModel.Provider) {
+        this.createSimple(block, this.plainVariant(block, provider))
+    }
+
+    // Identifier
 
     /**
      * ブロックJSONを生成します。
      * @param block ブロックのインスタンス
      * @param modelId 使用するモデルのID
      */
-    fun BlockModelGenerators.createSimple(block: Block, modelId: Identifier) {
+    fun BlockModelGenerators.createSimple(block: HTSimpleValueWithKey<Block>, modelId: Identifier) {
         this.createSimple(block, BlockModelGenerators.plainVariant(modelId))
     }
 
@@ -68,9 +91,11 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @param block ブロックの提供元
      * @param variant マルチパート形式のヴァリアント
      */
-    fun BlockModelGenerators.createSimple(block: Block, variant: MultiVariant) {
-        this.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant))
+    fun BlockModelGenerators.createSimple(block: HTSimpleValueWithKey<Block>, variant: MultiVariant) {
+        this.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block.getOrThrow(), variant))
     }
+
+    // Decoration
 
     /**
      * @since 26.1.8
@@ -95,10 +120,11 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
         bottom: Material,
     ) {
         val slab: SlabBlock = block.getOrThrow()
-        val mapping: TextureMapping = TextureMapping().put(
-            TextureSlot.TOP,
-            top,
-        ).put(TextureSlot.BOTTOM, bottom).put(TextureSlot.SIDE, side)
+        val mapping: TextureMapping = buildTextureMapping {
+            put(TextureSlot.TOP, top)
+            put(TextureSlot.BOTTOM, bottom)
+            put(TextureSlot.SIDE, side)
+        }
         val modelId: Identifier = ModelTemplates.SLAB_BOTTOM.createBlock(block, mapping, modelOutput)
 
         blockStateOutput.accept(
@@ -117,10 +143,11 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      */
     fun BlockModelGenerators.createStairs(block: HTValueWithKey<Block, StairBlock>, top: Material, side: Material, bottom: Material) {
         val stairs: StairBlock = block.getOrThrow()
-        val mapping: TextureMapping = TextureMapping()
-            .put(TextureSlot.TOP, top)
-            .put(TextureSlot.BOTTOM, bottom)
-            .put(TextureSlot.SIDE, side)
+        val mapping: TextureMapping = buildTextureMapping {
+            put(TextureSlot.TOP, top)
+            put(TextureSlot.BOTTOM, bottom)
+            put(TextureSlot.SIDE, side)
+        }
         val modelId: Identifier = ModelTemplates.STAIRS_STRAIGHT.createBlock(block, mapping, modelOutput)
 
         blockStateOutput.accept(
@@ -139,7 +166,7 @@ abstract class HTModelProvider(output: PackOutput, modId: String) : ModelProvide
      * @since 26.1.8
      */
     fun BlockModelGenerators.createWall(block: HTValueWithKey<Block, WallBlock>, wall: Material) {
-        val mapping: TextureMapping = TextureMapping().put(TextureSlot.WALL, wall)
+        val mapping: TextureMapping = buildTextureMapping { put(TextureSlot.WALL, wall) }
         this.blockStateOutput.accept(
             BlockModelGenerators.createWall(
                 block.getOrThrow(),

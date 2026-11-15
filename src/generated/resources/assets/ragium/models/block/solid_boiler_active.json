@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/bricks",
+    "side": "ragium:block/solid_boiler_side_active",
+    "top": "ragium:block/solid_boiler_top"
+  }
+}

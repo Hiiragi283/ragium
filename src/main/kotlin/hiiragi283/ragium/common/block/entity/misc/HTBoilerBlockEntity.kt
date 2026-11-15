@@ -33,7 +33,6 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.transaction.Transaction
-import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTBaseMachineBlockEntity(type, pos, state) {
     companion object {
@@ -55,7 +54,7 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
     }
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = useTransaction { transaction: Transaction ->
-        if (!isBurning(transaction)) return false
+        useTransaction(transaction) { sub: Transaction -> if (!isBurning(sub)) return false }
 
         val waterToConsume: Int = RagiumConfig.SERVER.generator.boilerWaterPerTick.get()
         val waterExtracted: Int = waterTank.extract(WATER_RESOURCE, waterToConsume, transaction, HTTransferAccess.INTERNAL)
@@ -72,7 +71,7 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
         }
     }
 
-    protected abstract fun isBurning(transaction: TransactionContext): Boolean
+    protected abstract fun isBurning(transaction: Transaction): Boolean
 
     //    Solid    //
 
@@ -160,7 +159,7 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
             }
         }
 
-        override fun isBurning(transaction: TransactionContext): Boolean {
+        override fun isBurning(transaction: Transaction): Boolean {
             val level: Level = this.level ?: return false
             if (progress <= 0) {
                 val burnTime: Int = fuelSlot.resource.toStack(1).getBurnTime(null, level.fuelValues())
@@ -169,6 +168,7 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
                 if (extracted == 1) {
                     this.maxProgress = burnTime
                     this.progress = maxProgress
+                    transaction.commit()
                 } else {
                     return false
                 }
@@ -210,6 +210,6 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
             widgetHolder.track(steamTank)
         }
 
-        override fun isBurning(transaction: TransactionContext): Boolean = this.level?.canSeeSky(blockPos.above()) ?: false
+        override fun isBurning(transaction: Transaction): Boolean = this.level?.canSeeSky(blockPos.above()) ?: false
     }
 }

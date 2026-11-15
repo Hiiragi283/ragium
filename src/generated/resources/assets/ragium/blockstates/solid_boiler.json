@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "is_active=false": {
       "model": "ragium:block/solid_boiler"
+    },
+    "is_active=true": {
+      "model": "ragium:block/solid_boiler_active"
     }
   }
 }
