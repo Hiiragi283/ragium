@@ -52,15 +52,15 @@ abstract class HTResourceInputSlot<
         return ingredient.getMatchingStack(getStoredInput())
     }*/
 
-    final override fun use(input: INSTANCE?, transaction: TransactionContext): HTInputHandler.UseResult {
+    final override fun use(input: INSTANCE?, transaction: TransactionContext): HTInputSlot.UseResult {
         if (input == null || isEmpty(input)) {
-            return HTInputHandler.UseResult.EMPTY
+            return HTInputSlot.UseResult.EMPTY
         }
         val amount: Int = getAmount(input)
         val extracted: Int = slot.extract(asResource(input), amount, transaction, HTTransferAccess.INTERNAL)
         return when {
-            extracted == amount -> HTInputHandler.UseResult.CONSUMED
-            else -> HTInputHandler.UseResult.NOT_CONSUMED
+            extracted == amount -> HTInputSlot.UseResult.CONSUMED
+            else -> HTInputSlot.UseResult.NOT_CONSUMED
         }
     }
 }

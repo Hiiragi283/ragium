@@ -6,7 +6,6 @@ import hiiragi283.lib.recipe.base.HTFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemCombineRecipe
 import hiiragi283.lib.recipe.base.HTItemToRecipe
-import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
 import net.minecraft.core.BlockPos
@@ -39,16 +38,6 @@ data object HTRecipeCacheHelper {
     class SingleItem<RECIPE : HTItemToRecipe<*>>(lookup: HTRecipeLookup<RECIPE>) :
         HTSingleRecipeCache.Typed<Item, ItemInstance, RECIPE>(lookup, HTItemToRecipe<*>::ingredient) {
         override fun isEmpty(input: ItemInstance): Boolean = HTIngredientHelper.isEmpty(input)
-    }
-
-    /**
-     * 複数のアイテムに対する[HTSingleRecipeCache]の実装クラスです。
-     */
-    class MultiItem<RECIPE : HTSizedShapelessRecipe>(lookup: HTRecipeLookup<RECIPE>) :
-        HTSingleRecipeCache<List<ItemInstance>, RECIPE>(lookup) {
-        override fun isEmpty(input: List<ItemInstance>): Boolean = HTIngredientHelper.isEmpty(input)
-
-        override fun matches(recipe: RECIPE, input: List<ItemInstance>): Boolean = recipe.test(input)
     }
 
     //    Double    //

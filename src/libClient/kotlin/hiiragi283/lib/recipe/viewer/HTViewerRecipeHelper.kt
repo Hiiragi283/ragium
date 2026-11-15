@@ -9,7 +9,6 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemCombineRecipe
 import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemToMultiItemRecipe
-import hiiragi283.lib.recipe.base.HTSizedShapelessRecipe
 import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.recipe.display.displayOrEmpty
 import hiiragi283.lib.recipe.result.HTItemOrFluidResult
@@ -122,18 +121,6 @@ data object HTViewerRecipeHelper {
             id.identifier(),
             recipe.itemIngredient.display(),
             recipe.fluidIngredient.display(),
-            recipe.result.display(),
-            recipe.progressData,
-        )
-    }
-
-    // Multi
-    @JvmStatic
-    fun sizedShapeless(holder: HTRecipeHolder<HTSizedShapelessRecipe.Basic>): HTMultiToSingleViewerRecipe {
-        val (id: RecipeKey, recipe: HTSizedShapelessRecipe.Basic) = holder
-        return HTMultiToSingleViewerRecipe(
-            id.identifier(),
-            recipe.ingredients.map(HTDisplayableContent::display),
             recipe.result.display(),
             recipe.progressData,
         )

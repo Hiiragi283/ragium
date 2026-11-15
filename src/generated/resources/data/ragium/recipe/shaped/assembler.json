@@ -5,7 +5,7 @@
     "A": "#c:circuits/advanced",
     "B": "ragium:machine_parts/mechanical",
     "C": "minecraft:crafter",
-    "D": "ragium:machine_casing/industrial"
+    "D": "ragium:machine_casing/advanced"
   },
   "pattern": [
     "ABA",

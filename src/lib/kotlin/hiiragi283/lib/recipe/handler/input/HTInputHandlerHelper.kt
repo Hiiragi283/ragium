@@ -2,13 +2,10 @@ package hiiragi283.lib.recipe.handler.input
 
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.transfer.HTResourceSlot
-import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.fluid.getFluidStack
-import hiiragi283.lib.transfer.fluid.toResourcePair
 import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.lib.transfer.item.getItemStack
-import hiiragi283.lib.transfer.item.toResourcePair
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
 import net.minecraft.world.item.ItemStack
@@ -19,7 +16,6 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.item.ItemResource
-import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 /**
  * @author Hiiragi Tsubasa
@@ -51,30 +47,6 @@ data object HTInputHandlerHelper {
         override fun getStoredInput(): FluidStack = slot.getFluidStack()
     }
 
-    /**
-     * 複数の[HTFluidTank]を[液体][FluidInstance]向けの[HTInputHandler]に変換します。
-     * @since 26.1.11
-     */
-    @JvmStatic
-    fun forFluids(tanks: List<HTFluidTank>): HTInputHandler<FluidInstance> = MultiFluids(tanks)
-
-    @JvmRecord
-    private data class MultiFluids(private val tanks: List<HTFluidTank>) : HTInputHandler<FluidInstance> {
-        override fun use(input: FluidInstance?, transaction: TransactionContext): HTInputHandler.UseResult {
-            if (input == null || HTIngredientHelper.isEmpty(input)) return HTInputHandler.UseResult.EMPTY
-            val (resource: FluidResource, amount: Int) = HTIngredientHelper.unwrap(input).toResourcePair()
-            var extracted = 0
-            for (tank: HTFluidTank in tanks) {
-                extracted += tank.extract(resource, amount - extracted, transaction, HTTransferAccess.INTERNAL)
-                if (extracted == amount) break
-            }
-            return when (extracted) {
-                amount -> HTInputHandler.UseResult.CONSUMED
-                else -> HTInputHandler.UseResult.NOT_CONSUMED
-            }
-        }
-    }
-
     //    Item    //
 
     /**
@@ -98,29 +70,5 @@ data object HTInputHandlerHelper {
         }
 
         override fun getStoredInput(): ItemStack = slot.getItemStack()
-    }
-
-    /**
-     * 複数の[HTItemSlot]を[アイテム][ItemInstance]向けの[HTInputHandler]に変換します。
-     * @since 26.1.11
-     */
-    @JvmStatic
-    fun forItems(slots: List<HTItemSlot>): HTInputHandler<ItemInstance> = MultiItems(slots)
-
-    @JvmRecord
-    private data class MultiItems(private val slots: List<HTItemSlot>) : HTInputHandler<ItemInstance> {
-        override fun use(input: ItemInstance?, transaction: TransactionContext): HTInputHandler.UseResult {
-            if (input == null || HTIngredientHelper.isEmpty(input)) return HTInputHandler.UseResult.EMPTY
-            val (resource: ItemResource, amount: Int) = HTIngredientHelper.unwrap(input).toResourcePair()
-            var extracted = 0
-            for (slot: HTItemSlot in slots) {
-                extracted += slot.extract(resource, amount - extracted, transaction, HTTransferAccess.INTERNAL)
-                if (extracted == amount) break
-            }
-            return when (extracted) {
-                amount -> HTInputHandler.UseResult.CONSUMED
-                else -> HTInputHandler.UseResult.NOT_CONSUMED
-            }
-        }
     }
 }

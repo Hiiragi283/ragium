@@ -9,7 +9,6 @@ import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.base.HTRecipeFactories
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
-import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
 import hiiragi283.lib.recipe.ingredient.HTItemCatalyst
 import hiiragi283.lib.recipe.input.HTFluidRecipeInput
 import hiiragi283.lib.serialization.codec.HTCodecs
@@ -63,12 +62,13 @@ data class RTFluidReactingRecipe(
         val SERIALIZER: RecipeSerializer<RTFluidReactingRecipe> = RecipeSerializer(CODEC, STREAM_CODEC)
     }
 
-    override fun test(input: List<FluidInstance>, catalyst: ItemInstance): Boolean =
-        HTIngredientHelper.match(ingredients, input) && this.catalyst.test(catalyst)
+    override fun test(input: List<FluidInstance>, catalyst: ItemInstance): Boolean = TODO()
+    // HTIngredientHelper.match(ingredients, input) && this.catalyst.test(catalyst)
 
     override fun apply(input: List<FluidInstance>, catalyst: ItemInstance): HTFluidSeparatingRecipe.Output = result.create()
 
-    override fun getMatchingStack(input: List<FluidInstance>): List<FluidInstance> = HTIngredientHelper.getMatchingStacks(ingredients, input)
+    override fun getMatchingStack(input: List<FluidInstance>): List<FluidInstance> = TODO()
+    // HTIngredientHelper.getMatchingStacks(ingredients, input)
 
     override fun produce(input: Input): HTFluidSeparatingRecipe.Output = apply(input.fluids, input.catalyst)
 

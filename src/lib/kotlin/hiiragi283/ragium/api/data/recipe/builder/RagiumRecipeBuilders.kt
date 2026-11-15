@@ -13,7 +13,6 @@ import hiiragi283.lib.data.recipe.builder.HTItemToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTLocationToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTSingleRecipeBuilder
-import hiiragi283.lib.data.recipe.builder.HTSizedShapelessRecipeBuilder
 import hiiragi283.lib.recipe.ingredient.HTFluidIngredient
 import hiiragi283.lib.recipe.ingredient.HTItemIngredient
 import hiiragi283.lib.recipe.result.HTItemResult
@@ -127,11 +126,11 @@ data object RagiumRecipeBuilders {
 
     // Heat
     @JvmStatic
-    inline fun alloying(builderAction: HTSizedShapelessRecipeBuilder<RTAlloyingRecipe>.() -> Unit): HTSizedShapelessRecipeBuilder<RTAlloyingRecipe> {
+    inline fun alloying(builderAction: HTItemCombineRecipeBuilder<RTAlloyingRecipe>.() -> Unit): HTItemCombineRecipeBuilder<RTAlloyingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTSizedShapelessRecipeBuilder(RagiumConstants.ALLOYING, ::RTAlloyingRecipe).apply(builderAction)
+        return HTItemCombineRecipeBuilder(RagiumConstants.ALLOYING, ::RTAlloyingRecipe).apply(builderAction)
     }
 
     @JvmStatic

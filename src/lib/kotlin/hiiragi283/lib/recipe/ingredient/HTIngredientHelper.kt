@@ -76,7 +76,7 @@ data object HTIngredientHelper {
         else -> FluidStackTemplate(instance.typeHolder(), newAmount, HTDataComponentHelper.createPatch(instance))
     }
 
-    /**
+    /*/**
      * @since 26.1.11
      */
     @JvmName("matchFluids")
@@ -133,7 +133,7 @@ data object HTIngredientHelper {
             return listOf()
         }
         return results
-    }
+    }*/
 
     //    Item    //
 
@@ -188,7 +188,7 @@ data object HTIngredientHelper {
         else -> ItemStackTemplate(instance.typeHolder(), newCount, HTDataComponentHelper.createPatch(instance))
     }
 
-    /**
+    /*/**
      * @since 26.1.11
      */
     @JvmName("matchItems")
@@ -245,5 +245,5 @@ data object HTIngredientHelper {
             return listOf()
         }
         return results
-    }
+    }*/
 }

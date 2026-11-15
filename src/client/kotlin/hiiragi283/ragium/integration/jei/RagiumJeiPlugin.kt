@@ -11,7 +11,6 @@ import hiiragi283.lib.integration.jei.category.HTItemSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToItemAndFluidViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToMultiViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToSingleViewerRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTSizedShapelessRecipeCategory
 import hiiragi283.lib.integration.jei.ingredient.HTIngredientTypes
 import hiiragi283.lib.item.HTPotionBasedItem
 import hiiragi283.lib.item.alchemy.HTPotionHelper
@@ -162,10 +161,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 guiHelper.createDrawableItemLike(RagiumBlocks.PRESS_MACHINE),
             ),
             // Heat
-            HTSizedShapelessRecipeCategory(
+            HTDoubleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.ALLOYING,
                 RagiumTranslation.RECIPE_CATEGORY_ALLOYING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.ALLOY_SMELTER),
+                HTBackgroundType.EXTRA_INPUT,
             ),
             HTSingleToItemAndFluidViewerRecipeCategory(
                 RagiumJeiRecipeTypes.DRYING,
@@ -269,7 +269,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.FILLING, RagiumRecipeLookups.FILLING, HTViewerRecipeHelper::itemAndFluidToItem)
         registration.addRecipes(RagiumJeiRecipeTypes.PRESSING, RagiumRecipeLookups.PRESSING, HTViewerRecipeHelper::catalysedSingleToSingle)
         // Heat
-        registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING, RagiumRecipeLookups.ALLOYING, HTViewerRecipeHelper::sizedShapeless)
+        registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING, RagiumRecipeLookups.ALLOYING, HTViewerRecipeHelper::itemCombine)
         registration.addRecipes(RagiumJeiRecipeTypes.DRYING, RagiumRecipeLookups.DRYING, HTViewerRecipeHelper::singleToItemAndFluid)
         registration.addRecipes(RagiumJeiRecipeTypes.FREEZING, RagiumRecipeLookups.FREEZING, HTViewerRecipeHelper::catalysedSingleToSingle)
         registration.addRecipes(RagiumJeiRecipeTypes.MELTING, RagiumRecipeLookups.MELTING, HTViewerRecipeHelper::singleToSingle)

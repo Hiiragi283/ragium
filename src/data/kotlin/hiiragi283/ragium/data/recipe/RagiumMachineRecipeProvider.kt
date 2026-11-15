@@ -184,6 +184,14 @@ class RagiumMachineRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         VanillaRecipeBuilders.shaped {
             crossLayered()
+            define('A') { +holderSet(CommonTagPrefixes.CIRCUITS, HTTieredContents.MATERIAL.advanced) }
+            define('B') { items { +MachineParts.MECHANICAL } }
+            define('C') { items { +Items.CRAFTER } }
+            define('D') { items { +RagiumBlocks.MACHINE_CASINGS.advanced } }
+            result { +RagiumBlocks.ASSEMBLER }
+        }.save(exporter)
+        VanillaRecipeBuilders.shaped {
+            crossLayered()
             define('A') { items { +Items.HOPPER } }
             define('B') { items { +MachineParts.MECHANICAL } }
             define('C') { items { +RagiumBlocks.EXTRACTOR } }
@@ -205,15 +213,6 @@ class RagiumMachineRecipeProvider(packOutput: PackOutput, future: CompletableFut
             define('C') { items { +RagiumBlocks.COMPRESSOR } }
             define('D') { items { +RagiumBlocks.MACHINE_CASINGS.advanced } }
             result { +RagiumBlocks.PRESS_MACHINE }
-        }.save(exporter)
-
-        VanillaRecipeBuilders.shaped {
-            crossLayered()
-            define('A') { +holderSet(CommonTagPrefixes.CIRCUITS, HTTieredContents.MATERIAL.advanced) }
-            define('B') { items { +MachineParts.MECHANICAL } }
-            define('C') { items { +Items.CRAFTER } }
-            define('D') { items { +RagiumBlocks.MACHINE_CASINGS.industrial } }
-            result { +RagiumBlocks.ASSEMBLER }
         }.save(exporter)
         // Heat
         VanillaRecipeBuilders.shapeless {

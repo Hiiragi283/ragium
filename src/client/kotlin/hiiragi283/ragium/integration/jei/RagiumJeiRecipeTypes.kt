@@ -5,7 +5,6 @@ import hiiragi283.lib.recipe.viewer.HTCatalysedSingleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTFluidSeparatingViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
-import hiiragi283.lib.recipe.viewer.HTMultiToSingleViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTSingleToItemAndFluidViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTSingleToMultiViewerRecipe
 import hiiragi283.lib.recipe.viewer.HTSingleToSingleViewerRecipe
@@ -46,7 +45,7 @@ data object RagiumJeiRecipeTypes {
 
     // Heat
     @JvmField
-    val ALLOYING: IRecipeType<HTMultiToSingleViewerRecipe> = create(RagiumConstants.ALLOYING)
+    val ALLOYING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.ALLOYING)
 
     @JvmField
     val DRYING: IRecipeType<HTSingleToItemAndFluidViewerRecipe> = create(RagiumConstants.DRYING)
