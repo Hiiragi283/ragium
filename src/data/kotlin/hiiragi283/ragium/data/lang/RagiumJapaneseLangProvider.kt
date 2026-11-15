@@ -174,6 +174,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.SILICON_BOULE, "シリコンブール")
         add(RagiumItems.SILICON_WAFER, "シリコンウェハ")
         add(RagiumItems.BLANK_CIRCUIT_BOARD, "空の回路基板")
+        add(RagiumItems.PHOTOVOLTAIC_CELL, "太陽電池セル")
         add(RagiumItems.BLANK_MUSIC_DISC, "空の音楽ディスク")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
         add(RagiumItems.WITHER_DOLL, "ウィザー人形")

@@ -281,5 +281,16 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
                 count = 12
             }
         }.save(exporter)
+
+        // Molten Si + Lapis -> Photovoltaic Cell
+        RagiumRecipeBuilders.autoclaving {
+            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.LAPIS) }
+            fluidIngredient {
+                +holderSet(RagiumFluids.MOLTEN_SILICON)
+                amount = 90 * 2
+            }
+            result { +RagiumItems.PHOTOVOLTAIC_CELL }
+            time *= 4
+        }.save(exporter)
     }
 }

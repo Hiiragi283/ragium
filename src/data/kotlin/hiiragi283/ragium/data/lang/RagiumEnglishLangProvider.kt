@@ -178,6 +178,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.SILICON_BOULE, "Silicon Boule")
         add(RagiumItems.SILICON_WAFER, "Silicon Wafer")
         add(RagiumItems.BLANK_CIRCUIT_BOARD, "Empty Circuit Board")
+        add(RagiumItems.PHOTOVOLTAIC_CELL, "Photovoltaic Cell")
         add(RagiumItems.BLANK_MUSIC_DISC, "Blank Music Disc")
         add(RagiumItems.ELDER_HEART, "Elder Heart")
         add(RagiumItems.WITHER_DOLL, "Wither Doll")

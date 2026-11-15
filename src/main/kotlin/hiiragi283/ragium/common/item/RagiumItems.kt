@@ -248,6 +248,9 @@ data object RagiumItems {
         HTTieredContents.NAMES.map { name: String -> REGISTER.registerSimpleItem("circuit/$name") }
 
     @JvmField
+    val PHOTOVOLTAIC_CELL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("photovoltaic_cell")
+
+    @JvmField
     val BLANK_MUSIC_DISC: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_music_disc")
 
     // Arcane
