@@ -64,6 +64,7 @@ data object RagiumItems {
         REGISTER.addAlias("electric_circuit", "circuit_board/advanced")
         REGISTER.addAlias("circuit_board/elite", "circuit_board/industrial")
         REGISTER.addAlias("circuit/elite", "circuit/industrial")
+        REGISTER.addAlias("diamond_wafer", "silicon_wafer")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -239,9 +240,6 @@ data object RagiumItems {
     @JvmField
     val CIRCUITS: HTTieredContents<HTSimpleDeferredItem> =
         HTTieredContents.NAMES.map { name: String -> REGISTER.registerSimpleItem("circuit/$name") }
-
-    @JvmField
-    val DIAMOND_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("diamond_wafer")
 
     @JvmField
     val BLANK_MUSIC_DISC: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_music_disc")

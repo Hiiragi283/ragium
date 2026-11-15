@@ -30,7 +30,6 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         circuitBoard()
         circuit()
         silicon()
-        diamond()
     }
 
     override fun getName(): String = "Electronics Recipes"
@@ -284,19 +283,6 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
                 +RagiumItems.SILICON_WAFER
                 count = 12
             }
-        }.save(exporter)
-    }
-
-    private fun diamond() {
-        // Carbon -> Diamond Wafer
-        // TODO: CVD法
-        RagiumRecipeBuilders.engraving {
-            ingredient {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.CARBON)
-                count = 8
-            }
-            catalyst { items { +RagiumItems.DIAMOND_LENS } }
-            result { +RagiumItems.DIAMOND_WAFER }
         }.save(exporter)
     }
 }
