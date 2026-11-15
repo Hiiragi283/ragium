@@ -6,7 +6,7 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.lib.util.fixedFraction
 import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTProgressWidget
+import hiiragi283.ragium.common.gui.widget.HTArrowWidget
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -23,7 +23,7 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
     protected val progression: Float get() = fixedFraction(maxProgress - progress, maxProgress)
 
     fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(3.75)) {
-        widgetHolder += HTProgressWidget(::progression, x, HTSlotHelper.getSlotPosY(1))
+        widgetHolder += HTArrowWidget.Right(::progression, x, HTSlotHelper.getSlotPosY(1))
     }
 
     override fun writeValue(output: ValueOutput) {

@@ -12,9 +12,9 @@ import hiiragi283.lib.util.fixedFraction
 import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.gui.widget.HTArrowWidget
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
 import hiiragi283.ragium.common.gui.widget.HTItemWidget
-import hiiragi283.ragium.common.gui.widget.HTProgressWidget
 import hiiragi283.ragium.common.transfer.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
@@ -97,7 +97,7 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
 
         override fun setupMenu(widgetHolder: HTWidgetHolder) {
             // progress
-            widgetHolder += HTProgressWidget(::progression, HTSlotHelper.getSlotPosX(3.75), HTSlotHelper.getSlotPosY(1))
+            widgetHolder += HTArrowWidget.Right(::progression, HTSlotHelper.getSlotPosX(3.75), HTSlotHelper.getSlotPosY(1))
             // inputs
             widgetHolder += HTItemWidget.Container(
                 fuelSlot,
@@ -191,7 +191,7 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
 
         override fun setupMenu(widgetHolder: HTWidgetHolder) {
             // progress
-            widgetHolder += HTProgressWidget({ 0f }, HTSlotHelper.getSlotPosX(3.75), HTSlotHelper.getSlotPosY(1))
+            widgetHolder += HTArrowWidget.Right({ 0f }, HTSlotHelper.getSlotPosX(3.75), HTSlotHelper.getSlotPosY(1))
             // inputs
             widgetHolder += HTFluidWidget.Tank(
                 waterTank,

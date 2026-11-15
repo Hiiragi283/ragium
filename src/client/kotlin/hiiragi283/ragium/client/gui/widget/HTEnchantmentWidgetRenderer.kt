@@ -17,7 +17,7 @@ import net.minecraft.world.item.Items
 class HTEnchantmentWidgetRenderer(gui: HTGuiAccess, widget: HTEnchantmentWidget) : HTAbstractWidgetRenderer<HTEnchantmentWidget>(gui, widget) {
     companion object {
         @JvmField
-        val BACKGROUND: Identifier = RagiumAPI.id(HTConstants.TEXTURES, HTConstants.GUI, "enchantment_slot_background.png")
+        val BACKGROUND: Identifier = RagiumAPI.id(HTConstants.TEXTURES, HTConstants.GUI, HTConstants.BACKGROUND, "enchantment_slot.png")
 
         @JvmField
         val ENCHANTED_BOOK = ItemStack(Items.ENCHANTED_BOOK)

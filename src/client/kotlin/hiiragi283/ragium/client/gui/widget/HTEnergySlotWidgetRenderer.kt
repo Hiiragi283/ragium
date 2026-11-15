@@ -17,7 +17,7 @@ class HTEnergySlotWidgetRenderer(gui: HTGuiAccess, widget: HTEnergySlotWidget) :
         val SPRITE: Identifier = RagiumAPI.id("energy_slot")
 
         @JvmField
-        val BACKGROUND: Identifier = RagiumAPI.id(HTConstants.TEXTURES, HTConstants.GUI, "energy_slot_background.png")
+        val BACKGROUND: Identifier = RagiumAPI.id(HTConstants.TEXTURES, HTConstants.GUI, HTConstants.BACKGROUND, "energy_slot.png")
     }
 
     override fun getBackgroundId(): Identifier = BACKGROUND

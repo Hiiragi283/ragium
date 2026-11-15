@@ -11,8 +11,8 @@ import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.lib.util.fixedFraction
 import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
+import hiiragi283.ragium.common.gui.widget.HTArrowWidget
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
-import hiiragi283.ragium.common.gui.widget.HTProgressWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicEnergyHandlerHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
@@ -32,7 +32,7 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
     val progression: Float get() = fixedFraction(progress, maxProgress)
 
     fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(3.75), y: Int = HTSlotHelper.getSlotPosY(1)) {
-        widgetHolder += HTProgressWidget(::progression, x, y)
+        widgetHolder += HTArrowWidget.Right(::progression, x, y)
     }
 
     protected fun updateProgress(maxProgress: Int) {

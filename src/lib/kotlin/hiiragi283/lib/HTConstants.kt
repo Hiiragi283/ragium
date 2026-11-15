@@ -22,6 +22,8 @@ data object HTConstants {
     const val TEXTURES = "textures"
     const val GUI = "gui"
 
+    const val BACKGROUND = "background"
+
     //    Item    //
 
     //    Mod ID    //

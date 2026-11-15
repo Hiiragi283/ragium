@@ -10,9 +10,9 @@ import hiiragi283.ragium.common.block.entity.HTBlockEntityWithMenu
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
+import hiiragi283.ragium.common.gui.widget.HTArrowWidget
 import hiiragi283.ragium.common.gui.widget.HTEnchantmentWidget
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
-import hiiragi283.ragium.common.gui.widget.HTProgressWidget
 import hiiragi283.ragium.common.transfer.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
@@ -70,7 +70,7 @@ class HTEnchantmentAbsorberBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotHelper.getSlotPosY(2),
         )
         // progress
-        widgetHolder += HTProgressWidget({ 0f }, HTSlotHelper.getSlotPosX(3.75), HTSlotHelper.getSlotPosY(1))
+        widgetHolder += HTArrowWidget.Right({ 0f }, HTSlotHelper.getSlotPosX(3.75), HTSlotHelper.getSlotPosY(1))
         // inputs
         widgetHolder += HTFluidWidget.Tank(
             inputTank,

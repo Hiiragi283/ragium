@@ -19,11 +19,11 @@ import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.client.gui.screen.HTWidgetContainerScreen
 import hiiragi283.ragium.client.gui.screen.tooltip.HTMemoryDiscClientTooltipComponent
+import hiiragi283.ragium.client.gui.widget.HTArrowWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTEnchantmentWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTItemWidgetRenderer
-import hiiragi283.ragium.client.gui.widget.HTProgressWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTWidgetRendererManager
 import hiiragi283.ragium.client.renderer.HTTankBlockEntityRenderer
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -86,7 +86,8 @@ data object RagiumClient : HTClientMod() {
         event.register(RagiumWidgetTypes.ENERGY.get(), ::HTEnergySlotWidgetRenderer)
         event.register(RagiumWidgetTypes.FLUID.get(), ::HTFluidWidgetRenderer)
         event.register(RagiumWidgetTypes.ITEM.get(), ::HTItemWidgetRenderer)
-        event.register(RagiumWidgetTypes.PROGRESS.get(), ::HTProgressWidgetRenderer)
+        event.register(RagiumWidgetTypes.ARROW_RIGHT.get(), HTArrowWidgetRenderer<*>::Right)
+        event.register(RagiumWidgetTypes.ARROW_LEFT.get(), HTArrowWidgetRenderer<*>::Left)
         event.register(RagiumWidgetTypes.TEXTURE.get()) { gui: HTGuiAccess, widget: HTTextureWidget ->
             Renderable { graphics: GuiGraphicsExtractor, _, _, _ ->
                 val (x: Int, y: Int, width: Int, height: Int) = widget.bounds

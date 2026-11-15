@@ -30,7 +30,10 @@ data object RagiumWidgetTypes {
     val ITEM: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTItemWidget>> = register(HTConstants.ITEM)
 
     @JvmField
-    val PROGRESS: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTProgressWidget>> = register("progress")
+    val ARROW_RIGHT: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTArrowWidget.Right>> = register("arrow/right")
+
+    @JvmField
+    val ARROW_LEFT: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTArrowWidget.Left>> = register("arrow/left")
 
     @JvmField
     val TEXTURE: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTTextureWidget>> = register("texture")
