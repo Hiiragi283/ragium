@@ -18,5 +18,5 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTItemToFluidBlock
         playSound(SoundEvents.LAVA_POP)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.melter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.melter
 }

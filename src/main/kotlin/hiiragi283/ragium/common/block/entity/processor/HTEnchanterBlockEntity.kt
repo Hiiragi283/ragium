@@ -18,5 +18,5 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTItemCombineBl
         playSound(SoundEvents.ENCHANTMENT_TABLE_USE)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.enchanter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.enchanter
 }

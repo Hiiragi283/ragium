@@ -99,5 +99,5 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createOutputHandler(): HTOutputHandler<ItemStack> = HTOutputHandlerHelper.forItem(outputSlot)
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.smelter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.smelter
 }

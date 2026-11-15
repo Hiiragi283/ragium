@@ -19,5 +19,5 @@ class HTAutoclaveBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.SPONGE_ABSORB)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.autoclave
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.autoclave
 }

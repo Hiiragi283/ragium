@@ -19,5 +19,5 @@ class HTPrinterBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.AMETHYST_BLOCK_BREAK)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.printer
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.printer
 }

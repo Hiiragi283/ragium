@@ -18,5 +18,5 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTFluidSeparatin
         playSound(SoundEvents.FIRE_EXTINGUISH)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.refinery
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.refinery
 }

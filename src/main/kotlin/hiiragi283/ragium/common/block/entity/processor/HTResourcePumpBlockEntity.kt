@@ -65,5 +65,5 @@ class HTResourcePumpBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.BUCKET_FILL)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.resourcePump
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.resourcePump
 }

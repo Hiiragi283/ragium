@@ -19,5 +19,5 @@ class HTCentrifugeBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.WIND_CHARGE_THROW)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.centrifuge
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.centrifuge
 }

@@ -88,5 +88,5 @@ class HTChemicalLaboBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false // TODO
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.chemicalLabo
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.chemicalLabo
 }

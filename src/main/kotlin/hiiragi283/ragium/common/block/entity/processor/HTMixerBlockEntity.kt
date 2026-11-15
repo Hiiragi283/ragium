@@ -18,5 +18,5 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTItemAndFluidToFlu
         playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.mixer
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.mixer
 }

@@ -20,5 +20,5 @@ class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBl
         playSound(SoundEvents.GRINDSTONE_USE)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.pulverizer
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.pulverizer
 }

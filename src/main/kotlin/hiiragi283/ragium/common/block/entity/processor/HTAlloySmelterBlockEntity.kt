@@ -19,5 +19,5 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.FIRE_EXTINGUISH)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.alloySmelter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.alloySmelter
 }

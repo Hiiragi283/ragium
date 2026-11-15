@@ -18,5 +18,5 @@ class HTElectrolyzerBlockEntity(pos: BlockPos, state: BlockState) : HTFluidSepar
         playSound(SoundEvents.FIREWORK_ROCKET_TWINKLE)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.electrolyzer
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.electrolyzer
 }

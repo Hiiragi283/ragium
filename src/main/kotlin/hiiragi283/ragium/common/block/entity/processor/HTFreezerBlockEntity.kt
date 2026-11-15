@@ -79,5 +79,5 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.BUCKET_FILL_POWDER_SNOW)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.freezer
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.freezer
 }

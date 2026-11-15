@@ -10,8 +10,8 @@ import hiiragi283.lib.HTConstants
 data object RagiumConstants {
     //    Blocks    //
 
-    const val DYNAMO = "dynamo"
     const val MACHINE = "machine"
+    const val DYNAMO = "dynamo"
     const val GENERATOR = "generator"
     const val PROCESSOR = "processor"
 

@@ -18,5 +18,5 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlo
         playSound(SoundEvents.SLIME_BLOCK_BREAK)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.extractor
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.extractor
 }

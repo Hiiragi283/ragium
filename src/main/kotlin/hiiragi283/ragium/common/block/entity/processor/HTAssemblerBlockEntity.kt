@@ -18,5 +18,5 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) : HTSizedShapeles
         playSound(SoundEvents.CRAFTER_CRAFT)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.assembler
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.assembler
 }

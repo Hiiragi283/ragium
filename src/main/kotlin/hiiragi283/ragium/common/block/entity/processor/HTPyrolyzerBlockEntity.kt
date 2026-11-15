@@ -18,5 +18,5 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) : HTItemSeparatin
         playSound(SoundEvents.BLAZE_DEATH)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.pyrolyzer
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.pyrolyzer
 }

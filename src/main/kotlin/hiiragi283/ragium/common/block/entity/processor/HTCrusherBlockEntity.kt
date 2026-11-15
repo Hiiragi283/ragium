@@ -18,5 +18,5 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItem
         playSound(SoundEvents.GRAVEL_BREAK)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.crusher
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.crusher
 }

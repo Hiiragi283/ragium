@@ -18,5 +18,5 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItem
         playSound(SoundEvents.BONE_MEAL_USE)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.planter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.planter
 }

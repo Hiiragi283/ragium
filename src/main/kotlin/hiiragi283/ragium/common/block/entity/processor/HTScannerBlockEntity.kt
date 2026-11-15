@@ -30,7 +30,7 @@ class HTScannerBlockEntity(pos: BlockPos, state: BlockState) : HTItemCombineBloc
         playSound(SoundEvents.RESPAWN_ANCHOR_CHARGE)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.scanner
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.scanner
 
     //    FakeRecipe    //
 

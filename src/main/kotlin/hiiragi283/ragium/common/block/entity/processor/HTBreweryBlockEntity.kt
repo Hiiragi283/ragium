@@ -19,5 +19,5 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.BREWING_STAND_BREW)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.brewery
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.brewery
 }

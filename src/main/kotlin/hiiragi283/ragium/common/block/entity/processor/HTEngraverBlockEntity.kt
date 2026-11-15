@@ -19,5 +19,5 @@ class HTEngraverBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.ALLAY_HURT)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.engraver
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.engraver
 }

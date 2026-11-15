@@ -19,5 +19,5 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.cuttingMachine
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.cuttingMachine
 }

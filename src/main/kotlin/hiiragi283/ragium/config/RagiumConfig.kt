@@ -66,7 +66,7 @@ data object RagiumConfig {
         val generator: Generator
 
         @JvmField
-        val machine: Machine
+        val processor: Processor
 
         // Storage
         @JvmField
@@ -87,9 +87,9 @@ data object RagiumConfig {
             generator = Generator(builder)
             builder.pop()
 
-            builder.push(RagiumConstants.MACHINE)
+            builder.push(RagiumConstants.PROCESSOR)
             builder.comment("Configurations for Machines")
-            machine = Machine(builder)
+            processor = Processor(builder)
             builder.pop()
 
             builder.push("storage")
@@ -141,7 +141,7 @@ data object RagiumConfig {
             }
         }
 
-        class Machine(builder: ModConfigSpec.Builder) {
+        class Processor(builder: ModConfigSpec.Builder) {
             // Mechanical
             @JvmField
             val assembler: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.ASSEMBLER)

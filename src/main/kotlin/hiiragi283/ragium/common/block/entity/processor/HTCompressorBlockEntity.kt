@@ -18,5 +18,5 @@ class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBl
         playSound(SoundEvents.ANVIL_LAND)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.compressor
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.compressor
 }

@@ -19,5 +19,5 @@ class HTArcaneTransformerBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.RESPAWN_ANCHOR_CHARGE)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.arcaneTransformer
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.arcaneTransformer
 }

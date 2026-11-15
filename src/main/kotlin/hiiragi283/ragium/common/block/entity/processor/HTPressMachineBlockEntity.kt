@@ -19,5 +19,5 @@ class HTPressMachineBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.PISTON_EXTEND)
     }
 
-    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.machine.pressMachine
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.pressMachine
 }
