@@ -12,7 +12,6 @@ import hiiragi283.ragium.data.model.RagiumModelProvider
 import hiiragi283.ragium.data.recipe.RagiumArcaneRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumChemicalRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumColoringRecipeProvider
-import hiiragi283.ragium.data.recipe.RagiumCommonRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumElectronicsRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumHeatRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumMachineRecipeProvider
@@ -56,7 +55,6 @@ data object RagiumDataGen {
         event.createProvider(::RagiumGlobalLootModifierProvider)
 
         event.createProvider(::RagiumVanillaRecipeProvider)
-        event.createProvider(::RagiumCommonRecipeProvider)
         event.createProvider(::RagiumColoringRecipeProvider)
         event.createProvider(::RagiumMachineRecipeProvider)
         event.createProvider(::RagiumOreProcessingRecipeProvider)

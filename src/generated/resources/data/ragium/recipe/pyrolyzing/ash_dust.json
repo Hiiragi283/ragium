@@ -8,6 +8,10 @@
     "fluid": {
       "amount": 1000,
       "id": "ragium:sulfur_trioxide"
+    },
+    "item": {
+      "count": 1,
+      "id": "ragium:ash_dust"
     }
   },
   "time": 200

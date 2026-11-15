@@ -26,6 +26,8 @@ import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.registry.HTTieredContents
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.block.generator.HTDynamoBlock
+import hiiragi283.ragium.common.block.generator.HTGeneratorBlock
 import hiiragi283.ragium.common.block.misc.HTBoilerBlock
 import hiiragi283.ragium.common.block.misc.HTEnchantmentAbsorberBlock
 import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock

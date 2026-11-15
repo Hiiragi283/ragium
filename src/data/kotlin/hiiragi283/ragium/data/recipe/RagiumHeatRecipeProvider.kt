@@ -436,26 +436,6 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
                 amount /= 4
             }
         }.save(exporter)
-        // 2x H2S + 3x O2 -> 2x SO2 + 2x H2O
-        RagiumRecipeBuilders.fluidReacting {
-            ingredient {
-                +holderSet(RagiumFluids.HYDROGEN_SULFIDE)
-                amount *= 2
-            }
-            ingredient {
-                +holderSet(RagiumFluids.OXYGEN)
-                amount *= 3
-            }
-            fluidResult {
-                +RagiumFluids.SULFUR_DIOXIDE
-                amount *= 2
-            }
-            fluidResult {
-                water()
-                amount *= 2
-            }
-            recipeId suffix "_from_hydrogen_sulfide"
-        }.save(exporter)
 
         // Naphtha -> Fuel
         RagiumRecipeBuilders.refining {

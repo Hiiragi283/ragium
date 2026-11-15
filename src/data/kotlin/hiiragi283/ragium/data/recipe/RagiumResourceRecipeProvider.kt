@@ -10,6 +10,7 @@ import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.RagiumMaterial
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -36,7 +37,10 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
         resourcePumping()
 
         honey()
+        bioFuel()
     }
+
+    override fun getName(): String = "Bio Recipes"
 
     private fun brewing() {
         // Splash Bottle
@@ -350,5 +354,52 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }.save(exporter)
     }
 
-    override fun getName(): String = "Bio Recipes"
+    private fun bioFuel() {
+        // Seed -> Plant Oil + Bio Chaff
+        RagiumRecipeBuilders.centrifuging {
+            ingredient {
+                +holderSet(Tags.Items.SEEDS)
+                count *= 8
+            }
+            itemResult { +RagiumItems.BIO_CHAFF }
+            fluidResult { +RagiumFluids.PLANT_OIL }
+        }.save(exporter)
+        // Bio Chaff -> Dirt
+        RagiumRecipeBuilders.compressing {
+            ingredient {
+                items { +RagiumItems.BIO_CHAFF }
+                count *= 4
+            }
+            result { +Items.DIRT }
+            recipeId suffix "_from_chaff"
+        }.save(exporter)
+
+        // Water + Potato / Sugarcane -> Alcohol
+        RagiumRecipeBuilders.brewing {
+            itemIngredient { +holderSet(setOf(Tags.Items.CROPS_POTATO, Tags.Items.CROPS_SUGAR_CANE)) }
+            fluidIngredient {
+                +waterSet()
+                amount /= 4
+            }
+            result {
+                +RagiumFluids.ALCOHOL
+                amount /= 4
+            }
+            recipeId prefix "bio_"
+        }.save(exporter)
+
+        // Plant Oil + R-OH + NaOH -> Fuel + Glycerol
+        RagiumRecipeBuilders.fluidReacting {
+            ingredient { +holderSet(RagiumFluids.PLANT_OIL) }
+            ingredient {
+                +holderSet(RagiumTags.Fluids.ALCOHOLS)
+                amount *= 6
+            }
+            fluidResult {
+                +RagiumFluids.FUEL
+                amount *= 6
+            }
+            recipeId prefix "bio_"
+        }.save(exporter)
+    }
 }

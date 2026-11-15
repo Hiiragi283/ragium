@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.misc
 
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.common.block.HTGeneratorBlock
 import hiiragi283.ragium.common.block.RagiumBlockBehaviors
+import hiiragi283.ragium.common.block.generator.HTGeneratorBlock
 import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand

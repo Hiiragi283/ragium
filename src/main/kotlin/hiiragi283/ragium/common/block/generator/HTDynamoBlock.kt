@@ -1,6 +1,9 @@
-package hiiragi283.ragium.common.block
+package hiiragi283.ragium.common.block.generator
 
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.common.block.HTDirectionalEntityBlock
+import hiiragi283.ragium.common.block.RagiumBlockBehaviors
+import hiiragi283.ragium.common.block.RagiumBlockStateProperties
 import hiiragi283.ragium.common.gui.factory.HTBlockWidgetHolderContext
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

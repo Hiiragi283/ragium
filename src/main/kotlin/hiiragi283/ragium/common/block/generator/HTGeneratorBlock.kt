@@ -1,6 +1,8 @@
-package hiiragi283.ragium.common.block
+package hiiragi283.ragium.common.block.generator
 
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
+import hiiragi283.ragium.common.block.HTBasicEntityBlock
+import hiiragi283.ragium.common.block.RagiumBlockStateProperties
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
