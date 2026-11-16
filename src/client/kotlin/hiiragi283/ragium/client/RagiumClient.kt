@@ -24,6 +24,7 @@ import hiiragi283.ragium.client.gui.widget.HTEnchantmentWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTFluidWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTItemWidgetRenderer
+import hiiragi283.ragium.client.gui.widget.HTSolarWidgetRenderer
 import hiiragi283.ragium.client.gui.widget.HTWidgetRendererManager
 import hiiragi283.ragium.client.renderer.HTTankBlockEntityRenderer
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -81,12 +82,13 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
+        event.register(RagiumWidgetTypes.ARROW_RIGHT.get(), HTArrowWidgetRenderer<*>::Right)
+        event.register(RagiumWidgetTypes.ARROW_LEFT.get(), HTArrowWidgetRenderer<*>::Left)
         event.register(RagiumWidgetTypes.ENCHANTMENT.get(), ::HTEnchantmentWidgetRenderer)
         event.register(RagiumWidgetTypes.ENERGY.get(), ::HTEnergySlotWidgetRenderer)
         event.register(RagiumWidgetTypes.FLUID.get(), ::HTFluidWidgetRenderer)
         event.register(RagiumWidgetTypes.ITEM.get(), ::HTItemWidgetRenderer)
-        event.register(RagiumWidgetTypes.ARROW_RIGHT.get(), HTArrowWidgetRenderer<*>::Right)
-        event.register(RagiumWidgetTypes.ARROW_LEFT.get(), HTArrowWidgetRenderer<*>::Left)
+        event.register(RagiumWidgetTypes.SOLAR.get(), ::HTSolarWidgetRenderer)
         event.register(RagiumWidgetTypes.TEXTURE.get()) { gui: HTGuiAccess, widget: HTTextureWidget ->
             Renderable { graphics: GuiGraphicsExtractor, _, _, _ ->
                 val (x: Int, y: Int, width: Int, height: Int) = widget.bounds

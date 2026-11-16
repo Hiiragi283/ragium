@@ -18,6 +18,12 @@ data object RagiumWidgetTypes {
         REGISTER.register(name, HTWidgetType.Companion::simple)
 
     @JvmField
+    val ARROW_RIGHT: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTArrowWidget.Right>> = register("arrow/right")
+
+    @JvmField
+    val ARROW_LEFT: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTArrowWidget.Left>> = register("arrow/left")
+
+    @JvmField
     val ENCHANTMENT: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTEnchantmentWidget>> = register(HTConstants.ENCHANTMENT)
 
     @JvmField
@@ -30,10 +36,7 @@ data object RagiumWidgetTypes {
     val ITEM: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTItemWidget>> = register(HTConstants.ITEM)
 
     @JvmField
-    val ARROW_RIGHT: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTArrowWidget.Right>> = register("arrow/right")
-
-    @JvmField
-    val ARROW_LEFT: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTArrowWidget.Left>> = register("arrow/left")
+    val SOLAR: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTSolarWidget>> = register("solar")
 
     @JvmField
     val TEXTURE: HTDeferredHolder<HTWidgetType<*>, HTWidgetType<HTTextureWidget>> = register("texture")

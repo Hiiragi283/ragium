@@ -238,6 +238,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
 
         add(HTCommonTranslation.BIOME, $$"Biome: %1$s")
         add(HTCommonTranslation.ENCHANTMENT_POWER, $$"Enchantment Power: %1$s")
+        add(HTCommonTranslation.SOLAR_POWER, $$"Solar Level: %1$s")
 
         add(HTCommonTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(HTCommonTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")

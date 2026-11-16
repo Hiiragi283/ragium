@@ -178,6 +178,7 @@
   "gui.ragium.percentage": "%1$s %%",
   "gui.ragium.progress": "Progress: %1$s %%",
   "gui.ragium.seconds": "%1$s sec (%2$s ticks)",
+  "gui.ragium.solar_power": "Solar Level: %1$s",
   "gui.ragium.stored": "%1$s: %2$s",
   "gui.ragium.stored.exp": "%1$s Exp",
   "gui.ragium.stored.fe": "%1$s FE",

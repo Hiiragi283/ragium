@@ -717,6 +717,7 @@
     "energy",
     "fluid",
     "item",
+    "solar",
     "texture"
   ]
 }

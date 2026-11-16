@@ -51,6 +51,7 @@ enum class HTCommonTranslation(type: String, vararg path: String) : HTTranslatio
 
     BIOME(HTConstants.GUI, "biome"),
     ENCHANTMENT_POWER(HTConstants.GUI, HTConstants.ENCHANTMENT_POWER),
+    SOLAR_POWER(HTConstants.GUI, "solar_power"),
 
     // Item Description
     TOOLTIP_INTRINSIC_ENCHANTMENT(HTConstants.TOOLTIP, "intrinsic_enchantment"),

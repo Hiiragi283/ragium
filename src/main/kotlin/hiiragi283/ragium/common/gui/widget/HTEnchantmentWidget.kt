@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.EnchantingTableBlock
 
-class HTEnchantmentWidget(val power: () -> Float, x: Int, y: Int) : HTAbstractWidget(x, y, 18, 18) {
+class HTEnchantmentWidget(private val provider: () -> Float, x: Int, y: Int) : HTAbstractWidget(x, y, 18, 18) {
     companion object {
         @JvmStatic
         fun collectPower(level: Level?, pos: BlockPos): Float {
@@ -19,6 +19,8 @@ class HTEnchantmentWidget(val power: () -> Float, x: Int, y: Int) : HTAbstractWi
                 }.sum()
         }
     }
+
+    val enchantmentPower: Float get() = provider().coerceAtLeast(0f)
 
     override fun getType(): HTWidgetType<*> = RagiumWidgetTypes.ENCHANTMENT.get()
 }

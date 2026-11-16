@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.gui.widget.HTArrowWidget
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
 import hiiragi283.ragium.common.gui.widget.HTItemWidget
+import hiiragi283.ragium.common.gui.widget.HTSolarWidget
 import hiiragi283.ragium.common.transfer.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
@@ -22,7 +23,6 @@ import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.entity.FuelValues
 import net.minecraft.world.level.block.state.BlockState
@@ -54,7 +54,7 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
     }
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = useTransaction { transaction: Transaction ->
-        useTransaction(transaction) { sub: Transaction -> if (!isBurning(sub)) return false }
+        useTransaction(transaction) { sub: Transaction -> if (!isBurning(level, sub)) return false }
 
         val waterToConsume: Int = RagiumConfig.SERVER.generator.boilerWaterPerTick.get()
         val waterExtracted: Int = waterTank.extract(WATER_RESOURCE, waterToConsume, transaction, HTTransferAccess.INTERNAL)
@@ -71,7 +71,7 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
         }
     }
 
-    protected abstract fun isBurning(transaction: Transaction): Boolean
+    protected abstract fun isBurning(level: ServerLevel, transaction: Transaction): Boolean
 
     //    Solid    //
 
@@ -159,8 +159,7 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
             }
         }
 
-        override fun isBurning(transaction: Transaction): Boolean {
-            val level: Level = this.level ?: return false
+        override fun isBurning(level: ServerLevel, transaction: Transaction): Boolean {
             if (progress <= 0) {
                 val burnTime: Int = fuelSlot.resource.toStack(1).getBurnTime(null, level.fuelValues())
                 if (burnTime <= 0) return false
@@ -191,7 +190,7 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
 
         override fun setupMenu(widgetHolder: HTWidgetHolder) {
             // progress
-            widgetHolder += HTArrowWidget.Right({ 0f }, HTSlotHelper.getSlotPosX(3.75), HTSlotHelper.getSlotPosY(1))
+            widgetHolder += HTSolarWidget(::getSunAngle, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(1))
             // inputs
             widgetHolder += HTFluidWidget.Tank(
                 waterTank,
@@ -210,6 +209,6 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
             widgetHolder.track(steamTank)
         }
 
-        override fun isBurning(transaction: Transaction): Boolean = this.level?.canSeeSky(blockPos.above()) ?: false
+        override fun isBurning(level: ServerLevel, transaction: Transaction): Boolean = getSunAngle() > 0
     }
 }

@@ -27,7 +27,7 @@ class HTEnchantmentWidgetRenderer(gui: HTGuiAccess, widget: HTEnchantmentWidget)
         // Render background
         HTSpriteRenderHelper.blit(graphics, BACKGROUND, bounds)
         // Render front
-        val power: Float = widget.power()
+        val power: Float = widget.enchantmentPower
         if (power > 0f) {
             val (x: Int, y: Int) = bounds
             graphics.item(ENCHANTED_BOOK, x + 1, y + 1)
