@@ -91,6 +91,7 @@
     "resource_pump",
     "scanner",
     "shadow_steel_block",
+    "sifting_machine",
     "silver_block",
     "smelter",
     "solar_boiler",
@@ -143,6 +144,7 @@
     "refinery",
     "resource_pump",
     "scanner",
+    "sifting_machine",
     "smelter",
     "solar_boiler",
     "solid_boiler",
@@ -367,7 +369,6 @@
     "experience_bucket",
     "experience_tank",
     "extractor",
-    "flint_shard",
     "fluorite",
     "fluorite_block",
     "fluorite_dust",
@@ -480,6 +481,7 @@
     "shadow_steel_block",
     "shadow_steel_ingot",
     "shadow_steel_nugget",
+    "sifting_machine",
     "silica_dust",
     "silicon_dust",
     "silver_block",
@@ -584,6 +586,7 @@
     "reacting/item",
     "refining",
     "resource/pumping",
+    "sifting",
     "transforming"
   ],
   "minecraft:recipe_type": [
@@ -613,6 +616,7 @@
     "reacting/item",
     "refining",
     "resource/pumping",
+    "sifting",
     "transforming"
   ],
   "minecraft:slot_display": [

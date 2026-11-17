@@ -1,0 +1,18 @@
+{
+  "type": "ragium:sifting",
+  "ingredient": {
+    "count": 3,
+    "items": "#c:crushed_ores/redstone"
+  },
+  "results": [
+    {
+      "count": 8,
+      "id": "minecraft:redstone"
+    },
+    {
+      "count": 1,
+      "id": "ragium:small_raginite_dust"
+    }
+  ],
+  "time": 200
+}

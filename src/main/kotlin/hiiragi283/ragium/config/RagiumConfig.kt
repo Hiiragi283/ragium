@@ -167,6 +167,9 @@ data object RagiumConfig {
             @JvmField
             val pulverizer: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.PULVERIZER)
 
+            @JvmField
+            val siftingMachine: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.SIFTING_MACHINE, 32)
+
             // Heat
             @JvmField
             val alloySmelter: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.ALLOY_SMELTER, 32)

@@ -1,0 +1,18 @@
+{
+  "type": "ragium:sifting",
+  "ingredient": {
+    "count": 3,
+    "items": "#c:crushed_ores/lapis"
+  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:lapis_lazuli"
+    },
+    {
+      "count": 1,
+      "id": "ragium:apatite"
+    }
+  ],
+  "time": 200
+}

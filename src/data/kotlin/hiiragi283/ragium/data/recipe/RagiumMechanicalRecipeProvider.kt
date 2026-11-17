@@ -45,6 +45,7 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         crushing()
         cutting()
         pressing()
+        sifting()
 
         filling()
     }
@@ -557,39 +558,25 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
         RagiumRecipeBuilders.crushing {
             ingredient { +holderSet(Tags.Items.GRAVELS) }
             result { +Items.SAND }
-            result {
-                +RagiumItems.FLINT_SHARD
-                count = 2
-            }
             time /= 2
             recipeId suffix "_from_gravel"
         }.save(exporter)
 
-        // Sandstone -> 4x Sand + 2x Small Salt + Small Niter
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS) }
-            result {
-                +Items.SAND
-                count = 4
-            }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Chemical.SALT)
-                count = 2
-            }
-            result { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Chemical.NITER) }
-            time /= 2
-            recipeId suffix "_from_sandstone"
-        }.save(exporter)
-        // Red Sandstone -> 4x Red Sand + Small Bauxite?
-        RagiumRecipeBuilders.crushing {
-            ingredient { +holderSet(Tags.Items.SANDSTONE_RED_BLOCKS) }
-            result {
-                +Items.RED_SAND
-                count = 4
-            }
-            time /= 2
-            recipeId suffix "_from_sandstone"
-        }.save(exporter)
+        // Sandstone -> 4x Sand
+        setOf(
+            Tags.Items.SANDSTONE_UNCOLORED_BLOCKS to Items.SAND,
+            Tags.Items.SANDSTONE_RED_BLOCKS to Items.RED_SAND,
+        ).forEach { (input: TagKey<Item>, output: Item) ->
+            RagiumRecipeBuilders.crushing {
+                ingredient { +holderSet(input) }
+                result {
+                    +output
+                    count = 4
+                }
+                time /= 2
+                recipeId suffix "_from_sandstone"
+            }.save(exporter)
+        }
 
         // Book -> 3x Paper Pulp
         RagiumRecipeBuilders.crushing {
@@ -892,6 +879,26 @@ class RagiumMechanicalRecipeProvider(packOutput: PackOutput, future: Completable
                 }
             }.save(exporter)
         }
+    }
+
+    private fun sifting() {
+        // Gravel -> Flint
+        RagiumRecipeBuilders.sifting {
+            ingredient { +holderSet(Tags.Items.GRAVELS) }
+            result { +Items.FLINT }
+        }.save(exporter)
+        // Sand -> 2x Small Salt + 1x Small Niter
+        RagiumRecipeBuilders.sifting {
+            ingredient {
+                +holderSet(Tags.Items.SANDS)
+                count = 4
+            }
+            result {
+                +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Chemical.SALT)
+                count = 2
+            }
+            result { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Chemical.NITER) }
+        }.save(exporter)
     }
 
     private fun filling() {

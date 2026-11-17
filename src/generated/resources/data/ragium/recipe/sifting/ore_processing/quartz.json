@@ -1,0 +1,18 @@
+{
+  "type": "ragium:sifting",
+  "ingredient": {
+    "count": 3,
+    "items": "#c:crushed_ores/quartz"
+  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:quartz"
+    },
+    {
+      "count": 1,
+      "id": "ragium:fluorite"
+    }
+  ],
+  "time": 200
+}

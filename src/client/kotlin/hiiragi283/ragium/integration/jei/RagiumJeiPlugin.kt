@@ -160,6 +160,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumTranslation.RECIPE_CATEGORY_PRESSING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.PRESS_MACHINE),
             ),
+            HTSingleToMultiViewerRecipeCategory(
+                RagiumJeiRecipeTypes.SIFTING,
+                RagiumTranslation.RECIPE_CATEGORY_SIFTING,
+                guiHelper.createDrawableItemLike(RagiumBlocks.SIFTING_MACHINE),
+            ),
             // Heat
             HTDoubleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.ALLOYING,
@@ -268,6 +273,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.EXTRACTING, RagiumRecipeLookups.EXTRACTING, HTViewerRecipeHelper::singleToSingle)
         registration.addRecipes(RagiumJeiRecipeTypes.FILLING, RagiumRecipeLookups.FILLING, HTViewerRecipeHelper::itemAndFluidToItem)
         registration.addRecipes(RagiumJeiRecipeTypes.PRESSING, RagiumRecipeLookups.PRESSING, HTViewerRecipeHelper::catalysedSingleToSingle)
+        registration.addRecipes(RagiumJeiRecipeTypes.SIFTING, RagiumRecipeLookups.SIFTING, HTViewerRecipeHelper::singleToMultiItem)
         // Heat
         registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING, RagiumRecipeLookups.ALLOYING, HTViewerRecipeHelper::itemCombine)
         registration.addRecipes(RagiumJeiRecipeTypes.DRYING, RagiumRecipeLookups.DRYING, HTViewerRecipeHelper::singleToItemAndFluid)
@@ -456,6 +462,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addCraftingStation(RagiumJeiRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
         registration.addCraftingStation(RagiumJeiRecipeTypes.EXTRACTING, RagiumBlocks.EXTRACTOR)
         registration.addCraftingStation(RagiumJeiRecipeTypes.PRESSING, RagiumBlocks.PRESS_MACHINE)
+        registration.addCraftingStation(RagiumJeiRecipeTypes.SIFTING, RagiumBlocks.SIFTING_MACHINE)
         // Heat
         registration.addCraftingStation(RagiumJeiRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.DRYING, RagiumBlocks.DRYER)

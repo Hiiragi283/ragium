@@ -57,6 +57,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.EXTRACTOR, "Extractor")
         add(RagiumBlocks.PRESS_MACHINE, "Press Machine")
         add(RagiumBlocks.PULVERIZER, "Pulverizer")
+        add(RagiumBlocks.SIFTING_MACHINE, "Sifting Machine")
 
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         add(RagiumBlocks.DRYER, "Dryer")
@@ -154,7 +155,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.BAMBOO_CHARCOAL, "Bamboo Charcoal")
         add(RagiumItems.PARTICLE_BOARD, "Particle Board")
         add(RagiumItems.CEMENT, "Cement")
-        add(RagiumItems.FLINT_SHARD, "Flint Shard")
         add(RagiumItems.REDSTONE_CIRCUIT_BOARD, "Redstone Circuit Board")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.STICKY_BALL, "Sticky Ball")
@@ -255,6 +255,7 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.RECIPE_CATEGORY_EXTRACTING, "Extracting")
         add(RagiumTranslation.RECIPE_CATEGORY_FILLING, "Filling")
         add(RagiumTranslation.RECIPE_CATEGORY_PRESSING, "Pressing")
+        add(RagiumTranslation.RECIPE_CATEGORY_SIFTING, "Sifting")
 
         add(RagiumTranslation.RECIPE_CATEGORY_ALLOYING, "Alloying")
         add(RagiumTranslation.RECIPE_CATEGORY_DRYING, "Drying")

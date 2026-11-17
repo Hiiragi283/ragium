@@ -76,11 +76,6 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             }
             recipeId suffix "_with_lime"
         }.save(exporter)
-        // 4x Flint Shard -> Flint
-        VanillaRecipeBuilders.shapeless {
-            repeat(4) { ingredient { items { +RagiumItems.FLINT_SHARD } } }
-            result { +Items.FLINT }
-        }.save(exporter)
 
         // XX Tools
         registerTools(RagiumItems.SOOTY_IRON_TOOLS, RagiumToolMaterials.SOOTY_IRON)

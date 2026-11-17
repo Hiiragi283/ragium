@@ -10,15 +10,9 @@
       ]
     }
   },
-  "results": [
-    {
-      "count": 2,
-      "id": "ragium:crushed_coal_ore"
-    },
-    {
-      "count": 1,
-      "id": "ragium:sulfur_dust"
-    }
-  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:crushed_coal_ore"
+  },
   "time": 200
 }

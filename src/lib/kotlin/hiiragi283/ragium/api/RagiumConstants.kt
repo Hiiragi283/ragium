@@ -27,6 +27,7 @@ data object RagiumConstants {
     const val EXTRACTOR = "extractor"
     const val PRESS_MACHINE = "press_machine"
     const val PULVERIZER = "pulverizer"
+    const val SIFTING_MACHINE = "sifting_machine"
 
     // Heat
     const val BOILER = "boiler"
@@ -88,6 +89,7 @@ data object RagiumConstants {
     const val EXTRACTING = "extracting"
     const val FILLING = "filling"
     const val PRESSING = "pressing"
+    const val SIFTING = "sifting"
 
     // Heat
     const val ALLOYING = "alloying"

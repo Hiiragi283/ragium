@@ -44,6 +44,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTResourcePumpBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTScannerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTSiftingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
@@ -142,6 +143,10 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val PULVERIZER: HTDeferredBlockEntityType<HTPulverizerBlockEntity> =
         registerTick(RagiumConstants.PULVERIZER, ::HTPulverizerBlockEntity)
+
+    @JvmField
+    val SIFTING_MACHINE: HTDeferredBlockEntityType<HTSiftingMachineBlockEntity> =
+        registerTick(RagiumConstants.SIFTING_MACHINE, ::HTSiftingMachineBlockEntity)
 
     // Heat
     @JvmField
@@ -307,6 +312,7 @@ data object RagiumBlockEntityTypes {
         registerBlockEntity(EXTRACTOR.get())
         registerBlockEntity(PRESS_MACHINE.get())
         registerBlockEntity(PULVERIZER.get())
+        registerBlockEntity(SIFTING_MACHINE.get())
 
         registerBlockEntity(ALLOY_SMELTER.get())
         registerBlockEntity(DRYER.get())

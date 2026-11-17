@@ -144,17 +144,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             }
             result { +Items.POISONOUS_POTATO }
         }.save(exporter)
-
-        // Gravel + Water -> Flint
-        RagiumRecipeBuilders.bathing {
-            itemIngredient { +holderSet(Tags.Items.GRAVELS) }
-            fluidIngredient {
-                +waterSet()
-                amount /= 4
-            }
-            result { +Items.FLINT }
-            time /= 4
-        }.save(exporter)
     }
 
     //    Element    //
@@ -227,17 +216,6 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 count = 3
             }
             result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.NITER) }
-            recipeId suffix "_from_gunpowder"
-        }.save(exporter)
-        // Gunpowder -> C + S + KNO3
-        RagiumRecipeBuilders.centrifuging {
-            ingredient {
-                +holderSet(Tags.Items.GUNPOWDERS)
-                count = 3
-            }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.CARBON) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SULFUR) }
-            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.NITER) }
             recipeId suffix "_from_gunpowder"
         }.save(exporter)
         // H2SO4 + 2x KNO3 -> 2x HNO3 + K2SO4

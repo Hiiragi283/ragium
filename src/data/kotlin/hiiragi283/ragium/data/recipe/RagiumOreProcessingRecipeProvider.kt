@@ -4,7 +4,6 @@ import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.collection.forEach
 import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
-import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
@@ -16,8 +15,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.builder.RagiumRecipeBuilders
 import hiiragi283.ragium.api.material.HTItemPart
 import hiiragi283.ragium.api.material.RagiumMaterial
-import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
+import hiiragi283.ragium.api.recipe.RTSiftingRecipe
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.item.RagiumItems
 import hiiragi283.ragium.common.material.RagiumMaterialHelper
@@ -25,6 +24,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import java.util.concurrent.CompletableFuture
 
 class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) :
@@ -36,7 +36,7 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
     override fun exportValues() {
         crushing()
         alloying()
-        centrifuging()
+        sifting()
 
         // Crushed XX Ore -> XX Ingot
         setOf(
@@ -66,11 +66,11 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
 
     private fun crushing() {
         // XX Ore || Raw XX -> 2x Crushed XX + extra
-        crushOre(RagiumMaterial.Fuel.COAL) { result { +dustOrThrow(RagiumMaterial.Chemical.SULFUR) } }
+        crushOre(RagiumMaterial.Fuel.COAL)
 
-        crushOre(RagiumMaterial.Gem.LAPIS) { result { +dustOrThrow(RagiumMaterial.Gem.APATITE) } }
-        crushOre(RagiumMaterial.Gem.QUARTZ) { result { +dustOrThrow(RagiumMaterial.Gem.FLUORITE) } }
-        crushOre(RagiumMaterial.Gem.DIAMOND) { result { +dustOrThrow(RagiumMaterial.Chemical.CARBON) } }
+        crushOre(RagiumMaterial.Gem.LAPIS)
+        crushOre(RagiumMaterial.Gem.QUARTZ)
+        crushOre(RagiumMaterial.Gem.DIAMOND)
         crushOre(RagiumMaterial.Gem.EMERALD)
 
         crushOre(RagiumMaterial.Metal.COPPER) { result { +smallDustOrThrow(RagiumMaterial.Metal.GOLD) } }
@@ -131,7 +131,7 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
             put(RagiumMaterial.Other.REDSTONE, Items.REDSTONE, 4)
 
             put(RagiumMaterial.Gem.LAPIS, Items.LAPIS_LAZULI, 3)
-            put(RagiumMaterial.Gem.QUARTZ, Items.QUARTZ, 2)
+            put(RagiumMaterial.Gem.QUARTZ, Items.QUARTZ, 3)
             put(RagiumMaterial.Gem.DIAMOND, Items.DIAMOND, 1)
             put(RagiumMaterial.Gem.EMERALD, Items.EMERALD, 1)
 
@@ -151,39 +151,34 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
         }
     }
 
-    //    Centrifuging    //
+    //    Sifting    //
 
-    private fun centrifuging() {
-        // Crushed XX Ore -> XX Dust + extra
-        centrifuging(RagiumMaterial.Fuel.COAL)
+    private fun sifting() {
+        // 3x Crushed XX Ore -> 2x XX + 1x extra
+        sifting(RagiumMaterial.Fuel.COAL, Items.COAL) { result { +dustOrThrow(RagiumMaterial.Chemical.SULFUR) } }
 
-        centrifuging(RagiumMaterial.Gem.LAPIS, 3)
-        centrifuging(RagiumMaterial.Gem.QUARTZ, 3)
-        centrifuging(RagiumMaterial.Gem.DIAMOND)
-        centrifuging(RagiumMaterial.Gem.EMERALD)
+        sifting(RagiumMaterial.Gem.LAPIS, Items.LAPIS_LAZULI, 3) { result { +RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.APATITE) } }
+        sifting(RagiumMaterial.Gem.QUARTZ, Items.QUARTZ, 3) { result { +RagiumItems.getOrThrow(HTItemPart.GEM, RagiumMaterial.Gem.FLUORITE) } }
+        sifting(RagiumMaterial.Gem.DIAMOND, Items.DIAMOND) { result { +dustOrThrow(RagiumMaterial.Chemical.CARBON) } }
+        sifting(RagiumMaterial.Gem.EMERALD, Items.EMERALD)
 
-        centrifuging(RagiumMaterial.Metal.COPPER) { itemResult { +smallDustOrThrow(RagiumMaterial.Metal.NICKEL) } }
-        centrifuging(RagiumMaterial.Metal.IRON) { itemResult { +smallDustOrThrow(RagiumMaterial.Metal.CHROMIUM) } }
-        centrifuging(RagiumMaterial.Metal.GOLD) { itemResult { +smallDustOrThrow(RagiumMaterial.Metal.SILVER) } }
-
-        centrifuging(RagiumMaterial.Other.REDSTONE, 4) { itemResult { +smallDustOrThrow(RagiumMaterial.Other.RAGINITE) } }
+        sifting(RagiumMaterial.Other.REDSTONE, Items.REDSTONE, 4) { result { +smallDustOrThrow(RagiumMaterial.Other.RAGINITE) } }
     }
 
-    private inline fun centrifuging(
+    private inline fun sifting(
         material: RagiumMaterial,
-        count: Int = 1,
-        builderAction: HTItemSeparatingRecipeBuilder<RTCentrifugingRecipe>.() -> Unit = {},
+        output: ItemLike,
+        multiplier: Int = 1,
+        builderAction: HTItemToMultiItemRecipeBuilder<RTSiftingRecipe>.() -> Unit = {},
     ) {
-        val dust: HTSimpleDeferredItem = when (material) {
-            RagiumMaterial.Gem.QUARTZ -> RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, RagiumMaterial.Chemical.SILICA]
-            RagiumMaterial.Other.REDSTONE -> HTSimpleDeferredItem(vanillaId("redstone"))
-            else -> RagiumItems.MATERIAL_ITEMS[HTItemPart.DUST, material]
-        } ?: return
-        RagiumRecipeBuilders.centrifuging {
-            ingredient { +holderSet(CommonTagPrefixes.CRUSHED_ORES, material) }
-            itemResult {
-                +dust
-                this.count = count
+        RagiumRecipeBuilders.sifting {
+            ingredient {
+                +holderSet(CommonTagPrefixes.CRUSHED_ORES, material)
+                count = 3
+            }
+            result {
+                +output.asItem()
+                this.count = 2 * multiplier
             }
             builderAction()
             recipeId prefix PREFIX

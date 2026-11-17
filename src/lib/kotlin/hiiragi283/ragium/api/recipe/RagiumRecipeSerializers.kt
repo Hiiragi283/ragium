@@ -66,6 +66,10 @@ data object RagiumRecipeSerializers {
     val PRESSING: RecipeSerializer<RTPressingRecipe> =
         register(RagiumConstants.PRESSING, RTPressingRecipe.SERIALIZER)
 
+    @JvmField
+    val SIFTING: RecipeSerializer<RTSiftingRecipe> =
+        register(RagiumConstants.SIFTING, RTSiftingRecipe.SERIALIZER)
+
     // Heat
     @JvmField
     val ALLOYING: RecipeSerializer<RTAlloyingRecipe> =

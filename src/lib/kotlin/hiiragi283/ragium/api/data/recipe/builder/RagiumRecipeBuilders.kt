@@ -40,6 +40,7 @@ import hiiragi283.ragium.api.recipe.RTPressingRecipe
 import hiiragi283.ragium.api.recipe.RTPyrolyzingRecipe
 import hiiragi283.ragium.api.recipe.RTRefiningRecipe
 import hiiragi283.ragium.api.recipe.RTResourcePumpingRecipe
+import hiiragi283.ragium.api.recipe.RTSiftingRecipe
 import hiiragi283.ragium.api.recipe.RTTransformingRecipe
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -122,6 +123,14 @@ data object RagiumRecipeBuilders {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
         return HTSingleRecipeBuilder.Catalysed(RagiumConstants.PRESSING, ::RTPressingRecipe).apply(builderAction)
+    }
+
+    @JvmStatic
+    inline fun sifting(builderAction: HTItemToMultiItemRecipeBuilder<RTSiftingRecipe>.() -> Unit): HTItemToMultiItemRecipeBuilder<RTSiftingRecipe> {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        return HTItemToMultiItemRecipeBuilder(RagiumConstants.SIFTING, ::RTSiftingRecipe).apply(builderAction)
     }
 
     // Heat

@@ -43,6 +43,9 @@ data object RagiumJeiRecipeTypes {
     @JvmField
     val PRESSING: IRecipeType<HTCatalysedSingleToSingleViewerRecipe> = create(RagiumConstants.PRESSING)
 
+    @JvmField
+    val SIFTING: IRecipeType<HTSingleToMultiViewerRecipe> = create(RagiumConstants.SIFTING)
+
     // Heat
     @JvmField
     val ALLOYING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.ALLOYING)
