@@ -65,6 +65,8 @@ data object RagiumItems {
         REGISTER.addAlias("circuit_board/elite", "circuit_board/industrial")
         REGISTER.addAlias("circuit/elite", "circuit/industrial")
         REGISTER.addAlias("diamond_wafer", "silicon_wafer")
+        REGISTER.addAlias("silicon_boule", "silicon_dust")
+        REGISTER.addAlias("silicon_wafer", "silicon_dust")
 
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyDefaultComponents)
@@ -229,12 +231,6 @@ data object RagiumItems {
     // Electronics
     @JvmField
     val CRUDE_SILICON: HTSimpleDeferredItem = REGISTER.registerSimpleItem("crude_silicon")
-
-    @JvmField
-    val SILICON_BOULE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_boule") { it.stacksTo(1) }
-
-    @JvmField
-    val SILICON_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_wafer")
 
     @JvmField
     val BLANK_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board/blank")

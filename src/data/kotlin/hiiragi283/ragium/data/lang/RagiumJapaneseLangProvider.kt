@@ -133,8 +133,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFATE_SOLUTION, "アルカリ硫酸塩溶液")
         // Al
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "アルミナ水溶液")
-        // Si
-        addFluid(RagiumFluids.MOLTEN_SILICON, "溶融シリコン")
         // P
         addFluid(RagiumFluids.PHOSPHORIC_ACID, "リン酸")
         // S
@@ -171,8 +169,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumItems.SPLASH_BOTTLE, "スプラッシュ瓶")
         add(RagiumItems.LINGERING_BOTTLE, "残留瓶")
         add(RagiumItems.CRUDE_SILICON, "粗製シリコン")
-        add(RagiumItems.SILICON_BOULE, "シリコンブール")
-        add(RagiumItems.SILICON_WAFER, "シリコンウェハ")
         add(RagiumItems.BLANK_CIRCUIT_BOARD, "空の回路基板")
         add(RagiumItems.PHOTOVOLTAIC_CELL, "太陽電池セル")
         add(RagiumItems.BLANK_MUSIC_DISC, "空の音楽ディスク")

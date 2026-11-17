@@ -137,8 +137,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         addFluid(RagiumFluids.SULFATE_SOLUTION, "Alkali Sulfate Solution")
         // Al
         addFluid(RagiumFluids.ALUMINA_SOLUTION, "Alumina Solution")
-        // Si
-        addFluid(RagiumFluids.MOLTEN_SILICON, "Molten Silicon")
         // P
         addFluid(RagiumFluids.PHOSPHORIC_ACID, "Phosphoric Acid")
         // S
@@ -175,8 +173,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumItems.SPLASH_BOTTLE, "Splash Bottle")
         add(RagiumItems.LINGERING_BOTTLE, "Lingering Bottle")
         add(RagiumItems.CRUDE_SILICON, "Crude Silicon")
-        add(RagiumItems.SILICON_BOULE, "Silicon Boule")
-        add(RagiumItems.SILICON_WAFER, "Silicon Wafer")
         add(RagiumItems.BLANK_CIRCUIT_BOARD, "Empty Circuit Board")
         add(RagiumItems.PHOTOVOLTAIC_CELL, "Photovoltaic Cell")
         add(RagiumItems.BLANK_MUSIC_DISC, "Blank Music Disc")

@@ -1,0 +1,18 @@
+{
+  "type": "ragium:alloying",
+  "ingredients": [
+    {
+      "count": 3,
+      "items": "#c:dusts/silicon"
+    },
+    {
+      "count": 1,
+      "items": "#c:dusts/lapis"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:photovoltaic_cell"
+  },
+  "time": 200
+}

@@ -3,8 +3,6 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
-import hiiragi283.lib.data.recipe.builder.ingredient
-import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.tag.CommonTagPrefixes
 import hiiragi283.lib.tag.HTCommonTags
 import hiiragi283.ragium.api.RagiumAPI
@@ -66,7 +64,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         VanillaRecipeBuilders.shaped {
             hollow4()
             define('A') { +holderSet(HTCommonTags.Items.PLASTICS) }
-            define('B') { items { +RagiumItems.SILICON_WAFER } }
+            define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SILICON) }
             result { +RagiumItems.MEMORY_DISC }
         }.save(exporter)
 
@@ -172,18 +170,33 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             result { +RagiumItems.CIRCUITS.basic }
         }.save(exporter)
         RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARDS.basic } }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
+            result { +RagiumItems.CIRCUITS.basic }
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
+            ingredient {
+                items { +RagiumItems.CIRCUIT_BOARDS.basic }
+                count = 2
+            }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE) }
+            result {
+                +RagiumItems.CIRCUITS.basic
+                count = 2
+            }
+            recipeId suffix "_with_glowstone"
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
             ingredient {
                 items { +RagiumItems.CIRCUIT_BOARDS.basic }
                 count = 4
             }
-            ingredient {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE)
-                count = 4
-            }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.DIAMOND) }
             result {
                 +RagiumItems.CIRCUITS.basic
                 count = 4
             }
+            recipeId suffix "_with_diamond"
         }.save(exporter)
         // Basic -> Advanced
         VanillaRecipeBuilders.shaped {
@@ -196,18 +209,21 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
         }.save(exporter)
         // Advanced
         RagiumRecipeBuilders.assembling {
+            ingredient { items { +RagiumItems.CIRCUIT_BOARDS.advanced } }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE) }
+            result { +RagiumItems.CIRCUITS.advanced }
+        }.save(exporter)
+        RagiumRecipeBuilders.assembling {
             ingredient {
                 items { +RagiumItems.CIRCUIT_BOARDS.advanced }
                 count = 2
             }
-            ingredient {
-                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.GLOWSTONE)
-                count = 2
-            }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.DIAMOND) }
             result {
                 +RagiumItems.CIRCUITS.advanced
                 count = 2
             }
+            recipeId suffix "_with_diamond"
         }.save(exporter)
         // Industrial
         RagiumRecipeBuilders.assembling {
@@ -246,51 +262,15 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
                 amount = 100
             }
         }.save(exporter)
-        // Molten Silicon
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(HTCommonTags.Items.SILICON) }
-            result {
-                +RagiumFluids.MOLTEN_SILICON
-                amount = 30
-            }
-            recipeId suffix "_from_crude"
-        }.save(exporter)
-        RagiumRecipeBuilders.melting {
-            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SILICON) }
-            result {
-                +RagiumFluids.MOLTEN_SILICON
-                amount = 90
-            }
-            recipeId suffix "_from_dust"
-        }.save(exporter)
-        // Molten Si + Redstone -> Silicon Boule
-        RagiumRecipeBuilders.autoclaving {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.RAGINITE) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.MOLTEN_SILICON)
-                amount = 90 * 8
-            }
-            result { +RagiumItems.SILICON_BOULE }
-            time *= 16
-        }.save(exporter)
-        // Silicon Boule -> Silicon Wafer
-        RagiumRecipeBuilders.cutting {
-            ingredient { items { +RagiumItems.SILICON_BOULE } }
-            result {
-                +RagiumItems.SILICON_WAFER
-                count = 12
-            }
-        }.save(exporter)
 
-        // Molten Si + Lapis -> Photovoltaic Cell
-        RagiumRecipeBuilders.autoclaving {
-            itemIngredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.LAPIS) }
-            fluidIngredient {
-                +holderSet(RagiumFluids.MOLTEN_SILICON)
-                amount = 90 * 2
+        // Si + Lapis -> Photovoltaic Cell
+        RagiumRecipeBuilders.alloying {
+            ingredient {
+                +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Chemical.SILICON)
+                count = 3
             }
+            ingredient { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Gem.LAPIS) }
             result { +RagiumItems.PHOTOVOLTAIC_CELL }
-            time *= 4
         }.save(exporter)
     }
 }

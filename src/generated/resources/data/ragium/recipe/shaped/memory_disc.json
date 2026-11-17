@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": "#c:plastics",
-    "B": "ragium:silicon_wafer"
+    "B": "#c:dusts/silicon"
   },
   "pattern": [
     " A ",

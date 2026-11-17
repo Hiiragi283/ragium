@@ -1,0 +1,18 @@
+{
+  "type": "ragium:assembling",
+  "ingredients": [
+    {
+      "count": 4,
+      "items": "ragium:circuit_board/basic"
+    },
+    {
+      "count": 1,
+      "items": "#c:dusts/diamond"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:circuit/basic"
+  },
+  "time": 200
+}

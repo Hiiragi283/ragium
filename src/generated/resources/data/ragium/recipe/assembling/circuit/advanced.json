@@ -2,16 +2,16 @@
   "type": "ragium:assembling",
   "ingredients": [
     {
-      "count": 2,
+      "count": 1,
       "items": "ragium:circuit_board/advanced"
     },
     {
-      "count": 2,
+      "count": 1,
       "items": "#c:dusts/glowstone"
     }
   ],
   "result": {
-    "count": 2,
+    "count": 1,
     "id": "ragium:circuit/advanced"
   },
   "time": 200
