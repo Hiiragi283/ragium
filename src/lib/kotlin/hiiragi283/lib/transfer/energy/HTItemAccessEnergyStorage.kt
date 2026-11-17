@@ -1,5 +1,6 @@
 package hiiragi283.lib.transfer.energy
 
+import hiiragi283.lib.serialization.value.EmptyValueIOSerializable
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import net.minecraft.world.item.Item
@@ -20,7 +21,8 @@ open class HTItemAccessEnergyStorage(
     private val capacityPerItem: Int,
     protected val canExtract: Predicate<HTTransferAccess>,
     protected val canInsert: Predicate<HTTransferAccess>,
-) : HTEnergyStorage {
+) : HTEnergyStorage,
+    EmptyValueIOSerializable {
     protected val validItem: Item = itemAccess.resource.item
 
     protected fun getAmount(resource: ItemResource): Int = when {

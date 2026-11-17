@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.misc
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
+import hiiragi283.lib.serialization.value.EmptyValueIOSerializable
 import hiiragi283.lib.transfer.HTSnapshotStackResourceSlot
 import hiiragi283.lib.transfer.HTStackResourceHelper
 import hiiragi283.lib.transfer.HTTransferAccess
@@ -76,7 +77,8 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
 
     inner class UpgradeItemSlot(val slotIndex: Int) :
         HTSnapshotStackResourceSlot<ItemStack, ItemResource>(),
-        HTItemStackSlot {
+        HTItemStackSlot,
+        EmptyValueIOSerializable {
         private fun getUpgrades(): HTMachineUpgradeList = this@HTUpgradeStationBlockEntity
             .toolSlot
             .resource

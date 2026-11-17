@@ -1,5 +1,6 @@
 package hiiragi283.lib.capability
 
+import hiiragi283.lib.serialization.value.EmptyValueIOSerializable
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTEnergyHandler
 import hiiragi283.lib.transfer.energy.HTEnergyStorage
@@ -32,7 +33,7 @@ data object HTEnergyCapabilities : HTMultiCapability<EnergyHandler> {
     fun unwrap(handler: EnergyHandler): HTEnergyStorage = when (handler) {
         is HTEnergyHandler -> handler.storage
 
-        else -> object : HTEnergyStorage {
+        else -> object : HTEnergyStorage, EmptyValueIOSerializable {
             override fun insert(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = handler.insert(amount, transaction)
 
             override fun extract(amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int = handler.extract(amount, transaction)

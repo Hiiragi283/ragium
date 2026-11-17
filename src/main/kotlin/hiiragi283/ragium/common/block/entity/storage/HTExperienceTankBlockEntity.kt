@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.storage
 
 import com.google.common.primitives.Ints
 import hiiragi283.lib.player.HTExperienceHelper
+import hiiragi283.lib.serialization.value.EmptyValueIOSerializable
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -31,7 +32,8 @@ class HTExperienceTankBlockEntity(pos: BlockPos, state: BlockState) :
 
     inner class ExpTank :
         SnapshotJournal<Long>(),
-        HTFluidTank {
+        HTFluidTank,
+        EmptyValueIOSerializable {
         private val player: ServerPlayer?
             get() = (this@HTExperienceTankBlockEntity.level as? ServerLevel)?.let(this@HTExperienceTankBlockEntity::getOwnerPlayer)
         private val playerExp: Long get() = player?.let(HTExperienceHelper::getPlayerExp) ?: 0

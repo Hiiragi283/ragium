@@ -1,5 +1,6 @@
 package hiiragi283.lib.capability
 
+import hiiragi283.lib.serialization.value.EmptyValueIOSerializable
 import hiiragi283.lib.transfer.HTResourceHandler
 import hiiragi283.lib.transfer.HTResourceSlot
 import hiiragi283.lib.transfer.HTTransferAccess
@@ -27,7 +28,7 @@ interface HTResourceMultiCapability<T : Resource> : HTMultiCapability<ResourceHa
         is HTResourceHandler<T> -> handler.slots
 
         else -> List(handler.size()) { index: Int ->
-            object : HTResourceSlot<T> {
+            object : HTResourceSlot<T>, EmptyValueIOSerializable {
                 override fun isValid(resource: T): Boolean = handler.isValid(index, resource)
 
                 override fun insert(resource: T, amount: Int, transaction: TransactionContext, access: HTTransferAccess): Int =

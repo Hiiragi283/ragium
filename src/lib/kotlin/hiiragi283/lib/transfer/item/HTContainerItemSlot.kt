@@ -1,5 +1,6 @@
 package hiiragi283.lib.transfer.item
 
+import hiiragi283.lib.serialization.value.EmptyValueIOSerializable
 import hiiragi283.lib.transfer.HTSnapshotStackResourceSlot
 import hiiragi283.lib.transfer.HTStackResourceHelper
 import net.minecraft.world.Container
@@ -14,7 +15,8 @@ import net.neoforged.neoforge.transfer.item.ItemResource
  */
 class HTContainerItemSlot(val container: Container, val index: Int) :
     HTSnapshotStackResourceSlot<ItemStack, ItemResource>(),
-    HTItemStackSlot {
+    HTItemStackSlot,
+    EmptyValueIOSerializable {
     init {
         val maxSlot: Int = container.containerSize - 1
         require(index in (0..maxSlot)) { "Index: $index is out of max container slot index: $maxSlot" }

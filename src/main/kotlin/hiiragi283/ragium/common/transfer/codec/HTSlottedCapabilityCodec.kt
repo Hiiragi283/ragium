@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.transfer.codec
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.transfer.item.HTItemSlot
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.Direction
 import net.minecraft.world.level.storage.ValueInput
@@ -18,7 +17,7 @@ import net.neoforged.neoforge.common.util.ValueIOSerializable
  * @author Hiiragi Tsubasa
  * @since 26.1.0
  */
-class HTSlottedCapabilityCodec<CONTAINER : Any>(
+class HTSlottedCapabilityCodec<CONTAINER : ValueIOSerializable>(
     private val containerTag: String,
     private val containerKey: String,
     private val blockEntityGetter: (HTBlockEntity, Direction?) -> List<CONTAINER>,
@@ -58,16 +57,12 @@ class HTSlottedCapabilityCodec<CONTAINER : Any>(
         for (slot: Int in containers.indices) {
             val container: CONTAINER = containers[slot]
             val output: ValueOutput = list.addChild()
-            if (container is ValueIOSerializable) {
-                container.serialize(output)
-                if (output.isEmpty) {
-                    list.discardLast()
-                    continue
-                }
-                output.putInt(containerKey, slot)
-            } else {
-                RagiumAPI.LOGGER.warn("Container slot: $container does not support serialization")
+            container.serialize(output)
+            if (output.isEmpty) {
+                list.discardLast()
+                continue
             }
+            output.putInt(containerKey, slot)
         }
     }
 
@@ -85,13 +80,7 @@ class HTSlottedCapabilityCodec<CONTAINER : Any>(
             input.getInt(containerKey)
                 .filter(containers.indices::contains)
                 .map(containers::get)
-                .ifPresent {
-                    if (it is ValueIOSerializable) {
-                        it.deserialize(input)
-                    } else {
-                        RagiumAPI.LOGGER.warn("Container slot: $it does not support deserialization")
-                    }
-                }
+                .ifPresent { it.deserialize(input) }
         }
     }
 

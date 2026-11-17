@@ -8,7 +8,6 @@ import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.HTTransferValidators
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
-import net.neoforged.neoforge.common.util.ValueIOSerializable
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import java.util.function.BiPredicate
@@ -28,8 +27,7 @@ open class HTBasicFluidTank(
     filter: Predicate<FluidResource>,
     listener: Runnable?,
 ) : HTSnapshotStackResourceSlot.Basic<FluidStack, FluidResource>(capacity, canExtract, canInsert, filter, listener),
-    HTFluidStackTank,
-    ValueIOSerializable {
+    HTFluidStackTank {
     companion object {
         @JvmStatic
         fun create(
