@@ -46,7 +46,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumBlocks.COMBUSTION_DYNAMO, "燃焼ダイナモ")
 
         add(RagiumBlocks.ASSEMBLER, "組立機")
-        add(RagiumBlocks.CENTRIFUGE, "遠心分離機")
         add(RagiumBlocks.CRUSHER, "破砕機")
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CUTTING_MACHINE, "裁断機")
@@ -245,7 +244,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) :
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
 
         add(RagiumTranslation.RECIPE_CATEGORY_ASSEMBLING, "組立")
-        add(RagiumTranslation.RECIPE_CATEGORY_CENTRIFUGING, "遠心分離")
         add(RagiumTranslation.RECIPE_CATEGORY_COMPRESSING, "圧縮")
         add(RagiumTranslation.RECIPE_CATEGORY_CRUSHING, "破砕")
         add(RagiumTranslation.RECIPE_CATEGORY_CUTTING, "切断")

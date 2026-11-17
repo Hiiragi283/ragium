@@ -5,8 +5,10 @@
     "items": "minecraft:sunflower"
   },
   "result": {
-    "count": 4,
-    "id": "minecraft:yellow_dye"
+    "item": {
+      "count": 4,
+      "id": "minecraft:yellow_dye"
+    }
   },
   "time": 200
 }

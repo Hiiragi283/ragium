@@ -314,7 +314,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }.save(exporter)
 
         // Honey Bottle -> Glass Bottle + Liquid
-        RagiumRecipeBuilders.centrifuging {
+        RagiumRecipeBuilders.extracting {
             ingredient { +holderSet(Tags.Items.DRINKS_HONEY) }
             itemResult { +Items.GLASS_BOTTLE }
             fluidResult {
@@ -334,7 +334,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }.save(exporter)
 
         // Honeycomb -> Beeswax + Liquid
-        RagiumRecipeBuilders.centrifuging {
+        RagiumRecipeBuilders.extracting {
             ingredient { items { +Items.HONEYCOMB } }
             itemResult { +RagiumItems.BEESWAX }
             fluidResult {
@@ -356,7 +356,7 @@ class RagiumResourceRecipeProvider(packOutput: PackOutput, future: CompletableFu
 
     private fun bioFuel() {
         // Seed -> Plant Oil + Bio Chaff
-        RagiumRecipeBuilders.centrifuging {
+        RagiumRecipeBuilders.extracting {
             ingredient {
                 +holderSet(Tags.Items.SEEDS)
                 count *= 8

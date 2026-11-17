@@ -192,14 +192,6 @@ class RagiumMachineRecipeProvider(packOutput: PackOutput, future: CompletableFut
         }.save(exporter)
         VanillaRecipeBuilders.shaped {
             crossLayered()
-            define('A') { items { +Items.HOPPER } }
-            define('B') { items { +MachineParts.MECHANICAL } }
-            define('C') { items { +RagiumBlocks.EXTRACTOR } }
-            define('D') { items { +RagiumBlocks.MACHINE_CASINGS.advanced } }
-            result { +RagiumBlocks.CENTRIFUGE }
-        }.save(exporter)
-        VanillaRecipeBuilders.shaped {
-            crossLayered()
             define('A') { items { +Items.GRINDSTONE } }
             define('B') { items { +MachineParts.MECHANICAL } }
             define('C') { items { +RagiumBlocks.PULVERIZER } }

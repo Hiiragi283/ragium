@@ -9,6 +9,7 @@ import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemCombineRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
+import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTLocationToFluidRecipeBuilder
@@ -22,7 +23,6 @@ import hiiragi283.ragium.api.recipe.RTAssemblingRecipe
 import hiiragi283.ragium.api.recipe.RTAutoclavingRecipe
 import hiiragi283.ragium.api.recipe.RTBathingRecipe
 import hiiragi283.ragium.api.recipe.RTBrewingRecipe
-import hiiragi283.ragium.api.recipe.RTCentrifugingRecipe
 import hiiragi283.ragium.api.recipe.RTCompressingRecipe
 import hiiragi283.ragium.api.recipe.RTCrushingRecipe
 import hiiragi283.ragium.api.recipe.RTCuttingRecipe
@@ -88,21 +88,13 @@ data object RagiumRecipeBuilders {
     }
 
     @JvmStatic
-    inline fun centrifuging(
-        builderAction: HTItemSeparatingRecipeBuilder<RTCentrifugingRecipe>.() -> Unit,
-    ): HTItemSeparatingRecipeBuilder<RTCentrifugingRecipe> {
+    inline fun extracting(
+        builderAction: HTItemToItemAndFluidRecipeBuilder<RTExtractingRecipe>.() -> Unit,
+    ): HTItemToItemAndFluidRecipeBuilder<RTExtractingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemSeparatingRecipeBuilder(RagiumConstants.CENTRIFUGING, ::RTCentrifugingRecipe).apply(builderAction)
-    }
-
-    @JvmStatic
-    inline fun extracting(builderAction: HTItemToItemRecipeBuilder<RTExtractingRecipe>.() -> Unit): HTItemToItemRecipeBuilder<RTExtractingRecipe> {
-        contract {
-            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
-        }
-        return HTSingleRecipeBuilder.Basic(RagiumConstants.EXTRACTING, ::RTExtractingRecipe).apply(builderAction)
+        return HTItemToItemAndFluidRecipeBuilder(RagiumConstants.EXTRACTING, ::RTExtractingRecipe).apply(builderAction)
     }
 
     @JvmStatic

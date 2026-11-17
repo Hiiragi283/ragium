@@ -5,8 +5,10 @@
     "items": "minecraft:cocoa_beans"
   },
   "result": {
-    "count": 2,
-    "id": "minecraft:brown_dye"
+    "item": {
+      "count": 2,
+      "id": "minecraft:brown_dye"
+    }
   },
   "time": 200
 }

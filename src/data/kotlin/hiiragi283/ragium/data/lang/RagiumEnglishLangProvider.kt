@@ -50,7 +50,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumBlocks.COMBUSTION_DYNAMO, "Combustion Dynamo")
 
         add(RagiumBlocks.ASSEMBLER, "Assembler")
-        add(RagiumBlocks.CENTRIFUGE, "Centrifuge")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
@@ -248,7 +247,6 @@ class RagiumEnglishLangProvider(output: PackOutput) :
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
 
         add(RagiumTranslation.RECIPE_CATEGORY_ASSEMBLING, "Assembling")
-        add(RagiumTranslation.RECIPE_CATEGORY_CENTRIFUGING, "Centrifuging")
         add(RagiumTranslation.RECIPE_CATEGORY_COMPRESSING, "Compressing")
         add(RagiumTranslation.RECIPE_CATEGORY_CRUSHING, "Crushing")
         add(RagiumTranslation.RECIPE_CATEGORY_CUTTING, "Cutting")

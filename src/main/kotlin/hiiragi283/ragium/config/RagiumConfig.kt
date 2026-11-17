@@ -147,9 +147,6 @@ data object RagiumConfig {
             val assembler: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.ASSEMBLER)
 
             @JvmField
-            val centrifuge: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CENTRIFUGE, 32)
-
-            @JvmField
             val crusher: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConstants.CRUSHER, 32)
 
             @JvmField

@@ -1,13 +1,13 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "ingredient": {
     "count": 1,
-    "items": "#c:drinks/honey"
+    "items": "minecraft:experience_bottle"
   },
   "result": {
     "fluid": {
       "amount": 250,
-      "id": "ragium:honey"
+      "id": "ragium:experience"
     },
     "item": {
       "count": 1,

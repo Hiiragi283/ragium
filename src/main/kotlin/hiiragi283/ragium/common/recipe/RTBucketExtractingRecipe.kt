@@ -2,11 +2,12 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.item.createOrEmpty
-import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
+import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTProgressData
 import hiiragi283.lib.recipe.base.HTProgressRecipe
 import hiiragi283.lib.recipe.ingredient.HTIngredient
 import hiiragi283.lib.recipe.ingredient.HTIngredientHelper
+import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import net.minecraft.core.TypedInstance
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemInstance
@@ -14,7 +15,7 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
-data object RTBucketCentrifugingRecipe : HTItemSeparatingRecipe, HTProgressRecipe.Holder {
+data object RTBucketExtractingRecipe : HTItemToItemAndFluidRecipe, HTProgressRecipe.Holder {
     override val ingredient: HTIngredient<Item, ItemInstance> = object : HTIngredient<Item, ItemInstance> {
         override fun test(instance: ItemInstance): Boolean = testOnlyType(instance) && instance.count() > 0
 
@@ -32,7 +33,7 @@ data object RTBucketCentrifugingRecipe : HTItemSeparatingRecipe, HTProgressRecip
         }
     }
 
-    override fun apply(input: ItemInstance): HTItemSeparatingRecipe.Output = HTItemSeparatingRecipe.Output(
+    override fun apply(input: ItemInstance): HTItemAndFluidStack = HTItemAndFluidStack(
         input.craftingRemainder.createOrEmpty(),
         HTIngredientHelper.unwrap(input).let(FluidUtil::getFirstStackContained),
     )

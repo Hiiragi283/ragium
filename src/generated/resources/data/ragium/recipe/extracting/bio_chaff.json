@@ -1,5 +1,5 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "ingredient": {
     "count": 8,
     "items": "#c:seeds"

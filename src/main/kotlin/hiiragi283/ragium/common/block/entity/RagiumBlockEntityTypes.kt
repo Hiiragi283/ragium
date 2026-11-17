@@ -23,7 +23,6 @@ import hiiragi283.ragium.common.block.entity.processor.HTArcaneTransformerBlockE
 import hiiragi283.ragium.common.block.entity.processor.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTAutoclaveBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTCentrifugeBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTChemicalBathBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTChemicalLaboBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCompressorBlockEntity
@@ -64,7 +63,7 @@ data object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun register(event: IEventBus) {
-        REGISTER.addAlias("brewery", "mixer")
+        REGISTER.addAlias("centrifuge", RagiumConstants.EXTRACTOR)
 
         event.addListener(::addSupportedBlocks)
         event.addListener(::registerCapabilities)
@@ -115,10 +114,6 @@ data object RagiumBlockEntityTypes {
     @JvmField
     val ASSEMBLER: HTDeferredBlockEntityType<HTAssemblerBlockEntity> =
         registerTick(RagiumConstants.ASSEMBLER, ::HTAssemblerBlockEntity)
-
-    @JvmField
-    val CENTRIFUGE: HTDeferredBlockEntityType<HTCentrifugeBlockEntity> =
-        registerTick(RagiumConstants.CENTRIFUGE, ::HTCentrifugeBlockEntity)
 
     @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
@@ -305,7 +300,6 @@ data object RagiumBlockEntityTypes {
 
         // Processor
         registerBlockEntity(ASSEMBLER.get())
-        registerBlockEntity(CENTRIFUGE.get())
         registerBlockEntity(CRUSHER.get())
         registerBlockEntity(COMPRESSOR.get())
         registerBlockEntity(CUTTING_MACHINE.get())

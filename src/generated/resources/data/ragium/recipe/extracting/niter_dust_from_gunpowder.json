@@ -5,8 +5,10 @@
     "items": "#c:gunpowders"
   },
   "result": {
-    "count": 1,
-    "id": "ragium:niter_dust"
+    "item": {
+      "count": 1,
+      "id": "ragium:niter_dust"
+    }
   },
   "time": 200
 }

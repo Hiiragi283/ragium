@@ -124,11 +124,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 guiHelper.createDrawableItemLike(RagiumBlocks.ASSEMBLER),
                 HTBackgroundType.EXTRA_INPUT,
             ),
-            HTItemSeparatingRecipeCategory(
-                RagiumJeiRecipeTypes.CENTRIFUGING,
-                RagiumTranslation.RECIPE_CATEGORY_CENTRIFUGING,
-                guiHelper.createDrawableItemLike(RagiumBlocks.CENTRIFUGE),
-            ),
             HTSingleToSingleViewerRecipeCategory(
                 RagiumJeiRecipeTypes.COMPRESSING,
                 RagiumTranslation.RECIPE_CATEGORY_COMPRESSING,
@@ -144,7 +139,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumTranslation.RECIPE_CATEGORY_CUTTING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.CUTTING_MACHINE),
             ),
-            HTSingleToSingleViewerRecipeCategory(
+            HTSingleToItemAndFluidViewerRecipeCategory(
                 RagiumJeiRecipeTypes.EXTRACTING,
                 RagiumTranslation.RECIPE_CATEGORY_EXTRACTING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.EXTRACTOR),
@@ -266,11 +261,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     override fun registerRecipes(registration: IRecipeRegistration) {
         // Mechanical
         registration.addRecipes(RagiumJeiRecipeTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING, HTViewerRecipeHelper::itemCombine)
-        registration.addRecipes(RagiumJeiRecipeTypes.CENTRIFUGING, RagiumRecipeLookups.CENTRIFUGING, HTViewerRecipeHelper::itemSeparating)
         registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING, HTViewerRecipeHelper::singleToSingle)
         registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeLookups.CRUSHING, HTViewerRecipeHelper::singleToMultiItem)
         registration.addRecipes(RagiumJeiRecipeTypes.CUTTING, RagiumRecipeLookups.CUTTING, HTViewerRecipeHelper::singleToMultiItem)
-        registration.addRecipes(RagiumJeiRecipeTypes.EXTRACTING, RagiumRecipeLookups.EXTRACTING, HTViewerRecipeHelper::singleToSingle)
+        registration.addRecipes(RagiumJeiRecipeTypes.EXTRACTING, RagiumRecipeLookups.EXTRACTING, HTViewerRecipeHelper::singleToItemAndFluid)
         registration.addRecipes(RagiumJeiRecipeTypes.FILLING, RagiumRecipeLookups.FILLING, HTViewerRecipeHelper::itemAndFluidToItem)
         registration.addRecipes(RagiumJeiRecipeTypes.PRESSING, RagiumRecipeLookups.PRESSING, HTViewerRecipeHelper::catalysedSingleToSingle)
         registration.addRecipes(RagiumJeiRecipeTypes.SIFTING, RagiumRecipeLookups.SIFTING, HTViewerRecipeHelper::singleToMultiItem)
@@ -456,7 +450,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
         // Mechanical
         registration.addCraftingStation(RagiumJeiRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER)
-        registration.addCraftingStation(RagiumJeiRecipeTypes.CENTRIFUGING, RagiumBlocks.CENTRIFUGE)
         registration.addCraftingStation(RagiumJeiRecipeTypes.CRUSHING, RagiumBlocks.PULVERIZER, RagiumBlocks.CRUSHER)
         registration.addCraftingStation(RagiumJeiRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
         registration.addCraftingStation(RagiumJeiRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)

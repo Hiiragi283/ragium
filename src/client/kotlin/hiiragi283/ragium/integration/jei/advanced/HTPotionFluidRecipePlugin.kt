@@ -1,14 +1,13 @@
 package hiiragi283.ragium.integration.jei.advanced
 
-import hiiragi283.lib.collection.nel
 import hiiragi283.lib.integration.jei.getIngredient
 import hiiragi283.lib.item.alchemy.HTBottleType
 import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
-import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
-import hiiragi283.lib.util.Ior
-import hiiragi283.ragium.common.recipe.RTPotionBottleCentrifugingRecipe
+import hiiragi283.lib.recipe.viewer.HTSingleToItemAndFluidViewerRecipe
+import hiiragi283.lib.util.toOptional
+import hiiragi283.ragium.common.recipe.RTPotionBottleExtractingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
 import mezz.jei.api.neoforge.NeoForgeTypes
@@ -30,7 +29,7 @@ data object HTPotionFluidRecipePlugin : IRecipeManagerPlugin {
 
         else -> when (focus.role) {
             RecipeIngredientRole.INPUT -> listOf(RagiumJeiRecipeTypes.FILLING)
-            RecipeIngredientRole.OUTPUT -> listOf(RagiumJeiRecipeTypes.CENTRIFUGING)
+            RecipeIngredientRole.OUTPUT -> listOf(RagiumJeiRecipeTypes.EXTRACTING)
             else -> listOf()
         }
     }
@@ -56,13 +55,14 @@ data object HTPotionFluidRecipePlugin : IRecipeManagerPlugin {
                 }
 
             // ポーション瓶から液体ポーションを取り出す
-            RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.CENTRIFUGING ->
+            RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.EXTRACTING ->
                 HTBottleType.entries.map { bottleType: HTBottleType ->
-                    HTItemSeparatingViewerRecipe(
+                    HTSingleToItemAndFluidViewerRecipe(
                         null,
                         HTSlotDisplayHelper.create(bottleType.filledItem.asTemplate(patch = potionPatch).getOrThrow()),
-                        Ior.Both(HTSlotDisplayHelper.create(bottleType.emptyItem).nel(), FluidStackSlotDisplay(stackFocused)),
-                        RTPotionBottleCentrifugingRecipe.PROGRESS_DATA,
+                        HTSlotDisplayHelper.create(bottleType.emptyItem).toOptional(),
+                        FluidStackSlotDisplay(stackFocused).toOptional(),
+                        RTPotionBottleExtractingRecipe.PROGRESS_DATA,
                     )
                 }
 

@@ -1,14 +1,13 @@
 package hiiragi283.ragium.integration.jei.advanced
 
-import hiiragi283.lib.collection.nel
 import hiiragi283.lib.fluid.createBucket
 import hiiragi283.lib.integration.jei.getIngredient
 import hiiragi283.lib.item.toTemplateOrNull
 import hiiragi283.lib.recipe.display.HTSlotDisplayHelper
 import hiiragi283.lib.recipe.viewer.HTDoubleToSingleViewerRecipe
-import hiiragi283.lib.recipe.viewer.HTItemSeparatingViewerRecipe
-import hiiragi283.lib.util.Ior
-import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
+import hiiragi283.lib.recipe.viewer.HTSingleToItemAndFluidViewerRecipe
+import hiiragi283.lib.util.toOptional
+import hiiragi283.ragium.common.recipe.RTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.RTBucketFillingRecipe
 import hiiragi283.ragium.integration.jei.RagiumJeiRecipeTypes
 import mezz.jei.api.constants.VanillaTypes
@@ -32,7 +31,7 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
     override fun <V : Any> getRecipeTypes(focus: IFocus<V>): List<IRecipeType<*>> = when {
         focus.getIngredient(VanillaTypes.ITEM_STACK)?.takeIf(::isFilledBucket) != null ->
             when (focus.role) {
-                RecipeIngredientRole.INPUT -> listOf(RagiumJeiRecipeTypes.CENTRIFUGING)
+                RecipeIngredientRole.INPUT -> listOf(RagiumJeiRecipeTypes.EXTRACTING)
                 RecipeIngredientRole.OUTPUT -> listOf(RagiumJeiRecipeTypes.FILLING)
                 else -> listOf()
             }
@@ -40,7 +39,7 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
         focus.getIngredient(NeoForgeTypes.FLUID_STACK)?.takeIf { !it.createBucket().isEmpty } != null ->
             when (focus.role) {
                 RecipeIngredientRole.INPUT -> listOf(RagiumJeiRecipeTypes.FILLING)
-                RecipeIngredientRole.OUTPUT -> listOf(RagiumJeiRecipeTypes.CENTRIFUGING)
+                RecipeIngredientRole.OUTPUT -> listOf(RagiumJeiRecipeTypes.EXTRACTING)
                 else -> listOf()
             }
 
@@ -56,12 +55,13 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
             if (!fluidIn.isEmpty && remainder != null) {
                 return when (focus.role) {
                     // Filled Bucket -> Empty Bucket + Fluid
-                    RecipeIngredientRole.INPUT if recipeType == RagiumJeiRecipeTypes.CENTRIFUGING ->
-                        HTItemSeparatingViewerRecipe(
+                    RecipeIngredientRole.INPUT if recipeType == RagiumJeiRecipeTypes.EXTRACTING ->
+                        HTSingleToItemAndFluidViewerRecipe(
                             null,
                             HTSlotDisplayHelper.create(filledBucket),
-                            Ior.Both(HTSlotDisplayHelper.create(remainder).nel(), HTSlotDisplayHelper.create(fluidIn)),
-                            RTBucketCentrifugingRecipe.progressData,
+                            HTSlotDisplayHelper.create(remainder).toOptional(),
+                            HTSlotDisplayHelper.create(fluidIn).toOptional(),
+                            RTBucketExtractingRecipe.progressData,
                         )
 
                     // Empty Bucket + Fluid -> Filled Bucket
@@ -92,12 +92,13 @@ data object HTFluidBucketRecipePlugin : IRecipeManagerPlugin {
                     RTBucketFillingRecipe.progressData,
                 )
 
-            RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.CENTRIFUGING ->
-                HTItemSeparatingViewerRecipe(
+            RecipeIngredientRole.OUTPUT if recipeType == RagiumJeiRecipeTypes.EXTRACTING ->
+                HTSingleToItemAndFluidViewerRecipe(
                     null,
                     HTSlotDisplayHelper.create(bucket),
-                    Ior.Both(HTSlotDisplayHelper.create(remainder).nel(), HTSlotDisplayHelper.create(fluid)),
-                    RTBucketCentrifugingRecipe.progressData,
+                    HTSlotDisplayHelper.create(remainder).toOptional(),
+                    HTSlotDisplayHelper.create(fluid).toOptional(),
+                    RTBucketExtractingRecipe.progressData,
                 )
 
             else -> null

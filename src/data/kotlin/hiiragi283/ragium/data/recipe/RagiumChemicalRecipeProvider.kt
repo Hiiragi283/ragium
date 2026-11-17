@@ -215,7 +215,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +holderSet(Tags.Items.GUNPOWDERS)
                 count = 3
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.NITER) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.NITER) }
             recipeId suffix "_from_gunpowder"
         }.save(exporter)
         // H2SO4 + 2x KNO3 -> 2x HNO3 + K2SO4
@@ -526,7 +526,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +holderSet(Tags.Items.NETHERRACKS)
                 count = 8
             }
-            result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SULFUR) }
+            itemResult { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SULFUR) }
             recipeId suffix "_from_netherrack"
         }.save(exporter)
 

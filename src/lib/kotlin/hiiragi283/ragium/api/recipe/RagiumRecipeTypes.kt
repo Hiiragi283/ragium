@@ -39,9 +39,6 @@ data object RagiumRecipeTypes {
     val ASSEMBLING: RecipeType<RTAssemblingRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
-    val CENTRIFUGING: RecipeType<RTCentrifugingRecipe> = create(RagiumConstants.CENTRIFUGING)
-
-    @JvmField
     val COMPRESSING: RecipeType<RTCompressingRecipe> = create(RagiumConstants.COMPRESSING)
 
     @JvmField

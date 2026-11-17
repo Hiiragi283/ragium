@@ -20,9 +20,9 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.fluid.RagiumFluids
-import hiiragi283.ragium.common.recipe.RTBucketCentrifugingRecipe
+import hiiragi283.ragium.common.recipe.RTBucketExtractingRecipe
 import hiiragi283.ragium.common.recipe.RTBucketFillingRecipe
-import hiiragi283.ragium.common.recipe.RTPotionBottleCentrifugingRecipe
+import hiiragi283.ragium.common.recipe.RTPotionBottleExtractingRecipe
 import hiiragi283.ragium.common.recipe.RTPotionBottleFillingRecipe
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import net.minecraft.core.Holder
@@ -75,7 +75,6 @@ internal data object RagiumCommon {
     private fun initRecipeLookups() {
         // from recipe types
         RagiumRecipeLookups.ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING)
-        RagiumRecipeLookups.CENTRIFUGING.fromRecipeType(RagiumRecipeTypes.CENTRIFUGING)
         RagiumRecipeLookups.COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING)
         RagiumRecipeLookups.CRUSHING.fromRecipeType(RagiumRecipeTypes.CRUSHING)
         RagiumRecipeLookups.CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING)
@@ -134,13 +133,13 @@ internal data object RagiumCommon {
                     }.buildSynthetic()
                 }
         }
-        RagiumRecipeLookups.CENTRIFUGING.addRecipes(
+        RagiumRecipeLookups.EXTRACTING.addRecipes(
             buildMap {
                 HTBottleType.entries.forEach { bottleType: HTBottleType ->
-                    this[RagiumAPI.id("/${RagiumConstants.CENTRIFUGING}/potion_bottle/${bottleType.serializedName}")] =
-                        RTPotionBottleCentrifugingRecipe(bottleType)
+                    this[RagiumAPI.id("/${RagiumConstants.EXTRACTING}/potion_bottle/${bottleType.serializedName}")] =
+                        RTPotionBottleExtractingRecipe(bottleType)
                 }
-                this[RagiumAPI.id("/${RagiumConstants.CENTRIFUGING}/bucket")] = RTBucketCentrifugingRecipe
+                this[RagiumAPI.id("/${RagiumConstants.EXTRACTING}/bucket")] = RTBucketExtractingRecipe
             },
         )
         RagiumRecipeLookups.FILLING.addRecipes(

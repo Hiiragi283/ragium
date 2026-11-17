@@ -9,6 +9,7 @@ import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemCombineRecipe
 import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
+import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.lib.recipe.lookup.HTCompoundRecipeLookup
@@ -38,9 +39,6 @@ data object RagiumRecipeLookups {
     val ASSEMBLING: HTCompoundRecipeLookup<HTItemCombineRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
-    val CENTRIFUGING: HTCompoundRecipeLookup<HTItemSeparatingRecipe> = create(RagiumConstants.CENTRIFUGING)
-
-    @JvmField
     val COMPRESSING: HTCompoundRecipeLookup<HTItemToItemRecipe> = create(RagiumConstants.COMPRESSING)
 
     @JvmField
@@ -50,7 +48,7 @@ data object RagiumRecipeLookups {
     val CUTTING: HTCompoundRecipeLookup<HTItemToMultiItemRecipe> = create(RagiumConstants.CUTTING)
 
     @JvmField
-    val EXTRACTING: HTCompoundRecipeLookup<HTItemToItemRecipe> = create(RagiumConstants.EXTRACTING)
+    val EXTRACTING: HTCompoundRecipeLookup<HTItemToItemAndFluidRecipe> = create(RagiumConstants.EXTRACTING)
 
     @JvmField
     val FILLING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConstants.FILLING)

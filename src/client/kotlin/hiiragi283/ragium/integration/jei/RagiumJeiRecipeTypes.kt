@@ -23,9 +23,6 @@ data object RagiumJeiRecipeTypes {
     val ASSEMBLING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.ASSEMBLING)
 
     @JvmField
-    val CENTRIFUGING: IRecipeType<HTItemSeparatingViewerRecipe> = create(RagiumConstants.CENTRIFUGING)
-
-    @JvmField
     val COMPRESSING: IRecipeType<HTSingleToSingleViewerRecipe> = create(RagiumConstants.COMPRESSING)
 
     @JvmField
@@ -35,7 +32,7 @@ data object RagiumJeiRecipeTypes {
     val CUTTING: IRecipeType<HTSingleToMultiViewerRecipe> = create(RagiumConstants.CUTTING)
 
     @JvmField
-    val EXTRACTING: IRecipeType<HTSingleToSingleViewerRecipe> = create(RagiumConstants.EXTRACTING)
+    val EXTRACTING: IRecipeType<HTSingleToItemAndFluidViewerRecipe> = create(RagiumConstants.EXTRACTING)
 
     @JvmField
     val FILLING: IRecipeType<HTDoubleToSingleViewerRecipe> = create(RagiumConstants.FILLING)

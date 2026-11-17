@@ -1,8 +1,8 @@
 {
-  "type": "ragium:centrifuging",
+  "type": "ragium:extracting",
   "ingredient": {
     "count": 1,
-    "items": "minecraft:honeycomb"
+    "items": "#c:drinks/honey"
   },
   "result": {
     "fluid": {
@@ -11,7 +11,7 @@
     },
     "item": {
       "count": 1,
-      "id": "ragium:beeswax"
+      "id": "minecraft:glass_bottle"
     }
   },
   "time": 200

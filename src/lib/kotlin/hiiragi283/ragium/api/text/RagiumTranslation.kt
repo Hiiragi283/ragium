@@ -20,7 +20,6 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
 
     // Recipe Category
     RECIPE_CATEGORY_ASSEMBLING(HTConstants.RECIPE_CATEGORY, RagiumConstants.ASSEMBLING),
-    RECIPE_CATEGORY_CENTRIFUGING(HTConstants.RECIPE_CATEGORY, RagiumConstants.CENTRIFUGING),
     RECIPE_CATEGORY_COMPRESSING(HTConstants.RECIPE_CATEGORY, RagiumConstants.COMPRESSING),
     RECIPE_CATEGORY_CRUSHING(HTConstants.RECIPE_CATEGORY, RagiumConstants.CRUSHING),
     RECIPE_CATEGORY_CUTTING(HTConstants.RECIPE_CATEGORY, RagiumConstants.CUTTING),

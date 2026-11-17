@@ -375,7 +375,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
 
     private fun oilRefining() {
         // Soul Sand -> Sand + Crude Oil
-        RagiumRecipeBuilders.centrifuging {
+        RagiumRecipeBuilders.extracting {
             ingredient { items { +Items.SOUL_SAND } }
             itemResult { +Items.SAND }
             fluidResult {
@@ -385,7 +385,7 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             recipeId replace id("crude_oil_from_soul_sand")
         }.save(exporter)
         // Soul Soil -> Clay + Crude Oil
-        RagiumRecipeBuilders.centrifuging {
+        RagiumRecipeBuilders.extracting {
             ingredient { items { +Items.SOUL_SOIL } }
             itemResult { +Items.CLAY }
             fluidResult {

@@ -5,8 +5,10 @@
     "items": "#c:netherracks"
   },
   "result": {
-    "count": 1,
-    "id": "ragium:sulfur_dust"
+    "item": {
+      "count": 1,
+      "id": "ragium:sulfur_dust"
+    }
   },
   "time": 200
 }

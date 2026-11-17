@@ -39,10 +39,6 @@ data object RagiumRecipeSerializers {
         register(RagiumConstants.ASSEMBLING, RTAssemblingRecipe.SERIALIZER)
 
     @JvmField
-    val CENTRIFUGING: RecipeSerializer<RTCentrifugingRecipe> =
-        register(RagiumConstants.CENTRIFUGING, RTCentrifugingRecipe.SERIALIZER)
-
-    @JvmField
     val COMPRESSING: RecipeSerializer<RTCompressingRecipe> =
         register(RagiumConstants.COMPRESSING, RTCompressingRecipe.SERIALIZER)
 

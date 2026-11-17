@@ -80,6 +80,7 @@ data object RagiumBlocks {
         }
         REGISTER.addAlias("machine_casing", "decoration_casing/basic")
         REGISTER.addAlias("magmatic_dynamo", RagiumConstants.STEAM_DYNAMO)
+        REGISTER.addAlias("centrifuge", RagiumConstants.EXTRACTOR)
 
         eventBus.addListener(::registerCapabilities)
 
@@ -292,9 +293,6 @@ data object RagiumBlocks {
     val ASSEMBLER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerProcessor(RagiumBlockEntityTypes.ASSEMBLER)
 
     @JvmField
-    val CENTRIFUGE: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerProcessor(RagiumBlockEntityTypes.CENTRIFUGE)
-
-    @JvmField
     val CRUSHER: HTBasicDeferredBlockAndItem<HTMachineBlock> = registerProcessor(RagiumBlockEntityTypes.CRUSHER)
 
     @JvmField
@@ -385,7 +383,6 @@ data object RagiumBlocks {
         sortedMapOf(HTMachineType.COMPARATOR),
         {
             put(HTMachineType.MECHANICAL, ASSEMBLER)
-            put(HTMachineType.MECHANICAL, CENTRIFUGE)
             put(HTMachineType.MECHANICAL, CRUSHER)
             put(HTMachineType.MECHANICAL, COMPRESSOR)
             put(HTMachineType.MECHANICAL, CUTTING_MACHINE)
