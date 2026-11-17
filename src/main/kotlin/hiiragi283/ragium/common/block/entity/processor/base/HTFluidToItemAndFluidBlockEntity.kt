@@ -1,11 +1,16 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
+import hiiragi283.lib.gui.HTBackgroundType
+import hiiragi283.lib.gui.HTSlotHelper
+import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
 import hiiragi283.lib.recipe.handler.output.HTOutputHandler
 import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
 import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
+import hiiragi283.ragium.common.gui.widget.HTFluidWidget
+import hiiragi283.ragium.common.gui.widget.HTItemWidget
 import hiiragi283.ragium.common.transfer.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
@@ -32,6 +37,37 @@ abstract class HTFluidToItemAndFluidBlockEntity(type: BlockEntityType<*>, pos: B
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
+    }
+
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        super.setupMenu(widgetHolder)
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
+        // progress
+        addProgressBar(widgetHolder, y = HTSlotHelper.getSlotPosY(1.5))
+        // inputs
+        widgetHolder += HTFluidWidget.Tank(
+            inputTank,
+            HTSlotHelper.getSlotPosX(1),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+        )
+        widgetHolder.track(inputTank)
+        // output
+        widgetHolder += HTItemWidget.Container(
+            outputSlot,
+            2,
+            HTSlotHelper.getSlotPosX(5.5),
+            HTSlotHelper.getSlotPosY(1),
+            HTBackgroundType.OUTPUT,
+        )
+        widgetHolder.track(outputSlot)
+        widgetHolder += HTFluidWidget.Tank(
+            outputTank,
+            HTSlotHelper.getSlotPosX(7),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.OUTPUT,
+        )
+        widgetHolder.track(outputTank)
     }
 
     //    HTFluidToBlockEntity    //

@@ -3,9 +3,10 @@ package hiiragi283.ragium.common.block.entity.processor.base
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
-import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
+import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.handler.output.HTOutputHandler
 import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
+import hiiragi283.lib.recipe.result.HTItemAndFluidStack
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
@@ -22,8 +23,8 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
-abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTItemToBlockEntity<HTItemSeparatingRecipe.Output, HTItemSeparatingRecipe>(type, pos, state) {
+abstract class HTItemToItemAndFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
+    HTItemToBlockEntity<HTItemAndFluidStack, HTItemToItemAndFluidRecipe>(type, pos, state) {
 
     private lateinit var outputTank: HTVariableFluidTank
 
@@ -31,68 +32,66 @@ abstract class HTItemSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockP
         outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(getTankCapacity(), listener))
     }
 
-    private lateinit var outputSlots: List<HTBasicItemSlot>
+    private lateinit var outputSlot: HTBasicItemSlot
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {
         createInputSlot(builder, listener)
-        outputSlots = List(4) { builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener)) }
+        outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(1.5))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
         // progress
-        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(2.75))
-        // input
+        addProgressBar(widgetHolder, y = HTSlotHelper.getSlotPosY(1.5))
+        // inputs
         widgetHolder += HTItemWidget.Container(
             inputSlot,
             0,
-            HTSlotHelper.getSlotPosX(1),
+            HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.INPUT,
         )
         widgetHolder.track(inputSlot)
-        // outputs
-        outputSlots.forEachIndexed { index: Int, slot: HTBasicItemSlot ->
-            widgetHolder += HTItemWidget.Container(
-                slot,
-                1 + index,
-                HTSlotHelper.getSlotPosX(5 + index % 2),
-                HTSlotHelper.getSlotPosY(0.5 + index / 2),
-                HTBackgroundType.OUTPUT,
-            )
-            widgetHolder.track(slot)
-        }
+        // output
+        widgetHolder += HTItemWidget.Container(
+            outputSlot,
+            2,
+            HTSlotHelper.getSlotPosX(5.5),
+            HTSlotHelper.getSlotPosY(1),
+            HTBackgroundType.OUTPUT,
+        )
+        widgetHolder.track(outputSlot)
         widgetHolder += HTFluidWidget.Tank(
             outputTank,
-            HTSlotHelper.getSlotPosX(7.5),
+            HTSlotHelper.getSlotPosX(7),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
         )
         widgetHolder.track(outputTank)
     }
 
-    //    HTItemToBlockEntity    //
+    //    HTFluidToBlockEntity    //
 
-    private val outputItemHandler: HTOutputHandler<ItemStack> = HTOutputHandlerHelper.forItems(outputSlots)
     private val outputFluidHandler: HTOutputHandler<FluidStack> = HTOutputHandlerHelper.forFluid(outputTank)
+    private val outputItemHandler: HTOutputHandler<ItemStack> = HTOutputHandlerHelper.forItem(outputSlot)
 
-    override fun canComplete(recipe: HTItemSeparatingRecipe, input: ItemInstance, output: HTItemSeparatingRecipe.Output): Boolean =
+    override fun canComplete(recipe: HTItemToItemAndFluidRecipe, input: ItemInstance, output: HTItemAndFluidStack): Boolean =
         useTransaction { transaction: Transaction ->
-            val (items: List<ItemStack>, fluid: FluidStack) = output
+            val (itemOutput: ItemStack, fluidOutput: FluidStack) = output
             when {
                 inputHandler.use(recipe.getMatchingStack(input), transaction).failed -> false
-                !outputFluidHandler.take(fluid, transaction).fullOrNoneTaken -> false
-                else -> outputItemHandler.takeAll(items, transaction).fullOrNoneTaken
+                !outputItemHandler.take(itemOutput, transaction).fullOrNoneTaken -> false
+                else -> outputFluidHandler.take(fluidOutput, transaction).fullOrNoneTaken
             }
         }
 
-    override fun onComplete(recipe: HTItemSeparatingRecipe, input: ItemInstance, output: HTItemSeparatingRecipe.Output) {
+    override fun onComplete(recipe: HTItemToItemAndFluidRecipe, input: ItemInstance, output: HTItemAndFluidStack) {
         useTransaction { transaction: Transaction ->
-            val (items: List<ItemStack>, fluid: FluidStack) = output
+            val (itemOutput: ItemStack, fluidOutput: FluidStack) = output
             inputHandler.use(recipe.getMatchingStack(input), transaction)
-            outputItemHandler.takeAll(items, transaction)
-            outputFluidHandler.take(fluid, transaction)
+            outputItemHandler.take(itemOutput, transaction)
+            outputFluidHandler.take(fluidOutput, transaction)
             transaction.commit()
         }
         onComplete()

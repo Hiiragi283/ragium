@@ -28,6 +28,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTChemicalLaboBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTElectrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTEngraverBlockEntity
@@ -149,8 +150,8 @@ data object RagiumBlockEntityTypes {
         registerTick(RagiumConstants.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
 
     @JvmField
-    val DRYER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
-        registerTick(RagiumConstants.DRYER, ::HTFreezerBlockEntity) // TODO
+    val DRYER: HTDeferredBlockEntityType<HTDryerBlockEntity> =
+        registerTick(RagiumConstants.DRYER, ::HTDryerBlockEntity)
 
     @JvmField
     val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =

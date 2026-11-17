@@ -9,16 +9,10 @@
       "amount": 4500,
       "id": "ragium:creosote"
     },
-    "items": [
-      {
-        "count": 1,
-        "id": "ragium:coal_coke_block"
-      },
-      {
-        "count": 9,
-        "id": "ragium:tar"
-      }
-    ]
+    "item": {
+      "count": 1,
+      "id": "ragium:coal_coke_block"
+    }
   },
   "time": 900
 }

@@ -7,7 +7,6 @@ import hiiragi283.lib.recipe.base.HTCatalysedSingleRecipe
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToRecipe
 import hiiragi283.lib.recipe.base.HTItemCombineRecipe
-import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.lib.recipe.display.HTDisplayableContent
 import hiiragi283.lib.recipe.display.displayOrEmpty
@@ -60,17 +59,6 @@ data object HTViewerRecipeHelper {
             recipe.ingredient.display(),
             recipe.result.content.getRight().displayOrEmpty(),
             recipe.result.content.getLeftList().map(HTDisplayableContent::display),
-            recipe.progressData,
-        )
-    }
-
-    @JvmStatic
-    fun itemSeparating(holder: HTRecipeHolder<HTItemSeparatingRecipe.Basic>): HTItemSeparatingViewerRecipe {
-        val (id: RecipeKey, recipe: HTItemSeparatingRecipe.Basic) = holder
-        return HTItemSeparatingViewerRecipe(
-            id.identifier(),
-            recipe.ingredient.display(),
-            recipe.result.content.mapLeft { it.map(HTDisplayableContent::display) }.mapRight(HTDisplayableContent::display),
             recipe.progressData,
         )
     }

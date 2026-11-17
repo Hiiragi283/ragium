@@ -7,7 +7,6 @@ import hiiragi283.lib.recipe.base.HTFluidToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.lib.recipe.base.HTItemCombineRecipe
-import hiiragi283.lib.recipe.base.HTItemSeparatingRecipe
 import hiiragi283.lib.recipe.base.HTItemToFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemAndFluidRecipe
 import hiiragi283.lib.recipe.base.HTItemToItemRecipe
@@ -73,7 +72,7 @@ data object RagiumRecipeLookups {
     val MELTING: HTCompoundRecipeLookup<HTItemToFluidRecipe> = create(RagiumConstants.MELTING)
 
     @JvmField
-    val PYROLYZING: HTCompoundRecipeLookup<HTItemSeparatingRecipe> = create(RagiumConstants.PYROLYZING)
+    val PYROLYZING: HTCompoundRecipeLookup<HTItemToItemAndFluidRecipe> = create(RagiumConstants.PYROLYZING)
 
     @JvmField
     val REFINING: HTCompoundRecipeLookup<HTFluidSeparatingRecipe> = create(RagiumConstants.REFINING)

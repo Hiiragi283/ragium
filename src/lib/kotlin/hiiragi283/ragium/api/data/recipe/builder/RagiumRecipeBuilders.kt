@@ -7,7 +7,6 @@ import hiiragi283.lib.data.recipe.builder.HTFluidToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemCombineRecipeBuilder
-import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemAndFluidRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToItemRecipeBuilder
@@ -164,12 +163,12 @@ data object RagiumRecipeBuilders {
 
     @JvmStatic
     inline fun pyrolyzing(
-        builderAction: HTItemSeparatingRecipeBuilder<RTPyrolyzingRecipe>.() -> Unit,
-    ): HTItemSeparatingRecipeBuilder<RTPyrolyzingRecipe> {
+        builderAction: HTItemToItemAndFluidRecipeBuilder<RTPyrolyzingRecipe>.() -> Unit,
+    ): HTItemToItemAndFluidRecipeBuilder<RTPyrolyzingRecipe> {
         contract {
             callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
-        return HTItemSeparatingRecipeBuilder(RagiumConstants.PYROLYZING, ::RTPyrolyzingRecipe).apply(builderAction)
+        return HTItemToItemAndFluidRecipeBuilder(RagiumConstants.PYROLYZING, ::RTPyrolyzingRecipe).apply(builderAction)
     }
 
     @JvmStatic

@@ -7,7 +7,6 @@ import hiiragi283.lib.integration.jei.HTJeiPlugin
 import hiiragi283.lib.integration.jei.category.HTCatalysedSingleToSingleViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTDoubleToSingleViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTFluidSeparatingRecipeCategory
-import hiiragi283.lib.integration.jei.category.HTItemSeparatingRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToItemAndFluidViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToMultiViewerRecipeCategory
 import hiiragi283.lib.integration.jei.category.HTSingleToSingleViewerRecipeCategory
@@ -182,7 +181,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 RagiumTranslation.RECIPE_CATEGORY_MELTING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.MELTER),
             ),
-            HTItemSeparatingRecipeCategory(
+            HTSingleToItemAndFluidViewerRecipeCategory(
                 RagiumJeiRecipeTypes.PYROLYZING,
                 RagiumTranslation.RECIPE_CATEGORY_PYROLYZING,
                 guiHelper.createDrawableItemLike(RagiumBlocks.PYROLYZER),
@@ -273,7 +272,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.DRYING, RagiumRecipeLookups.DRYING, HTViewerRecipeHelper::singleToItemAndFluid)
         registration.addRecipes(RagiumJeiRecipeTypes.FREEZING, RagiumRecipeLookups.FREEZING, HTViewerRecipeHelper::catalysedSingleToSingle)
         registration.addRecipes(RagiumJeiRecipeTypes.MELTING, RagiumRecipeLookups.MELTING, HTViewerRecipeHelper::singleToSingle)
-        registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING, HTViewerRecipeHelper::itemSeparating)
+        registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING, HTViewerRecipeHelper::singleToItemAndFluid)
         registration.addRecipes(RagiumJeiRecipeTypes.REFINING, RagiumRecipeLookups.REFINING, HTViewerRecipeHelper::fluidSeparating)
         // Chemical
         registration.addRecipes(RagiumJeiRecipeTypes.AUTOCLAVING, RagiumRecipeLookups.AUTOCLAVING, HTViewerRecipeHelper::itemAndFluidToItem)
