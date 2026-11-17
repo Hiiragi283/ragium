@@ -7,8 +7,6 @@ import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.HTItemSeparatingRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
-import hiiragi283.lib.data.recipe.builder.ingredient
-import hiiragi283.lib.data.recipe.builder.result
 import hiiragi283.lib.recipe.ingredient.HTMaterialTagsIngredient
 import hiiragi283.lib.registry.HTSimpleDeferredItem
 import hiiragi283.lib.resource.vanillaId
@@ -60,22 +58,26 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
     private fun oreOrRaw(material: HTMaterialLike): HTMaterialTagsIngredient =
         materialTags(nelOf(CommonTagPrefixes.ORE, CommonTagPrefixes.RAW_MATERIALS), material)
 
+    private fun dustOrThrow(material: RagiumMaterial): HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.DUST, material)
+
+    private fun smallDustOrThrow(material: RagiumMaterial): HTSimpleDeferredItem = RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, material)
+
     //    Crushing    //
 
     private fun crushing() {
         // XX Ore || Raw XX -> 2x Crushed XX + extra
-        crushOre(RagiumMaterial.Fuel.COAL) { result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.SULFUR) } }
+        crushOre(RagiumMaterial.Fuel.COAL) { result { +dustOrThrow(RagiumMaterial.Chemical.SULFUR) } }
 
-        crushOre(RagiumMaterial.Gem.LAPIS) { result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.APATITE) } }
-        crushOre(RagiumMaterial.Gem.QUARTZ) { result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.FLUORITE) } }
-        crushOre(RagiumMaterial.Gem.DIAMOND) { result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Chemical.CARBON) } }
+        crushOre(RagiumMaterial.Gem.LAPIS) { result { +dustOrThrow(RagiumMaterial.Gem.APATITE) } }
+        crushOre(RagiumMaterial.Gem.QUARTZ) { result { +dustOrThrow(RagiumMaterial.Gem.FLUORITE) } }
+        crushOre(RagiumMaterial.Gem.DIAMOND) { result { +dustOrThrow(RagiumMaterial.Chemical.CARBON) } }
         crushOre(RagiumMaterial.Gem.EMERALD)
 
-        crushOre(RagiumMaterial.Metal.COPPER) { result { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.GOLD) } }
-        crushOre(RagiumMaterial.Metal.IRON) { result { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.NICKEL) } }
-        crushOre(RagiumMaterial.Metal.GOLD) { result { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.COPPER) } }
+        crushOre(RagiumMaterial.Metal.COPPER) { result { +smallDustOrThrow(RagiumMaterial.Metal.GOLD) } }
+        crushOre(RagiumMaterial.Metal.IRON) { result { +smallDustOrThrow(RagiumMaterial.Metal.NICKEL) } }
+        crushOre(RagiumMaterial.Metal.GOLD) { result { +smallDustOrThrow(RagiumMaterial.Metal.COPPER) } }
 
-        crushOre(RagiumMaterial.Other.REDSTONE) { result { +RagiumItems.getOrThrow(HTItemPart.DUST, RagiumMaterial.Gem.CINNABAR) } }
+        crushOre(RagiumMaterial.Other.REDSTONE) { result { +dustOrThrow(RagiumMaterial.Gem.CINNABAR) } }
         // Crushed XX -> XX Dust
         pulverizeOre(RagiumMaterial.Fuel.COAL)
 
@@ -160,11 +162,11 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
         centrifuging(RagiumMaterial.Gem.DIAMOND)
         centrifuging(RagiumMaterial.Gem.EMERALD)
 
-        centrifuging(RagiumMaterial.Metal.COPPER) { itemResult { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.NICKEL) } }
-        centrifuging(RagiumMaterial.Metal.IRON) { itemResult { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.CHROMIUM) } }
-        centrifuging(RagiumMaterial.Metal.GOLD) { itemResult { +RagiumItems.getOrThrow(HTItemPart.SMALL_DUST, RagiumMaterial.Metal.SILVER) } }
+        centrifuging(RagiumMaterial.Metal.COPPER) { itemResult { +smallDustOrThrow(RagiumMaterial.Metal.NICKEL) } }
+        centrifuging(RagiumMaterial.Metal.IRON) { itemResult { +smallDustOrThrow(RagiumMaterial.Metal.CHROMIUM) } }
+        centrifuging(RagiumMaterial.Metal.GOLD) { itemResult { +smallDustOrThrow(RagiumMaterial.Metal.SILVER) } }
 
-        centrifuging(RagiumMaterial.Other.REDSTONE, 4)
+        centrifuging(RagiumMaterial.Other.REDSTONE, 4) { itemResult { +smallDustOrThrow(RagiumMaterial.Other.RAGINITE) } }
     }
 
     private inline fun centrifuging(

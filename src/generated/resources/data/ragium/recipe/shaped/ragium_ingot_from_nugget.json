@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "ragium_ingot",
+  "key": {
+    "A": "#c:nuggets/ragium",
+    "B": "ragium:ragium_nugget"
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "id": "ragium:ragium_ingot"
+  }
+}

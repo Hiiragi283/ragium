@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "ragium_ingot",
+  "ingredients": [
+    "#c:storage_blocks/ragium"
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:ragium_ingot"
+  }
+}

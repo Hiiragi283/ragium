@@ -5,10 +5,16 @@
     "items": "#c:crushed_ores/redstone"
   },
   "result": {
-    "item": {
-      "count": 4,
-      "id": "minecraft:redstone"
-    }
+    "items": [
+      {
+        "count": 4,
+        "id": "minecraft:redstone"
+      },
+      {
+        "count": 1,
+        "id": "ragium:small_raginite_dust"
+      }
+    ]
   },
   "time": 200
 }

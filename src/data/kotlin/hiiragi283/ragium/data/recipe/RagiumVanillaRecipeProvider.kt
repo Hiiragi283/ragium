@@ -405,6 +405,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
 
         nineToBlock(RagiumMaterial.Metal.ALUMINUM, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Metal.SILVER, HTItemPart.INGOT)
+        nineToBlock(RagiumMaterial.Metal.RAGIUM, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Alloy.CONSTANTAN, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Alloy.INVAR, HTItemPart.INGOT)
         nineToBlock(RagiumMaterial.Alloy.SOOTY_IRON, HTItemPart.INGOT)
@@ -413,6 +414,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Ingot <-> Nugget
         ingotToNugget(RagiumMaterial.Metal.ALUMINUM)
         ingotToNugget(RagiumMaterial.Metal.SILVER)
+        ingotToNugget(RagiumMaterial.Metal.RAGIUM)
         ingotToNugget(RagiumMaterial.Alloy.NETHERITE, ingot = HTSimpleDeferredItem(vanillaId("netherite_ingot")))
         ingotToNugget(RagiumMaterial.Alloy.CONSTANTAN)
         ingotToNugget(RagiumMaterial.Alloy.INVAR)

@@ -18,10 +18,12 @@ import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.registry.HTTieredContents
 import hiiragi283.ragium.api.text.HTItemTooltip
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.common.block.RagiumBlocks
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.component.RagiumToolMaterials
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentType
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.HoneycombItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
@@ -104,6 +106,7 @@ data object RagiumItems {
                 putAll(RagiumMaterial.Metal.CHROMIUM, HTItemPart.DUST, HTItemPart.SMALL_DUST)
                 putAll(RagiumMaterial.Metal.NICKEL, HTItemPart.DUST, HTItemPart.SMALL_DUST)
                 putAll(RagiumMaterial.Metal.SILVER, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET, HTItemPart.SMALL_DUST)
+                putAll(RagiumMaterial.Metal.RAGIUM, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET)
                 // Alloy
                 putAll(RagiumMaterial.Alloy.NETHERITE, HTItemPart.DUST, HTItemPart.GEAR, HTItemPart.NUGGET)
                 putAll(RagiumMaterial.Alloy.CONSTANTAN, HTItemPart.DUST, HTItemPart.INGOT, HTItemPart.NUGGET)
@@ -120,6 +123,7 @@ data object RagiumItems {
                 put(RagiumMaterial.Chemical.NITER, HTItemPart.SMALL_DUST)
 
                 putAll(RagiumMaterial.Other.WOOD, HTItemPart.GEAR)
+                put(RagiumMaterial.Other.RAGINITE, HTItemPart.SMALL_DUST)
                 // Raws
                 setOf(
                     RagiumMaterial.Fuel.COAL,
@@ -137,12 +141,6 @@ data object RagiumItems {
                     part,
                     material,
                     REGISTER.registerSimpleItem(part.createName(material)) { properties: Item.Properties ->
-                        when (material) {
-                            RagiumMaterial.Alloy.BLACK_STEEL -> Rarity.UNCOMMON
-                            RagiumMaterial.Alloy.SHADOW_STEEL -> Rarity.RARE
-                            RagiumMaterial.Other.RAGINITE -> Rarity.EPIC
-                            else -> null
-                        }?.let(properties::rarity)
                         if (material == RagiumMaterial.Alloy.NETHERITE) {
                             properties.fireResistant()
                         }
@@ -375,6 +373,27 @@ data object RagiumItems {
     private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
         fun <T : Any> set(item: ItemLike, type: DataComponentType<T>, value: T) {
             event.modify(item) { builder: DataComponentMap.Builder, _, _ -> builder.set(type, value) }
+        }
+
+        // Rarity
+        sequenceOf(RagiumBlocks.MATERIAL_BLOCKS, MATERIAL_ITEMS)
+            .flatMap { it.entries.map { (_, material: RagiumMaterial, item: ItemLike) -> material to item } }
+            .forEach { (material, item) ->
+                event.modify(item) { builder, _, _ ->
+                    builder.set(
+                        DataComponents.RARITY,
+                        when (material) {
+                            RagiumMaterial.Alloy.BLACK_STEEL -> Rarity.UNCOMMON
+                            RagiumMaterial.Alloy.SHADOW_STEEL -> Rarity.RARE
+                            RagiumMaterial.Other.RAGINITE -> Rarity.RARE
+                            RagiumMaterial.Metal.RAGIUM -> Rarity.EPIC
+                            else -> null
+                        },
+                    )
+                }
+            }
+        event.modify(RagiumBlocks.CREATIVE_BATTERY) { builder, _, _ ->
+            builder.set(DataComponents.RARITY, Rarity.EPIC)
         }
 
         // Tooltip

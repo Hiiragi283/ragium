@@ -117,6 +117,13 @@ sealed interface RagiumMaterial :
          * @since 26.1.11
          */
         SILVER("Silver", "銀"),
+
+        // Ragium
+
+        /**
+         * @since 26.1.14
+         */
+        RAGIUM("Ragium", "ラギウム"),
         ;
 
         constructor(enName: String, jaName: String) : this(HTLangName(enName, jaName))

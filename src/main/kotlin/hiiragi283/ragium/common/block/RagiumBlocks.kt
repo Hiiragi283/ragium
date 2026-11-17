@@ -37,12 +37,8 @@ import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
 import hiiragi283.ragium.common.item.block.HTCreativeTankBlockItem
 import hiiragi283.ragium.common.item.block.HTPotionTankBlockItem
 import hiiragi283.ragium.config.RagiumConfig
-import net.minecraft.core.component.DataComponentMap
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Rarity
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.IronBarsBlock
@@ -52,7 +48,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.transfer.InfiniteResourceHandler
 import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
 import net.neoforged.neoforge.transfer.fluid.FluidResource
@@ -87,7 +82,6 @@ data object RagiumBlocks {
         REGISTER.addAlias("magmatic_dynamo", RagiumConstants.STEAM_DYNAMO)
 
         eventBus.addListener(::registerCapabilities)
-        eventBus.addListener(::modifyDefaultComponents)
 
         REGISTER.register(eventBus)
     }
@@ -154,6 +148,7 @@ data object RagiumBlocks {
         RagiumMaterial.Fuel.PITCH_COKE to copyOf(Blocks.COAL_BLOCK).mapColor(MapColor.TERRACOTTA_BLUE),
         RagiumMaterial.Metal.ALUMINUM to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.COLOR_PINK),
         RagiumMaterial.Metal.SILVER to copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.TERRACOTTA_LIGHT_GRAY),
+        RagiumMaterial.Metal.RAGIUM to copyOf(Blocks.NETHERITE_BLOCK).mapColor(MapColor.CRIMSON_NYLIUM),
         RagiumMaterial.Alloy.CONSTANTAN to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_ORANGE),
         RagiumMaterial.Alloy.INVAR to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.TERRACOTTA_CYAN),
         RagiumMaterial.Alloy.SOOTY_IRON to copyOf(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_GRAY),
@@ -554,24 +549,5 @@ data object RagiumBlocks {
             },
             CREATIVE_TANK,
         )
-    }
-
-    @JvmStatic
-    private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
-        // Block
-        setOf(
-            RagiumMaterial.Alloy.BLACK_STEEL to Rarity.UNCOMMON,
-            RagiumMaterial.Alloy.SHADOW_STEEL to Rarity.RARE,
-        ).forEach { (material: RagiumMaterial, rarity: Rarity) ->
-            for (part: HTBlockPart in HTBlockPart.entries) {
-                val block: ItemLike = MATERIAL_BLOCKS[part, material] ?: continue
-                event.modify(block) { builder: DataComponentMap.Builder, _, _ ->
-                    builder.set(DataComponents.RARITY, rarity)
-                }
-            }
-        }
-        event.modify(CREATIVE_BATTERY) { builder: DataComponentMap.Builder, _, _ ->
-            builder.set(DataComponents.RARITY, Rarity.EPIC)
-        }
     }
 }

@@ -18,6 +18,8 @@ import hiiragi283.lib.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.RagiumDataComponents
+import hiiragi283.ragium.api.material.HTItemPart
+import hiiragi283.ragium.api.material.RagiumMaterial
 import hiiragi283.ragium.api.recipe.RagiumRecipeSerializers
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -36,7 +38,6 @@ import hiiragi283.ragium.common.transfer.energy.HTEnergyNetwork
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.Items
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
@@ -74,7 +75,7 @@ data object Ragium : HTCommonMod() {
                 RagiumAPI.id("common"),
                 HTCreativeModeTabHelper.createSimpleTab(
                     RagiumTranslation.RAGIUM,
-                    Items.RED_DYE,
+                    RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Metal.RAGIUM),
                 ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     // Items
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, items = RagiumItems.REGISTER.asSequence())
