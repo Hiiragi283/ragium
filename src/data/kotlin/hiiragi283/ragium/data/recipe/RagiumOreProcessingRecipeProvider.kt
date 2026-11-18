@@ -75,7 +75,7 @@ class RagiumOreProcessingRecipeProvider(packOutput: PackOutput, future: Completa
 
         crushOre(RagiumMaterial.Metal.COPPER) { result { +smallDustOrThrow(RagiumMaterial.Metal.GOLD) } }
         crushOre(RagiumMaterial.Metal.IRON) { result { +smallDustOrThrow(RagiumMaterial.Metal.NICKEL) } }
-        crushOre(RagiumMaterial.Metal.GOLD) { result { +smallDustOrThrow(RagiumMaterial.Metal.COPPER) } }
+        crushOre(RagiumMaterial.Metal.GOLD) { result { +smallDustOrThrow(RagiumMaterial.Metal.SILVER) } }
 
         crushOre(RagiumMaterial.Other.REDSTONE) { result { +dustOrThrow(RagiumMaterial.Gem.CINNABAR) } }
         // Crushed XX -> XX Dust

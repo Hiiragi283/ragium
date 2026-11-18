@@ -4,10 +4,10 @@
   "group": "sooty_iron_ingot",
   "key": {
     "A": {
-      "type": "neoforge:or",
-      "values": [
-        "#c:tiny/charcoal",
-        "#c:tiny/coal"
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:tiny/coal",
+        "c:tiny/charcoal"
       ]
     },
     "B": "#c:ingots/iron"

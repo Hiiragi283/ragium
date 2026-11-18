@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "sooty_iron_ingot",
+  "ingredients": [
+    "#c:ingots/iron",
+    {
+      "neoforge:ingredient_type": "ragium:material_tags",
+      "tags": [
+        "c:dusts/coal",
+        "c:dusts/charcoal"
+      ]
+    }
+  ],
+  "result": {
+    "id": "ragium:sooty_iron_ingot"
+  }
+}

@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.item.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
@@ -166,7 +167,7 @@ class RagiumElectronicsRecipeProvider(packOutput: PackOutput, future: Completabl
             +"AAA"
             define('A') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Metal.COPPER) }
             define('B') { +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.REDSTONE) }
-            define('C') { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
+            define('C') { +holderSet(ItemTags.PLANKS) }
             result { +RagiumItems.CIRCUITS.basic }
         }.save(exporter)
         RagiumRecipeBuilders.assembling {

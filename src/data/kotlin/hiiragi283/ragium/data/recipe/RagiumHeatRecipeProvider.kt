@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.recipe
 
-import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
@@ -124,40 +123,12 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
             }
         }.save(exporter)
 
-        // Iron + Coals -> Sooty Iron
+        // Invar + Obsidian Dust -> Black Steel
         RagiumRecipeBuilders.alloying {
-            ingredient { +dustOrIngot(RagiumMaterial.Metal.IRON) }
-            ingredient {
-                +materialTags(
-                    nelOf(
-                        CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.COAL),
-                        CommonTagPrefixes.DUST.itemTagKey(RagiumMaterial.Fuel.CHARCOAL),
-                        RagiumTags.Items.COALS,
-                    ),
-                )
-            }
-            result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
-            recipeId suffix "_by_coals"
-        }.save(exporter)
-        // 2x Iron + Cokes -> 2x Sooty Iron
-        RagiumRecipeBuilders.alloying {
-            ingredient {
-                +dustOrIngot(RagiumMaterial.Metal.IRON)
-                count = 2
-            }
-            ingredient { +holderSet(RagiumTags.Items.COKES) }
-            result {
-                +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.SOOTY_IRON)
-                count = 2
-            }
-            recipeId suffix "_by_cokes"
-        }.save(exporter)
-        // Sooty Iron + Obsidian Dust -> Black Steel
-        RagiumRecipeBuilders.alloying {
-            ingredient { +holderSet(CommonTagPrefixes.INGOT, RagiumMaterial.Alloy.SOOTY_IRON) }
+            ingredient { +dustOrIngot(RagiumMaterial.Alloy.INVAR) }
             ingredient {
                 +holderSet(CommonTagPrefixes.DUST, RagiumMaterial.Other.OBSIDIAN)
-                count = 2
+                count = 4
             }
             result { +RagiumItems.getOrThrow(HTItemPart.INGOT, RagiumMaterial.Alloy.BLACK_STEEL) }
         }.save(exporter)

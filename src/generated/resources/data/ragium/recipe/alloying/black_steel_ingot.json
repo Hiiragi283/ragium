@@ -3,10 +3,16 @@
   "ingredients": [
     {
       "count": 1,
-      "items": "#c:ingots/sooty_iron"
+      "items": {
+        "neoforge:ingredient_type": "ragium:material_tags",
+        "tags": [
+          "c:dusts/invar",
+          "c:ingots/invar"
+        ]
+      }
     },
     {
-      "count": 2,
+      "count": 4,
       "items": "#c:dusts/obsidian"
     }
   ],

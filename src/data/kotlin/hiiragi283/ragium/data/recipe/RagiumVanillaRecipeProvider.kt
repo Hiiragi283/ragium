@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.recipe
 
+import hiiragi283.lib.collection.nelOf
 import hiiragi283.lib.data.recipe.HTRecipeProvider
 import hiiragi283.lib.data.recipe.builder.VanillaRecipeBuilders
 import hiiragi283.lib.data.recipe.builder.ingredient
@@ -504,25 +505,57 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         VanillaRecipeBuilders.shaped {
             hollow8()
             define('A') {
-                +setOf(RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL)
-                    .map(CommonTagPrefixes.TINY::itemTagKey)
-                    .let(::holderSet)
+                +materialTags(
+                    CommonTagPrefixes.TINY,
+                    nelOf(RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL),
+                )
             }
             define('B') { +ironIngot }
             result { +sootyIronIngot }
             group = sootyIronIngot.id.path
+            recipeId suffix "_by_coal"
         }.save(exporter)
         VanillaRecipeBuilders.shaped {
             hollow4()
             define('A') {
-                +setOf(RagiumMaterial.Fuel.COAL_COKE, RagiumMaterial.Fuel.PITCH_COKE)
-                    .map(CommonTagPrefixes.TINY::itemTagKey)
-                    .let(::holderSet)
+                +materialTags(
+                    CommonTagPrefixes.TINY,
+                    nelOf(RagiumMaterial.Fuel.COAL_COKE, RagiumMaterial.Fuel.PITCH_COKE, RagiumMaterial.Chemical.CARBON),
+                )
             }
             define('B') { +ironIngot }
             result { +sootyIronIngot }
             group = sootyIronIngot.id.path
-            recipeId suffix "_from_coke"
+            recipeId suffix "_by_coke"
+        }.save(exporter)
+
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +ironIngot }
+            ingredient {
+                +materialTags(
+                    CommonTagPrefixes.DUST,
+                    nelOf(RagiumMaterial.Fuel.COAL, RagiumMaterial.Fuel.CHARCOAL),
+                )
+            }
+            result { +sootyIronIngot }
+            group = sootyIronIngot.id.path
+            recipeId suffix "_by_coal_dust"
+        }.save(exporter)
+        VanillaRecipeBuilders.shapeless {
+            ingredient { +ironIngot }
+            ingredient { +ironIngot }
+            ingredient {
+                +materialTags(
+                    CommonTagPrefixes.DUST,
+                    nelOf(RagiumMaterial.Fuel.COAL_COKE, RagiumMaterial.Fuel.PITCH_COKE, RagiumMaterial.Chemical.CARBON),
+                )
+            }
+            result {
+                +sootyIronIngot
+                count = 2
+            }
+            group = sootyIronIngot.id.path
+            recipeId suffix "_by_coke_dust"
         }.save(exporter)
     }
 

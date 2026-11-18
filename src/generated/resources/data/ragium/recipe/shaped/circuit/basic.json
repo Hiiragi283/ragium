@@ -4,7 +4,7 @@
   "key": {
     "A": "#c:ingots/copper",
     "B": "#c:dusts/redstone",
-    "C": "#c:ingots/sooty_iron"
+    "C": "#minecraft:planks"
   },
   "pattern": [
     "AAA",
