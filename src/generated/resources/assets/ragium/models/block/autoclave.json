@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/orientable",
   "textures": {
-    "front": "ragium:block/autoclave_front",
+    "front": "ragium:block/machine/autoclave_front",
     "side": "ragium:block/machine/chemical_side",
     "top": "ragium:block/machine_casing/basic"
   }

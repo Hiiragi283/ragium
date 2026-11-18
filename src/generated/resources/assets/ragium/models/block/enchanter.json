@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/orientable",
   "textures": {
-    "front": "ragium:block/enchanter_front",
+    "front": "ragium:block/machine/enchanter_front",
     "side": "ragium:block/machine/arcane_side",
     "top": "ragium:block/machine_casing/basic"
   }

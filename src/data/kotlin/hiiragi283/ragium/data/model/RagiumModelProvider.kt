@@ -8,6 +8,7 @@ import hiiragi283.lib.data.model.createBlock
 import hiiragi283.lib.registry.HTFluidContent
 import hiiragi283.lib.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.lib.resource.HTSimpleValueWithKey
+import hiiragi283.lib.resource.modifyPath
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
@@ -207,14 +208,17 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
         )
     }
 
-    private fun machineModel(generators: BlockModelGenerators, machineType: HTMachineType, block: HTSimpleValueWithKey<Block>): Identifier {
-        val blockId: Identifier = block.blockId()
-        return ModelTemplates.CUBE_ORIENTABLE.create(
-            blockId,
-            textureMapping(machineType).put(TextureSlot.FRONT, Material(blockId.withSuffix("_front"))),
+    private fun machineModel(generators: BlockModelGenerators, machineType: HTMachineType, block: HTSimpleValueWithKey<Block>): Identifier =
+        ModelTemplates.CUBE_ORIENTABLE.create(
+            block.blockId(),
+            buildTextureMapping(textureMapping(machineType)) {
+                put(
+                    TextureSlot.FRONT,
+                    Material(block.id().modifyPath { "${HTConstants.BLOCK}/${RagiumConstants.MACHINE}/${it}_front" }),
+                )
+            },
             generators.modelOutput,
         )
-    }
 
     private fun textureMapping(machineType: HTMachineType): TextureMapping = buildTextureMapping {
         put(TextureSlot.TOP, Material(RagiumBlocks.MACHINE_CASINGS.basic.blockId()))

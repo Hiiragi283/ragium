@@ -41,7 +41,11 @@ inline fun vanillaId(path: String): Identifier = Identifier.withDefaultNamespace
  */
 fun vanillaId(vararg path: String): Identifier = Identifier.withDefaultNamespace(path.joinToString(separator = "/"))
 
-inline fun Identifier.modifyPath(operator: Identity<String>): Identifier = this.namespace.toId(operator(this.path))
+inline fun Identifier.modifyPath(operator: Identity<String>): Identifier {
+    val oldPath: String = this.path
+    val newPath: String = operator(oldPath)
+    return if (newPath == oldPath) this else this.namespace.toId(newPath)
+}
 
 /**
  * この[Identifier]から，`block/`で前置された[ID][Identifier]を返します。

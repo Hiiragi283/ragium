@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/orientable",
   "textures": {
-    "front": "ragium:block/press_machine_front",
+    "front": "ragium:block/machine/press_machine_front",
     "side": "ragium:block/machine/mechanical_side",
     "top": "ragium:block/machine_casing/basic"
   }

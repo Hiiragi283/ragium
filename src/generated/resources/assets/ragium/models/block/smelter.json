@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/orientable",
   "textures": {
-    "front": "ragium:block/smelter_front",
+    "front": "ragium:block/machine/smelter_front",
     "side": "ragium:block/machine/heat_side",
     "top": "ragium:block/machine_casing/basic"
   }

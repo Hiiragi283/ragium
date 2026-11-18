@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/orientable",
   "textures": {
-    "front": "ragium:block/engraver_front",
+    "front": "ragium:block/machine/engraver_front",
     "side": "ragium:block/machine/electronics_side",
     "top": "ragium:block/machine_casing/basic"
   }
