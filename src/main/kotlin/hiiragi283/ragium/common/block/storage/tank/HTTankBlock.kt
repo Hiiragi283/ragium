@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.storage
+package hiiragi283.ragium.common.block.storage.tank
 
 import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.HTFluidStorageBlock

@@ -10,7 +10,7 @@ import hiiragi283.lib.transfer.HTHandlerProvider
 import hiiragi283.lib.transfer.energy.HTEnergyStorage
 import hiiragi283.lib.transfer.fluid.FluidResourceHandler
 import hiiragi283.lib.transfer.fluid.HTFluidTank
-import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
+import hiiragi283.lib.transfer.holder.HTEnergyStorageHolder
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTItemSlot
 import hiiragi283.lib.transfer.item.ItemResourceHandler
@@ -167,7 +167,7 @@ abstract class HTBlockEntity(type: BlockEntityType<*>, worldPosition: BlockPos, 
     // Energy
     fun hasEnergyStorage(): Boolean = energyHandlerManager != null
 
-    protected open fun createEnergyStorage(listener: Runnable): HTEnergyHandlerHolder? = null
+    protected open fun createEnergyStorage(listener: Runnable): HTEnergyStorageHolder? = null
 
     fun getEnergyStorage(side: Direction?): HTEnergyStorage? = energyHandlerManager?.getStorage(side)
 

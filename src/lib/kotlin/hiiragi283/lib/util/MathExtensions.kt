@@ -8,6 +8,7 @@ package hiiragi283.lib.util
  */
 fun fixedFraction(amount: Int, capacity: Int, loop: Boolean = false): Float {
     if (capacity <= 0) return 0f
+    if (amount == capacity) return 1f
     val fixedAmount: Int = when (loop) {
         true -> amount % capacity
         false -> minOf(amount, capacity)
@@ -26,6 +27,7 @@ fun fixedFraction(amount: Int, capacity: Int, loop: Boolean = false): Float {
  */
 fun fixedFraction(amount: Long, capacity: Long, loop: Boolean = false): Double {
     if (capacity <= 0) return 0.0
+    if (amount == capacity) return 0.0
     val fixedAmount: Long = when (loop) {
         true -> amount % capacity
         false -> minOf(amount, capacity)

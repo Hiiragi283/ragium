@@ -4,7 +4,7 @@ import hiiragi283.lib.registry.HTDeferredBlockEntityType
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.lib.world.getTypedBlockEntity
 import hiiragi283.ragium.common.block.HTBasicEntityBlock
-import hiiragi283.ragium.common.block.entity.storage.base.HTBaseTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.tank.HTBaseTankBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand

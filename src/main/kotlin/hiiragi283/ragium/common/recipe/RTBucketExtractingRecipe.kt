@@ -38,11 +38,6 @@ data object RTBucketExtractingRecipe : HTItemToItemAndFluidRecipe, HTProgressRec
         HTIngredientHelper.unwrap(input).let(FluidUtil::getFirstStackContained),
     )
 
-    override fun getMatchingStack(input: ItemInstance): ItemInstance = when {
-        test(input) -> HTIngredientHelper.copyWithCount(input, 1)
-        else -> ItemStack.EMPTY
-    }
-
     override fun getProgressData(input: ItemInstance): HTProgressData = progressData
 
     override val progressData: HTProgressData = HTProgressData.time(60)

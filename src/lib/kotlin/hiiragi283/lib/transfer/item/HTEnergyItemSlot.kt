@@ -4,6 +4,7 @@ import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.HTTransferPredicates
 import hiiragi283.lib.transfer.energy.HTEnergyStorage
+import hiiragi283.lib.transfer.useSafeTransaction
 import hiiragi283.lib.transfer.useTransaction
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.transfer.access.ItemAccess
@@ -49,12 +50,8 @@ class HTEnergyItemSlot(
             filter: Predicate<ItemResource> = HTTransferPredicates.alwaysTrue(),
         ): HTEnergyItemSlot = HTEnergyItemSlot(
             storage,
-            HTTransferPredicates.notExternal<ItemResource>().or { resource: ItemResource, _ ->
-                !canDrain(storage, resource)
-            },
-            HTTransferPredicates.internalOnly<ItemResource>().or { resource: ItemResource, _ ->
-                canDrain(storage, resource)
-            },
+            HTTransferPredicates.notExternal<ItemResource>().or { resource: ItemResource, _ -> !canDrain(storage, resource) },
+            HTTransferPredicates.internalOnly<ItemResource>().or { resource: ItemResource, _ -> canDrain(storage, resource) },
             filter,
             listener,
         )
@@ -66,20 +63,16 @@ class HTEnergyItemSlot(
         }
 
         @JvmStatic
-        private fun canDrain(storage: HTEnergyStorage, handler1: EnergyHandler): Boolean {
-            if (storage.amount == 0) {
-                return handler1.amountAsLong < handler1.capacityAsLong
-            }
-            return useTransaction { transaction: Transaction ->
-                handler1.insert(storage.capacity, transaction) > 0
-            }
+        private fun canDrain(storage: HTEnergyStorage, handler1: EnergyHandler): Boolean = if (storage.amount == 0) {
+            handler1.amountAsLong < handler1.capacityAsLong
+        } else {
+            useSafeTransaction { transaction: Transaction -> handler1.insert(storage.capacity, transaction) > 0 }
         }
 
         @JvmStatic
         fun canFill(resource: ItemResource): Boolean {
-            val handler1: EnergyHandler =
-                resource.toStack().let(ItemAccess::forStack).let(HTEnergyCapabilities::getCapability) ?: return false
-            return useTransaction { transaction: Transaction -> handler1.extract(Int.MAX_VALUE, transaction) > 0 }
+            val handler1: EnergyHandler = resource.toStack().let(ItemAccess::forStack).let(HTEnergyCapabilities::getCapability) ?: return false
+            return useSafeTransaction { transaction: Transaction -> handler1.extract(Int.MAX_VALUE, transaction) > 0 }
         }
     }
 

@@ -51,6 +51,8 @@ interface HTFluidToRecipe<OUTPUT : Any> : HTRecipeFactories.SingleInput<HTSingle
 
     override fun produce(input: HTSingleFluidRecipeInput): OUTPUT = apply(input.fluid)
 
+    override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
+
     override fun getProgressData(input: HTSingleFluidRecipeInput): HTProgressData = getProgressData(input.fluid)
 
     /**
@@ -61,8 +63,6 @@ interface HTFluidToRecipe<OUTPUT : Any> : HTRecipeFactories.SingleInput<HTSingle
         HTBasicSingleRecipe<HTFluidIngredient, RESULT>(ingredient, result, progressData),
         HTFluidToRecipe<OUTPUT> {
         override fun apply(input: FluidInstance): OUTPUT = result.create()
-
-        override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
 
         override fun getProgressData(input: FluidInstance): HTProgressData = progressData
     }

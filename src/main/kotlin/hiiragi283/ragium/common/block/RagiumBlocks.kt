@@ -20,6 +20,7 @@ import hiiragi283.lib.transfer.fluid.HTFluidTankUtil
 import hiiragi283.lib.transfer.fluid.HTItemAccessFluidHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
+import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
@@ -31,9 +32,11 @@ import hiiragi283.ragium.common.block.generator.HTGeneratorBlock
 import hiiragi283.ragium.common.block.misc.HTBoilerBlock
 import hiiragi283.ragium.common.block.misc.HTEnchantmentAbsorberBlock
 import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock
-import hiiragi283.ragium.common.block.storage.HTPotionTankBlock
-import hiiragi283.ragium.common.block.storage.HTTankBlock
-import hiiragi283.ragium.common.block.storage.HTVoidTankBlock
+import hiiragi283.ragium.common.block.storage.battery.HTBatteryBlock
+import hiiragi283.ragium.common.block.storage.tank.HTPotionTankBlock
+import hiiragi283.ragium.common.block.storage.tank.HTTankBlock
+import hiiragi283.ragium.common.block.storage.tank.HTVoidTankBlock
+import hiiragi283.ragium.common.item.block.HTBatteryBlockItem
 import hiiragi283.ragium.common.item.block.HTCreativeTankBlockItem
 import hiiragi283.ragium.common.item.block.HTPotionTankBlockItem
 import hiiragi283.ragium.config.RagiumConfig
@@ -49,7 +52,9 @@ import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.transfer.InfiniteResourceHandler
+import net.neoforged.neoforge.transfer.access.ItemAccess
 import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
+import net.neoforged.neoforge.transfer.energy.ItemAccessEnergyHandler
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 
 data object RagiumBlocks {
@@ -477,8 +482,15 @@ data object RagiumBlocks {
     )
 
     @JvmField
-    val CREATIVE_BATTERY: HTBasicDeferredBlockAndItem<HTBasicEntityBlock> =
-        registerWithBE(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBasicEntityBlock)
+    val BATTERY: HTDeferredBlockAndItem<HTBatteryBlock, HTBatteryBlockItem> =
+        registerWithBE(RagiumBlockEntityTypes.BATTERY, ::HTBatteryBlock, ::HTBatteryBlockItem)
+
+    @JvmField
+    val CREATIVE_BATTERY: HTDeferredBlockAndItem<HTBatteryBlock, HTBatteryBlockItem> =
+        registerWithBE(RagiumBlockEntityTypes.CREATIVE_BATTERY, ::HTBatteryBlock, ::HTBatteryBlockItem)
+
+    @JvmField
+    val BATTERIES: List<HTSimpleDeferredBlockAndItem> = listOf(BATTERY, CREATIVE_BATTERY)
 
     //    Misc    //
 
@@ -536,11 +548,6 @@ data object RagiumBlocks {
             VOID_TANK,
         )
         event.registerItem(
-            HTEnergyCapabilities.item,
-            { _, _ -> InfiniteEnergyHandler.INSTANCE },
-            CREATIVE_BATTERY,
-        )
-        event.registerItem(
             HTFluidCapabilities.item,
             { stack: ItemStack, _ ->
                 HTFluidTankUtil.getFluid(stack)
@@ -549,6 +556,17 @@ data object RagiumBlocks {
                     ?.let(::InfiniteResourceHandler)
             },
             CREATIVE_TANK,
+        )
+
+        event.registerItem(
+            HTEnergyCapabilities.item,
+            { _, access: ItemAccess -> ItemAccessEnergyHandler(access, RagiumDataComponents.ENERGY, RagiumConfig.SERVER.batteryCapacity.asInt) },
+            BATTERY,
+        )
+        event.registerItem(
+            HTEnergyCapabilities.item,
+            { _, _ -> InfiniteEnergyHandler.INSTANCE },
+            CREATIVE_BATTERY,
         )
     }
 }

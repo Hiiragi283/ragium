@@ -21,7 +21,7 @@ val ResourceHandler<*>.indices: IntRange get() = (0..<size())
 //    Transaction    //
 
 /**
- * [Transaction]を安全に使用します。
+ * 新しい[Transaction]を安全に使用します。
  * @param T 戻り値のクラス
  * @param parent 現在開いている親のトランザクション
  * @param action 現在のトランザクションを使用するブロック
@@ -34,4 +34,20 @@ inline fun <T> useTransaction(parent: TransactionContext? = null, action: (Trans
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
     return Transaction.open(parent).use(action)
+}
+
+/**
+ * 現在の[Transaction]に基づいて，新しい[Transaction]を安全に使用します。
+ * @param T 戻り値のクラス
+ * @param action 現在のトランザクションを使用するブロック
+ * @return [action]の戻り値
+ * @author Hiiragi Tsubasa
+ * @since 26.1.14
+ */
+@Suppress("DEPRECATION")
+inline fun <T> useSafeTransaction(action: (Transaction) -> T): T {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    return Transaction.open(Transaction.getCurrentOpenedTransaction()).use(action)
 }

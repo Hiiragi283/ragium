@@ -3,8 +3,10 @@ package hiiragi283.ragium.common.block.entity
 import com.mojang.serialization.Codec
 import hiiragi283.lib.serialization.codec.HTCodecs
 import hiiragi283.lib.transfer.fluid.HTFluidTank
+import hiiragi283.lib.transfer.holder.HTEnergyStorageHolder
 import hiiragi283.lib.transfer.holder.HTResourceSlotHolder
 import hiiragi283.lib.transfer.item.HTItemSlot
+import hiiragi283.ragium.common.transfer.holder.HTBasicEnergyStorageHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
@@ -55,6 +57,14 @@ abstract class HTConfigurableBlockEntity(type: BlockEntityType<*>, pos: BlockPos
         super.readUpdateTag(input)
         input.read("slot_info", CONFIG_CODEC).ifPresent(slotInfoCache::putAll)
     }
+
+    final override fun createEnergyStorage(listener: Runnable): HTEnergyStorageHolder? {
+        val builder: HTBasicEnergyStorageHolder.Builder = HTBasicEnergyStorageHolder.builder(this)
+        createEnergyStorage(builder, listener)
+        return builder.build()
+    }
+
+    protected open fun createEnergyStorage(builder: HTBasicEnergyStorageHolder.Builder, listener: Runnable) {}
 
     final override fun createFluidHandler(listener: Runnable): HTResourceSlotHolder<HTFluidTank>? {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)

@@ -8,6 +8,6 @@ import net.minecraft.core.Direction
  * @author Hiiragi Tsubasa
  * @since 26.1.12
  */
-interface HTEnergyHandlerHolder : HTCapabilityHolder {
-    fun getHandler(side: Direction?): HTEnergyStorage?
+interface HTEnergyStorageHolder : HTCapabilityHolder {
+    fun getStorage(side: Direction?): HTEnergyStorage?
 }

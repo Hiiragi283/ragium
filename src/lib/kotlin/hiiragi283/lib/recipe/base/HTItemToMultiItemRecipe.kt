@@ -59,7 +59,5 @@ interface HTItemToMultiItemRecipe : HTItemToRecipe<List<ItemStack>> {
         override fun getProgressData(input: ItemInstance): HTProgressData = progressData
 
         override fun apply(input: ItemInstance): List<ItemStack> = results.map(HTItemResult::create)
-
-        override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
     }
 }

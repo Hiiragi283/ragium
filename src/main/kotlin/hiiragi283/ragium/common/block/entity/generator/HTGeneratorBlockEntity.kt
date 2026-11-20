@@ -5,11 +5,10 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.energy.HTBasicEnergyStorage
 import hiiragi283.lib.transfer.energy.HTEnergyStorageUtil
-import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
 import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
-import hiiragi283.ragium.common.transfer.holder.HTBasicEnergyHandlerHolder
+import hiiragi283.ragium.common.transfer.holder.HTBasicEnergyStorageHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
@@ -24,16 +23,14 @@ abstract class HTGeneratorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
     protected lateinit var storage: HTBasicEnergyStorage
         private set
 
-    final override fun createEnergyStorage(listener: Runnable): HTEnergyHandlerHolder? {
-        val builder: HTBasicEnergyHandlerHolder.Builder = HTBasicEnergyHandlerHolder.builder(this)
-        storage = builder.addHandler(
+    final override fun createEnergyStorage(builder: HTBasicEnergyStorageHolder.Builder, listener: Runnable) {
+        storage = builder.addStorage(
             HTSlotInfo.OUTPUT,
             HTBasicEnergyStorage.output(
                 HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
                 listener,
             ),
         )
-        return builder.build()
     }
 
     protected abstract fun getConfig(): HTEnergyConfig

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.lib.renderer.HTBlockEntityRenderer
 import hiiragi283.lib.renderer.HTRenderHelper
 import hiiragi283.lib.renderer.state.HTFluidBERenderState
-import hiiragi283.ragium.common.block.entity.storage.base.HTBaseTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.tank.HTBaseTankBlockEntity
 import net.minecraft.client.renderer.Sheets
 import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider

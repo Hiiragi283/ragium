@@ -40,8 +40,6 @@ class RTPlantingRecipe(ingredient: HTItemIngredient, result: HTItemResult, progr
         getMatchingStack(input).let(HTIngredientHelper::unwrap).copy(),
     )
 
-    override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
-
     override fun getProgressData(input: ItemInstance): HTProgressData = progressData
 
     override fun getSerializer(): RecipeSerializer<RTPlantingRecipe> = RagiumRecipeSerializers.PLANTING

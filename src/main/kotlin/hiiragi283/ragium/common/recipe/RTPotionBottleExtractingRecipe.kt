@@ -48,10 +48,5 @@ data class RTPotionBottleExtractingRecipe(
         HTPotionHelper.createFluid(input, HTPotionHelper.BOTTLE_AMOUNT).mapOrElse(FluidStackTemplate::create) { FluidStack.EMPTY },
     )
 
-    override fun getMatchingStack(input: ItemInstance): ItemInstance = when {
-        test(input) -> HTIngredientHelper.copyWithCount(input, 1)
-        else -> ItemStack.EMPTY
-    }
-
     override fun getProgressData(input: ItemInstance): HTProgressData = progressData
 }

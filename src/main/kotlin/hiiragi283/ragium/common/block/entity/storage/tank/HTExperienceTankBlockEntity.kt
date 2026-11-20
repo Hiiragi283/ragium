@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.storage
+package hiiragi283.ragium.common.block.entity.storage.tank
 
 import com.google.common.primitives.Ints
 import hiiragi283.lib.player.HTExperienceHelper
@@ -6,7 +6,6 @@ import hiiragi283.lib.serialization.value.EmptyValueIOSerializable
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.block.entity.storage.base.HTBaseTankBlockEntity
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo

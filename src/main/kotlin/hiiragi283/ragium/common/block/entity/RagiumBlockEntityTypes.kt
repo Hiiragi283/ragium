@@ -46,17 +46,17 @@ import hiiragi283.ragium.common.block.entity.processor.HTResourcePumpBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTScannerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSiftingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTExperienceTankBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTPotionTankBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.battery.HTBatteryBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.battery.HTCreativeBatteryBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.tank.HTCreativeTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.tank.HTExperienceTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.tank.HTPotionTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.tank.HTTankBlockEntity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
-import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler
 
 data object RagiumBlockEntityTypes {
     @JvmField
@@ -254,6 +254,10 @@ data object RagiumBlockEntityTypes {
         REGISTER.registerType("energy_pipe", ::HTEnergyPipeBlockEntity)
 
     @JvmField
+    val BATTERY: HTDeferredBlockEntityType<HTBatteryBlockEntity> =
+        registerTick("battery", ::HTBatteryBlockEntity)
+
+    @JvmField
     val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
         registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
 
@@ -339,10 +343,8 @@ data object RagiumBlockEntityTypes {
         registerBlockEntity(EXPERIENCE_TANK.get())
         registerBlockEntity(CREATIVE_TANK.get())
 
-        event.registerBlockEntity(
-            HTEnergyCapabilities.block,
-            CREATIVE_BATTERY.get(),
-        ) { _, _ -> InfiniteEnergyHandler.INSTANCE }
+        registerBlockEntity(BATTERY.get())
+        registerBlockEntity(CREATIVE_BATTERY.get())
         // Misc
         registerBlockEntity(UPGRADE_STATION.get())
         registerBlockEntity(ENCHANTMENT_ABSORBER.get())

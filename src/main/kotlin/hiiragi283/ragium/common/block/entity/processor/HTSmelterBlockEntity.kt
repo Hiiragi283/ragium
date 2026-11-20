@@ -92,8 +92,6 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
         override fun apply(input: ItemInstance): ItemStack = recipe.assemble(FAKE_INPUT)
 
-        override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
-
         override fun getProgressData(input: ItemInstance): HTProgressData = HTProgressData.time(recipe.cookingTime())
     }
 

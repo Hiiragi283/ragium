@@ -38,8 +38,8 @@ class RagiumBlockTagsProvider(output: PackOutput, lookupProvider: CompletableFut
             yieldAll(RagiumBlocks.DECORATION_HULLS.values)
 
             yieldAll(RagiumBlocks.TANKS)
+            yieldAll(RagiumBlocks.BATTERIES)
             yield(RagiumBlocks.ENERGY_PIPE)
-            yield(RagiumBlocks.CREATIVE_BATTERY)
 
             yield(RagiumBlocks.UPGRADE_STATION)
             yield(RagiumBlocks.ENCHANTMENT_ABSORBER)

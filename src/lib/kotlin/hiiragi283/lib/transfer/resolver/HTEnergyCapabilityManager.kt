@@ -2,7 +2,7 @@ package hiiragi283.lib.transfer.resolver
 
 import hiiragi283.lib.transfer.energy.HTEnergyHandler
 import hiiragi283.lib.transfer.energy.HTEnergyStorage
-import hiiragi283.lib.transfer.holder.HTEnergyHandlerHolder
+import hiiragi283.lib.transfer.holder.HTEnergyStorageHolder
 import hiiragi283.lib.transfer.proxy.HTProxyEnergyHandler
 import net.minecraft.core.Direction
 import net.neoforged.neoforge.transfer.energy.EmptyEnergyHandler
@@ -13,12 +13,12 @@ import net.neoforged.neoforge.transfer.energy.EnergyHandler
  * @author Hiiragi Tsubasa
  * @since 26.1.12
  **/
-class HTEnergyCapabilityManager(holder: HTEnergyHandlerHolder) :
-    HTCapabilityManager<HTEnergyHandlerHolder, EnergyHandler>(holder, { side: Direction?, holder: HTEnergyHandlerHolder ->
-        val handler: EnergyHandler = holder.getHandler(side)?.let(::HTEnergyHandler) ?: EmptyEnergyHandler.INSTANCE
+class HTEnergyCapabilityManager(holder: HTEnergyStorageHolder) :
+    HTCapabilityManager<HTEnergyStorageHolder, EnergyHandler>(holder, { side: Direction?, holder: HTEnergyStorageHolder ->
+        val handler: EnergyHandler = holder.getStorage(side)?.let(::HTEnergyHandler) ?: EmptyEnergyHandler.INSTANCE
         HTProxyEnergyHandler(handler, side, holder)
     }) {
     override fun isEmpty(side: Direction?): Boolean = getStorage(side) == null
 
-    fun getStorage(side: Direction?): HTEnergyStorage? = holder.getHandler(side)
+    fun getStorage(side: Direction?): HTEnergyStorage? = holder.getStorage(side)
 }

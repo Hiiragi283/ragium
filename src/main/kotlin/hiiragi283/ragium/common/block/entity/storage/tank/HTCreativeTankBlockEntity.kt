@@ -1,8 +1,7 @@
-package hiiragi283.ragium.common.block.entity.storage
+package hiiragi283.ragium.common.block.entity.storage.tank
 
 import hiiragi283.lib.transfer.fluid.HTFluidTankUtil
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.block.entity.storage.base.HTBaseTankBlockEntity
 import hiiragi283.ragium.common.transfer.fluid.HTCreativeFluidTank
 import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo

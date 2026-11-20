@@ -1,8 +1,9 @@
-package hiiragi283.ragium.common.block.entity.storage.base
+package hiiragi283.ragium.common.block.entity.storage.tank
 
 import hiiragi283.lib.transfer.HTResourceSlotUtil
 import hiiragi283.lib.transfer.fluid.HTFluidTank
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
+import hiiragi283.ragium.common.transfer.holder.HTBasicFluidTankHolder
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
@@ -13,6 +14,8 @@ import net.minecraft.world.level.storage.ValueOutput
 
 abstract class HTBaseTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTConfigurableBlockEntity(type, pos, state) {
     abstract val tank: HTFluidTank
+
+    abstract override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable)
 
     override fun markDirtyComparator() {
         level?.updateNeighbourForOutputSignal(blockPos, blockState.block)
@@ -28,6 +31,7 @@ abstract class HTBaseTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, st
     }
 
     override fun readUpdateTag(input: ValueInput) {
+        super.readUpdateTag(input)
         tank.deserialize(input)
     }
 

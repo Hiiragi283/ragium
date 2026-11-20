@@ -71,7 +71,6 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             // yield(RagiumBlocks.CRYOLITE_BLOCK)
 
             yieldAll(RagiumBlocks.MACHINE_CASINGS)
-            yield(RagiumBlocks.CREATIVE_BATTERY) // TODO
         }.forEach { generators.createTrivialCube(it.getOrThrow()) }
 
         createEnergyPipe(generators)
@@ -159,8 +158,11 @@ class RagiumModelProvider(output: PackOutput) : HTModelProvider(output, RagiumAP
             generators.createSimple(block, ModelTemplates.CUBE_TOP, textureMapping(machineType))
         }
         // Storage
-        for (blockItem: HTSimpleValueWithKey<Block> in RagiumBlocks.TANKS) {
-            generators.createSimple(blockItem, HTModelTemplates.Providers.TANK_TEMPLATE)
+        for (tank: HTSimpleValueWithKey<Block> in RagiumBlocks.TANKS) {
+            generators.createSimple(tank, HTModelTemplates.Providers.TANK_TEMPLATE)
+        }
+        for (battery: HTSimpleValueWithKey<Block> in RagiumBlocks.BATTERIES) {
+            generators.createTrivialCube(battery.getOrThrow()) // TODO
         }
         // Misc
         generators.createSimple(RagiumBlocks.UPGRADE_STATION, TexturedModel.CUBE_TOP_BOTTOM)

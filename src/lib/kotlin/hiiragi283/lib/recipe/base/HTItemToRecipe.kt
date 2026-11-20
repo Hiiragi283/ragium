@@ -51,6 +51,8 @@ interface HTItemToRecipe<OUTPUT : Any> : HTRecipeFactories.SingleInput<SingleRec
 
     override fun produce(input: SingleRecipeInput): OUTPUT = apply(input.item())
 
+    override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
+
     override fun getProgressData(input: SingleRecipeInput): HTProgressData = getProgressData(input.item())
 
     /**
@@ -61,8 +63,6 @@ interface HTItemToRecipe<OUTPUT : Any> : HTRecipeFactories.SingleInput<SingleRec
         HTBasicSingleRecipe<HTItemIngredient, RESULT>(ingredient, result, progressData),
         HTItemToRecipe<OUTPUT> {
         override fun apply(input: ItemInstance): OUTPUT = result.create()
-
-        override fun getMatchingStack(input: ItemInstance): ItemInstance = ingredient.getMatchingStack(input)
 
         override fun getProgressData(input: ItemInstance): HTProgressData = progressData
     }

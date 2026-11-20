@@ -109,7 +109,5 @@ interface HTFluidSeparatingRecipe : HTFluidToRecipe<HTFluidSeparatingRecipe.Outp
         override fun getProgressData(input: FluidInstance): HTProgressData = progressData
 
         override fun apply(input: FluidInstance): Output = result.create()
-
-        override fun getMatchingStack(input: FluidInstance): FluidInstance = ingredient.getMatchingStack(input)
     }
 }

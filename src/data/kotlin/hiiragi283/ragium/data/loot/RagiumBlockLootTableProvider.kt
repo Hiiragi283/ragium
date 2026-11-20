@@ -29,12 +29,12 @@ class RagiumBlockLootTableProvider(registries: HolderLookup.Provider) :
             .flatten()
             .forEach { add(it, ::copyComponent) }
         // Storage
-        listOf(
-            RagiumBlocks.TANK,
-            RagiumBlocks.POTION_TANK,
-            RagiumBlocks.CREATIVE_TANK,
-        ).forEach { blockItem: HTSimpleDeferredBlockAndItem ->
+        for (blockItem: HTSimpleDeferredBlockAndItem in RagiumBlocks.TANKS) {
             add(blockItem) { block: Block -> copyComponent(block) { include(RagiumDataComponents.FLUID) } }
+        }
+
+        for (blockItem: HTSimpleDeferredBlockAndItem in RagiumBlocks.BATTERIES) {
+            add(blockItem) { block: Block -> copyComponent(block) { include(RagiumDataComponents.ENERGY) } }
         }
         // Misc
         add(RagiumBlocks.UPGRADE_STATION, ::copyComponent)
