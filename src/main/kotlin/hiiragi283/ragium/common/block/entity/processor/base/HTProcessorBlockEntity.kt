@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTSlotHelper
+import hiiragi283.lib.gui.sync.HTIntSyncSlot
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.handler.lookup.HTRecipeLookupHandler
 import hiiragi283.lib.transfer.HTTransferAccess
@@ -32,6 +33,8 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
     fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(3.75), y: Int = HTSlotHelper.getSlotPosY(1)) {
         widgetHolder += HTArrowWidget.Right(::progression, x, y)
+        widgetHolder += HTIntSyncSlot.create(::progress)
+        widgetHolder += HTIntSyncSlot.create(::maxProgress)
     }
 
     protected fun updateProgress(maxProgress: Int) {
@@ -55,28 +58,8 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
 
     override fun readValue(input: ValueInput) {
         super.readValue(input)
-        input.getInt(HTConstants.MAX_PROGRESS).ifPresent { maxProgress: Int ->
-            this.maxProgress = maxProgress
-            input.getInt(HTConstants.PROGRESS).ifPresent { progress: Int ->
-                this.progress = progress
-            }
-        }
-    }
-
-    override fun writeReducedUpdateTag(output: ValueOutput) {
-        super.writeReducedUpdateTag(output)
-        output.putInt(HTConstants.PROGRESS, progress)
-        output.putInt(HTConstants.MAX_PROGRESS, maxProgress)
-    }
-
-    override fun readUpdateTag(input: ValueInput) {
-        super.readUpdateTag(input)
-        input.getInt(HTConstants.MAX_PROGRESS).ifPresent { maxProgress: Int ->
-            this.maxProgress = maxProgress
-            input.getInt(HTConstants.PROGRESS).ifPresent { progress: Int ->
-                this.progress = progress
-            }
-        }
+        input.getInt(HTConstants.MAX_PROGRESS).ifPresent(::maxProgress::set)
+        input.getInt(HTConstants.PROGRESS).ifPresent(::progress::set)
     }
 
     //    Energized    //

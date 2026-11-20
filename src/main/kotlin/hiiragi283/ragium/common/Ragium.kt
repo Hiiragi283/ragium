@@ -2,6 +2,8 @@ package hiiragi283.ragium.common
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.data.loot.predicates.HTBlockSetLootCondition
+import hiiragi283.lib.gui.sync.HTBoolSyncPayload
+import hiiragi283.lib.gui.sync.HTFloatSyncPayload
 import hiiragi283.lib.gui.sync.HTFluidSyncPayload
 import hiiragi283.lib.gui.sync.HTIntSyncPayload
 import hiiragi283.lib.gui.sync.HTItemSyncPayload
@@ -143,8 +145,11 @@ data object Ragium : HTCommonMod() {
             helper.register(RagiumAPI.id("enchanted_book"), HTItemResult.EnchantedBookEntry.TYPE)
         }
         event.register(RagiumRegistries.Keys.SYNCABLE_SLOT_TYPE) { helper ->
+            helper.register(RagiumAPI.id("boolean"), HTBoolSyncPayload.TYPE)
             helper.register(RagiumAPI.id("integer"), HTIntSyncPayload.TYPE)
             helper.register(RagiumAPI.id("long"), HTLongSyncPayload.TYPE)
+            helper.register(RagiumAPI.id("float"), HTFloatSyncPayload.TYPE)
+
             helper.register(RagiumAPI.id(HTConstants.ITEM), HTItemSyncPayload.TYPE)
             helper.register(RagiumAPI.id(HTConstants.FLUID), HTFluidSyncPayload.TYPE)
         }

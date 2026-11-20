@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.generator.dynamo
 
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTSlotHelper
+import hiiragi283.lib.gui.sync.HTIntSyncSlot
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.lib.util.fixedFraction
@@ -24,6 +25,8 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
 
     fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(3.75)) {
         widgetHolder += HTArrowWidget.Right(::progression, x, HTSlotHelper.getSlotPosY(1))
+        widgetHolder += HTIntSyncSlot.create(::progress)
+        widgetHolder += HTIntSyncSlot.create(::maxProgress)
     }
 
     override fun writeValue(output: ValueOutput) {
@@ -34,24 +37,8 @@ abstract class HTDynamoBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
 
     override fun readValue(input: ValueInput) {
         super.readValue(input)
-        input.getInt(HTConstants.MAX_PROGRESS).ifPresent {
-            this.maxProgress = it
-            input.getInt(HTConstants.PROGRESS).ifPresent(::progress::set)
-        }
-    }
-
-    override fun writeReducedUpdateTag(output: ValueOutput) {
-        super.writeReducedUpdateTag(output)
-        output.putInt(HTConstants.PROGRESS, progress)
-        output.putInt(HTConstants.MAX_PROGRESS, maxProgress)
-    }
-
-    override fun readUpdateTag(input: ValueInput) {
-        super.readUpdateTag(input)
-        input.getInt(HTConstants.MAX_PROGRESS).ifPresent {
-            this.maxProgress = it
-            input.getInt(HTConstants.PROGRESS).ifPresent(::progress::set)
-        }
+        input.getInt(HTConstants.MAX_PROGRESS).ifPresent(::maxProgress::set)
+        input.getInt(HTConstants.PROGRESS).ifPresent(::progress::set)
     }
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {

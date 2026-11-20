@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.misc
 import hiiragi283.lib.HTConstants
 import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
+import hiiragi283.lib.gui.sync.HTIntSyncSlot
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTTransferAccess
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
@@ -97,6 +98,8 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
         override fun setupMenu(widgetHolder: HTWidgetHolder) {
             // progress
             widgetHolder += HTArrowWidget.Right(::progression, HTSlotHelper.getSlotPosX(3.75), HTSlotHelper.getSlotPosY(1))
+            widgetHolder += HTIntSyncSlot.create(::progress)
+            widgetHolder += HTIntSyncSlot.create(::maxProgress)
             // inputs
             widgetHolder += HTItemWidget.Container(
                 fuelSlot,
@@ -136,26 +139,8 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
 
         override fun readValue(input: ValueInput) {
             super.readValue(input)
-            input.getInt(HTConstants.MAX_PROGRESS).ifPresent {
-                this.maxProgress = it
-                input.getInt(HTConstants.PROGRESS).ifPresent(::progress::set)
-            }
-        }
-
-        override fun writeReducedUpdateTag(output: ValueOutput) {
-            super.writeReducedUpdateTag(output)
-            output.putInt(HTConstants.PROGRESS, progress)
-            output.putInt(HTConstants.MAX_PROGRESS, maxProgress)
-        }
-
-        override fun readUpdateTag(input: ValueInput) {
-            super.readUpdateTag(input)
-            input.getInt(HTConstants.MAX_PROGRESS).ifPresent { maxProgress: Int ->
-                this.maxProgress = maxProgress
-                input.getInt(HTConstants.PROGRESS).ifPresent { progress: Int ->
-                    this.progress = progress
-                }
-            }
+            input.getInt(HTConstants.MAX_PROGRESS).ifPresent(::maxProgress::set)
+            input.getInt(HTConstants.PROGRESS).ifPresent(::progress::set)
         }
 
         override fun isBurning(level: ServerLevel, transaction: Transaction): Boolean {

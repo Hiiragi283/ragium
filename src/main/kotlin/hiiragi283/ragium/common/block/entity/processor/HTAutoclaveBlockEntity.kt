@@ -16,7 +16,7 @@ class HTAutoclaveBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getLookup(): HTRecipeLookup<HTItemAndFluidToItemRecipe> = RagiumRecipeLookups.AUTOCLAVING
 
     override fun onComplete() {
-        playSound(SoundEvents.SPONGE_ABSORB)
+        playSound(SoundEvents.AMETHYST_BLOCK_PLACE)
     }
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.processor.autoclave

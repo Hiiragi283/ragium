@@ -76,7 +76,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         RagiumRecipeBuilders.autoclaving {
             itemIngredient { items { +Items.SMALL_AMETHYST_BUD } }
             fluidIngredient {
-                +steamSet
+                +waterSet()
                 amount /= 4
             }
             result { +Items.MEDIUM_AMETHYST_BUD }
@@ -84,7 +84,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         RagiumRecipeBuilders.autoclaving {
             itemIngredient { items { +Items.MEDIUM_AMETHYST_BUD } }
             fluidIngredient {
-                +steamSet
+                +waterSet()
                 amount /= 4
             }
             result { +Items.LARGE_AMETHYST_BUD }
@@ -92,7 +92,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         RagiumRecipeBuilders.autoclaving {
             itemIngredient { items { +Items.LARGE_AMETHYST_BUD } }
             fluidIngredient {
-                +steamSet
+                +waterSet()
                 amount /= 4
             }
             result { +Items.AMETHYST_CLUSTER }

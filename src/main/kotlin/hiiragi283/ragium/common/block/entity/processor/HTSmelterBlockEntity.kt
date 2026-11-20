@@ -81,9 +81,9 @@ class HTSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getLookup(): HTRecipeLookup<HTItemToItemRecipe> = HTRecipeLookup { context: HTRecipeLookup.Context ->
         val resourceIn: ItemResource = typeSlot.resource
         when {
-            resourceIn.`is`(Items.BLAST_FURNACE) -> RecipeType.SMELTING
-            resourceIn.`is`(Items.SMOKER) -> RecipeType.BLASTING
-            else -> RecipeType.SMOKING
+            resourceIn.`is`(Items.BLAST_FURNACE) -> RecipeType.BLASTING
+            resourceIn.`is`(Items.SMOKER) -> RecipeType.SMOKING
+            else -> RecipeType.SMELTING
         }.let(context::byType).map { it.map(::wrapRecipe) }
     }
 
