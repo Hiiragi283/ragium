@@ -84,7 +84,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             }
 
         // Tanks
-        registration.registerFromDataComponentTypes(RagiumBlocks.POTION_TANK.asItem(), RagiumDataComponents.FLUID)
         registration.registerFromDataComponentTypes(RagiumBlocks.CREATIVE_TANK.asItem(), RagiumDataComponents.FLUID)
     }
 

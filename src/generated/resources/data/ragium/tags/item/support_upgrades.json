@@ -3,7 +3,6 @@
     "#ragium:generators",
     "#ragium:processors",
     "ragium:battery",
-    "ragium:potion_tank",
     "ragium:tank"
   ]
 }

@@ -6,7 +6,6 @@ import hiiragi283.lib.collection.Table
 import hiiragi283.lib.collection.buildListMultiMap
 import hiiragi283.lib.collection.buildTable
 import hiiragi283.lib.data.lang.HTLangName
-import hiiragi283.lib.item.alchemy.HTPotionHelper
 import hiiragi283.lib.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.lib.registry.HTDecorationContent
 import hiiragi283.lib.registry.HTDeferredBlockAndItem
@@ -34,12 +33,10 @@ import hiiragi283.ragium.common.block.misc.HTBoilerBlock
 import hiiragi283.ragium.common.block.misc.HTEnchantmentAbsorberBlock
 import hiiragi283.ragium.common.block.misc.HTUpgradeStationBlock
 import hiiragi283.ragium.common.block.storage.battery.HTBatteryBlock
-import hiiragi283.ragium.common.block.storage.tank.HTPotionTankBlock
 import hiiragi283.ragium.common.block.storage.tank.HTTankBlock
 import hiiragi283.ragium.common.block.storage.tank.HTVoidTankBlock
 import hiiragi283.ragium.common.item.block.HTBatteryBlockItem
 import hiiragi283.ragium.common.item.block.HTCreativeTankBlockItem
-import hiiragi283.ragium.common.item.block.HTPotionTankBlockItem
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -87,6 +84,7 @@ data object RagiumBlocks {
         REGISTER.addAlias("machine_casing", "decoration_casing/basic")
         REGISTER.addAlias("magmatic_dynamo", RagiumConstants.STEAM_DYNAMO)
         REGISTER.addAlias("centrifuge", RagiumConstants.EXTRACTOR)
+        REGISTER.addAlias("potion_tank", "tank")
 
         eventBus.addListener(::registerCapabilities)
 
@@ -442,14 +440,6 @@ data object RagiumBlocks {
     )
 
     @JvmField
-    val POTION_TANK: HTDeferredBlockAndItem<HTPotionTankBlock, HTPotionTankBlockItem> = registerWithBE(
-        RagiumBlockEntityTypes.POTION_TANK,
-        ::HTPotionTankBlock,
-        ::HTPotionTankBlockItem,
-        tankProperty,
-    )
-
-    @JvmField
     val EXPERIENCE_TANK: HTBasicDeferredBlockAndItem<HTTankBlock> = registerWithBE(
         RagiumBlockEntityTypes.EXPERIENCE_TANK,
         ::HTTankBlock,
@@ -472,7 +462,7 @@ data object RagiumBlocks {
     )
 
     @JvmField
-    val TANKS: List<HTSimpleDeferredBlockAndItem> = listOf(TANK, POTION_TANK, EXPERIENCE_TANK, VOID_TANK, CREATIVE_TANK)
+    val TANKS: List<HTSimpleDeferredBlockAndItem> = listOf(TANK, EXPERIENCE_TANK, VOID_TANK, CREATIVE_TANK)
 
     // Battery
     @JvmField
@@ -531,17 +521,6 @@ data object RagiumBlocks {
                 HTItemAccessFluidHandler.create(access, HTMachineUpgradeHelper.modifyCapacity(stack, RagiumConfig.SERVER.tankCapacity))
             },
             TANK,
-        )
-        event.registerItem(
-            HTFluidCapabilities.item,
-            { stack: ItemStack, access: ItemAccess ->
-                HTItemAccessFluidHandler.create(
-                    access,
-                    HTMachineUpgradeHelper.modifyCapacity(stack, RagiumConfig.SERVER.tankCapacity),
-                    filter = HTPotionHelper::hasAnyEffect,
-                )
-            },
-            POTION_TANK,
         )
         event.registerItem(HTFluidCapabilities.item, { _, _ -> HTVoidTankBlock.VOIDING_HANDLER }, VOID_TANK)
         event.registerItem(

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.lib.HTConstants
+import hiiragi283.lib.capability.HTEnergyCapabilities
 import hiiragi283.lib.capability.HTFluidCapabilities
 import hiiragi283.lib.event.HTRegisterWidgetRendererEvent
 import hiiragi283.lib.fluid.FluidStackTintSource
@@ -13,6 +14,7 @@ import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.Text
+import hiiragi283.lib.transfer.energy.HTEnergyStorage
 import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
@@ -286,12 +288,31 @@ data object RagiumClient : HTClientMod() {
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankBlockEntityRenderer)
-        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.POTION_TANK.get(), ::HTTankBlockEntityRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.EXPERIENCE_TANK.get(), ::HTTankBlockEntityRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), ::HTTankBlockEntityRenderer)
     }
 
     @JvmStatic
     private fun registerTooltipAppenders(event: RegisterTooltipAppendersEvent) {
+        event.registerAppender(
+            TooltipLocation.HEAD,
+        ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
+            if (!stack.`is`(RagiumTags.Items.SHOW_ENERGY_TOOLTIPS)) return@registerAppender
+            val storage: HTEnergyStorage = HTEnergyCapabilities.getStorage(stack) ?: return@registerAppender
+            val isCreative: Boolean = stack.`is`(RagiumTags.BlockItems.STORAGES_CREATIVE.item)
+            // Energy Amount
+            val amount: Int = storage.amount
+            when {
+                isCreative -> HTCommonTranslation.STORED_FE.translateColored(ChatFormatting.GRAY, HTCommonTranslation.INFINITE)
+                amount <= 0 -> HTCommonTranslation.EMPTY.translateColored(ChatFormatting.RED)
+                else -> HTCommonTranslation.STORED_FE.translateColored(ChatFormatting.GRAY, amount)
+            }.let(builder::accept)
+            // Energy Capacity
+            when (isCreative) {
+                true -> HTCommonTranslation.CAPACITY.translateColored(ChatFormatting.BLUE, ChatFormatting.GRAY, HTCommonTranslation.INFINITE)
+                false -> HTCommonTranslation.CAPACITY_FE.translateColored(ChatFormatting.BLUE, ChatFormatting.GRAY, storage.capacity)
+            }.let(builder::accept)
+        }
         event.registerAppender(
             TooltipLocation.HEAD,
         ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
@@ -319,17 +340,8 @@ data object RagiumClient : HTClientMod() {
             }.let(builder::accept)
             // Tank Capacity
             when (isCreative) {
-                true -> HTCommonTranslation.CAPACITY.translateColored(
-                    ChatFormatting.BLUE,
-                    ChatFormatting.GRAY,
-                    HTCommonTranslation.INFINITE,
-                )
-
-                false -> HTCommonTranslation.CAPACITY_MB.translateColored(
-                    ChatFormatting.BLUE,
-                    ChatFormatting.GRAY,
-                    view.currentCapacity,
-                )
+                true -> HTCommonTranslation.CAPACITY.translateColored(ChatFormatting.BLUE, ChatFormatting.GRAY, HTCommonTranslation.INFINITE)
+                false -> HTCommonTranslation.CAPACITY_MB.translateColored(ChatFormatting.BLUE, ChatFormatting.GRAY, view.currentCapacity)
             }.let(builder::accept)
         }
 

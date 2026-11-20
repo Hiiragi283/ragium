@@ -97,10 +97,12 @@ class RagiumItemTagsProvider(output: PackOutput, lookupProvider: CompletableFutu
                 builder(RagiumTags.Items.SMELTING_FLUXES).addTag(prefix.itemTagKey(gem))
             }
         }
+
         RagiumBlocks.TANKS.forEach { builder(RagiumTags.Items.SHOW_FLUID_TOOLTIPS).add(it) }
+        RagiumBlocks.BATTERIES.forEach { builder(RagiumTags.Items.SHOW_ENERGY_TOOLTIPS).add(it) }
+
         builder(RagiumTags.Items.SUPPORT_UPGRADES)
             .add(RagiumBlocks.TANK)
-            .add(RagiumBlocks.POTION_TANK)
             .add(RagiumBlocks.BATTERY)
             .addTag(HTMachineType.GENERATOR_PREFIX.rawCommonTag.item)
             .addTag(HTMachineType.PROCESSOR_PREFIX.rawCommonTag.item)
