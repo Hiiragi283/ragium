@@ -40,24 +40,18 @@ open class HTBasicEnergyStorage(
 
     final override val amount: Int get() = this.amountIn
 
-    fun setAmount(amount: Int) {
-        setAmountUnchecked(amount, true)
-    }
-
-    protected fun setAmountInternal(amount: Int) {
-        setAmountUnchecked(amount, false)
-    }
-
-    protected fun setAmountUnchecked(amount: Int, validate: Boolean) {
-        if (amount == 0) {
-            if (this.amountIn == 0) return
-            this.amountIn = 0
-        } else if (!validate || amount > 0) {
-            this.amountIn = amount.coerceIn(0, capacity)
-        } else {
-            error("Invalid amount for storage: $amount")
+    fun setAmount(newAmount: Int, transaction: TransactionContext? = null) {
+        TransferPreconditions.checkNonNegative(newAmount)
+        if (newAmount != this.amountIn) {
+            transaction?.let {
+                updateSnapshots(it)
+                this.amountIn = newAmount
+            } ?: run {
+                val oldAmount: Int = this.amountIn
+                this.amountIn = newAmount
+                onRootCommit(oldAmount)
+            }
         }
-        onRootCommit(this.amountIn)
     }
 
     override val capacity: Int get() = this.capacityIn
@@ -67,8 +61,7 @@ open class HTBasicEnergyStorage(
         if (!this.canInsert.test(access)) return 0
         val inserted: Int = minOf(needed, amount)
         if (inserted > 0) {
-            this.updateSnapshots(transaction)
-            amountIn += inserted
+            setAmount(amountIn + inserted, transaction)
             return inserted
         }
         return 0
@@ -79,8 +72,7 @@ open class HTBasicEnergyStorage(
         if (!this.canExtract.test(access)) return 0
         val extracted: Int = minOf(this.amountIn, amount)
         if (extracted > 0) {
-            this.updateSnapshots(transaction)
-            amountIn -= extracted
+            setAmount(amountIn - extracted, transaction)
             return extracted
         }
         return 0
@@ -93,7 +85,7 @@ open class HTBasicEnergyStorage(
     }
 
     override fun deserialize(input: ValueInput) {
-        input.getInt(HTConstants.AMOUNT).ifPresent(::setAmountInternal)
+        input.getInt(HTConstants.AMOUNT).ifPresent(::setAmount)
     }
 
     //    SnapshotJournal    //
@@ -105,7 +97,9 @@ open class HTBasicEnergyStorage(
     }
 
     override fun onRootCommit(originalState: Int) {
-        listener?.run()
+        if (this.amountIn != originalState) {
+            listener?.run()
+        }
     }
 
     override fun toString(): String = "HTBasicEnergyStorage(amount=$amountIn, capacity=$capacity)"

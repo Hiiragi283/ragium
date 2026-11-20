@@ -10,6 +10,7 @@ import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.fluid.FluidResource
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 import java.util.function.BiPredicate
 import java.util.function.Predicate
 
@@ -60,28 +61,24 @@ open class HTBasicFluidTank(
 
     override fun getStackCopy(): FluidStack = stackIn.copy()
 
-    override fun setStack(stack: FluidStack) {
-        setStackUnchecked(stack, true)
-    }
-
-    override fun setStackInternal(stack: FluidStack) {
-        setStackUnchecked(stack, false)
-    }
-
-    private fun setStackUnchecked(other: FluidStack, validate: Boolean) {
-        val resource: FluidResource = getHelper().getResourceFrom(other)
-        if (resource.isEmpty) {
-            if (this.stackIn.isEmpty) return
-            this.stackIn = FluidStack.EMPTY
-        } else if (!validate || isValid(resource)) {
-            this.stackIn = other
-        } else {
-            error("Invalid stack for tank: $other")
+    override fun setStack(stack: FluidStack, transaction: TransactionContext?) {
+        val oldStack: FluidStack = this.stackIn
+        if (!getHelper().isSame(oldStack, stack)) {
+            transaction?.let {
+                updateSnapshots(it)
+                this.stackIn = stack
+            } ?: run {
+                this.stackIn = stack
+                onRootCommit(oldStack)
+            }
         }
-        onRootCommit(getStackCopy())
     }
 
     override fun getHelper(): HTStackResourceHelper.Fluid = HTStackResourceHelper.Fluid
+
+    override fun revertToSnapshot(snapshot: FluidStack) {
+        this.stackIn = snapshot
+    }
 
     //    ValueIOSerializable    //
 
@@ -90,6 +87,6 @@ open class HTBasicFluidTank(
     }
 
     override fun deserialize(input: ValueInput) {
-        input.read(HTConstants.FLUID, FluidStack.OPTIONAL_CODEC).ifPresent(::setStackInternal)
+        input.read(HTConstants.FLUID, FluidStack.OPTIONAL_CODEC).ifPresent(::setStack)
     }
 }

@@ -26,6 +26,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockState) :
     HTBlockEntity(RagiumBlockEntityTypes.UPGRADE_STATION.get(), worldPosition, blockState),
@@ -84,18 +85,28 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
             .resource
             .let(HTMachineUpgradeHelper::getUpgrades)
 
-        override fun getStackCopy(): ItemStack = getUpgrades()[slotIndex]
-
-        override fun setStack(stack: ItemStack) {
-            setStackInternal(stack)
-        }
-
-        override fun setStackInternal(stack: ItemStack) {
-            val mutable = HTMachineUpgradeList.Mutable(getUpgrades())
-            mutable[slotIndex] = stack
+        private fun setUpgrade(mutable: HTMachineUpgradeList.Mutable) {
             val toolStack: ItemStack = this@HTUpgradeStationBlockEntity.toolSlot.getStackCopy()
             HTMachineUpgradeHelper.setUpgrades(toolStack, mutable)
             this@HTUpgradeStationBlockEntity.toolSlot.setStack(toolStack)
+        }
+
+        override fun getStackCopy(): ItemStack = getUpgrades()[slotIndex]
+
+        override fun setStack(stack: ItemStack, transaction: TransactionContext?) {
+            val oldStack: ItemStack = getStackCopy()
+            if (!getHelper().isSame(stack, oldStack)) {
+                val mutable = HTMachineUpgradeList.Mutable(getUpgrades())
+                transaction?.let {
+                    updateSnapshots(it)
+                    mutable[slotIndex] = stack
+                    setUpgrade(mutable)
+                } ?: run {
+                    mutable[slotIndex] = stack
+                    setUpgrade(mutable)
+                    onRootCommit(oldStack)
+                }
+            }
         }
 
         override fun getHelper(): HTStackResourceHelper.Item = HTStackResourceHelper.Item
@@ -105,8 +116,16 @@ class HTUpgradeStationBlockEntity(worldPosition: BlockPos, blockState: BlockStat
 
         override fun canResourceExtract(resource: ItemResource, access: HTTransferAccess): Boolean = access != HTTransferAccess.EXTERNAL
 
+        override fun revertToSnapshot(snapshot: ItemStack) {
+            val mutable = HTMachineUpgradeList.Mutable(getUpgrades())
+            mutable[slotIndex] = snapshot
+            setUpgrade(mutable)
+        }
+
         override fun onRootCommit(originalState: ItemStack) {
-            this@HTUpgradeStationBlockEntity.setOnlySave()
+            if (!getHelper().isSame(originalState, getStackCopy())) {
+                this@HTUpgradeStationBlockEntity.setOnlySave()
+            }
         }
 
         override fun isValid(resource: ItemResource): Boolean =

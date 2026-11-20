@@ -25,6 +25,11 @@ abstract class HTStackResourceHelper<S : Any, T : Resource> {
     abstract fun getAmountFrom(stack: S): Int
 
     /**
+     * 指定したスタックが等しいかどうか判定します。
+     */
+    abstract fun isSame(left: S, right: S): Boolean
+
+    /**
      * 指定したスタックとリソースが等しいかどうか判定します。
      */
     abstract fun isSame(stack: S, resource: T): Boolean
@@ -45,6 +50,9 @@ abstract class HTStackResourceHelper<S : Any, T : Resource> {
 
         override fun getAmountFrom(stack: FluidStack): Int = stack.amount()
 
+        override fun isSame(left: FluidStack, right: FluidStack): Boolean =
+            FluidStack.isSameFluidSameComponents(left, right) && left.amount() == right.amount()
+
         override fun isSame(stack: FluidStack, resource: FluidResource): Boolean = resource.matches(stack)
 
         override fun createStack(resource: FluidResource, amount: Int): FluidStack = resource.toStack(amount)
@@ -60,6 +68,9 @@ abstract class HTStackResourceHelper<S : Any, T : Resource> {
         override fun getResourceFrom(stack: ItemStack): ItemResource = ItemResource.of(stack)
 
         override fun getAmountFrom(stack: ItemStack): Int = stack.count()
+
+        override fun isSame(left: ItemStack, right: ItemStack): Boolean =
+            ItemStack.isSameItemSameComponents(left, right) && left.count() == right.count()
 
         override fun isSame(stack: ItemStack, resource: ItemResource): Boolean = resource.matches(stack)
 

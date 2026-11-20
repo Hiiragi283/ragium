@@ -14,7 +14,7 @@ import hiiragi283.lib.network.HTPayloadHandlers
 import hiiragi283.lib.resource.vanillaId
 import hiiragi283.lib.text.HTCommonTranslation
 import hiiragi283.lib.text.Text
-import hiiragi283.lib.transfer.energy.HTEnergyStorage
+import hiiragi283.lib.transfer.energy.HTEnergyView
 import hiiragi283.lib.transfer.fluid.HTFluidView
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.RagiumDataComponents
@@ -298,10 +298,10 @@ data object RagiumClient : HTClientMod() {
             TooltipLocation.HEAD,
         ) { stack: ItemStack, _, _, _, _, builder: Consumer<Text> ->
             if (!stack.`is`(RagiumTags.Items.SHOW_ENERGY_TOOLTIPS)) return@registerAppender
-            val storage: HTEnergyStorage = HTEnergyCapabilities.getStorage(stack) ?: return@registerAppender
+            val view: HTEnergyView = HTEnergyCapabilities.getStorage(stack) ?: return@registerAppender
             val isCreative: Boolean = stack.`is`(RagiumTags.BlockItems.STORAGES_CREATIVE.item)
             // Energy Amount
-            val amount: Int = storage.amount
+            val amount: Int = view.amount
             when {
                 isCreative -> HTCommonTranslation.STORED_FE.translateColored(ChatFormatting.GRAY, HTCommonTranslation.INFINITE)
                 amount <= 0 -> HTCommonTranslation.EMPTY.translateColored(ChatFormatting.RED)
@@ -310,7 +310,7 @@ data object RagiumClient : HTClientMod() {
             // Energy Capacity
             when (isCreative) {
                 true -> HTCommonTranslation.CAPACITY.translateColored(ChatFormatting.BLUE, ChatFormatting.GRAY, HTCommonTranslation.INFINITE)
-                false -> HTCommonTranslation.CAPACITY_FE.translateColored(ChatFormatting.BLUE, ChatFormatting.GRAY, storage.capacity)
+                false -> HTCommonTranslation.CAPACITY_FE.translateColored(ChatFormatting.BLUE, ChatFormatting.GRAY, view.capacity)
             }.let(builder::accept)
         }
         event.registerAppender(

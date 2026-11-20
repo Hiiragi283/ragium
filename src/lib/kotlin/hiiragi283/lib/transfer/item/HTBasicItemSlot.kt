@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 import java.util.function.BiPredicate
 import java.util.function.Predicate
 
@@ -69,28 +70,24 @@ open class HTBasicItemSlot(
 
     override fun getStackCopy(): ItemStack = stackIn.copy()
 
-    override fun setStack(stack: ItemStack) {
-        setStackUnchecked(stack, true)
-    }
-
-    override fun setStackInternal(stack: ItemStack) {
-        setStackUnchecked(stack, false)
-    }
-
-    private fun setStackUnchecked(other: ItemStack, validate: Boolean) {
-        val resource: ItemResource = getHelper().getResourceFrom(other)
-        if (resource.isEmpty) {
-            if (this.stackIn.isEmpty) return
-            this.stackIn = ItemStack.EMPTY
-        } else if (!validate || isValid(resource)) {
-            this.stackIn = other
-        } else {
-            error("Invalid stack for slot: $other")
+    override fun setStack(stack: ItemStack, transaction: TransactionContext?) {
+        val oldStack: ItemStack = this.stackIn
+        if (!getHelper().isSame(oldStack, stack)) {
+            transaction?.let {
+                updateSnapshots(it)
+                this.stackIn = stack
+            } ?: run {
+                this.stackIn = stack
+                onRootCommit(oldStack)
+            }
         }
-        onRootCommit(getStackCopy())
     }
 
     override fun getHelper(): HTStackResourceHelper.Item = HTStackResourceHelper.Item
+
+    override fun revertToSnapshot(snapshot: ItemStack) {
+        this.stackIn = snapshot
+    }
 
     override fun getCapacity(resource: ItemResource): Int = when (resource.isEmpty) {
         true -> capacity
@@ -109,6 +106,6 @@ open class HTBasicItemSlot(
     }
 
     override fun deserialize(input: ValueInput) {
-        input.read(HTConstants.ITEM, ItemStack.OPTIONAL_CODEC).ifPresent(::setStackInternal)
+        input.read(HTConstants.ITEM, ItemStack.OPTIONAL_CODEC).ifPresent(::setStack)
     }
 }

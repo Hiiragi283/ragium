@@ -20,11 +20,6 @@ abstract class HTSnapshotStackResourceSlot<S : Any, T : Resource> :
     protected abstract fun getHelper(): HTStackResourceHelper<S, T>
 
     /**
-     * 保持しているスタックを置き換えます。
-     */
-    protected abstract fun setStackInternal(stack: S)
-
-    /**
      * 一度に搬入される量の上限を返します。
      * @param access このスロットへのアクセスの種類
      */
@@ -46,8 +41,7 @@ abstract class HTSnapshotStackResourceSlot<S : Any, T : Resource> :
                 val needed: Int = minOf(inputRate(access), getNeeded(resource))
                 val inserted: Int = minOf(amount, needed)
                 if (inserted > 0) {
-                    this.updateSnapshots(transaction)
-                    setStackInternal(getHelper().createStack(resource, amountIn + inserted))
+                    setStack(getHelper().createStack(resource, amountIn + inserted), transaction)
                     return inserted
                 }
             }
@@ -62,8 +56,7 @@ abstract class HTSnapshotStackResourceSlot<S : Any, T : Resource> :
             val stored: Int = minOf(outputRate(access), amountIn)
             val extracted: Int = minOf(amount, stored)
             if (extracted > 0) {
-                this.updateSnapshots(transaction)
-                setStackInternal(getHelper().createStack(resource, amountIn - extracted))
+                setStack(getHelper().createStack(resource, amountIn - extracted), transaction)
                 return extracted
             }
         }
@@ -77,10 +70,6 @@ abstract class HTSnapshotStackResourceSlot<S : Any, T : Resource> :
     //    SnapshotJournal    //
 
     final override fun createSnapshot(): S = getStackCopy()
-
-    final override fun revertToSnapshot(snapshot: S) {
-        setStackInternal(snapshot)
-    }
 
     abstract override fun onRootCommit(originalState: S)
 
@@ -100,7 +89,9 @@ abstract class HTSnapshotStackResourceSlot<S : Any, T : Resource> :
             super.canResourceExtract(resource, access) && canExtract.test(resource, access)
 
         override fun onRootCommit(originalState: S) {
-            listener?.run()
+            if (!getHelper().isSame(originalState, getStackCopy())) {
+                listener?.run()
+            }
         }
 
         override fun isValid(resource: T): Boolean = filter.test(resource)

@@ -1,6 +1,7 @@
 package hiiragi283.lib.transfer
 
 import net.neoforged.neoforge.transfer.resource.Resource
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 /**
  * スタックに基づいた[HTResourceSlot]の拡張インターフェースです。
@@ -18,5 +19,5 @@ interface HTStackSlot<S : Any, T : Resource> : HTResourceSlot<T> {
     /**
      * 保持しているスタックを置き換えます。
      */
-    fun setStack(stack: S)
+    fun setStack(stack: S, transaction: TransactionContext? = null)
 }
