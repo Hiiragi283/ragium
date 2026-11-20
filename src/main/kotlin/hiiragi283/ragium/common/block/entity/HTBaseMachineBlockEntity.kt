@@ -9,12 +9,11 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import java.util.function.IntSupplier
 
 abstract class HTBaseMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(type, pos, state),
     HTBlockEntityWithMenu {
-    protected fun getTankCapacity(): IntSupplier = RagiumConfig.SERVER.machineTankCapacity
+    protected fun getTankCapacity(): Int = HTMachineUpgradeHelper.modifyCapacity(components(), RagiumConfig.SERVER.machineTankCapacity)
 
     fun isActive(): Boolean = isActive(this.blockState)
 

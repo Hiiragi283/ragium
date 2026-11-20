@@ -4,6 +4,7 @@ import com.google.common.primitives.Ints
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import net.minecraft.core.component.DataComponentGetter
 import net.neoforged.neoforge.common.MutableDataComponentHolder
+import java.util.function.IntSupplier
 
 data object HTMachineUpgradeHelper {
     @JvmStatic
@@ -36,8 +37,8 @@ data object HTMachineUpgradeHelper {
     }
 
     @JvmStatic
-    fun modifyCapacity(getter: DataComponentGetter, base: Int): Int {
+    fun modifyCapacity(getter: DataComponentGetter, base: IntSupplier): Int {
         val multiplier: Long = maxOf(1, 100L + getCombinedUpgrade(getter).capacity)
-        return Ints.saturatedCast(base * multiplier / 100)
+        return Ints.saturatedCast(base.asInt * multiplier / 100)
     }
 }

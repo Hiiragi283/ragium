@@ -4,8 +4,8 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTTransferAccess
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.useTransaction
+import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTBlockEntityWithMenu
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
@@ -20,7 +20,6 @@ import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.ModConfigSpec
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.transaction.Transaction
 
@@ -50,18 +49,18 @@ class HTEnchantmentAbsorberBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    private lateinit var inputTank: HTBasicFluidTank
-    private lateinit var outputTank: HTBasicFluidTank
+    private lateinit var inputTank: HTVariableFluidTank
+    private lateinit var outputTank: HTVariableFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(getTankCapacity(), listener, filter = RagiumFluids.EXPERIENCE::isOfTag),
+            HTVariableFluidTank.input(::getTankCapacity, listener, filter = RagiumFluids.EXPERIENCE::isOfTag),
         )
-        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(getTankCapacity(), listener))
+        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(::getTankCapacity, listener))
     }
 
-    private fun getTankCapacity(): ModConfigSpec.IntValue = RagiumConfig.SERVER.enchantmentAbsorberTankCapacity
+    private fun getTankCapacity(): Int = HTMachineUpgradeHelper.modifyCapacity(components(), RagiumConfig.SERVER.enchantmentAbsorberTankCapacity)
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         widgetHolder += HTEnchantmentWidget(

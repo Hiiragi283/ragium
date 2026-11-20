@@ -16,11 +16,7 @@ import java.util.function.IntSupplier
  * @since 26.1.0
  */
 @JvmRecord
-data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: IntSupplier) {
-    fun getCapacity(): Int = capacity.asInt
-
-    fun getUsage(): Int = rate.asInt
-
+data class HTEnergyConfig(val capacity: IntSupplier, val rate: IntSupplier) {
     companion object {
         @JvmStatic
         private fun energyCapacity(builder: ModConfigSpec.Builder, value: Int): ModConfigSpec.IntValue = builder

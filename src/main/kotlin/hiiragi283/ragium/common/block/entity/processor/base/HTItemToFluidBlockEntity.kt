@@ -22,7 +22,7 @@ abstract class HTItemToFluidBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
     private lateinit var outputTank: HTVariableFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
-        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(getTankCapacity(), listener))
+        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(::getTankCapacity, listener))
     }
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: Runnable) {

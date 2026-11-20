@@ -4,7 +4,6 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTTransferAccess
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
@@ -42,17 +41,17 @@ class HTCombustionDynamoBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.generator.combustionDynamo
 
-    private lateinit var fuelTank: HTBasicFluidTank
-    private lateinit var coolantTank: HTBasicFluidTank
+    private lateinit var fuelTank: HTVariableFluidTank
+    private lateinit var coolantTank: HTVariableFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
         fuelTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(getTankCapacity(), listener, filter = { it.getData(RagiumDataMaps.COMBUSTION_FUEL) != null }),
+            HTVariableFluidTank.input(::getTankCapacity, listener, filter = { it.getData(RagiumDataMaps.COMBUSTION_FUEL) != null }),
         )
         coolantTank = builder.addSlot(
             HTSlotInfo.EXTRA_INPUT,
-            HTVariableFluidTank.input(getTankCapacity(), listener, filter = { it.getData(RagiumDataMaps.COOLANT) != null }),
+            HTVariableFluidTank.input(::getTankCapacity, listener, filter = { it.getData(RagiumDataMaps.COOLANT) != null }),
         )
     }
 

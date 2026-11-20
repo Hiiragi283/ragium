@@ -6,7 +6,6 @@ import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.base.HTFluidSeparatingRecipe
 import hiiragi283.lib.recipe.handler.output.HTOutputHandler
 import hiiragi283.lib.recipe.handler.output.HTOutputHandlerHelper
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
@@ -22,16 +21,15 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidInstance
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.transaction.Transaction
-import java.util.function.IntSupplier
 
 abstract class HTFluidSeparatingBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTFluidToBlockEntity<HTFluidSeparatingRecipe.Output, HTFluidSeparatingRecipe>(type, pos, state) {
 
-    private lateinit var leftOutputTank: HTBasicFluidTank
-    private lateinit var rightOutputTank: HTBasicFluidTank
+    private lateinit var leftOutputTank: HTVariableFluidTank
+    private lateinit var rightOutputTank: HTVariableFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
-        val capacity: IntSupplier = getTankCapacity()
+        val capacity: () -> Int = ::getTankCapacity
         createInputTank(builder, listener)
         leftOutputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(capacity, listener))
         rightOutputTank = builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, HTVariableFluidTank.output(capacity, listener))

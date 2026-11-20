@@ -5,7 +5,6 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTTransferAccess
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.lib.util.fixedFraction
@@ -43,14 +42,14 @@ abstract class HTBoilerBlockEntity(type: BlockEntityType<*>, pos: BlockPos, stat
         protected val STEAM_RESOURCE: FluidResource by lazy(RagiumFluids.STEAM::asResourceOrEmpty)
     }
 
-    protected lateinit var waterTank: HTBasicFluidTank
+    protected lateinit var waterTank: HTVariableFluidTank
         private set
-    protected lateinit var steamTank: HTBasicFluidTank
+    protected lateinit var steamTank: HTVariableFluidTank
         private set
 
     protected fun createTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
-        waterTank = builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(getTankCapacity(), listener, filter = { it.`is`(Tags.Fluids.WATER) }))
-        steamTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(getTankCapacity(), listener))
+        waterTank = builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(::getTankCapacity, listener, filter = { it.`is`(Tags.Fluids.WATER) }))
+        steamTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(::getTankCapacity, listener))
     }
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = useTransaction { transaction: Transaction ->

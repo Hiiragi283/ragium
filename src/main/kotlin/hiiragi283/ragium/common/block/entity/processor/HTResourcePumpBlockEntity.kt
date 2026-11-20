@@ -29,7 +29,7 @@ class HTResourcePumpBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var outputTank: HTVariableFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
-        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(getTankCapacity(), listener))
+        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(::getTankCapacity, listener))
     }
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {

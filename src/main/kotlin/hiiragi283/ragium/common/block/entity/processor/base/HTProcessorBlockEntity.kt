@@ -5,13 +5,13 @@ import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.recipe.handler.lookup.HTRecipeLookupHandler
 import hiiragi283.lib.transfer.HTTransferAccess
-import hiiragi283.lib.transfer.energy.HTBasicEnergyStorage
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.lib.util.fixedFraction
 import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTBaseMachineBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTArrowWidget
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
+import hiiragi283.ragium.common.transfer.energy.HTVariableEnergyStorage
 import hiiragi283.ragium.common.transfer.holder.HTBasicEnergyStorageHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
@@ -82,16 +82,13 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
     //    Energized    //
 
     abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
-        protected lateinit var storage: HTBasicEnergyStorage
+        protected lateinit var storage: HTVariableEnergyStorage
             private set
 
         final override fun createEnergyStorage(builder: HTBasicEnergyStorageHolder.Builder, listener: Runnable) {
             storage = builder.addStorage(
                 HTSlotInfo.INPUT,
-                HTBasicEnergyStorage.input(
-                    HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().getCapacity()),
-                    listener,
-                ),
+                HTVariableEnergyStorage.input({ HTMachineUpgradeHelper.modifyCapacity(components(), getConfig().capacity) }, listener),
             )
         }
 
@@ -102,7 +99,8 @@ abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, s
             widgetHolder.track(storage)
         }
 
-        protected val baseEnergyPerTick: Int = getConfig().getUsage()
+        protected val baseEnergyPerTick: Int
+            get() = getConfig().rate.asInt
         protected val currentEnergyPerTick: Int
             get() = HTMachineUpgradeHelper.modifySpeed(components(), this.baseEnergyPerTick)
 

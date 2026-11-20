@@ -7,6 +7,7 @@ import hiiragi283.lib.transfer.energy.HTEnergyStorage
 import hiiragi283.lib.transfer.energy.HTEnergyStorageUtil
 import hiiragi283.lib.transfer.item.HTEnergyItemSlot
 import hiiragi283.lib.transfer.useTransaction
+import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTBlockEntityWithMenu
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTArrowWidget
@@ -15,6 +16,7 @@ import hiiragi283.ragium.common.gui.widget.HTItemWidget
 import hiiragi283.ragium.common.transfer.holder.HTBasicEnergyStorageHolder
 import hiiragi283.ragium.common.transfer.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.transfer.holder.HTSlotInfo
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
@@ -30,6 +32,8 @@ abstract class HTBaseBatteryBlockEntity(type: BlockEntityType<*>, pos: BlockPos,
     abstract val storage: HTEnergyStorage
 
     abstract override fun createEnergyStorage(builder: HTBasicEnergyStorageHolder.Builder, listener: Runnable)
+
+    protected fun getBatteryCapacity(): Int = HTMachineUpgradeHelper.modifyCapacity(components(), RagiumConfig.SERVER.batteryCapacity)
 
     private lateinit var fillSlot: HTEnergyItemSlot
     private lateinit var drainSlot: HTEnergyItemSlot

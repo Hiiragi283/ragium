@@ -25,8 +25,8 @@ class HTChemicalLaboBlockEntity(pos: BlockPos, state: BlockState) :
     private lateinit var outputTank: HTVariableFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
-        inputTank = builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(getTankCapacity(), listener))
-        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(getTankCapacity(), listener))
+        inputTank = builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(::getTankCapacity, listener))
+        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(::getTankCapacity, listener))
     }
 
     private lateinit var inputSlot: HTBasicItemSlot

@@ -6,7 +6,6 @@ import hiiragi283.lib.recipe.handler.input.HTInputHandlerHelper
 import hiiragi283.lib.recipe.handler.input.HTInputSlot
 import hiiragi283.lib.recipe.handler.output.HTOutputHandler
 import hiiragi283.lib.recipe.lookup.HTRecipeLookup
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.lib.transfer.item.HTBasicItemSlot
 import hiiragi283.lib.transfer.useTransaction
 import hiiragi283.ragium.common.transfer.fluid.HTVariableFluidTank
@@ -25,11 +24,11 @@ abstract class HTCatalysedFluidToBlockEntity<OUTPUT : Any, RECIPE : HTCatalysedF
     pos: BlockPos,
     state: BlockState,
 ) : HTDoubleProcessorBlockEntity<FluidInstance, ItemInstance, OUTPUT, RECIPE>(type, pos, state) {
-    protected lateinit var inputTank: HTBasicFluidTank
+    protected lateinit var inputTank: HTVariableFluidTank
         private set
 
     protected fun createInputTank(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
-        inputTank = builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(getTankCapacity(), listener))
+        inputTank = builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(::getTankCapacity, listener))
     }
 
     protected lateinit var catalystSlot: HTBasicItemSlot

@@ -4,7 +4,6 @@ import hiiragi283.lib.gui.HTBackgroundType
 import hiiragi283.lib.gui.HTSlotHelper
 import hiiragi283.lib.gui.widget.HTWidgetHolder
 import hiiragi283.lib.transfer.HTTransferAccess
-import hiiragi283.lib.transfer.fluid.HTBasicFluidTank
 import hiiragi283.ragium.common.block.entity.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.fluid.RagiumFluids
 import hiiragi283.ragium.common.gui.widget.HTFluidWidget
@@ -30,12 +29,12 @@ class HTSteamDynamoBlockEntity(pos: BlockPos, state: BlockState) : HTDynamoBlock
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.SERVER.generator.steamDynamo
 
-    private lateinit var fuelTank: HTBasicFluidTank
+    private lateinit var fuelTank: HTVariableFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: Runnable) {
         fuelTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(getTankCapacity(), listener, filter = RagiumFluids.STEAM::isOf),
+            HTVariableFluidTank.input(::getTankCapacity, listener, filter = RagiumFluids.STEAM::isOf),
         )
     }
 

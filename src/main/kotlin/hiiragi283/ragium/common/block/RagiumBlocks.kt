@@ -22,6 +22,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConstants
 import hiiragi283.ragium.api.data.RagiumDataComponents
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.HTMachineUpgradeHelper
 import hiiragi283.ragium.api.material.HTBlockPart
 import hiiragi283.ragium.api.material.HTStorageBlockPart
 import hiiragi283.ragium.api.material.RagiumMaterial
@@ -526,27 +527,23 @@ data object RagiumBlocks {
         // Item
         event.registerItem(
             HTFluidCapabilities.item,
-            { _, access ->
-                HTItemAccessFluidHandler.create(access, RagiumConfig.SERVER.tankCapacity.asInt)
+            { stack: ItemStack, access: ItemAccess ->
+                HTItemAccessFluidHandler.create(access, HTMachineUpgradeHelper.modifyCapacity(stack, RagiumConfig.SERVER.tankCapacity))
             },
             TANK,
         )
         event.registerItem(
             HTFluidCapabilities.item,
-            { _, access ->
+            { stack: ItemStack, access: ItemAccess ->
                 HTItemAccessFluidHandler.create(
                     access,
-                    RagiumConfig.SERVER.tankCapacity.asInt,
+                    HTMachineUpgradeHelper.modifyCapacity(stack, RagiumConfig.SERVER.tankCapacity),
                     filter = HTPotionHelper::hasAnyEffect,
                 )
             },
             POTION_TANK,
         )
-        event.registerItem(
-            HTFluidCapabilities.item,
-            { _, _ -> HTVoidTankBlock.VOIDING_HANDLER },
-            VOID_TANK,
-        )
+        event.registerItem(HTFluidCapabilities.item, { _, _ -> HTVoidTankBlock.VOIDING_HANDLER }, VOID_TANK)
         event.registerItem(
             HTFluidCapabilities.item,
             { stack: ItemStack, _ ->
@@ -560,13 +557,15 @@ data object RagiumBlocks {
 
         event.registerItem(
             HTEnergyCapabilities.item,
-            { _, access: ItemAccess -> ItemAccessEnergyHandler(access, RagiumDataComponents.ENERGY, RagiumConfig.SERVER.batteryCapacity.asInt) },
+            { stack: ItemStack, access: ItemAccess ->
+                ItemAccessEnergyHandler(
+                    access,
+                    RagiumDataComponents.ENERGY,
+                    HTMachineUpgradeHelper.modifyCapacity(stack, RagiumConfig.SERVER.batteryCapacity),
+                )
+            },
             BATTERY,
         )
-        event.registerItem(
-            HTEnergyCapabilities.item,
-            { _, _ -> InfiniteEnergyHandler.INSTANCE },
-            CREATIVE_BATTERY,
-        )
+        event.registerItem(HTEnergyCapabilities.item, { _, _ -> InfiniteEnergyHandler.INSTANCE }, CREATIVE_BATTERY)
     }
 }
